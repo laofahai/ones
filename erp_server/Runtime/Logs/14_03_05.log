@@ -1,0 +1,1096 @@
+[ 2014-03-05T11:18:59+08:00 ] 127.0.0.1 /test/erp_server/dashboard
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004129s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004261s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004588s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004753s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002428s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002522s ]
+ERR: 无法加载模块:dashboard
+
+[ 2014-03-05T11:19:01+08:00 ] 127.0.0.1 /test/erp_server/
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002432s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002544s ]
+ERR: Action:show您所请求的方法不存在！
+
+[ 2014-03-05T11:20:22+08:00 ] 127.0.0.1 /test/erp_server/
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001590s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001704s ]
+ERR: 无法加载模块:Index
+
+[ 2014-03-05T11:20:39+08:00 ] 127.0.0.1 /test/erp_server/
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001614s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001733s ]
+
+[ 2014-03-05T11:20:58+08:00 ] 127.0.0.1 /test/erp_server/
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000678s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000788s ]
+ERR: 非法操作index
+
+[ 2014-03-05T11:21:07+08:00 ] 127.0.0.1 /test/erp_server/
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000694s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000806s ]
+
+[ 2014-03-05T11:21:09+08:00 ] 127.0.0.1 /test/erp_server/
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000736s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000894s ]
+
+[ 2014-03-05T11:22:08+08:00 ] 127.0.0.1 /test/erp_server/test/1
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003572s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003733s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004760s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004862s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000680s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000770s ]
+
+[ 2014-03-05T11:22:17+08:00 ] 127.0.0.1 /test/erp_server/test/1
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001707s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001818s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004719s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004812s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000669s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000758s ]
+
+[ 2014-03-05T11:22:23+08:00 ] 127.0.0.1 /test/erp_server/test/1
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001703s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001813s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004641s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004726s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000661s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000749s ]
+
+[ 2014-03-05T11:22:36+08:00 ] 127.0.0.1 /test/erp_server/test/1
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001744s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001862s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005001s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005103s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000681s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000774s ]
+
+[ 2014-03-05T11:38:33+08:00 ] 127.0.0.1 /test/erp_server/test/1
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002993s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003120s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004633s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004717s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002528s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002642s ]
+
+[ 2014-03-05T11:40:04+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005272s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005473s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.007879s ]
+INFO: [ route_check ] --END-- [ RunTime:0.008042s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002658s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002861s ]
+ERR: 无法加载模块:test
+
+[ 2014-03-05T11:40:07+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004969s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005173s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.009092s ]
+INFO: [ route_check ] --END-- [ RunTime:0.009477s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001075s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001246s ]
+ERR: 无法加载模块:test
+
+[ 2014-03-05T11:40:38+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003129s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003305s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004284s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004414s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002150s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002308s ]
+ERR: 无法加载模块:test
+
+[ 2014-03-05T11:41:38+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.006178s ]
+INFO: [ path_info ] --END-- [ RunTime:0.006335s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005063s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005182s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002647s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002792s ]
+ERR: 无法加载模块:test
+
+[ 2014-03-05T11:41:47+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002283s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002428s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005836s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005986s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002503s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002618s ]
+ERR: 无法加载模块:test
+
+[ 2014-03-05T11:42:01+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002697s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002843s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005165s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005289s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002551s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002647s ]
+ERR: Action:ajaxReturn您所请求的方法不存在！
+
+[ 2014-03-05T11:42:31+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002970s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003095s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004685s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004782s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001696s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001827s ]
+
+[ 2014-03-05T11:42:35+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001699s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001828s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.006645s ]
+INFO: [ route_check ] --END-- [ RunTime:0.006786s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001090s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001273s ]
+
+[ 2014-03-05T11:43:25+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004395s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004598s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.007868s ]
+INFO: [ route_check ] --END-- [ RunTime:0.008036s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.004109s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004314s ]
+
+[ 2014-03-05T11:44:02+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005250s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005456s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005775s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005961s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002464s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002665s ]
+
+[ 2014-03-05T11:48:58+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003199s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003335s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003519s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003605s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001590s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001683s ]
+
+[ 2014-03-05T11:48:59+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001803s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001950s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002739s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002895s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000750s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000871s ]
+
+[ 2014-03-05T11:50:26+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004736s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004919s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.007048s ]
+INFO: [ route_check ] --END-- [ RunTime:0.007201s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001690s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001811s ]
+
+[ 2014-03-05T11:52:30+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004832s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005042s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005631s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005790s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002478s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002670s ]
+
+[ 2014-03-05T11:52:31+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002863s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002982s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003846s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003950s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002700s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002895s ]
+
+[ 2014-03-05T11:52:43+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005721s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005925s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.008259s ]
+INFO: [ route_check ] --END-- [ RunTime:0.008442s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.004833s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.005074s ]
+
+[ 2014-03-05T11:53:08+08:00 ] 127.0.0.1 /test/erp_server/test/1
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003086s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003226s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005246s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005357s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001661s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001791s ]
+
+[ 2014-03-05T11:53:53+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003984s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004193s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004556s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004721s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001082s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001241s ]
+
+[ 2014-03-05T11:54:26+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003033s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003236s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003875s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004035s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001140s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001322s ]
+
+[ 2014-03-05T11:54:27+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004051s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004275s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003936s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004089s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001083s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001285s ]
+
+[ 2014-03-05T12:01:43+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005971s ]
+INFO: [ path_info ] --END-- [ RunTime:0.006263s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.006440s ]
+INFO: [ route_check ] --END-- [ RunTime:0.006641s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003080s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003275s ]
+
+[ 2014-03-05T12:01:47+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002940s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003089s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003759s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003872s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001660s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001791s ]
+
+[ 2014-03-05T12:01:57+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003809s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004043s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004722s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004859s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001649s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001762s ]
+
+[ 2014-03-05T12:01:59+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002622s ]
+INFO: [ path_info ] --END-- [ RunTime:0.009257s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003674s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003835s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000967s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001116s ]
+
+[ 2014-03-05T12:02:45+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003034s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003227s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004533s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004731s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001099s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001304s ]
+
+[ 2014-03-05T12:02:49+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004679s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004858s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.006015s ]
+INFO: [ route_check ] --END-- [ RunTime:0.006186s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001696s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001829s ]
+
+[ 2014-03-05T12:02:52+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001686s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001809s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002513s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002622s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000724s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000827s ]
+
+[ 2014-03-05T12:04:03+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003997s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004174s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003818s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003938s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001677s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001811s ]
+
+[ 2014-03-05T12:04:33+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004935s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005148s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.007849s ]
+INFO: [ route_check ] --END-- [ RunTime:0.008012s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001148s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001338s ]
+
+[ 2014-03-05T12:04:44+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001740s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001880s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003528s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003671s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000915s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001065s ]
+
+[ 2014-03-05T12:05:36+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003483s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003642s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.007150s ]
+INFO: [ route_check ] --END-- [ RunTime:0.007293s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003015s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003153s ]
+
+[ 2014-03-05T12:05:41+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003967s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004110s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005574s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005711s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002091s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002283s ]
+
+[ 2014-03-05T12:06:01+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005037s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005232s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003282s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003410s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000897s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001035s ]
+
+[ 2014-03-05T12:10:50+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005553s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005795s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005709s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005873s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002150s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002344s ]
+
+[ 2014-03-05T12:11:56+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003045s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003321s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004058s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004233s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000961s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001121s ]
+
+[ 2014-03-05T12:13:52+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003127s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003286s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004837s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004975s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001707s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001829s ]
+
+[ 2014-03-05T12:15:06+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002738s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002922s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003696s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003859s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001038s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001205s ]
+
+[ 2014-03-05T12:15:21+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004369s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004559s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003712s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003830s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001743s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001880s ]
+
+[ 2014-03-05T12:15:42+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002373s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002585s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002462s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002559s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001034s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001224s ]
+
+[ 2014-03-05T12:15:43+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002899s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003092s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004343s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004497s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001038s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001201s ]
+
+[ 2014-03-05T12:15:54+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003261s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003457s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004493s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004661s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001403s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001601s ]
+
+[ 2014-03-05T12:15:55+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001868s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001996s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002384s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002471s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000688s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000778s ]
+
+[ 2014-03-05T12:15:59+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003263s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003466s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004054s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004227s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001084s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001274s ]
+
+[ 2014-03-05T12:16:00+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003225s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003430s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004610s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004773s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001158s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001434s ]
+
+[ 2014-03-05T12:16:05+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002766s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002953s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004591s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004748s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001046s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001224s ]
+
+[ 2014-03-05T12:16:41+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003043s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003244s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004003s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004173s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001249s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001521s ]
+
+[ 2014-03-05T12:16:43+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002988s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003189s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003976s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004142s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001109s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001285s ]
+
+[ 2014-03-05T12:16:46+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002919s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003113s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003724s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003887s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001121s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001310s ]
+
+[ 2014-03-05T12:16:53+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004445s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004641s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004086s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004248s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001141s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001356s ]
+
+[ 2014-03-05T12:17:02+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002888s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003089s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005393s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005567s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001278s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001467s ]
+
+[ 2014-03-05T12:17:03+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003407s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003596s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003930s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004087s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001093s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001271s ]
+
+[ 2014-03-05T12:17:05+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002847s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003027s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002557s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002661s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000705s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000801s ]
+
+[ 2014-03-05T12:17:13+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002780s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002959s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003634s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003793s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001137s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001339s ]
+
+[ 2014-03-05T12:17:18+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002689s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002848s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002847s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002957s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000713s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000812s ]
+
+[ 2014-03-05T12:17:27+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005825s ]
+INFO: [ path_info ] --END-- [ RunTime:0.006034s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005823s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005991s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002669s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002870s ]
+
+[ 2014-03-05T12:17:28+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001745s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001868s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002948s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003058s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000829s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000985s ]
+
+[ 2014-03-05T12:17:38+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002725s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002903s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004481s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004657s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001031s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001187s ]
+
+[ 2014-03-05T12:17:57+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001876s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002000s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002429s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002525s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000699s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000792s ]
+
+[ 2014-03-05T12:18:13+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003061s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003262s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003925s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004143s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001105s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001311s ]
+
+[ 2014-03-05T12:18:16+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001784s ]
+INFO: [ path_info ] --END-- [ RunTime:0.001934s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003010s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003123s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000718s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000822s ]
+
+[ 2014-03-05T12:18:24+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003042s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003241s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003906s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004066s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001081s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001262s ]
+
+[ 2014-03-05T12:18:29+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002009s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002155s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002588s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002700s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000709s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000806s ]
+
+[ 2014-03-05T12:18:36+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002804s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002987s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003744s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003897s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001026s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001199s ]
+
+[ 2014-03-05T12:18:41+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003356s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003545s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004765s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004921s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001080s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001545s ]
+
+[ 2014-03-05T12:18:45+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001897s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002026s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002451s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002550s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000716s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000814s ]
+
+[ 2014-03-05T12:19:00+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003150s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003357s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004221s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004398s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001656s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001986s ]
+
+[ 2014-03-05T12:19:05+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002283s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002435s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003020s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003128s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001035s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001184s ]
+
+[ 2014-03-05T12:19:19+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003496s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003702s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004329s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004509s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000794s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000916s ]
+
+[ 2014-03-05T12:19:28+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005111s ]
+INFO: [ path_info ] --END-- [ RunTime:0.006874s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.006007s ]
+INFO: [ route_check ] --END-- [ RunTime:0.006178s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002610s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002813s ]
+
+[ 2014-03-05T12:19:33+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002013s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002156s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002518s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002622s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000709s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000808s ]
+
+[ 2014-03-05T12:19:41+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004886s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005092s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.007443s ]
+INFO: [ route_check ] --END-- [ RunTime:0.007610s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.003021s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003222s ]
+
+[ 2014-03-05T12:19:46+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001970s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002107s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.009032s ]
+INFO: [ route_check ] --END-- [ RunTime:0.009233s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000751s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000876s ]
+
+[ 2014-03-05T12:20:06+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001979s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002127s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002945s ]
+INFO: [ route_check ] --END-- [ RunTime:0.003092s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001087s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001267s ]
+
+[ 2014-03-05T12:29:26+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.005047s ]
+INFO: [ path_info ] --END-- [ RunTime:0.005256s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005956s ]
+INFO: [ route_check ] --END-- [ RunTime:0.006123s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002402s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002594s ]
+
+[ 2014-03-05T12:29:30+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002833s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003010s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005281s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005435s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000991s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001143s ]
+
+[ 2014-03-05T12:30:21+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.004749s ]
+INFO: [ path_info ] --END-- [ RunTime:0.004943s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.005456s ]
+INFO: [ route_check ] --END-- [ RunTime:0.005615s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002466s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002654s ]
+
+[ 2014-03-05T12:30:25+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.001885s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002011s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002425s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002516s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000696s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000791s ]
+
+[ 2014-03-05T12:30:34+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003019s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003211s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004126s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004286s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001051s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001223s ]
+
+[ 2014-03-05T12:30:56+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002658s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002846s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.003920s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004073s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001035s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001212s ]
+
+[ 2014-03-05T12:32:27+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.006290s ]
+INFO: [ path_info ] --END-- [ RunTime:0.006492s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.006687s ]
+INFO: [ route_check ] --END-- [ RunTime:0.006852s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.002729s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002925s ]
+
+[ 2014-03-05T12:32:33+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.003346s ]
+INFO: [ path_info ] --END-- [ RunTime:0.003547s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.004763s ]
+INFO: [ route_check ] --END-- [ RunTime:0.004930s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001043s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001199s ]
+
+[ 2014-03-05T12:32:38+08:00 ] 127.0.0.1 /test/erp_server/test
+INFO: [ path_info ] --START--
+INFO: CheckUrlExt Behavior ::run [ RunTime:0.002314s ]
+INFO: [ path_info ] --END-- [ RunTime:0.002468s ]
+NOTIC: [8] Constant __EXT__ already defined D:\htdocs\test\erp_server\ThinkPHP\Lib\Core\Dispatcher.class.php 第 100 行.
+INFO: [ route_check ] --START--
+INFO: CheckRestRoute Behavior ::run [ RunTime:0.002528s ]
+INFO: [ route_check ] --END-- [ RunTime:0.002647s ]
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000738s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000881s ]
+
