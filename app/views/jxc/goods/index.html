@@ -1,0 +1,16 @@
+<div ng-controller="JXCGoodsCtl">
+    <section class="actionsBtn row clearfix">
+        <div class="actionsBtnLeft btn-group">
+            <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
+            <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
+            <a class="btn btn-sm btn-success" href="#/JXC/Goods/add">{{i18n.lang.add}}</a>
+            <a class="btn btn-sm btn-primary" href="#/JXC/Goods">{{i18n.lang.list}}</a>
+        </div>
+        <div class="actionsBtnRight btn-group">
+            <button class="btn btn-sm btn-primary disabled">{{i18n.lang.selected_action|sprintf:selectedItems.length}}</button>
+            <button class="btn btn-sm btn-default" ng-class="{disabled: selectedItems.length!=1}">{{i18n.lang.edit}}</button>
+            <button class="btn btn-sm btn-danger" ng-class="{disabled: !selectedItems.length}">{{i18n.lang.delete}}</button>
+        </div>
+    </section>
+    <div class="gridStyle" ng-grid="gridOptions"></div>
+</div>

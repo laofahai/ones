@@ -1,6 +1,6 @@
 'use strict';
 
-var loginHash = $_GET("hash");
+var loginHash = uriParamsGet('hash');
 var ERP = angular.module('erp', [
     'ngCookies',
     'ngResource',
@@ -9,10 +9,12 @@ var ERP = angular.module('erp', [
     'ngGrid',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
+    
+    'erp.common',
     'erp.config',
-    'erp.jxc'
+    'erp.jxc',
 //    'erp.service'
-])
+   ])
         /**
          * $http interceptor.
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
@@ -45,7 +47,7 @@ var ERP = angular.module('erp', [
             $httpProvider.responseInterceptors.push(interceptor);
         })
         .run(function($http, $rootScope, $templateCache) {
-            
+
             //设置HTTP请求默认头
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
@@ -54,12 +56,12 @@ var ERP = angular.module('erp', [
             };
 
             //载入默认模板
-            if(CommonView.defaultTemplate.length >0) {
-                for(i=0; i<CommonView.defaultTemplate.length; i++) {
-                    $templateCache.put(CommonView.defaultTemplate[i][0],CommonView.defaultTemplate[i][1]);
+            if (CommonView.defaultTemplate.length > 0) {
+                for (i = 0; i < CommonView.defaultTemplate.length; i++) {
+                    $templateCache.put(CommonView.defaultTemplate[i][0], CommonView.defaultTemplate[i][1]);
                 }
             }
-            
+
         });
 
 
@@ -89,29 +91,28 @@ ERP.controller('MainCtl', function($scope, $rootScope, $location, $http) {
             return $location.path();
         }, function() {
             //设置当前页面信息
-            var fullPath = $location.path().split("/").slice(1,4);
+            var fullPath = $location.path().split("/").slice(1, 4);
             var group = fullPath[0];
-            var module= fullPath[1];
-            var action= fullPath[2];
+            var module = fullPath[1];
+            var action = fullPath[2];
             group = group ? group : "HOME";
-            module= module? module: "Index";
-            action = action ? action : "Index";
+            module = module ? module : "Index";
+            action = action ? action : "index";
             $scope.currentPage = {
-                
             };
-            
-            if(group in $scope.i18n.urlMap) {
+
+            if (group in $scope.i18n.urlMap) {
                 $scope.currentPage.group = $scope.i18n.urlMap[group].name;
-                if(module in $scope.i18n.urlMap[group].modules) {
+                if (module in $scope.i18n.urlMap[group].modules) {
                     $scope.currentPage.module = $scope.i18n.urlMap[group].modules[module].name;
-                    if(action in $scope.i18n.urlMap[group].modules[module].actions) {
+                    if (action in $scope.i18n.urlMap[group].modules[module].actions) {
                         $scope.currentPage.action = $scope.i18n.urlMap[group].modules[module].actions[action][0];
                         $scope.currentPage.actionDesc = $scope.i18n.urlMap[group].modules[module].actions[action][1];
                     }
                 }
             }
-            
-            
+
+
         });
     });
 

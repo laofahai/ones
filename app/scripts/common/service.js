@@ -6,7 +6,7 @@
 if(ResourcesDefine.length) {
     var sd;
     for(var i=0;i<ResourcesDefine.length;i++) {
-        sd = ServicesDefine[i];
+        sd = ResourcesDefine[i];
         ERP.factory(sd[0], ["$resource", "erp.config", function($resource, conf) {
             return $resource(
                 conf.BSU+sd[1], sd[2]|{}

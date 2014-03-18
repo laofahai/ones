@@ -7,7 +7,7 @@
 var CommonView = {
     
     defaultTemplate : [
-        ['CommonView/grid.html', '<div class="gridStyle" ng-grid="gridOptions"></div>']
+        ['CommonView/grid.html', '<div class="gridStyle" ng-grid="gridOptions"></div>'],
     ],
     
     displyGrid: function($scope, resource, columnDefs, options) {
@@ -40,8 +40,8 @@ var CommonView = {
             showSelectionCheckbox: true,
             rowHeight: 40,
             headerRowHeight: 40,
-            checkboxCellTemplate: '<div class="ngSelectionCell"><label><input tabindex="-1" class="ngSelectionCheckbox ace" type="checkbox" ng-checked="row.selected" /><span class="lbl"></span></label></div>',
-            checkboxHeaderTemplate: '<div class="ngSelectionCell"><label><input class="ngSelectionHeader ace" type="checkbox" ng-show="multiSelect" ng-model="allSelected" ng-change="toggleSelectAll(allSelected)"/><span class="lbl"></span></label></div>',
+            checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
+            checkboxHeaderTemplate: '<div></div>',
             totalServerItems: 'totalServerItems',
             i18n: "zh-cn"
         };

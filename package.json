@@ -1,6 +1,6 @@
 {
-  "name": "newopenx",
-  "version": "0.0.0",
+  "name": "openx_erp",
+  "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",

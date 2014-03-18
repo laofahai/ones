@@ -8,8 +8,12 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid'])
                         controller: 'JXCStockinCtl'
                     })
                     .when('/JXC/Goods', {
-                        templateUrl: 'CommonView/grid.html',
+                        templateUrl: 'views/jxc/goods/index.html',
                         controller: 'JXCGoodsCtl'
+                    })
+                    .when('/JXC/Goods/add', {
+                        templateUrl: 'views/jxc/goods/add.html',
+                        controller: 'JXCGoodsAddCtl'
                     });
         })
 
@@ -19,18 +23,36 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid'])
 
         .controller("JXCGoodsCtl", ["$scope", "GoodsRes", function($scope, GoodsRes) {
                 
+                $scope.selectedItems = [];
+                
                 var columnDefs = [
-                    {field: 'id', displayName: 'ID', resizable: false, width: '100'},
-                    {field: 'factory_code', displayName: "系统编码", width: "100"},
-                    {field: 'name', displayName: '产品名称', width: "200"},
-                    {field: 'measure', displayName: '计量单位', width: '80'},
-                    {field: 'category_name', displayName: '所属分类', width: '80'},
-                    {field: 'price', displayName: "基本价格", width: '100'},
+                    {field: 'id', displayName: 'ID', resizable: false},
+                    {field: 'factory_code', displayName: "系统编码"},
+                    {field: 'name', displayName: '产品名称'},
+                    {field: 'measure', displayName: '计量单位'},
+                    {field: 'category_name', displayName: '所属分类'},
+                    {field: 'price', displayName: "基本价格"},
                     {
-                        displayName: "操作",
-                        sortAble: false
-                    }];
+                        displayName: "基础操作",
+                        sortable: false,
+                        cellTemplate :  '<div class="ngCellText" ng-class="col.colIndex()">'+
+                                        '<div class="btn-group"><button class="btn btn-xs btn-info"><i class="icon icon-edit"></i></button>'+
+                                        '<button class="btn btn-xs btn-danger"><i class="icon icon-trash"></i></button>'+
+                                        '</div></div>'
+                    },
+                    {
+                        displayName: "工作流操作", sortable: false
+                    },
+                ];
                 
+                var options = {
+                    afterSelectionChange: function(rowitem, items){
+                        $scope.selectedItems = items;
+                    }
+                };
                 
-                CommonView.displyGrid($scope, GoodsRes, columnDefs);
-            }]);
+                CommonView.displyGrid($scope, GoodsRes, columnDefs, options);
+            }])
+        .controller("JXCGoodsAddCtl", function($scope, JXCGoodsModel){
+            console.log(JXCGoodsModel);
+        })

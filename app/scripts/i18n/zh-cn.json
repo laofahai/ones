@@ -6,11 +6,24 @@
                 "Goods": {
                     "name": "商品管理",
                     "actions": {
-                        "Index": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"]
+                        "index": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
+                        "add": ["新增商品"]
                     }
                 }
             }
         }
 
+    },
+    "lang": {
+        "navigation": {
+            "back": "后退",
+            "forward": "前进"
+        },
+        "add": "增加",
+        "edit": "编辑",
+        "delete": "删除",
+        "list": "列表",
+        "move_to_trash": "移到回收站",
+        "selected_action" : "选中%s项："
     }
 }
