@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid'])
+angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'])
         .config(function($routeProvider) {
             $routeProvider
                     .when('/JXC/Stockin', {
@@ -72,7 +72,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid'])
                 CommonView.displyGrid($scope, GoodsRes, columnDefs, options);
             }])
         .controller("JXCGoodsAddCtl", function($scope, JXCGoodsModel){
-            $scope.info = "hello";
             var fields = JXCGoodsModel.getFields($scope.$parent.i18n);
+            $scope.config = {
+                extraClass : "ng-form",
+                fieldsDefine: fields
+            };
             CommonView.displayForm(fields);
         })
