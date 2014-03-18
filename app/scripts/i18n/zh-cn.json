@@ -1,5 +1,16 @@
 {
     "urlMap": {
+        "HOME": {
+            "name": "首页",
+            "modules": {
+                "Index": {
+                    "name": "",
+                    "actions": {
+                        "dashboard": ["控制面板"]
+                    }
+                }
+            }
+        },
         "JXC": {
             "name": "进销存",
             "modules": {
@@ -24,6 +35,12 @@
         "delete": "删除",
         "list": "列表",
         "move_to_trash": "移到回收站",
-        "selected_action" : "选中%s项："
+        "selected_action" : "选中%s项：",
+        
+        "name": "名称",
+        "factory_code": "基础原厂编码",
+        "measure": "计量单位",
+        "price": "价格",
+        "category_id": "分类ID"
     }
 }

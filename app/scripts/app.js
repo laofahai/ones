@@ -12,9 +12,10 @@ var ERP = angular.module('erp', [
     
     'erp.common',
     'erp.config',
+    
     'erp.jxc',
 //    'erp.service'
-   ])
+])
         /**
          * $http interceptor.
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
@@ -70,72 +71,74 @@ var ERP = angular.module('erp', [
 /**
  * Root Ctrl
  * */
-ERP.controller('MainCtl', function($scope, $rootScope, $location, $http) {
+ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config",
+        function($scope, $rootScope, $location, $http, conf) {
+            if (!loginHash) {
+                window.location.href = 'index.html';
+            }
+            $rootScope.$on("event:loginRequired", function() {
+                window.location.href = 'index.html';
+            });
 
-    if (!loginHash) {
-        window.location.href = 'index.html';
-    }
-    $rootScope.$on("event:loginRequired", function() {
-        window.location.href = 'index.html';
-    });
+            /**
+             * 加载语言包
+             * */
+            $http.get("scripts/i18n/zh-cn.json").success(function(data) {
+                $scope.i18n = data;
+                /**
+                 * 监控路由变化
+                 * */
+                $scope.$watch(function() {
+                    return $location.path();
+                }, function() {
+                    //设置当前页面信息
+                    var fullPath = $location.path().split("/").slice(1, 4);
+                    var group = fullPath[0];
+                    var module = fullPath[1];
+                    var action = fullPath[2];
+                    group = group ? group : "HOME";
+                    module = module ? module : "Index";
+                    action = action ? action : "index";
+                    $scope.currentPage = {
+                    };
 
-    /**
-     * 加载语言包
-     * */
-    $http.get("scripts/i18n/zh-cn.json").success(function(data) {
-        $scope.i18n = data;
+                    if (group in $scope.i18n.urlMap) {
+                        $scope.currentPage.group = $scope.i18n.urlMap[group].name;
+                        if (module in $scope.i18n.urlMap[group].modules) {
+                            $scope.currentPage.module = $scope.i18n.urlMap[group].modules[module].name;
+                            if (action in $scope.i18n.urlMap[group].modules[module].actions) {
+                                $scope.currentPage.action = $scope.i18n.urlMap[group].modules[module].actions[action][0];
+                                $scope.currentPage.actionDesc = $scope.i18n.urlMap[group].modules[module].actions[action][1];
+                            }
+                        }
+                    }
+                });
+
+                /**
+                 * 获取页面基本信息
+                 * */
+                $http.get(conf.BSU+"HOME/Index/index").success(function(data){
+                    $scope.$broadcast("initDataLoaded", data);
+                });
+            });
+
+        }]);
+
         /**
-         * 监控路由变化
+         * 通用提示信息显示。依赖ui.bootstrap
          * */
-        $scope.$watch(function() {
-            return $location.path();
-        }, function() {
-            //设置当前页面信息
-            var fullPath = $location.path().split("/").slice(1, 4);
-            var group = fullPath[0];
-            var module = fullPath[1];
-            var action = fullPath[2];
-            group = group ? group : "HOME";
-            module = module ? module : "Index";
-            action = action ? action : "index";
-            $scope.currentPage = {
+        ERP.controller("AlertCtl", function($scope, $rootScope) {
+            $scope.alerts = [];
+
+            $rootScope.addAlert = function(msg, type, closeable) {
+                type = type || "success";
+                closeable = closeable || true,
+                        $scope.alerts.push({msg: msg, type: type, closeable: closeable});
             };
 
-            if (group in $scope.i18n.urlMap) {
-                $scope.currentPage.group = $scope.i18n.urlMap[group].name;
-                if (module in $scope.i18n.urlMap[group].modules) {
-                    $scope.currentPage.module = $scope.i18n.urlMap[group].modules[module].name;
-                    if (action in $scope.i18n.urlMap[group].modules[module].actions) {
-                        $scope.currentPage.action = $scope.i18n.urlMap[group].modules[module].actions[action][0];
-                        $scope.currentPage.actionDesc = $scope.i18n.urlMap[group].modules[module].actions[action][1];
-                    }
-                }
-            }
-
-
+            $rootScope.closeAlert = function(index) {
+                $scope.alerts.splice(index, 1);
+            };
         });
-    });
-
-});
-
-//var Svs = angular.module('erp.service', []);
-
-
-/**
- * 通用提示信息显示。依赖ui.bootstrap
- * */
-ERP.controller("AlertCtl", function($scope, $rootScope) {
-    $scope.alerts = [];
-
-    $rootScope.addAlert = function(msg, type, closeable) {
-        type = type || "success";
-        closeable = closeable || true,
-                $scope.alerts.push({msg: msg, type: type, closeable: closeable});
-    };
-
-    $rootScope.closeAlert = function(index) {
-        $scope.alerts.splice(index, 1);
-    };
-});
 
 

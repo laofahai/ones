@@ -16,22 +16,21 @@ class CommonAction extends RestAction {
     public function __construct() {
         parent::__construct();
         
+        import("@.ORG.Auth");
+        
         if($_REQUEST["sessionHash"]) {
             session_id($_GET["sessionhash"]);
         }
         
+        if(!$this->isLogin()) {
+            header('HTTP/1.1 401 Unauthorized');
+        }
     }
     
-    
-    /**
-     * 分页
-     */
-    public function getQueryLimit($total, $page=1, $perPage=25) {
-        return array(
-            ($page-1)*$perPage,
-            ceil($total/$perPage)
-        );
+    public function isLogin() {
+        return $_SESSION["user"]["id"] ? 1 : 0;
     }
+    
     
     
 }

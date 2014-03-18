@@ -1,7 +1,7 @@
 /**
  * 通用视图
  * 
- * diplayGrid 封装 ng-grid 
+ * 
  * */
 
 var CommonView = {
@@ -10,6 +10,9 @@ var CommonView = {
         ['CommonView/grid.html', '<div class="gridStyle" ng-grid="gridOptions"></div>'],
     ],
     
+    /**
+     * diplayGrid 封装 ng-grid 
+     * */
     displyGrid: function($scope, resource, columnDefs, options) {
         
         $scope.totalServerItems = 0;
@@ -106,6 +109,16 @@ var CommonView = {
         
         $scope.gridOptions = opts;
 
+    },
+    
+    /**
+     * 表单生成
+     * */
+    displayForm : function(fields, data) {
+        data = data ? data : {};
+//        console.log(fields);
+        for(var f in fields) {}
+        
     }
 
 }

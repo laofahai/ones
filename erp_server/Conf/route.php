@@ -7,6 +7,7 @@ return array(
     array("test", "HOME/Index/index", "", "get", "json"),
     array("test/:id\d", "HOME/Index/index", "", "get", "json"),
     
+    array("passport/profile", "HOME/Passport/index", "", "get", "json"),
     array("passport/isLogin", "HOME/Passport/doLogin", "", "get", "json"),
     array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
     

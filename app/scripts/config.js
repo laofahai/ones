@@ -2,6 +2,8 @@
  * 资源信息
  * */
 var ResourcesDefine = [
+    ["UserRes", "passport/profile"],
+    
     ["StockinRes", "jxc/stockin/:id"],
     ["GoodsRes", "jxc/goods/:id"]
 ];

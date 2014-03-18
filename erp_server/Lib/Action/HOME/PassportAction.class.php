@@ -30,6 +30,7 @@ class PassportAction extends CommonAction {
                     "msg"   => L("password_not_verified")
                 ));
             }
+            
             foreach($theUser["groups"] as $g) {
                 $theUser["group_ids"][] = $g["id"];
             }
@@ -48,6 +49,7 @@ class PassportAction extends CommonAction {
     }
     
     public function Profile() {
+        
         if(IS_POST) {
             if(!$_POST["password"]) {
                 unset($_POST["password"]);
