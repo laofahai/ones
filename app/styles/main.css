@@ -49,7 +49,9 @@
 .ngSelectionCell input {
     top:5px;
 }
-
+.help-block {
+    display:inline-block;
+}
 
 /***/
 .actionsBtn {

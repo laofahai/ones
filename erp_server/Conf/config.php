@@ -27,7 +27,10 @@ return array(
         'AUTH_GROUP' => 'x_auth_group', //用户组数据表名
         'AUTH_GROUP_ACCESS' => 'x_auth_group_access', //用户组明细表
         'AUTH_RULE' => 'x_auth_rule', //权限规则表
-        'AUTH_USER' => 'x_user'//用户信息表
+        'AUTH_USER' => 'x_user',//用户信息表
+        'AUTH_DONT_NEED' => array(
+            "passport.userLogin"
+        )
     ),
     
     

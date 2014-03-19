@@ -72,10 +72,23 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 CommonView.displyGrid($scope, GoodsRes, columnDefs, options);
             }])
         .controller("JXCGoodsAddCtl", function($scope, JXCGoodsModel){
+            
             var fields = JXCGoodsModel.getFields($scope.$parent.i18n);
+    
             $scope.config = {
                 extraClass : "ng-form",
-                fieldsDefine: fields
+                fieldsDefine: fields,
+                name: "JXCGoodsAdd"
             };
+            
+            $scope.doSubmit = function(){
+                console.log($scope.JXCGoodsAddData);
+            };
+            
+            
+//            setInterval(function(){
+//                console.log($scope.JXCGoodsAdd);
+//            }, 2000);
+            
             CommonView.displayForm(fields);
         })

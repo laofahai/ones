@@ -21,7 +21,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','erp.config',
             }
             $rootScope.sessionHash = $rootScope.sessionHash || null;
 
-            $http.post(conf.BSU+'passport/userLogin', $scope.loginInfo ).
+            $http.post(conf.BSU+'passport/userLogin', $scope.loginInfo).
                 success(function(data, status, headers, config) {
                     if(data.error) {
                         $scope.error.isError = true;

@@ -21,8 +21,7 @@ class CommonAction extends RestAction {
         if($_REQUEST["sessionHash"]) {
             session_id($_GET["sessionhash"]);
         }
-        
-        if(!$this->isLogin()) {
+        if(!$this->isLogin() and !in_array(MODULE_NAME.".".ACTION_NAME, C("AUTH_CONFIG.AUTH_DONT_NEED"))) {
             header('HTTP/1.1 401 Unauthorized');
         }
     }
