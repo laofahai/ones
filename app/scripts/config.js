@@ -1,14 +1,4 @@
 /**
- * 资源信息
- * */
-var ResourcesDefine = [
-    ["UserRes", "passport/profile"],
-    
-    ["StockinRes", "jxc/stockin/:id"],
-    ["GoodsRes", "jxc/goods/:id"]
-];
-
-/**
  * 基本配置
  * */
 var conf = {
@@ -18,3 +8,15 @@ var conf = {
 
 angular.module("erp.config", [])
         .value("erp.config", conf);
+
+
+/**
+ * 资源信息
+ * */
+var ResourcesDefine = [
+    ["UserRes", "passport/profile"],
+    
+    ["StockinRes", "jxc/stockin/:id"],
+    ["GoodsRes", "jxc/goods/:id"],
+    ["GoodsCategoryRes", "jxc/goodsCategory/:id"]
+];

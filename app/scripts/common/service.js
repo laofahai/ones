@@ -9,7 +9,10 @@ if(ResourcesDefine.length) {
         sd = ResourcesDefine[i];
         ERP.factory(sd[0], ["$resource", "erp.config", function($resource, conf) {
             return $resource(
-                conf.BSU+sd[1], sd[2]|{}
+                conf.BSU+sd[1]+".json", sd[2]|{},
+                {
+                    query: { method:'GET', isArray: true }
+                }
             );
         }]);
     }

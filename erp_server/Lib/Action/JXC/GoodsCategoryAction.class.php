@@ -11,7 +11,8 @@
  * 
  */
 class GoodsCategoryAction extends NetestCategoryAction {
-    public $quickActionTpl = "baseData";
+    
+    
 }
 
 ?>

@@ -84,7 +84,7 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
              * 加载语言包
              * */
             $http.get("scripts/i18n/zh-cn.json").success(function(data) {
-                $scope.i18n = data;
+                $rootScope.i18n = data;
                 /**
                  * 监控路由变化
                  * */
@@ -102,13 +102,13 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                     $scope.currentPage = {
                     };
 
-                    if (group in $scope.i18n.urlMap) {
-                        $scope.currentPage.group = $scope.i18n.urlMap[group].name;
-                        if (module in $scope.i18n.urlMap[group].modules) {
-                            $scope.currentPage.module = $scope.i18n.urlMap[group].modules[module].name;
-                            if (action in $scope.i18n.urlMap[group].modules[module].actions) {
-                                $scope.currentPage.action = $scope.i18n.urlMap[group].modules[module].actions[action][0];
-                                $scope.currentPage.actionDesc = $scope.i18n.urlMap[group].modules[module].actions[action][1];
+                    if (group in $rootScope.i18n.urlMap) {
+                        $scope.currentPage.group = $rootScope.i18n.urlMap[group].name;
+                        if (module in $rootScope.i18n.urlMap[group].modules) {
+                            $scope.currentPage.module = $rootScope.i18n.urlMap[group].modules[module].name;
+                            if (action in $rootScope.i18n.urlMap[group].modules[module].actions) {
+                                $scope.currentPage.action = $rootScope.i18n.urlMap[group].modules[module].actions[action][0];
+                                $scope.currentPage.actionDesc = $rootScope.i18n.urlMap[group].modules[module].actions[action][1];
                             }
                         }
                     }

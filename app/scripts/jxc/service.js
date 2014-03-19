@@ -1,6 +1,10 @@
 angular.module("erp.jxc.services", [])
-        .service("JXCGoodsModel", function() {
-            this.getFields = function(i18n){
+        .service("JXCGoodsModel", ["$rootScope", "GoodsCategoryRes", function($rootScope, GoodsCategoryRes) {
+            var i18n = $rootScope.i18n;
+            GoodsCategoryRes.query(function(data){
+                $rootScope.$broadcast("goods_category_loaded", data);
+            });
+            this.getFields = function(categories){
                 return {
                     id: {
                         primary: true,
@@ -17,13 +21,16 @@ angular.module("erp.jxc.services", [])
                     },
                     price: {
                         displayName: i18n.lang.price,
-                        inputType: "float",
+                        inputType: "number",
                         value: 0
                     },
                     category_id: {
                         displayName: i18n.lang.category_name,
-                        inputType: "select"
+                        inputType: "select",
+                        dataSource: categories,
+                        valueField: "id",
+                        nameField : "prefix_name"
                     }
                 };
             };
-        });
+        }]);

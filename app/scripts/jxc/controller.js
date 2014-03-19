@@ -21,11 +21,11 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
             $scope.message = "hi, i am stockin";
         })
 
-        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", function($scope, GoodsRes, JXCGoodsModel) {
+        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "$rootScope", function($scope, GoodsRes, JXCGoodsModel, $rootScope) {
                 
                 $scope.selectedItems = [];
                 
-                var fields = JXCGoodsModel.getFields($scope.i18n);
+                var fields = JXCGoodsModel.getFields($rootScope.i18n);
                 var columnDefs = [];
                 for(var f in fields) {
                     fields[f].field = f;
@@ -71,15 +71,19 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 CommonView.displyGrid($scope, GoodsRes, columnDefs, options);
             }])
-        .controller("JXCGoodsAddCtl", function($scope, JXCGoodsModel){
+        .controller("JXCGoodsAddCtl", function($scope, JXCGoodsModel, GoodsCategoryRes){
             
-            var fields = JXCGoodsModel.getFields($scope.$parent.i18n);
+            $scope.$on("goods_category_loaded", function(event, data){
+                var fields = JXCGoodsModel.getFields(data);
     
-            $scope.config = {
-                extraClass : "ng-form",
-                fieldsDefine: fields,
-                name: "JXCGoodsAdd"
-            };
+                $scope.config = {
+                    fieldsDefine: fields,
+                    name: "JXCGoodsAdd"
+                };
+                
+                $scope.$broadcast("commonForm.data.ready");
+            });
+            
             
             $scope.doSubmit = function(){
                 console.log($scope.JXCGoodsAddData);
@@ -90,5 +94,5 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
 //                console.log($scope.JXCGoodsAdd);
 //            }, 2000);
             
-            CommonView.displayForm(fields);
+//            CommonView.displayForm(fields);
         })
