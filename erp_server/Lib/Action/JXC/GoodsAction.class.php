@@ -12,11 +12,7 @@
  */
 class GoodsAction extends CommonAction {
     
-    public function index() {
-        $goodsModel = D("GoodsCatView");
-        $theGoods = $goodsModel->select();
-        $this->response($theGoods);
-    }
+    public $indexModel = "GoodsCatView";
     
 }
 

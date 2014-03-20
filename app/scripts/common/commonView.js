@@ -21,6 +21,17 @@ var CommonView = {
         columnDefs = columnDefs ? columnDefs : null;
         
         /**
+         * 过滤器
+         * */
+        var col;
+        for(key in columnDefs) {
+            col = columnDefs[key];
+            if(false == col.listable) {
+                columnDefs.splice(key,1);
+            }
+        }
+        
+        /**
          * 分页/过滤器默认项
          * */
         var pagingOptions = {

@@ -58,8 +58,8 @@ var ERP = angular.module('erp', [
 
             //载入默认模板
             if (CommonView.defaultTemplate.length > 0) {
-                for (i = 0; i < CommonView.defaultTemplate.length; i++) {
-                    $templateCache.put(CommonView.defaultTemplate[i][0], CommonView.defaultTemplate[i][1]);
+                for (var cvdt in CommonView.defaultTemplate.length) {
+                    $templateCache.put(CommonView.defaultTemplate[cvdt][0], CommonView.defaultTemplate[cvdt][1]);
                 }
             }
 
@@ -128,7 +128,17 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
          * 通用提示信息显示。依赖ui.bootstrap
          * */
         ERP.controller("AlertCtl", function($scope, $rootScope) {
+            
             $scope.alerts = [];
+            
+            $scope.$watch(function(){
+                return $rootScope.alert;
+            }, function(){
+                if(!$rootScope.alert) {
+                    return;
+                }
+                $scope.alerts.push($rootScope.alert);
+            });
 
             $rootScope.addAlert = function(msg, type, closeable) {
                 type = type || "success";

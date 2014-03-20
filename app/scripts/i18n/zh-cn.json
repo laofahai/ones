@@ -41,6 +41,9 @@
         "factory_code": "基础原厂编码",
         "measure": "计量单位",
         "price": "价格",
-        "category_id": "分类ID"
+        "category_id": "分类ID",
+        "category": "分类",
+        "store_min": "库存下限",
+        "store_max": "库存上限"
     }
 }

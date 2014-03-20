@@ -12,8 +12,12 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'JXCGoodsCtl'
                     })
                     .when('/JXC/Goods/add', {
-                        templateUrl: 'views/jxc/goods/add.html',
-                        controller: 'JXCGoodsAddCtl'
+                        templateUrl: 'views/jxc/goods/edit.html',
+                        controller: 'JXCGoodsEditCtl'
+                    })
+                    .when('/JXC/Goods/edit/id/:id', {
+                        templateUrl: 'views/jxc/goods/edit.html',
+                        controller: 'JXCGoodsEditCtl'
                     });
         })
 
@@ -21,25 +25,23 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
             $scope.message = "hi, i am stockin";
         })
 
-        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "$rootScope", function($scope, GoodsRes, JXCGoodsModel, $rootScope) {
+        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "$rootScope", "$location",
+            function($scope, GoodsRes, JXCGoodsModel, $rootScope, $location) {
                 
                 $scope.selectedItems = [];
                 
-                var fields = JXCGoodsModel.getFields($rootScope.i18n);
+                var fields = JXCGoodsModel.getFieldsStruct($rootScope.i18n);
                 var columnDefs = [];
                 for(var f in fields) {
                     fields[f].field = f;
                     columnDefs.push(fields[f]);
                 }
                 
-                columnDefs.push({
-                    displayName: "基础操作",
-                    sortable: false,
-                    cellTemplate :  '<div class="ngCellText" ng-class="col.colIndex()">'+
-                                    '<div class="btn-group"><button class="btn btn-xs btn-info"><i class="icon icon-edit"></i></button>'+
-                                    '<button class="btn btn-xs btn-danger"><i class="icon icon-trash"></i></button>'+
-                                    '</div></div>'
-                });
+                $scope.doEditSelected = function(){
+                    if($scope.selectedItems.length) {
+                        $location.url("/JXC/Goods/edit/id/"+$scope.selectedItems[0].id);
+                    }
+                }
                 
 //                console.log(columnDefs);
                 
@@ -71,28 +73,34 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 CommonView.displyGrid($scope, GoodsRes, columnDefs, options);
             }])
-        .controller("JXCGoodsAddCtl", function($scope, JXCGoodsModel, GoodsCategoryRes){
-            
-            $scope.$on("goods_category_loaded", function(event, data){
-                var fields = JXCGoodsModel.getFields(data);
-    
-                $scope.config = {
-                    fieldsDefine: fields,
-                    name: "JXCGoodsAdd"
-                };
+        .controller("JXCGoodsEditCtl", ["$scope", "JXCGoodsModel", "GoodsRes", "$rootScope", "GoodsCategoryRes", "$location", "$routeParams",
+            function($scope, JXCGoodsModel, GoodsRes, $rootScope, GoodsCategoryRes, $location, $routeParams) {
                 
-                $scope.$broadcast("commonForm.data.ready");
-            });
-            
-            
-            $scope.doSubmit = function(){
-                console.log($scope.JXCGoodsAddData);
-            };
-            
-            
-//            setInterval(function(){
-//                console.log($scope.JXCGoodsAdd);
-//            }, 2000);
-            
-//            CommonView.displayForm(fields);
-        })
+                //edit
+                if(parseInt($routeParams["id"]) > 0) {
+                    GoodsRes.get({id: $routeParams["id"]}).$promise.then(function(data){
+                        $scope.JXCGoodsAddData = data;
+                    });
+                }
+
+                JXCGoodsModel.getFields($rootScope, GoodsCategoryRes);
+                
+                $scope.$on("goods_category_loaded", function(event, data){
+                    $scope.config = {
+                        fieldsDefine: data,
+                        name: "JXCGoodsAdd"
+                    };
+                    $scope.$broadcast("commonForm.data.ready");
+                });
+
+                $scope.doSubmit = function(){
+                    GoodsRes.save($scope.JXCGoodsAddData).$promise.then(function(data){
+                        if(data.error) {
+                            $rootScope.alert = {msg: data.msg, type: "danger"};
+                        } else {
+                            $location.url("/JXC/Goods");
+                        }
+                    });
+                };
+
+            }])

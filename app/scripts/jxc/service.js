@@ -1,10 +1,8 @@
 angular.module("erp.jxc.services", [])
-        .service("JXCGoodsModel", ["$rootScope", "GoodsCategoryRes", function($rootScope, GoodsCategoryRes) {
-            var i18n = $rootScope.i18n;
-            GoodsCategoryRes.query(function(data){
-                $rootScope.$broadcast("goods_category_loaded", data);
-            });
-            this.getFields = function(categories){
+        .service("JXCGoodsModel", function() {
+            
+            var obj = {};
+            obj.getFieldsStruct = function(i18n) {
                 return {
                     id: {
                         primary: true,
@@ -24,13 +22,38 @@ angular.module("erp.jxc.services", [])
                         inputType: "number",
                         value: 0
                     },
-                    category_id: {
-                        displayName: i18n.lang.category_name,
+                    goods_category_id: {
+                        displayName: i18n.lang.category,
                         inputType: "select",
-                        dataSource: categories,
                         valueField: "id",
-                        nameField : "prefix_name"
+                        nameField : "prefix_name",
+                        listable: false
+                    },
+                    category_name: {
+                        displayName: i18n.lang.category,
+                        inputType: false,
+                        hideInForm: true
+                    },
+                    store_min: {
+                        displayName: i18n.lang.store_min,
+                        inputType: "number",
+                        value: 0
+                    },
+                    store_max: {
+                        displayName: i18n.lang.store_max,
+                        inputType: "number",
+                        value: 0
                     }
                 };
             };
-        }]);
+            obj.getFields = function($rootScope, GoodsCategoryRes){
+                GoodsCategoryRes.query(function(data){
+                    var fields = obj.getFieldsStruct($rootScope.i18n);
+                    fields.goods_category_id.dataSource = data;
+                    $rootScope.$broadcast("goods_category_loaded", fields);
+                });
+                
+            };
+            
+            return obj;
+        });

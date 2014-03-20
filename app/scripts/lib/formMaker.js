@@ -1,7 +1,6 @@
 var formMaker = function($scope, defaultData) {
     defaultData = $scope.$parent.defaultData || {};
     config = $scope.$parent.config || {};
-    
     if (!config.fieldsDefine) {
         return false;
     }
@@ -24,7 +23,7 @@ var formMaker = function($scope, defaultData) {
     $scope[dataBindName] = {};
     for (var key in formMaker.opts.fieldsDefine) {
         field = formMaker.opts.fieldsDefine[key];
-        if (field.primary) {
+        if (field.primary || field.hideInForm) {
             continue;
         }
         /**
@@ -37,11 +36,12 @@ var formMaker = function($scope, defaultData) {
         /**
          * 绑定默认数据
          * */
-        if(key in defaultData) {
-            $scope.$parent[dataBindName][key] = defaultData[key];
-        } else if("value" in field) {
-            $scope.$parent[dataBindName][key] = field.value;
-        }
+//        if(key in defaultData) {
+//            
+//            field.value = $scope.$parent[dataBindName][key] = defaultData[key];
+//        } else if("value" in field) {
+//            field.value = $scope.$parent[dataBindName][key] = field.value;
+//        }
         
         /***/
         fieldHTML = formMaker.fieldFactory(key, field, $scope);
@@ -62,7 +62,6 @@ var formMaker = function($scope, defaultData) {
         name : formMaker.opts.name,
         html : finalHTML.join("")
     });
-
 };
 
 /**
@@ -91,7 +90,7 @@ formMaker.loadDefaultTemplate = function() {
                 '</div>',
         "text": '<input type="text" %s />',
         "number": '<input type="number" %s />',
-        "select": '<select %(attr)s><option ng-value="%(value)s" ng-repeat="%(key)s in %(data)s" ng-bind="%(name)s"></option></select>',
+        "select": '<select %(attr)s ng-options="%(name)s for %(key)s in %(data)s"></select>',
     };
 };
 
@@ -127,13 +126,16 @@ formMaker.init = function() {
      * */
     formMaker.methods.text = 
     formMaker.methods = {
+        //普通文本
         text : function(name, fieldDefine) {
             return sprintf(formMaker.opts.templates["text"], formMaker.makeAttrs(name, fieldDefine));
         },
+        //数字
         number: function(name, fieldDefine) {
             fieldDefine["min"] = undefined != fieldDefine["min"] ? fieldDefine["min"] : 0;
             return sprintf(formMaker.opts.templates["number"], formMaker.makeAttrs(name, fieldDefine));
         },
+        //下拉框选择
         select: function(name, fieldDefine, $scope){
             var valueField = fieldDefine.valueField || "id";
             var nameField  = fieldDefine.nameField  || "name";
@@ -152,9 +154,9 @@ formMaker.init = function() {
             var rs= sprintf(formMaker.opts.templates["select"], {
                 attr: formMaker.makeAttrs(name, fieldDefine),
                 key : name+"item",
-                value: name+"item.value",
                 data: name+"s",
-                name: name+"item.name"
+                name: name+"item.name",
+                selectPlease: "select please"
             });
             return rs;
         }

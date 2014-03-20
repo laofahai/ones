@@ -1,19 +1,21 @@
 'use strict';
 
 /**
- * 循环资源列表，定义资源
+ * 定义资源
  * */
-if(ResourcesDefine.length) {
-    var sd;
-    for(var i=0;i<ResourcesDefine.length;i++) {
-        sd = ResourcesDefine[i];
-        ERP.factory(sd[0], ["$resource", "erp.config", function($resource, conf) {
-            return $resource(
-                conf.BSU+sd[1]+".json", sd[2]|{},
-                {
-                    query: { method:'GET', isArray: true }
-                }
-            );
-        }]);
-    }
-}
+
+ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "passport/profile.json");
+    }]);
+
+ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "jxc/stockin/:id.json");
+    }]);
+
+ERP.factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "jxc/goods/:id.json");
+    }]);
+
+ERP.factory("GoodsCategoryRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "jxc/goodsCategory/:id.json");
+    }]);
