@@ -76,13 +76,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         .controller("JXCGoodsEditCtl", ["$scope", "JXCGoodsModel", "GoodsRes", "$rootScope", "GoodsCategoryRes", "$location", "$routeParams",
             function($scope, JXCGoodsModel, GoodsRes, $rootScope, GoodsCategoryRes, $location, $routeParams) {
                 
-                //edit
-                if(parseInt($routeParams["id"]) > 0) {
-                    GoodsRes.get({id: $routeParams["id"]}).$promise.then(function(data){
-                        $scope.JXCGoodsAddData = data;
-                    });
-                }
-
                 JXCGoodsModel.getFields($rootScope, GoodsCategoryRes);
                 
                 $scope.$on("goods_category_loaded", function(event, data){
@@ -90,6 +83,14 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         fieldsDefine: data,
                         name: "JXCGoodsAdd"
                     };
+                    
+                        //edit
+                    if(parseInt($routeParams["id"]) > 0) {
+                        GoodsRes.get({id: $routeParams["id"]}).$promise.then(function(defaultData){
+                            $scope.JXCGoodsAddData = formMaker.dataFormat(data, defaultData);
+                        });
+                    }
+
                     $scope.$broadcast("commonForm.data.ready");
                 });
 

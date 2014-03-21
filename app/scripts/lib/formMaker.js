@@ -90,7 +90,7 @@ formMaker.loadDefaultTemplate = function() {
                 '</div>',
         "text": '<input type="text" %s />',
         "number": '<input type="number" %s />',
-        "select": '<select %(attr)s ng-options="%(name)s for %(key)s in %(data)s"></select>',
+        "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>',
     };
 };
 
@@ -156,7 +156,8 @@ formMaker.init = function() {
                 key : name+"item",
                 data: name+"s",
                 name: name+"item.name",
-                selectPlease: "select please"
+                selectPlease: "select please",
+                value: name+"item.value"
             });
             return rs;
         }
@@ -174,7 +175,36 @@ formMaker.init = function() {
     };
 };
 
-
+/**
+ * 数据格式化方法
+ * eg: "123.2" => 123.2
+ * select字段
+ * */
+formMaker.dataFormat = function(fieldsDefine, data) {
+    
+    var getArrayValue = function(data, value, valueField, getField){
+        for(var i=0;i<data.length;i++) {
+            if(String(data[i][valueField]) == String(value)) {
+                return data[i][getField];
+            }
+        }
+        return false;
+    };
+    
+    for(var f in fieldsDefine) {
+        var struct = fieldsDefine[f];
+        switch(struct.inputType) {
+            case "number":
+                if(false === isNaN(data[f])) {
+                    data[f] = Number(data[f]);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return data;
+};
 
 
 

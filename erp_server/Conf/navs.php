@@ -49,7 +49,7 @@ return array(
 //        ),
 //        "icon" => "retweet",
 //    ),
-    "relationship_company" => array(
+    "rel_company" => array(
         "childs" => array(
             "list" => "CRM/RelationshipCompany",
             "add_new" => "CRM/RelationshipCompany/add"
