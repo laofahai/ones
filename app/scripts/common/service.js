@@ -5,17 +5,17 @@
  * */
 
 ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "passport/profile.json");
+        return $resource(cnf.BSU + "passport/profile.json", null, {'update': { method:'PUT' }});
     }]);
 
 ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "jxc/stockin/:id.json");
+        return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'update': { method:'PUT' }});
     }]);
 
 ERP.factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "jxc/goods/:id.json");
+        return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': { method:'PUT' }});
     }]);
 
 ERP.factory("GoodsCategoryRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "jxc/goodsCategory/:id.json");
+        return $resource(cnf.BSU + "jxc/goodsCategory/:id.json", null, {'update': { method:'PUT' }});
     }]);

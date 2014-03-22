@@ -14,6 +14,10 @@ angular.module("erp.jxc.services", [])
                     name: {
                         displayName: i18n.lang.name
                     },
+                    pinyin: {
+                        displayName: i18n.lang.firstChar,
+                        required: false
+                    },
                     measure: {
                         displayName: i18n.lang.measure
                     },
@@ -46,11 +50,11 @@ angular.module("erp.jxc.services", [])
                     }
                 };
             };
-            obj.getFields = function($rootScope, GoodsCategoryRes){
+            obj.getFields = function($scope, GoodsCategoryRes){
                 GoodsCategoryRes.query(function(data){
-                    var fields = obj.getFieldsStruct($rootScope.i18n);
+                    var fields = obj.getFieldsStruct($scope.i18n);
                     fields.goods_category_id.dataSource = data;
-                    $rootScope.$broadcast("goods_category_loaded", fields);
+                    $scope.$broadcast("goods_category_loaded", fields);
                 });
                 
             };

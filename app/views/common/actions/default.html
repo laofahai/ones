@@ -1,1 +1,12 @@
-<div>{{row.entity[col.field]}}</div>
+<section class="actionsBtn row clearfix">
+    <div class="actionsBtnLeft btn-group">
+        <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
+        <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
+        <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
+    </div>
+    <div class="actionsBtnRight btn-group" ng-hide="false === selecteAble">
+        <button class="btn btn-sm btn-primary disabled">{{i18n.lang.selected_action|sprintf:selectedItems.length}}</button>
+        <button class="btn btn-sm btn-default" ng-click="doEditSelected()" ng-class="{disabled: selectedItems.length!=1}">{{i18n.lang.actions.edit}}</button>
+        <button class="btn btn-sm btn-danger"  ng-click="doDeleleSelected()" ng-class="{disabled: !selectedItems.length}">{{i18n.lang.actions.delete}}</button>
+    </div>
+</section>

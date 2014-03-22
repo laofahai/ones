@@ -18,7 +18,8 @@
                     "name": "商品管理",
                     "actions": {
                         "index": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
-                        "add": ["新增商品"]
+                        "add": ["新增商品"],
+                        "edit": ["修改商品信息"]
                     }
                 }
             }
@@ -26,18 +27,28 @@
 
     },
     "lang": {
+        "widgetTitles": {
+            "fill_the_form": "请填写下面的表单"
+        },
+        "actions": {
+            "submit" : "提交",
+            "reset"  : "重填",
+            "return" : "返回",
+            "add": "增加",
+            "edit": "编辑",
+            "delete": "删除",
+            "list": "列表"
+        },
         "navigation": {
             "back": "后退",
             "forward": "前进"
         },
-        "add": "增加",
-        "edit": "编辑",
-        "delete": "删除",
-        "list": "列表",
+        "confirm_delete": "确定要删除这 %d 项吗？",
         "move_to_trash": "移到回收站",
         "selected_action" : "选中%s项：",
         
         "name": "名称",
+        "firstChar": "拼音首字母",
         "factory_code": "基础原厂编码",
         "measure": "计量单位",
         "price": "价格",

@@ -10,6 +10,7 @@ var formMaker = function($scope, defaultData) {
 
     var defaultOpts = {
         class: "form-horizontal",
+        submitAction: "doSubmit",
         fieldsDefine: {},
         templates: formMaker.loadDefaultTemplate()
     };
@@ -69,20 +70,25 @@ var formMaker = function($scope, defaultData) {
  * */
 formMaker.loadDefaultTemplate = function() {
     return {
-        "commonForm/form.html": '<form class="form-horizontal" name="%(name)s">%(html)s</form>',
+        "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" novalidate>%(html)s</form>',
         "commonForm/footer.html": '<div class="clearfix form-actions">' +
-                '<div class="col-md-offset-3 col-md-9">' +
-                '<button id="submitbtn" class="btn btn-info" ng-click="doSubmit();" type="button">' +
-                '<i class="icon-ok bigger-110"></i>' +
-                'Submit' +
-                '</button>' +
-                '&nbsp; &nbsp; &nbsp;' +
-                '<button class="btn" type="reset">' +
-                '<i class="icon-undo bigger-110"></i>' +
-                'Reset' +
-                '</button>' +
+                '<div class="col-md-offset-2 col-md-9">' +
+                    '<button id="submitbtn" class="btn btn-primary" ng-click="%(action)s();" type="button">' +
+                        '<i class="icon-ok bigger-110"></i>' +
+                        '{{%(langsubmit)s}}' +
+                    '</button>' +
+                    '&nbsp; &nbsp; &nbsp;' +
+                    '<button class="btn" type="reset">' +
+                        '<i class="icon-undo bigger-110"></i>' +
+                        '{{%(langreset)s}}' +
+                    '</button>' +
+                    '&nbsp; &nbsp; &nbsp;' +
+                    '<button class="btn btn-info" onclick="history.back()">' +
+                        '<i class="icon-undo bigger-110"></i>' +
+                        '{{%(langreturn)s}}' +
+                    '</button>' +
                 '</div>' +
-                '</div>{{JXCGoodsAddData}}',
+                '</div>',
         "commonForm/box.html": '<div class="form-group" ng-class="{\'has-error\': %(formname)s.%(fieldname)s.$dirty&&%(formname)s.%(fieldname)s.$invalid}">' +
                 '<label class="col-sm-3 control-label no-padding-right">%(label)s</label>' +
                 '<div class="col-xs-12 col-sm-4">%(inputHTML)s</div>' +
@@ -99,7 +105,12 @@ formMaker.init = function() {
      * 生成表单action按钮
      * */
     formMaker.makeActions = function() {
-        return formMaker.opts.templates["commonForm/footer.html"];
+        return sprintf(formMaker.opts.templates["commonForm/footer.html"], {
+            action: formMaker.opts.submitAction,
+            langsubmit: "i18n.lang.actions.submit",
+            langreset: "i18n.lang.actions.reset",
+            langreturn: "i18n.lang.actions.return"
+        });
     };
     
     /**
@@ -190,20 +201,21 @@ formMaker.dataFormat = function(fieldsDefine, data) {
         }
         return false;
     };
-    
+    var ResultData = {};
     for(var f in fieldsDefine) {
         var struct = fieldsDefine[f];
         switch(struct.inputType) {
             case "number":
                 if(false === isNaN(data[f])) {
-                    data[f] = Number(data[f]);
+                    ResultData[f] = Number(data[f]);
                 }
                 break;
             default:
+                ResultData[f] = data[f];
                 break;
         }
     }
-    return data;
+    return ResultData;
 };
 
 

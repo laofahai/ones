@@ -54,6 +54,17 @@
 }
 
 /***/
+.alert{
+    padding:8px;
+    margin:10px 15px;
+}
+commonform {
+    padding-top:30px;
+    display:block;
+}
+.form-actions {
+    margin-bottom:0;
+}
 .actionsBtn {
     margin-bottom:15px;
 }

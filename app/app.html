@@ -201,9 +201,6 @@
                     </div>
 
                     <div class="page-content">
-                        <div ng-controller="AlertCtl">
-                            <alert ng-repeat="alert in alerts" type="alert.type" closeable="aler.closeable" close="closeAlert($index)">{{alert.msg}}</alert>
-                        </div>
                         <div class="page-header" ng-show="{{currentPage || true}}">
                             <h1>
                                 {{currentPage.action}}
@@ -213,6 +210,9 @@
                                 </small>
                             </h1>
                         </div><!-- /.page-header -->
+                        <div ng-controller="AlertCtl">
+                            <alert ng-repeat="alert in alerts" type="alert.type" closeable="aler.closeable" close="closeAlert($index)">{{alert.msg}}</alert>
+                        </div>
                         <div class="col-xs-12" ng-view></div>
                         <!--//demo-->
 
@@ -315,8 +315,8 @@
         
         <script src="scripts/vendor/http-auth.js"></script>
         <script src="scripts/config.js"></script>
-        <script src="scripts/common/commonView.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/common/commonView.js"></script>
         
         <script src="scripts/common/filter.js"></script>
         <script src="scripts/common/directive.js"></script>
