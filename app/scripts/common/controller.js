@@ -31,6 +31,10 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
                     $scope.activeShowNav = parent;
                     $scope.openNav = parent;
                 };
+                $scope.checkThirdActiveNav = function(id, pid) {
+                    $scope.activeThirdNav = id;
+                    $scope.activeSubNav = pid;
+                }
             });
 
 

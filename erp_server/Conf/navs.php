@@ -78,7 +78,13 @@ return array(
     "settings" => array(
         "childs" => array(
             "field_set" => "HOME/Config",
-            "base_data_set" => "JXC/Goods",
+            "base_data_set" => array(
+                "goods_setting" => "JXC/Goods",
+                "goods_category"=> "JXC/GoodsCategory",
+                "stock_manage"  => "JXC/Stock",
+                "data_model"   => "HOME/DataModel",
+                "types_manage"  => "HOME/Types"
+            ),
             "organization_set" => "HOME/User",
             "workflow" => "HOME/Workflow",
             "clear_cache" => "HOME/Settings/clearCache"

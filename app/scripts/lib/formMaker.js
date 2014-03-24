@@ -1,6 +1,6 @@
 var formMaker = function($scope, defaultData) {
     defaultData = $scope.$parent.defaultData || {};
-    config = $scope.$parent.config || {};
+    var config = $scope.$parent.config || {};
     if (!config.fieldsDefine) {
         return false;
     }
@@ -37,12 +37,12 @@ var formMaker = function($scope, defaultData) {
         /**
          * 绑定默认数据
          * */
-//        if(key in defaultData) {
-//            
-//            field.value = $scope.$parent[dataBindName][key] = defaultData[key];
-//        } else if("value" in field) {
-//            field.value = $scope.$parent[dataBindName][key] = field.value;
-//        }
+        if(key in defaultData) {
+            
+            field.value = $scope.$parent[dataBindName][key] = defaultData[key];
+        } else if("value" in field) {
+            field.value = $scope.$parent[dataBindName][key] = field.value;
+        }
         
         /***/
         fieldHTML = formMaker.fieldFactory(key, field, $scope);

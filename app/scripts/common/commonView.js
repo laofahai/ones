@@ -35,10 +35,19 @@ var CommonView = {
         options.afterSelectionChange =  function(rowitem, items){
             needed.scope.selectedItems = items;
         };
-        
+        needed.scope.doView = options.doView ? options.doView : function(){
+            if(needed.scope.selectedItems.length) {
+                needed.location.url(needed.location.$$url.split("/").splice(0,3).join("/")+"/view/id/"+needed.scope.selectedItems[0].id);
+            }
+        };
+        needed.scope.doViewSub = options.doViewSub ? options.doViewSub : function(){
+            if(needed.scope.selectedItems.length) {
+                needed.location.url(needed.location.$$url.split("/").splice(0,3).join("/")+"/viewSub/id/"+needed.scope.selectedItems[0].id);
+            }
+        };
         needed.scope.doEditSelected = options.doEditSeleted ? options.doEditSelected : function(){
             if(needed.scope.selectedItems.length) {
-                needed.location.url("/JXC/Goods/edit/id/"+needed.scope.selectedItems[0].id);
+                needed.location.url(needed.location.$$url.split("/").splice(0,3).join("/")+"/edit/id/"+needed.scope.selectedItems[0].id);
             }
         };
         needed.scope.doDeleleSelected = options.doDeleleSelected ? options.doDeleleSelected : function() {
@@ -164,12 +173,13 @@ var CommonView = {
             name: null,
             id: null,
             dataLoadedEvent: null,
-            dataObject: null
+            dataObject: null,
+            returnPage: needed.location.$$url.split("/").splice(0,3).join("/")
         };
         opts = $.extend(defaultOpts, opts);
         opts.dataObject = opts.name+"Data";
         
-        if("dataLoadedEvent" in opts && "getFields" in model) {
+        if("dataLoadedEvent" in opts && opts.dataLoadedEvent && "getFields" in model) {
             model.getFields(needed.scope, needed.foreignResource);
             needed.scope.$on(opts.dataLoadedEvent, function(event, data){
                 //edit
@@ -185,23 +195,39 @@ var CommonView = {
                 needed.scope.$broadcast("commonForm.ready");
             });
         } else {
-            needed.scope.config = {
-                fieldsDefine: model.getFieldsStruct(needed.scope.i18n),
-                name: opts.dataObject
-            };
-            needed.scope.$broadcast("commonForm.ready");
+            setTimeout(function(){
+                needed.scope.config = {
+                    fieldsDefine: model.getFieldsStruct(needed.scope.i18n),
+                    name: opts.name
+                };
+                
+                //edit
+                if(opts.id) {
+                    needed.resource.get({id: opts.id}).$promise.then(function(defaultData){
+                        needed.scope[opts.dataObject] = formMaker.dataFormat(needed.scope.config.fieldsDefine, defaultData);
+                    });
+                }
+                needed.scope.$broadcast("commonForm.ready");
+            }, 100);
             //todo 无需异步加载其他数据
         }
         
         needed.scope.doSubmit = opts.doSubmit ? opts.doSubmit : function(){
+            
             if(opts.id) {
-                needed.resource.update({id: opts.id}, needed.scope[opts.dataObject]);
+                var getParams = {};
+                for(var k in needed.routeParams) {
+                    getParams[k] = needed.routeParams[k];
+                }
+                getParams.id = opts.id;
+                needed.resource.update(getParams, needed.scope[opts.dataObject]);
             } else {
-                needed.resource.save(needed.scope[opts.dataObject]).$promise.then(function(data){
-                    needed.location.url("/JXC/Goods");
-                });
+                for(var k in needed.routeParams) {
+                    needed.scope[opts.dataObject][k] = needed.routeParams[k];
+                }
+                needed.resource.save(needed.scope[opts.dataObject]);
             }
-            needed.location.url("/JXC/Goods");
+            needed.location.url(opts.returnPage);
         };
         
     }

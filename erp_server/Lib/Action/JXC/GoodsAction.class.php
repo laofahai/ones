@@ -14,6 +14,18 @@ class GoodsAction extends CommonAction {
     
     public $indexModel = "GoodsCatView";
     
+    protected function pretreatment() {
+        switch($this->_method) {
+            case "post":
+                $_POST["pinyin"] = Pinyin($_POST["name"]);
+                break;
+            case "put":
+                $_POST = I("put.");
+                $_POST["pinyin"] = Pinyin($_POST["name"]);
+                break;
+        }
+    }
+    
 }
 
 ?>

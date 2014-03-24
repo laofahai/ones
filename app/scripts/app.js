@@ -13,7 +13,8 @@ var ERP = angular.module('erp', [
     'erp.common',
     'erp.config',
     
-    'erp.jxc',
+    'erp.home',
+    'erp.jxc'
 //    'erp.service'
 ])
         /**

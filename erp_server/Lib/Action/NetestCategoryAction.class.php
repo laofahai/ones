@@ -22,25 +22,18 @@ class NetestCategoryAction extends CommonAction {
         $this->response($tree);
     }
     
-    public function _before_add() {
-        $pid = abs(intval($_GET["parentId"]));
-        if($pid) {
-            $model = D(MODULE_NAME);
-            $this->assign("parent", $model->find($pid));
-        }
-    }
     
     public function insert() {
         $catModel = D(MODULE_NAME);
         $rs = $catModel->addChildNode($_POST);
         if($rs) {
-            $this->success('添加成功', U('/'.GROUP_NAME.'/'.MODULE_NAME));
+            $this->success('添加成功');
         } else {
-            $this->error('添加失败', U('/'.GROUP_NAME.'/'.MODULE_NAME));
+            $this->error('添加失败');
         }
     }
     
-    public function foreverdelete() {
+    public function delete() {
         $catModel = D(MODULE_NAME);
         if($catModel->deleteNode($_GET["id"])) {
             $this->success("operate_success");

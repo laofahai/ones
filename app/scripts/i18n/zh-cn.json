@@ -8,6 +8,15 @@
                     "actions": {
                         "dashboard": ["控制面板"]
                     }
+                },
+                "DataModel": {
+                    "name": "数据模型",
+                    "actions": {
+                        "index": ["数据模型管理"],
+                        "add": ["新建数据模型"],
+                        "edit": ["修改数据模型基础信息"],
+                        "viewSub": ["查看数据模型字段"]
+                    }
                 }
             }
         },
@@ -21,12 +30,59 @@
                         "add": ["新增商品"],
                         "edit": ["修改商品信息"]
                     }
+                },
+                "GoodsCategory": {
+                    "name": "商品分类",
+                    "actions": {
+                        "index": ["商品分类列表"],
+                        "add": ["新增分类"],
+                        "edit": ["修改分类"]
+                    }
                 }
             }
         }
 
     },
     "lang": {
+        "navs": {
+            "dashboard": "控制面板",
+            "stock": "库存管理",
+            "stock_list": "库存列表",
+            "stockin_paper": "入库单",
+            "stockout_paper": "出库单",
+            "shipment_paper": "发货单",
+            "stock_transfer": "库存挑拨",
+            "purchase": "采购",
+            "add_new_purchase": "新建采购单",
+            "purchase_list": "采购单列表",
+            "sale": "销售",
+            "orders": "订单",
+            "returns": "退货单",
+            "rel_company": "往来单位管理",
+            "list": "列表",
+            "add_new": "新增",
+            "finance": "财务管理",
+            "finance_account": "财务管理",
+            "finance_record" : "收支记录",
+            "finance_receive_plan": "财务收入计划",
+            "finance_pay_plan": "财务付款计划",
+            "statistics": "统计分析",
+            "sale_statistics": "销售统计",
+            "stock_warning": "库存警告",
+            "statics_overview": "统计总览",
+            "statics_product_overview": "产品进销存表",
+            "settings": "设置",
+            "field_set": "字段设置",
+            "base_data_set": "基础数据管理",
+            "goods_setting": "商品管理",
+            "goods_category": "商品分类管理",
+            "stock_manage": "仓库管理",
+            "data_model": "数据模型管理",
+            "types_manage": "类型管理",
+            "organization_set": "组织机构管理",
+            "workflow": "工作流程",
+            "clear_cache": "清除缓存"
+        },
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单"
         },
@@ -35,9 +91,12 @@
             "reset"  : "重填",
             "return" : "返回",
             "add": "增加",
+            "addChild": "增加子项",
             "edit": "编辑",
             "delete": "删除",
-            "list": "列表"
+            "list": "列表",
+            "view": "查看",
+            "viewSub": "查看子项"
         },
         "navigation": {
             "back": "后退",
@@ -48,6 +107,8 @@
         "selected_action" : "选中%s项：",
         
         "name": "名称",
+        "type": "类型",
+        "displayName": "显示名称",
         "firstChar": "拼音首字母",
         "factory_code": "基础原厂编码",
         "measure": "计量单位",
@@ -55,6 +116,7 @@
         "category_id": "分类ID",
         "category": "分类",
         "store_min": "库存下限",
-        "store_max": "库存上限"
+        "store_max": "库存上限",
+        "listorder": "排序"
     }
 }

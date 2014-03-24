@@ -18,15 +18,27 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     .when('/JXC/Goods/edit/id/:id', {
                         templateUrl: 'views/jxc/goods/edit.html',
                         controller: 'JXCGoodsEditCtl'
-                    });
+                    })
+                    .when('/JXC/GoodsCategory', {
+                        templateUrl: 'views/jxc/goodsCategory/index.html',
+                        controller: 'JXCGoodsCategoryCtl'
+                    })
+                    .when('/JXC/GoodsCategory/add/pid/:pid', {
+                        templateUrl: 'views/jxc/goodsCategory/edit.html',
+                        controller: 'JXCGoodsCategoryEditCtl'
+                    })
+                    .when('/JXC/GoodsCategory/edit/id/:id', {
+                        templateUrl: 'views/jxc/goodsCategory/edit.html',
+                        controller: 'JXCGoodsCategoryEditCtl'
+                    })
         })
 
         .controller("JXCStockinCtl", function($scope) {
             $scope.message = "hi, i am stockin";
         })
 
-        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "$rootScope", "$location",
-            function($scope, GoodsRes, JXCGoodsModel, $rootScope, $location) {
+        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "$location",
+            function($scope, GoodsRes, JXCGoodsModel, $location) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -39,7 +51,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/Goods"
                     }
                 ];
-                var fields = JXCGoodsModel.getFieldsStruct($rootScope.i18n);
+                var fields = JXCGoodsModel.getFieldsStruct($scope.i18n);
                 CommonView.displyGrid({
                     scope : $scope,
                     resource: GoodsRes,
@@ -61,7 +73,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     }
                 ];
                 $scope.selecteAble = false;
-                $scope.filterAble = false;
                 var opts = {
                     name: "JXCGoodsEdit",
                     id: $routeParams["id"],
@@ -71,6 +82,43 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     scope : $scope,
                     resource: GoodsRes,
                     foreignResource: GoodsCategoryRes,
-                    location: $location
+                    location: $location,
+                    routeParams: $routeParams
                 }, JXCGoodsModel, opts);
+            }])
+        .controller("JXCGoodsCategoryCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "$location",
+            function($scope, model, res, $location){
+                var fields = model.getFieldsStruct($scope.i18n);
+                CommonView.displyGrid({
+                    scope : $scope,
+                    resource: res,
+                    location: $location
+                }, fields);
+                
+                $scope.addChildAble = true;
+                
+                $scope.doAddChild = function(){
+                    $location.url("/JXC/GoodsCategory/add/pid/"+$scope.selectedItems[0].id);
+                };
+            }])
+        .controller("JXCGoodsCategoryEditCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "$location", "$routeParams",
+            function($scope, model, res, $location, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/JXC/GoodsCategory"
+                    }
+                ];
+                $scope.selecteAble = false;
+                var opts = {
+                    name: "JXCGoodsCategoryEdit",
+                    id: $routeParams["id"]
+                };
+                CommonView.displayForm({
+                    scope : $scope,
+                    resource: res,
+                    location: $location,
+                    routeParams: $routeParams
+                }, model, opts);
             }])

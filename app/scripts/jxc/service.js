@@ -1,6 +1,5 @@
 angular.module("erp.jxc.services", [])
         .service("JXCGoodsModel", function() {
-            
             var obj = {};
             obj.getFieldsStruct = function(i18n) {
                 return {
@@ -57,6 +56,36 @@ angular.module("erp.jxc.services", [])
                     $scope.$broadcast("goods_category_loaded", fields);
                 });
                 
+            };
+            
+            return obj;
+        })
+        .service("JXCGoodsCategoryModel", function() {
+            var obj = {};
+            obj.getFieldsStruct = function(i18n) {
+                return {
+                    id : {
+                        primary: true,
+                        displayName: "ID"
+                    },
+                    name: {
+                        displayName: i18n.lang.category,
+                        listable: false
+                    },
+                    prefix_name: {
+                        hideInForm: true,
+                        displayName: i18n.lang.category
+                    },
+                    listorder: {
+                        inputType: "number",
+                        value: 99,
+                        displayName: i18n.lang.listorder
+                    }
+                };
+            };
+            
+            obj.getFields = function($scope){
+                return obj.getFieldsStruct;
             };
             
             return obj;

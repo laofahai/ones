@@ -47,7 +47,7 @@ class CommonTreeModel extends CommonModel {
         //$data['lft'] = array("lft", "lft+2");
         $data['lft'] = array("exp", "lft+2");
         $rs = $this->where($map)->save($data);
-        
+        unset($data);
         
         /**
          * 插入新值
@@ -59,6 +59,7 @@ class CommonTreeModel extends CommonModel {
         foreach($sourceData as $k=>$v) {
             $data[$k] = $v;
         }
+        $data["pinyin"] = Pinyin($sourceData["name"]);
 //        echo "<pre>";
 //        print_r($_POST);
 //        echo 1;

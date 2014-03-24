@@ -3,19 +3,63 @@
     rest 路由
  *  */
 
-return array(
+/**
+ * 自动生成URL路由
+ * array("home/dataModel/:id\d", "HOME/DataModel/read", "", "get", "json"),
+    array("home/dataModel/:id\d", "HOME/DataModel/update", "", "put", "json"),
+    array("home/dataModel", "HOME/DataModel/index", "", "get", "json"),
+    array("home/dataModel", "HOME/DataModel/insert", "", "post", "json"),
+    array("home/dataModel/:id", "HOME/DataModel/delete", "", "delete", "json"),
+ */
+function routeMaker($resName, $mapUrl, $methods = array()) {
+    if(!$methods) {
+        $methods = array("list", "get", "put", "post", "delete");
+    }
+    
+    $return = array();
+    
+    if(in_array("get", $methods)) {
+        array_push($return, array(
+            $resName."/:id\d", $mapUrl."/read", "", "get", "json"
+        ));
+    }
+    if(in_array("list", $methods)) {
+        array_push($return, array(
+            $resName, $mapUrl."/index", "", "get", "json"
+        ));
+    }
+    if(in_array("put", $methods)) {
+        array_push($return, array(
+            $resName."/:id\d", $mapUrl."/update", "", "put", "json"
+        ));
+    }
+    if(in_array("post", $methods)) {
+        array_push($return, array(
+            $resName, $mapUrl."/insert", "", "post", "json"
+        ));
+    }
+    if(in_array("delete", $methods)) {
+        array_push($return, array(
+            $resName."/:id", $mapUrl."/delete", "", "delete", "json"
+        ));
+    }
+    
+    return $return;
+    
+}
+
+$base = array(
     array("passport/profile", "HOME/Passport/index", "", "get", "json"),
     array("passport/isLogin", "HOME/Passport/doLogin", "", "get", "json"),
     array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
     
-    /**
-     * 进销存
-     */
-    array("jxc/goods/:id\d", "JXC/Goods/read", "", "get", "json"),
-    array("jxc/goods/:id\d", "JXC/Goods/update", "", "put", "json"),
-    array("jxc/goods/:id\d", "JXC/Goods/delete", "", "delete", "json"),
-    array("jxc/goods", "JXC/Goods/index", "", "get", "json"),
-    array("jxc/goods", "JXC/Goods/insert", "", "post", "json"),
-    
     array("jxc/goodsCategory/:id", "JXC/GoodsCategory/index", "", "get", "json"),
+    array("jxc/goodsCategory", "JXC/GoodsCategory/insert", "", "post", "json"),
+    array("jxc/goodsCategory/:id", "JXC/GoodsCategory/delete", "", "delete", "json"),
+);
+
+return array_merge($base, 
+    routeMaker("home/dataModel", "HOME/DataModel"),
+    routeMaker("jxc/goods", "JXC/Goods"),
+    routeMaker("home/dataModel", "HOME/DataModelFields")
 );

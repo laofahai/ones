@@ -70,6 +70,13 @@ class CommonAction extends RestAction {
         ));
         exit;
     }
+    protected function success($msg) {
+        $this->response(array(
+            "error" => 0,
+            "msg"   => $msg
+        ));
+        exit;
+    }
     
     /**
      * 
@@ -81,7 +88,7 @@ class CommonAction extends RestAction {
         if (empty($model)) {
             $this->error(L("Server error"));
         }
-        
+
         $list = $model->where($map)->order("id DESC")->select();
         $this->response($list);
     }
@@ -103,10 +110,15 @@ class CommonAction extends RestAction {
      * 通用REST插入方法
      */
     public function insert() {
-//        $this->testResponse();
         $name = $this->getActionName();
         $model = D($name);
+        
 
+        /**
+         * 对提交数据进行预处理
+         */
+        $this->pretreatment();
+        
         if (false === $model->create()) {
             $this->error($model->getError());
         }
@@ -123,6 +135,66 @@ class CommonAction extends RestAction {
         } else {
             //失败提示
             $this->error('新增失败!');
+        }
+    }
+    
+    /**
+     * 更新
+     */
+    public function update() {
+        $name = $this->getActionName();
+        $model = D($name);
+        /**
+         * 对提交数据进行预处理
+         */
+        $this->pretreatment();
+        if (false === $model->create()) {
+            $this->error($model->getError());
+        }
+        // 更新数据
+        $result = $model->save();
+        if ($result !== false) { //保存成功
+            $this->response(array(
+                "error" => 0
+            ));
+        } else {
+            //失败提示
+            $this->error('更新失败!');
+        }
+    }
+    
+    /**
+     * 删除
+     */
+    public function delete() {
+        $name = $this->getActionName();
+        $model = M($name);
+        if (!empty($model)) {
+            $pk = $model->getPk();
+            $id = $_REQUEST [$pk];
+            if (isset($id)) {
+                $condition = array($pk => array('in', explode('|', $id)));
+                $list = $model->where($condition)->delete();
+                if ($list !== false) {
+                    $this->success('删除成功！');
+                } else {
+                    $this->error('删除失败！');
+                }
+            } else {
+                $this->error('非法操作');
+            }
+        }
+    }
+    
+    /**
+     * 对数据进行预处理
+     * 
+     */
+    protected function pretreatment() {
+        switch($this->_method) {
+            case "put":
+                $_POST = I("put.");
+                break;
         }
     }
 
