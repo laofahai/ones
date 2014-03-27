@@ -6,10 +6,6 @@
 
 var CommonView = {
     
-    defaultTemplate : [
-        ['CommonView/grid.html', '<div class="gridStyle" ng-grid="gridOptions"></div>'],
-    ],
-    
     /**
      * diplayGrid 封装 ng-grid 
      * */
@@ -21,6 +17,20 @@ var CommonView = {
         options = options ? options : {};
         fieldsStruct = fieldsStruct ? fieldsStruct : [];
         var columnDefs = [];
+        
+        options.afterSelectionChange =  function(rowitem, items){
+            if(true === items) {
+                needed.scope.selectedItems = [];
+                for(var i=0;i<rowitem.length;i++) {
+                    needed.scope.selectedItems.push(rowitem[i].entity)
+                }
+            } else if(false === items) {
+                needed.scope.selectedItems = [];
+            } else {
+                needed.scope.selectedItems = items;
+            }
+        };
+        
         /**
          * 字段名称
          * */
@@ -28,41 +38,6 @@ var CommonView = {
             fieldsStruct[f].field = f;
             columnDefs.push(fieldsStruct[f]);
         }
-        
-        /**
-         * 默认方法
-         * */
-        options.afterSelectionChange =  function(rowitem, items){
-            needed.scope.selectedItems = items;
-        };
-        needed.scope.doView = options.doView ? options.doView : function(){
-            if(needed.scope.selectedItems.length) {
-                needed.location.url(needed.location.$$url.split("/").splice(0,3).join("/")+"/view/id/"+needed.scope.selectedItems[0].id);
-            }
-        };
-        needed.scope.doViewSub = options.doViewSub ? options.doViewSub : function(){
-            if(needed.scope.selectedItems.length) {
-                needed.location.url(needed.location.$$url.split("/").splice(0,3).join("/")+"/viewSub/id/"+needed.scope.selectedItems[0].id);
-            }
-        };
-        needed.scope.doEditSelected = options.doEditSeleted ? options.doEditSelected : function(){
-            if(needed.scope.selectedItems.length) {
-                needed.location.url(needed.location.$$url.split("/").splice(0,3).join("/")+"/edit/id/"+needed.scope.selectedItems[0].id);
-            }
-        };
-        needed.scope.doDeleleSelected = options.doDeleleSelected ? options.doDeleleSelected : function() {
-            if(!confirm(sprintf(needed.scope.i18n.lang.confirm_delete, needed.scope.selectedItems.length))) {
-                return false;
-            }
-            var ids = [];
-            for(var i=0;i<needed.scope.selectedItems.length;i++) {
-                ids.push(needed.scope.selectedItems[i].id);
-            }
-            needed.resource.delete({id: ids.join("|")}, function(data){
-                needed.scope.selectedItems = [];
-                getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
-            });
-        };
         
         
         /**
@@ -100,12 +75,54 @@ var CommonView = {
             rowHeight: 40,
             headerRowHeight: 40,
             checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
-            checkboxHeaderTemplate: '<div></div>',
             totalServerItems: 'totalServerItems',
-            i18n: "zh-cn"
+            i18n: "zh-cn",
+            
+            //extra
+            module: needed.location.$$url.split("/").splice(0,3).join("/"),
+            subModule:"",
+            extraParams: {},
         };
         
         var opts = $.extend(defaults, options);
+        opts.subModule = opts.subModule ? "/"+opts.subModule : "";
+        
+        /**
+         * 默认方法
+         * */
+        needed.scope.doView = opts.doView ? opts.doView : function(){
+            if(needed.scope.selectedItems.length) {
+                needed.location.url(opts.module+opts.subModule+"/view/id/"+needed.scope.selectedItems[0].id);
+            }
+        };
+        needed.scope.doViewSub = opts.doViewSub ? opts.doViewSub : function(){
+            if(needed.scope.selectedItems.length) {
+                needed.location.url(opts.module+opts.subModule+"/viewSub/id/"+needed.scope.selectedItems[0].id);
+            }
+        };
+        needed.scope.doViewDataModel = opts.doViewDataModel ? opts.doViewDataModel : function(){
+//            console.log("/HOME/DataModelData/modelId/"+needed.scope.selectedItems[0].bind_model);
+            needed.location.url("/HOME/DataModelData/"+needed.scope.selectedItems[0].bind_model);
+        };
+        needed.scope.doEditSelected = opts.doEditSeleted ? opts.doEditSelected : function(){
+            if(needed.scope.selectedItems.length) {
+//                console.log(opts.module+opts.subModule+"/edit/id/"+needed.scope.selectedItems[0].id);return;
+                needed.location.url(opts.module+opts.subModule+"/edit/id/"+needed.scope.selectedItems[0].id);
+            }
+        };
+        needed.scope.doDeleleSelected = opts.doDeleleSelected ? opts.doDeleleSelected : function() {
+            if(!confirm(sprintf(needed.scope.i18n.lang.confirm_delete, needed.scope.selectedItems.length))) {
+                return false;
+            }
+            var ids = [];
+            for(var i=0;i<needed.scope.selectedItems.length;i++) {
+                ids.push(needed.scope.selectedItems[i].id);
+            }
+            needed.resource.delete({id: ids.join("|")}, function(data){
+                needed.scope.selectedItems = [];
+                getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+            });
+        };
         
         opts.columnDefs = columnDefs;
         
@@ -123,14 +140,14 @@ var CommonView = {
                 var data;
                 if (searchText) {
                     var ft = searchText.toLowerCase();
-                    needed.resource.query(function(largeLoad) {
+                    needed.resource.query(opts.extraParams,function(largeLoad) {
                         data = largeLoad.filter(function(item) {
                             return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                         });
                         setPagingData(data, page, pageSize);
                     });
                 } else {
-                    needed.resource.query(function(largeLoad) {
+                    needed.resource.query(opts.extraParams,function(largeLoad) {
                         setPagingData(largeLoad, page, pageSize);
                     });
                 }
@@ -170,11 +187,11 @@ var CommonView = {
      * */
     displayForm : function(needed, model, opts) {
         var defaultOpts = {
-            name: null,
-            id: null,
-            dataLoadedEvent: null,
-            dataObject: null,
-            returnPage: needed.location.$$url.split("/").splice(0,3).join("/")
+            name: null, //表单名称
+            id: null,   //如为编辑，需传递此参数
+            dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
+            dataObject: null,  //数据绑定到$scope的名字
+            returnPage: needed.location.$$url.split("/").splice(0,3).join("/") //表单提交之后的返回页面地址
         };
         opts = $.extend(defaultOpts, opts);
         opts.dataObject = opts.name+"Data";
@@ -200,7 +217,6 @@ var CommonView = {
                     fieldsDefine: model.getFieldsStruct(needed.scope.i18n),
                     name: opts.name
                 };
-                
                 //edit
                 if(opts.id) {
                     needed.resource.get({id: opts.id}).$promise.then(function(defaultData){
@@ -212,8 +228,8 @@ var CommonView = {
             //todo 无需异步加载其他数据
         }
         
+        //默认表单提交方法，可自动判断是否编辑/新建
         needed.scope.doSubmit = opts.doSubmit ? opts.doSubmit : function(){
-            
             if(opts.id) {
                 var getParams = {};
                 for(var k in needed.routeParams) {
@@ -230,6 +246,15 @@ var CommonView = {
             needed.location.url(opts.returnPage);
         };
         
+    },
+    
+    /**
+     * 生成单据录入表单
+     * */
+    displayBill: function(needed, model, opts) {
+        
+        var defaultOpt = {};
+        
     }
 
-}
+};

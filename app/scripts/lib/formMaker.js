@@ -5,6 +5,7 @@ var formMaker = function($scope, defaultData) {
         return false;
     }
     
+    //字段方法列表
     formMaker.methods = {};
     formMaker.init();
 
@@ -22,6 +23,7 @@ var formMaker = function($scope, defaultData) {
     dataBindName = formMaker.opts.name + "Data";
     $scope.$parent[dataBindName] = $scope.$parent[dataBindName] || {};
     $scope[dataBindName] = {};
+    
     for (var key in formMaker.opts.fieldsDefine) {
         field = formMaker.opts.fieldsDefine[key];
         if (field.primary || field.hideInForm) {

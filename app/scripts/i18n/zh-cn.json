@@ -1,7 +1,7 @@
 {
     "urlMap": {
         "HOME": {
-            "name": "首页",
+            "name": "基础模块",
             "modules": {
                 "Index": {
                     "name": "",
@@ -16,6 +16,14 @@
                         "add": ["新建数据模型"],
                         "edit": ["修改数据模型基础信息"],
                         "viewSub": ["查看数据模型字段"]
+                    }
+                },
+                "DataModelData": {
+                    "name": "模型数据",
+                    "actions": {
+                        "index": ["模型数据管理"],
+                        "add": ["新增模型数据"],
+                        "edit": ["修改模型数据"]
                     }
                 }
             }
@@ -38,6 +46,19 @@
                         "add": ["新增分类"],
                         "edit": ["修改分类"]
                     }
+                },
+                "Stockin": {
+                    "name": "入库单",
+                    "actions": {
+                        "index": ["入库单列表"],
+                        "add": ["新建入库单"]
+                    }
+                },
+                "StockProductList": {
+                    "name": "库存管理",
+                    "actions": {
+                        "index": ["库存商品列表"]
+                    }
                 }
             }
         }
@@ -51,7 +72,7 @@
             "stockin_paper": "入库单",
             "stockout_paper": "出库单",
             "shipment_paper": "发货单",
-            "stock_transfer": "库存挑拨",
+            "stock_transfer": "库存调拨",
             "purchase": "采购",
             "add_new_purchase": "新建采购单",
             "purchase_list": "采购单列表",
@@ -83,6 +104,11 @@
             "workflow": "工作流程",
             "clear_cache": "清除缓存"
         },
+        "inputType": {
+            "text": "单行文本",
+            "number": "数字",
+            "select": "下拉选择框"
+        },
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单"
         },
@@ -96,7 +122,8 @@
             "delete": "删除",
             "list": "列表",
             "view": "查看",
-            "viewSub": "查看子项"
+            "viewSub": "查看子项",
+            "viewModelData": "查看模型数据"
         },
         "navigation": {
             "back": "后退",
@@ -108,13 +135,21 @@
         
         "name": "名称",
         "type": "类型",
+        "data": "数据",
+        "field": "字段",
+        "version": "型号",
+        "standard": "规格",
+        "measure": "计量单位",
+        "bindDataModel": "绑定数据模型",
         "displayName": "显示名称",
         "firstChar": "拼音首字母",
         "factory_code": "基础原厂编码",
+        "factoryCodeAll": "原厂编码",
         "measure": "计量单位",
         "price": "价格",
         "category_id": "分类ID",
         "category": "分类",
+        "storeNum": "库存数量",
         "store_min": "库存下限",
         "store_max": "库存上限",
         "listorder": "排序"

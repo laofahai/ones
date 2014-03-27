@@ -99,10 +99,8 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                     var action = fullPath[2];
                     group = group ? group : "HOME";
                     module = module ? module : "Index";
-                    action = action ? action : "index";
-                    $scope.currentPage = {
-                    };
-
+                    action = action && isNaN(parseInt(action)) ? action : "index";
+                    $scope.currentPage = {};
                     if (group in $rootScope.i18n.urlMap) {
                         $scope.currentPage.group = $rootScope.i18n.urlMap[group].name;
                         if (module in $rootScope.i18n.urlMap[group].modules) {

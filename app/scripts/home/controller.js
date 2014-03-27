@@ -15,9 +15,29 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         templateUrl: "views/home/dataModel/edit.html",
                         controller: "DataModelEditCtl"
                     })
-                    .when('/HOME/DataModel/viewSub/id/:id', {
+                    .when('/HOME/DataModel/viewSub/id/:pid', {
                         templateUrl: "views/home/dataModel/viewSub.html",
                         controller: "DataModelFieldsCtl"
+                    })
+                    .when('/HOME/DataModelFields/add/pid/:pid', {
+                        templateUrl: "views/home/dataModel/editSub.html",
+                        controller: "DataModelFieldsEditCtl"
+                    })
+                    .when('/HOME/DataModelFields/edit/id/:id', {
+                        templateUrl: "views/home/dataModel/editSub.html",
+                        controller: "DataModelFieldsEditCtl"
+                    })
+                    .when('/HOME/DataModelData/:modelId', {
+                        templateUrl: "views/home/dataModel/data.html",
+                        controller: "DataModelDataCtl"
+                    })
+                    .when('/HOME/DataModelData/add/:modelId', {
+                        templateUrl: "views/home/dataModel/dataEdit.html",
+                        controller: "DataModelDataEditCtl"
+                    })
+                    .when('/HOME/DataModelData/:modelId/edit/id/:id', {
+                        templateUrl: "views/home/dataModel/dataEdit.html",
+                        controller: "DataModelDataEditCtl"
                     });
         })
         .controller("DataModelCtl", ["$scope", "DataModelRes", "DataModelModel", "$location",
@@ -69,18 +89,18 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     routeParams: $routeParams
                 }, DataModelModel, opts);
             }])
-        .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "$location",
-            function($scope, DataModelFieldsRes, DataModelFieldsModel, $location) {
+        .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "$location", "$routeParams",
+            function($scope, DataModelFieldsRes, DataModelFieldsModel, $location, $routeParams) {
                 $scope.pageActions = [
                     {
-                        label: $scope.i18n.lang.actions.add,
-                        class: "success",
-                        href: "/HOME/DataModel/add"
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/HOME/DataModelFields/add/pid/"+$routeParams.pid
                     },
                     {
-                        label: $scope.i18n.lang.actions.list,
-                        class: "primary",
-                        href: "/HOME/DataModel"
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/HOME/DataModelFields"
                     }
                 ];
                 var fields = DataModelFieldsModel.getFieldsStruct($scope.i18n);
@@ -88,5 +108,92 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     scope: $scope,
                     resource: DataModelFieldsRes,
                     location: $location
-                }, fields);
+                }, fields, {
+                    module: "/HOME/DataModelFields",
+                });
+            }])
+        
+        .controller("DataModelFieldsEditCtl", ["$scope", "DataModelFieldsModel", "DataModelFieldsRes", "$location", "$routeParams",
+            function($scope, DataModelFieldsModel, DataModelFieldsRes, $location, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/HOME/DataModelFields/add/pid/"+$routeParams.pid
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/HOME/DataModelFields/"
+                    }
+                ];
+                $scope.selecteAble = false;
+                var opts = {
+                    name: "DataModelEdit",
+                    module: "/HOME/DataModelFields",
+                    returnPage: "/HOME/DataModel/viewSub/id/"+$routeParams.pid,
+                    id: $routeParams.id
+                };
+                CommonView.displayForm({
+                    scope : $scope,
+                    resource: DataModelFieldsRes,
+                    location: $location,
+                    routeParams: $routeParams
+                }, DataModelFieldsModel, opts);
+            }])
+        .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "$location", "$routeParams",
+            function($scope, DataModelDataRes, DataModelDataModel, $location, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/HOME/DataModelData/add/"+$routeParams.modelId
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/HOME/DataModelData/"+$routeParams.modelId
+                    }
+                ];
+                var fields = DataModelDataModel.getFieldsStruct($scope.i18n);
+                CommonView.displyGrid({
+                    scope: $scope,
+                    resource: DataModelDataRes,
+                    location: $location
+                }, fields, {
+                    module: "/HOME/DataModelData",
+                    subModule: $routeParams.modelId,
+                    extraParams: {modelId:$routeParams.modelId}
+                });
+            }])
+        .controller("DataModelDataEditCtl", ["$scope", "DataModelDataModel", "DataModelDataRes","DataModelFieldsRes", "$location", "$routeParams",
+            function($scope, DataModelDataModel, DataModelDataRes, DataModelFieldsRes, $location, $routeParams) {
+                
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/HOME/DataModelData/add/"+$routeParams.modelId
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/HOME/DataModelData/"+$routeParams.modelId
+                    }
+                ];
+                $scope.selecteAble = false;
+                var opts = {
+                    name: "DataModelDataEdit",
+                    module: "/HOME/DataModelData",
+                    returnPage: "/HOME/DataModelData/"+$routeParams.modelId,
+                    id: $routeParams.id,
+                    dataLoadedEvent: "foreignDataLoaded"
+                };
+                CommonView.displayForm({
+                    scope : $scope,
+                    resource: DataModelDataRes,
+                    foreignResource: [$routeParams.modelId, DataModelFieldsRes],
+                    location: $location,
+                    routeParams: $routeParams
+                }, DataModelDataModel, opts);
             }])

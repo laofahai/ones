@@ -8,6 +8,7 @@
         <button class="btn btn-sm btn-primary disabled">{{i18n.lang.selected_action|sprintf:selectedItems.length}}</button>
         <button class="btn btn-sm btn-success" ng-click="doAddChild()" ng-class="{disabled: selectedItems.length!=1}" ng-show="addChildAble">{{i18n.lang.actions.addChild}}</button>
         <button class="btn btn-sm btn-primary" ng-click="doViewSub()" ng-class="{disabled: selectedItems.length!=1}" ng-show="viewSubAble">{{i18n.lang.actions.viewSub}}</button>
+        <button class="btn btn-sm btn-primary" ng-click="doViewDataModel()" ng-class="{disabled: selectedItems.length!=1||selectedItems[0].bind_model<=0}" ng-show="viewDataAble">{{i18n.lang.actions.viewModelData}}</button>
         <button class="btn btn-sm btn-default" ng-click="doEditSelected()" ng-class="{disabled: selectedItems.length!=1}">{{i18n.lang.actions.edit}}</button>
         <button class="btn btn-sm btn-danger"  ng-click="doDeleleSelected()" ng-class="{disabled: !selectedItems.length}">{{i18n.lang.actions.delete}}</button>
     </div>

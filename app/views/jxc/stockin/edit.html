@@ -1,0 +1,39 @@
+<div ng-controller="JXCStockinEditCtl">
+    <pageactions /></div>
+<div class="billContainer">
+    <form name="stockinScript">
+        <div class="billHeader">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label>单位：</label>
+                    <input type="text" />
+                </div>
+                <div class="col-sm-3">
+                    <label>时间：</label>
+                    <span class="input-icon input-icon-right">
+                        <input type="text" class="form-control" 
+                               datepicker-popup="{{format}}" 
+                               ng-model="dt" 
+                               is-open="opened" 
+                               min="minDate" 
+                               max="'2015-06-22'" 
+                               datepicker-options="dateOptions" 
+                               date-disabled="disabled(date, mode)" 
+                               ng-required="true" close-text="Close" />
+                        <i class="icon-calendar gray"></i>
+                    </span>
+                </div>
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-3 align-right">
+                    <label>单据编号：</label>
+                    <span>RK201303030415</span>
+                </div>
+            </div>
+        </div>
+        <div class="billBody">
+            <bill></bill>
+        </div>
+        <div class="billFooter"></div>
+    </form>
+</div>

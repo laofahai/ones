@@ -35,6 +35,12 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','erp.config',
                     $scope.error.msg = 'Server Error.';
                 });
         };
+        
+        $scope.doKeyDown = function(event){
+            if(event.keyCode == "13") {
+                $scope.doLogin();
+            }
+        };
 
 
         $scope.doRetrivePwd = function() {

@@ -78,3 +78,41 @@ commonform {
     display:inline;
     margin-right:15px;
 }
+
+/**
+*   bills
+*/
+.billContainer {
+    border:1px solid #CFCFCF;
+    box-shadow:0 1px 3px rgba(0, 0, 0, 0.2);
+    padding:10px 20px;
+    margin-bottom:20px;
+}
+.billHeader {
+    padding:10px 0;
+    margin-bottom:10px;
+}
+.billHeader label,.billHeader input,.billHeader span {
+    font-size:12px;
+}
+.billBody table th:first-child {
+    width:60px;
+}
+.billBody table td {
+    position:relative;
+    padding:0 5px !important;height:36px;line-height:38px !important;
+    font-size:14px;
+    overflow:hidden;
+}
+.billBody table td .editAble {
+    position:absolute;
+    left:0;top:0;
+    width:100%;
+    border:none;
+    z-index:10;
+    height:38px;
+}
+.billBody .rowHead .icon {
+    cursor:pointer;
+    margin:0 3px;
+}

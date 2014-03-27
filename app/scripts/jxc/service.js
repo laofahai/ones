@@ -30,6 +30,7 @@ angular.module("erp.jxc.services", [])
                         inputType: "select",
                         valueField: "id",
                         nameField : "prefix_name",
+                        "ng-change": "loadDataModel()",
                         listable: false
                     },
                     category_name: {
@@ -49,13 +50,14 @@ angular.module("erp.jxc.services", [])
                     }
                 };
             };
-            obj.getFields = function($scope, GoodsCategoryRes){
+            obj.getFields = function($scope, reses){
+                var GoodsCategoryRes = reses[0];
+                var DataModelRes = reses[1];
                 GoodsCategoryRes.query(function(data){
                     var fields = obj.getFieldsStruct($scope.i18n);
                     fields.goods_category_id.dataSource = data;
                     $scope.$broadcast("goods_category_loaded", fields);
                 });
-                
             };
             
             return obj;
@@ -76,6 +78,15 @@ angular.module("erp.jxc.services", [])
                         hideInForm: true,
                         displayName: i18n.lang.category
                     },
+                    bind_model_name: {
+                        displayName: i18n.lang.bindDataModel,
+                        hideInForm:true
+                    },
+                    bind_model: {
+                        displayName: i18n.lang.bindDataModel,
+                        inputType: "select",
+                        listable: false
+                    },
                     listorder: {
                         inputType: "number",
                         value: 99,
@@ -84,9 +95,112 @@ angular.module("erp.jxc.services", [])
                 };
             };
             
-            obj.getFields = function($scope){
-                return obj.getFieldsStruct;
+            obj.getFields = function($scope, DataModelRes){
+                DataModelRes.query(function(data){
+                    var fields = obj.getFieldsStruct($scope.i18n);
+                    fields.bind_model.dataSource = data;
+                    $scope.$broadcast("dataModelLoaded", fields);
+                });
             };
             
             return obj;
-        });
+        })
+        .service("StockProductModel", function() {
+            var obj = {};
+            obj.getFieldsStruct = function(i18n) {
+                return {
+                    id : {
+                        primary: true,
+                        displayName: "ID"
+                    },
+                    factory_code_all: {
+                        displayName: i18n.lang.factoryCodeAll
+                    },
+                    goods_name: {
+                        displayName: i18n.lang.name
+                    },
+                    category_name: {
+                        displayName: i18n.lang.category
+                    },
+                    stock_name: {
+                        displayName: i18n.lang.stock
+                    },
+                    standard: {
+                        displayName: i18n.lang.standard
+                    },
+                    version: {
+                        displayName: i18n.lang.version
+                    },
+                    num: {
+                        displayName: i18n.lang.storeNum
+                    },
+                    measure: {
+                        displayName: i18n.lang.measure
+                    }
+//                    store_min: {
+//                        displayName: i18n.lang.store_min,
+//                    },
+//                    store_max: {
+//                        displayName: i18n.lang.store_min,
+//                    },
+                    
+                };
+            };
+            
+            obj.getFields = function($scope, DataModelRes){
+                DataModelRes.query(function(data){
+                    var fields = obj.getFieldsStruct($scope.i18n);
+                    fields.bind_model.dataSource = data;
+                    $scope.$broadcast("dataModelLoaded", fields);
+                });
+            };
+            
+            return obj;
+        })
+        .service("StockinModel", function() {
+            var obj = {};
+            obj.getFieldsStruct = function(i18n) {
+                return {
+                    id : {
+                        primary: true,
+                        displayName: "ID"
+                    },
+                    factory_code_all: {
+                        displayName: i18n.lang.factoryCodeAll,
+                        editAble: false
+                    },
+                    goods_name: {
+                        displayName: i18n.lang.name
+                    },
+                    category_name: {
+                        displayName: i18n.lang.category,
+                        billAble: false
+                    },
+                    stock_name: {
+                        displayName: i18n.lang.stock
+                    },
+                    standard: {
+                        displayName: i18n.lang.standard
+                    },
+                    version: {
+                        displayName: i18n.lang.version
+                    },
+                    num: {
+                        displayName: i18n.lang.storeNum
+                    }
+//                    store_min: {
+//                        displayName: i18n.lang.store_min,
+//                    },
+//                    store_max: {
+//                        displayName: i18n.lang.store_min,
+//                    },
+                    
+                };
+            };
+            
+            obj.getFields = function($scope){
+                return obj.getFieldsStruct();
+            };
+            
+            return obj;
+        })

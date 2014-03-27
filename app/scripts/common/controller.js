@@ -14,9 +14,9 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
                     .when('/', {
                         redirectTo: '/HOME/Index/dashboard'
                     })
-                    .otherwise({
-                        redirectTo: '/HOME/Index/dashboard'
-                    });
+//                    .otherwise({
+//                        redirectTo: '/HOME/Index/dashboard'
+//                    });
         })
         .controller('CommonSidebarCtl', ['$scope', function($scope) {
             $scope.$on("initDataLoaded", function(event, data){
