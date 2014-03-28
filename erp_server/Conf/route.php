@@ -49,17 +49,16 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
 }
 
 $base = array(
-    array("passport/profile", "HOME/Passport/index", "", "get", "json"),
-    array("passport/isLogin", "HOME/Passport/doLogin", "", "get", "json"),
-    array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
+    //array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
     
-    array("jxc/goodsCategory/:id", "JXC/GoodsCategory/index", "", "get", "json"),
-    array("jxc/goodsCategory", "JXC/GoodsCategory/insert", "", "post", "json"),
-    array("jxc/goodsCategory/:id", "JXC/GoodsCategory/delete", "", "delete", "json"),
 );
 
 return array_merge($base, 
+    routeMaker("passport/userLogin", "Passport/Login", array("post")),
     routeMaker("home/dataModel", "HOME/DataModel"),
     routeMaker("jxc/goods", "JXC/Goods"),
-    routeMaker("home/dataModel", "HOME/DataModelFields")
+    routeMaker("jxc/goodsCategory", "JXC/GoodsCategory"),
+    routeMaker("home/dataModelFields", "HOME/DataModelFields"),
+    routeMaker("home/dataModelData", "HOME/DataModelData"),
+    routeMaker("jxc/stockProductList", "JXC/StockProductList", array("list"))
 );

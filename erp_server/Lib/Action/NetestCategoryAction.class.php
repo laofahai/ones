@@ -13,7 +13,8 @@
 class NetestCategoryAction extends CommonAction {
     
     public function index() {
-        $categoryModel = D(MODULE_NAME);
+        $name = $this->indexModel ? $this->indexModel : $this->getActionName();
+        $categoryModel = D($name);
         $tree = $categoryModel->getTree(1);
         foreach($tree as $k=>$t) {
             $tree[$k]["prefix_name"] = $t["prefix"].$t["name"];

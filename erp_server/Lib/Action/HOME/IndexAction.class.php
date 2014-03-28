@@ -72,39 +72,7 @@ class IndexAction extends CommonAction {
             );
             $theNav = reIndex($theNav);
         }
-        return $theNav;
-        print_r($theNav);exit;
-//        
-        foreach($navs as $label => $n) {
-            $childs = array();
-            foreach($n["childs"] as $cl => $c) {
-                list($group, $module, $action) = explode("/", $c);
-                $action = $action ? $action : "index";
-                $authName = sprintf("%s.%s.%s", $group, $module, $action);
-                if(!$auth->check($authName, $_SESSION["user"]["id"])) {
-                    continue;
-                }
-                $url = $c;
-                $childs[] = array(
-                    "label" => $cl,
-                    "url"   => $url,
-                    "id"    => md5($url.$cl)
-                );
-            }
-            
-            $url = $n["action"];
-            if($childs or isset($n["action"])) {
-                $theNav[] = array(
-                    "childs" => $childs,
-                    "label"  => $label,
-                    "icon"   => $n["icon"],
-                    "url"    => $url,
-                    "id"     => md5($label.$url.$childs)
-                );
-            }
-            
-        }
-        F("Nav/".$this->user["id"], $theNav);
+//        F("Nav/".$this->user["id"], $theNav);
 //        print_r($theNav);exit;
         return $theNav;
     }

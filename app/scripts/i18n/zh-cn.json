@@ -137,6 +137,7 @@
         "type": "类型",
         "data": "数据",
         "field": "字段",
+        "stock": "仓库",
         "version": "型号",
         "standard": "规格",
         "measure": "计量单位",

@@ -255,6 +255,11 @@ var CommonView = {
         
         var defaultOpt = {};
         
+        opts = $.extend(defaultOpt, opts);
+        
+        opts.fieldsDefine = model.getFieldsStruct(needed.scope.i18n, needed.res);
+        needed.scope.config = opts;
+        
     }
 
 };

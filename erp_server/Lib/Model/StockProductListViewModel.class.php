@@ -13,12 +13,56 @@
 class StockProductListViewModel extends ViewModel {
     
     protected $viewFields = array(
-        "StockProductList" => array("id","factory_code_all","goods_id","stock_id","color_id","standard_id","num"),
-        "Goods" => array("name"=>"goods_name","measure","store_min", "_on"=>"Goods.id=StockProductList.goods_id"),
+        "StockProductList" => array("id","factory_code_all","goods_id","stock_id","num"),
+        "Goods" => array("name"=>"goods_name","measure","store_min","store_max", "_on"=>"Goods.id=StockProductList.goods_id"),
+        "GoodsCategory" => array("name"=>"category_name","bind_model"=>"bind_model_id", "_on"=>"Goods.goods_category_id=GoodsCategory.id"),
         "Stock" => array("name"=>"stock_name", "total_num"=>"stock_total_num", "_on"=>"Stock.id=StockProductList.stock_id"),
-        "GoodsColor" => array("name"=>"color_name", "_on"=>"GoodsColor.id=StockProductList.color_id"),
-        "GoodsStandard" => array("name"=>"standard_name", "_on"=>"GoodsStandard.id=StockProductList.standard_id")
     );
+    
+    // 定义原厂编码格式
+    protected $goodsCode = "factory_code-standard-version";
+    
+    /**
+     * @override
+     * 
+     * factory_code_all : 商品编码+规格ID+型号ID
+     */
+    public function select($options=array()) {
+        $data = parent::select($options);
+        
+//        print_r($data);exit;
+        
+        foreach($data as $k=>$v) {
+            $data[$k]["modelIndex"] = sprintf("%d-%d", $v["goods_category_id"], $v["bind_model"]);
+            $modelIds[$v["bind_model_id"]] = $v["bind_model_id"];
+            $data[$k]["goodsCode"] = explode("-", $v["factory_code_all"]);
+//            $data[$k]["num"] = intval($data[$k]["num"]);
+        }
+        
+        $dmd = D("DataModelDataView");
+        $map = array(
+            "model_id" => array("IN", implode(',', $modelIds))
+        );
+        $tmp = $dmd->where($map)->select();
+        
+        foreach($tmp as $k=>$v) {
+            $dataView[$v["id"]] = $v; 
+        }
+        
+        foreach($data as $k=>$v) {
+            foreach($v["goodsCode"] as $i=> $gc) {
+                if($i==0) {
+                    continue;
+                }
+                $data[$k][$dataView[$gc]["field_name"]] = $dataView[$gc]["data"];
+            }
+        }
+        
+//        print_r($data);exit;
+        return $data;
+        
+        
+    }
     
 }
 

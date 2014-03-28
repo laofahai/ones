@@ -12,10 +12,11 @@
  * @author Administrator
  */
 class CommonAction extends RestAction {
+    
+    protected $indexModel = null;
 
     public function __construct() {
         parent::__construct();
-        
         if(!IS_AJAX) {
 //            exit("Permission Denied");
         }
@@ -89,6 +90,9 @@ class CommonAction extends RestAction {
             $this->error(L("Server error"));
         }
 
+        $map = array();
+        $this->_filter($map);
+        
         $list = $model->where($map)->order("id DESC")->select();
         $this->response($list);
     }
@@ -113,12 +117,10 @@ class CommonAction extends RestAction {
         $name = $this->getActionName();
         $model = D($name);
         
-
         /**
          * 对提交数据进行预处理
          */
         $this->pretreatment();
-        
         if (false === $model->create()) {
             $this->error($model->getError());
         }
@@ -185,6 +187,8 @@ class CommonAction extends RestAction {
             }
         }
     }
+    
+    protected function _filter(&$map) {}
     
     /**
      * 对数据进行预处理

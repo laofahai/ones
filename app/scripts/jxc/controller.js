@@ -74,8 +74,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     location: $location
                 }, fields);
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinModel", "$location",
-            function($scope, StockinRes, StockinModel, $location) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockinModel", "$location",
+            function($scope, StockinRes, GoodsRes, StockinModel, $location) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -92,6 +92,12 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.selecteAble = false;
                 $scope.showWeeks = true;
                 
+                var opts = {};
+                
+                CommonView.displayBill({
+                    scope: $scope,
+                    res: GoodsRes
+                }, StockinModel, opts);
                 
                 
                 $scope.today = function() {

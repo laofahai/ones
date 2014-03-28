@@ -20,7 +20,6 @@ angular.module("erp.common.directives", [])
                                 var html = formMaker($scope);
                                 iElement.append($compile(html)($scope.$parent));
                             });
-
                         }
                     };
                 }
@@ -30,6 +29,9 @@ angular.module("erp.common.directives", [])
             return {
                 restrict: "E",
                 replace: true,
+                scope: {
+                    config: "="
+                },
                 transclusion: true,
                 compile: function(element, attrs, transclude) {
                     return {

@@ -14,6 +14,16 @@ class GoodsAction extends CommonAction {
     
     public $indexModel = "GoodsCatView";
     
+    protected function _filter(&$map) {
+        $typeahead = trim(strip_tags($_GET["typeahead"]));
+        if($typeahead) {
+            $map["name"] = array("LIKE", "%{$typeahead}%");
+            $typeahead = strtoupper($typeahead);
+            $map["pinyin"] = array("LIKE", "%{$typeahead}%");
+            $map["_logic"] = "OR";
+        }
+    }
+    
     protected function pretreatment() {
         switch($this->_method) {
             case "post":

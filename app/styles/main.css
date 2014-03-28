@@ -102,17 +102,38 @@ commonform {
     position:relative;
     padding:0 5px !important;height:36px;line-height:38px !important;
     font-size:14px;
-    overflow:hidden;
 }
-.billBody table td .editAble {
+.billBody table td label {
+    width:100%;height:34px;line-height:34px;
+    display:block;
+}
+.billBody table td input.editAble {
     position:absolute;
     left:0;top:0;
     width:100%;
     border:none;
     z-index:10;
-    height:38px;
+    height:34px;
 }
 .billBody .rowHead .icon {
     cursor:pointer;
     margin:0 3px;
+}
+.typeAheadList {
+    position:absolute;
+    width:100%;
+    border:1px solid #ddd;
+    top:38px;
+    left:0;
+    list-style:none;
+    padding:0;
+    margin:0;
+    background:#fff;
+}
+.typeAheadList li {
+    height:36px;line-height:36px;
+    cursor:pointer;
+}
+.typeAheadList li:hover,.typeAheadList li.active {
+    background:#f2f2f2;
 }

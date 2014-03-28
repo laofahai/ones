@@ -12,7 +12,6 @@
  */
 class GoodsCategoryAction extends NetestCategoryAction {
     
-    
 }
 
 ?>

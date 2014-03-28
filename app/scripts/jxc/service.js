@@ -160,17 +160,20 @@ angular.module("erp.jxc.services", [])
         .service("StockinModel", function() {
             var obj = {};
             obj.getFieldsStruct = function(i18n) {
-                return {
+                var fields = {
                     id : {
                         primary: true,
-                        displayName: "ID"
+                        displayName: "ID",
+                        billAble: false
                     },
                     factory_code_all: {
                         displayName: i18n.lang.factoryCodeAll,
-                        editAble: false
+                        editAble: false,
+                        billAble:false
                     },
                     goods_name: {
-                        displayName: i18n.lang.name
+                        displayName: i18n.lang.name,
+                        inputType: "typeahead"
                     },
                     category_name: {
                         displayName: i18n.lang.category,
@@ -196,6 +199,12 @@ angular.module("erp.jxc.services", [])
 //                    },
                     
                 };
+                // GoodsRes
+                if(arguments[1]) {
+                    fields.goods_name.dataSource = arguments[1];
+                }
+                
+                return fields;
             };
             
             obj.getFields = function($scope){

@@ -57,13 +57,6 @@ var ERP = angular.module('erp', [
                 return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
             };
 
-            //载入默认模板
-            if (CommonView.defaultTemplate.length > 0) {
-                for (var cvdt in CommonView.defaultTemplate.length) {
-                    $templateCache.put(CommonView.defaultTemplate[cvdt][0], CommonView.defaultTemplate[cvdt][1]);
-                }
-            }
-
         });
 
 

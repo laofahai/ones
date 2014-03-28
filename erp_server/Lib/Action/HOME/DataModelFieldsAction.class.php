@@ -13,4 +13,15 @@
  */
 class DataModelFieldsAction extends CommonAction {
     
+    /**
+     * 过滤器
+     */
+    protected function _filter(&$map) {
+        if(isset($_GET["modelId"])) {
+            $map["model_id"] = abs(intval($_GET["modelId"]));
+        }
+    }
+    
+    
+    
 }
