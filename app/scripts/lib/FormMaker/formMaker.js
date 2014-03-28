@@ -4,6 +4,7 @@
 
 var formMaker = function($scope, defaultData) {
     this.scope = $scope;
+    
     defaultData = $scope.$parent.defaultData || {};
     var config = $scope.$parent.config || {};
     if (!config.fieldsDefine) {
@@ -14,62 +15,7 @@ var formMaker = function($scope, defaultData) {
         class: "form-horizontal",
         submitAction: "doSubmit",
         fieldsDefine: {},
-        templates: this.loadDefaultTemplate(),
-        dataBindName: ""
-    };
-    
-    this.opts = $.extend(true, defaultOpts, config);
-    //this.fieldsMaker
-    this.fm = new formFieldsMaker($scope);
-    
-    this.opts.dataBindName = this.opts.dataBindName ? this.opts.dataBindName : this.opts.name+"Data";
-    
-    $scope.$parent[this.opts.dataBindName] = $scope.$parent[this.opts.dataBindName] || {};
-    $scope[this.opts.dataBindName] = {};
-};
-
-formMaker.prototype = {
-    makeHTML : function() {
-        var self = this;
-        var fieldHTML, finalHTML = [];
-        var boxHTML = this.opts.templates["commonForm/box.html"];
-        angular.forEach(this.opts.fieldsDefine, function(struct, field){
-            struct.class = "width-100";
-            struct["ng-model"] = self.opts.dataBindName+"."+field;
-            if(struct.required !== false) {
-                struct.required = "required";
-            } else {
-                delete(struct.required);
-            }
-            if(!struct.hideInForm && !struct.primary) {
-                fieldHTML = self.fm.maker.factory(field, struct, self.scope);
-                if (false != fieldHTML) {
-                    finalHTML.push(sprintf(boxHTML, {
-                        formname: self.opts.name,
-                        fieldname: struct.name ? struct.name : field,
-                        label: struct.displayName,
-                        inputHTML: fieldHTML
-                    }));
-                }
-            }
-        });
-        
-        finalHTML.push(this.makeActions());
-        return sprintf(self.opts.templates["commonForm/form.html"], {
-            name : self.opts.name,
-            html : finalHTML.join("")
-        });
-    },
-    makeActions: function(){
-        return sprintf(this.opts.templates["commonForm/footer.html"], {
-            action: this.opts.submitAction,
-            langsubmit: "i18n.lang.actions.submit",
-            langreset: "i18n.lang.actions.reset",
-            langreturn: "i18n.lang.actions.return"
-        });
-    },
-    loadDefaultTemplate: function(){
-        return {
+        templates: {
             "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" novalidate>%(html)s</form>',
             "commonForm/footer.html": '<div class="clearfix form-actions">' +
                     '<div class="col-md-offset-2 col-md-9">' +
@@ -97,7 +43,63 @@ formMaker.prototype = {
             "text": '<input type="text" %s />',
             "number": '<input type="number" %s />',
             "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>',
-        };
+        },
+        dataBindName: ""
+    };
+    
+    this.opts = $.extend(true, defaultOpts, config);
+    //this.fieldsMaker
+    this.fm = new formFieldsMaker($scope);
+    
+    this.opts.dataBindName = this.opts.dataBindName ? this.opts.dataBindName : this.opts.name+"Data";
+    
+    $scope.$parent[this.opts.dataBindName] = $scope.$parent[this.opts.dataBindName] || {};
+    $scope[this.opts.dataBindName] = {};
+};
+
+formMaker.prototype = {
+    makeHTML : function() {
+        if(this.scope.formBuilded) {
+            return;
+        }
+        var self = this;
+        var fieldHTML, finalHTML = [];
+        var boxHTML = this.opts.templates["commonForm/box.html"];
+        angular.forEach(this.opts.fieldsDefine, function(struct, field){
+            struct.class = "width-100";
+            struct["ng-model"] = self.opts.dataBindName+"."+field;
+            if(struct.required !== false) {
+                struct.required = "required";
+            } else {
+                delete(struct.required);
+            }
+            if(!struct.hideInForm && !struct.primary) {
+                fieldHTML = self.fm.maker.factory(field, struct, self.scope);
+                if (false != fieldHTML) {
+                    finalHTML.push(sprintf(boxHTML, {
+                        formname: self.opts.name,
+                        fieldname: struct.name ? struct.name : field,
+                        label: struct.displayName,
+                        inputHTML: fieldHTML
+                    }));
+                }
+            }
+        });
+        
+        finalHTML.push(this.makeActions());
+        self.scope.formBuilded = true;
+        return sprintf(self.opts.templates["commonForm/form.html"], {
+            name : self.opts.name,
+            html : finalHTML.join("")
+        });
+    },
+    makeActions: function(){
+        return sprintf(this.opts.templates["commonForm/footer.html"], {
+            action: this.opts.submitAction,
+            langsubmit: "i18n.lang.actions.submit",
+            langreset: "i18n.lang.actions.reset",
+            langreturn: "i18n.lang.actions.return"
+        });
     }
 };
 

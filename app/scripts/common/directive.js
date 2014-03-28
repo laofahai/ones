@@ -19,8 +19,8 @@ angular.module("erp.common.directives", [])
                             $scope.$on("commonForm.ready", function() {
                                 var fm = new formMaker($scope);
                                 var html = fm.makeHTML();
-//                                var html = formMaker($scope);
                                 iElement.append($compile(html)($scope.$parent));
+                                return;
                             });
                         }
                     };

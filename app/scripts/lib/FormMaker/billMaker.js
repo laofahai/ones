@@ -1,7 +1,7 @@
 var billFormMaker = function($scope, $compile){
     
     var defaultOpts = {
-        minRows: 1,
+        minRows: 9,
         dataName: "formData",
         autoFocusNext: true,
         methods: {}
@@ -151,13 +151,19 @@ billFormMaker.prototype = {
         scope.$parent.onTextBlur = function(event) {
             var ele = $(event.target);
             scope.$parent.billEndEdit(ele.parent(), true);
-            self.setData(ele, ele.val());
+            self.setData(ele, ele.val(), true);
         };
         scope.$parent.onTextKeydown = function(event) {
-            if(event.keyCode == 13) {
+            if(event.keyCode == 9 && !event.shiftKey) {
+                window.event.returnValue=false;
                 var ele = $(event.target);
-                scope.$parent.billEndEdit(ele.parent(), false);
                 self.setData(ele, ele.val());
+            } else if(event.keyCode == 13) {
+                var ele = $(event.target);
+                self.setData(ele, ele.val());
+            } else if((event.shiftKey) && (event.keyCode==9)) {
+                window.event.returnValue=false;
+                console.log("shift tab");
             }
         };
         scope.$parent.onTypeaheadBlur = function(event){
@@ -165,7 +171,11 @@ billFormMaker.prototype = {
             self.setTypeaheadData(ele, scope, true);
         };
         scope.$parent.onTypeaheadKeydown = function(event) {
-            if(event.keyCode == 13) {
+            if(event.keyCode == 9) {
+                window.event.returnValue=false;
+                var ele = $(event.target);
+                self.setTypeaheadData(ele, scope);
+            } else if(event.keyCode == 13) {
                 var ele = $(event.target);
                 self.setTypeaheadData(ele, scope);
             }
@@ -200,7 +210,7 @@ billFormMaker.prototype = {
             index++;
         });
     },
-    setData: function(element, data) {
+    setData: function(element, data, isBlur) {
         var ele = $(element);
         var td = ele.parent();
         var index = td.parent().data("trid");
@@ -214,6 +224,10 @@ billFormMaker.prototype = {
         }
         this.scope[this.opts.dataName][index][field] = data;
         this.scope.$emit("billFieldEdited", this.scope[this.opts.dataName]);
+        
+        if(!isBlur) {
+            this.scope.$parent.billEndEdit(td, false);
+        }
     },
     setTypeaheadData: function(ele, scope, isBlur) {
         var self = this;
@@ -234,16 +248,16 @@ billFormMaker.prototype = {
             td.find("label").text(ele.val());
             td.find("*").not("label").remove();
             //设置在作用于中得数据对象
-            if(!self.scope[self.opts.dataName][index]) {
-                self.scope[self.opts.dataName][index] = {};
+            if(!scope[self.opts.dataName][index]) {
+                scope[self.opts.dataName][index] = {};
             }   
-            self.scope[self.opts.dataName][index][field] = val;
-            
+            scope[self.opts.dataName][index][field] = val;
+            delete(scope.$parent[dataName]);
             if(!isBlur) {
                 scope.$parent.billEndEdit(td, false);
             }
             setTimeout(function(){
-                self.scope.$parent.$broadcast("billFieldEdited", self.scope[self.opts.dataName]);
+                scope.$parent.$broadcast("billFieldEdited", scope[self.opts.dataName]);
             });
         }, timeout);
         
