@@ -230,6 +230,10 @@ var CommonView = {
         
         //默认表单提交方法，可自动判断是否编辑/新建
         needed.scope.doSubmit = opts.doSubmit ? opts.doSubmit : function(){
+            if(!needed.scope[opts.name].$valid) {
+//                console.log(needed.scope[opts.name]);
+                return;
+            }
             if(opts.id) {
                 var getParams = {};
                 for(var k in needed.routeParams) {
@@ -256,7 +260,7 @@ var CommonView = {
         var defaultOpt = {};
         
         opts = $.extend(defaultOpt, opts);
-        
+        opts.dataName = "";
         opts.fieldsDefine = model.getFieldsStruct(needed.scope.i18n, needed.res);
         needed.scope.config = opts;
         

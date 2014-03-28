@@ -94,6 +94,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 var opts = {};
                 
+                $scope.$on("billFieldEdited", function(event, data){
+                    $scope.formData = data;
+                });
+                
                 CommonView.displayBill({
                     scope: $scope,
                     res: GoodsRes

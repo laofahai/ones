@@ -15,9 +15,13 @@ var formMaker = function($scope, defaultData) {
         fieldsDefine: {},
         templates: formMaker.loadDefaultTemplate()
     };
+    
+    
 
     formMaker.opts = $.extend(true, defaultOpts, config);
-
+    
+//    console.log(JSON.stringify(formMaker.opts.fieldsDefine));
+    
     var field, dataBindName, fieldHTML, boxHTML, finalHTML = [];
     boxHTML = formMaker.opts.templates["commonForm/box.html"];
     dataBindName = formMaker.opts.name + "Data";

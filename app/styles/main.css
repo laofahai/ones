@@ -95,8 +95,13 @@ commonform {
 .billHeader label,.billHeader input,.billHeader span {
     font-size:12px;
 }
-.billBody table th:first-child {
+.billBody table thead th:nth-child(1), .billBody table tbody th:nth-child(1) {
+    width:40px;
+    text-align:center;
+}
+.billBody table thead th:nth-child(2) {
     width:60px;
+    text-align:center;
 }
 .billBody table td {
     position:relative;
@@ -136,4 +141,7 @@ commonform {
 }
 .typeAheadList li:hover,.typeAheadList li.active {
     background:#f2f2f2;
+}
+.tdEditAble .dropdown-menu {
+    width:100%;
 }

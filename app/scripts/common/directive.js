@@ -17,7 +17,9 @@ angular.module("erp.common.directives", [])
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
                             $scope.$on("commonForm.ready", function() {
-                                var html = formMaker($scope);
+                                var fm = new formMaker($scope);
+                                var html = fm.makeHTML();
+//                                var html = formMaker($scope);
                                 iElement.append($compile(html)($scope.$parent));
                             });
                         }
@@ -37,7 +39,7 @@ angular.module("erp.common.directives", [])
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
 //                            $scope.$on("billForm.ready", function() {
-                                var b = new billMaker($scope, $compile);
+                                var b = new billFormMaker($scope, $compile);
                                 iElement.append($compile(b.makeHTML())($scope.$parent));
 //                            });
 
@@ -50,7 +52,7 @@ angular.module("erp.common.directives", [])
             return {
                 restrict: "E",
                 scope: {
-                    title: "="
+                    wtitle: "="
                 },
                 replace: false,
                 transclusion: true,
@@ -60,7 +62,7 @@ angular.module("erp.common.directives", [])
                             '<div class="widget-body"><div class="widget-main no-padding">%(inner)s</div></div>'+
                         '</div>';
                     element.html(sprintf(template, {
-                        title : $rootScope.i18n.lang.widgetTitles[attrs.title],
+                        title : $rootScope.i18n.lang.widgetTitles[attrs.wtitle],
                         inner : element.html()
                     }));
                 }
