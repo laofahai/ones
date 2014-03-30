@@ -4,39 +4,39 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
         .config(function($routeProvider) {
             $routeProvider
                     .when('/HOME/DataModel', {
-                        templateUrl: "views/home/dataModel/index.html",
+                        templateUrl: "views/common/grid.html",
                         controller: "DataModelCtl"
                     })
                     .when('/HOME/DataModel/add', {
-                        templateUrl: "views/home/dataModel/edit.html",
+                        templateUrl: "views/common/edit.html",
                         controller: "DataModelEditCtl"
                     })
                     .when('/HOME/DataModel/edit/id/:id', {
-                        templateUrl: "views/home/dataModel/edit.html",
+                        templateUrl: "views/common/edit.html",
                         controller: "DataModelEditCtl"
                     })
                     .when('/HOME/DataModel/viewSub/id/:pid', {
-                        templateUrl: "views/home/dataModel/viewSub.html",
+                        templateUrl: "views/common/grid.html",
                         controller: "DataModelFieldsCtl"
                     })
                     .when('/HOME/DataModelFields/add/pid/:pid', {
-                        templateUrl: "views/home/dataModel/editSub.html",
+                        templateUrl: "views/common/edit.html",
                         controller: "DataModelFieldsEditCtl"
                     })
                     .when('/HOME/DataModelFields/edit/id/:id', {
-                        templateUrl: "views/home/dataModel/editSub.html",
+                        templateUrl: "views/common/edit.html",
                         controller: "DataModelFieldsEditCtl"
                     })
                     .when('/HOME/DataModelData/:modelId', {
-                        templateUrl: "views/home/dataModel/data.html",
+                        templateUrl: "views/common/grid.html",
                         controller: "DataModelDataCtl"
                     })
                     .when('/HOME/DataModelData/add/:modelId', {
-                        templateUrl: "views/home/dataModel/dataEdit.html",
+                        templateUrl: "views/common/edit.html",
                         controller: "DataModelDataEditCtl"
                     })
                     .when('/HOME/DataModelData/:modelId/edit/id/:id', {
-                        templateUrl: "views/home/dataModel/dataEdit.html",
+                        templateUrl: "views/common/edit.html",
                         controller: "DataModelDataEditCtl"
                     });
         })

@@ -5,7 +5,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
             $routeProvider
                     //入库
                     .when('/JXC/Stockin', {
-                        templateUrl: 'views/jxc/stockin/index.html',
+                        templateUrl: 'views/common/grid.html',
                         controller: 'JXCStockinCtl'
                     })
                     .when('/JXC/Stockin/add', {
@@ -14,15 +14,15 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     })
                     //商品基础
                     .when('/JXC/Goods', {
-                        templateUrl: 'views/jxc/goods/index.html',
+                        templateUrl: 'views/common/grid.html',
                         controller: 'JXCGoodsCtl'
                     })
                     .when('/JXC/Goods/add', {
-                        templateUrl: 'views/jxc/goods/edit.html',
+                        templateUrl: 'views/common/edit.html',
                         controller: 'JXCGoodsEditCtl'
                     })
                     .when('/JXC/Goods/edit/dataModel/id/:id', {
-                        templateUrl: 'views/jxc/goods/editDataModel.html',
+                        templateUrl: 'views/common/edit.html',
                         controller: 'JXCGoodsEditModelCtl'
                     })
                     .when('/JXC/Goods/edit/id/:id', {
@@ -30,15 +30,15 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'JXCGoodsEditCtl'
                     })
                     .when('/JXC/GoodsCategory', {
-                        templateUrl: 'views/jxc/goodsCategory/index.html',
+                        templateUrl: 'views/common/grid.html',
                         controller: 'JXCGoodsCategoryCtl'
                     })
                     .when('/JXC/GoodsCategory/add/pid/:pid', {
-                        templateUrl: 'views/jxc/goodsCategory/edit.html',
+                        templateUrl: 'views/common/edit.html',
                         controller: 'JXCGoodsCategoryEditCtl'
                     })
                     .when('/JXC/GoodsCategory/edit/id/:id', {
-                        templateUrl: 'views/jxc/goodsCategory/edit.html',
+                        templateUrl: 'views/common/edit.html',
                         controller: 'JXCGoodsCategoryEditCtl'
                     })
                     //仓库管理
@@ -48,14 +48,16 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     })
                     //库存列表
                     .when('/JXC/StockProductList', {
-                        templateUrl: 'views/jxc/stock/products.html',
+                        templateUrl: 'views/common/grid.html',
                         controller: 'StockProductsCtl'
                     })
         })
+        .controller("JXCStockCtl", ["$scope", function(){
+            
+        }])
         //入库单
         .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location",
             function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location) {
-                
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -79,18 +81,21 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
                     $scope.workflowActionList = data;
                 });
-                
-                $scope.doWorkflow = function(event, id) {
-                    $scope.selectedItems = [];
-                    return $scope.$parent.doWorkflow(event, id, $scope.selectedItems, StockinRes);
-                };
-                $scope.workflowActionDisabled = function(id){
-                    return $scope.$parent.workflowActionDisabled(id, $scope.selectedItems);
-                };
-                //@todo 判断 两条数据 下步操作相同情况
-                $scope.workflowDisabled = function(){
-                    return $scope.$parent.workflowActionDisabled($scope.selectedItems);
-                };
+                $scope.$watch(function(){
+                    return $scope.selectedItems;
+                }, function(){
+                    $scope.doWorkflow = function(event, id) {
+                        $scope.selectedItems = [];
+                        return $scope.$parent.doWorkflow(event, id, $scope.selectedItems, StockinRes);
+                    };
+                    $scope.workflowActionDisabled = function(id){
+                        return $scope.$parent.workflowActionDisabled(id, $scope.selectedItems);
+                    };
+                    //@todo 判断 两条数据 下步操作相同情况
+                    $scope.workflowDisabled = function(){
+                        return $scope.$parent.workflowDisabled($scope.selectedItems);
+                    };
+                });
             }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockProductsRes", "StockRes", "StockinEditModel", "DataModelDataRes", "$location",
             function($scope, StockinRes, GoodsRes, StockProductsRes, StockRes, StockinEditModel, DataModelDataRes, $location) {

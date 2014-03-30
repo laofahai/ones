@@ -105,7 +105,7 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 return result;
             };
             $scope.workflowDisabled = function(selectedItems) {
-                selectedItems = selectedItems || [];
+                selectedItems = !selectedItems || [];
                 if(!selectedItems.length) {
                     return true;
                 }
@@ -114,17 +114,18 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 for(var i=0;i<selectedItems.length;i++) {
                     var item = selectedItems[i];
                     if(!item["processes"]) {
+                        console.log(1);
                         disable = true;
                         break;
                     }
                     if(next !== null && next !== item["processes"]["nextActions"]) {
+                        console.log(2);
                         disable = true;
                         break;
                     }
                     disable = false;
                     next = item["processes"]["nextActions"];
                 }
-
                 return disable;
             };
 
@@ -180,7 +181,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
          * 通用提示信息显示。依赖ui.bootstrap
          * */
         ERP.controller("AlertCtl", function($scope, $rootScope) {
-            
             $scope.alerts = [];
             
             $scope.$watch(function(){

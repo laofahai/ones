@@ -82,6 +82,10 @@ angular.module("erp.jxc.services", [])
                         displayName: i18n.lang.bindDataModel,
                         hideInForm:true
                     },
+                    pinyin: {
+                        displayName: i18n.lang.firstChar,
+                        required: false
+                    },
                     bind_model: {
                         displayName: i18n.lang.bindDataModel,
                         inputType: "select",

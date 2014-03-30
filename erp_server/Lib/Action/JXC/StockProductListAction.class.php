@@ -15,4 +15,14 @@ class StockProductListAction extends CommonAction {
     
     protected $indexModel = "StockProductListView";
     
+    protected function _filter(&$map) {
+        if($_GET["id"]) {
+            unset($map["id"]);
+            $map["stock_id"] = abs(intval($_GET["id"]));
+        }
+        if($_GET["factory_code_all"]) {
+            $map["factory_code_all"] = $_GET["factory_code_all"];
+        }
+    }
+    
 }

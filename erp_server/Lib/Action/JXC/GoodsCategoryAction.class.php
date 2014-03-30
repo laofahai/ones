@@ -12,6 +12,18 @@
  */
 class GoodsCategoryAction extends NetestCategoryAction {
     
+    protected function pretreatment() {
+        switch($this->_method) {
+            case "post":
+                $_POST["pinyin"] = $_POST["pinyin"] ? $_POST["pinyin"] : Pinyin($_POST["name"]);
+                break;
+            case "put":
+                $_POST = I("put.");
+                $_POST["pinyin"] = $_POST["pinyin"] ? $_POST["pinyin"] : Pinyin($_POST["name"]);
+                break;
+        }
+    }
+    
 }
 
 ?>

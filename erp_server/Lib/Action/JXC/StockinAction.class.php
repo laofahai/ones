@@ -21,7 +21,6 @@ class StockinAction extends CommonAction {
      * @override
      */
     public function insert() {
-        
         if(!$_POST["data"]) {
             return;
         }
@@ -35,7 +34,7 @@ class StockinAction extends CommonAction {
             "status"  => 0,
             "user_id" => $this->user["id"],
             "stock_manager" => 0,
-            "total_num"=> $_POST["total_num"],
+            "total_num"=> $_POST["totalnum"],
             "memo"    => $_POST["memo"]
         );
         

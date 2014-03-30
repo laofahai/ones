@@ -114,8 +114,14 @@ class CommonAction extends RestAction {
         if($this->relation) {
             $model = $model->relation(true);
         }
-        $id = $_GET["id"];
-        $this->response($model->find($id));
+        
+        $map = array(
+            "id" => abs(intval($_GET["id"]))
+        );
+        $this->_filter($map);
+        
+        $item = $model->where($map)->find();
+        $this->response($item);
     }
 
     /**

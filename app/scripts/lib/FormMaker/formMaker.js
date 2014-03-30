@@ -73,6 +73,11 @@ formMaker.prototype = {
             } else {
                 delete(struct.required);
             }
+            
+            if(struct.value) {
+                self.scope.$parent[self.opts.dataBindName][field] = struct.value;
+            }
+            
             if(!struct.hideInForm && !struct.primary) {
                 fieldHTML = self.fm.maker.factory(field, struct, self.scope);
                 if (false != fieldHTML) {
