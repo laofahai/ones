@@ -53,12 +53,19 @@ $base = array(
     
 );
 
-return array_merge($base, 
+$urlRoutes = array_merge($base, 
     routeMaker("passport/userLogin", "Passport/Login", array("post")),
+        
     routeMaker("home/dataModel", "HOME/DataModel"),
-    routeMaker("jxc/goods", "JXC/Goods"),
-    routeMaker("jxc/goodsCategory", "JXC/GoodsCategory"),
     routeMaker("home/dataModelFields", "HOME/DataModelFields"),
     routeMaker("home/dataModelData", "HOME/DataModelData"),
-    routeMaker("jxc/stockProductList", "JXC/StockProductList", array("list"))
+        
+    routeMaker("workflow/nodes", "HOME/WorkflowNode"),
+        
+    routeMaker("jxc/goods", "JXC/Goods"),
+    routeMaker("jxc/goodsCategory", "JXC/GoodsCategory"),
+    routeMaker("jxc/stockProductList", "JXC/StockProductList", array("list")),
+    routeMaker("jxc/stockin", "JXC/Stockin", null)
 );
+
+return $urlRoutes;

@@ -53,8 +53,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     })
         })
         //入库单
-        .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "$location",
-            function($scope, StockinRes, StockinModel, $location) {
+        .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location",
+            function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -73,9 +73,74 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     resource: StockinRes,
                     location: $location
                 }, fields);
+                
+                WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
+                    $scope.workflowActionList = data;
+                });
+                
+                $scope.doWorkflow = function(event, id) {
+                    if($(event.target).parent().hasClass("disabled")) {
+                        return false;
+                    }
+                    
+                    var fs = StockinRes.doWorkflow({
+                        workflow: true,
+                        node_id: id,
+                        id: $scope.selectedItems[0].id
+                    }).$promise.then(function(data){
+                        $scope.selectedItems = [];
+                        $scope.$broadcast("gridData.changed");
+                    });
+                    
+                    
+                }
+                $scope.workflowActionDisabled = function(id){
+                    if(!$scope.selectedItems.length) {
+                        return true;
+                    }
+                    
+                    var result = true;
+                    for(var i=0;i<$scope.selectedItems.length;i++) {
+                        var item = $scope.selectedItems[i];
+                        if(!item["processes"]) {
+                            result = true;
+                            break;
+                        }
+                        for(var j=0;j<item.processes.nextNodes.length;j++) {
+                            if(item.processes.nextNodes[j].id == id) {
+                                result = false;
+                                break;
+                            }
+                        }
+                    }
+                    return result;
+                };
+                //@todo 两条数据 下步操作相同
+                $scope.workflowDisabled = function(){
+                    if(!$scope.selectedItems.length) {
+                        return true;
+                    }
+                    var next = null;
+                    var disable = true;
+                    for(var i=0;i<$scope.selectedItems.length;i++) {
+                        var item = $scope.selectedItems[i];
+                        if(!item["processes"]) {
+                            disable = true;
+                            break;
+                        }
+                        if(next !== null && next !== item["processes"]["nextActions"]) {
+                            disable = true;
+                            break;
+                        }
+                        disable = false;
+                        next = item["processes"]["nextActions"];
+                    }
+                    
+                    return disable;
+                };
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockinModel", "$location",
-            function($scope, StockinRes, GoodsRes, StockinModel, $location) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockinEditModel", "DataModelDataRes", "$location",
+            function($scope, StockinRes, GoodsRes, StockinEditModel, DataModelDataRes, $location) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -99,48 +164,21 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 });
                 
                 CommonView.displayBill({
+                    name: "stockinScript",
                     scope: $scope,
-                    res: GoodsRes
-                }, StockinModel, opts);
+                    modelRes: StockinRes,
+                    res: {
+                        goods: GoodsRes,
+                        dataModelData: DataModelDataRes
+                    }
+                }, StockinEditModel, opts);
                 
+                $scope.formMetaData = {};
                 
-                $scope.today = function() {
-                    $scope.dt = new Date();
-                  };
-                  $scope.today();
-
-                  $scope.showWeeks = true;
-                  $scope.toggleWeeks = function () {
-                    $scope.showWeeks = ! $scope.showWeeks;
-                  };
-
-                  $scope.clear = function () {
-                    $scope.dt = null;
-                  };
-
-                  // Disable weekend selection
-                  $scope.disabled = function(date, mode) {
-//                    return ( mode === "day" && ( date.getDay() === 0 || date.getDay() === 6 ) );
-                  };
-
-                  $scope.toggleMin = function() {
-                    $scope.minDate = ( $scope.minDate ) ? null : new Date();
-                  };
-                  $scope.toggleMin();
-
-                  $scope.open = function($event) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-
-                    $scope.opened = true;
-                  };
-
-                  $scope.dateOptions = {
-                    "starting-day": 1
-                  };
-
-                  $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
-                  $scope.format = $scope.formats[0];
+                $scope.formMetaData.inputTime = new Date();
+                $scope.maxDate = new Date();
+                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
+                $scope.format = $scope.formats[0];
                 
             }])
         //商品管理

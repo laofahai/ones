@@ -6,7 +6,7 @@ var formFieldsMaker = function(scope, opts) {
     
     var defaultOpts = {};
     
-    this.maker = new fieldsMakerFactory(this);
+    
     this.scope = scope;
     this.opts = $.extend(defaultOpts, opts);
     this.templates = {
@@ -15,13 +15,17 @@ var formFieldsMaker = function(scope, opts) {
         "fields/select": '<select %(attr)s ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s"></select>',
         'fields/email' : '<input type="number" %s />',
         //'fields/typeahead': '<input type="typeahead" %s />',
-        'fields/typeahead' : '<input type="text" ng-model="%(model)s" typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s />'
+        'fields/typeahead' : '<input type="text" ng-model="%(model)s" typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s />'
     };
+    
+    this.maker = new fieldsMakerFactory(this, this.opts);
 };
 
 var fieldsMakerFactory = function(fieldsMaker, opts) {
     this.$parent = fieldsMaker;
-    var defaultOpts = {};
+    var defaultOpts = {
+        multi: false
+    };
     this.opts = $.extend(defaultOpts, opts);
     this.opts.enabledAttrs = ["id", "value", "name", 
         "required", "class", "ng-model", "ng-blur", 
@@ -60,10 +64,10 @@ fieldsMakerFactory.prototype = {
      * */
     _attr: function(name, fieldDefine) {
         var k, v, html = [];
-        fieldDefine.name = name;
         //多行数据 如bill
         if(!this.opts.multi) {
             fieldDefine.id = "id_"+name;
+            fieldDefine.name = name;
         }
         for (k in fieldDefine) {
             if(this.opts.enabledAttrs.indexOf(k) < 0) {
@@ -98,36 +102,41 @@ fieldsMakerFactory.prototype = {
         }
         delete(fieldDefine.dataSource);
         $scope.$parent[name+"s"] = data;
-        var rs= sprintf(this.$parent.templates["fields/select"], {
+        return sprintf(this.$parent.templates["fields/select"], {
             attr: this._attr(name, fieldDefine),
             key : name+"item",
             data: name+"s"
         });
-        return rs;
     },
     _typeahead: function(name, fieldDefine, $scope) {
         var methodName = name+"DataSource";
         var nameField = fieldDefine.nameField || "name";
         var valueField= fieldDefine.valueField|| "id";
+        var queryParams;
         $scope.$parent[methodName] = function(val){
-            return fieldDefine.dataSource.query({typeahead: val}).$promise.then(function(data){
+            queryParams = $.extend(fieldDefine.queryParams || {}, {typeahead: val});
+            return fieldDefine.dataSource.query(queryParams).$promise.then(function(data){
                 var dataList = [];
                 angular.forEach(data, function(item){
                     dataList.push({
                         label:item[nameField],
-                        value:item[valueField]
+                        value:item[valueField],
+                        category: item.goods_category_id,
+                        factory_code: item.factory_code
                     });
-//                    dataList.push(item.name);
                 });
-//                console.log(dataList);
                 return dataList;
             });
         };
-        
-//        $scope.$parent.showselected = function(){
-//            console.log(arguments);
-//        };
-
+        //设置默认值
+        if(fieldDefine.value) {
+            $scope.$parent[name+"TAIT"] = fieldDefine.value;
+        }
+        //@todo 设置默认显示
+//        if(fieldDefine.autoQuery) {
+//            $scope.$parent.versionTAIT = "*";
+//            $scope.$parent[methodName]();
+//        }
         
         var html = sprintf(this.$parent.templates["fields/typeahead"], {
             key: name+"item",

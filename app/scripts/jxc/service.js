@@ -157,7 +157,36 @@ angular.module("erp.jxc.services", [])
             
             return obj;
         })
-        .service("StockinModel", function() {
+        .service("StockinModel", function(){
+            var obj = {};
+            obj.getFieldsStruct= function(i18n) {
+                return {
+                    bill_id: {
+                        displayName: i18n.lang.billId
+                    },
+                    subject: {
+                        displayName: i18n.lang.subject
+                    },
+                    dateline: {
+                        displayName: i18n.lang.dateline,
+                        cellFilter: "dateFormat"
+                    },
+                    status_text: {
+                        displayName: i18n.lang.status,
+                        field: "processes.status_text"
+                    },
+                    sponsor: {
+                        displayName: i18n.lang.sponsor
+                    },
+                    stock_manager: {
+                        displayName: i18n.lang.stockManager
+                    }
+                };
+            };
+            
+            return obj;
+        })
+        .service("StockinEditModel", function() {
             var obj = {};
             obj.getFieldsStruct = function(i18n) {
                 var fields = {
@@ -166,30 +195,43 @@ angular.module("erp.jxc.services", [])
                         displayName: "ID",
                         billAble: false
                     },
-                    factory_code_all: {
-                        displayName: i18n.lang.factoryCodeAll,
-                        editAble: false,
-                        billAble:false
-                    },
-                    goods_name: {
-                        displayName: i18n.lang.name,
-                        inputType: "typeahead"
-                    },
-                    category_name: {
-                        displayName: i18n.lang.category,
-                        billAble: false
-                    },
-                    stock_name: {
-                        displayName: i18n.lang.stock
+                    goods_id: {
+                        displayName: i18n.lang.goods,
+                        inputType: "typeahead",
+                        listAble: false
                     },
                     standard: {
-                        displayName: i18n.lang.standard
+                        displayName: i18n.lang.standard,
+                        nameField: "data",
+                        valueField: "id",
+                        inputType: "typeahead",
+                        autoQuery: true,
+                        queryWithExistsData: ["goods_id"],
+                        queryParams: {
+                            fieldAlias: "standard"
+                        }
                     },
                     version: {
-                        displayName: i18n.lang.version
+                        displayName: i18n.lang.version,
+                        nameField: "data",
+                        valueField: "id",
+                        inputType: "typeahead",
+                        autoQuery: true,
+                        queryWithExistsData: ["goods_id"],
+                        queryParams: {
+                            fieldAlias: "version"
+                        }
                     },
                     num: {
-                        displayName: i18n.lang.storeNum
+                        displayName: i18n.lang.num,
+                        inputType: "number"
+                    },
+                    stock: {
+                        displayName: i18n.lang.stock
+                    },
+                    store_num: {
+                        displayName: i18n.lang.storeNum,
+                        editAble:false
                     }
 //                    store_min: {
 //                        displayName: i18n.lang.store_min,
@@ -200,8 +242,12 @@ angular.module("erp.jxc.services", [])
                     
                 };
                 // GoodsRes
-                if(arguments[1]) {
-                    fields.goods_name.dataSource = arguments[1];
+                if(arguments[1].goods) {
+                    fields.goods_id.dataSource = arguments[1].goods;
+                }
+                if(arguments[1].dataModelData) {
+                    fields.standard.dataSource = arguments[1].dataModelData;
+                    fields.version.dataSource = arguments[1].dataModelData;
                 }
                 
                 return fields;

@@ -35,7 +35,9 @@ var CommonView = {
          * 字段名称
          * */
         for(var f in fieldsStruct) {
-            fieldsStruct[f].field = f;
+            if(!fieldsStruct[f]["field"]) {
+                fieldsStruct[f].field = f;
+            }
             columnDefs.push(fieldsStruct[f]);
         }
         
@@ -101,12 +103,10 @@ var CommonView = {
             }
         };
         needed.scope.doViewDataModel = opts.doViewDataModel ? opts.doViewDataModel : function(){
-//            console.log("/HOME/DataModelData/modelId/"+needed.scope.selectedItems[0].bind_model);
             needed.location.url("/HOME/DataModelData/"+needed.scope.selectedItems[0].bind_model);
         };
         needed.scope.doEditSelected = opts.doEditSeleted ? opts.doEditSelected : function(){
             if(needed.scope.selectedItems.length) {
-//                console.log(opts.module+opts.subModule+"/edit/id/"+needed.scope.selectedItems[0].id);return;
                 needed.location.url(opts.module+opts.subModule+"/edit/id/"+needed.scope.selectedItems[0].id);
             }
         };
@@ -177,6 +177,11 @@ var CommonView = {
                 getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
             }
         }, true);
+        
+        needed.scope.$on('gridData.changed', function(){
+            needed.scope.selectedItems = [];
+            getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+        });
         
         needed.scope.gridOptions = opts;
 
@@ -257,12 +262,31 @@ var CommonView = {
      * */
     displayBill: function(needed, model, opts) {
         
-        var defaultOpt = {};
+        var defaultOpt = {
+            dataName: "formData"
+        };
         
         opts = $.extend(defaultOpt, opts);
         opts.dataName = "";
         opts.fieldsDefine = model.getFieldsStruct(needed.scope.i18n, needed.res);
         needed.scope.config = opts;
+        
+        //默认表单提交方法，可自动判断是否编辑/新建
+        needed.scope.doSubmit = opts.doSubmit ? opts.doSubmit : function(){
+            var data = $.extend(needed.scope.formMetaData, {data: needed.scope.formData});
+            if(opts.id) {
+                var getParams = {};
+                for(var k in needed.routeParams) {
+                    getParams[k] = needed.routeParams[k];
+                }
+                getParams.id = opts.id;
+                needed.modelRes.update(getParams, data);
+            } else {
+                needed.modelRes.save(data);
+            }
+            return;
+            needed.location.url(opts.returnPage);
+        };
         
     }
 

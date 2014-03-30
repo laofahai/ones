@@ -15,6 +15,12 @@ class DataModelDataAction extends CommonAction {
     
     protected $indexModel = "DataModelDataView";
     
+    protected function _filter(&$map) {
+        if($_GET['fieldAlias']) {
+            $map["DataModelFields.field_name"] = $_GET['fieldAlias'];
+        }
+    }
+    
     protected function pretreatment() {
         $_POST["model_id"] = $_POST["modelId"];
     }

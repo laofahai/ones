@@ -17,6 +17,13 @@ return array(
     'URL_MODEL' => 1,
     'URL_ROUTE_RULES' => require "route.php",
     
+    /**
+     * 单据编号前缀
+     */
+    "BILL_PREFIX" => array(
+        "Stockin" => "RK"
+    ),
+    
     
     /**
      * AUTH 权限控制

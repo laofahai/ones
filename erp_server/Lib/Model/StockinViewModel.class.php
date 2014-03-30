@@ -15,9 +15,7 @@ class StockinViewModel extends CommonViewModel {
     protected $workflowAlias = 'stockin';
     
     protected $viewFields = array(
-        "Stockin" => array("id","subject","dateline","status","total_num","stock_id","user_id","stock_manager","memo"),
-        "Stock" => array("name"=>"stock_name", "_on" => "Stock.id=Stockin.stock_id"),
-        "User"  => array("truename"=>"sponsor", "_on" => "User.id=Stockin.user_id"),
+        "Stockin" => array("id","bill_id", "subject","dateline","status","total_num","user_id","stock_manager","memo"),
     );
     
     protected $status_lang = array(
@@ -27,6 +25,32 @@ class StockinViewModel extends CommonViewModel {
         "inverse", "info", "success"
     );
     
+    
+    public function select($options = array()) {
+        $data = parent::select($options);
+        if(!$data) {
+            return $data;
+        }
+        
+        foreach($data as $k=>$v) {
+            if($v["stock_manager"]) {
+                $data[$k]["stock_manager"] = toTruename($v["stock_manager"]);
+            }
+            $data[$k]["sponsor"] = toTruename($v["user_id"]);
+            $ids[] = $v["id"];
+        }
+        
+        if($this->workflowAlias) {
+            import("@.Workflow.Workflow");
+            $workflow = new Workflow($this->workflowAlias);
+            $processData = $workflow->getListProcess($ids);
+            foreach($data as $k=> $v) {
+                $data[$k]["processes"] = $processData[$v[$this->workflowMainRowField]];
+            }
+        }
+        
+        return $data;
+    }
     
 }
 

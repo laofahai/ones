@@ -27,7 +27,9 @@ var billFormMaker = function($scope, $compile){
         
     };
     
-    this.fm = new formFieldsMaker($scope);
+    this.fm = new formFieldsMaker($scope, {
+        multi: true
+    });
     
 };
 
@@ -65,7 +67,7 @@ billFormMaker.prototype = {
                     field: field,
                     type: item.inputType,
                     tdClass: false !== item.editAble ? "tdEditAble" : "",
-                    event: false !== item.editAble ? 'ng-dblclick="billFieldEdit($event.target)"' : ""
+                    event: false !== item.editAble ? 'ng-click="billFieldEdit($event.target)"' : ""
                 }));
             }
         });
@@ -85,21 +87,30 @@ billFormMaker.prototype = {
             struct.class="width-100 editAble";
             
             //支持的事件列表
-            var eventsList = ["blur", "click", "keydown"];
+            var eventsList = ["blur", "click", "keydown", "focus"];
             var events = {};
             angular.forEach(eventsList, function(e){
-                var m = sprintf("on%s%s", type.ucfirst(), e.ucfirst());
+                var m = sprintf("on%s%s%s", field.ucfirst(), type.ucfirst(), e.ucfirst());
                 if(m in scope.$parent) {
                     events["ng-"+e] = m;
+                } else {
+                    m = sprintf("on%s%s", type.ucfirst(), e.ucfirst());
+                    if(m in scope.$parent) {
+                        events["ng-"+e] = m;
+                    }
                 }
             }); 
             var html = self.fm.maker.factory(field, struct, scope, $(ele).text(), events);
             html = self.compile(html)(scope.$parent);
             td.append(html);
-            td.find(".editAble").focus();
+            td.find(".editAble").focus().select();
+            
         };
         
         //结束编辑 ele 应为td子元素
+        /**
+         * @todo 回调方法
+         * */
         scope.$parent.billEndEdit = function(td, isBlur){
             var next = false;
             var tdEditAbles = td.parent().find(".tdEditAble");
@@ -154,6 +165,24 @@ billFormMaker.prototype = {
             self.setData(ele, ele.val(), true);
         };
         scope.$parent.onTextKeydown = function(event) {
+            if(event.keyCode == 9 && !event.shiftKey) {
+                window.event.returnValue=false;
+                var ele = $(event.target);
+                self.setData(ele, ele.val());
+            } else if(event.keyCode == 13) {
+                var ele = $(event.target);
+                self.setData(ele, ele.val());
+            } else if((event.shiftKey) && (event.keyCode==9)) {
+                window.event.returnValue=false;
+                console.log("shift tab");
+            }
+        };
+        scope.$parent.onNumberBlur = function(event) {
+            var ele = $(event.target);
+            scope.$parent.billEndEdit(ele.parent(), true);
+            self.setData(ele, ele.val(), true);
+        };
+        scope.$parent.onNumberKeydown = function(event) {
             if(event.keyCode == 9 && !event.shiftKey) {
                 window.event.returnValue=false;
                 var ele = $(event.target);
@@ -237,10 +266,7 @@ billFormMaker.prototype = {
             var field = td.data("bind-model");
             var dataName = field+"TAIT";
             var index = td.parent().data("trid");
-            var val;
-            if(dataName in scope.$parent) {
-                val = scope.$parent[dataName].value;
-            } else {
+            if(!(dataName in scope.$parent)) {
                 td.find("label").text("");
                 td.find("*").not("label").remove();
                 return;
@@ -251,7 +277,7 @@ billFormMaker.prototype = {
             if(!scope[self.opts.dataName][index]) {
                 scope[self.opts.dataName][index] = {};
             }   
-            scope[self.opts.dataName][index][field] = val;
+            scope[self.opts.dataName][index][field] = scope.$parent[dataName];
             delete(scope.$parent[dataName]);
             if(!isBlur) {
                 scope.$parent.billEndEdit(td, false);
@@ -259,6 +285,7 @@ billFormMaker.prototype = {
             setTimeout(function(){
                 scope.$parent.$broadcast("billFieldEdited", scope[self.opts.dataName]);
             });
+            scope.$parent.$digest();
         }, timeout);
         
     }

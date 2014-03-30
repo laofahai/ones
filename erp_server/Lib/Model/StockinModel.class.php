@@ -13,13 +13,41 @@
 class StockinModel extends CommonModel {
     
     protected $_auto = array(
-        array("dateline","time",1,"function"),
         array("status", 0),
-        array("confirm_user_id", "getCurrentUid", 1, "function"),
         array("user_id", "getCurrentUid", 1, "function")
     );
     
     protected $workflowAlias = "stockin";
+    
+    
+    public function newBill($billData, $billItems) {
+        if(!$billItems) {
+            return;
+        }
+        
+        $this->startTrans();
+        $billId = $this->add($billData);
+        
+        $itemsModel = D("StockinDetail");
+        foreach($billItems as $billItem) {
+            $billItem["stockin_id"] = $billId;
+            $id = $itemsModel->add($billItem);
+            
+            if(!$id) {
+                $this->rollback();
+                break;
+            }
+        }
+        
+        $this->commit();
+        
+        import("@.Workflow.Workflow");
+        $workflow = new Workflow($this->workflowAlias);
+        $node = $workflow->doNext($billId, "", true);
+        
+        return $billId;
+        
+    }
     
     
 }

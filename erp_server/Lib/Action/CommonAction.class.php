@@ -14,6 +14,8 @@
 class CommonAction extends RestAction {
     
     protected $indexModel = null;
+    
+    protected $user;
 
     public function __construct() {
         parent::__construct();
@@ -21,11 +23,13 @@ class CommonAction extends RestAction {
 //            exit("Permission Denied");
         }
 
+        import("@.Workflow.Workflow");
         import("@.ORG.Auth");
-
-        if ($_REQUEST["sessionHash"]) {
-            session_id($_GET["sessionhash"]);
+        if ($_SERVER["HTTP_SESSIONHASH"]) {
+            session_id($_SERVER["HTTP_SESSIONHASH"]);
         }
+        
+        $this->user = $_SESSION["user"];
     }
 
     protected function isLogin() {
@@ -101,6 +105,10 @@ class CommonAction extends RestAction {
      * 通用REST GET方法
      */
     public function read() {
+        if("true" === $_GET["workflow"]) {
+            return $this->doWorkflow();
+        }
+        
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);
         if($this->relation) {
@@ -188,6 +196,30 @@ class CommonAction extends RestAction {
         }
     }
     
+    /**
+     * 执行工作流节点
+     */
+    protected function doWorkflow() {
+        $mainRowid = abs(intval($_GET["id"]));
+        $nodeId = abs(intval($_GET["node_id"]));
+        if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
+           $this->error("not_allowed");
+        }
+        
+        $workflow = new Workflow($this->workflowAlias);
+        $rs = $workflow->doNext($mainRowid, $nodeId, false, false);
+        if(false === $rs) {
+            $this->error("not_allowed");
+        }
+        // 结束信息返回true、或者没有任何返回值时跳转
+        if(true === $rs or !$rs) {
+            $this->success();
+        }
+    }
+    
+    /**
+     * 过滤器
+     */
     protected function _filter(&$map) {}
     
     /**

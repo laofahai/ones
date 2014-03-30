@@ -18,6 +18,7 @@ class GoodsAction extends CommonAction {
         $typeahead = trim(strip_tags($_GET["typeahead"]));
         if($typeahead) {
             $map["name"] = array("LIKE", "%{$typeahead}%");
+            $map["factory_code"] = array("LIKE", "{$typeahead}%");
             $typeahead = strtoupper($typeahead);
             $map["pinyin"] = array("LIKE", "%{$typeahead}%");
             $map["_logic"] = "OR";

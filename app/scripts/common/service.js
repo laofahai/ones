@@ -7,7 +7,9 @@
 ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "passport/profile.json", null, {'update': { method:'PUT' }});
     }]);
-
+ERP.factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "workflow/nodes.json", null, {'update': { method:'PUT' }});
+    }]);
 ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'update': { method:'PUT' }});
     }]);
@@ -24,7 +26,7 @@ ERP.factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': { method:'PUT' }});
     }]);
 ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "jxc/stockin/:id.json");
+        return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method:'GET'}});
     }]);
 ERP.factory("StockProductsRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/stockProductList/:id.json");

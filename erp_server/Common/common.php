@@ -10,6 +10,45 @@ function getPwd($source) {
     return md5($source);
 }
 
+function getUserCache() {
+    $userData = F("User/All");
+    if (!$userData) {
+        $tmp = D("User")->select();
+        foreach ($tmp as $v) {
+            unset($v["password"]);
+            $userData[$v["id"]] = $v;
+        }
+        F("User/All", $userData);
+    }
+    return $userData;
+}
+
+function getUserTruenameArray() {
+    $users = getUserCache();
+    foreach($users as $k=>$v) {
+        $users[$k] = $v["truename"];
+    }
+    return $users;
+}
+
+function toDate($str, $format = "Y-m-d H:i:s") {
+    return date($format, $str);
+}
+function toTruename($uid) {
+    if (!$uid) {
+        return L("Unnamed");
+    }
+    $userData = getUserCache();
+    return $userData[$uid]["truename"];
+}
+function toUsername($uid) {
+    if (!$uid) {
+        return L("Unnamed");
+    }
+    $userData = getUserCache();
+    return $userData[$uid]["username"];
+}
+
 /**
  * 去除数组索引
  */
@@ -20,7 +59,16 @@ function reIndex($data) {
     return $tmp;
 }
 
+/**
+ * 
+ */
+function inExplodeArray($id, $ids, $split=",") {
+    return in_array($id, explode($split, $ids));
+}
 
+function getCurrentUid() {
+    return $_SESSION["user"]["id"];
+}
 
 /**
  * 汉字转拼音

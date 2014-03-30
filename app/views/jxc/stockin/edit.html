@@ -1,40 +1,53 @@
 <div ng-controller="JXCStockinEditCtl">
     <pageactions />
 <div class="billContainer">
-    <form name="stockinScript">
+    <form name="stockinScript" novalidate>
         <div class="billHeader">
             {{formData}}
             <div class="row">
                 <div class="col-sm-3">
-                    <label>单位：</label>
-                    <input type="text" />
+                    <label>{{i18n.lang.subject}}: </label>
+                    <input type="text" class="input-medium" ng-model="formMetaData.subject" required />
                 </div>
                 <div class="col-sm-3">
-                    <label>时间：</label>
+                    <label>{{i18n.lang.dateline}}: </label>
                     <span class="input-icon input-icon-right">
                         <input type="text" class="form-control" 
                                datepicker-popup="{{format}}" 
-                               ng-model="dt" 
-                               is-open="opened" 
-                               min="minDate" 
-                               max="'2015-06-22'" 
+                               ng-model="formMetaData.inputTime"
+                               is-open="opened"
+                               max="maxDate" 
+                               show-weeks="false"
                                datepicker-options="dateOptions" 
                                date-disabled="disabled(date, mode)" 
-                               ng-required="true" close-text="Close" />
+                               ng-required="true" close-text="{{i18n.lang.actions.close}}" />
                         <i class="icon-calendar gray"></i>
                     </span>
                 </div>
                 <div class="col-sm-3">
                 </div>
                 <div class="col-sm-3 align-right">
-                    <label>单据编号：</label>
-                    <span>RK201303030415</span>
                 </div>
             </div>
         </div>
         <div class="billBody">
             <bill config="config"></bill>
         </div>
-        <div class="billFooter"></div>
+        <div class="billFooter clearfix">
+            <div class="row form-group">
+                <label class="col-sm-1 text-right">
+                    {{i18n.lang.memo}}
+                </label>
+                <div class="col-sm-11">
+                    <input type="text" ng-model="formMetaData.memo" class="width-100" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-7">
+                    <button class="btn btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
+                </div>
+            </div>
+        </div>
     </form>
 </div>

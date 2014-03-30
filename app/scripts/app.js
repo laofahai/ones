@@ -23,11 +23,9 @@ var ERP = angular.module('erp', [
          */
         .config(function($httpProvider) {
             var interceptor = ['$rootScope', '$q', function(scope, $q) {
-
                     function success(response) {
                         return response;
                     }
-
                     function error(response) {
                         var status = response.status;
                         if (401 === status) {
@@ -49,8 +47,8 @@ var ERP = angular.module('erp', [
             $httpProvider.responseInterceptors.push(interceptor);
         })
         .run(function($http, $rootScope, $templateCache) {
-
             //设置HTTP请求默认头
+            $http.defaults.headers.common["sessionHash"] = loginHash;
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
             $http.defaults.transformRequest = function(data) {
@@ -58,8 +56,6 @@ var ERP = angular.module('erp', [
             };
 
         });
-
-
 
 
 /**
