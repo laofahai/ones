@@ -35,6 +35,7 @@ class StockinAction extends CommonAction {
             "status"  => 0,
             "user_id" => $this->user["id"],
             "stock_manager" => 0,
+            "total_num"=> $_POST["total_num"],
             "memo"    => $_POST["memo"]
         );
         
@@ -48,6 +49,7 @@ class StockinAction extends CommonAction {
                         $billItem["goods_id"]["factory_code"], 
                         $billItem["standard"]["value"],
                         $billItem["version"]["value"]),
+                "memo" => $billItem["memo"],
                 "stock_id"   => 1//$billItem["stock_id"]
             );
         }

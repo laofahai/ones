@@ -43,9 +43,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-5"></div>
+                <div class="col-sm-1 text-right">
+                    {{i18n.lang.sponsor}}
+                </div>
+                <div class="col-sm-4">
+                    <span ng-bind="$parent.userInfo.truename"></span>
+                </div>
                 <div class="col-sm-7">
-                    <button class="btn btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
+                    <button class="btn btn-sm btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
                 </div>
             </div>
         </div>

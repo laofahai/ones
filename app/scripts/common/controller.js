@@ -40,7 +40,5 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
 
         }])
         .controller('navHeaderCtl', function($scope){
-            $scope.$on("initDataLoaded", function(event, data){
-                $scope.userInfo = data.user;
-            });
+            
         });

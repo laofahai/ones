@@ -27,7 +27,7 @@ var fieldsMakerFactory = function(fieldsMaker, opts) {
         multi: false
     };
     this.opts = $.extend(defaultOpts, opts);
-    this.opts.enabledAttrs = ["id", "value", "name", 
+    this.opts.enabledAttrs = ["id", "value", "name", "totalAble", 
         "required", "class", "ng-model", "ng-blur", 
         "ng-focus", "ng-click", "ng-dblclick", "ng-keydown"];
 };

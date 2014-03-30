@@ -15,7 +15,7 @@ var billFormMaker = function($scope, $compile){
     this.opts.templates = this.templates = {
         'bills/box.html' : '<table class="table table-bordered" id="billTable">'+
                 '<thead><tr><th>#</th><th></th>%(headHTML)s</tr></thead>'+
-                '<tbody>%(bodyHTML)s</tbody></table>{{$parent.formData}}',
+                '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>{{$parent.formData}}',
         'bills/fields/rowHead.html': '<th>%(i)s</th><td class="center"><label class="rowHead">'+
                                 '<i class="icon icon-plus" ng-click="billAddRow($event.target)"></i> '+
                                 '<i class="icon icon-trash" ng-click="billRemoveRow($event.target)"></i> '+
@@ -38,7 +38,8 @@ billFormMaker.prototype = {
         this.bindEvents(this.scope);
         return sprintf(this.opts.templates["bills/box.html"], {
             headHTML : this.makeHead(this.opts.fieldsDefine),
-            bodyHTML : this.makeBody(this.opts.fieldsDefine)
+            bodyHTML : this.makeBody(this.opts.fieldsDefine),
+            footHTML : this.makeFoot(this.opts.fieldsDefine)
         });
     },
     makeHead: function(fieldsDefine){
@@ -56,6 +57,19 @@ billFormMaker.prototype = {
             html.push(this.makeRow(fieldsDefine, i));
         }
         return html.join("");
+    },
+    makeFoot: function(fieldsDefine){
+        var html = ['<td colspan="2" align="center">'+this.scope.$parent.i18n.lang.total+'</td>'];
+        angular.forEach(fieldsDefine, function(item, field){
+            if(item.billAble !== false) {
+                if(item.totalAble) {
+                    html.push(sprintf('<td class="tdTotalAble" tdname="%s" id="tdTotalAble%s">0</td>', field, field));
+                } else {
+                    html.push("<td></td>");
+                }
+            }
+        });
+        return sprintf("<tr>%s</tr>", html.join(""));
     },
     makeRow: function(fieldsDefine,i){
         var self = this;
@@ -180,16 +194,16 @@ billFormMaker.prototype = {
         scope.$parent.onNumberBlur = function(event) {
             var ele = $(event.target);
             scope.$parent.billEndEdit(ele.parent(), true);
-            self.setData(ele, ele.val(), true);
+            self.setNumberData(ele, ele.val());
         };
         scope.$parent.onNumberKeydown = function(event) {
             if(event.keyCode == 9 && !event.shiftKey) {
                 window.event.returnValue=false;
                 var ele = $(event.target);
-                self.setData(ele, ele.val());
+                self.setNumberData(ele, ele.val());
             } else if(event.keyCode == 13) {
                 var ele = $(event.target);
-                self.setData(ele, ele.val());
+                self.setNumberData(ele, ele.val());
             } else if((event.shiftKey) && (event.keyCode==9)) {
                 window.event.returnValue=false;
                 console.log("shift tab");
@@ -238,6 +252,24 @@ billFormMaker.prototype = {
             $(tr).find("th:first").html(index);
             index++;
         });
+    },
+    setNumberData: function(element, data, isBlur) {
+        if($(element).attr("totalAble")) {
+            var field = $(element).parent().data("bind-model");
+            this.setData(element, data, isBlur);
+            var total = 0;
+            for(var i=0; i<this.scope[this.opts.dataName].length;i++) {
+                if(!this.scope[this.opts.dataName][i]) {
+                    continue;
+                }
+                total += parseFloat(this.scope[this.opts.dataName][i][field]);
+            }
+            total = total.toFixed(2);
+            $("#tdTotalAble"+field).text(total);
+        } else {
+            this.setData(element, data, isBlur);
+        }
+        
     },
     setData: function(element, data, isBlur) {
         var ele = $(element);

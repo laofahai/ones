@@ -57,7 +57,6 @@ var ERP = angular.module('erp', [
 
         });
 
-
 /**
  * Root Ctrl
  * */
@@ -106,8 +105,14 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                  * 获取页面基本信息
                  * */
                 $http.get(conf.BSU+"HOME/Index/index").success(function(data){
+                    $rootScope.uesrInfo = data.user;
                     $scope.$broadcast("initDataLoaded", data);
                 });
+                
+                $scope.$on("initDataLoaded", function(event, data){
+                    $scope.userInfo = data.user;
+                });
+                
             });
 
         }]);

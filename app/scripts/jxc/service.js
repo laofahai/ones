@@ -167,6 +167,9 @@ angular.module("erp.jxc.services", [])
                     subject: {
                         displayName: i18n.lang.subject
                     },
+                    total_num: {
+                        displayName: i18n.lang.totalNum
+                    },
                     dateline: {
                         displayName: i18n.lang.dateline,
                         cellFilter: "dateFormat"
@@ -222,16 +225,20 @@ angular.module("erp.jxc.services", [])
                             fieldAlias: "version"
                         }
                     },
-                    num: {
-                        displayName: i18n.lang.num,
-                        inputType: "number"
-                    },
                     stock: {
                         displayName: i18n.lang.stock
                     },
                     store_num: {
                         displayName: i18n.lang.storeNum,
                         editAble:false
+                    },
+                    num: {
+                        displayName: i18n.lang.num,
+                        inputType: "number",
+                        totalAble: true
+                    },
+                    memo: {
+                        displayName: i18n.lang.memo
                     }
 //                    store_min: {
 //                        displayName: i18n.lang.store_min,
