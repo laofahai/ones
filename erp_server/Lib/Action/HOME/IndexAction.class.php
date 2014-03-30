@@ -68,7 +68,7 @@ class IndexAction extends CommonAction {
                 "label"  => $rootLabel,
                 "icon"   => $data["icon"],
                 "id"     => md5($rootLabel.json_encode($data)),
-                "url"    => $data["url"] ? $data["url"] : ""
+                "url"    => $data["action"] ? $data["action"] : ""
             );
             $theNav = reIndex($theNav);
         }

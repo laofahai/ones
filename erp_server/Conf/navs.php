@@ -26,7 +26,6 @@ return array(
             "stock_transfer" => "JXC/StockTransfer"
         ),
         "icon" => "th-large",
-        "action"=> "#nogo"
     ),
     "purchase" => array(
         "childs" => array(
@@ -41,7 +40,6 @@ return array(
             "returns"=> "JXC/Returns",
         ),
         "icon" => "pencil",
-        "action" => "#nogo"
     ),
 //    "produce" => array(
 //        "childs" => array(

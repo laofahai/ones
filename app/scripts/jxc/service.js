@@ -109,6 +109,25 @@ angular.module("erp.jxc.services", [])
             
             return obj;
         })
+        .service("StockModel", function(){
+            var obj = {};
+            obj.getFieldsStruct = function(i18n){
+                return {
+                    id: {
+                        primary: true,
+                        displayName: "ID"
+                    },
+                    name: {},
+                    total_num: {
+                        displayName: i18n.lang.total,
+                        hideInForm: true
+                    }
+                }
+                
+            }
+            
+            return obj;
+        })
         .service("StockProductModel", function() {
             var obj = {};
             obj.getFieldsStruct = function(i18n) {

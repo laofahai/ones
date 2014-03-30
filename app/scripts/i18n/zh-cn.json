@@ -47,6 +47,14 @@
                         "edit": ["修改分类"]
                     }
                 },
+                "Stock" : {
+                    "name": "仓库管理",
+                    "actions": {
+                        "index": ["仓库列表"],
+                        "add": ["新建仓库"],
+                        "edit": ["修改仓库信息"]
+                    }
+                },
                 "Stockin": {
                     "name": "入库单",
                     "actions": {

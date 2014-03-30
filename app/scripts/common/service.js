@@ -10,9 +10,6 @@ ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
 ERP.factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/nodes.json", null, {'update': { method:'PUT' }});
     }]);
-ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'update': { method:'PUT' }});
-    }]);
 ERP.factory("DataModelRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "home/dataModel/:id.json", null, {'update': { method:'PUT' }});
     }]);
@@ -22,6 +19,7 @@ ERP.factory("DataModelFieldsRes", ["$resource", "erp.config", function($resource
 ERP.factory("DataModelDataRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "home/dataModelData/:id.json", null, {'update': { method:'PUT' }});
     }]);
+
 ERP.factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': { method:'PUT' }});
     }]);

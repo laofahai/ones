@@ -36,6 +36,7 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
                     $scope.activeSubNav = pid;
                 };
                 $scope.goPage = function(url) {
+                    console.log(url);
                     if(!url) {
                         return;
                     }

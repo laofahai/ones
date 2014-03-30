@@ -34,8 +34,11 @@ var CommonView = {
          * 字段名称
          * */
         for (var f in fieldsStruct) {
-            if (!fieldsStruct[f]["field"]) {
+            if(!fieldsStruct[f].field) {
                 fieldsStruct[f].field = f;
+            }
+            if(!fieldsStruct[f].displayName) {
+                fieldsStruct[f].displayName = needed.scope.i18n.lang[f];
             }
             columnDefs.push(fieldsStruct[f]);
         }
@@ -50,6 +53,7 @@ var CommonView = {
             if (false == col.listable) {
                 columnDefs.splice(key, 1);
             }
+            
         }
 
         /**
@@ -199,7 +203,7 @@ var CommonView = {
         };
         opts = $.extend(defaultOpts, opts);
         opts.dataObject = opts.name + "Data";
-
+        
         if ("dataLoadedEvent" in opts && opts.dataLoadedEvent && "getFields" in model) {
             model.getFields(needed.scope, needed.foreignResource);
             needed.scope.$on(opts.dataLoadedEvent, function(event, data) {

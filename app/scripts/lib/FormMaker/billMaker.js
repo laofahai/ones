@@ -55,7 +55,6 @@ billFormMaker.prototype = {
         var html = [];
         for(var i=0;i<this.opts.minRows;i++) {
             html.push(this.makeRow(fieldsDefine, i));
-            this.scope.$parent[this.opts.dataName][i] = {};
         }
         return html.join("");
     },
@@ -75,6 +74,7 @@ billFormMaker.prototype = {
     makeRow: function(fieldsDefine,i){
         var self = this;
         var html = [this.opts.templates['bills/fields/rowHead.html']];
+        this.scope.$parent[this.opts.dataName][i] = {};
         angular.forEach(fieldsDefine, function(item, field){
             if(item.billAble!==false) {
                 item.inputType = item.inputType ? item.inputType : "text";
@@ -234,7 +234,7 @@ billFormMaker.prototype = {
                 return;
             }
             var tr = $(element).parents("tr");
-            scope[self.opts.dataName][tr.data("trid")] = {};
+            delete(scope[self.opts.dataName][tr.data("trid")])
             tr.remove();
             self.reIndexTr();
         };

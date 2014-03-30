@@ -12,7 +12,7 @@ var formFieldsMaker = function(scope, opts) {
     this.templates = {
         "fields/text": '<input type="text" %s />',
         "fields/number": '<input type="number" %s />',
-        "fields/select": '<select %(attr)s ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s"></select>',
+        "fields/select": '<select %(attr)s ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s"><option><option></select>',
         'fields/email' : '<input type="number" %s />',
         'fields/typeahead' : '<input type="text" '+
                 'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" '+
@@ -49,6 +49,9 @@ fieldsMakerFactory.prototype = {
         }
         if(value) {
             fieldDefine.value = value;
+        }
+        if(!fieldDefine.displayName) {
+            fieldDefine.displayName = this.$parent.scope.$parent.i18n.lang[name];
         }
         if (method in this) {
             return this[method](name, fieldDefine, $scope);

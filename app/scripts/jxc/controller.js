@@ -43,8 +43,16 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     })
                     //仓库管理
                     .when('/JXC/Stock', {
-                        templateUrl: 'views/jxc/stock/index.html',
+                        templateUrl: 'views/common/grid.html',
                         controller: 'JXCStockCtl'
+                    })
+                    .when('/JXC/Stock/add', {
+                        templateUrl: 'views/common/edit.html',
+                        controller: 'JXCStockEditCtl'
+                    })
+                    .when('/JXC/Stock/edit/id/:id', {
+                        templateUrl: 'views/common/edit.html',
+                        controller: 'JXCStockEditCtl'
                     })
                     //库存列表
                     .when('/JXC/StockProductList', {
@@ -52,22 +60,53 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'StockProductsCtl'
                     })
         })
-        .controller("JXCStockCtl", ["$scope", function($scope){
-            $scope.optionsFromQuery = [
+        .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", function($scope, StockModel, StockRes, $location){
+            $scope.pageActions = [
                 {
-                    id: 1,
-                    name: 2
+                    label : $scope.i18n.lang.actions.add,
+                    class : "success",
+                    href  : "/JXC/Stock/add"
                 },
                 {
-                    id: 3,
-                    name: 4
-                },
-                {
-                    id: 5,
-                    name: 6
+                    label : $scope.i18n.lang.actions.list,
+                    class : "primary",
+                    href  : "/JXC/Stock"
                 }
             ];
+            var fields = StockModel.getFieldsStruct($scope.i18n);
+            CommonView.displyGrid({
+                scope : $scope,
+                resource: StockRes,
+                location: $location
+            }, fields);
         }])
+        .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "$location", "$routeParams",
+            function($scope, StockModel, StockRes, $location, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/JXC/Stock/add"
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/JXC/Stock"
+                    }
+                ];
+                $scope.selecteAble = false;
+                var opts = {
+                    name: "StockEdit",
+                    id: $routeParams["id"]
+                };
+                CommonView.displayForm({
+                    scope : $scope,
+                    resource: StockRes,
+                    location: $location,
+                    routeParams: $routeParams
+                }, StockModel, opts);
+                
+            }])
         //入库单
         .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location",
             function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location) {
