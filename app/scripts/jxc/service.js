@@ -211,7 +211,7 @@ angular.module("erp.jxc.services", [])
                         displayName: i18n.lang.standard,
                         nameField: "data",
                         valueField: "id",
-                        inputType: "typeahead",
+                        inputType: "select",
                         editAbleRequire: "goods_id",
                         autoQuery: true,
                         queryWithExistsData: ["goods_id"],
@@ -223,7 +223,7 @@ angular.module("erp.jxc.services", [])
                         displayName: i18n.lang.version,
                         nameField: "data",
                         valueField: "id",
-                        inputType: "typeahead",
+                        inputType: "select",
                         editAbleRequire: "goods_id",
                         autoQuery: true,
                         queryWithExistsData: ["goods_id"],
@@ -234,7 +234,7 @@ angular.module("erp.jxc.services", [])
                     stock: {
                         editAbleRequire: ["goods_id", "standard", "version"],
                         displayName: i18n.lang.stock,
-                        inputType: "typeahead"
+                        inputType: "select"
                     },
                     store_num: {
                         displayName: i18n.lang.storeNum,
@@ -267,6 +267,8 @@ angular.module("erp.jxc.services", [])
                 if(arguments[1].stock) {
                     fields.stock.dataSource = arguments[1].stock;
                 }
+                
+                
                 
                 return fields;
             };

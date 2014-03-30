@@ -167,11 +167,11 @@ formMaker.init = function() {
                 });
             }
             delete(fieldDefine.dataSource);
-            $scope.$parent[name+"s"] = data;
+            $scope.$parent[name+"sSelect"] = data;
             var rs= sprintf(formMaker.opts.templates["select"], {
                 attr: formMaker.makeAttrs(name, fieldDefine),
                 key : name+"item",
-                data: name+"s",
+                data: name+"ssSelect",
                 name: name+"item.name",
                 selectPlease: "select please",
                 value: name+"item.value"

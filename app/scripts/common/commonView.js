@@ -75,6 +75,8 @@ var CommonView = {
             showSelectionCheckbox: true,
             rowHeight: 40,
             headerRowHeight: 40,
+            enableColumnResize: true,
+//            enablePinning: true,  
             checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
             totalServerItems: 'totalServerItems',
             i18n: "zh-cn",
@@ -263,6 +265,7 @@ var CommonView = {
         };
 
         opts = $.extend(defaultOpt, opts);
+        
         opts.fieldsDefine = model.getFieldsStruct(needed.scope.i18n, needed.res);
         needed.scope.config = opts;
 

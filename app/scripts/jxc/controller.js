@@ -26,7 +26,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'JXCGoodsEditModelCtl'
                     })
                     .when('/JXC/Goods/edit/id/:id', {
-                        templateUrl: 'views/jxc/goods/edit.html',
+                        templateUrl: 'views/common/edit.html',
                         controller: 'JXCGoodsEditCtl'
                     })
                     .when('/JXC/GoodsCategory', {
@@ -52,8 +52,21 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'StockProductsCtl'
                     })
         })
-        .controller("JXCStockCtl", ["$scope", function(){
-            
+        .controller("JXCStockCtl", ["$scope", function($scope){
+            $scope.optionsFromQuery = [
+                {
+                    id: 1,
+                    name: 2
+                },
+                {
+                    id: 3,
+                    name: 4
+                },
+                {
+                    id: 5,
+                    name: 6
+                }
+            ];
         }])
         //入库单
         .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location",

@@ -106,6 +106,7 @@ commonform {
 .billHeader label,.billHeader input,.billHeader span {
     font-size:12px;
 }
+
 .billBody table thead th {
     text-align:center;
 }
@@ -133,6 +134,25 @@ commonform {
     box-shadow:0 1px 2px 1px rgba(0, 0, 0, 0.1) inset !important;
     z-index:10;
     height:36px;
+}
+.billBody .chosen-container {
+    position:absolute;
+    left:0;top:0;
+    width:100%;
+    height:36px;
+    line-height:36px;
+}
+.billBody .chosen-container .chosen-single {
+    height:36px;line-height:36px;
+    background:0;
+    border:0;
+}
+.billBody .chosen-container .chosen-single b {
+    display:none;
+}
+.billBody .chosen-container.chosen-with-drop .chosen-single{
+    border:1px solid #4492c9;
+    border-bottom:0;
 }
 .billBody .rowHead .icon {
     cursor:pointer;

@@ -93,6 +93,12 @@ billFormMaker.prototype = {
         }));
     },
     bindEvents: function(scope){
+        
+        //绑定chosen事件
+        $(".tdEditAble").delegate(".chosen-container", "keydown", function(){
+            console.log(arguments);
+        });
+        
         var self = this;
         scope.$parent.billFieldEdit = function(ele){
             var context = self.getLabelContext(ele);
@@ -105,6 +111,7 @@ billFormMaker.prototype = {
             }
             var struct = self.opts.fieldsDefine[context.field];
             struct.class="width-100 editAble";
+            struct.remoteDataField = sprintf("%s%d", context.field, context.trid);
             struct["ng-model"] = sprintf("%s[%d].%s", self.opts.dataName, context.trid, context.field);
             if(struct.editAbleRequire) {
                 if(struct.editAbleRequire instanceof Array) {
@@ -248,7 +255,6 @@ billFormMaker.prototype = {
                 self.setData(ele, ele.val());
             } else if((event.shiftKey) && (event.keyCode==9)) {
                 window.event.returnValue=false;
-                console.log("shift tab");
             }
         };
         scope.$parent.onNumberBlur = function(event) {
@@ -266,7 +272,6 @@ billFormMaker.prototype = {
                 self.setNumberData(ele, ele.val());
             } else if((event.shiftKey) && (event.keyCode==9)) {
                 window.event.returnValue=false;
-                console.log("shift tab");
             }
         };
         scope.$parent.onTypeaheadBlur = function(event){

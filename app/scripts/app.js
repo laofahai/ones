@@ -9,6 +9,7 @@ var ERP = angular.module('erp', [
     'ngGrid',
     'ui.bootstrap',
     'ui.bootstrap.tpls',
+    'localytics.directives',
     
     'erp.common',
     'erp.config',

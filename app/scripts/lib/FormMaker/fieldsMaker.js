@@ -28,9 +28,7 @@ var fieldsMakerFactory = function(fieldsMaker, opts) {
         multi: false
     };
     this.opts = $.extend(defaultOpts, opts);
-    this.opts.enabledAttrs = ["id", "value", "name", "totalAble", 
-        "required", "class", "ng-model", "ng-blur", 
-        "ng-focus", "ng-click", "ng-dblclick", "ng-keydown"];
+    this.opts.disabledAttrs = ["dataSource"];
 };
 fieldsMakerFactory.prototype = {
     
@@ -71,7 +69,7 @@ fieldsMakerFactory.prototype = {
             fieldDefine.name = name;
         }
         for (k in fieldDefine) {
-            if(this.opts.enabledAttrs.indexOf(k) < 0) {
+            if(this.opts.disabledAttrs.indexOf(k) >= 0) {
                 continue;
             }
             v = fieldDefine[k];
@@ -92,22 +90,43 @@ fieldsMakerFactory.prototype = {
         var valueField = fieldDefine.valueField || "id";
         var nameField  = fieldDefine.nameField  || "name";
         var data = [];
-        for(var item in fieldDefine.dataSource) {
-            if(!item || !fieldDefine.dataSource[item][valueField]) {
-                continue;
+        
+        fieldDefine.chosen = "chosen";
+        
+        if(typeof(fieldDefine.dataSource) == "object") {
+            for(var item in fieldDefine.dataSource) {
+                if(!item || !fieldDefine.dataSource[item][valueField]) {
+                    continue;
+                }
+                data.push({
+                    value : fieldDefine.dataSource[item][valueField],
+                    name  : fieldDefine.dataSource[item][nameField]
+                });
             }
-            data.push({
-                value : fieldDefine.dataSource[item][valueField],
-                name  : fieldDefine.dataSource[item][nameField]
+            delete(fieldDefine.dataSource);
+            
+            $scope.$parent[fieldDefine.remoteDataField+"sSelect"] = data;
+            
+        } else if(typeof(fieldDefine.dataSource) == "function") {
+            var queryParams = fieldDefine.queryParams || {};
+            fieldDefine.dataSource.query(queryParams).$promise.then(function(result){
+                angular.forEach(result, function(item){
+                    data.push({
+                        value : item[valueField],
+                        name  : item[nameField]
+                    });
+                });
+                $scope.$parent[fieldDefine.remoteDataField+"sSelect"]= data;
             });
         }
-        delete(fieldDefine.dataSource);
-        $scope.$parent[name+"s"] = data;
+        
         return sprintf(this.$parent.templates["fields/select"], {
             attr: this._attr(name, fieldDefine),
             key : name+"item",
-            data: name+"s"
+            data: fieldDefine.remoteDataField+"sSelect"
         });
+        
+        
     },
     _typeahead: function(name, fieldDefine, $scope) {
         var methodName = name+"DataSource";
