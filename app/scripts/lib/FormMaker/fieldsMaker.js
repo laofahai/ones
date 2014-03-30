@@ -14,8 +14,9 @@ var formFieldsMaker = function(scope, opts) {
         "fields/number": '<input type="number" %s />',
         "fields/select": '<select %(attr)s ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s"></select>',
         'fields/email' : '<input type="number" %s />',
-        //'fields/typeahead': '<input type="typeahead" %s />',
-        'fields/typeahead' : '<input type="text" ng-model="%(model)s" typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s />'
+        'fields/typeahead' : '<input type="text" '+
+                'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" '+
+                'typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s />'
     };
     
     this.maker = new fieldsMakerFactory(this, this.opts);
@@ -141,8 +142,7 @@ fieldsMakerFactory.prototype = {
         var html = sprintf(this.$parent.templates["fields/typeahead"], {
             key: name+"item",
             data: methodName,
-            attr: this._attr(name, fieldDefine),
-            model: name+"TAIT"
+            attr: this._attr(name, fieldDefine)
         });
         return html;
     }

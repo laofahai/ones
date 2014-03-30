@@ -263,23 +263,14 @@ var CommonView = {
         };
 
         opts = $.extend(defaultOpt, opts);
-        opts.dataName = "";
         opts.fieldsDefine = model.getFieldsStruct(needed.scope.i18n, needed.res);
         needed.scope.config = opts;
 
+        
 
         //默认表单提交方法，可自动判断是否编辑/新建
         needed.scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
 
-            /**
-             * 合计字段
-             * */
-            var tdTotals = $(".tdTotalAble");
-            for (var i = 0; i < tdTotals.length; i++) {
-                var name = $(tdTotals[i]).attr("tdname");
-                needed.scope.formMetaData["total_"+name] = $(tdTotals[i]).text();
-            }
-            
             var data = $.extend(needed.scope.formMetaData, {data: needed.scope.formData});
             if (opts.id) {
                 var getParams = {};

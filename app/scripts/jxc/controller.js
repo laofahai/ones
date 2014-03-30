@@ -55,6 +55,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         //入库单
         .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location",
             function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location) {
+                
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -74,73 +75,25 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     location: $location
                 }, fields);
                 
+                $scope.workflowAble = true;
                 WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
                     $scope.workflowActionList = data;
                 });
                 
                 $scope.doWorkflow = function(event, id) {
-                    if($(event.target).parent().hasClass("disabled")) {
-                        return false;
-                    }
-                    
-                    var fs = StockinRes.doWorkflow({
-                        workflow: true,
-                        node_id: id,
-                        id: $scope.selectedItems[0].id
-                    }).$promise.then(function(data){
-                        $scope.selectedItems = [];
-                        $scope.$broadcast("gridData.changed");
-                    });
-                    
-                    
-                }
-                $scope.workflowActionDisabled = function(id){
-                    if(!$scope.selectedItems.length) {
-                        return true;
-                    }
-                    
-                    var result = true;
-                    for(var i=0;i<$scope.selectedItems.length;i++) {
-                        var item = $scope.selectedItems[i];
-                        if(!item["processes"]) {
-                            result = true;
-                            break;
-                        }
-                        for(var j=0;j<item.processes.nextNodes.length;j++) {
-                            if(item.processes.nextNodes[j].id == id) {
-                                result = false;
-                                break;
-                            }
-                        }
-                    }
-                    return result;
+                    $scope.selectedItems = [];
+                    return $scope.$parent.doWorkflow(event, id, $scope.selectedItems, StockinRes);
                 };
-                //@todo 两条数据 下步操作相同
+                $scope.workflowActionDisabled = function(id){
+                    return $scope.$parent.workflowActionDisabled(id, $scope.selectedItems);
+                };
+                //@todo 判断 两条数据 下步操作相同情况
                 $scope.workflowDisabled = function(){
-                    if(!$scope.selectedItems.length) {
-                        return true;
-                    }
-                    var next = null;
-                    var disable = true;
-                    for(var i=0;i<$scope.selectedItems.length;i++) {
-                        var item = $scope.selectedItems[i];
-                        if(!item["processes"]) {
-                            disable = true;
-                            break;
-                        }
-                        if(next !== null && next !== item["processes"]["nextActions"]) {
-                            disable = true;
-                            break;
-                        }
-                        disable = false;
-                        next = item["processes"]["nextActions"];
-                    }
-                    
-                    return disable;
+                    return $scope.$parent.workflowActionDisabled($scope.selectedItems);
                 };
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockinEditModel", "DataModelDataRes", "$location",
-            function($scope, StockinRes, GoodsRes, StockinEditModel, DataModelDataRes, $location) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockProductsRes", "StockRes", "StockinEditModel", "DataModelDataRes", "$location",
+            function($scope, StockinRes, GoodsRes, StockProductsRes, StockRes, StockinEditModel, DataModelDataRes, $location) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -157,7 +110,11 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.selecteAble = false;
                 $scope.showWeeks = true;
                 
-                var opts = {};
+                var opts = {
+                    res : {
+                        stockProduct: StockProductsRes
+                    }
+                };
                 
                 $scope.$on("billFieldEdited", function(event, data){
                     $scope.formData = data;
@@ -169,12 +126,14 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     modelRes: StockinRes,
                     res: {
                         goods: GoodsRes,
+                        stock: StockRes,
                         dataModelData: DataModelDataRes
                     }
                 }, StockinEditModel, opts);
                 
-                $scope.formMetaData = {};
                 
+                
+                $scope.formMetaData = {};
                 $scope.formMetaData.inputTime = new Date();
                 $scope.maxDate = new Date();
                 $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];

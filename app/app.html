@@ -144,20 +144,20 @@
 
                     <ul id="nav-list" class="nav nav-list" ng-controller="CommonSidebarCtl">
                         <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
-                            <a href="#/{{nav.url}}" ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id)">
+                            <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);goPage(nav.url)">
                                 <i class="icon-{{nav.icon}}"></i>
                                 <span class="menu-text" ng-bind="i18n.lang.navs[nav.label]"></span>
                                 <b class="arrow icon-angle-down" ng-show="{{nav.childs.length}}"></b>
                             </a>
                             <ul class="submenu">
                                 <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
-                                    <a href="#/{{nc.url}}" ng-click="checkSubActiveNav(nc.id, nav.id)">
+                                    <a ng-click="checkSubActiveNav(nc.id, nav.id);goPage(nc.url)">
                                         <i class="icon-double-angle-right"></i>
                                         <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]"></span>
                                     </a>
                                     <ul class="submenu">
                                         <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
-                                            <a href="#/{{nct.url}}" ng-click="checkThirdActiveNav(nct.id, nc.id)">
+                                            <a ng-click="checkThirdActiveNav(nct.id, nc.id);goPage(nct.url)">
                                                 <i class="icon-double-angle-right"></i>
                                                 <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]"></span>
                                             </a>

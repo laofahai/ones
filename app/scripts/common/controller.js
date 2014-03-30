@@ -18,7 +18,7 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
 //                        redirectTo: '/HOME/Index/dashboard'
 //                    });
         })
-        .controller('CommonSidebarCtl', ['$scope', function($scope) {
+        .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
             $scope.$on("initDataLoaded", function(event, data){
                 $scope.navs = data.navs;
                 $scope.activeSubNav = "";
@@ -34,7 +34,13 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
                 $scope.checkThirdActiveNav = function(id, pid) {
                     $scope.activeThirdNav = id;
                     $scope.activeSubNav = pid;
-                }
+                };
+                $scope.goPage = function(url) {
+                    if(!url) {
+                        return;
+                    }
+                    $location.url("/"+url);
+                };
             });
 
 

@@ -68,6 +68,65 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             $rootScope.$on("event:loginRequired", function() {
                 window.location.href = 'index.html';
             });
+            
+            $scope.doWorkflow = function(event, node_id, selectedItems, res){
+                selectedItems = selectedItems || [];
+                if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
+                    return false;
+                }
+                res.doWorkflow({
+                    workflow: true,
+                    node_id: node_id,
+                    id: selectedItems[0].id
+                }).$promise.then(function(data){
+                    $scope.$broadcast("gridData.changed");
+                });
+            };
+            $scope.workflowActionDisabled = function(id, selectedItems) {
+                selectedItems = selectedItems || [];
+                if(!selectedItems.length) {
+                    return true;
+                }
+
+                var result = true;
+                for(var i=0;i<selectedItems.length;i++) {
+                    var item = selectedItems[i];
+                    if(!item["processes"]) {
+                        result = true;
+                        break;
+                    }
+                    for(var j=0;j<item.processes.nextNodes.length;j++) {
+                        if(item.processes.nextNodes[j].id == id) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+                return result;
+            };
+            $scope.workflowDisabled = function(selectedItems) {
+                selectedItems = selectedItems || [];
+                if(!selectedItems.length) {
+                    return true;
+                }
+                var next = null;
+                var disable = true;
+                for(var i=0;i<selectedItems.length;i++) {
+                    var item = selectedItems[i];
+                    if(!item["processes"]) {
+                        disable = true;
+                        break;
+                    }
+                    if(next !== null && next !== item["processes"]["nextActions"]) {
+                        disable = true;
+                        break;
+                    }
+                    disable = false;
+                    next = item["processes"]["nextActions"];
+                }
+
+                return disable;
+            };
 
             /**
              * 加载语言包

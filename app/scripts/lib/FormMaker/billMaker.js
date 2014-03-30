@@ -10,7 +10,7 @@ var billFormMaker = function($scope, $compile){
     this.opts = $.extend(defaultOpts, $scope.config);
     this.scope = $scope;
     this.compile = $compile;
-    this.scope[this.opts.dataName] = [];
+    this.scope.$parent[this.opts.dataName] = this.scope[this.opts.dataName] = [];
     
     this.opts.templates = this.templates = {
         'bills/box.html' : '<table class="table table-bordered" id="billTable">'+
@@ -55,6 +55,7 @@ billFormMaker.prototype = {
         var html = [];
         for(var i=0;i<this.opts.minRows;i++) {
             html.push(this.makeRow(fieldsDefine, i));
+            this.scope.$parent[this.opts.dataName][i] = {};
         }
         return html.join("");
     },
@@ -94,31 +95,88 @@ billFormMaker.prototype = {
     bindEvents: function(scope){
         var self = this;
         scope.$parent.billFieldEdit = function(ele){
-            var td = $(ele).parent();
-            var field = td.data("bind-model");
-            var type = td.data("input-type");
-            var struct = self.opts.fieldsDefine[field];
+            var context = self.getLabelContext(ele);
+            
+            //已经存在
+            
+            if(context.td.find(".editAble").length) {
+                context.td.find(".editAble").removeClass("hide").eq(0).focus();
+                return;
+            }
+            var struct = self.opts.fieldsDefine[context.field];
             struct.class="width-100 editAble";
+            struct["ng-model"] = sprintf("%s[%d].%s", self.opts.dataName, context.trid, context.field);
+            if(struct.editAbleRequire) {
+                if(struct.editAbleRequire instanceof Array) {
+                    for(var i=0;i<struct.editAbleRequire.length;i++) {
+                        struct.editAbleRequire[i];
+                        if(!scope[self.opts.dataName][context.trid] || !scope[self.opts.dataName][context.trid][struct.editAbleRequire[i]]) {
+                            return false;
+                        }
+                    }
+                } else {
+                    if(!scope[self.opts.dataName][context.trid] || !scope[self.opts.dataName][context.trid][struct.editAbleRequire]) {
+                        return false;
+                    }
+                }
+            }
             
             //支持的事件列表
             var eventsList = ["blur", "click", "keydown", "focus"];
             var events = {};
             angular.forEach(eventsList, function(e){
-                var m = sprintf("on%s%s%s", field.ucfirst(), type.ucfirst(), e.ucfirst());
+                var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
                 if(m in scope.$parent) {
                     events["ng-"+e] = m;
                 } else {
-                    m = sprintf("on%s%s", type.ucfirst(), e.ucfirst());
+                    m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
                     if(m in scope.$parent) {
                         events["ng-"+e] = m;
                     }
                 }
             }); 
-            var html = self.fm.maker.factory(field, struct, scope, $(ele).text(), events);
-            html = self.compile(html)(scope.$parent);
-            td.append(html);
-            td.find(".editAble").focus().select();
             
+            var html = self.fm.maker.factory(context.field, struct, scope, context.text, events);
+            html = self.compile(html)(scope.$parent);
+            context.td.append(html);
+            context.td.find(".editAble").focus(function(){
+                var method = "after"+struct.inputType.ucfirst()+"Focus";
+                if(method in scope.$parent) {
+                    scope.$parent[method]($(this), struct);
+                }
+            }).select();
+            
+            return;
+//            var td = $(ele).parent();
+//            var trid = td.parent().data("trid");
+//            var field = td.data("bind-model");
+//            var type = td.data("input-type");
+//            var struct = self.opts.fieldsDefine[field];
+//            struct.class="width-100 editAble";
+//
+//            //支持的事件列表
+//            var eventsList = ["blur", "click", "keydown", "focus"];
+//            var events = {};
+//            angular.forEach(eventsList, function(e){
+//                var m = sprintf("on%s%s%s", field.ucfirst(), type.ucfirst(), e.ucfirst());
+//                if(m in scope.$parent) {
+//                    events["ng-"+e] = m;
+//                } else {
+//                    m = sprintf("on%s%s", type.ucfirst(), e.ucfirst());
+//                    if(m in scope.$parent) {
+//                        events["ng-"+e] = m;
+//                    }
+//                }
+//            }); 
+//            var html = self.fm.maker.factory(field, struct, scope, $(ele).text(), events);
+//            html = self.compile(html)(scope.$parent);
+//            td.append(html);
+//            td.find(".editAble").focus(function(){
+//                var method = "after"+struct.inputType.ucfirst()+"Focus";
+//                if(method in scope.$parent) {
+//                    scope.$parent[method]($(this), struct);
+//                }
+//            }).select();
         };
         
         //结束编辑 ele 应为td子元素
@@ -168,7 +226,9 @@ billFormMaker.prototype = {
                 alert("at least 2 rows");
                 return;
             }
-            $(element).parents("tr").remove();
+            var tr = $(element).parents("tr");
+            scope[self.opts.dataName][tr.data("trid")] = {};
+            tr.remove();
             self.reIndexTr();
         };
         
@@ -211,38 +271,57 @@ billFormMaker.prototype = {
         };
         scope.$parent.onTypeaheadBlur = function(event){
             var ele = $(event.target);
-            self.setTypeaheadData(ele, scope, true);
+            self.setTypeaheadData(ele, self.scope, true);
         };
         scope.$parent.onTypeaheadKeydown = function(event) {
             if(event.keyCode == 9) {
                 window.event.returnValue=false;
                 var ele = $(event.target);
-                self.setTypeaheadData(ele, scope);
+                self.setTypeaheadData(ele, self.scope);
             } else if(event.keyCode == 13) {
                 var ele = $(event.target);
-                self.setTypeaheadData(ele, scope);
+                self.setTypeaheadData(ele, self.scope);
             }
         };
-//        scope.$parent.onTypeaheadBlur = function(event) {
-//            event.returnValue = false;
-//        };
-//        scope.$parent.onTypeaheadKeydown = function(event){
-////            setTimeout(function(){
-////                var ele = $(event.target);
-////                var val = ele.val();
-////                var field = ele.parent().data("bind-model");
-////                var dataSource = self.opts.fieldsDefine[field].dataSource
-////                if(!val || !dataSource) {
-////                    return;
-////                }
-////                if(event.keyCode<48 || event.keyCode>90 || (event.keyCode>57&&event.keyCode<65)) {
-////                    return;
-////                }
-////                dataSource.query({typeahead: val}).$promise.then(function(data){
-////                    //结果将添加到typeahead下拉列表
-////                });
-////            });
-//        };
+        scope.$parent.onStockTypeaheadBlur = function(event){
+            self.scope.$parent.onTypeaheadBlur(event);
+            setTimeout(function(){
+                var context = self.getInputContext(event.target);
+                var tmp = self.scope[self.opts.dataName][context.trid];
+                self.opts.res.stockProduct.get({
+                    factory_code_all: sprintf("%s-%s-%s", tmp.goods_id.factory_code, tmp.standard.value, tmp.version.value),
+                    id: self.scope[self.opts.dataName][context.trid].stock.value
+                }).$promise.then(function(data){
+                    context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
+    //                self.scope[self.opts.dataName][context.trid].store_num=data.num;
+                });
+            },100);
+        };
+        
+    },
+    //获取当前input的上下文数据
+    getInputContext : function(element){
+        var context = {};
+        context.ele = $(element);
+        context.eleValue = context.ele.val();
+        context.td = context.ele.parent();
+        context.label = context.td.find("label");
+        context.tr = context.td.parent();
+        context.trid = context.index = context.tr.data("trid");
+        context.field = context.td.data("bind-model");
+        context.inputType = context.td.data("input-type");
+        return context;
+    },
+    getLabelContext: function(element) {
+        var context = {};
+        context.ele = $(element);
+        context.td =  context.ele.parent();
+        context.tr = context.td.parent();
+        context.trid = context.index = context.tr.data("trid");
+        context.field = context.td.data("bind-model");
+        context.text = context.ele.text();
+        context.inputType = context.td.data("input-type");
+        return context;
     },
     //重置TR的行数，并且重新计算数据
     reIndexTr: function() {
@@ -255,70 +334,79 @@ billFormMaker.prototype = {
     },
     setNumberData: function(element, data, isBlur) {
         if($(element).attr("totalAble")) {
-            var field = $(element).parent().data("bind-model");
-            this.setData(element, data, isBlur);
             var total = 0;
-            for(var i=0; i<this.scope[this.opts.dataName].length;i++) {
-                if(!this.scope[this.opts.dataName][i]) {
-                    continue;
+            var context = this.getInputContext(element);
+            angular.forEach(this.scope[this.opts.dataName], function(item){
+                if(context.field in item) {
+                    total += parseFloat(item[context.field]);
                 }
-                total += parseFloat(this.scope[this.opts.dataName][i][field]);
-            }
+            });
             total = total.toFixed(2);
-            $("#tdTotalAble"+field).text(total);
+            $("#tdTotalAble"+context.field).text(total);
+            this.scope.$parent.formMetaData["total"+context.field] = total;
+            this.setData(element, data, isBlur);
         } else {
             this.setData(element, data, isBlur);
         }
         
     },
     setData: function(element, data, isBlur) {
-        var ele = $(element);
-        var td = ele.parent();
-        var index = td.parent().data("trid");
-        var field = td.data("bind-model");
-        ele.remove();
-        td.find("label").html(data);
-        
-        //设置在作用于中得数据对象
-        if(!this.scope[this.opts.dataName][index]) {
-            this.scope[this.opts.dataName][index] = {};
-        }
-        this.scope[this.opts.dataName][index][field] = data;
-        this.scope.$emit("billFieldEdited", this.scope[this.opts.dataName]);
-        
-        if(!isBlur) {
-            this.scope.$parent.billEndEdit(td, false);
-        }
+        var context = this.getInputContext(element);
+        context.ele.remove();
+        context.label.html(data);
+//        
+//        //设置在作用于中得数据对象
+//        if(!this.scope[this.opts.dataName][context.trid]) {
+//            this.scope[this.opts.dataName][context.trid] = {};
+//        }
+//        this.scope[this.opts.dataName][context.trid][context.field] = data;
+//        this.scope.$emit("billFieldEdited", this.scope[this.opts.dataName]);
+//        
+        this.scope.$parent.billEndEdit(context.td, isBlur);
     },
     setTypeaheadData: function(ele, scope, isBlur) {
+        var val;
+        var context = this.getInputContext(ele);
         var self = this;
-        var timeout = isBlur ? 200 : 0;
         setTimeout(function(){
-            var td = ele.parent();
-            var field = td.data("bind-model");
-            var dataName = field+"TAIT";
-            var index = td.parent().data("trid");
-            if(!(dataName in scope.$parent)) {
-                td.find("label").text("");
-                td.find("*").not("label").remove();
-                return;
+            if(scope.$parent[self.opts.dataName][context.trid][context.field]) {
+                val = context.ele.val();
+            } else {
+                context.ele.val('');
             }
-            td.find("label").text(ele.val());
-            td.find("*").not("label").remove();
-            //设置在作用于中得数据对象
-            if(!scope[self.opts.dataName][index]) {
-                scope[self.opts.dataName][index] = {};
-            }   
-            scope[self.opts.dataName][index][field] = scope.$parent[dataName];
-            delete(scope.$parent[dataName]);
-            if(!isBlur) {
-                scope.$parent.billEndEdit(td, false);
-            }
-            setTimeout(function(){
-                scope.$parent.$broadcast("billFieldEdited", scope[self.opts.dataName]);
-            });
-            scope.$parent.$digest();
-        }, timeout);
+            context.td.find("label").text(val);
+            context.td.find(".editAble").addClass("hide");
+            scope.$parent.billEndEdit(context.td, isBlur);
+        }, 200);
+//        
+//        return;
+//        setTimeout(function(){
+//            
+//            
+//            if(!(context.dataName in scope.$parent)) {
+//                context.td.find("label").text("");
+//                context.td.find("*").not("label").remove();
+//                return;
+//            }
+//            
+//            if(!self.scope[self.opts.dataName][context.trid]) {
+//                self.scope[self.opts.dataName][context.trid] = {};
+//            }
+//            if(typeof(self.scope.$parent[context.dataName]) == "object") {
+//                if(!self.scope[self.opts.dataName][context.trid]) {
+//                    self.scope[self.opts.dataName][context.trid] = {};
+//                }
+//                self.scope[self.opts.dataName][context.trid][context.field] = scope.$parent[context.dataName];
+//                context.label.text(context.eleValue);
+//            }
+//            
+//            scope.$parent.$broadcast("billFieldEdited", scope[self.opts.dataName]);
+//            
+//            context.td.find("*").not("label").remove();
+//            delete(scope.$parent[context.dataName]);
+//            
+//            scope.$parent.billEndEdit(context.td);
+//        }, timeout);
         
     }
 };

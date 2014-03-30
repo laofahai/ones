@@ -25,6 +25,9 @@ ERP.factory("DataModelDataRes", ["$resource", "erp.config", function($resource, 
 ERP.factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': { method:'PUT' }});
     }]);
+ERP.factory("StockRes", ["$resource", "erp.config", function($resource, cnf) {
+    return $resource(cnf.BSU + "jxc/stock/:id.json");
+}]);
 ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method:'GET'}});
     }]);
