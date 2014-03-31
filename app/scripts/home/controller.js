@@ -60,13 +60,12 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
             $scope.cacheTypes = [null, true, true, true];
             $scope.doClearCache = function() {
                 $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){
-                    console.log($scope.i18n.lang.messages.cacheCleared);
                     $scope.$parent.alert($scope.i18n.lang.messages.cacheCleared);
                 });
             };
         }])
-        .controller("HomeTypesCtl", ["$scope", "TypesRes", "TypesModel", "$location", 
-            function($scope, TypesRes, TypesModel, $location){
+        .controller("HomeTypesCtl", ["$scope", "TypesRes", "TypesModel", "ComView", 
+            function($scope, TypesRes, TypesModel, ComView){
                 $scope.pageActions = [
                     {
                         label: $scope.i18n.lang.actions.add,
@@ -79,15 +78,10 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href: "/HOME/Types"
                     }
                 ];
-                var fields = TypesModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope: $scope,
-                    resource: TypesRes,
-                    location: $location
-                }, fields);
+                ComView.displayGrid($scope,TypesModel,TypesRes);
             }])
-        .controller("HomeTypesEditCtl", ["$scope", "TypesRes", "TypesModel", "$location", "$routeParams",
-            function($scope, TypesRes, TypesModel, $location, $routeParams) {
+        .controller("HomeTypesEditCtl", ["$scope", "TypesRes", "TypesModel", "ComView", "$routeParams",
+            function($scope, TypesRes, TypesModel, ComView, $routeParams) {
                 $scope.pageActions = [
                     {
                         label: $scope.i18n.lang.actions.add,
@@ -106,15 +100,10 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     name: "TypesEdit",
                     id: $routeParams.id
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: TypesRes,
-                    location: $location,
-                    routeParams: $routeParams
-                }, TypesModel, opts);
+                ComView.displayForm($scope,TypesModel,TypesRes,opts);
             }])
-        .controller("DataModelCtl", ["$scope", "DataModelRes", "DataModelModel", "$location",
-            function($scope, DataModelRes, DataModelModel, $location) {
+        .controller("DataModelCtl", ["$scope", "DataModelRes", "DataModelModel", "ComView",
+            function($scope, DataModelRes, DataModelModel, ComView) {
                 $scope.pageActions = [
                     {
                         label: $scope.i18n.lang.actions.add,
@@ -128,15 +117,10 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     }
                 ];
                 $scope.viewSubAble = true;
-                var fields = DataModelModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope: $scope,
-                    resource: DataModelRes,
-                    location: $location
-                }, fields);
+                ComView.displayGrid($scope, DataModelModel, DataModelRes);
             }])
-        .controller("DataModelEditCtl", ["$scope", "DataModelModel", "DataModelRes", "$location", "$routeParams",
-            function($scope, DataModelModel, DataModelRes, $location, $routeParams) {
+        .controller("DataModelEditCtl", ["$scope", "DataModelModel", "DataModelRes", "ComView", "$routeParams",
+            function($scope, DataModelModel, DataModelRes, ComView, $routeParams) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -155,15 +139,10 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     name: "DataModelEdit",
                     id: $routeParams.id
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: DataModelRes,
-                    location: $location,
-                    routeParams: $routeParams
-                }, DataModelModel, opts);
+                ComView.displayForm($scope,DataModelModel,DataModelRes, opts);
             }])
-        .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "$location", "$routeParams",
-            function($scope, DataModelFieldsRes, DataModelFieldsModel, $location, $routeParams) {
+        .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "ComView", "$routeParams",
+            function($scope, DataModelFieldsRes, DataModelFieldsModel, ComView, $routeParams) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -176,18 +155,13 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href  : "/HOME/DataModelFields"
                     }
                 ];
-                var fields = DataModelFieldsModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope: $scope,
-                    resource: DataModelFieldsRes,
-                    location: $location
-                }, fields, {
-                    module: "/HOME/DataModelFields",
+                ComView.displayGrid($scope,DataModelFieldsModel,DataModelFieldsRes,{
+                    module: "/HOME/DataModelFields"
                 });
             }])
         
-        .controller("DataModelFieldsEditCtl", ["$scope", "DataModelFieldsModel", "DataModelFieldsRes", "$location", "$routeParams",
-            function($scope, DataModelFieldsModel, DataModelFieldsRes, $location, $routeParams) {
+        .controller("DataModelFieldsEditCtl", ["$scope", "DataModelFieldsModel", "DataModelFieldsRes", "ComView", "$routeParams",
+            function($scope, DataModelFieldsModel, DataModelFieldsRes, ComView, $routeParams) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -207,15 +181,10 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     returnPage: "/HOME/DataModel/viewSub/id/"+$routeParams.pid,
                     id: $routeParams.id
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: DataModelFieldsRes,
-                    location: $location,
-                    routeParams: $routeParams
-                }, DataModelFieldsModel, opts);
+                ComView.displayForm($scope, DataModelFieldsModel, DataModelFieldsRes, opts);
             }])
-        .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "$location", "$routeParams",
-            function($scope, DataModelDataRes, DataModelDataModel, $location, $routeParams) {
+        .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "ComView", "$routeParams",
+            function($scope, DataModelDataRes, DataModelDataModel, ComView, $routeParams) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -228,19 +197,14 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href  : "/HOME/DataModelData/"+$routeParams.modelId
                     }
                 ];
-                var fields = DataModelDataModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope: $scope,
-                    resource: DataModelDataRes,
-                    location: $location
-                }, fields, {
+                ComView.displayGrid($scope, DataModelDataModel, DataModelDataRes, {
                     module: "/HOME/DataModelData",
                     subModule: $routeParams.modelId,
                     extraParams: {modelId:$routeParams.modelId}
                 });
             }])
-        .controller("DataModelDataEditCtl", ["$scope", "DataModelDataModel", "DataModelDataRes","DataModelFieldsRes", "$location", "$routeParams",
-            function($scope, DataModelDataModel, DataModelDataRes, DataModelFieldsRes, $location, $routeParams) {
+        .controller("DataModelDataEditCtl", ["$scope", "DataModelDataModel", "DataModelDataRes","DataModelFieldsRes", "ComView", "$routeParams",
+            function($scope, DataModelDataModel, DataModelDataRes, DataModelFieldsRes, ComView, $routeParams) {
                 
                 $scope.pageActions = [
                     {
@@ -262,11 +226,5 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     id: $routeParams.id,
                     dataLoadedEvent: "foreignDataLoaded"
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: DataModelDataRes,
-                    foreignResource: [$routeParams.modelId, DataModelFieldsRes],
-                    location: $location,
-                    routeParams: $routeParams
-                }, DataModelDataModel, opts);
+                ComView.displayForm($scope,DataModelDataModel,DataModelDataRes,opts, true);
             }])

@@ -10,6 +10,11 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
 ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "user/:id.json", null, {'update': { method:'PUT' }});
     }]);
+
+ERP.factory("DepartmentRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "passport/department/:id.json", null, {'update': { method:'PUT' }});
+    }]);
+
 ERP.factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/nodes.json", null, {'update': { method:'PUT' }});
     }]);

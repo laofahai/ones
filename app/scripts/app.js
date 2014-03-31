@@ -12,8 +12,9 @@ var ERP = angular.module('erp', [
     'localytics.directives',
     
     'erp.common',
+    'erp.commonView',
     'erp.config',
-    
+    'erp.passport',
     'erp.home',
     'erp.jxc'
 //    'erp.service'

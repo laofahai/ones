@@ -60,28 +60,24 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'StockProductsCtl'
                     })
         }])
-        .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", function($scope, StockModel, StockRes, $location){
-            $scope.pageActions = [
-                {
-                    label : $scope.i18n.lang.actions.add,
-                    class : "success",
-                    href  : "/JXC/Stock/add"
-                },
-                {
-                    label : $scope.i18n.lang.actions.list,
-                    class : "primary",
-                    href  : "/JXC/Stock"
-                }
-            ];
-            var fields = StockModel.getFieldsStruct($scope.i18n);
-            CommonView.displyGrid({
-                scope : $scope,
-                resource: StockRes,
-                location: $location
-            }, fields);
-        }])
-        .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "UserRes", "$location", "$routeParams",
-            function($scope, StockModel, StockRes, UserRes, $location, $routeParams) {
+        .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", "ComView",
+            function($scope, StockModel, StockRes, $location, ComView){
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/JXC/Stock/add"
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/JXC/Stock"
+                    }
+                ];
+                ComView.displayGrid($scope, StockModel, StockRes);
+            }])
+        .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "$routeParams", "ComView",
+            function($scope, StockModel, StockRes, $routeParams, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -99,18 +95,13 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     name: "StockEdit",
                     id: $routeParams["id"]
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: StockRes,
-                    location: $location,
-                    foreignResource: UserRes,
-                    routeParams: $routeParams
-                }, StockModel, opts);
+                
+                ComView.displayForm($scope, StockModel, StockRes, opts, true);
                 
             }])
         //入库单
-        .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location",
-            function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location) {
+        .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location", "ComView",
+            function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -123,12 +114,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/Stockin"
                     }
                 ];
-                var fields = StockinModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope : $scope,
-                    resource: StockinRes,
-                    location: $location
-                }, fields);
+                ComView.displayGrid($scope, StockinModel, StockinRes);
                 
                 $scope.workflowAble = true;
                 WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
@@ -150,8 +136,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     };
                 });
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockProductsRes", "StockRes", "StockinEditModel", "DataModelDataRes", "$location",
-            function($scope, StockinRes, GoodsRes, StockProductsRes, StockRes, StockinEditModel, DataModelDataRes, $location) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockProductsRes", "StockRes", "StockinEditModel", "DataModelDataRes", "$location", "ComView",
+            function($scope, StockinRes, GoodsRes, StockProductsRes, StockRes, StockinEditModel, DataModelDataRes, $location, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -168,28 +154,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.selecteAble = false;
                 $scope.showWeeks = true;
                 
-                var opts = {
-                    res : {
-                        stockProduct: StockProductsRes
-                    }
-                };
-                
-                $scope.$on("billFieldEdited", function(event, data){
-                    $scope.formData = data;
-                });
-                
-                CommonView.displayBill({
-                    name: "stockinScript",
-                    scope: $scope,
-                    modelRes: StockinRes,
-                    res: {
-                        goods: GoodsRes,
-                        stock: StockRes,
-                        dataModelData: DataModelDataRes
-                    }
-                }, StockinEditModel, opts);
-                
-                
+                ComView.displayBill($scope, StockinEditModel, StockinRes);
                 
                 $scope.formMetaData = {};
                 $scope.formMetaData.inputTime = new Date();
@@ -199,8 +164,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
             }])
         //商品管理
-        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "$location",
-            function($scope, GoodsRes, JXCGoodsModel, $location) {
+        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "ComView",
+            function($scope, GoodsRes, JXCGoodsModel, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -213,15 +178,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/Goods"
                     }
                 ];
-                var fields = JXCGoodsModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope : $scope,
-                    resource: GoodsRes,
-                    location: $location
-                }, fields);
+                ComView.displayGrid($scope, JXCGoodsModel, GoodsRes);
             }])
-        .controller("JXCGoodsEditCtl", ["$scope", "JXCGoodsModel", "GoodsRes", "GoodsCategoryRes", "DataModelRes", "$location", "$routeParams",
-            function($scope, JXCGoodsModel, GoodsRes, GoodsCategoryRes, DataModelRes, $location, $routeParams) {
+        .controller("JXCGoodsEditCtl", ["$scope", "JXCGoodsModel", "GoodsRes", "$routeParams", "ComView",
+            function($scope, JXCGoodsModel, GoodsRes, $routeParams, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -235,40 +195,25 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     }
                 ];
                 $scope.selecteAble = false;
+                
                 var opts = {
                     name: "JXCGoodsEdit",
-                    id: $routeParams["id"],
-                    dataLoadedEvent : "goods_category_loaded",
+                    id: $routeParams["id"]
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: GoodsRes,
-                    foreignResource: [GoodsCategoryRes, DataModelRes],
-                    location: $location,
-                    routeParams: $routeParams
-                }, JXCGoodsModel, opts);
+                ComView.displayForm($scope, JXCGoodsModel, GoodsRes, opts, true);
                 
             }])
         
         //商品分类管理
-        .controller("JXCGoodsCategoryCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "$location",
-            function($scope, model, res, $location){
-                var fields = model.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope : $scope,
-                    resource: res,
-                    location: $location
-                }, fields);
-                
+        .controller("JXCGoodsCategoryCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "ComView",
+            function($scope, model, res, ComView){
+                ComView.displayGrid($scope, model, res);
                 $scope.addChildAble = true;
                 $scope.viewDataAble = true;
                 
-                $scope.doAddChild = function(){
-                    $location.url("/JXC/GoodsCategory/add/pid/"+$scope.selectedItems[0].id);
-                };
             }])
-        .controller("JXCGoodsCategoryEditCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "DataModelRes", "$location", "$routeParams",
-            function($scope, model, res, DataModelRes, $location, $routeParams) {
+        .controller("JXCGoodsCategoryEditCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "$routeParams", "ComView",
+            function($scope, model, res, $routeParams, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.list,
@@ -277,28 +222,18 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     }
                 ];
                 $scope.selecteAble = false;
+                
                 var opts = {
                     name: "JXCGoodsCategoryEdit",
-                    dataLoadedEvent: "dataModelLoaded",
                     id: $routeParams["id"]
                 };
-                CommonView.displayForm({
-                    scope : $scope,
-                    resource: res,
-                    foreignResource: DataModelRes, //可以作为数组传入，通过arguments获取
-                    location: $location,
-                    routeParams: $routeParams
-                }, model, opts);
+                ComView.displayForm($scope, model, res, opts, true);
+                
             }])
         
         //库存列表
-        .controller("StockProductsCtl", ["$scope", "StockProductsRes", "StockProductModel", "$location",
-            function($scope, StockProductsRes, StockProductModel, $location) {
+        .controller("StockProductsCtl", ["$scope", "StockProductsRes", "StockProductModel", "ComView",
+            function($scope, StockProductsRes, StockProductModel, ComView) {
                 $scope.selecteAble = false;
-                var fields = StockProductModel.getFieldsStruct($scope.i18n);
-                CommonView.displyGrid({
-                    scope : $scope,
-                    resource: StockProductsRes,
-                    location: $location
-                }, fields);
+                ComView.displayGrid($scope, StockProductModel, StockProductsRes);
             }])

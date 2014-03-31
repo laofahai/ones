@@ -4,9 +4,9 @@
 
 var formMaker = function($scope, defaultData) {
     this.scope = $scope;
-    
     defaultData = $scope.$parent.defaultData || {};
     var config = $scope.$parent.config || {};
+    
     if (!config.fieldsDefine) {
         return false;
     }

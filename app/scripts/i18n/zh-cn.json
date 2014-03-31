@@ -1,5 +1,16 @@
 {
     "urlMap": {
+        "Passport": {
+            "name": "用户账户模块",
+            "modules": {
+                "User": {
+                    "name": "用户管理",
+                    "actions": {
+                        "index": ["用户列表"]
+                    }
+                }
+            }
+        },
         "HOME": {
             "name": "基础模块",
             "modules": {
@@ -174,11 +185,13 @@
         "cache_temp": "项目缓存",
         "cache_log": "错误日志",
         "cache_data": "数据缓存",
+        "id" : "ID",
         "num": "数量",
         "memo": "备注",
         "name": "名称",
         "type": "类型",
         "data": "数据",
+        "email": "邮箱",
         "total": "合计",
         "goods": "商品",
         "field": "字段",
@@ -193,6 +206,7 @@
         "dateline": "时间",
         "standard": "规格",
         "measure": "计量单位",
+        "department": "部门",
         "stockManager": "库管员",
         "bindDataModel": "绑定数据模型",
         "displayName": "显示名称",

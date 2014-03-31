@@ -1,32 +1,25 @@
 angular.module("erp.jxc.services", [])
-        .service("JXCGoodsModel", function() {
+        .service("JXCGoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", function($rootScope, GoodsCategoryRes, $q) {
             var obj = {};
-            obj.getFieldsStruct = function(i18n) {
-                return {
+            obj.getFieldsStruct = function(structOnly) {
+                var i18n = $rootScope.i18n.lang;
+                var struct = {
                     id: {
-                        primary: true,
-                        displayName: "ID"
+                        primary: true
                     },
-                    factory_code: {
-                        displayName: i18n.lang.factory_code
-                    },
-                    name: {
-                        displayName: i18n.lang.name
-                    },
+                    factory_code: {},
+                    name: {},
                     pinyin: {
-                        displayName: i18n.lang.firstChar,
+                        displayName: i18n.firstChar,
                         required: false
                     },
-                    measure: {
-                        displayName: i18n.lang.measure
-                    },
+                    measure: {},
                     price: {
-                        displayName: i18n.lang.price,
                         inputType: "number",
                         value: 0
                     },
                     goods_category_id: {
-                        displayName: i18n.lang.category,
+                        displayName: i18n.category,
                         inputType: "select",
                         valueField: "id",
                         nameField : "prefix_name",
@@ -34,97 +27,97 @@ angular.module("erp.jxc.services", [])
                         listable: false
                     },
                     category_name: {
-                        displayName: i18n.lang.category,
+                        displayName: i18n.category,
                         inputType: false,
                         hideInForm: true
                     },
                     store_min: {
-                        displayName: i18n.lang.store_min,
                         inputType: "number",
                         value: 0
                     },
                     store_max: {
-                        displayName: i18n.lang.store_max,
                         inputType: "number",
                         value: 0
                     }
                 };
+                
+                if(structOnly) {
+                    return struct;
+                } else {
+                    var defer = $q.defer();
+                    GoodsCategoryRes.query(function(data){
+                        struct.goods_category_id.dataSource = data;
+                        defer.resolve(struct);
+                    });
+                    return defer.promise;
+                }
             };
-            obj.getFields = function($scope, reses){
-                var GoodsCategoryRes = reses[0];
-                var DataModelRes = reses[1];
-                GoodsCategoryRes.query(function(data){
-                    var fields = obj.getFieldsStruct($scope.i18n);
-                    fields.goods_category_id.dataSource = data;
-                    $scope.$broadcast("goods_category_loaded", fields);
-                });
-            };
-            
             return obj;
-        })
-        .service("JXCGoodsCategoryModel", function() {
+        }])
+        .service("JXCGoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
             var obj = {};
-            obj.getFieldsStruct = function(i18n) {
-                return {
+            obj.getFieldsStruct = function(structOnly) {
+                var i18n = $rootScope.i18n.lang;
+                var struct = {
                     id : {
-                        primary: true,
-                        displayName: "ID"
+                        primary: true
                     },
                     name: {
-                        displayName: i18n.lang.category,
+                        displayName: i18n.category,
                         listable: false
                     },
                     prefix_name: {
                         hideInForm: true,
-                        displayName: i18n.lang.category
+                        displayName: i18n.category
                     },
                     bind_model_name: {
-                        displayName: i18n.lang.bindDataModel,
+                        displayName: i18n.bindDataModel,
                         hideInForm:true
                     },
                     pinyin: {
-                        displayName: i18n.lang.firstChar,
+                        displayName: i18n.firstChar,
                         required: false
                     },
                     bind_model: {
-                        displayName: i18n.lang.bindDataModel,
+                        displayName: i18n.bindDataModel,
                         inputType: "select",
                         listable: false
                     },
                     listorder: {
                         inputType: "number",
-                        value: 99,
-                        displayName: i18n.lang.listorder
+                        value: 99
                     }
                 };
+                
+                if(structOnly) {
+                    return struct;
+                } else {
+                    var defer = $q.defer();
+                    DataModelRes.query(function(data){
+                        struct.bind_model.dataSource = data;
+                        defer.resolve(struct);
+                    });
+                    return defer.promise;
+                }
             };
-            
-            obj.getFields = function($scope, DataModelRes){
-                DataModelRes.query(function(data){
-                    var fields = obj.getFieldsStruct($scope.i18n);
-                    fields.bind_model.dataSource = data;
-                    $scope.$broadcast("dataModelLoaded", fields);
-                });
-            };
-            
             return obj;
-        })
-        .service("StockModel", function(){
+        }])
+        .service("StockModel", ["$rootScope", "UserRes", "$q", function($rootScope, userRes, $q){
             var obj = {};
-            obj.getFieldsStruct = function(i18n, userRes){
-                return {
+            obj.getFieldsStruct = function(structOnly){
+                var defer = $q.defer();
+                var fieldsStruct = {
                     id: {
                         primary: true,
                         displayName: "ID"
                     },
                     name: {},
                     managers_name: {
-                        displayName: i18n.lang.stockManager,
+                        displayName: $rootScope.i18n.lang.stockManager,
                         hideInForm:true
                     },
                     managers: {
-                        displayName: i18n.lang.stockManager,
-                        dataSource: userRes,
+                        displayName: $rootScope.i18n.lang.stockManager,
                         nameField: "truename",
                         valueField: "id",
                         inputType: "select",
@@ -133,181 +126,145 @@ angular.module("erp.jxc.services", [])
                         listable:false
                     },
                     total_num: {
-                        displayName: i18n.lang.total,
+                        displayName: $rootScope.i18n.lang.total,
                         hideInForm: true
                     }
                 };
+                if(structOnly) {
+                    return fieldsStruct;
+                } else {
+                    userRes.query().$promise.then(function(data){
+                        fieldsStruct.managers.dataSource = data;
+                        defer.resolve(fieldsStruct);
+                    });
+                }
+                
+                return defer.promise;
             };
             
             return obj;
-        })
-        .service("StockProductModel", function() {
+        }])
+        .service("StockProductModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
             var obj = {};
-            obj.getFieldsStruct = function(i18n) {
-                return {
+            obj.getFieldsStruct = function(structOnly) {
+                var i18n = $rootScope.i18n.lang;
+                return fieldsStruct = {
                     id : {
                         primary: true,
                         displayName: "ID"
                     },
                     factory_code_all: {
-                        displayName: i18n.lang.factoryCodeAll
+                        displayName: i18n.factoryCodeAll
                     },
                     goods_name: {
-                        displayName: i18n.lang.name
+                        displayName: i18n.name
                     },
                     category_name: {
-                        displayName: i18n.lang.category
+                        displayName: i18n.category
                     },
                     stock_name: {
-                        displayName: i18n.lang.stock
+                        displayName: i18n.stock
                     },
-                    standard: {
-                        displayName: i18n.lang.standard
-                    },
-                    version: {
-                        displayName: i18n.lang.version
-                    },
+                    standard: {},
+                    version: {},
                     num: {
-                        displayName: i18n.lang.storeNum
+                        displayName: i18n.storeNum
                     },
-                    measure: {
-                        displayName: i18n.lang.measure
-                    }
-//                    store_min: {
-//                        displayName: i18n.lang.store_min,
-//                    },
-//                    store_max: {
-//                        displayName: i18n.lang.store_min,
-//                    },
-                    
+                    measure: {}
                 };
+                
             };
-            
-            obj.getFields = function($scope, DataModelRes){
-                DataModelRes.query(function(data){
-                    var fields = obj.getFieldsStruct($scope.i18n);
-                    fields.bind_model.dataSource = data;
-                    $scope.$broadcast("dataModelLoaded", fields);
-                });
-            };
-            
             return obj;
-        })
-        .service("StockinModel", function(){
+        }])
+        .service("StockinModel", ["$rootScope", function($rootScope){
             var obj = {};
-            obj.getFieldsStruct= function(i18n) {
+            obj.getFieldsStruct= function() {
+                var i18n = $rootScope.i18n.lang;
                 return {
                     bill_id: {
-                        displayName: i18n.lang.billId
+                        displayName: i18n.billId
                     },
-                    subject: {
-                        displayName: i18n.lang.subject
-                    },
+                    subject: {},
                     total_num: {
-                        displayName: i18n.lang.totalNum
+                        displayName: i18n.totalNum
                     },
                     dateline: {
-                        displayName: i18n.lang.dateline,
                         cellFilter: "dateFormat"
                     },
                     status_text: {
-                        displayName: i18n.lang.status,
+                        displayName: i18n.status,
                         field: "processes.status_text"
                     },
-                    sponsor: {
-                        displayName: i18n.lang.sponsor
-                    },
+                    sponsor: {},
                     stock_manager: {
-                        displayName: i18n.lang.stockManager
+                        displayName: i18n.stockManager
                     }
                 };
             };
             
             return obj;
-        })
-        .service("StockinEditModel", function() {
-            var obj = {};
-            obj.getFieldsStruct = function(i18n) {
-                var fields = {
-                    id : {
-                        primary: true,
-                        displayName: "ID",
-                        billAble: false
-                    },
-                    goods_id: {
-                        displayName: i18n.lang.goods,
-                        inputType: "typeahead",
-                        listAble: false
-                    },
-                    standard: {
-                        displayName: i18n.lang.standard,
-                        nameField: "data",
-                        valueField: "id",
-                        inputType: "select",
-                        editAbleRequire: "goods_id",
-                        autoQuery: true,
-                        queryWithExistsData: ["goods_id"],
-                        queryParams: {
-                            fieldAlias: "standard"
-                        }
-                    },
-                    version: {
-                        displayName: i18n.lang.version,
-                        nameField: "data",
-                        valueField: "id",
-                        inputType: "select",
-                        editAbleRequire: "goods_id",
-                        autoQuery: true,
-                        queryWithExistsData: ["goods_id"],
-                        queryParams: {
-                            fieldAlias: "version"
-                        }
-                    },
-                    stock: {
-                        editAbleRequire: ["goods_id", "standard", "version"],
-                        displayName: i18n.lang.stock,
-                        inputType: "select"
-                    },
-                    store_num: {
-                        displayName: i18n.lang.storeNum,
-                        editAble:false
-                    },
-                    num: {
-                        displayName: i18n.lang.num,
-                        inputType: "number",
-                        totalAble: true
-                    },
-                    memo: {
-                        displayName: i18n.lang.memo
-                    }
-//                    store_min: {
-//                        displayName: i18n.lang.store_min,
-//                    },
-//                    store_max: {
-//                        displayName: i18n.lang.store_min,
-//                    },
-                    
+        }])
+        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes", 
+            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+                var obj = {};
+                obj.getFieldsStruct = function() {
+                    var i18n = $rootScope.i18n.lang;
+                    var fields = {
+                        id : {
+                            primary: true,
+                            billAble: false
+                        },
+                        goods_id: {
+                            displayName: i18n.goods,
+                            inputType: "typeahead",
+                            dataSource: GoodsRes,
+                            listAble: false
+                        },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            inputType: "select",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            autoQuery: true,
+                            queryWithExistsData: ["goods_id"],
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            inputType: "select",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            autoQuery: true,
+                            queryWithExistsData: ["goods_id"],
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
+                        },
+                        stock: {
+                            editAbleRequire: ["goods_id", "standard", "version"],
+                            inputType: "select",
+                            dataSource: StockRes
+                        },
+                        store_num: {
+                            displayName: i18n.storeNum,
+                            editAble:false
+                        },
+                        num: {
+                            inputType: "number",
+                            totalAble: true
+                        },
+                        memo: {}
+
+                    };
+
+
+                    return fields;
                 };
-                // GoodsRes
-                if(arguments[1].goods) {
-                    fields.goods_id.dataSource = arguments[1].goods;
-                }
-                if(arguments[1].dataModelData) {
-                    fields.standard.dataSource = arguments[1].dataModelData;
-                    fields.version.dataSource = arguments[1].dataModelData;
-                }
-                if(arguments[1].stock) {
-                    fields.stock.dataSource = arguments[1].stock;
-                }
-                
-                
-                
-                return fields;
-            };
-            
-            obj.getFields = function($scope){
-                return obj.getFieldsStruct();
-            };
-            
-            return obj;
-        })
+
+
+                return obj;
+            }])
