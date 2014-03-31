@@ -12,5 +12,25 @@
  * @author 志鹏
  */
 class StockModel extends CommonModel {
-    //put your code here
+    
+    public function select($options = array()) {
+        $data = parent::select($options);
+        if(!$data) {
+            return $data;
+        }
+        
+        foreach($data as $k=>$v) {
+            if($v["managers"]) {
+                $managers = explode(",", $v["managers"]);
+                $mnames = array();
+                foreach($managers as $m) {
+                    $mnames[] = toTruename($m);
+                }
+                $data[$k]["managers_name"] = implode(", ", $mnames);
+            }
+        }
+        
+        return $data;
+    }
+    
 }

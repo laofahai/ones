@@ -68,11 +68,11 @@ angular.module("erp.common.directives", [])
                 }
             };
         }])
-        .directive("pageactions", function($compile){
+        .directive("pageactions", ["$compile", function($compile){
             return {
                 restrict: "E",
                 templateUrl: 'views/common/actions/default.html',
                 replace: false,
                 transclude: true
             };
-        });
+        }]);

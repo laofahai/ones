@@ -83,7 +83,12 @@ return array(
                 "data_model"   => "HOME/DataModel",
                 "types_manage"  => "HOME/Types"
             ),
-            "organization_set" => "HOME/User",
+            "organization_set" => array(
+                "user_setting" => "Passport/User",
+                "auth_rule_node" => "HOME/AuthRule",
+                "user_group"   => "HOME/AuthGroup",
+                "department"   => "HOME/Department"
+            ),
             "workflow" => "HOME/Workflow",
             "clear_cache" => "HOME/Settings/clearCache"
         ),

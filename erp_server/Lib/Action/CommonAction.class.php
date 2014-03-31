@@ -160,6 +160,7 @@ class CommonAction extends RestAction {
     public function update() {
         $name = $this->getActionName();
         $model = D($name);
+        
         /**
          * 对提交数据进行预处理
          */
@@ -169,6 +170,7 @@ class CommonAction extends RestAction {
         }
         // 更新数据
         $result = $model->save();
+        
         if ($result !== false) { //保存成功
             $this->response(array(
                 "error" => 0

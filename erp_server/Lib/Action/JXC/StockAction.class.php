@@ -12,5 +12,17 @@
  * @author nemo
  */
 class StockAction extends CommonAction {
-    //put your code here
+    
+    public function pretreatment() {
+        switch($this->_method) {
+            case "post":
+                $_POST["managers"] = implode(",", $_POST["managers"]);
+                break;
+            case "put":
+                $_POST = I("put.");
+                $_POST["managers"] = implode(",", $_POST["managers"]);
+                break;
+        }
+    }
+    
 }

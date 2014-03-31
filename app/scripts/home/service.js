@@ -22,6 +22,39 @@ angular.module("erp.home.services", [])
             };
             return obj;
          })
+         .service("TypesModel", function(){
+             var obj = {};
+             obj.getFieldsStruct = function(i18n){
+                 return {
+                     id: {
+                         primary: true
+                     },
+                     type: {
+                         inputType: "select",
+                         dataSource: [
+                             {id: "purchase", name:i18n.lang.types.purchase},
+                             {id: "sale", name:i18n.lang.types.sale},
+                             {id: "returns", name:i18n.lang.types.returns},
+                             {id: "shipment", name:i18n.lang.types.shipment},
+                             {id: "freight", name:i18n.lang.types.freight},
+                             {id: "receive", name:i18n.lang.types.receive},
+                             {id: "pay", name:i18n.lang.types.pay},
+                             {id: "voucher", name:i18n.lang.types.voucher}
+                         ]
+                     },
+                     alias: {},
+                     name: {},
+                     listorder: {
+                         inputType: "number",
+                         value: 99
+                     },
+                     status: {
+                         inputType: "checkbox"
+                     }
+                 };
+             };
+             return obj;
+         })
          .service("DataModelFieldsModel", function() {
             var obj = {};
             obj.getFieldsStruct = function(i18n){

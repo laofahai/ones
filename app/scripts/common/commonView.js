@@ -222,7 +222,7 @@ var CommonView = {
         } else {
             setTimeout(function() {
                 needed.scope.config = {
-                    fieldsDefine: model.getFieldsStruct(needed.scope.i18n),
+                    fieldsDefine: model.getFieldsStruct(needed.scope.i18n, needed.foreignResource),
                     name: opts.name
                 };
                 //edit
@@ -255,6 +255,7 @@ var CommonView = {
                 }
                 needed.resource.save(needed.scope[opts.dataObject]);
             }
+            
             needed.location.url(opts.returnPage);
         };
 
@@ -289,7 +290,6 @@ var CommonView = {
             } else {
                 needed.modelRes.save(data);
             }
-            return;
             needed.location.url(opts.returnPage);
         };
 

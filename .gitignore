@@ -5,3 +5,4 @@ dist
 app/bower_components
 nbproject
 /demo/
+/erp_server/Runtime/

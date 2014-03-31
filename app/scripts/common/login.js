@@ -53,10 +53,10 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','erp.config',
  * 设置http头及序列化
  * 
  * */
-LoginModule.run(function($http){
+LoginModule.run(["$http", function($http){
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
     $http.defaults.transformRequest = function (data) {
         return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
     }
-});
+}]);

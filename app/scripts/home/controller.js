@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directives'])
-        .config(function($routeProvider) {
+        .config(["$routeProvider",function($routeProvider) {
             $routeProvider
                     .when('/HOME/DataModel', {
                         templateUrl: "views/common/grid.html",
@@ -38,8 +38,81 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     .when('/HOME/DataModelData/:modelId/edit/id/:id', {
                         templateUrl: "views/common/edit.html",
                         controller: "DataModelDataEditCtl"
-                    });
-        })
+                    })
+                    .when('/HOME/Types', {
+                        templateUrl: "views/common/grid.html",
+                        controller: "HomeTypesCtl"
+                    })
+                    .when('/HOME/Types/add', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "HomeTypesEditCtl"
+                    })
+                    .when('/HOME/Types/edit/id/:id', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "HomeTypesEditCtl"
+                    })
+                    .when('/HOME/Settings/clearCache', {
+                        templateUrl: "views/home/clearCache.html",
+                        controller: "clearCacheCtl"
+                    })
+        }])
+        .controller("clearCacheCtl", ["$scope", "$http", "erp.config", function($scope, $http, conf){
+            $scope.cacheTypes = [null, true, true, true];
+            $scope.doClearCache = function() {
+                $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){
+                    console.log($scope.i18n.lang.messages.cacheCleared);
+                    $scope.$parent.alert($scope.i18n.lang.messages.cacheCleared);
+                });
+            };
+        }])
+        .controller("HomeTypesCtl", ["$scope", "TypesRes", "TypesModel", "$location", 
+            function($scope, TypesRes, TypesModel, $location){
+                $scope.pageActions = [
+                    {
+                        label: $scope.i18n.lang.actions.add,
+                        class: "success",
+                        href: "/HOME/Types/add"
+                    },
+                    {
+                        label: $scope.i18n.lang.actions.list,
+                        class: "primary",
+                        href: "/HOME/Types"
+                    }
+                ];
+                var fields = TypesModel.getFieldsStruct($scope.i18n);
+                CommonView.displyGrid({
+                    scope: $scope,
+                    resource: TypesRes,
+                    location: $location
+                }, fields);
+            }])
+        .controller("HomeTypesEditCtl", ["$scope", "TypesRes", "TypesModel", "$location", "$routeParams",
+            function($scope, TypesRes, TypesModel, $location, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label: $scope.i18n.lang.actions.add,
+                        class: "success",
+                        href: "/HOME/Types/add"
+                    },
+                    {
+                        label: $scope.i18n.lang.actions.list,
+                        class: "primary",
+                        href: "/HOME/Types"
+                    }
+                ];
+                $scope.selecteAble = false;
+                
+                var opts = {
+                    name: "TypesEdit",
+                    id: $routeParams.id
+                };
+                CommonView.displayForm({
+                    scope : $scope,
+                    resource: TypesRes,
+                    location: $location,
+                    routeParams: $routeParams
+                }, TypesModel, opts);
+            }])
         .controller("DataModelCtl", ["$scope", "DataModelRes", "DataModelModel", "$location",
             function($scope, DataModelRes, DataModelModel, $location) {
                 $scope.pageActions = [

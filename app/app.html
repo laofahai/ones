@@ -10,19 +10,17 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
         <link rel="stylesheet" href="bower_components/chosen/chosen.min.css" />
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:css({.tmp,app}) styles/main.css -->
         <link rel="stylesheet" href="styles/ace/css/font-awesome.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-fonts.css" />
         <link rel="stylesheet" href="styles/ace/css/ace.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-rtl.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-skins.min.css" />
+        <!-- endbower -->
+        <!-- build:css({.tmp,app}) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
     </head>
@@ -219,8 +217,8 @@
                                 </small>
                             </h1>
                         </div><!-- /.page-header -->
-                        <div ng-controller="AlertCtl">
-                            <alert ng-repeat="alert in alerts" type="alert.type" closeable="aler.closeable" close="closeAlert($index)">{{alert.msg}}</alert>
+                        <div ng-controller="AlertCtl" ng-show="alert.msg">
+                            <alert type="alert.type" closeable="aler.closeable" close="closeAlert()">{{alert.msg}}</alert>
                         </div>
                         <div class="col-xs-12" ng-view></div>
                         <!--//demo-->
@@ -299,7 +297,6 @@
         <script src="bower_components/json3/lib/json3.min.js"></script>
         <![endif]-->
 
-        <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
@@ -313,18 +310,14 @@
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="bower_components/chosen/chosen.jquery.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/vendor/ace/typeahead-bs2.min.js"></script>
         <script src="scripts/vendor/ace/uncompressed/ace.js"></script>
         <script src="scripts/vendor/ace/uncompressed/ace-extra.js"></script>
         <script src="scripts/vendor/ace/uncompressed/ace-elements.js"></script>
-        
+        <!-- endbower -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/lib/function.js"></script>
-        <!--<script src="scripts/lib/formMaker.js"></script>-->
-        <!--<script src="scripts/lib/billMaker.js"></script>-->
         
         <script src="scripts/lib/formMaker/fieldsMaker.js"></script>
         <script src="scripts/lib/formMaker/formMaker.js"></script>

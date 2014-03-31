@@ -3,43 +3,16 @@
     <head>
         <meta charset="utf-8" />
         <title>Login Page</title>
-
         <meta name="description" content="User login page" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- basic styles -->
-
+        <!-- endbuild -->
+        <!-- build:css({.tmp,app}) styles/main.css -->
         <link href="styles/ace/css/bootstrap.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="styles/ace/css/font-awesome.min.css" />
-
-        <!--[if IE 7]>
-          <link rel="stylesheet" href="styles/ace/css/font-awesome-ie7.min.css" />
-        <![endif]-->
-
-        <!-- page specific plugin styles -->
-
-        <!-- fonts -->
-
         <link rel="stylesheet" href="styles/ace/css/ace-fonts.css" />
-
-        <!-- ace styles -->
-
         <link rel="stylesheet" href="styles/ace/css/ace.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-rtl.min.css" />
-        
-        
-        
-        <!--[if lte IE 8]>
-          <link rel="stylesheet" href="styles/ace/css/ace-ie.min.css" />
-        <![endif]-->
-
-        <!-- inline styles related to this page -->
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-        <!--[if lt IE 9]>
-        <script src="styles/ace/js/html5shiv.js"></script>
-        <script src="styles/ace/js/respond.min.js"></script>
-        <![endif]-->
+        <!-- endbuild -->
     </head>
 
     <body class="login-layout" ng-app="login">
@@ -169,29 +142,16 @@
         </div><!-- /.main-container -->
 
         <!-- basic scripts -->
-
-        <!--[if !IE]> -->
-        <script type="text/javascript">
-            window.jQuery || document.write("<script src='scripts/vendor/ace/jquery-2.0.3.min.js'>" + "<" + "/script>");
-        </script>
-        <!-- <![endif]-->
-
-        <!--[if IE]>
-        <script type="text/javascript">
-        window.jQuery || document.write("<script src='scripts/vendor/ace/jquery-1.10.2.min.js'>"+"<"+"/script>");
-        </script>
-        <![endif]-->
-
-        <script type="text/javascript">
-            if ("ontouchend" in document)
-                document.write("<script src='scripts/vendor/ace/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-        </script>
-
-        <!-- inline scripts related to this page -->
+        
+        <script src="bower_components/jquery/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <!-- build:js({.tmp,app}) scripts/login.js -->
         <script src="scripts/config.js"></script>
         <script src="scripts/common/login.js"></script>
+        <script src='scripts/vendor/ace/jquery.mobile.custom.min.js'></script>
+        <!-- endbuild -->
+
         <script type="text/javascript">
             function show_box(id) {
                 jQuery('.widget-box.visible').removeClass('visible');

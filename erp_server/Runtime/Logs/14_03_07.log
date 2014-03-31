@@ -1,5 +1,0 @@
-[ 2014-03-07T11:30:30+08:00 ] 127.0.0.1 /test/erp_server/index.php?g=HOME&m=Index&a=doLogin&ajax=1
-INFO: [ app_begin ] --START--
-INFO: ReadHtmlCache Behavior ::run [ RunTime:0.001947s ]
-INFO: [ app_begin ] --END-- [ RunTime:0.002099s ]
-

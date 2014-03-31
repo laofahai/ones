@@ -60,6 +60,45 @@ function reIndex($data) {
 }
 
 /**
+ * 清除缓存
+ */
+function clearCache($type = 0, $path = NULL) {
+    if (is_null($path)) {
+        switch ($type) {
+            case 0:// 模版缓存目录
+                $path = CACHE_PATH;
+                break;
+            case 1:// 数据缓存目录
+                $path = TEMP_PATH;
+                break;
+            case 2:// 日志目录
+                $path = LOG_PATH;
+                break;
+            case 3:// 数据目录
+                $path = DATA_PATH;
+                break;
+        }
+    }
+//    import("ORG.Io.Dir");
+    $rs = delDirAndFile($path);
+}
+function delDirAndFile($dirName) {
+    if ($handle = opendir("$dirName")) {
+        while (false !== ( $item = readdir($handle) )) {
+            if ($item != "." && $item != "..") {
+                if (is_dir("$dirName/$item")) {
+                    delDirAndFile("$dirName/$item");
+                } else {
+                    @ unlink("$dirName/$item");
+                }
+            }
+        }
+        @ closedir($handle);
+        @ rmdir($dirName);
+    }
+}
+
+/**
  * 
  */
 function inExplodeArray($id, $ids, $split=",") {

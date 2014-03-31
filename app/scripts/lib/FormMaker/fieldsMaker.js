@@ -88,6 +88,10 @@ fieldsMakerFactory.prototype = {
         fieldDefine["min"] = undefined != fieldDefine["min"] ? fieldDefine["min"] : 0;
         return sprintf(this.$parent.templates["fields/number"], this._attr(name, fieldDefine));
     },
+    //多选框
+    _checkbox: function(name, fieldDefine){
+        
+    },
     //下拉框选择
     _select: function(name, fieldDefine, $scope){
         var valueField = fieldDefine.valueField || "id";
@@ -95,8 +99,9 @@ fieldsMakerFactory.prototype = {
         var data = [];
         
         fieldDefine.chosen = "chosen";
+        fieldDefine.remoteDataField = fieldDefine.remoteDataField || name;
         
-        if(typeof(fieldDefine.dataSource) == "object") {
+        if(fieldDefine.dataSource instanceof Array) {
             for(var item in fieldDefine.dataSource) {
                 if(!item || !fieldDefine.dataSource[item][valueField]) {
                     continue;
@@ -106,8 +111,7 @@ fieldsMakerFactory.prototype = {
                     name  : fieldDefine.dataSource[item][nameField]
                 });
             }
-            delete(fieldDefine.dataSource);
-            
+//            delete(fieldDefine.dataSource);
             $scope.$parent[fieldDefine.remoteDataField+"sSelect"] = data;
             
         } else if(typeof(fieldDefine.dataSource) == "function") {

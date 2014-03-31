@@ -17,6 +17,14 @@ class UserModel extends CommonModel {
         array("password", "getPwd", 3, "function"),
     );
     
+    public function select($options=array()) {
+        $data = parent::select($options);
+        foreach($data as $k=>$v) {
+            unset($data[$k]["password"]);
+        }
+        return $data;
+    }
+    
 }
 
 ?>

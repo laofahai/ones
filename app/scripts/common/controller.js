@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
-        .config(function($routeProvider) {
+        .config(["$routeProvider", function($routeProvider) {
             $routeProvider
                     .when('/', {
                         templateUrl: 'views/home/dashboard.html',
@@ -17,7 +17,7 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
 //                    .otherwise({
 //                        redirectTo: '/HOME/Index/dashboard'
 //                    });
-        })
+        }])
         .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
             $scope.$on("initDataLoaded", function(event, data){
                 $scope.navs = data.navs;
@@ -46,6 +46,6 @@ angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
 
 
         }])
-        .controller('navHeaderCtl', function($scope){
+        .controller('navHeaderCtl', ["$scope", function($scope){
             
-        });
+        }]);

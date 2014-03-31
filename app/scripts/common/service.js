@@ -4,11 +4,18 @@
  * 定义资源
  * */
 
-ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
+ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "passport/profile.json", null, {'update': { method:'PUT' }});
+    }]);
+ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "user/:id.json", null, {'update': { method:'PUT' }});
     }]);
 ERP.factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/nodes.json", null, {'update': { method:'PUT' }});
+    }]);
+
+ERP.factory("TypesRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "types/:id.json", null, {'update': { method:'PUT' }});
     }]);
 ERP.factory("DataModelRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "home/dataModel/:id.json", null, {'update': { method:'PUT' }});
@@ -24,7 +31,7 @@ ERP.factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': { method:'PUT' }});
     }]);
 ERP.factory("StockRes", ["$resource", "erp.config", function($resource, cnf) {
-    return $resource(cnf.BSU + "jxc/stock/:id.json");
+    return $resource(cnf.BSU + "jxc/stock/:id.json", null, {'update': { method:'PUT' }});
 }]);
 ERP.factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method:'GET'}});

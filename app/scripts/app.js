@@ -22,7 +22,7 @@ var ERP = angular.module('erp', [
          * $http interceptor.
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
          */
-        .config(function($httpProvider) {
+        .config(["$httpProvider", function($httpProvider) {
             var interceptor = ['$rootScope', '$q', function(scope, $q) {
                     function success(response) {
                         return response;
@@ -46,8 +46,8 @@ var ERP = angular.module('erp', [
                     };
                 }];
             $httpProvider.responseInterceptors.push(interceptor);
-        })
-        .run(function($http, $rootScope, $templateCache) {
+        }])
+        .run(["$http", function($http) {
             //设置HTTP请求默认头
             $http.defaults.headers.common["sessionHash"] = loginHash;
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -56,7 +56,7 @@ var ERP = angular.module('erp', [
                 return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
             };
 
-        });
+        }]);
 
 /**
  * Root Ctrl
@@ -69,6 +69,14 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             $rootScope.$on("event:loginRequired", function() {
                 window.location.href = 'index.html';
             });
+            
+            $scope.alert = function(msg, type, timeout) {
+                $scope.$broadcast("alert", {
+                    msg: msg,
+                    type: type,
+                    timeout: timeout
+                });
+            };
             
             $scope.doWorkflow = function(event, node_id, selectedItems, res){
                 selectedItems = selectedItems || [];
@@ -115,12 +123,10 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 for(var i=0;i<selectedItems.length;i++) {
                     var item = selectedItems[i];
                     if(!item["processes"]) {
-                        console.log(1);
                         disable = true;
                         break;
                     }
                     if(next !== null && next !== item["processes"]["nextActions"]) {
-                        console.log(2);
                         disable = true;
                         break;
                     }
@@ -181,8 +187,63 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
         /**
          * 通用提示信息显示。依赖ui.bootstrap
          * */
-        ERP.controller("AlertCtl", function($scope, $rootScope) {
-            $scope.alerts = [];
+        ERP.controller("AlertCtl", ["$scope", "$rootScope", "$q", function($scope, $rootScope, $q) {
+            $scope.alert = {};
+            
+            $scope.$on("alert", function(event, data){
+                $scope.alert.type = data.type || "warning";
+                $scope.alert.msg  = data.msg;
+                $scope.alert.closeAble  = true;
+                $scope.alert.autoClose = data.timeout === false ? false : (isNaN(data.timeout) === false ? data.timeout : '3000');
+            });
+            
+            $scope.closeAlert = function() {
+                $scope.alert = {};
+            };
+            
+            var closeAlert = function(timeout){
+                var deferred = $q.defer();
+                setTimeout(function(){
+                    $scope.$apply(function(){
+                        $scope.closeAlert();
+                    });
+                }, timeout);
+                return deferred.promise;
+            };
+            $scope.$watch(function(){
+                return $scope.alert;
+            }, function(){
+                if($scope.alert.autoClose !== false) {
+                    var timeout = $scope.alert.autoClose == false ? 1440000 : 5000;
+                    var promise = closeAlert(timeout);
+                }
+            });
+            
+//            
+//            function asyncGreet(name) {
+//                var deferred = $q.defer();
+//
+//                setTimeout(function() {
+//                  // since this fn executes async in a future turn of the event loop, we need to wrap
+//                  // our code into an $apply call so that the model changes are properly observed.
+//                  $scope.$apply(function() {
+//                    
+//                  });
+//                }, 1000);
+//
+//                return deferred.promise;
+//              }
+//
+//              var promise = asyncGreet('Robin Hood');
+//              promise.then(function(greeting) {
+//                alert('Success: ' + greeting);
+//              }, function(reason) {
+//                alert('Failed: ' + reason);
+//              }, function(update) {
+//                alert('Got notification: ' + update);
+//              });
+            
+            return;
             
             $scope.$watch(function(){
                 return $rootScope.alert;
@@ -202,6 +263,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             $rootScope.closeAlert = function(index) {
                 $scope.alerts.splice(index, 1);
             };
-        });
+        }]);
 
 

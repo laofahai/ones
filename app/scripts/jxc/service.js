@@ -111,20 +111,33 @@ angular.module("erp.jxc.services", [])
         })
         .service("StockModel", function(){
             var obj = {};
-            obj.getFieldsStruct = function(i18n){
+            obj.getFieldsStruct = function(i18n, userRes){
                 return {
                     id: {
                         primary: true,
                         displayName: "ID"
                     },
                     name: {},
+                    managers_name: {
+                        displayName: i18n.lang.stockManager,
+                        hideInForm:true
+                    },
+                    managers: {
+                        displayName: i18n.lang.stockManager,
+                        dataSource: userRes,
+                        nameField: "truename",
+                        valueField: "id",
+                        inputType: "select",
+                        multiple: "multiple",
+                        remoteDataField: "managers",
+                        listable:false
+                    },
                     total_num: {
                         displayName: i18n.lang.total,
                         hideInForm: true
                     }
-                }
-                
-            }
+                };
+            };
             
             return obj;
         })

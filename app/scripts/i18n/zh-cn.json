@@ -25,6 +25,12 @@
                         "add": ["新增模型数据"],
                         "edit": ["修改模型数据"]
                     }
+                },
+                "Settings": {
+                    "name": "系统设置",
+                    "actions": {
+                        "clearCache": ["清除缓存"]
+                    }
                 }
             }
         },
@@ -109,6 +115,10 @@
             "data_model": "数据模型管理",
             "types_manage": "类型管理",
             "organization_set": "组织机构管理",
+            "user_setting" : "用户管理",
+            "auth_rule_node": "权限节点",
+            "user_group": "用户组管理",
+            "department": "部门管理",
             "workflow": "工作流程",
             "clear_cache": "清除缓存"
         },
@@ -119,6 +129,13 @@
         },
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单"
+        },
+        "messages": {
+            "cacheCleared": "缓存已成功清除",
+            "addSuccess": "新增%s成功",
+            "editSuccess": "修改%s成功",
+            "deleteSuccess": "删除%s成功",
+            "operateSuccess": "操作成功"
         },
         "actions": {
             "submit" : "提交",
@@ -133,16 +150,30 @@
             "list": "列表",
             "view": "查看",
             "viewSub": "查看子项",
+            "clearCache": "清除缓存",
             "viewModelData": "查看模型数据"
+        },
+        "types" : {
+            "purchase": "采购类型",
+            "sale": "销售类型",
+            "returns": "退货类型",
+            "shipment": "物流方式",
+            "freight" : "运费类型",
+            "receive" : "收款类别",
+            "pay"     : "付款类别",
+            "voucher" : "凭证字号"
         },
         "navigation": {
             "back": "后退",
             "forward": "前进"
         },
+        
         "confirm_delete": "确定要删除这 %d 项吗？",
         "move_to_trash": "移到回收站",
         "selected_action" : "选中%s项：",
-        
+        "cache_temp": "项目缓存",
+        "cache_log": "错误日志",
+        "cache_data": "数据缓存",
         "num": "数量",
         "memo": "备注",
         "name": "名称",
@@ -153,6 +184,7 @@
         "field": "字段",
         "stock": "仓库",
         "status": "状态",
+        "alias" : "别名",
         "billId": "单据编号",
         "totalNum": "总数",
         "sponsor": "制单人",

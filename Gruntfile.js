@@ -142,7 +142,7 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     'bower-install': {
       app: {
-        html: '<%= yeoman.app %>/index.html',
+        html: '<%= yeoman.app %>/app.html',
         ignorePath: '<%= yeoman.app %>/'
       }
     },
@@ -185,26 +185,26 @@ module.exports = function (grunt) {
     },
 
     // The following *-min tasks produce minified files in the dist folder
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
+//    imagemin: {
+//      dist: {
+//        files: [{
+//          expand: true,
+//          cwd: '<%= yeoman.app %>/images',
+//          src: '{,*/}*.{png,jpg,jpeg,gif}',
+//          dest: '<%= yeoman.dist %>/images'
+//        }]
+//      }
+//    },
+//    svgmin: {
+//      dist: {
+//        files: [{
+//          expand: true,
+//          cwd: '<%= yeoman.app %>/images',
+//          src: '{,*/}*.svg',
+//          dest: '<%= yeoman.dist %>/images'
+//        }]
+//      }
+//    },
     htmlmin: {
       dist: {
         options: {
@@ -254,10 +254,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
-            'bower_components/**/*',
-            'images/{,*/}*.{webp}',
-            'fonts/*'
+            'styles/ace/font/*',
+            'scipts/i18n/*.json'
           ]
         }, {
           expand: true,
@@ -285,7 +283,7 @@ module.exports = function (grunt) {
       dist: [
         'copy:styles',
 //        'imagemin',
-        'svgmin'
+//        'svgmin'
       ]
     },
 
@@ -296,7 +294,6 @@ module.exports = function (grunt) {
        dist: {
          files: {
            '<%= yeoman.dist %>/styles/main.css': [
-             '<%= yeoman.app %>/styles/ace/css/*.css',
              '.tmp/styles/{,*/}*.css',
              '<%= yeoman.app %>/styles/{,*/}*.css'
            ]
@@ -306,10 +303,15 @@ module.exports = function (grunt) {
      uglify: {
        dist: {
          files: {
+             
            '<%= yeoman.dist %>/scripts/scripts.js': [
              '<%= yeoman.app %>/scripts/*.js',
              '<%= yeoman.app %>/scripts/{,*/}*.js',
              '<%= yeoman.dist %>/scripts/scripts.js'
+           ],
+           '<%= yeoman.dist %>/scripts/login.js': [
+             '<%= yeoman.app %>/scripts/config.js',
+             '<%= yeoman.app %>/scripts/common/login.js'
            ]
          }
        }
@@ -358,7 +360,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'bower-install',
+//    'bower-install',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -375,7 +377,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
 //    'newer:jshint',
-    'test',
+//    'test',
     'build'
   ]);
 };

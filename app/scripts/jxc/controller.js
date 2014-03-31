@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'])
-        .config(function($routeProvider) {
+        .config(["$routeProvider", function($routeProvider) {
             $routeProvider
                     //入库
                     .when('/JXC/Stockin', {
@@ -59,7 +59,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/grid.html',
                         controller: 'StockProductsCtl'
                     })
-        })
+        }])
         .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", function($scope, StockModel, StockRes, $location){
             $scope.pageActions = [
                 {
@@ -80,8 +80,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 location: $location
             }, fields);
         }])
-        .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "$location", "$routeParams",
-            function($scope, StockModel, StockRes, $location, $routeParams) {
+        .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "UserRes", "$location", "$routeParams",
+            function($scope, StockModel, StockRes, UserRes, $location, $routeParams) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -103,6 +103,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     scope : $scope,
                     resource: StockRes,
                     location: $location,
+                    foreignResource: UserRes,
                     routeParams: $routeParams
                 }, StockModel, opts);
                 
