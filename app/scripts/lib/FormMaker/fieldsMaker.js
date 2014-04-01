@@ -14,6 +14,7 @@ var formFieldsMaker = function(scope, opts) {
         "fields/number": '<input type="number" %s />',
         "fields/select": '<select %(attr)s ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s"><option><option></select>',
         'fields/email' : '<input type="number" %s />',
+        'fields/password': '<input type="password" %s />',
         'fields/typeahead' : '<input type="text" '+
                 'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" '+
                 'typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s />'
@@ -87,6 +88,10 @@ fieldsMakerFactory.prototype = {
     _number: function(name, fieldDefine) {
         fieldDefine["min"] = undefined != fieldDefine["min"] ? fieldDefine["min"] : 0;
         return sprintf(this.$parent.templates["fields/number"], this._attr(name, fieldDefine));
+    },
+    _password: function(name, fieldDefine){
+        delete(fieldDefine.value);
+        return sprintf(this.$parent.templates["fields/password"], this._attr(name, fieldDefine));
     },
     //多选框
     _checkbox: function(name, fieldDefine){

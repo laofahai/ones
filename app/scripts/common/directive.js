@@ -3,7 +3,7 @@
 /**
  * 表单生成
  * */
-angular.module("erp.common.directives", [])
+angular.module("erp.common.directives", ["erp.formMaker"])
         .directive("commonform", ["$compile", function($compile) {
             return {
                 restrict: "E",
@@ -27,7 +27,7 @@ angular.module("erp.common.directives", [])
                 }
             };
         }])
-        .directive("bill", ["$compile", function($compile){
+        .directive("bill", ["$compile", "BillMaker", function($compile, BillMaker){
             return {
                 restrict: "E",
                 replace: true,
@@ -39,6 +39,9 @@ angular.module("erp.common.directives", [])
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
 //                            $scope.$on("billForm.ready", function() {
+                                var b = new BillMaker.makeForm($scope);
+                                iElement.append($compile(b.makeHTML())($scope.$parent));
+                                return;
                                 var b = new billFormMaker($scope, $compile);
                                 iElement.append($compile(b.makeHTML())($scope.$parent));
 //                            });

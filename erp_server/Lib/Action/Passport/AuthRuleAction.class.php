@@ -7,10 +7,10 @@
  */
 
 /**
- * Description of DepartmentAction
+ * Description of AuthRuleAction
  *
  * @author nemo
  */
-class DepartmentAction extends NetestCategoryAction {
+class AuthRuleAction extends CommonAction {
     //put your code here
 }

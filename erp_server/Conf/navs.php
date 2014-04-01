@@ -85,9 +85,9 @@ return array(
             ),
             "organization_set" => array(
                 "user_setting" => "Passport/User",
-                "auth_rule_node" => "HOME/AuthRule",
-                "user_group"   => "HOME/AuthGroup",
-                "department"   => "HOME/Department"
+                "auth_rule_node" => "Passport/AuthRule",
+                "user_group"   => "Passport/AuthGroup",
+                "department"   => "Passport/Department"
             ),
             "workflow" => "HOME/Workflow",
             "clear_cache" => "HOME/Settings/clearCache"

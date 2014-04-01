@@ -84,13 +84,16 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
                     return false;
                 }
-                res.doWorkflow({
-                    workflow: true,
-                    node_id: node_id,
-                    id: selectedItems[0].id
-                }).$promise.then(function(data){
-                    $scope.$broadcast("gridData.changed");
-                });
+                
+                for(var i=0;i<selectedItems.length;i++) {
+                    res.doWorkflow({
+                        workflow: true,
+                        node_id: node_id,
+                        id: selectedItems[i].id
+                    });
+                }
+                $scope.$broadcast("gridData.changed");
+                
             };
             $scope.workflowActionDisabled = function(id, selectedItems) {
                 selectedItems = selectedItems || [];
@@ -115,7 +118,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 return result;
             };
             $scope.workflowDisabled = function(selectedItems) {
-                selectedItems = !selectedItems || [];
                 if(!selectedItems.length) {
                     return true;
                 }

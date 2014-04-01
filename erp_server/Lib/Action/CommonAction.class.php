@@ -73,14 +73,12 @@ class CommonAction extends RestAction {
             "error" => 1,
             "msg"   => $msg
         ));
-        exit;
     }
     protected function success($msg) {
         $this->response(array(
             "error" => 0,
             "msg"   => $msg
         ));
-        exit;
     }
     
     /**
@@ -93,24 +91,31 @@ class CommonAction extends RestAction {
         if (empty($model)) {
             $this->error(L("Server error"));
         }
+        
+        if($this->relation) {
+            $model = $model->relation(true);
+        }
 
         $map = array();
         $this->_filter($map);
         
         $list = $model->where($map)->order("id DESC")->select();
+        
+//        print_r($list);
         $this->response($list);
     }
     
     /**
      * 通用REST GET方法
      */
-    public function read() {
+    public function read($return=false) {
         if("true" === $_GET["workflow"]) {
             return $this->doWorkflow();
         }
         
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);
+        
         if($this->relation) {
             $model = $model->relation(true);
         }
@@ -121,6 +126,11 @@ class CommonAction extends RestAction {
         $this->_filter($map);
         
         $item = $model->where($map)->find();
+        
+        if($return) {
+            return $item;
+        }
+        
         $this->response($item);
     }
 
@@ -128,7 +138,7 @@ class CommonAction extends RestAction {
      * 通用REST插入方法
      */
     public function insert() {
-        $name = $this->getActionName();
+        $name = $this->insertModel ? $this->insertModel : $this->getActionName();
         $model = D($name);
         
         /**
@@ -158,7 +168,7 @@ class CommonAction extends RestAction {
      * 更新
      */
     public function update() {
-        $name = $this->getActionName();
+        $name = $this->updateModel ? $this->updateModel : $this->getActionName();
         $model = D($name);
         
         /**
@@ -168,9 +178,12 @@ class CommonAction extends RestAction {
         if (false === $model->create()) {
             $this->error($model->getError());
         }
+        
+        if($this->relation) {
+            $model = $model->relation(true);
+        }
         // 更新数据
         $result = $model->save();
-        
         if ($result !== false) { //保存成功
             $this->response(array(
                 "error" => 0
@@ -191,7 +204,7 @@ class CommonAction extends RestAction {
             $pk = $model->getPk();
             $id = $_REQUEST [$pk];
             if (isset($id)) {
-                $condition = array($pk => array('in', explode('|', $id)));
+                $condition = array($pk => array('in', $id));
                 $list = $model->where($condition)->delete();
                 if ($list !== false) {
                     $this->success('删除成功！');
@@ -210,6 +223,7 @@ class CommonAction extends RestAction {
     protected function doWorkflow() {
         $mainRowid = abs(intval($_GET["id"]));
         $nodeId = abs(intval($_GET["node_id"]));
+        
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
            $this->error("not_allowed");
         }
@@ -219,6 +233,9 @@ class CommonAction extends RestAction {
         if(false === $rs) {
             $this->error("not_allowed");
         }
+        
+        
+        
         // 结束信息返回true、或者没有任何返回值时跳转
         if(true === $rs or !$rs) {
             $this->success();

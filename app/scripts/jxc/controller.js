@@ -12,6 +12,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/jxc/stockin/edit.html',
                         controller: 'JXCStockinEditCtl'
                     })
+                    .when('/JXC/Stockin/edit/id/:id', {
+                        templateUrl: 'views/jxc/stockin/edit.html',
+                        controller: 'JXCStockinEditCtl'
+                    })
                     //商品基础
                     .when('/JXC/Goods', {
                         templateUrl: 'views/common/grid.html',
@@ -120,24 +124,29 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
                     $scope.workflowActionList = data;
                 });
+                
+                $scope.doWorkflow = function(event, id) {
+//                    $scope.selectedItems = [];
+                    return $scope.$parent.doWorkflow(event, id, $scope.selectedItems, StockinRes);
+                };
+                $scope.workflowActionDisabled = function(id){
+                    return $scope.$parent.workflowActionDisabled(id, $scope.selectedItems);
+                };
+                //@todo 判断 两条数据 下步操作相同情况
+                var ifWorkflowDisabled = function(){
+                    var rs = $scope.$parent.workflowDisabled($scope.selectedItems);
+                    return rs;
+                };
+                
+                $scope.workflowDisabled = true;
                 $scope.$watch(function(){
                     return $scope.selectedItems;
                 }, function(){
-                    $scope.doWorkflow = function(event, id) {
-                        $scope.selectedItems = [];
-                        return $scope.$parent.doWorkflow(event, id, $scope.selectedItems, StockinRes);
-                    };
-                    $scope.workflowActionDisabled = function(id){
-                        return $scope.$parent.workflowActionDisabled(id, $scope.selectedItems);
-                    };
-                    //@todo 判断 两条数据 下步操作相同情况
-                    $scope.workflowDisabled = function(){
-                        return $scope.$parent.workflowDisabled($scope.selectedItems);
-                    };
+                    $scope.workflowDisabled = ifWorkflowDisabled();
                 });
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "GoodsRes", "StockProductsRes", "StockRes", "StockinEditModel", "DataModelDataRes", "$location", "ComView",
-            function($scope, StockinRes, GoodsRes, StockProductsRes, StockRes, StockinEditModel, DataModelDataRes, $location, ComView) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView",
+            function($scope, StockinRes, StockinEditModel, ComView) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -151,10 +160,13 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     }
                 ];
                 
+                $scope.workflowAble = true;
                 $scope.selecteAble = false;
                 $scope.showWeeks = true;
                 
                 ComView.displayBill($scope, StockinEditModel, StockinRes);
+                
+                
                 
                 $scope.formMetaData = {};
                 $scope.formMetaData.inputTime = new Date();
@@ -207,10 +219,11 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         //商品分类管理
         .controller("JXCGoodsCategoryCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "ComView",
             function($scope, model, res, ComView){
-                ComView.displayGrid($scope, model, res);
+                ComView.displayGrid($scope, model, res, {
+                    multiSelect: false
+                });
                 $scope.addChildAble = true;
                 $scope.viewDataAble = true;
-                
             }])
         .controller("JXCGoodsCategoryEditCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "$routeParams", "ComView",
             function($scope, model, res, $routeParams, ComView) {

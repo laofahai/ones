@@ -23,7 +23,6 @@ angular.module("erp.jxc.services", [])
                         inputType: "select",
                         valueField: "id",
                         nameField : "prefix_name",
-                        "ng-change": "loadDataModel()",
                         listable: false
                     },
                     category_name: {

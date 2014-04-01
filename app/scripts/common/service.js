@@ -14,6 +14,12 @@ ERP.factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
 ERP.factory("DepartmentRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "passport/department/:id.json", null, {'update': { method:'PUT' }});
     }]);
+ERP.factory("AuthRuleRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "passport/authRule/:id.json", null, {'update': { method:'PUT' }});
+    }]);
+ERP.factory("AuthGroupRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "passport/authGroup/:id.json", null, {'update': { method:'PUT' }});
+    }]);
 
 ERP.factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/nodes.json", null, {'update': { method:'PUT' }});

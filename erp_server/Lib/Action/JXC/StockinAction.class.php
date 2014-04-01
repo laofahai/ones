@@ -17,6 +17,12 @@ class StockinAction extends CommonAction {
     
     protected $workflowAlias = "stockin";
     
+    public function read() {
+        if(!$_GET["includeRows"]) {
+            return parent::read();
+        }
+    }
+    
     /**
      * @override
      */
@@ -54,15 +60,20 @@ class StockinAction extends CommonAction {
         }
         
         $billId = $stockinModel->newBill($billData, $billItems);
-        
-        
-        
-        
-//        $stockinModel->add($billData);
-        
-//        echo $stockinModel->getLastSql();exit;
-        
-        
+    }
+    
+    public function _after_delete() {
+        $id = $_REQUEST["id"];
+        $model = D("StockinDetail");
+        $model->where(array(
+            "stockin_id" => array("IN", $id)
+        ))->delete();
+        $workflow = D("Workflow")->getByAlias($this->workflowAlias);
+        $model = D("WorkflowProcess");
+        $model->where(array(
+            "mainrow_id" => array("IN", $id),
+            "workflow_id"=> $workflow["id"]
+        ))->delete();
     }
     
 }

@@ -19,7 +19,9 @@ class StockinModel extends CommonModel {
     
     protected $workflowAlias = "stockin";
     
-    
+    /**
+     * 创建新单据
+     */
     public function newBill($billData, $billItems) {
         if(!$billItems) {
             return;
@@ -41,6 +43,7 @@ class StockinModel extends CommonModel {
         
         $this->commit();
         
+        //单据进入初始工作流程
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $node = $workflow->doNext($billId, "", true);

@@ -39,12 +39,33 @@ class UserRelationModel extends RelationModel {
      */
     public function select($options = array()) {
         $data = parent::select($options);
-        $_datas = array();
+        
         foreach($data as $k=>$v) {
-            $data[$k]["status_lang"] = $this->status_lang[$v["status"]];
-            $data[$k]["status_class"] = $this->status_class[$v["status"]];
+            unset($data[$k]["password"]);
+            if($v["groups"]) {
+                foreach($v["groups"] as $ag) {
+                    $data[$k]["usergroup"][] = $ag["title"];
+                    $data[$k]["group_ids"][] = $ag["id"];
+                }
+                $data[$k]["group_ids"] = implode(",",$data[$k]["group_ids"]);
+                $data[$k]["usergroup"] = implode(", ", $data[$k]["usergroup"]);
+            }
+        }
+        return $data;
+    }
+    
+    public function find($options = array()){
+        $data = parent::find($options);
+        if(!$data) {
+            return $data;
         }
         
+        if($data["groups"]) {
+            foreach($data["groups"] as $k=> $g) {
+                $data["usergroup"][] = $g["id"];
+            }
+            $data["usergroup"] = implode(",", $data["usergroup"]);
+        }
         return $data;
     }
     

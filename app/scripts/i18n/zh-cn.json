@@ -6,7 +6,33 @@
                 "User": {
                     "name": "用户管理",
                     "actions": {
-                        "index": ["用户列表"]
+                        "index": ["用户列表"],
+                        "add": ["新增用户"],
+                        "edit": ["修改用户信息"]
+                    }
+                },
+                "AuthRule": {
+                    "name": "权限节点",
+                    "actions": {
+                        "index": ["权限节点列表"],
+                        "add": ["新增权限节点"],
+                        "edit": ["修改权限节点信息"]
+                    }
+                },
+                "AuthGroup": {
+                    "name": "用户组",
+                    "actions": {
+                        "index": ["用户组列表"],
+                        "add"  : ["新增用户组"],
+                        "edit" : ["修改用户组"]
+                    }
+                },
+                "Department": {
+                    "name": "部门",
+                    "actions": {
+                        "index": ["部门列表"],
+                        "add"  : ["新增部门"],
+                        "edit" : ["修改部门"]
                     }
                 }
             }
@@ -42,6 +68,14 @@
                     "actions": {
                         "clearCache": ["清除缓存"]
                     }
+                },
+                "Types": {
+                    "name": "类型管理",
+                    "actions" : {
+                        "index": ["类型管理列表"],
+                        "add": ["新增类型"],
+                        "edit": ["修改类型"]
+                    }
                 }
             }
         },
@@ -76,7 +110,8 @@
                     "name": "入库单",
                     "actions": {
                         "index": ["入库单列表"],
-                        "add": ["新建入库单"]
+                        "add": ["新建入库单"],
+                        "edit": ["入库单信息"]
                     }
                 },
                 "StockProductList": {
@@ -146,7 +181,8 @@
             "addSuccess": "新增%s成功",
             "editSuccess": "修改%s成功",
             "deleteSuccess": "删除%s成功",
-            "operateSuccess": "操作成功"
+            "operateSuccess": "操作成功",
+            "fillTheForm": "请完整填写表单"
         },
         "actions": {
             "submit" : "提交",
@@ -191,6 +227,7 @@
         "name": "名称",
         "type": "类型",
         "data": "数据",
+        "title": "标题",
         "email": "邮箱",
         "total": "合计",
         "goods": "商品",
@@ -198,6 +235,7 @@
         "stock": "仓库",
         "status": "状态",
         "alias" : "别名",
+        "phone" : "电话",
         "billId": "单据编号",
         "totalNum": "总数",
         "sponsor": "制单人",
@@ -206,6 +244,10 @@
         "dateline": "时间",
         "standard": "规格",
         "measure": "计量单位",
+        "username": "用户名",
+        "usergroup": "用户组",
+        "truename": "姓名",
+        "password": "密码",
         "department": "部门",
         "stockManager": "库管员",
         "bindDataModel": "绑定数据模型",
