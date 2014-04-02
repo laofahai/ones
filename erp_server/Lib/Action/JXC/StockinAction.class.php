@@ -21,6 +21,44 @@ class StockinAction extends CommonAction {
         if(!$_GET["includeRows"]) {
             return parent::read();
         }
+        
+        $formData = parent::read(true);
+        $formData["inputTime"] = $formData["dateline"]*1000;
+        
+        $rowModel = D("StockinDetailView");
+        $rows = $rowModel->where("stockin_id=".$formData["id"])->select();
+        $modelIds = array();
+        $rowData = array();
+        foreach($rows as $v) {
+            $tmp = explode("-", $v["factory_code_all"]);
+            array_shift($tmp);
+            $modelIds = array_merge($modelIds, $tmp);
+            $v["modelIds"] = $tmp;
+            $rowData[$v["id"]] = $v;
+        }
+        array_flip(array_flip($modelIds));
+
+        $dataModel = D("DataModelDataView");
+        $tmp = $dataModel->where(array(
+            "id" => array("IN", implode(",", $modelIds))
+        ))->select();
+        
+        foreach($tmp as $v) {
+            $modelData[$v["id"]] = $v;
+        }
+        
+        foreach($rowData as $k=>$v) {
+            if(!$v["modelIds"]) {
+                continue;
+            }
+            foreach($v["modelIds"] as $mid) {
+                $rowData[$k][$modelData[$mid]["field_name"]] = $modelData[$mid]["data"];
+            }
+        }
+        
+        $formData["rows"] = reIndex($rowData);
+        $this->response($formData);
+        
     }
     
     /**
@@ -52,12 +90,14 @@ class StockinAction extends CommonAction {
                 "num"        => $billItem["num"],
                 "factory_code_all" => sprintf("%s-%d-%d", 
                         $billItem["goods_id"]["factory_code"], 
-                        $billItem["standard"]["value"],
-                        $billItem["version"]["value"]),
+                        $billItem["standard"],
+                        $billItem["version"]),
                 "memo" => $billItem["memo"],
-                "stock_id"   => 1//$billItem["stock_id"]
+                "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
             );
         }
+        
+//        print_r($billItems);exit;
         
         $billId = $stockinModel->newBill($billData, $billItems);
     }

@@ -216,7 +216,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html', 'views/**/*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -254,8 +254,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'styles/ace/font/*',
-            'scipts/i18n/*.json'
+            'views/**/*.html'
           ]
         }, {
           expand: true,
@@ -292,22 +291,56 @@ module.exports = function (grunt) {
     // to use the Usemin blocks.
      cssmin: {
        dist: {
+//           
+//           <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
+//        <link rel="stylesheet" href="bower_components/chosen/chosen.min.css" />
+//        <link rel="stylesheet" href="styles/ace/css/font-awesome.min.css" />
          files: {
+             '<%= yeoman.dist %>/styles/ace.css': [
+             '<%= yeoman.app %>/styles/ace/css/bootstrap.min.css',
+             '<%= yeoman.app %>/styles/ace/css/font-awesome.min.css',
+             '<%= yeoman.app %>/styles/ace/css/ace-fonts.css',
+             '<%= yeoman.app %>/styles/ace/css/ace.min.css',
+             '<%= yeoman.app %>/styles/ace/css/ace-rtl.css',
+             '<%= yeoman.app %>/styles/ace/css/ace-skin.min.css'
+           ],
+           '<%= yeoman.dist %>/styles/vendor.css': [
+             '<%= yeoman.app %>/bower_components/angular-grid/ng-grid.min.css',
+             '<%= yeoman.app %>/bower_components/chosen/chosen.min.css',
+           ],
            '<%= yeoman.dist %>/styles/main.css': [
              '.tmp/styles/{,*/}*.css',
+             '<%= yeoman.app %>/styles/ace/css/datepicker.css',
              '<%= yeoman.app %>/styles/{,*/}*.css'
            ]
          }
        }
      },
+     
      uglify: {
        dist: {
          files: {
-             
-           '<%= yeoman.dist %>/scripts/scripts.js': [
-             '<%= yeoman.app %>/scripts/*.js',
-             '<%= yeoman.app %>/scripts/{,*/}*.js',
-             '<%= yeoman.dist %>/scripts/scripts.js'
+           '<%= yeoman.dist %>/scripts/bower.js': [
+             '<%= yeoman.app %>/bower_components/jquery/jquery.js',
+             '<%= yeoman.app %>/bower_components/angular/angular.js',
+             '<%= yeoman.app %>/bower_components/bootstrap/dist/js/bootstrap.js',
+             '<%= yeoman.app %>/bower_components/angular-resource/angular-resource.js',
+             '<%= yeoman.app %>/bower_components/angular-cookies/angular-cookies.js',
+             '<%= yeoman.app %>/bower_components/angular-sanitize/angular-sanitize.js',
+             '<%= yeoman.app %>/bower_components/angular-route/angular-route.js',
+             '<%= yeoman.app %>/bower_components/angular-grid/ng-grid-2.0.7.debug.js',
+             '<%= yeoman.app %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+             '<%= yeoman.app %>/bower_components/chosen/chosen.jquery.js',
+             '<%= yeoman.app %>/bower_components/angular-chosen-localytics/chosen.js'
+           ],
+           '<%= yeoman.dist %>/scripts/ace.js': [
+             '<%= yeoman.app %>/vendor/ace/typeahead-bs2.min.js',
+             '<%= yeoman.app %>/vendor/ace/ace.min.js',
+             '<%= yeoman.app %>/vendor/ace/ace-extra.min.js',
+             '<%= yeoman.app %>/vendor/ace/ace-elements.min.js'
+           ],  
+           '<%= yeoman.dist %>/scripts/app.js': [
+             '<%= yeoman.app %>/scripts/**/*.js',
            ],
            '<%= yeoman.dist %>/scripts/login.js': [
              '<%= yeoman.app %>/scripts/config.js',
@@ -318,15 +351,7 @@ module.exports = function (grunt) {
      },
      concat: {
        dist: {}
-     },
-
-    // Test settings
-//    karma: {
-//      unit: {
-//        configFile: 'karma.conf.js',
-//        singleRun: true
-//      }
-//    }
+     }
   });
 
 

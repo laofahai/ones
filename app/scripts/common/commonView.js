@@ -4,7 +4,7 @@
  * */
 (function(){
 angular.module("erp.commonView", ["erp.formMaker"])
-        .service("ComView",["$location", "$rootScope", "$routeParams", "BillMaker",
+        .service("ComView",["$location", "$rootScope", "$routeParams", 
             function($location, $rootScope, $routeParams){
                 var service = {};
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
@@ -26,7 +26,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
 
                         if (opts.id) {
                             resource.get({id: opts.id}).$promise.then(function(defaultData) {
-                                $scope[opts.dataObject] = formMaker.dataFormat($scope.config.fieldsDefine, defaultData);
+                                $scope[opts.dataObject] = dataFormat($scope.config.fieldsDefine, defaultData);
                             });
                         }
                         setTimeout(function(){

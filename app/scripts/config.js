@@ -8,4 +8,3 @@ var conf = {
 
 angular.module("erp.config", [])
         .value("erp.config", conf);
-

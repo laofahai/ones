@@ -1,35 +1,31 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Idea Tech ERP System</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
-        <link rel="stylesheet" href="bower_components/chosen/chosen.min.css" />
+        <!-- build:css({.tmp,app}) styles/ace.css -->
+        <link rel="stylesheet" href="styles/ace/css/bootstrap.min.css" />
         <link rel="stylesheet" href="styles/ace/css/font-awesome.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-fonts.css" />
         <link rel="stylesheet" href="styles/ace/css/ace.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-rtl.min.css" />
         <link rel="stylesheet" href="styles/ace/css/ace-skins.min.css" />
+        <!-- endbuild -->
         <!-- endbower -->
+        <!-- build:css({.tmp,app}) styles/vendor.css -->
+        <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
+        <link rel="stylesheet" href="styles/ace/css/chosen.css" />
+        <!-- endbuild -->
         <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/ace/css/datepicker.css" />
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
     </head>
     <body ng-app="erp" ng-controller="MainCtl">
-        <!--[if lt IE 7]>
-          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-        <!-- Add your site or application content here -->
         <div class="navbar navbar-default" id="navbar">
             <script type="text/javascript">
                 try {
@@ -281,23 +277,7 @@
             </a>
         </div><!-- /.main-container -->
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-        <!--     <script>
-               (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-               })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        
-               ga('create', 'UA-XXXXX-X');
-               ga('send', 'pageview');
-            </script>-->
-
-        <!--[if lt IE 9]>
-        <script src="bower_components/es5-shim/es5-shim.js"></script>
-        <script src="bower_components/json3/lib/json3.min.js"></script>
-        <![endif]-->
-
-        <!-- bower:js -->
+        <!-- build:js({.tmp,app}) scripts/bower.js -->
         <script src="bower_components/jquery/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -310,20 +290,19 @@
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="bower_components/chosen/chosen.jquery.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
-        <script src="scripts/vendor/ace/typeahead-bs2.min.js"></script>
-        <script src="scripts/vendor/ace/uncompressed/ace.js"></script>
-        <script src="scripts/vendor/ace/uncompressed/ace-extra.js"></script>
-        <script src="scripts/vendor/ace/uncompressed/ace-elements.js"></script>
-        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:js({.tmp,app}) scripts/ace.js -->
+        <script src="vendor/ace/typeahead-bs2.min.js"></script>
+        <script src="vendor/ace/uncompressed/ace.js"></script>
+        <script src="vendor/ace/uncompressed/ace-extra.js"></script>
+        <script src="vendor/ace/uncompressed/ace-elements.js"></script>
+        <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- build:js({.tmp,app}) scripts/app.js -->
         <script src="scripts/lib/function.js"></script>
         
-        <script src="scripts/lib/formMaker/fieldsMaker.js"></script>
-        <script src="scripts/lib/formMaker/formMaker.js"></script>
-        <script src="scripts/lib/formMaker/billMaker.js"></script>
+        <script src="scripts/lib/formMaker.js"></script>
         
-        <script src="scripts/vendor/http-auth.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/common/commonView.js"></script>

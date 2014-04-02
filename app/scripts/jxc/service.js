@@ -250,7 +250,8 @@ angular.module("erp.jxc.services", [])
                         },
                         store_num: {
                             displayName: i18n.storeNum,
-                            editAble:false
+                            editAble:false,
+                            min: -9999
                         },
                         num: {
                             inputType: "number",

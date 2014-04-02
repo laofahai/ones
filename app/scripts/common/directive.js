@@ -4,7 +4,7 @@
  * 表单生成
  * */
 angular.module("erp.common.directives", ["erp.formMaker"])
-        .directive("commonform", ["$compile", function($compile) {
+        .directive("commonform", ["$compile", "FormMaker", function($compile, FormMaker) {
             return {
                 restrict: "E",
                 scope: {
@@ -17,7 +17,7 @@ angular.module("erp.common.directives", ["erp.formMaker"])
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
                             $scope.$on("commonForm.ready", function() {
-                                var fm = new formMaker($scope);
+                                var fm = new FormMaker.makeForm($scope);
                                 var html = fm.makeHTML();
                                 iElement.append($compile(html)($scope.$parent));
                                 return;
@@ -27,7 +27,7 @@ angular.module("erp.common.directives", ["erp.formMaker"])
                 }
             };
         }])
-        .directive("bill", ["$compile", "BillMaker", function($compile, BillMaker){
+        .directive("bill", ["$compile", "FormMaker", function($compile, FormMaker){
             return {
                 restrict: "E",
                 replace: true,
@@ -39,7 +39,7 @@ angular.module("erp.common.directives", ["erp.formMaker"])
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
 //                            $scope.$on("billForm.ready", function() {
-                                var b = new BillMaker.makeForm($scope);
+                                var b = new FormMaker.makeBill($scope);
                                 iElement.append($compile(b.makeHTML())($scope.$parent));
                                 return;
                                 var b = new billFormMaker($scope, $compile);

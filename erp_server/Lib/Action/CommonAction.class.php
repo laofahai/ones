@@ -126,7 +126,6 @@ class CommonAction extends RestAction {
         $this->_filter($map);
         
         $item = $model->where($map)->find();
-        
         if($return) {
             return $item;
         }
