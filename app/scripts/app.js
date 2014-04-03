@@ -7,8 +7,8 @@ var ERP = angular.module('erp', [
     'ngSanitize',
     'ngRoute',
     'ngGrid',
-    'ui.bootstrap',
-    'ui.bootstrap.tpls',
+    'ngAnimate',
+    'mgcrea.ngStrap',
     'localytics.directives',
     
     'erp.common',
@@ -113,7 +113,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             };
             $scope.workflowActionDisabled = function(id, selectedItems) {
                 selectedItems = selectedItems || [];
-                console.log(selectedItems);
                 if(!selectedItems.length) {
                     return true;
                 }
@@ -206,7 +205,15 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
         /**
          * 通用提示信息显示。依赖ui.bootstrap
          * */
-        ERP.controller("AlertCtl", ["$scope", "$rootScope", "$q", function($scope, $rootScope, $q) {
+        ERP.controller("AlertCtl", ["$scope", "$rootScope", "$q", "$alert", function($scope, $rootScope, $q, $alert) {
+                
+                var erpAlert = $alert({title: null, 
+                    content: 'Best check yo self, you\'re not looking too good.', 
+                    placement: 'top', type: 'info', show: true,
+                    container: '#alerts-container'
+                });
+                return;
+                
             $scope.alert = {};
             
             $scope.$on("alert", function(event, data){

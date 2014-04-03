@@ -213,9 +213,7 @@
                                 </small>
                             </h1>
                         </div><!-- /.page-header -->
-                        <div ng-controller="AlertCtl" ng-show="alert.msg">
-                            <alert type="alert.type" closeable="aler.closeable" close="closeAlert()">{{alert.msg}}</alert>
-                        </div>
+                        <div ng-controller="AlertCtl" id="alerts-container"></div>
                         <div class="col-xs-12" ng-view></div>
                         <!--//demo-->
 
@@ -286,8 +284,9 @@
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src="bower_components/angular-grid/ng-grid-2.0.7.debug.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
         <script src="bower_components/chosen/chosen.jquery.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
         <!-- endbuild -->
