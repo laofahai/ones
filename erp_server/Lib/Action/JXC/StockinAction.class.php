@@ -100,6 +100,8 @@ class StockinAction extends CommonAction {
 //        print_r($billItems);exit;
         
         $billId = $stockinModel->newBill($billData, $billItems);
+        
+        var_dump($billId);
     }
     
     public function _after_delete() {

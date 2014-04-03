@@ -92,7 +92,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
 
                 service.displayGrid = function($scope, fieldsDefine, resource, opts){
                     $scope.totalServerItems = 0;
-                    $scope.selectedItems = [];
+                    $scope.gridSelected = [];
 
                     var options = opts ? opts : {};
                     fieldsDefine = fieldsDefine ? fieldsDefine : [];
@@ -110,23 +110,41 @@ angular.module("erp.commonView", ["erp.formMaker"])
 
                     options.afterSelectionChange = function(rowitem, items) {
 //                        console.log(arguments);
-                        if (true === items) { //全选
-                            $scope.selectedItems = [];
-                            for (var i = 0; i < rowitem.length; i++) {
-                                $scope.selectedItems.push(rowitem[i].entity)
-                            }
-                        } else if (false === items) { //取消全选
-                            $scope.selectedItems = [];
-                        } else {
-                            $scope.selectedItems = items;
-                        }
-//                        console.log($scope.selectedItems);
+//                        angular.forEach(items, function(it, key){
+//                            if(it.checked) {
+//                                delete(items[key]);
+//                            }
+//                        });
+//                        
+//                        $scope.gridSelected = items;
+//                        
+////                        if (true === items) { //全选
+////                            $scope.gridSelected = [];
+////                            for (var i = 0; i < rowitem.length; i++) {
+////                                $scope.gridSelected.push(rowitem[i].entity);
+////                            }
+////                        } else if (false === items) { //取消全选
+////                            $scope.gridSelected = [];
+////                        } else {
+////                            if(rowitem.entity.checked) {
+////                                $scope.gridSelected.push(rowitem.entity);
+////                            }
+////                            if($scope.gridSelected instanceof Array && $scope.gridSelected.length > 0 && $scope.gridSelected[0]) {
+////                                angular.forEach($scope.gridSelected, function(item,key){
+////                                    if(!item.checked) {
+////                                        delete($scope.gridSelected[key]);
+////                                    }
+////                                });
+////                            }
+////                        }
+////                        
+////                        console.log($scope.gridSelected);
                     };
                     
-                    options.beforeSelectionChange = function (event) {
-                        event.entity.checked = !event.selected;
-                        return true;
-                    }
+//                    options.beforeSelectionChange = function (event) {
+//                        event.entity.checked = !event.selected;
+//                        return true;
+//                    };
 
                     /**
                      * 字段名称
@@ -175,17 +193,22 @@ angular.module("erp.commonView", ["erp.formMaker"])
                         showFilter: true,
                         showColumnMenu: true,
                         showSelectionCheckbox: true,
+//                        selectWithCheckboxOnly: true,
                         rowHeight: 40,
+                        multiSelect: true,
                         headerRowHeight: 40,
                         enableColumnResize: true,
+                        selectedItems: $scope.gridSelected,
+//                        selectedItems: "gridSelected",
             //            enablePinning: true,  
-                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
+//                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
                         totalServerItems: 'totalServerItems',
                         i18n: "zh-cn",
                         //extra
                         module: $location.$$url.split("/").splice(0, 3).join("/"),
                         subModule: "",
-                        extraParams: {}
+                        queryExtraParams: {}, //get 参数
+                        editExtraParams: null //edit 时附加参数
                     };
 
                     var opts = $.extend(defaults, options);
@@ -195,41 +218,49 @@ angular.module("erp.commonView", ["erp.formMaker"])
                      * 默认方法
                      * */
                     $scope.doAddChild = opts.doAddChild ? opts.doAddChild : function(){
-                        if ($scope.selectedItems.length) {
-                            $location.url(opts.module + opts.subModule + "/add/pid/"+$scope.selectedItems[0].id);
+                        if ($scope.gridSelected.length) {
+                            $location.url(opts.module + opts.subModule + "/add/pid/"+$scope.gridSelected[0].id);
                         }
                     };
                     $scope.doView = opts.doView ? opts.doView : function() {
-                        if ($scope.selectedItems.length) {
-                            $location.url(opts.module + opts.subModule + "/view/id/" + $scope.selectedItems[0].id);
+                        if ($scope.gridSelected.length) {
+                            $location.url(opts.module + opts.subModule + "/view/id/" + $scope.gridSelected[0].id);
                         }
                     };
                     $scope.doViewSub = opts.doViewSub ? opts.doViewSub : function() {
-                        if ($scope.selectedItems.length) {
-                            $location.url(opts.module + opts.subModule + "/viewSub/id/" + $scope.selectedItems[0].id);
+                        if ($scope.gridSelected.length) {
+                            $location.url(opts.module + opts.subModule + "/viewSub/id/" + $scope.gridSelected[0].id);
                         }
                     };
                     $scope.doViewDataModel = opts.doViewDataModel ? opts.doViewDataModel : function() {
-                        $location.url("/HOME/DataModelData/" + $scope.selectedItems[0].bind_model);
+                        $location.url("/HOME/DataModelData/" + $scope.gridSelected[0].bind_model);
                     };
                     $scope.doEditSelected = opts.doEditSeleted ? opts.doEditSelected : function() {
-                        if ($scope.selectedItems.length) {
-                            $location.url(opts.module + opts.subModule + "/edit/id/" + $scope.selectedItems[0].id);
+                        if ($scope.gridSelected.length) {
+                            $location.url(opts.module + opts.subModule + "/edit/id/" + $scope.gridSelected[0].id+opts.editExtraParams);
                         }
                     };
                     $scope.doDeleteSelected = opts.doDeleleSelected ? opts.doDeleleSelected : function() {
-                        if (!confirm(sprintf($scope.i18n.lang.confirm_delete, $scope.selectedItems.length))) {
+                        if (!confirm(sprintf($scope.i18n.lang.confirm_delete, $scope.gridSelected.length))) {
                             return false;
                         }
                         var ids = [];
-                        for (var i = 0; i < $scope.selectedItems.length; i++) {
-                            ids.push($scope.selectedItems[i].id);
+                        for (var i = 0; i < $scope.gridSelected.length; i++) {
+                            ids.push($scope.gridSelected[i].id);
                         }
                         resource.delete({id: ids.join(",")}, function(data) {
                             $scope.$broadcast("gridData.changed");
                         });
-
+                        
+                        $scope.gridOptions.selectedItems = [];
+                        $scope.gridSelected = [];
                     };
+                    
+                    //查看工作进程
+                    $scope.doViewWorkflowProcesses = function(){
+                        var id = $scope.gridSelected[0].id;
+                    }
+                    
 
                     opts.columnDefs = columnDefs;
 
@@ -247,14 +278,14 @@ angular.module("erp.commonView", ["erp.formMaker"])
                             var data;
                             if (searchText) {
                                 var ft = searchText.toLowerCase();
-                                resource.query(opts.extraParams, function(largeLoad) {
+                                resource.query(opts.queryExtraParams, function(largeLoad) {
                                     data = largeLoad.filter(function(item) {
                                         return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                                     });
                                     setPagingData(data, page, pageSize);
                                 });
                             } else {
-                                resource.query(opts.extraParams, function(largeLoad) {
+                                resource.query(opts.queryExtraParams, function(largeLoad) {
                                     setPagingData(largeLoad, page, pageSize);
                                 });
                             }
@@ -283,11 +314,14 @@ angular.module("erp.commonView", ["erp.formMaker"])
                             getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
                         }
                     }, true);
-
+                    
                     $scope.$on('gridData.changed', function() {
-                        $scope.selectedItems = [];
+                        var url = "/HOME/goTo/url/"+encodeURI(encodeURIComponent($location.$$url));
+                        $location.url(url);
+                        return;
+//                        $scope.gridSelected = [];
+                        $scope.gridOptions.selectedItems = [];
                         getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
-                        console.log($scope.selectedItems);
                     });
                     $scope.gridOptions = opts;
                 };

@@ -16,7 +16,7 @@ class StockProductListModel extends Model {
     /**
      * 更新库存
      */
-    public function updateStoreList($data, $stockid) {
+    public function updateStoreList($data) {
         if(!$data) {
             return false;
         }
@@ -26,7 +26,6 @@ class StockProductListModel extends Model {
         }
         $map = array(
             "factory_code_all" => array("IN", implode(",", $fca)),
-            "stock_id" => $stockid
         );
         $tmp = $this->where($map)->select();
         foreach($tmp as $t) {
@@ -42,15 +41,15 @@ class StockProductListModel extends Model {
 //                
 //            }
 //            print_r($v);exit;
-            if(array_key_exists($v["factory_code_all"]."-".$stockid, $old)) {
-                $num = $v["num"]+$old[$v["factory_code_all"]."-".$stockid];
+            if(array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $old)) {
+                $num = $v["num"]+$old[$v["factory_code_all"]."-".$v["stock_id"]];
             } else {
                 $num = $v["num"];
             }
             $saveData = array(
                 "factory_code_all" => $v["factory_code_all"],
                 "goods_id" => $v["goods_id"],
-                "stock_id" => $stockid,
+                "stock_id" => $v["stock_id"],
                 "color_id" => $v["color_id"],
                 "standard_id" => $v["standard_id"],
                 "num" => $num

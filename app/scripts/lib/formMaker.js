@@ -275,7 +275,7 @@
                         if(defaultData) {
                             label = defaultData[i][item.field];
                         } else {
-                            label = null;
+                            label = "";
                         }
                         item.inputType = item.inputType ? item.inputType : "text";
                         html.push(sprintf(self.templates['bills/fields/td.html'], {

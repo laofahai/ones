@@ -127,23 +127,25 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 $scope.doWorkflow = function(event, id) {
 //                    $scope.selectedItems = [];
-                    return $scope.$parent.doWorkflow(event, id, $scope.selectedItems, StockinRes);
+                    return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, StockinRes);
                 };
                 $scope.workflowActionDisabled = function(id){
-                    return $scope.$parent.workflowActionDisabled(id, $scope.selectedItems);
+                    return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
                 };
                 //@todo 判断 两条数据 下步操作相同情况
                 var ifWorkflowDisabled = function(){
-                    var rs = $scope.$parent.workflowDisabled($scope.selectedItems);
+                    var rs = $scope.$parent.workflowDisabled($scope.gridSelected);
                     return rs;
                 };
                 
-                $scope.workflowDisabled = true;
-                $scope.$watch(function(){
-                    return $scope.selectedItems;
-                }, function(){
-                    $scope.workflowDisabled = ifWorkflowDisabled();
-                });
+                
+                
+                $scope.workflowDisabled = false;
+//                $scope.$watch(function(){
+//                    return $scope.selectedItems;
+//                }, function(){
+//                    $scope.workflowDisabled = ifWorkflowDisabled();
+//                });
             }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView",
             function($scope, StockinRes, StockinEditModel, ComView) {

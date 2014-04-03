@@ -13,8 +13,8 @@
 class StockinDetailViewModel extends CommonViewModel {
     
     protected $viewFields = array(
-        "StockinDetail" => array("id","stockin_id","goods_id","num"),
-        "Goods"  => array("name"=>"goods_name", "measure","factory_code", "goods_category_id", "_on" => "Goods.id=StockinDetail.goods_id"),
+        "StockinDetail" => array("id","stockin_id","goods_id","stock_id","num", "factory_code_all"),
+        "Goods"  => array("name"=>"goods_name", "measure","factory_code",  "goods_category_id", "_on" => "Goods.id=StockinDetail.goods_id"),
     );
     
 }

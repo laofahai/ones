@@ -3,6 +3,10 @@
 angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directives'])
         .config(["$routeProvider",function($routeProvider) {
             $routeProvider
+                    .when('/HOME/goTo/url/:url', {
+                        controller: "HOMERedirectCtl",
+                        templateUrl: "views/common/blank.html",
+                    })
                     .when('/HOME/DataModel', {
                         templateUrl: "views/common/grid.html",
                         controller: "DataModelCtl"
@@ -23,7 +27,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         templateUrl: "views/common/edit.html",
                         controller: "DataModelFieldsEditCtl"
                     })
-                    .when('/HOME/DataModelFields/edit/id/:id', {
+                    .when('/HOME/DataModelFields/edit/id/:id/pid/:pid', {
                         templateUrl: "views/common/edit.html",
                         controller: "DataModelFieldsEditCtl"
                     })
@@ -51,10 +55,37 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         templateUrl: "views/common/edit.html",
                         controller: "HomeTypesEditCtl"
                     })
+                    .when('/HOME/Workflow', {
+                        templateUrl: "views/common/grid.html",
+                        controller: "WorkflowCtl"
+                    })
+                    .when('/HOME/Workflow/add', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "WorkflowEditCtl"
+                    })
+                    .when('/HOME/Workflow/edit/id/:id', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "WorkflowEditCtl"
+                    })
+                    .when('/HOME/Workflow/viewSub/id/:pid', {
+                        templateUrl: "views/common/grid.html",
+                        controller: "WorkflowNodeCtl"
+                    })
+                    .when('/HOME/WorkflowNode/add/pid/:pid', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "WorkflowNodeEditCtl"
+                    })
+                    .when('/HOME/WorkflowNode/edit/id/:id/pid/:pid', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "WorkflowNodeEditCtl"
+                    })
                     .when('/HOME/Settings/clearCache', {
                         templateUrl: "views/home/clearCache.html",
                         controller: "clearCacheCtl"
                     })
+        }])
+        .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
+            $location.url($routeParams.url);
         }])
         .controller("clearCacheCtl", ["$scope", "$http", "erp.config", function($scope, $http, conf){
             $scope.cacheTypes = [null, true, true, true];
@@ -64,6 +95,91 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                 });
             };
         }])
+        .controller("WorkflowNodeCtl", ["$scope", "WorkflowNodeRes", "WorkflowNodeModel", "ComView", "$routeParams", 
+            function($scope, WorkflowNodeRes, WorkflowNodeModel, ComView, $routeParams){
+                $scope.pageActions = [
+                    {
+                        label: $scope.i18n.lang.actions.add,
+                        class: "success",
+                        href: "/HOME/WorkflowNode/add/pid/"+$routeParams.pid
+                    },
+                    {
+                        label: $scope.i18n.lang.actions.list,
+                        class: "primary",
+                        href: "/HOME/Workflow/viewSub/id/"+$routeParams.pid
+                    }
+                ];
+//                $scope.currentPage.action = "某工作流";
+                ComView.displayGrid($scope,WorkflowNodeModel,WorkflowNodeRes, {
+                    queryExtraParams: {
+                        workflow_id: $routeParams.pid
+                    },
+                    module: "/HOME/WorkflowNode",
+                    editExtraParams: "/pid/"+$routeParams.pid
+                });
+            }])
+        .controller("WorkflowNodeEditCtl", ["$scope", "WorkflowNodeModel", "WorkflowNodeRes", "ComView", "$routeParams",
+            function($scope, WorkflowNodeModel, WorkflowNodeRes, ComView, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.add,
+                        class : "success",
+                        href  : "/HOME/WorkflowNode/add/pid/"+$routeParams.pid
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/HOME/Workflow/viewSub/id/"+$routeParams.pid
+                    }
+                ];
+                $scope.selecteAble = false;
+                var opts = {
+                    name: "DataModelEdit",
+                    module: "/HOME/DataModelFields",
+                    returnPage: "/HOME/Workflow/viewSub/id/"+$routeParams.pid,
+                    id: $routeParams.id
+                };
+                ComView.displayForm($scope, WorkflowNodeModel, WorkflowNodeRes, opts);
+            }])
+        .controller("WorkflowCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", 
+            function($scope, WorkflowRes, WorkflowModel, ComView){
+                $scope.pageActions = [
+                    {
+                        label: $scope.i18n.lang.actions.add,
+                        class: "success",
+                        href: "/HOME/Types/add"
+                    },
+                    {
+                        label: $scope.i18n.lang.actions.list,
+                        class: "primary",
+                        href: "/HOME/Types"
+                    }
+                ];
+                $scope.viewSubAble = true;
+                ComView.displayGrid($scope,WorkflowModel,WorkflowRes);
+            }])
+        .controller("WorkflowEditCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", "$routeParams",
+            function($scope, WorkflowRes, WorkflowModel, ComView, $routeParams) {
+                $scope.pageActions = [
+                    {
+                        label: $scope.i18n.lang.actions.add,
+                        class: "success",
+                        href: "/HOME/Types/add"
+                    },
+                    {
+                        label: $scope.i18n.lang.actions.list,
+                        class: "primary",
+                        href: "/HOME/Types"
+                    }
+                ];
+                $scope.selecteAble = false;
+                
+                var opts = {
+                    name: "TypesEdit",
+                    id: $routeParams.id
+                };
+                ComView.displayForm($scope,WorkflowModel,WorkflowRes,opts);
+            }])
         .controller("HomeTypesCtl", ["$scope", "TypesRes", "TypesModel", "ComView", 
             function($scope, TypesRes, TypesModel, ComView){
                 $scope.pageActions = [
@@ -152,11 +268,12 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     {
                         label : $scope.i18n.lang.actions.list,
                         class : "primary",
-                        href  : "/HOME/DataModelFields"
+                        href  : "/HOME/DataModel/viewSub/id/"+$routeParams.pid
                     }
                 ];
                 ComView.displayGrid($scope,DataModelFieldsModel,DataModelFieldsRes,{
-                    module: "/HOME/DataModelFields"
+                    module: "/HOME/DataModelFields",
+                    editExtraParams: "/pid/"+$routeParams.pid
                 });
             }])
         
@@ -166,19 +283,19 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     {
                         label : $scope.i18n.lang.actions.add,
                         class : "success",
-                        href  : "/HOME/DataModelFields/add/pid/"+$routeParams.pid
+                        href  : "/HOME/DataModelFields/add/pid/"+$routeParams.id
                     },
                     {
                         label : $scope.i18n.lang.actions.list,
                         class : "primary",
-                        href  : "/HOME/DataModelFields/"
+                        href  : "/HOME/DataModel/viewSub/id/"+$routeParams.pid
                     }
                 ];
                 $scope.selecteAble = false;
                 var opts = {
                     name: "DataModelEdit",
                     module: "/HOME/DataModelFields",
-                    returnPage: "/HOME/DataModel/viewSub/id/"+$routeParams.pid,
+                    returnPage: "/HOME/DataModel/viewSub/id/"+$routeParams.id,
                     id: $routeParams.id
                 };
                 ComView.displayForm($scope, DataModelFieldsModel, DataModelFieldsRes, opts);

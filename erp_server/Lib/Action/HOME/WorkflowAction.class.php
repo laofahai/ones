@@ -13,5 +13,3 @@
 class WorkflowAction extends CommonAction {
     //put your code here
 }
-
-?>

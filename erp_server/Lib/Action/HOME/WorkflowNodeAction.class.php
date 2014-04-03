@@ -33,6 +33,10 @@ class WorkflowNodeAction extends CommonAction {
         }
     }
     
+    protected function _order(&$order) {
+        $order="listorder ASC, id ASC";
+    }
+    
 //    public function index() {
 //        $workflow_id = abs(intval($_GET["workflow_id"]));
 //        if(!$workflow_id) {

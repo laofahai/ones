@@ -129,3 +129,53 @@ angular.module("erp.home.services", [])
                 };
                 return obj;
              }])
+        .service("WorkflowModel", ["$rootScope", function($rootScope){
+            return {
+                getFieldsStruct: function(){
+                    return {
+                        id: {
+                            primary: true
+                        },
+                        alias : {},
+                        name: {},
+                        workflow_file: {
+                            displayName: $rootScope.i18n.lang.workflowAssitFile
+                        },
+                        memo: {}
+                    };
+                }
+            };
+        }])
+        .service("WorkflowNodeModel", ["$rootScope", function($rootScope){
+            return {
+                getFieldsStruct: function(){
+                    return {
+                        id: {primary: true},
+                        name: {},
+                        type: {},
+                        execute_file: {
+                            listable: false
+                        },
+                        listorder: {},
+                        prev_node_id: {},
+                        next_node_id: {},
+                        executor: {
+                            listable: false
+                        },
+                        cond: {
+                            listable: false
+                        },
+                        'default': {
+                            listable: false
+                        },
+                        execute_type: {},
+                        remind: {
+                            listable: false
+                        },
+                        max_time: {},
+                        status_text: {},
+                        memo: {}
+                    };
+                }
+            };
+        }])

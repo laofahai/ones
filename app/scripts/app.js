@@ -62,14 +62,31 @@ var ERP = angular.module('erp', [
 /**
  * Root Ctrl
  * */
-ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config",
-        function($scope, $rootScope, $location, $http, conf) {
+ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "$modal",
+        function($scope, $rootScope, $location, $http, conf, $modal) {
             if (!loginHash) {
                 window.location.href = 'index.html';
             }
             $rootScope.$on("event:loginRequired", function() {
                 window.location.href = 'index.html';
             });
+            
+            $scope.openModal = function(controller){
+                var modalInstance = $modal.open({
+                    templateUrl: 'myModalContent.html',
+                    controller: ModalInstanceCtrl,
+                    resolve: {
+                        items: function () {
+                            return $scope.items;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                }, function () {
+                    console.log('Modal dismissed at: ' + new Date());
+                });
+            };
             
             $scope.alert = function(msg, type, timeout) {
                 $scope.$broadcast("alert", {
@@ -93,14 +110,13 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                     });
                 }
                 $scope.$broadcast("gridData.changed");
-                
             };
             $scope.workflowActionDisabled = function(id, selectedItems) {
                 selectedItems = selectedItems || [];
+                console.log(selectedItems);
                 if(!selectedItems.length) {
                     return true;
                 }
-
                 var result = true;
                 for(var i=0;i<selectedItems.length;i++) {
                     var item = selectedItems[i];

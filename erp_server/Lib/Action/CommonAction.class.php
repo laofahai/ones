@@ -98,9 +98,11 @@ class CommonAction extends RestAction {
 
         $map = array();
         $this->_filter($map);
+        $order = "id DESC";
+        $this->_order($order);
         
-        $list = $model->where($map)->order("id DESC")->select();
-        
+        $list = $model->where($map)->order($order)->select();
+//        echo $model->getLastSql();exit;
 //        print_r($list);
         $this->response($list);
     }
@@ -245,6 +247,7 @@ class CommonAction extends RestAction {
      * 过滤器
      */
     protected function _filter(&$map) {}
+    protected function _order(&$order) {}
     
     /**
      * 对数据进行预处理

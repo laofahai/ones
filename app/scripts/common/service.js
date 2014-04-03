@@ -21,8 +21,12 @@ ERP.factory("AuthGroupRes", ["$resource", "erp.config", function($resource, cnf)
         return $resource(cnf.BSU + "passport/authGroup/:id.json", null, {'update': { method:'PUT' }});
     }]);
 
+ERP.factory("WorkflowRes", ["$resource", "erp.config", function($resource, cnf) {
+        return $resource(cnf.BSU + "workflow/:id.json", null, {'update': { method:'PUT' }});
+    }]);
+
 ERP.factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "workflow/nodes.json", null, {'update': { method:'PUT' }});
+        return $resource(cnf.BSU + "workflow/nodes/:id.json", null, {'update': { method:'PUT' }});
     }]);
 
 ERP.factory("TypesRes", ["$resource", "erp.config", function($resource, cnf) {

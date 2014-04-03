@@ -18,6 +18,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
     public function run() {
         $id = $this->mainrowId;
         if(!$id) {
+            return false;
             $this->action->error(L("params_error"));
         }
         
@@ -29,11 +30,11 @@ class StockinConfirmStockin extends WorkflowAbstract {
         
         $stockin = D("Stockin");
         $theStockin = $stockin->find($id);
-        
         $stockProductListModel = D("StockProductList");
         $stockProductListModel->startTrans();
-        $rs = $stockProductListModel->updateStoreList($data, $theStockin["stock_id"]);
-        if($rs) {
+//        print_r($data);exit;
+        $rs = $stockProductListModel->updateStoreList($data);
+        if(true === $rs) {
             $stockProductListModel->commit();
             $data = array(
                 "status" => 2,
@@ -55,6 +56,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
     }
     
     public function checkStockManger($condition) {
+        return true;
         $stockIn = D("Stockin")->find($this->mainrowId);
         $managers = D("Stock")->where("id=".$stockIn["stock_id"])->getField("managers");
         

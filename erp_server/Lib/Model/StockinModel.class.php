@@ -29,10 +29,11 @@ class StockinModel extends CommonModel {
         
         $this->startTrans();
         $billId = $this->add($billData);
-        
+//        echo $billId;exit;
         $itemsModel = D("StockinDetail");
         foreach($billItems as $billItem) {
             $billItem["stockin_id"] = $billId;
+//            print_r($billItem);exit;
             $id = $itemsModel->add($billItem);
             
             if(!$id) {
@@ -47,7 +48,7 @@ class StockinModel extends CommonModel {
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $node = $workflow->doNext($billId, "", true);
-        
+        var_dump($node);
         return $billId;
         
     }
