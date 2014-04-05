@@ -1,7 +1,7 @@
 (function(){
     'use struct';
     angular.module("erp.formMaker", [])
-    .service("FormMaker", ["$compile", function($compile) {
+    .service("FormMaker", ["$compile", "$q", function($compile, $q) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -10,13 +10,16 @@
             this.templates = {
                 "fields/text": '<input type="text" %s />',
                 "fields/number": '<input type="number" %s />',
-                "fields/select": '<select %(attr)s ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s"><option><option></select>',
+                "fields/select": '<select %(attr)s '+
+                        'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
+                        'search_contains="true" '+
+                        '><option><option></select>',
                 'fields/email': '<input type="number" %s />',
                 'fields/password': '<input type="password" %s />',
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
-                        'typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s'+
-                        ' bs-typeahead />'
+                        'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
+                        'data-html="true" bs-typeahead />'
             };
 
             this.maker = new service.fieldsMakerFactory(this, this.opts);
@@ -123,7 +126,7 @@
                         angular.forEach(result, function(item) {
                             data.push({
                                 value: item[valueField],
-                                name: item[nameField]
+                                name: item.pinyin ? item[nameField]+"_"+item.pinyin : item[nameField]
                             });
                         });
                         $scope.$parent[fieldDefine.remoteDataField + "sSelect"] = data;
@@ -144,18 +147,31 @@
                 var valueField = fieldDefine.valueField || "id";
                 var queryParams;
                 queryParams = $.extend(fieldDefine.queryParams || {}, {});
-                fieldDefine.dataSource.query(queryParams).$promise.then(function(data) {
-                    var dataList = [];
-                    angular.forEach(data, function(item) {
-                        dataList.push({
-                            label: item[nameField],
-                            value: item[valueField],
-                            category: item.goods_category_id,
-                            factory_code: item.factory_code
+                
+                $scope.$parent[methodName] = function(val){
+                    queryParams = $.extend(fieldDefine.queryParams || {}, {typeahead: val});
+                    var defer = $q.defer();
+                    fieldDefine.dataSource.query(queryParams, function(data){
+                        var dataList = [];
+                        angular.forEach(data, function(item) {
+                            dataList.push({
+                                label: item[valueField]+"_"+item[nameField],
+                                value: item[valueField],
+                                category: item.goods_category_id,
+                                factory_code: item.factory_code
+                            });
                         });
+                        defer.resolve(dataList);
                     });
-                    return dataList;
-                });
+                    return defer.promise.then(function(data){
+                        console.log(data);
+                        return data;
+                    });
+                };
+                
+                
+                console.log($scope.$parent[methodName]("d"));
+                
                 //设置默认值
                 if (fieldDefine.value) {
                     $scope.$parent[name + "TAIT"] = fieldDefine.value;
@@ -211,6 +227,7 @@
             this.fm = new formFieldsMaker($scope, {
                 multi: true //指定为表单绑定多条数据
             });
+            
         };
 
         service.makeBill.prototype = {
@@ -226,7 +243,11 @@
                 var html = [];
                 angular.forEach(fieldsDefine, function(item){
                     if(item.billAble!==false) {
-                        html.push(sprintf('<th>%s</th>', item.displayName));
+                        var attr = [];
+                        if("width" in item) {
+                            attr.push('width="'+item.width+'"');
+                        }
+                        html.push(sprintf('<th %s>%s</th>', attr.join(""), item.displayName));
                     }
                 });
                 return html.join("");
@@ -599,7 +620,7 @@
             
             $scope.$parent.doKeydown = function(event){
                 if(event.keyCode == 13) {
-                    $scope.$parent.doSubmit();
+//                    $scope.$parent.doSubmit();
                 }
             };
         };

@@ -91,8 +91,17 @@ class CommonTreeModel extends CommonModel {
         if(!$node) {
             return false;
         }
-        //UPDATE nested_category SET rgt = rgt - @myWidth WHERE rgt > @myRight;
-        //UPDATE nested_category SET lft = lft - @myWidth WHERE lft > @myRight;
+        //UPDATE `x_department` SET `lft`=lft-2 WHERE ( `lft` > '4' )
+        //UPDATE `x_department` SET `rgt`=rgt-2 WHERE ( `rgt` > '4' )
+        //DELETE FROM `x_department` WHERE ( `lft` >= '3' ) AND ( `rgt` <= '4' ){"error":0,"msg":"operate_success"}
+        
+        $this->startTrans();
+        
+        $this->where(array(
+            "lft" => array("EGT", $node['lft']),
+            "rgt" => array("ELT", $node['rgt']) 
+        ))->delete();
+        
         $width = $node["rgt"] - $node["lft"] + 1;
         $this->where(array(
             "lft" => array("GT", $node["rgt"])
@@ -101,10 +110,9 @@ class CommonTreeModel extends CommonModel {
             "rgt" => array("GT", $node["rgt"])
         ))->setDec('rgt',$width); 
         
-        return $this->where(array(
-            "lft" => array("EGT", $node['lft']),
-            "rgt" => array("ELT", $node['rgt']) 
-        ))->delete();
+        $this->commit();
+        
+        return true;
     }
     
     /**

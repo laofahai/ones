@@ -2,7 +2,7 @@
 <div class="billContainer">
     {{formData}}
     {{formMetaData}}
-    <form name="stockinScript" novalidate>
+    <form name="stockinScript" ng-keydown="doKeydown($event);" novalidate>
         <div class="billHeader">
             <div class="row">
                 <div class="col-sm-3">
@@ -13,15 +13,24 @@
                     <label>{{i18n.lang.dateline}}: </label>
                     <span class="input-icon input-icon-right">
                         <input type="text" class="form-control" 
-                               datepicker-popup="{{format}}" 
-                               ng-model="formMetaData.inputTime"
-                               is-open="opened"
-                               max="maxDate" 
-                               show-weeks="false"
-                               datepicker-options="dateOptions" 
-                               date-disabled="disabled(date, mode)" 
-                               ng-required="true" close-text="{{i18n.lang.actions.close}}" />
+                               size="10"
+                               ng-model="formMetaData.inputTime" 
+                               data-date-format="yyyy-MM-dd" 
+                               data-date-type="object" 
+                               data-max-date="today" 
+                               data-autoclose="true"
+                               bs-datepicker />
                         <i class="icon-calendar gray"></i>
+                    </span>
+                    <span class="input-icon input-icon-right">
+                        <input type="text" size="8" 
+                               class="form-control" 
+                               ng-model="formMetaData.inputTime" 
+                               data-time-format="HH:mm" 
+                               data-time-type="object" 
+                               data-autoclose="1" 
+                               bs-timepicker />
+                        <i class="icon-time gray"></i>
                     </span>
                 </div>
                 <div class="col-sm-3">
@@ -50,7 +59,7 @@
                     <span ng-bind="$parent.userInfo.truename"></span>
                 </div>
                 <div class="col-sm-7">
-                    <button class="btn btn-sm btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
+                    <button type="button" class="btn btn-sm btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
                 </div>
             </div>
         </div>

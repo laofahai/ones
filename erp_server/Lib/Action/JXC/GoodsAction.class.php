@@ -15,14 +15,17 @@ class GoodsAction extends CommonAction {
     public $indexModel = "GoodsCatView";
     
     protected function _filter(&$map) {
-        $typeahead = trim(strip_tags($_GET["typeahead"]));
+        $typeahead = strtoupper(trim(strip_tags($_GET["typeahead"])));
         if($typeahead) {
             $map["name"] = array("LIKE", "%{$typeahead}%");
             $map["factory_code"] = array("LIKE", "{$typeahead}%");
-            $typeahead = strtoupper($typeahead);
             $map["pinyin"] = array("LIKE", "%{$typeahead}%");
             $map["_logic"] = "OR";
         }
+    }
+    
+    protected function _before_index() {
+        $this->indexModel = "Goods";
     }
     
     protected function pretreatment() {

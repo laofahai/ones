@@ -215,9 +215,10 @@ angular.module("erp.jxc.services", [])
                         },
                         goods_id: {
                             displayName: i18n.goods,
-                            inputType: "typeahead",
+                            inputType: "select",
                             dataSource: GoodsRes,
-                            listAble: false
+                            listAble: false,
+                            width: 300
                         },
                         standard: {
                             nameField: "data",

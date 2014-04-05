@@ -143,6 +143,8 @@ commonform {
     height:36px;line-height:36px;
     background:0;
     border:0;
+    box-shadow:none !important;
+    border-radius: 0 !important;
 }
 .billBody .chosen-container .chosen-single b {
     display:none;
@@ -150,6 +152,7 @@ commonform {
 .billBody .chosen-container.chosen-with-drop .chosen-single{
     border:1px solid #4492c9;
     border-bottom:0;
+    border-color:#aaa;
 }
 .billBody .rowHead .icon {
     cursor:pointer;
@@ -188,4 +191,14 @@ commonform {
     left:50%;
     margin-left:-15%;
     z-index:9999;
+}
+
+.datepicker {
+    width:500px !important;
+}
+.timepicker .btn, .datepicker .btn {
+    border:none !important;
+}
+.chosen-container-single .chosen-search:after {
+    content: ""
 }

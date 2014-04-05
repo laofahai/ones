@@ -90,6 +90,9 @@ class CommonAction extends RestAction {
      * 通用REST列表返回 
      **/
     public function index() {
+        if(method_exists($this, "_before_index")){
+            $this->_before_index();
+        }
         $name = $this->indexModel ? $this->indexModel : $this->getActionName();
         $model = D($name);
         if (empty($model)) {
