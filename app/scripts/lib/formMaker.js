@@ -15,7 +15,8 @@
                 'fields/password': '<input type="password" %s />',
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
-                        'typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s />'
+                        'typeahead="%(key)s as %(key)s.label for %(key)s in %(data)s($viewValue)| filter:{label:$viewValue}" %(attr)s'+
+                        ' bs-typeahead />'
             };
 
             this.maker = new service.fieldsMakerFactory(this, this.opts);
@@ -142,21 +143,19 @@
                 var nameField = fieldDefine.nameField || "name";
                 var valueField = fieldDefine.valueField || "id";
                 var queryParams;
-                $scope.$parent[methodName] = function(val) {
-                    queryParams = $.extend(fieldDefine.queryParams || {}, {typeahead: val});
-                    return fieldDefine.dataSource.query(queryParams).$promise.then(function(data) {
-                        var dataList = [];
-                        angular.forEach(data, function(item) {
-                            dataList.push({
-                                label: item[nameField],
-                                value: item[valueField],
-                                category: item.goods_category_id,
-                                factory_code: item.factory_code
-                            });
+                queryParams = $.extend(fieldDefine.queryParams || {}, {});
+                fieldDefine.dataSource.query(queryParams).$promise.then(function(data) {
+                    var dataList = [];
+                    angular.forEach(data, function(item) {
+                        dataList.push({
+                            label: item[nameField],
+                            value: item[valueField],
+                            category: item.goods_category_id,
+                            factory_code: item.factory_code
                         });
-                        return dataList;
                     });
-                };
+                    return dataList;
+                });
                 //设置默认值
                 if (fieldDefine.value) {
                     $scope.$parent[name + "TAIT"] = fieldDefine.value;
@@ -558,7 +557,7 @@
                 submitAction: "doSubmit",
                 fieldsDefine: {},
                 templates: {
-                    "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" novalidate>%(html)s</form>',
+                    "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" ng-keydown="doKeydown($event)" novalidate>%(html)s</form>',
                     "commonForm/footer.html": '<div class="clearfix form-actions">' +
                             '<div class="col-md-offset-2 col-md-9">' +
                                 '<button id="submitbtn" class="btn btn-primary" ng-click="%(action)s();" type="button">' +
@@ -597,6 +596,12 @@
 
             $scope.$parent[this.opts.dataBindName] = $scope.$parent[this.opts.dataBindName] || {};
             $scope[this.opts.dataBindName] = {};
+            
+            $scope.$parent.doKeydown = function(event){
+                if(event.keyCode == 13) {
+                    $scope.$parent.doSubmit();
+                }
+            };
         };
 
         service.makeForm.prototype = {

@@ -74,6 +74,10 @@ class CommonAction extends RestAction {
             "msg"   => $msg
         ));
     }
+    protected function httpError($code, $msg) {
+        send_http_status($code);
+        exit;
+    }
     protected function success($msg) {
         $this->response(array(
             "error" => 0,
@@ -161,7 +165,7 @@ class CommonAction extends RestAction {
             ));
         } else {
             //失败提示
-            $this->error('新增失败!');
+            $this->httpError(500);
         }
     }
     
@@ -191,7 +195,7 @@ class CommonAction extends RestAction {
             ));
         } else {
             //失败提示
-            $this->error('更新失败!');
+            $this->httpError(500);
         }
     }
     
@@ -210,10 +214,10 @@ class CommonAction extends RestAction {
                 if ($list !== false) {
                     $this->success('删除成功！');
                 } else {
-                    $this->error('删除失败！');
+                    $this->httpError(500);
                 }
             } else {
-                $this->error('非法操作');
+                $this->httpError(500);
             }
         }
     }

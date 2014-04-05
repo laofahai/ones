@@ -29,15 +29,16 @@ var ERP = angular.module('erp', [
                         return response;
                     }
                     function error(response) {
+//                        console.log(response);
                         var status = response.status;
+                        var deferred = $q.defer();
                         if (401 === status) {
-                            var deferred = $q.defer();
-                            var req = {
-                                config: response.config,
-                                deferred: deferred
-                            };
                             scope.$broadcast('event:loginRequired');
                             return deferred.promise;
+                        } else if(403 === status) {
+                            scope.$broadcast('event:permissionDenied');
+                        } else if(500 === status) {
+                            scope.$broadcast('event:serverError');
                         }
                         return $q.reject(response);
                     }
@@ -56,19 +57,26 @@ var ERP = angular.module('erp', [
             $http.defaults.transformRequest = function(data) {
                 return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
             };
-
         }]);
 
 /**
  * Root Ctrl
  * */
-ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "$modal",
-        function($scope, $rootScope, $location, $http, conf, $modal) {
+ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "$modal", "ComView",
+        function($scope, $rootScope, $location, $http, conf, $modal, ComView) {
             if (!loginHash) {
                 window.location.href = 'index.html';
             }
-            $rootScope.$on("event:loginRequired", function() {
+            $scope.$on("event:loginRequired", function() {
                 window.location.href = 'index.html';
+            });
+            
+            $scope.$on("event:permissionDenied", function() {
+                ComView.alert($rootScope.i18n.lang.messages.permissionDenied, "danger");
+            });
+            
+            $scope.$on("event:serverError", function() {
+                ComView.alert($rootScope.i18n.lang.messages.permissionDenied, "danger");
             });
             
             $scope.openModal = function(controller){
@@ -88,13 +96,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 });
             };
             
-            $scope.alert = function(msg, type, timeout) {
-                $scope.$broadcast("alert", {
-                    msg: msg,
-                    type: type,
-                    timeout: timeout
-                });
-            };
             
             $scope.doWorkflow = function(event, node_id, selectedItems, res){
                 selectedItems = selectedItems || [];
@@ -207,12 +208,20 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
          * */
         ERP.controller("AlertCtl", ["$scope", "$rootScope", "$q", "$alert", function($scope, $rootScope, $q, $alert) {
                 
-                var erpAlert = $alert({title: null, 
+                return;
+                $scope.defaultAlert = {title: null, 
                     content: 'Best check yo self, you\'re not looking too good.', 
                     placement: 'top', type: 'info', show: true,
                     container: '#alerts-container'
+                };
+                
+                $scope.alert = {};
+                
+                $scope.$watch(function(){
+                    $scope.alert;
                 });
-                return;
+                
+                var erpAlert = $alert($scope.alert);
                 
             $scope.alert = {};
             

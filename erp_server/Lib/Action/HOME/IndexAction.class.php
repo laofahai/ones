@@ -29,7 +29,7 @@ class IndexAction extends CommonAction {
      */
     private function makeNav() {
         $navs = F("Nav/".$this->user["id"]);
-        if($navs and false) {
+        if($navs) {
             return $navs;
         }
         

@@ -177,3 +177,15 @@ commonform {
     width:100%;
     margin:0;
 }
+.assignPermissionTable div.checkboxContainer label {
+    display:inline-block;
+    width:20%;
+}
+
+#alerts-container {
+    position:fixed;
+    width:30%;
+    left:50%;
+    margin-left:-15%;
+    z-index:9999;
+}

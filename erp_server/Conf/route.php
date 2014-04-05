@@ -59,6 +59,7 @@ $urlRoutes = array_merge($base,
     routeMaker("user", "Passport/User"),
     routeMaker("passport/authRule", "Passport/AuthRule"),
     routeMaker("passport/authGroup", "Passport/AuthGroup"),
+    routeMaker("passport/authGroupRule", "Passport/AuthGroupRule"),
     routeMaker("passport/department", "Passport/Department"),
         
     routeMaker("types", "HOME/Types"),

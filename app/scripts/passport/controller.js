@@ -38,6 +38,14 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
                 templateUrl: 'views/common/edit.html',
                 controller: 'AuthGroupEditCtl'
             })
+            .when("/Passport/AuthGroup/viewSub/id/:pid", {
+                templateUrl: 'views/passport/assignPermission.html',
+                controller: 'AuthGroupAssignPermissionCtl'
+            })
+            .when("/Passport/AuthGroup", {
+                templateUrl: 'views/common/grid.html',
+                controller: 'AuthGroupCtl'
+            })
             .when("/Passport/Department", {
                 templateUrl: 'views/common/grid.html',
                 controller: 'DepartmentCtl'
@@ -50,6 +58,21 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
                 templateUrl: 'views/common/edit.html',
                 controller: 'DepartmentEditCtl'
             })
+        }])
+    .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams",
+        function($scope, AuthGroupRuleRes, $routeParams){
+            $scope.permissionData = [];
+            $scope.selecteAble = false;
+            AuthGroupRuleRes.query({id: $routeParams.pid}).$promise.then(function(data){
+                $scope.permissionData = data.selected;
+                $scope.dataList = data.rules; 
+            });
+            
+            $scope.doSubmit = function(){
+                AuthGroupRuleRes.update({id: $routeParams.pid}, $scope.permissionData).$promise.then(function(data){
+                    
+                });
+            }
         }])
     .controller("AuthGroupCtl", ["$scope", "AuthGroupModel", "AuthGroupRes", "ComView",
             function($scope, AuthGroupModel, AuthGroupRes, ComView){
@@ -65,6 +88,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
                         href  : "/Passport/AuthGroup/"
                     }
                 ];
+                $scope.viewSubAble = true;
                 ComView.displayGrid($scope, AuthGroupModel, AuthGroupRes);
             }])
         .controller("AuthGroupEditCtl", ["$scope", "AuthGroupModel", "AuthGroupRes", "ComView", "$routeParams",

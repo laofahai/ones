@@ -3,10 +3,28 @@
  * 
  * */
 (function(){
-angular.module("erp.commonView", ["erp.formMaker"])
-        .service("ComView",["$location", "$rootScope", "$routeParams", 
-            function($location, $rootScope, $routeParams){
+angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
+        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert",
+            function($location, $rootScope, $routeParams, $q, $alert){
                 var service = {};
+                /**
+                 * 通用alert
+                 * */
+                service.alert = function(alertMsg, type, title, autohide) {
+                    type = type || "warning";
+                    title = title || type.ucfirst()+":"; 
+                    var erpalert = $alert({title: title, 
+                        content: alertMsg, 
+                        placement: 'top', type: type, show: true,
+                        container: '#alerts-container'
+                    });
+                    
+                    if(autohide !== false) {
+                        setTimeout(function(){
+                            erpalert.hide();
+                        }, 5000);
+                    }
+                };
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
                     var defaultOpts = {
                         name: null, //表单名称
@@ -45,7 +63,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
                                 fieldsDefine = data;
                                 doDefine();
                             }, function(msg){
-                                $scope.$parent.alert(msg);
+                                service.alert(msg);
                             });
                         } else {
                             fieldsDefine = model.getFieldsStruct();
@@ -57,7 +75,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
 
                     $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
                         if (!$scope[opts.name].$valid) {
-                            $scope.$parent.alert($scope.i18n.lang.messages.fillTheForm, "danger");
+                            service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                             return;
                         }
                         if (opts.id) {
@@ -68,7 +86,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
                             getParams.id = opts.id;
                             resource.update(getParams, $scope[opts.dataObject], function(data){
                                 if(data.error) {
-                                    $scope.$parent.alert(data.msg);
+                                    service.alert(data.msg);
                                 } else {
                                     $location.url(opts.returnPage);
                                 }
@@ -79,7 +97,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
                             }
                             resource.save($scope[opts.dataObject], function(data){
                                 if(data.error) {
-                                    $scope.$parent.alert(data.msg);
+                                    service.alert(data.msg);
                                 } else {
                                     $location.url(opts.returnPage);
                                 }
@@ -208,7 +226,7 @@ angular.module("erp.commonView", ["erp.formMaker"])
                         module: $location.$$url.split("/").splice(0, 3).join("/"),
                         subModule: "",
                         queryExtraParams: {}, //get 参数
-                        editExtraParams: null //edit 时附加参数
+                        editExtraParams: "" //edit 时附加参数
                     };
 
                     var opts = $.extend(defaults, options);

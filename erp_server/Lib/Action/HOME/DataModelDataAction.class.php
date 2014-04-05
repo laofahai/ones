@@ -19,6 +19,9 @@ class DataModelDataAction extends CommonAction {
         if($_GET['fieldAlias']) {
             $map["DataModelFields.field_name"] = $_GET['fieldAlias'];
         }
+        if($_GET["id"]) {
+            echo 123;exit;
+        }
     }
     
     protected function pretreatment() {

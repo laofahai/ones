@@ -188,7 +188,9 @@
             "editSuccess": "修改%s成功",
             "deleteSuccess": "删除%s成功",
             "operateSuccess": "操作成功",
-            "fillTheForm": "请完整填写表单"
+            "fillTheForm": "请完整填写表单",
+            "permissionDenied": "您没有权限进行此操作",
+            "serverError": "服务器返回错误，请联系系统管理员"
         },
         "actions": {
             "submit" : "提交",
@@ -269,6 +271,8 @@
         "storeNum": "库存数量",
         "store_min": "库存下限",
         "store_max": "库存上限",
-        "listorder": "排序"
+        "listorder": "排序",
+        "checkAll_uncheck": "全选/取消",
+        "authRuleNode": "权限节点"
     }
 }

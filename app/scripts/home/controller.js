@@ -87,11 +87,11 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
             $location.url($routeParams.url);
         }])
-        .controller("clearCacheCtl", ["$scope", "$http", "erp.config", function($scope, $http, conf){
+        .controller("clearCacheCtl", ["$scope", "$http", "erp.config", "ComView", function($scope, $http, conf, ComView){
             $scope.cacheTypes = [null, true, true, true];
             $scope.doClearCache = function() {
                 $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){
-                    $scope.$parent.alert($scope.i18n.lang.messages.cacheCleared);
+                    ComView.alert($scope.i18n.lang.messages.cacheCleared, "info");
                 });
             };
         }])

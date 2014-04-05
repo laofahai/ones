@@ -12,5 +12,13 @@
  * @author nemo
  */
 class AuthGroupAction extends CommonAction {
-    //put your code here
+    
+    public function _after_delete() {
+        //删除用户组对应权限
+        $model = D("AuthGroupRule");
+        $model->where(array(
+            "group_id" => array("IN", $_REQUEST["id"])
+        ))->delete();
+    }
+    
 }
