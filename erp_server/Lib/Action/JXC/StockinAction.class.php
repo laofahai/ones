@@ -85,11 +85,12 @@ class StockinAction extends CommonAction {
         $data = $_POST["data"];
         $billItems = array();
         foreach($data as $k=> $billItem) {
+            list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);
             $billItems[$k] = array(
-                "goods_id"   => $billItem["goods_id"]["value"],
+                "goods_id"   => $billItem["goods_id"],
                 "num"        => $billItem["num"],
                 "factory_code_all" => sprintf("%s-%d-%d", 
-                        $billItem["goods_id"]["factory_code"], 
+                        $factory_code, 
                         $billItem["standard"],
                         $billItem["version"]),
                 "memo" => $billItem["memo"],
@@ -97,6 +98,7 @@ class StockinAction extends CommonAction {
             );
         }
         
+//        print_r($billData);
 //        print_r($billItems);exit;
         
         $billId = $stockinModel->newBill($billData, $billItems);

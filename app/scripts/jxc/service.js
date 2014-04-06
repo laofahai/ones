@@ -217,6 +217,8 @@ angular.module("erp.jxc.services", [])
                             displayName: i18n.goods,
                             inputType: "select",
                             dataSource: GoodsRes,
+                            valueField: "combineId",
+                            nameField: "combineLabel",
                             listAble: false,
                             width: 300
                         },
@@ -226,7 +228,6 @@ angular.module("erp.jxc.services", [])
                             inputType: "select",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
-                            autoQuery: true,
                             queryWithExistsData: ["goods_id"],
                             queryParams: {
                                 fieldAlias: "standard"
@@ -238,7 +239,6 @@ angular.module("erp.jxc.services", [])
                             inputType: "select",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
-                            autoQuery: true,
                             queryWithExistsData: ["goods_id"],
                             queryParams: {
                                 fieldAlias: "version"

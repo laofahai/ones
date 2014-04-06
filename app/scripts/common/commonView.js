@@ -125,7 +125,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         var model = fieldsDefine;
                         fieldsDefine = model.getFieldsStruct(true);
                     }
-
+                    
+                    
                     options.afterSelectionChange = function(rowitem, items) {
 //                        console.log(arguments);
 //                        angular.forEach(items, function(it, key){

@@ -28,6 +28,17 @@ class GoodsAction extends CommonAction {
         $this->indexModel = "Goods";
     }
     
+    public function index() {
+        $model = D("Goods");
+        $data = $model->select();
+        foreach($data as $k=>$v) {
+            $data[$k]["combineId"] = sprintf("%s_%d_%d", $v["factory_code"], $v["id"], $v["goods_category_id"]);
+            $data[$k]["combineLabel"] = sprintf("%s_%s", $v["name"], $v["pinyin"]);
+        }
+        
+        $this->response($data);
+    }
+    
     protected function pretreatment() {
         switch($this->_method) {
             case "post":

@@ -21,7 +21,6 @@
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />'
             };
-
             this.maker = new service.fieldsMakerFactory(this, this.opts);
         };
 
@@ -38,12 +37,12 @@
         service.fieldsMakerFactory.prototype = {
             /**
              * 字段生成器工厂方法，
-             * @name 字段name
+             * @name 字段name //context field, text, trid
              * @fieldDefine 字段属性
              * @scope 作用域对象
              * @events 单个字段的事件列表，eg: ngBlur: doTextEndEdit; 
              * */
-            factory: function(name, fieldDefine, $scope, value, events) {
+            factory: function(context, fieldDefine, $scope, events) {
                 var method = "_" + (fieldDefine.inputType ? fieldDefine.inputType : "text");
                 //事件绑定
                 if (events) {
@@ -51,14 +50,17 @@
                         fieldDefine[event] = func + "($event)";
                     });
                 }
-                if (value) {
-                    fieldDefine.value = value;
+                if (context.text) {
+                    fieldDefine.value = context.text;
+                }
+                if(context.trid !== "undefined") {
+                    fieldDefine["data-row-index"] = context.trid;
                 }
                 if (!fieldDefine.displayName) {
-                    fieldDefine.displayName = this.$parent.scope.$parent.i18n.lang[name];
+                    fieldDefine.displayName = this.$parent.scope.$parent.i18n.lang[context.field];
                 }
                 if (method in this) {
-                    return this[method](name, fieldDefine, $scope);
+                    return this[method](context.field, fieldDefine, $scope);
                 } else {
                     return false;
                 }
@@ -103,6 +105,7 @@
                 var valueField = fieldDefine.valueField || "id";
                 var nameField = fieldDefine.nameField || "name";
                 var data = [];
+                var self = this;
 
                 fieldDefine.chosen = "chosen";
                 fieldDefine.remoteDataField = fieldDefine.remoteDataField || name;
@@ -117,22 +120,29 @@
                             name: fieldDefine.dataSource[item][nameField]
                         });
                     }
-                    //            delete(fieldDefine.dataSource);
                     $scope.$parent[fieldDefine.remoteDataField + "sSelect"] = data;
 
                 } else if (typeof (fieldDefine.dataSource) == "function") {
                     var queryParams = fieldDefine.queryParams || {};
+                    //需要使用已有数据作为参数进行查询
+                    if(fieldDefine.queryWithExistsData) {
+                        angular.forEach(fieldDefine.queryWithExistsData, function(qItem){
+                            queryParams[qItem] = fieldDefine["data-row-index"] !== "undefine"
+                                                ? $scope.$parent[self.opts.dataName][fieldDefine["data-row-index"]][qItem]
+                                                : $scope.$parent[self.opts.dataName][qItem];
+                        });
+                    }
                     fieldDefine.dataSource.query(queryParams).$promise.then(function(result) {
                         angular.forEach(result, function(item) {
                             data.push({
                                 value: item[valueField],
-                                name: item.pinyin ? item[nameField]+"_"+item.pinyin : item[nameField]
+                                name: item[nameField]
                             });
                         });
                         $scope.$parent[fieldDefine.remoteDataField + "sSelect"] = data;
                     });
                 }
-
+                
                 return sprintf(this.$parent.templates["fields/select"], {
                     attr: this._attr(name, fieldDefine),
                     key: name + "item",
@@ -168,9 +178,6 @@
                         return data;
                     });
                 };
-                
-                
-                console.log($scope.$parent[methodName]("d"));
                 
                 //设置默认值
                 if (fieldDefine.value) {
@@ -221,11 +228,8 @@
             };
 
             this.fm = new service.makeField($scope, {
-                multi: true //指定为表单绑定多条数据
-            });
-            return;
-            this.fm = new formFieldsMaker($scope, {
-                multi: true //指定为表单绑定多条数据
+                multi: true, //指定为表单绑定多条数据
+                dataName: this.opts.dataName
             });
             
         };
@@ -320,14 +324,13 @@
                     var context = self.getLabelContext(ele);
 
                     //已经存在
-
                     if(context.td.find(".editAble").length) {
                         context.td.find(".editAble").removeClass("hide").eq(0).focus();
                         return;
                     }
                     var struct = self.opts.fieldsDefine[context.field];
                     struct.class="width-100 editAble";
-                    struct.remoteDataField = sprintf("%s%d", context.field, context.trid);
+                    struct.remoteDataField = sprintf("%s_%d", context.field, context.trid);
                     struct["ng-model"] = sprintf("%s[%d].%s", self.opts.dataName, context.trid, context.field);
                     if(struct.editAbleRequire) {
                         if(struct.editAbleRequire instanceof Array) {
@@ -345,7 +348,7 @@
                     }
 
                     //支持的事件列表
-                    var eventsList = ["blur", "click", "keydown", "focus"];
+                    var eventsList = ["blur", "click", "keydown", "focus", "change"];
                     var events = {};
                     angular.forEach(eventsList, function(e){
                         var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
@@ -359,7 +362,7 @@
                         }
                     }); 
 
-                    var html = self.fm.maker.factory(context.field, struct, scope, context.text, events);
+                    var html = self.fm.maker.factory(context, struct, scope, events);
                     html = self.compile(html)(scope.$parent);
                     context.td.append(html);
                     context.td.find(".editAble").focus(function(){
@@ -472,8 +475,10 @@
                         self.setTypeaheadData(ele, self.scope);
                     }
                 };
-                scope.$parent.onStockTypeaheadBlur = function(event){
-                    self.scope.$parent.onTypeaheadBlur(event);
+                scope.$parent.onStockSelectChange = function(event){
+                    console.log(self);
+                    console.log(arguments);return;
+//                    self.scope.$parent.onTypeaheadBlur(event);
                     setTimeout(function(){
                         var context = self.getInputContext(event.target);
                         var tmp = self.scope.$parent[self.opts.dataName][context.trid];
@@ -486,7 +491,7 @@
                         });
                     },100);
                 };
-
+                
             },
             //获取当前input的上下文数据
             getInputContext : function(element){
@@ -526,12 +531,10 @@
                     var total = 0;
                     var context = this.getInputContext(element);
                     angular.forEach(this.scope.$parent[this.opts.dataName], function(item){
-                        console.log(item);
                         if(context.field in item) {
                             total += parseFloat(item[context.field]);
                         }
                     });
-                    console.log(total);
                     total = total.toFixed(2);
                     $("#tdTotalAble"+context.field).text(total);
                     this.scope.$parent.formMetaData["total"+context.field] = total;
@@ -647,7 +650,7 @@
                     }
 
                     if(!struct.hideInForm && !struct.primary) {
-                        fieldHTML = self.fm.maker.factory(field, struct, self.scope);
+                        fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                         if (false != fieldHTML) {
                             finalHTML.push(sprintf(boxHTML, {
                                 formname: self.opts.name,

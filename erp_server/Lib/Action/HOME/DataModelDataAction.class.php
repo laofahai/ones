@@ -19,8 +19,14 @@ class DataModelDataAction extends CommonAction {
         if($_GET['fieldAlias']) {
             $map["DataModelFields.field_name"] = $_GET['fieldAlias'];
         }
-        if($_GET["id"]) {
-            echo 123;exit;
+        //根据分类查询对应的模型
+        if($_GET["goods_id"] and strpos($_GET["goods_id"], "_") !== false) {
+            list($factory_code, $id, $catid) = explode("_", $_GET["goods_id"]);
+            $model = D("GoodsCategory");
+            $category = $model->find($catid);
+            if($category) {
+                $map["model_id"] = $category["bind_model"];
+            }
         }
     }
     

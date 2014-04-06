@@ -29,7 +29,7 @@ class StockProductListViewModel extends ViewModel {
      */
     public function select($options=array()) {
         $data = parent::select($options);
-        
+//        echo $this->getLastSql();exit;
 //        print_r($data);exit;
         
         foreach($data as $k=>$v) {

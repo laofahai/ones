@@ -17,6 +17,8 @@ class StockProductListModel extends Model {
      * 更新库存
      */
     public function updateStoreList($data) {
+        
+//        print_r($data);exit;
         if(!$data) {
             return false;
         }

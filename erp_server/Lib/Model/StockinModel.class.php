@@ -48,7 +48,6 @@ class StockinModel extends CommonModel {
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $node = $workflow->doNext($billId, "", true);
-        var_dump($node);
         return $billId;
         
     }
