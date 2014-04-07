@@ -258,8 +258,18 @@
             },
             makeBody: function(fieldsDefine){
                 var html = [], self=this;
+                
                 //编辑模式下
+                var defaultData = self.scope.$parent.formMetaData.rows || [];
+                this.scope.$parent.formMetaData.rows = defaultData = dataFormat(fieldsDefine, defaultData);
+                var defaultDataLength = defaultData.length || self.opts.minRows;
+                for(var i=0;i<defaultDataLength;i++) {
+                    html.push(this.makeRow(fieldsDefine, i, defaultData));
+                }
+                return html.join("");
+                
                 if(this.opts.isEdit) {
+                    
                     this.scope.$on("bill.dataLoaded", function(evt, data){
                         self.opts.defaultData = data.rows;
                         delete(data.rows);
@@ -281,7 +291,11 @@
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble !== false) {
                         if(item.totalAble) {
-                            html.push(sprintf('<td class="tdTotalAble" tdname="%s" id="tdTotalAble%s">0</td>', field, field));
+                            html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s">0</td>', 
+                                {
+                                    field: field,
+                                    dataBind: "formMetaData.total_"+field
+                                }));
                         } else {
                             html.push("<td></td>");
                         }
@@ -292,12 +306,13 @@
             makeRow: function(fieldsDefine,i, defaultData){
                 var self = this;
                 var html = [this.opts.templates['bills/fields/rowHead.html']];
-                this.scope.$parent[this.opts.dataName][i] = {};
+                defaultData = defaultData || [];
+                this.scope.$parent[this.opts.dataName][i] = defaultData[i] || {};
                 var label;
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble!==false) {
-                        if(defaultData) {
-                            label = defaultData[i][item.field];
+                        if(defaultData.length) {
+                            label = defaultData[i][item.field+"_label"] || "";
                         } else {
                             label = "";
                         }
@@ -311,7 +326,7 @@
                         }));
                     }
                 });
-
+                
                 this.maxTrId = i;
                 return sprintf('<tr data-trid="%s">%s</tr>', i, sprintf(html.join(""), {
                     i: i+1
@@ -536,8 +551,8 @@
                         }
                     });
                     total = total.toFixed(2);
-                    $("#tdTotalAble"+context.field).text(total);
-                    this.scope.$parent.formMetaData["total"+context.field] = total;
+                    data = parseFloat(data).toFixed(2);
+                    this.scope.$parent.formMetaData["total_"+context.field] = total;
                     this.setData(element, data, isBlur);
                 } else {
                     this.setData(element, data, isBlur);

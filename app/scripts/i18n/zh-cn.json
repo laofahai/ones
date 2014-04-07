@@ -173,6 +173,7 @@
             "returns": "退货单",
             "rel_company": "往来单位管理",
             "relCompanyGroup": "分组",
+            "relCompanyRecord": "基础档案",
             "list": "列表",
             "add_new": "新增",
             "finance": "财务管理",

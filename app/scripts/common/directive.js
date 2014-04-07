@@ -38,14 +38,16 @@ angular.module("erp.common.directives", ["erp.formMaker"])
                 compile: function(element, attrs, transclude) {
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
-//                            $scope.$on("billForm.ready", function() {
+                            if($scope.config.isEdit) {
+                                $scope.$on("bill.dataLoaded", function(evt, data){
+                                    $scope.$parent.formMetaData = data;
+                                    var b = new FormMaker.makeBill($scope);
+                                    iElement.append($compile(b.makeHTML())($scope.$parent));
+                                });
+                            } else {
                                 var b = new FormMaker.makeBill($scope);
                                 iElement.append($compile(b.makeHTML())($scope.$parent));
-                                return;
-                                var b = new billFormMaker($scope, $compile);
-                                iElement.append($compile(b.makeHTML())($scope.$parent));
-//                            });
-
+                            }
                         }
                     };
                 }

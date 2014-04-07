@@ -63,29 +63,27 @@ String.prototype.ucfirst = function () {
  * 格式化表单中得数据，比如input number之类的
  * */
 var dataFormat = function(fieldsDefine, data) {
-    var getArrayValue = function(data, value, valueField, getField){
-        for(var i=0;i<data.length;i++) {
-            if(String(data[i][valueField]) == String(value)) {
-                return data[i][getField];
-            }
+    if(data instanceof Array) {
+        for(var i=0; i<data.length;i++) {
+            data[i] = dataFormat(fieldsDefine, data[i]);
         }
-        return false;
-    };
-    var ResultData = {};
+        
+        return data;
+    }
     for(var f in fieldsDefine) {
         var struct = fieldsDefine[f];
         switch(struct.inputType) {
             case "number":
                 if(false === isNaN(data[f])) {
-                    ResultData[f] = Number(data[f]);
+                    data[f] = Number(data[f]);
                 }
                 break;
             default:
-                ResultData[f] = data[f];
+                data[f] = data[f];
                 break;
         }
     }
-    return ResultData;
+    return data;
 };
 
 

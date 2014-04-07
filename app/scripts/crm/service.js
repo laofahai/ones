@@ -27,12 +27,13 @@ angular.module("erp.crm.services", [])
                             primary: true
                         },
                         name: {},
+                        group: {
+                            field: "Group.name"
+                        },
+                        discount: {},
                         owner: {
                             hideInForm: true,
                             field: "User.truename"
-                        },
-                        group: {
-                            field: "Group.name"
                         },
                         linkMan: {
                             field: "Linkman[0].contact"

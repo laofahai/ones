@@ -52,7 +52,7 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
             return $resource(cnf.BSU + "jxc/stock/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method: 'GET'}});
+            return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
     .factory("StockProductsRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockProductList/:id.json");

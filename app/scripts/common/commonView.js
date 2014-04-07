@@ -371,8 +371,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
 
                     //默认表单提交方法，可自动判断是否编辑/新建
                     $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
-
-                        var data = $.extend($scope.formMetaData, {data: $scope[opts.dataName]});
+                        var data = $.extend($scope.formMetaData, {rows: $scope[opts.dataName]});
                         if (opts.id) {
                             var getParams = {};
                             for (var k in $routeParams) {
@@ -383,7 +382,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         } else {
                             resource.save(data);
                         }
-                        $location.url(opts.returnPage);
+                        
+//                        $location.url(opts.returnPage);
                     };
 
                 };
@@ -401,7 +401,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         });
                     }
                     
-                }
+                };
                 return service;
             }]);
 })(window.angular);

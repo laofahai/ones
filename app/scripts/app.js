@@ -31,7 +31,6 @@ var ERP = angular.module('erp', [
                         return response;
                     }
                     function error(response) {
-//                        console.log(response);
                         var status = response.status;
                         var deferred = $q.defer();
                         if (401 === status) {
@@ -57,7 +56,8 @@ var ERP = angular.module('erp', [
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
             $http.defaults.transformRequest = function(data) {
-                return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
+                console.log(data);
+                return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;
             };
         }]);
 
@@ -78,7 +78,7 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             });
             
             $scope.$on("event:serverError", function() {
-                ComView.alert($rootScope.i18n.lang.messages.permissionDenied, "danger");
+                ComView.alert($rootScope.i18n.lang.messages.serverError, "danger");
             });
             
 //            $scope.openModal = function(controller){

@@ -30,10 +30,16 @@ class StockinAction extends CommonAction {
         $modelIds = array();
         $rowData = array();
         foreach($rows as $v) {
-            $tmp = explode("-", $v["factory_code_all"]);
-            array_shift($tmp);
+            $tmp = explode("-", $v["factory_code_all"]); //
+            $factory_code = array_shift($tmp);
             $modelIds = array_merge($modelIds, $tmp);
             $v["modelIds"] = $tmp;
+            $v["stock"] = $v["stock_id"];
+            $v["memo_label"] = $v["memo"];
+            $v["stock_label"] = $v["stock_name"];
+            $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
+            $v["goods_id_label"] = sprintf("%s_%s",$v["goods_name"],$v["goods_pinyin"]);
+            $v["num_label"] = $v["num"];
             $rowData[$v["id"]] = $v;
         }
         array_flip(array_flip($modelIds));
@@ -47,14 +53,19 @@ class StockinAction extends CommonAction {
             $modelData[$v["id"]] = $v;
         }
         
+//        print_r($rowData);exit;
+        
         foreach($rowData as $k=>$v) {
             if(!$v["modelIds"]) {
                 continue;
             }
             foreach($v["modelIds"] as $mid) {
-                $rowData[$k][$modelData[$mid]["field_name"]] = $modelData[$mid]["data"];
+                $rowData[$k][$modelData[$mid]["field_name"]] = $mid;
+                $rowData[$k][$modelData[$mid]["field_name"]."_label"] = $modelData[$mid]["data"];
             }
         }
+        
+//        print_r($rowData);exit;
         
         $formData["rows"] = reIndex($rowData);
         $this->response($formData);
@@ -65,7 +76,7 @@ class StockinAction extends CommonAction {
      * @override
      */
     public function insert() {
-        if(!$_POST["data"]) {
+        if(!$_POST["rows"]) {
             return;
         }
         
@@ -82,7 +93,7 @@ class StockinAction extends CommonAction {
             "memo"    => $_POST["memo"]
         );
         
-        $data = $_POST["data"];
+        $data = $_POST["rows"];
         $billItems = array();
         foreach($data as $k=> $billItem) {
             list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);

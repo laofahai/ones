@@ -103,6 +103,10 @@ commonform {
 .billHeader label,.billHeader input,.billHeader span {
     font-size:12px;
 }
+.billHeader label,.billHeader span {
+    height:30px;line-height:30px;
+    margin:0;
+}
 
 .billBody table thead th {
     text-align:center;
@@ -136,8 +140,9 @@ commonform {
     position:absolute;
     left:0;top:0;
     width:100%;
-    height:36px;
-    line-height:36px;
+    height:35px;
+    line-height:35px;
+    background:#fff;
 }
 .billBody .chosen-container .chosen-single {
     height:36px;line-height:36px;

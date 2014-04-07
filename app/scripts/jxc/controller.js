@@ -149,8 +149,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
 //                    $scope.workflowDisabled = ifWorkflowDisabled();
 //                });
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView",
-            function($scope, StockinRes, StockinEditModel, ComView) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
+            function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -168,8 +168,9 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.selecteAble = false;
                 $scope.showWeeks = true;
                 
-                ComView.displayBill($scope, StockinEditModel, StockinRes);
-                
+                ComView.displayBill($scope, StockinEditModel, StockinRes, {
+                    id: $routeParams.id
+                });
                 
                 
                 $scope.formMetaData = {};
