@@ -50,7 +50,7 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
 
 $base = array(
     //array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
-    
+    array("JXC/StockProductList/Export", "HOME/JXC/StockProductList/Export", "", "get", "json"),
 );
 
 $urlRoutes = array_merge($base, 

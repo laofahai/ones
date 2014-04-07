@@ -63,6 +63,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/grid.html',
                         controller: 'StockProductsCtl'
                     })
+                    .when('/JXC/StockProductList/Export', {
+                        templateUrl: 'views/jxc/stockProductList/export.html',
+                        controller: 'StockProductsExportCtl'
+                    })
         }])
         .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", "ComView",
             function($scope, StockModel, StockRes, $location, ComView){
@@ -252,6 +256,44 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         //库存列表
         .controller("StockProductsCtl", ["$scope", "StockProductsRes", "StockProductModel", "ComView",
             function($scope, StockProductsRes, StockProductModel, ComView) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/JXC/StockProductList"
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.export,
+                        class : "success",
+                        href  : "/JXC/StockProductList/Export"
+                    }
+                ];
                 $scope.selecteAble = false;
                 ComView.displayGrid($scope, StockProductModel, StockProductsRes);
+            }])
+        .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "erp.config",
+            function($scope, StockProductExportModel, ComView, $http, cnf) {
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/JXC/StockProductList"
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.export,
+                        class : "success",
+                        href  : "/JXC/StockProductList/Export"
+                    }
+                ];
+                $scope.selecteAble = false;
+                ComView.displayForm($scope, StockProductExportModel, null, {
+                    name: "export"
+                }, true);
+                
+                $scope.doSubmit = function(){
+                    var url = cnf.BSU+'JXC/StockProductList/Export';
+                    url+= "/stock/"+$scope.exportData.stock.join('_');
+                    url+= "/warningonly/"+$scope.exportData.stockWarningOnly;
+                    window.open(url);
+                };
             }])

@@ -56,7 +56,6 @@ var ERP = angular.module('erp', [
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
             $http.defaults.transformRequest = function(data) {
-                console.log(data);
                 return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;
             };
         }]);

@@ -147,7 +147,7 @@ angular.module("erp.jxc.services", [])
             var obj = {};
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
-                return fieldsStruct = {
+                return {
                     id : {
                         primary: true,
                         displayName: "ID"
@@ -169,11 +169,48 @@ angular.module("erp.jxc.services", [])
                     num: {
                         displayName: i18n.storeNum
                     },
+                    store_min: {},
+                    store_max: {},
                     measure: {}
                 };
                 
             };
             return obj;
+        }])
+    .service("StockProductExportModel", ["$rootScope", "StockRes", "$q", function($rootScope, StockRes, $q) {
+            var service = {
+                getFieldsStruct : function() {
+                    var i18n = $rootScope.i18n.lang;
+                    var struct = {
+                        stock: {
+                            inputType: "select",
+                            required: false,
+                            multiple: true
+                        },
+                        stockWarningOnly: {
+                            inputType: "select",
+                            dataSource: [
+                                {
+                                    id: 1,
+                                    name: i18n.yes
+                                },
+                                {
+                                    id: -1,
+                                    name: i18n.no
+                                }
+                            ],
+                            required: false
+                        }
+                    };
+                    var defer = $q.defer();
+                    StockRes.query(function(data){
+                        struct.stock.dataSource = data;
+                        defer.resolve(struct);
+                    });
+                    return defer.promise;
+                }
+            };
+            return service;
         }])
         .service("StockinModel", ["$rootScope", function($rootScope){
             var obj = {};

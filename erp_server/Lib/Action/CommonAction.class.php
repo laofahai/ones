@@ -267,6 +267,76 @@ class CommonAction extends RestAction {
                 break;
         }
     }
+    
+    /**
+     * 执行导出excel
+     * @todo 循环效率
+     */
+    protected function doExport($filename, $data) {
+        if(!$this->exportFields or !$data) {
+            return;
+        }
+        
+        import("@.ORG.excel.XMLExcel");
+        $xls=new XMLExcel;
+	$xls->setDefaultWidth(80);
+        $xls->setDefaultHeight(20);
+	$xls->setDefaultAlign("center");
+        $head = array();
+        foreach($this->exportFields as $k=>$v) {
+//            array_push($row, sprintf('<b>%s</b>', $v));
+            array_push($head, sprintf('<b>%s</b>', $v));
+        }
+        
+        foreach($data as $item) {
+            $rowTpl = $this->exportFields;
+            $fieldTpl = "%s";
+            if(array_key_exists("store_min", $item)) {
+                if(($item["store_min"]>0 and $item["store_min"]<=$item["num"]) 
+                        or ($item["store_max"]>0 and $item["store_max"]>=$item["num"])) {
+                    $fieldTpl = '<font color="red">%s</font>';
+                }
+            }
+            foreach($item as $k=>$v) {
+                if(array_key_exists($k, $this->exportFields)) {
+                    $rowTpl[$k] = sprintf($fieldTpl, $v);
+                }
+            }
+            $xls->addPageRow($head, $rowTpl);
+        }
+        $xls->export($filename);
+//        $xls->addPageRow;
+        
+        exit;
+        
+        header("Content-type:application/vnd.ms-excel");
+        header("Content-Disposition:attachment;filename={$filename}");
+        $excel = array();
+        $row = array();
+        foreach($this->exportFields as $k=>$v) {
+//            array_push($row, sprintf('<b>%s</b>', $v));
+            array_push($row, sprintf('%s', iconv("utf-8", "gbk", $v)));
+        }
+        array_push($excel, implode("\t", $row));
+        foreach($data as $item) {
+            $row = array();
+            $fieldTpl = "%s";
+//            if(array_key_exists("store_min", $item)) {
+//                if(($item["store_min"]>0 and $item["store_min"]<=$item["num"]) 
+//                        or ($item["store_max"]>0 and $item["store_max"]>=$item["num"])) {
+//                    $fieldTpl = '<font color="red">%s</font>';
+//                }
+//            }
+            foreach($item as $k=>$v) {
+                if(array_key_exists($k, $this->exportFields)) {
+                    array_push($row, sprintf($fieldTpl, iconv("utf-8", "gbk", $v)));
+                }
+            }
+            array_push($excel, implode("\t", $row));
+        }
+        
+        echo implode("\r\n", $excel);
+    }
 
     
     private function testResponse() {

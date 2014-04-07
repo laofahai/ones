@@ -123,7 +123,8 @@
                 "StockProductList": {
                     "name": "库存管理",
                     "actions": {
-                        "index": ["库存商品列表"]
+                        "index": ["库存商品列表"],
+                        "Export": "导出库存清单"
                     }
                 }
             }
@@ -208,7 +209,8 @@
             "select": "下拉选择框"
         },
         "widgetTitles": {
-            "fill_the_form": "请填写下面的表单"
+            "fill_the_form": "请填写下面的表单",
+            "operate_options": "操作选项"
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",
@@ -228,6 +230,7 @@
             "save": "保存",
             "close": "关闭",
             "addChild": "增加子项",
+            "export": "导出",
             "edit": "编辑",
             "delete": "删除",
             "list": "列表",
@@ -258,6 +261,8 @@
         "cache_temp": "项目缓存",
         "cache_log": "错误日志",
         "cache_data": "数据缓存",
+        "yes": "是",
+        "no" : "否",
         "id" : "ID",
         "qq" : "QQ",
         "num": "数量",
@@ -294,6 +299,7 @@
         "password": "密码",
         "department": "部门",
         "stockManager": "库管员",
+        "stockWarningOnly": "仅库存警告数据",
         "bindDataModel": "绑定数据模型",
         "displayName": "显示名称",
         "firstChar": "拼音首字母",

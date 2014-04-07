@@ -98,7 +98,7 @@
             },
             //多选框
             _checkbox: function(name, fieldDefine) {
-
+                
             },
             //下拉框选择
             _select: function(name, fieldDefine, $scope) {
