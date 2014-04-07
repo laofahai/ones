@@ -202,3 +202,10 @@ commonform {
 .chosen-container-single .chosen-search:after {
     content: ""
 }
+
+.workflowProcessList .tree-item {
+    min-height:50px;
+}
+.workflowProcessList.tree {
+    overflow:hidden;
+}

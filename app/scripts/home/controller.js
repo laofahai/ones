@@ -135,7 +135,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                 $scope.selecteAble = false;
                 var opts = {
                     name: "DataModelEdit",
-                    module: "/HOME/DataModelFields",
+                    module: "/HOME/WorkflowNode",
                     returnPage: "/HOME/Workflow/viewSub/id/"+$routeParams.pid,
                     id: $routeParams.id
                 };
@@ -272,6 +272,9 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     }
                 ];
                 ComView.displayGrid($scope,DataModelFieldsModel,DataModelFieldsRes,{
+                    queryExtraParams: {
+                        modelId: $routeParams.pid
+                    },
                     module: "/HOME/DataModelFields",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });

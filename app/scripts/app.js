@@ -14,9 +14,11 @@ var ERP = angular.module('erp', [
     'erp.common',
     'erp.commonView',
     'erp.config',
+    
     'erp.passport',
     'erp.home',
-    'erp.jxc'
+    'erp.jxc',
+    'erp.crm'
 //    'erp.service'
 ])
         /**
@@ -79,22 +81,22 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 ComView.alert($rootScope.i18n.lang.messages.permissionDenied, "danger");
             });
             
-            $scope.openModal = function(controller){
-                var modalInstance = $modal.open({
-                    templateUrl: 'myModalContent.html',
-                    controller: ModalInstanceCtrl,
-                    resolve: {
-                        items: function () {
-                            return $scope.items;
-                        }
-                    }
-                });
-                modalInstance.result.then(function (selectedItem) {
-                    $scope.selected = selectedItem;
-                }, function () {
-                    console.log('Modal dismissed at: ' + new Date());
-                });
-            };
+//            $scope.openModal = function(controller){
+//                var modalInstance = $modal.open({
+//                    templateUrl: 'myModalContent.html',
+//                    controller: ModalInstanceCtrl,
+//                    resolve: {
+//                        items: function () {
+//                            return $scope.items;
+//                        }
+//                    }
+//                });
+//                modalInstance.result.then(function (selectedItem) {
+//                    $scope.selected = selectedItem;
+//                }, function () {
+//                    console.log('Modal dismissed at: ' + new Date());
+//                });
+//            };
             
             
             $scope.doWorkflow = function(event, node_id, selectedItems, res){
@@ -180,8 +182,11 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                         if (module in $rootScope.i18n.urlMap[group].modules) {
                             $scope.currentPage.module = $rootScope.i18n.urlMap[group].modules[module].name;
                             if (action in $rootScope.i18n.urlMap[group].modules[module].actions) {
-                                $scope.currentPage.action = $rootScope.i18n.urlMap[group].modules[module].actions[action][0];
-                                $scope.currentPage.actionDesc = $rootScope.i18n.urlMap[group].modules[module].actions[action][1];
+                                $scope.currentPage.action = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
+                                                            ? $rootScope.i18n.urlMap[group].modules[module].actions[action][0]
+                                                            : $rootScope.i18n.urlMap[group].modules[module].actions[action];
+                                $scope.currentPage.actionDesc = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
+                                                            ? $rootScope.i18n.urlMap[group].modules[module].actions[action][1] : "";
                             }
                         }
                     }
@@ -202,102 +207,4 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             });
 
         }]);
-
-        /**
-         * 通用提示信息显示。依赖ui.bootstrap
-         * */
-        ERP.controller("AlertCtl", ["$scope", "$rootScope", "$q", "$alert", function($scope, $rootScope, $q, $alert) {
-                
-                return;
-                $scope.defaultAlert = {title: null, 
-                    content: 'Best check yo self, you\'re not looking too good.', 
-                    placement: 'top', type: 'info', show: true,
-                    container: '#alerts-container'
-                };
-                
-                $scope.alert = {};
-                
-                $scope.$watch(function(){
-                    $scope.alert;
-                });
-                
-                var erpAlert = $alert($scope.alert);
-                
-            $scope.alert = {};
-            
-            $scope.$on("alert", function(event, data){
-                $scope.alert.type = data.type || "warning";
-                $scope.alert.msg  = data.msg;
-                $scope.alert.closeAble  = true;
-                $scope.alert.autoClose = data.timeout === false ? false : (isNaN(data.timeout) === false ? data.timeout : '3000');
-            });
-            
-            $scope.closeAlert = function() {
-                $scope.alert = {};
-            };
-            
-            var closeAlert = function(timeout){
-                var deferred = $q.defer();
-                setTimeout(function(){
-                    $scope.$apply(function(){
-                        $scope.closeAlert();
-                    });
-                }, timeout);
-                return deferred.promise;
-            };
-            $scope.$watch(function(){
-                return $scope.alert;
-            }, function(){
-                if($scope.alert.autoClose !== false) {
-                    var timeout = $scope.alert.autoClose == false ? 1440000 : 5000;
-                    var promise = closeAlert(timeout);
-                }
-            });
-            
-//            
-//            function asyncGreet(name) {
-//                var deferred = $q.defer();
-//
-//                setTimeout(function() {
-//                  // since this fn executes async in a future turn of the event loop, we need to wrap
-//                  // our code into an $apply call so that the model changes are properly observed.
-//                  $scope.$apply(function() {
-//                    
-//                  });
-//                }, 1000);
-//
-//                return deferred.promise;
-//              }
-//
-//              var promise = asyncGreet('Robin Hood');
-//              promise.then(function(greeting) {
-//                alert('Success: ' + greeting);
-//              }, function(reason) {
-//                alert('Failed: ' + reason);
-//              }, function(update) {
-//                alert('Got notification: ' + update);
-//              });
-            
-            return;
-            
-            $scope.$watch(function(){
-                return $rootScope.alert;
-            }, function(){
-                if(!$rootScope.alert) {
-                    return;
-                }
-                $scope.alerts.push($rootScope.alert);
-            });
-
-            $rootScope.addAlert = function(msg, type, closeable) {
-                type = type || "success";
-                closeable = closeable || true,
-                        $scope.alerts.push({msg: msg, type: type, closeable: closeable});
-            };
-
-            $rootScope.closeAlert = function(index) {
-                $scope.alerts.splice(index, 1);
-            };
-        }]);
-
 

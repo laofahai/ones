@@ -19,7 +19,8 @@
         <!-- build:css({.tmp,app}) styles/vendor.css -->
         <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
         <link rel="stylesheet" href="styles/ace/css/chosen.css" />
-        
+        <link rel="stylesheet" href="styles/bootstrap-additions.css" />
+        <link rel="stylesheet" href="styles/angular-motion.css" />
         <!-- endbuild -->
         <!-- build:css({.tmp,app}) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
@@ -213,8 +214,8 @@
                                 </small>
                             </h1>
                         </div><!-- /.page-header -->
-                        <div ng-controller="AlertCtl" id="alerts-container"></div>
-                        <div class="col-xs-12" ng-view></div>
+                        <div id="alerts-container"></div>
+                        <div class="col-xs-12" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}" ng-view></div>
                         <!--//demo-->
 
 
@@ -319,6 +320,9 @@
         
         <script src="scripts/jxc/service.js"></script>
         <script src="scripts/jxc/controller.js"></script>
+        
+        <script src="scripts/crm/service.js"></script>
+        <script src="scripts/crm/controller.js"></script>
         <!-- endbuild -->
     </body>
 </html>

@@ -66,8 +66,13 @@ $urlRoutes = array_merge($base,
     routeMaker("home/dataModel", "HOME/DataModel"),
     routeMaker("home/dataModelFields", "HOME/DataModelFields"),
     routeMaker("home/dataModelData", "HOME/DataModelData"),
-        
+    
     routeMaker("workflow/nodes", "HOME/WorkflowNode"),
+    routeMaker("workflow/process", "HOME/WorkflowProcess", array("get")),
+    routeMaker("workflow", "HOME/Workflow"),
+        
+    routeMaker("crm/relCompanyGroup", "CRM/RelationshipCompanyGroup"),
+    routeMaker("crm/relCompany", "CRM/RelationshipCompany"),
     
     routeMaker("jxc/stock", "JXC/Stock"),
     routeMaker("jxc/goods", "JXC/Goods"),

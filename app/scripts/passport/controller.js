@@ -63,16 +63,17 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
         function($scope, AuthGroupRuleRes, $routeParams){
             $scope.permissionData = [];
             $scope.selecteAble = false;
+            $scope.dataList = [];
             AuthGroupRuleRes.query({id: $routeParams.pid}).$promise.then(function(data){
-                $scope.permissionData = data.selected;
-                $scope.dataList = data.rules; 
+                $scope.permissionData = data.selected || [];
+                $scope.dataList = data.rules || {}; 
             });
             
             $scope.doSubmit = function(){
                 AuthGroupRuleRes.update({id: $routeParams.pid}, $scope.permissionData).$promise.then(function(data){
                     
                 });
-            }
+            };
         }])
     .controller("AuthGroupCtl", ["$scope", "AuthGroupModel", "AuthGroupRes", "ComView",
             function($scope, AuthGroupModel, AuthGroupRes, ComView){

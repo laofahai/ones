@@ -127,8 +127,34 @@
                     }
                 }
             }
+        },
+        "CRM": {
+            "name": "客户关系管理",
+            "modules": {
+                "RelCompanyGroup": {
+                    "name": "往来单位分组",
+                    "actions": {
+                        "index": "往来单位分组列表",
+                        "add"  : "新增分组",
+                        "edit" : "修改分组信息"
+                    }
+                },
+                "RelationshipCompany": {
+                    "name": "客户基本信息",
+                    "actions": {
+                        "index": "客户列表"
+                    }
+                },
+                "RelCompany": {
+                    "name": "客户基本信息",
+                    "actions": {
+                        "index": "客户列表",
+                        "add": "新增客户",
+                        "edit": "修改客户信息"
+                    }
+                }
+            }
         }
-
     },
     "lang": {
         "navs": {
@@ -146,6 +172,7 @@
             "orders": "订单",
             "returns": "退货单",
             "rel_company": "往来单位管理",
+            "relCompanyGroup": "分组",
             "list": "列表",
             "add_new": "新增",
             "finance": "财务管理",
@@ -206,7 +233,8 @@
             "view": "查看",
             "viewSub": "查看子项",
             "clearCache": "清除缓存",
-            "viewModelData": "查看模型数据"
+            "viewModelData": "查看模型数据",
+            "viewWorkflowProcess": "查看工作流进程"
         },
         "types" : {
             "purchase": "采购类型",
@@ -230,6 +258,7 @@
         "cache_log": "错误日志",
         "cache_data": "数据缓存",
         "id" : "ID",
+        "qq" : "QQ",
         "num": "数量",
         "memo": "备注",
         "name": "名称",
@@ -239,18 +268,24 @@
         "email": "邮箱",
         "total": "合计",
         "goods": "商品",
+        "group": "组",
         "field": "字段",
         "stock": "仓库",
         "status": "状态",
         "alias" : "别名",
         "phone" : "电话",
+        "owner" : "所属者",
         "billId": "单据编号",
+        "mobile" : "手机",
+        "telephone": "电话",
+        "linkMan": "联系人",
         "totalNum": "总数",
         "sponsor": "制单人",
         "version": "型号",
         "subject": "主题",
         "dateline": "时间",
         "standard": "规格",
+        "discount": "折扣",
         "measure": "计量单位",
         "username": "用户名",
         "usergroup": "用户组",

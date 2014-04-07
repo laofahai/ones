@@ -12,20 +12,19 @@
  */
 class WorkflowProcessAction extends CommonAction {
     
-    public function index() {
-        $workflow_id = abs(intval($_GET["workflow_id"]));
-        if(!$workflow_id) {
-            $this->redirect("/HOME/Workflow");
-        }
-        $workflow = D("Workflow");
-        $theWorkflow = $workflow->find($workflow_id);
-        if(!$theWorkflow) {
-            $this->redirect("/HOME/Workflow");
-        }
-        $this->assign("theWorkflow", $theWorkflow);
-        $_REQUEST["order"] = "listorder";
-        $_REQUEST["sort"] = "ASC";
-        parent::index("WorkflowDetailView");
+    public function read() {
+        $mainrowId = $_GET["id"];
+        $workflowAlias = $_GET["workflowAlias"];
+        
+        $workflow = D("Workflow")->getByAlias($workflowAlias);
+        
+        $model = D("WorkflowProcessView");
+        $process = $model->where(array(
+            "workflow_id" => $workflow["id"],
+            "mainrow_id"  => $mainrowId
+        ))->order("start_time ASC")->select();
+        
+        $this->response($process);
     }
     
 }

@@ -30,6 +30,9 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "workflow/nodes/:id.json", null, {'update': {method: 'PUT'}});
         }])
+    .factory("WorkflowProcessRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "workflow/process/:id.json", {type: "@type"});
+        }])
     .factory("TypesRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "types/:id.json", null, {'update': {method: 'PUT'}});
         }])
@@ -56,4 +59,10 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
         }])
     .factory("GoodsCategoryRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goodsCategory/:id.json", null, {'update': {method: 'PUT'}});
-        }]);
+        }])
+    .factory("RelCompanyGroupRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "crm/relCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});
+        }])
+    .factory("RelCompanyRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "crm/relCompany/:id.json", null, {'update': {method: 'PUT'}});
+        }])

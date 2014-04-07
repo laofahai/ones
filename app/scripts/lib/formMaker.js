@@ -623,7 +623,7 @@
             
             $scope.$parent.doKeydown = function(event){
                 if(event.keyCode == 13) {
-//                    $scope.$parent.doSubmit();
+                    $scope.$parent.doSubmit();
                 }
             };
         };

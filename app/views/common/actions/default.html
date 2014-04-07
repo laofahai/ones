@@ -7,12 +7,12 @@
     <div class="actionsBtnRight btn-group" ng-hide="false === selecteAble">
         <button class="btn btn-sm btn-primary disabled">{{i18n.lang.selected_action|sprintf:gridSelected.length}}</button>
         <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble" ng-class="{disabled: workflowDisabled}">
-            {{i18n.lang.workflow}}{{workflowDisabled}}
+            {{i18n.lang.workflow}}
             <span class="icon-caret-down icon-on-right"></span>
         </button>
         <ul class="dropdown-menu dropdown-default">
             <li>
-                <a ng-click="doViewWorkflowProcesses()">查看工作进程</a>
+                <a ng-click="doViewWorkflowProcesses()" bs-aside="workflowProcessContent" ng-bind="i18n.lang.actions.viewWorkflowProcess"></a>
             </li>
             <li ng-repeat="w in workflowActionList" ng-class="{disabled: workflowActionDisabled(w.id)}">
                 <a ng-click="doWorkflow($event, w.id);">{{w.name}}</a>

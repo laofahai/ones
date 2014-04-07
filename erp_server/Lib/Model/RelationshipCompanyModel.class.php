@@ -15,12 +15,17 @@ class RelationshipCompanyModel extends RelationModel {
     
     protected $_link = array(
         "User" => BELONGS_TO,
+        "RelationshipCompanyGroup" => array(
+            'mapping_type'=>BELONGS_TO,
+            "foreign_key" => "group_id",
+            "mapping_name" => "Group"
+        ),
         "RelationshipCompanyLinkman" => array(
             'mapping_type'=> HAS_MANY,
             'class_name'=> 'RelationshipCompanyLinkman',
             'foreign_key'=> 'relationship_company_id',
             'mapping_name'=> 'Linkman',
-            'mapping_order'=> 'id desc',
+            'mapping_order'=> 'is_primary DESC, id ASC',
        ),
     );
     
@@ -30,9 +35,12 @@ class RelationshipCompanyModel extends RelationModel {
     
     public function select($options=array()) {
         $data = parent::select($options);
-        foreach($data as $k=>$v) {
-            $data[$k]["status_lang"] = $this->status_lang[$v["status"]];
-        }
+        
+//        print_r($data);exit;
+        
+//        foreach($data as $k=>$v) {
+//            $data[$k]["status_lang"] = $this->status_lang[$v["status"]];
+//        }
         return $data;
     }
     

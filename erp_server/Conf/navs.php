@@ -49,8 +49,9 @@ return array(
 //    ),
     "rel_company" => array(
         "childs" => array(
-            "list" => "CRM/RelationshipCompany",
-            "add_new" => "CRM/RelationshipCompany/add"
+            "relCompanyGroup" => "CRM/RelCompanyGroup",
+            "list" => "CRM/RelCompany",
+            "add_new" => "CRM/RelCompany/add"
         ),
         "icon" => "link"
     ),

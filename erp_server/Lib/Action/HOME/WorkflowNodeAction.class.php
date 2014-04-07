@@ -10,6 +10,7 @@
  *
  * @author 志鹏
  */
+
 class WorkflowNodeAction extends CommonAction {
     
     private $theTypes = array(

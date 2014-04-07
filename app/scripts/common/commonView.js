@@ -4,8 +4,8 @@
  * */
 (function(){
 angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
-        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert",
-            function($location, $rootScope, $routeParams, $q, $alert){
+        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes",
+            function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes){
                 var service = {};
                 /**
                  * 通用alert
@@ -15,7 +15,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     title = title || type.ucfirst()+":"; 
                     var erpalert = $alert({title: title, 
                         content: alertMsg, 
-                        placement: 'top', type: type, show: true,
+                        placement: 'top-right', type: type, show: true,
                         container: '#alerts-container'
                     });
                     
@@ -24,6 +24,17 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                             erpalert.hide();
                         }, 5000);
                     }
+                };
+                /**
+                 * 通用aslide
+                 * */
+                service.aside = function(title, content, template){
+                    template = template || "views/common/aside.html";
+                    $aside({
+                        title: title,
+                        content: content,
+                        template: template
+                    });
                 };
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
                     var defaultOpts = {
@@ -109,6 +120,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                 };
 
                 service.displayGrid = function($scope, fieldsDefine, resource, opts){
+                    
                     $scope.totalServerItems = 0;
                     $scope.gridSelected = [];
 
@@ -126,45 +138,6 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         fieldsDefine = model.getFieldsStruct(true);
                     }
                     
-                    
-                    options.afterSelectionChange = function(rowitem, items) {
-//                        console.log(arguments);
-//                        angular.forEach(items, function(it, key){
-//                            if(it.checked) {
-//                                delete(items[key]);
-//                            }
-//                        });
-//                        
-//                        $scope.gridSelected = items;
-//                        
-////                        if (true === items) { //全选
-////                            $scope.gridSelected = [];
-////                            for (var i = 0; i < rowitem.length; i++) {
-////                                $scope.gridSelected.push(rowitem[i].entity);
-////                            }
-////                        } else if (false === items) { //取消全选
-////                            $scope.gridSelected = [];
-////                        } else {
-////                            if(rowitem.entity.checked) {
-////                                $scope.gridSelected.push(rowitem.entity);
-////                            }
-////                            if($scope.gridSelected instanceof Array && $scope.gridSelected.length > 0 && $scope.gridSelected[0]) {
-////                                angular.forEach($scope.gridSelected, function(item,key){
-////                                    if(!item.checked) {
-////                                        delete($scope.gridSelected[key]);
-////                                    }
-////                                });
-////                            }
-////                        }
-////                        
-////                        console.log($scope.gridSelected);
-                    };
-                    
-//                    options.beforeSelectionChange = function (event) {
-//                        event.entity.checked = !event.selected;
-//                        return true;
-//                    };
-
                     /**
                      * 字段名称
                      * */
@@ -180,7 +153,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
 
 
                     /**
-                     * 过滤器
+                     * 过滤不显示字段
                      * */
                     var col;
                     for (var key in columnDefs) {
@@ -188,7 +161,6 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         if (false == col.listable) {
                             columnDefs.splice(key, 1);
                         }
-
                     }
 
                     /**
@@ -277,8 +249,22 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     
                     //查看工作进程
                     $scope.doViewWorkflowProcesses = function(){
-                        var id = $scope.gridSelected[0].id;
-                    }
+                        if(!$scope.gridSelected.length) {
+                            return false;
+                        }
+                        WorkflowProcessRes.query({
+                            id: $scope.gridSelected[0].id,
+                            workflowAlias: $scope.workflowAlias
+                        }).$promise.then(function(data){
+                            service.aside({
+                                title: $scope.gridSelected[0].subject,
+                                subTitle: $scope.gridSelected[0].dateline_lang
+                            }, data, "views/common/workflowProcess.html");
+                        });
+                    };
+                    
+                    //导出excel
+                    $scope.doExport = function(){};
                     
 
                     opts.columnDefs = columnDefs;
@@ -401,6 +387,21 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     };
 
                 };
+                
+                service.makeDefaultPageAction = function($scope, module, actions){
+                    actions = actions || ["add", "list"];
+                    
+                    var cssClass = ["success", "primary"];
+                    $scope.pageActions = [];
+                    for(var i=0;i<actions.length;i++) {
+                        $scope.pageActions.push({
+                            label: $scope.i18n.lang.actions[actions[i]],
+                            class: cssClass[i],
+                            href : sprintf("/%s/%s", module, actions[i] === "list" ? "" : actions[i])
+                        });
+                    }
+                    
+                }
                 return service;
             }]);
 })(window.angular);

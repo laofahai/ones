@@ -121,6 +121,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 ComView.displayGrid($scope, StockinModel, StockinRes);
                 
                 $scope.workflowAble = true;
+                $scope.workflowAlias= "stockin";
+                
                 WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
                     $scope.workflowActionList = data;
                 });
