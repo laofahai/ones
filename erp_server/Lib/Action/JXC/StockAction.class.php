@@ -22,4 +22,6 @@ class StockAction extends CommonAction {
         }
     }
     
+    
+    
 }

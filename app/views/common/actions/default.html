@@ -4,7 +4,7 @@
         <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
         <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
     </div>
-    <div class="actionsBtnRight btn-group" ng-hide="false === selecteAble">
+    <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
         <button class="btn btn-sm btn-primary disabled">{{i18n.lang.selected_action|sprintf:gridSelected.length}}</button>
         <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble" ng-class="{disabled: workflowDisabled}">
             {{i18n.lang.workflow}}

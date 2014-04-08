@@ -62,7 +62,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
     .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams",
         function($scope, AuthGroupRuleRes, $routeParams){
             $scope.permissionData = [];
-            $scope.selecteAble = false;
+            $scope.selectAble = false;
             $scope.dataList = [];
             AuthGroupRuleRes.query({id: $routeParams.pid}).$promise.then(function(data){
                 $scope.permissionData = data.selected || [];
@@ -94,7 +94,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
             }])
         .controller("AuthGroupEditCtl", ["$scope", "AuthGroupModel", "AuthGroupRes", "ComView", "$routeParams",
             function($scope, AuthGroupModel, AuthGroupRes, ComView, $routeParams){
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -125,7 +125,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
             }])
         .controller("DepartmentEditCtl", ["$scope", "DepartmentModel", "DepartmentRes", "ComView", "$routeParams",
             function($scope, DepartmentModel, DepartmentRes, ComView, $routeParams){
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.list,
@@ -155,7 +155,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
             }])
         .controller("AuthRuleEditCtl", ["$scope", "AuthRuleModel", "AuthRuleRes", "ComView", "$routeParams",
             function($scope, AuthRuleModel, AuthRuleRes, ComView, $routeParams){
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,
@@ -190,7 +190,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
             }])
         .controller("UserEditCtl", ["$scope", "UserModel", "UserRes", "ComView", "$routeParams",
             function($scope, UserModel, UserRes, ComView, $routeParams){
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 $scope.pageActions = [
                     {
                         label : $scope.i18n.lang.actions.add,

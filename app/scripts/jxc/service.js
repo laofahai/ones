@@ -177,7 +177,8 @@ angular.module("erp.jxc.services", [])
             };
             return obj;
         }])
-    .service("StockProductExportModel", ["$rootScope", "StockRes", "$q", function($rootScope, StockRes, $q) {
+    .service("StockProductExportModel", ["$rootScope", "StockRes", "GoodsCategoryRes", "$q", 
+        function($rootScope, StockRes, GoodsCategoryRes, $q) {
             var service = {
                 getFieldsStruct : function() {
                     var i18n = $rootScope.i18n.lang;
@@ -186,6 +187,11 @@ angular.module("erp.jxc.services", [])
                             inputType: "select",
                             required: false,
                             multiple: true
+                        },
+                        category: {
+                            inputType: "select",
+                            multiple: true,
+                            nameField: "prefix_name"
                         },
                         stockWarningOnly: {
                             inputType: "select",
@@ -205,7 +211,11 @@ angular.module("erp.jxc.services", [])
                     var defer = $q.defer();
                     StockRes.query(function(data){
                         struct.stock.dataSource = data;
-                        defer.resolve(struct);
+                    }).$promise.then(function(){
+                        GoodsCategoryRes.query(function(data){
+                            struct.category.dataSource = data;
+                            defer.resolve(struct);
+                        });
                     });
                     return defer.promise;
                 }
@@ -306,3 +316,29 @@ angular.module("erp.jxc.services", [])
 
                 return obj;
             }])
+        .service("StockWarningModel", ["$rootScope", function($rootScope){
+            return {
+                getFieldsStruct: function(){
+                    return {
+                        factory_code_all: {
+                            displayName: $rootScope.i18n.lang.factoryCodeAll
+                        },
+                        goods_name: {
+                            displayName: $rootScope.i18n.lang.name
+                        },
+                        standard: {},
+                        version: {},
+                        measure: {},
+                        category_name: {
+                            displayName: $rootScope.i18n.lang.category
+                        },
+                        stock_name: {
+                            displayName: $rootScope.i18n.lang.stock
+                        },
+                        num: {},
+                        store_min: {},
+                        store_max: {}
+                    };
+                }
+            };
+        }])

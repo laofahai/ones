@@ -67,7 +67,23 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/jxc/stockProductList/export.html',
                         controller: 'StockProductsExportCtl'
                     })
+                    .when('/JXC/Stock/warning', {
+                        templateUrl: 'views/common/grid.html',
+                        controller: 'StockWarningCtl'
+                    })
         }])
+        .controller("StockWarningCtl", ["$scope", "StockWarningRes", "StockWarningModel", "ComView", 
+            function($scope, res, model, ComView){
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.export,
+                        class : "success",
+                        href  : "/JXC/StockWarning/Export"
+                    }
+                ];
+                $scope.selectAble = false;
+                ComView.displayGrid($scope, model, res);
+            }])
         .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", "ComView",
             function($scope, StockModel, StockRes, $location, ComView){
                 $scope.pageActions = [
@@ -98,7 +114,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/Stock"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 var opts = {
                     name: "StockEdit",
                     id: $routeParams["id"]
@@ -169,7 +185,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 ];
                 
                 $scope.workflowAble = true;
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 $scope.showWeeks = true;
                 
                 ComView.displayBill($scope, StockinEditModel, StockinRes, {
@@ -215,7 +231,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/Goods"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 
                 var opts = {
                     name: "JXCGoodsEdit",
@@ -243,7 +259,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/GoodsCategory"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 
                 var opts = {
                     name: "JXCGoodsCategoryEdit",
@@ -268,7 +284,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/StockProductList/Export"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 ComView.displayGrid($scope, StockProductModel, StockProductsRes);
             }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "erp.config",
@@ -285,7 +301,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/StockProductList/Export"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 ComView.displayForm($scope, StockProductExportModel, null, {
                     name: "export"
                 }, true);
@@ -295,6 +311,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     if($scope.exportData.stock) {
                         url+= "/stock/"+$scope.exportData.stock.join('_');
                     }
+                    url+= "/category/"+$scope.exportData.category.join('_');
                     url+= "/warningonly/"+$scope.exportData.stockWarningOnly;
                     window.open(url);
                 };

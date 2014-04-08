@@ -14,7 +14,7 @@ class StockProductListViewModel extends ViewModel {
     
     protected $viewFields = array(
         "StockProductList" => array("id","factory_code_all","goods_id","stock_id","num"),
-        "Goods" => array("name"=>"goods_name","measure","store_min","store_max", "_on"=>"Goods.id=StockProductList.goods_id"),
+        "Goods" => array("name"=>"goods_name","measure","goods_category_id","store_min","store_max", "_on"=>"Goods.id=StockProductList.goods_id"),
         "GoodsCategory" => array("name"=>"category_name","bind_model"=>"bind_model_id", "_on"=>"Goods.goods_category_id=GoodsCategory.id"),
         "Stock" => array("name"=>"stock_name", "total_num"=>"stock_total_num", "_on"=>"Stock.id=StockProductList.stock_id"),
     );

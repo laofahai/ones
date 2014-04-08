@@ -48,10 +48,13 @@ class StockProductListAction extends CommonAction {
         if($_GET["warningonly"] > 0) {
             $map["_string"] = '((store_min>0 AND store_min>=num) OR (store_max>0 AND store_max<=num))';
         }
+        if($_GET["category"]) {
+            $map["goods_category_id"] = array("IN", str_replace("_", ",", $_GET["category"]));
+        }
         
         $data = $model->where($map)->order("stock_id ASC")->select();
 //        echo $model->getLastSql();
-//        print_r($data);exit;
+        print_r($data);exit;
 //        
         $this->doExport(sprintf("export_kcqd_%s.xls", date("YmdHis", CTS)), $data);
     }

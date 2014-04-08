@@ -103,7 +103,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
             }])
         .controller("HOMEConfigEditCtl", ["$scope", "ConfigRes", "configModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $route){
-                $scope.selecteAble = false
+                $scope.selectAble = false
                 ComView.makeDefaultPageAction($scope, "HOME/Config");
                 ComView.displayForm($scope, model, res, {
                     id: $route.id
@@ -157,7 +157,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href  : "/HOME/Workflow/viewSub/id/"+$routeParams.pid
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 var opts = {
                     name: "DataModelEdit",
                     module: "/HOME/WorkflowNode",
@@ -197,7 +197,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href: "/HOME/Types"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 
                 var opts = {
                     name: "TypesEdit",
@@ -235,7 +235,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href: "/HOME/Types"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 
                 var opts = {
                     name: "TypesEdit",
@@ -274,7 +274,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href  : "/HOME/DataModel/"
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 
                 var opts = {
                     name: "DataModelEdit",
@@ -319,7 +319,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href  : "/HOME/DataModel/viewSub/id/"+$routeParams.pid
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 var opts = {
                     name: "DataModelEdit",
                     module: "/HOME/DataModelFields",
@@ -363,7 +363,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         href  : "/HOME/DataModelData/"+$routeParams.modelId
                     }
                 ];
-                $scope.selecteAble = false;
+                $scope.selectAble = false;
                 var opts = {
                     name: "DataModelDataEdit",
                     module: "/HOME/DataModelData",
