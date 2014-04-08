@@ -15,6 +15,7 @@
                         'search_contains="true" '+
                         '><option><option></select>',
                 'fields/email': '<input type="number" %s />',
+                'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
@@ -100,15 +101,21 @@
             _checkbox: function(name, fieldDefine) {
                 
             },
+            _textarea: function(name, fieldDefine){
+                var value = fieldDefine.value;
+                delete(fieldDefine.value);
+                return sprintf(this.$parent.templates["fields/textarea"], this._attr(name, fieldDefine), value);
+            },
             //下拉框选择
             _select: function(name, fieldDefine, $scope) {
                 var valueField = fieldDefine.valueField || "id";
                 var nameField = fieldDefine.nameField || "name";
                 var data = [];
                 var self = this;
-
                 fieldDefine.chosen = "chosen";
                 fieldDefine.remoteDataField = fieldDefine.remoteDataField || name;
+                fieldDefine["data-placeholder"]= $scope.$parent.i18n.lang.messages.chosen_select_text;
+                fieldDefine["no-results-text"]= $scope.$parent.i18n.lang.messages.chosen_no_result_text;
 
                 if (fieldDefine.dataSource instanceof Array) {
                     for (var item in fieldDefine.dataSource) {
@@ -174,7 +181,6 @@
                         defer.resolve(dataList);
                     });
                     return defer.promise.then(function(data){
-                        console.log(data);
                         return data;
                     });
                 };
@@ -491,8 +497,8 @@
                     }
                 };
                 scope.$parent.onStockSelectChange = function(event){
-                    console.log(self);
-                    console.log(arguments);return;
+//                    console.log(self);
+//                    console.log(arguments);return;
 //                    self.scope.$parent.onTypeaheadBlur(event);
                     setTimeout(function(){
                         var context = self.getInputContext(event.target);

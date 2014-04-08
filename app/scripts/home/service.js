@@ -49,6 +49,24 @@ angular.module("erp.home.services", [])
              };
              return obj;
          }])
+         .service("configModel", ["$rootScope", function($rootScope){
+                return {
+                    getFieldsStruct : function(){
+                        return {
+                            id: {primary: true},
+                            alias: {},
+                            name: {},
+                            value: {
+                                inputType: "textarea"
+                            },
+                            description: {
+                                inputType: "textarea",
+                                required: false
+                            }
+                        };
+                    }
+                };
+         }])
          .service("DataModelFieldsModel", ["$rootScope", function($rootScope) {
             var obj = {};
             obj.getFieldsStruct = function(){

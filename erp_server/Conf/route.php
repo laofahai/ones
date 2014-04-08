@@ -63,6 +63,7 @@ $urlRoutes = array_merge($base,
     routeMaker("passport/department", "Passport/Department"),
         
     routeMaker("types", "HOME/Types"),
+    routeMaker("config", "HOME/Config"),
     routeMaker("home/dataModel", "HOME/DataModel"),
     routeMaker("home/dataModelFields", "HOME/DataModelFields"),
     routeMaker("home/dataModelData", "HOME/DataModelData"),

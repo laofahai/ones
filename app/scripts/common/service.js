@@ -36,6 +36,9 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("TypesRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "types/:id.json", null, {'update': {method: 'PUT'}});
         }])
+    .factory("ConfigRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "config/:id.json", null, {'update': {method: 'PUT'}});
+        }])
     .factory("DataModelRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "home/dataModel/:id.json", null, {'update': {method: 'PUT'}});
         }])

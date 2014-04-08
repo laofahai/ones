@@ -292,7 +292,9 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 $scope.doSubmit = function(){
                     var url = cnf.BSU+'JXC/StockProductList/Export';
-                    url+= "/stock/"+$scope.exportData.stock.join('_');
+                    if($scope.exportData.stock) {
+                        url+= "/stock/"+$scope.exportData.stock.join('_');
+                    }
                     url+= "/warningonly/"+$scope.exportData.stockWarningOnly;
                     window.open(url);
                 };

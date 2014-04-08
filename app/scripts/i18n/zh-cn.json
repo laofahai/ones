@@ -220,7 +220,9 @@
             "operateSuccess": "操作成功",
             "fillTheForm": "请完整填写表单",
             "permissionDenied": "您没有权限进行此操作",
-            "serverError": "服务器返回错误，请联系系统管理员"
+            "serverError": "服务器返回错误，请联系系统管理员",
+            "chosen_select_text" : "请选择",
+            "chosen_no_result_text" : "'没有找到相关结果'"
         },
         "actions": {
             "submit" : "提交",
@@ -275,6 +277,8 @@
         "total": "合计",
         "goods": "商品",
         "group": "组",
+        "value": "值",
+        "description": "描述",
         "field": "字段",
         "stock": "仓库",
         "status": "状态",

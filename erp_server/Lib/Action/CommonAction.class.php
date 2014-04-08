@@ -22,7 +22,9 @@ class CommonAction extends RestAction {
         if(!IS_AJAX) {
 //            exit("Permission Denied");
         }
-
+        
+        $_POST = json_decode(file_get_contents('php://input'), true);
+        
         import("@.Workflow.Workflow");
         import("@.ORG.Auth");
         if ($_SERVER["HTTP_SESSIONHASH"]) {
@@ -261,11 +263,11 @@ class CommonAction extends RestAction {
      * 
      */
     protected function pretreatment() {
-        switch($this->_method) {
-            case "put":
-                $_POST = I("put.");
-                break;
-        }
+//        switch($this->_method) {
+//            case "put":
+//                $_POST = I("put.");
+//                break;
+//        }
     }
     
     /**

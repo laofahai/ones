@@ -25,7 +25,6 @@ class UserAction extends CommonAction {
                 $_POST["password"] = getPwd($_POST["password"]);
                 break;
             case "put":
-                $_POST = I("put.");
                 if($_POST["password"]) {
                     $_POST["password"] = getPwd($_POST["password"]);
                 } else {

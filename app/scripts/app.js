@@ -55,9 +55,10 @@ var ERP = angular.module('erp', [
             $http.defaults.headers.common["sessionHash"] = loginHash;
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-            $http.defaults.transformRequest = function(data) {
-                return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;
-            };
+//            var transReqFunc = function(data) {
+//                return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
+//            };
+//            $http.defaults.transformRequest.push(transReqFunc);
         }]);
 
 /**

@@ -7,6 +7,18 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         controller: "HOMERedirectCtl",
                         templateUrl: "views/common/blank.html",
                     })
+                    .when('/HOME/Config', {
+                        templateUrl: "views/common/grid.html",
+                        controller: "HOMEConfigCtl"
+                    })
+                    .when('/HOME/Config/add', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "HOMEConfigEditCtl"
+                    })
+                    .when('/HOME/Config/edit/id/:id', {
+                        templateUrl: "views/common/edit.html",
+                        controller: "HOMEConfigEditCtl"
+                    })
                     .when('/HOME/DataModel', {
                         templateUrl: "views/common/grid.html",
                         controller: "DataModelCtl"
@@ -84,6 +96,19 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                         controller: "clearCacheCtl"
                     })
         }])
+        .controller("HOMEConfigCtl", ["$scope", "ConfigRes", "configModel", "ComView", 
+            function($scope, res, model, ComView){
+                ComView.makeDefaultPageAction($scope, "HOME/Config");
+                ComView.displayGrid($scope, model, res);
+            }])
+        .controller("HOMEConfigEditCtl", ["$scope", "ConfigRes", "configModel", "ComView", "$routeParams",
+            function($scope, res, model, ComView, $route){
+                $scope.selecteAble = false
+                ComView.makeDefaultPageAction($scope, "HOME/Config");
+                ComView.displayForm($scope, model, res, {
+                    id: $route.id
+                });
+            }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
             $location.url($routeParams.url);
         }])
