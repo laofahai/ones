@@ -10,6 +10,8 @@ var ERP = angular.module('erp', [
     'ngAnimate',
     'mgcrea.ngStrap',
     'localytics.directives',
+    'ui.utils',
+    'ui.select',
     
     'erp.common',
     'erp.commonView',

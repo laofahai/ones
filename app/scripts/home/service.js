@@ -129,7 +129,7 @@ angular.module("erp.home.services", [])
                         field_id: {
                             displayName: i18n.field,
                             listable: false,
-                            inputType:"select",
+                            inputType: "select",
                             nameField: "display_name"
                         }
                     };
@@ -164,36 +164,68 @@ angular.module("erp.home.services", [])
                 }
             };
         }])
-        .service("WorkflowNodeModel", ["$rootScope", function($rootScope){
-            return {
-                getFieldsStruct: function(){
-                    return {
-                        id: {primary: true},
-                        name: {},
-                        type: {},
-                        execute_file: {
-                            listable: false
-                        },
-                        listorder: {},
-                        prev_node_id: {},
-                        next_node_id: {},
-                        executor: {
-                            listable: false
-                        },
-                        cond: {
-                            listable: false
-                        },
-                        'default': {
-                            listable: false
-                        },
-                        execute_type: {},
-                        remind: {
-                            listable: false
-                        },
-                        max_time: {},
-                        status_text: {},
-                        memo: {}
-                    };
-                }
-            };
-        }])
+        .service("WorkflowNodeModel", ["$rootScope", "WorkflowNodeRes", "$routeParams", "$q",
+            function($rootScope, res, $route, $q){
+                var service = {
+                    getFieldsStruct: function(structOnly){
+                        var struct = {
+                            id: {primary: true},
+                            name: {},
+                            type: {},
+                            execute_file: {
+                                listable: false
+                            },
+                            listorder: {
+                                value: 99
+                            },
+                            prev_node_id: {
+                                inputType: "select",
+                                required: false
+                            },
+                            next_node_id: {
+                                inputType: "select",
+                                required: false
+                            },
+                            executor: {
+                                listable: false,
+                                required: false
+                            },
+                            cond: {
+                                listable: false,
+                                required: false
+                            },
+                            'default': {
+                                listable: false,
+                                inputType: "select",
+                                dataSource: [
+                                    {id: 1, name: $rootScope.i18n.lang.yes},
+                                    {id: -1, name: $rootScope.i18n.lang.no}
+                                ]
+                            },
+                            remind: {
+                                listable: false
+                            },
+                            status_text: {},
+                            memo: {
+                                required: false
+                            },
+                        };
+
+                        if(!structOnly) {
+                            var defer = $q.defer();
+                            res.query({
+                                workflow_id: $route.pid
+                            }, function(data){
+                                struct.prev_node_id.dataSource = data;
+                                struct.next_node_id.dataSource = data;
+                                defer.resolve(struct);
+                            });
+                            return defer.promise;
+                        } else {
+                            return struct;
+                        }
+                    }
+                };
+
+                return service;
+            }])

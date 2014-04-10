@@ -30,7 +30,7 @@ class StockinAction extends CommonAction {
         $modelIds = array();
         $rowData = array();
         foreach($rows as $v) {
-            $tmp = explode("-", $v["factory_code_all"]); //
+            $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
             $factory_code = array_shift($tmp);
             $modelIds = array_merge($modelIds, $tmp);
             $v["modelIds"] = $tmp;
@@ -38,34 +38,16 @@ class StockinAction extends CommonAction {
             $v["memo_label"] = $v["memo"];
             $v["stock_label"] = $v["stock_name"];
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
-            $v["goods_id_label"] = sprintf("%s_%s",$v["goods_name"],$v["goods_pinyin"]);
+            $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
             $v["num_label"] = $v["num"];
             $rowData[$v["id"]] = $v;
         }
         array_flip(array_flip($modelIds));
 
         $dataModel = D("DataModelDataView");
-        $tmp = $dataModel->where(array(
-            "id" => array("IN", implode(",", $modelIds))
-        ))->select();
         
-        foreach($tmp as $v) {
-            $modelData[$v["id"]] = $v;
-        }
         
-//        print_r($rowData);exit;
-        
-        foreach($rowData as $k=>$v) {
-            if(!$v["modelIds"]) {
-                continue;
-            }
-            foreach($v["modelIds"] as $mid) {
-                $rowData[$k][$modelData[$mid]["field_name"]] = $mid;
-                $rowData[$k][$modelData[$mid]["field_name"]."_label"] = $modelData[$mid]["data"];
-            }
-        }
-        
-//        print_r($rowData);exit;
+        $rowData = $dataModel->assignModelData($rowData, $modelIds);
         
         $formData["rows"] = reIndex($rowData);
         $this->response($formData);
@@ -89,16 +71,19 @@ class StockinAction extends CommonAction {
             "status"  => 0,
             "user_id" => $this->user["id"],
             "stock_manager" => 0,
-            "total_num"=> $_POST["totalnum"],
+            "total_num"=> $_POST["total_num"],
             "memo"    => $_POST["memo"]
         );
         
         $data = $_POST["rows"];
         $billItems = array();
         foreach($data as $k=> $billItem) {
+            if(!$billItem) {
+                continue;
+            }
             list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);
             $billItems[$k] = array(
-                "goods_id"   => $billItem["goods_id"],
+                "goods_id"   => $goodsId,
                 "num"        => $billItem["num"],
                 "factory_code_all" => sprintf("%s-%d-%d", 
                         $factory_code, 
@@ -111,10 +96,10 @@ class StockinAction extends CommonAction {
         
 //        print_r($billData);
 //        print_r($billItems);exit;
-        
+//        
         $billId = $stockinModel->newBill($billData, $billItems);
         
-        var_dump($billId);
+//        var_dump($billId);
     }
     
     public function _after_delete() {

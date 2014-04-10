@@ -17,6 +17,22 @@
                 'fields/email': '<input type="number" %s />',
                 'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
+                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" theme="selectize" reset-search-input="false">'+
+                                    '<match ng-bind-html="$select.selected.label"></match>'+
+                                    '<choices refresh="%(method)s_refresh($select.search)" refresh-delay="0" repeat="%(data)s in %(method)s | filter: $select.search">'+
+                                      '<div ng-bind-html="%(data)s.label"></div>'+
+                                    '</choices>'+
+                                  '</ui-select>',
+//                            <ui-select ng-model="address.selected"
+//                                    reset-search-input="false"
+//                                    >
+//                           <match>{{$select.selected.name}}</match>
+//                           <choices repeat="address in addresses "
+//                                    refresh="refreshAddresses($select.search)"
+//                                    refresh-delay="0">
+//                             <div ng-bind-html="address.name | highlight: $select.search"></div>
+//                           </choices>
+//                         </ui-select>
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
@@ -54,7 +70,7 @@
                 if (context.text) {
                     fieldDefine.value = context.text;
                 }
-                if(context.trid !== "undefined") {
+                if(context.trid !== undefined) {
                     fieldDefine["data-row-index"] = context.trid;
                 }
                 if (!fieldDefine.displayName) {
@@ -134,7 +150,7 @@
                     //需要使用已有数据作为参数进行查询
                     if(fieldDefine.queryWithExistsData) {
                         angular.forEach(fieldDefine.queryWithExistsData, function(qItem){
-                            queryParams[qItem] = fieldDefine["data-row-index"] !== "undefine"
+                            queryParams[qItem] = fieldDefine["data-row-index"] !== undefined
                                                 ? $scope.$parent[self.opts.dataName][fieldDefine["data-row-index"]][qItem]
                                                 : $scope.$parent[self.opts.dataName][qItem];
                         });
@@ -157,6 +173,67 @@
                 });
 
 
+            },
+            _select2: function(name, fieldDefine, $scope) {
+                var methodName = name + "DataSource";
+                var nameField = fieldDefine.nameField || "name";
+                var valueField = fieldDefine.valueField || "id";
+                var queryParams;
+                var self = this;
+                queryParams = $.extend(fieldDefine.queryParams || {}, {});
+                
+                var oldval;
+
+                $scope.$parent[methodName] = undefined;
+                
+                $scope.$parent[methodName+"_refresh"] = function(val){
+                    if(oldval === val) {
+                        return;
+                    }
+                    oldval = val;
+                    if(fieldDefine.queryWithExistsData) {
+                        angular.forEach(fieldDefine.queryWithExistsData, function(qItem){
+                            queryParams[qItem] = fieldDefine["data-row-index"] !== undefined
+                                                ? $scope.$parent[self.opts.dataName][fieldDefine["data-row-index"]][qItem]
+                                                : $scope.$parent[self.opts.dataName][qItem];
+                        });
+                    }
+                    queryParams = $.extend(fieldDefine.queryParams || {}, {typeahead: val});
+                    fieldDefine.dataSource.query(queryParams, function(data){
+                        var dataList = [];
+                        angular.forEach(data, function(item) {
+                            dataList.push({
+                                label: item[nameField],
+                                value: item[valueField],
+                                category: item.goods_category_id,
+                                factory_code: item.factory_code
+                            });
+                        });
+                        $scope.$parent[methodName] = dataList;
+                    });
+                };
+                
+                
+                var html = sprintf(this.$parent.templates['fields/select2'], {
+                    method: methodName,
+                    data: name,
+                    label: nameField,
+                    model: fieldDefine["ng-model"]
+//                    dataSource: dataSourceName
+                });
+                
+//                console.log(html);
+                return html;
+                /*
+                <ui-select ng-model="formData[0].goods_id" 
+                theme="selectize" reset-search-input="false">
+                <match>{{$select.selected.combineLabel}}</match>
+                <choices refresh="goods_idDataSource_refresh" refresh-delay="0" 
+                repeat="goods_id in goods_idDataSource | filter: $select.search">
+                <div ng-bind-html="goods_id.combineLabel | highlight: $select.search">
+                </div></choices></ui-select> 
+                */
+                
             },
             _typeahead: function(name, fieldDefine, $scope) {
                 var methodName = name + "DataSource";
@@ -222,7 +299,7 @@
             this.opts.templates = this.templates = {
                 'bills/box.html' : '<table class="table table-bordered" id="billTable">'+
                         '<thead><tr><th>#</th><th></th>%(headHTML)s</tr></thead>'+
-                        '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>{{$parent.formData}}',
+                        '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>',
                 'bills/fields/rowHead.html': '<th>%(i)s</th><td class="center"><label class="rowHead">'+
                                         '<i class="icon icon-plus" ng-click="billAddRow($event.target)"></i> '+
                                         '<i class="icon icon-trash" ng-click="billRemoveRow($event.target)"></i> '+
@@ -346,7 +423,8 @@
 
                     //已经存在
                     if(context.td.find(".editAble").length) {
-                        context.td.find(".editAble").removeClass("hide").eq(0).focus();
+                        context.td.find(".editAble").removeClass("hide").find("input");
+                        context.inputAble.trigger("click").focus();
                         return;
                     }
                     var struct = self.opts.fieldsDefine[context.field];
@@ -386,12 +464,17 @@
                     var html = self.fm.maker.factory(context, struct, scope, events);
                     html = self.compile(html)(scope.$parent);
                     context.td.append(html);
-                    context.td.find(".editAble").focus(function(){
-                        var method = "after"+struct.inputType.ucfirst()+"Focus";
-                        if(method in scope.$parent) {
-                            scope.$parent[method]($(this), struct);
-                        }
-                    }).select();
+                    
+                    //触发结束编辑事件
+                    setTimeout(function(){
+                        context = self.getInputContext(ele);
+                        context.inputAble.trigger("click").focus();
+                        context.inputAble.bind("keydown", function(e){
+                            if(e.keyCode == 13) {
+                                self.scope.$parent.billEndEdit(context.td);
+                            }
+                        });
+                    }, 100);
                 };
 
                 //结束编辑 ele 应为td子元素
@@ -412,6 +495,7 @@
 
                     //自动跳到下一可编辑元素
                     if(self.opts.autoFocusNext && !isBlur) {
+                        
                         if(!next) { //当前行无下一元素
                             if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
                                 self.scope.$parent.billAddRow(null, true);
@@ -512,7 +596,6 @@
                         });
                     },100);
                 };
-                
             },
             //获取当前input的上下文数据
             getInputContext : function(element){
@@ -525,6 +608,8 @@
                 context.trid = context.index = context.tr.data("trid");
                 context.field = context.td.data("bind-model");
                 context.inputType = context.td.data("input-type");
+                context.inputAble = context.td.find("input");
+                
                 return context;
             },
             getLabelContext: function(element) {
@@ -536,6 +621,7 @@
                 context.field = context.td.data("bind-model");
                 context.text = context.ele.text();
                 context.inputType = context.td.data("input-type");
+                context.inputAble = context.td.find("input");
                 return context;
             },
             //重置TR的行数，并且重新计算数据
@@ -630,23 +716,25 @@
                     "number": '<input type="number" %s />',
                     "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>',
                 },
-                dataBindName: ""
+                dataName: ""
             };
 
             this.opts = $.extend(true, defaultOpts, config);
-            //this.fieldsMaker
-            this.fm = new service.makeField($scope);
+            
 
-            this.opts.dataBindName = this.opts.dataBindName ? this.opts.dataBindName : this.opts.name+"Data";
+            this.opts.dataName = this.opts.dataName ? this.opts.dataName : this.opts.name+"Data";
 
-            $scope.$parent[this.opts.dataBindName] = $scope.$parent[this.opts.dataBindName] || {};
-            $scope[this.opts.dataBindName] = {};
+            $scope.$parent[this.opts.dataName] = $scope.$parent[this.opts.dataName] || {};
+            $scope[this.opts.dataName] = {};
             
             $scope.$parent.doKeydown = function(event){
                 if(event.keyCode == 13) {
                     $scope.$parent.doSubmit();
                 }
             };
+            
+            //this.fieldsMaker
+            this.fm = new service.makeField($scope, this.opts);
         };
 
         service.makeForm.prototype = {
@@ -659,7 +747,7 @@
                 var boxHTML = this.opts.templates["commonForm/box.html"];
                 angular.forEach(this.opts.fieldsDefine, function(struct, field){
                     struct.class = "width-100";
-                    struct["ng-model"] = self.opts.dataBindName+"."+field;
+                    struct["ng-model"] = self.opts.dataName+"."+field;
                     if(struct.required !== false) {
                         struct.required = "required";
                     } else {
@@ -667,10 +755,11 @@
                     }
 
                     if(struct.value) {
-                        self.scope.$parent[self.opts.dataBindName][field] = struct.value;
+                        self.scope.$parent[self.opts.dataName][field] = struct.value;
                     }
 
                     if(!struct.hideInForm && !struct.primary) {
+                        self.scope.$parent[self.opts.dataName][field] = "";
                         fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                         if (false != fieldHTML) {
                             finalHTML.push(sprintf(boxHTML, {

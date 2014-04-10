@@ -78,6 +78,7 @@ return array(
             "field_set" => "HOME/Config",
             "base_data_set" => array(
                 "goods_setting" => "JXC/Goods",
+                "goods_tpl"     => "JXC/ProductTpl",
                 "goods_category"=> "JXC/GoodsCategory",
                 "stock_manage"  => "JXC/Stock",
                 "data_model"   => "HOME/DataModel",

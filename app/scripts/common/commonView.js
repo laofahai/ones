@@ -106,6 +106,11 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                             for (var k in $routeParams) {
                                 $scope[opts.dataObject][k] = $routeParams[k];
                             }
+                            var getParams = {};
+                            for (var k in $routeParams) {
+                                getParams[k] = $routeParams[k];
+                            }
+                            var params = $.extend(getParams, $scope[opts.dataObject]);
                             resource.save($scope[opts.dataObject], function(data){
                                 if(data.error) {
                                     service.alert(data.msg);
@@ -257,6 +262,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                             workflowAlias: $scope.workflowAlias
                         }).$promise.then(function(data){
                             service.aside({
+                                bill_id: $scope.gridSelected[0].bill_id,
                                 title: $scope.gridSelected[0].subject,
                                 subTitle: $scope.gridSelected[0].dateline_lang
                             }, data, "views/common/workflowProcess.html");

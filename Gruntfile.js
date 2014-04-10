@@ -300,17 +300,18 @@ module.exports = function (grunt) {
              '<%= yeoman.app %>/styles/ace/css/bootstrap.min.css',
              '<%= yeoman.app %>/styles/ace/css/font-awesome.min.css',
              '<%= yeoman.app %>/styles/ace/css/ace-fonts.css',
-             '<%= yeoman.app %>/styles/ace/css/ace.min.css',
+             '<%= yeoman.app %>/styles/ace/css/uncompressed/ace.css',
              '<%= yeoman.app %>/styles/ace/css/ace-rtl.css',
              '<%= yeoman.app %>/styles/ace/css/ace-skin.min.css'
            ],
            '<%= yeoman.dist %>/styles/vendor.css': [
              '<%= yeoman.app %>/bower_components/angular-grid/ng-grid.min.css',
              '<%= yeoman.app %>/bower_components/chosen/chosen.min.css',
+             '<%= yeoman.app %>/styles/bootstrap-additions.css',
+             '<%= yeoman.app %>/styles/angular-motion.css'
            ],
            '<%= yeoman.dist %>/styles/main.css': [
              '.tmp/styles/{,*/}*.css',
-             '<%= yeoman.app %>/styles/ace/css/datepicker.css',
              '<%= yeoman.app %>/styles/{,*/}*.css'
            ]
          }
@@ -329,7 +330,9 @@ module.exports = function (grunt) {
              '<%= yeoman.app %>/bower_components/angular-sanitize/angular-sanitize.js',
              '<%= yeoman.app %>/bower_components/angular-route/angular-route.js',
              '<%= yeoman.app %>/bower_components/angular-grid/ng-grid-2.0.7.debug.js',
-             '<%= yeoman.app %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+             '<%= yeoman.app %>/bower_components/angular-animate/angular-animate.js',
+             '<%= yeoman.app %>/bower_components/angular-strap/dist/angular-strap.js',
+             '<%= yeoman.app %>/bower_components/angular-strap/dist/angular-strap.tpl.js',
              '<%= yeoman.app %>/bower_components/chosen/chosen.jquery.js',
              '<%= yeoman.app %>/bower_components/angular-chosen-localytics/chosen.js'
            ],
@@ -340,10 +343,10 @@ module.exports = function (grunt) {
              '<%= yeoman.app %>/vendor/ace/ace-elements.min.js'
            ],  
            '<%= yeoman.dist %>/scripts/app.js': [
-             '<%= yeoman.app %>/scripts/**/*.js',
+             '<%= yeoman.app %>/scripts/**/*.js'
            ],
            '<%= yeoman.dist %>/scripts/login.js': [
-             '<%= yeoman.app %>/scripts/config.js',
+               '<%= yeoman.app %>/scripts/common/config.js',
              '<%= yeoman.app %>/scripts/common/login.js'
            ]
          }

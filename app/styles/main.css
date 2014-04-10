@@ -33,11 +33,14 @@ a{
     border-bottom:1px solid #ddd;
 }
 .ngRow.odd {
-    background:#f9f9f9;
+    background:#fff;
 }
 .ngRow.even {
     background:#fff
 }
+.ngRow.selected{
+    background:#f9f9f9;
+} 
 .ngTopPanel {
     color: #707070;
     font-weight: normal;
@@ -126,16 +129,20 @@ commonform {
     width:100%;height:34px;line-height:34px;
     display:block;
 }
-.billBody table td input.editAble,.billBody table td select {
+.billBody table td .editAble, .billBody table td .ui-select-search, .billBody table td select {
     position:absolute;
     left:0;top:0;
     width:100%;
     background:#fff !important;
     border:1px solid #4BB8F3;
+    border:0;
     box-shadow:0 1px 2px 1px rgba(0, 0, 0, 0.1) inset !important;
-    z-index:10;
-    height:36px;
+    box-shadow:none important;
+    border-radius: 0;
+    height:35px;
 }
+
+
 .billBody .chosen-container {
     position:absolute;
     left:0;top:0;
@@ -214,3 +221,34 @@ commonform {
 .workflowProcessList.tree {
     overflow:hidden;
 }
+
+.selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
+    border-radius: 0;
+    height:31px;
+}
+
+.ui-select-match {
+    line-height:31px;
+}
+
+.billBody .ui-select-choices-row .option span, .ui-select-match span {
+    display:none;
+}
+.billBody .selectize-dropdown {
+    top:35px;
+    border-radius:0;
+}
+.billBody .selectize-input {
+    border:none;
+    box-shadow:none;
+    line-height:35px;
+    border-radius:0;
+}
+.billBody .selectize-input input, .selectize-input {
+    padding:0 5px !important;
+}
+.billBody .selectize-input:after {
+    display:none !important;
+    color:#fff;
+}
+

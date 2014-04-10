@@ -71,6 +71,27 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/grid.html',
                         controller: 'StockWarningCtl'
                     })
+                    //商品拆装模板
+                    .when('/JXC/ProductTpl', {
+                        templateUrl: 'views/common/grid.html',
+                        controller:  'ProductTplCtl'
+                    })
+                    .when('/JXC/ProductTpl/add', {
+                        templateUrl: 'views/common/edit.html',
+                        controller:  'ProductTplEditCtl'
+                    })
+                    .when('/JXC/ProductTpl/edit/id/:id', {
+                        templateUrl: 'views/common/edit.html',
+                        controller:  'ProductTplEditCtl'
+                    })
+        }])
+        .controller("ProductTplCtl", ["$scope", "GoodsTplRes", "GoodsTplModel", "ComView", function($scope, res, model ,ComView){
+            ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
+            ComView.displayGrid($scope, model, res);
+        }])
+        .controller("ProductTplEditCtl", ["$scope", "GoodsTplRes", "GoodsTplModel", "ComView", function($scope, res, model ,ComView){
+            ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
+            ComView.displayForm($scope, model, res);
         }])
         .controller("StockWarningCtl", ["$scope", "StockWarningRes", "StockWarningModel", "ComView", 
             function($scope, res, model, ComView){
@@ -83,6 +104,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 ];
                 $scope.selectAble = false;
                 ComView.displayGrid($scope, model, res);
+                
+                
+                
+                
             }])
         .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", "ComView",
             function($scope, StockModel, StockRes, $location, ComView){

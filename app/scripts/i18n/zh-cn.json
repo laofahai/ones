@@ -127,6 +127,14 @@
                         "index": ["库存商品列表"],
                         "Export": "导出库存清单"
                     }
+                },
+                "ProductTpl": {
+                    "name": "产品拆装单模板",
+                    "actions": {
+                        "index": "拆装单模板列表",
+                        "add"  : "新增拆装单",
+                        "edit" : "修改拆装单"
+                    }
                 }
             }
         },
@@ -192,6 +200,7 @@
             "field_set": "字段设置",
             "base_data_set": "基础数据管理",
             "goods_setting": "商品管理",
+            "goods_tpl" : "商品拆装模板",
             "goods_category": "商品分类管理",
             "stock_manage": "仓库管理",
             "data_model": "数据模型管理",
@@ -310,9 +319,12 @@
         "firstChar": "拼音首字母",
         "factory_code": "基础原厂编码",
         "factoryCodeAll": "原厂编码",
+        "factory_code_all": "原厂编码",
+        "goods_name": "产品",
         "measure": "计量单位",
         "price": "价格",
         "workflow": "工作流",
+        "workflow_file": "工作流逻辑目录",
         "category_id": "分类ID",
         "category": "分类",
         "storeNum": "库存数量",
@@ -320,6 +332,16 @@
         "store_max": "库存上限",
         "listorder": "排序",
         "checkAll_uncheck": "全选/取消",
-        "authRuleNode": "权限节点"
+        "authRuleNode": "权限节点",
+        
+        "prev_node_id": "上一流程节点",
+        "next_node_id": "下一流程节点",
+        "cond": "条件",
+        "execute_type": "执行类型",
+        "status_text" : "状态文本",
+        "executor": "执行者",
+        "default" : "默认",
+        "remind": "提醒",
+        "execute_file": "执行文件"
     }
 }

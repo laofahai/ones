@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2014-03-28 03:11:04
+-- Generation Time: 2014-04-08 14:27:54
 -- 服务器版本： 5.1.73
 -- PHP Version: 5.4.24
 
@@ -349,9 +349,7 @@ INSERT INTO `x_auth_group` (`id`, `title`, `status`) VALUES
 (3, '财务', 1),
 (5, '销售', 1),
 (7, '采购', 1),
-(8, '质检', 1),
-(9, '小微企业版', 1),
-(10, '规模贸易版', 1);
+(8, '质检', 1);
 
 -- --------------------------------------------------------
 
@@ -376,10 +374,6 @@ INSERT INTO `x_auth_group_access` (`uid`, `group_id`) VALUES
 (1, 2),
 (1, 3),
 (1, 5),
-(2, 5),
-(6, 2),
-(8, 3),
-(8, 5),
 (9, 1),
 (9, 5),
 (10, 9),
@@ -396,20 +390,13 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
   `rule_id` int(11) NOT NULL,
   `flag` tinyint(1) NOT NULL DEFAULT '1',
   KEY `group_id` (`group_id`,`rule_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `x_auth_group_rule`
 --
 
 INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
-(9, 31, 0),
-(9, 30, 0),
-(9, 29, 0),
-(9, 65, 0),
-(9, 64, 0),
-(9, 141, 0),
-(9, 27, 0),
 (1, 104, 0),
 (1, 145, 0),
 (1, 100, 0),
@@ -639,213 +626,6 @@ INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
 (7, 99, 0),
 (7, 100, 0),
 (7, 104, 0),
-(9, 32, 0),
-(9, 33, 0),
-(9, 34, 0),
-(9, 35, 0),
-(9, 36, 0),
-(9, 37, 0),
-(9, 38, 0),
-(9, 39, 0),
-(9, 40, 0),
-(9, 41, 0),
-(9, 42, 0),
-(9, 43, 0),
-(9, 44, 0),
-(9, 110, 0),
-(9, 111, 0),
-(9, 112, 0),
-(9, 113, 0),
-(9, 114, 0),
-(9, 143, 0),
-(9, 142, 0),
-(9, 144, 0),
-(9, 136, 0),
-(9, 137, 0),
-(9, 138, 0),
-(9, 139, 0),
-(9, 140, 0),
-(9, 2, 0),
-(9, 45, 0),
-(9, 46, 0),
-(9, 56, 0),
-(9, 57, 0),
-(9, 11, 0),
-(9, 12, 0),
-(9, 13, 0),
-(9, 14, 0),
-(9, 15, 0),
-(9, 16, 0),
-(9, 17, 0),
-(9, 18, 0),
-(9, 19, 0),
-(9, 20, 0),
-(9, 21, 0),
-(9, 22, 0),
-(9, 23, 0),
-(9, 24, 0),
-(9, 25, 0),
-(9, 26, 0),
-(9, 28, 0),
-(9, 47, 0),
-(9, 48, 0),
-(9, 49, 0),
-(9, 50, 0),
-(9, 61, 0),
-(9, 62, 0),
-(9, 63, 0),
-(9, 67, 0),
-(9, 68, 0),
-(9, 69, 0),
-(9, 78, 0),
-(9, 79, 0),
-(9, 80, 0),
-(9, 81, 0),
-(9, 94, 0),
-(9, 3, 0),
-(9, 148, 0),
-(9, 147, 0),
-(9, 51, 0),
-(9, 52, 0),
-(9, 53, 0),
-(9, 54, 0),
-(9, 55, 0),
-(9, 58, 0),
-(9, 59, 0),
-(9, 60, 0),
-(9, 149, 0),
-(9, 70, 0),
-(9, 71, 0),
-(9, 72, 0),
-(9, 73, 0),
-(9, 74, 0),
-(9, 75, 0),
-(9, 76, 0),
-(9, 77, 0),
-(9, 117, 0),
-(9, 95, 0),
-(9, 145, 0),
-(9, 104, 0),
-(9, 146, 0),
-(9, 116, 0),
-(10, 116, 0),
-(10, 146, 0),
-(10, 104, 0),
-(10, 145, 0),
-(10, 100, 0),
-(10, 99, 0),
-(10, 98, 0),
-(10, 97, 0),
-(10, 96, 0),
-(10, 95, 0),
-(10, 117, 0),
-(10, 77, 0),
-(10, 76, 0),
-(10, 75, 0),
-(10, 74, 0),
-(10, 73, 0),
-(10, 72, 0),
-(10, 71, 0),
-(10, 70, 0),
-(10, 149, 0),
-(10, 60, 0),
-(10, 59, 0),
-(10, 58, 0),
-(10, 55, 0),
-(10, 54, 0),
-(10, 53, 0),
-(10, 52, 0),
-(10, 51, 0),
-(10, 147, 0),
-(10, 148, 0),
-(10, 3, 0),
-(10, 94, 0),
-(10, 81, 0),
-(10, 80, 0),
-(10, 79, 0),
-(10, 78, 0),
-(10, 69, 0),
-(10, 68, 0),
-(10, 67, 0),
-(10, 63, 0),
-(10, 62, 0),
-(10, 61, 0),
-(10, 50, 0),
-(10, 49, 0),
-(10, 48, 0),
-(10, 47, 0),
-(10, 28, 0),
-(10, 26, 0),
-(10, 25, 0),
-(10, 24, 0),
-(10, 23, 0),
-(10, 22, 0),
-(10, 21, 0),
-(10, 20, 0),
-(10, 19, 0),
-(10, 18, 0),
-(10, 17, 0),
-(10, 16, 0),
-(10, 15, 0),
-(10, 14, 0),
-(10, 13, 0),
-(10, 12, 0),
-(10, 11, 0),
-(10, 57, 0),
-(10, 56, 0),
-(10, 46, 0),
-(10, 45, 0),
-(10, 2, 0),
-(10, 135, 0),
-(10, 134, 0),
-(10, 133, 0),
-(10, 132, 0),
-(10, 131, 0),
-(10, 130, 0),
-(10, 129, 0),
-(10, 128, 0),
-(10, 127, 0),
-(10, 126, 0),
-(10, 123, 0),
-(10, 122, 0),
-(10, 121, 0),
-(10, 120, 0),
-(10, 119, 0),
-(10, 118, 0),
-(10, 140, 0),
-(10, 139, 0),
-(10, 138, 0),
-(10, 137, 0),
-(10, 136, 0),
-(10, 144, 0),
-(10, 142, 0),
-(10, 143, 0),
-(10, 114, 0),
-(10, 113, 0),
-(10, 112, 0),
-(10, 111, 0),
-(10, 110, 0),
-(10, 44, 0),
-(10, 43, 0),
-(10, 42, 0),
-(10, 41, 0),
-(10, 40, 0),
-(10, 39, 0),
-(10, 38, 0),
-(10, 37, 0),
-(10, 36, 0),
-(10, 35, 0),
-(10, 34, 0),
-(10, 33, 0),
-(10, 32, 0),
-(10, 31, 0),
-(10, 30, 0),
-(10, 29, 0),
-(10, 65, 0),
-(10, 64, 0),
-(10, 151, 0),
-(10, 141, 0),
-(10, 27, 0),
 (1, 27, 0),
 (1, 146, 0),
 (1, 116, 0);
@@ -894,7 +674,7 @@ INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `condition`, `catego
 (24, 'HOME.WorkflowNode.add', '添加工作流节点', 1, '', 'set'),
 (25, 'HOME.WorkflowNode.edit', '修改工作流节点', 1, '', 'set'),
 (26, 'HOME.WorkflowNode.foreverdelete', '删除工作流节点', 1, '', 'set'),
-(27, 'Statistics.Sale.index', '销售统计分析', 1, '', 'Statistics'),
+(27, 'Statistics.Sale.index', '销售统计分析', 1, '', 'statistics'),
 (28, 'HOME.AuthRule.index', '权限设定列表', 1, '', 'set'),
 (29, 'JXC.Goods.index', '产品列表', 1, '', 'basedata'),
 (30, 'JXC.Goods.add', '新增产品', 1, '', 'basedata'),
@@ -990,8 +770,8 @@ INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `condition`, `catego
 (138, 'CRM.RelationshipCompany.edit', '修改往来单位', 1, '', 'crm'),
 (139, 'CRM.RelationshipCompany.viewDetail', '查看往来单位详情', 1, '', 'crm'),
 (140, 'CRM.RelationshipCompany.foreverdelete', '删除往来单位', 1, '', 'crm'),
-(141, 'Statistics.Overview.index', '统计总览', 1, '', 'Statistics'),
-(151, 'Statistics.ProductView.index', '产品进销存表', 1, '', 'Statistics'),
+(141, 'Statistics.Overview.index', '统计总览', 1, '', 'statistics'),
+(151, 'Statistics.ProductView.index', '产品进销存表', 1, '', 'statistics'),
 (152, 'Accounting.AccountingVoucher.index', '记账凭证列表', 1, '', 'accounting'),
 (153, 'Accounting.AccountingVoucher.add', '录凭证', 1, '', 'accounting');
 
@@ -1010,7 +790,7 @@ CREATE TABLE IF NOT EXISTS `x_config` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`value`),
   KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `x_config`
@@ -1019,7 +799,7 @@ CREATE TABLE IF NOT EXISTS `x_config` (
 INSERT INTO `x_config` (`id`, `alias`, `name`, `value`, `description`) VALUES
 (1, 'company_name', '公司名称', '诸城某某服装公司', NULL),
 (2, 'company_address', '公司地址', '山东省诸城市人民东路', NULL),
-(3, 'company_phone', '联系电话', '0536-8888888', NULL);
+(3, 'company_phone', '联系电话', '0536-6086084', NULL);
 
 -- --------------------------------------------------------
 
@@ -1034,14 +814,16 @@ CREATE TABLE IF NOT EXISTS `x_data_model` (
   `listable` smallint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- 转存表中的数据 `x_data_model`
 --
 
 INSERT INTO `x_data_model` (`id`, `name`, `type`, `listable`) VALUES
-(1, '基本产品模型', '产品', 1);
+(1, '基本产品模型', '产品', 1),
+(4, '车间耗材基本模型', '耗材', 1),
+(5, '客户扩展模型', '客户', 1);
 
 -- --------------------------------------------------------
 
@@ -1091,7 +873,7 @@ CREATE TABLE IF NOT EXISTS `x_data_model_fields` (
   KEY `model_id` (`model_id`),
   KEY `type` (`type`),
   KEY `listorder` (`listorder`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `x_data_model_fields`
@@ -1099,7 +881,8 @@ CREATE TABLE IF NOT EXISTS `x_data_model_fields` (
 
 INSERT INTO `x_data_model_fields` (`id`, `model_id`, `display_name`, `field_name`, `type`, `extra_data`, `listorder`) VALUES
 (1, 1, '规格', 'standard', 'select', '', 99),
-(3, 1, '型号', 'version', 'text', '', 99);
+(3, 1, '型号', 'version', 'text', '', 99),
+(4, 0, '颜色', 'color', 'text', '', 99);
 
 -- --------------------------------------------------------
 
@@ -1117,23 +900,20 @@ CREATE TABLE IF NOT EXISTS `x_department` (
   PRIMARY KEY (`id`),
   KEY `lft` (`lft`,`rgt`,`listorder`),
   KEY `parentid` (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- 转存表中的数据 `x_department`
 --
 
 INSERT INTO `x_department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
-(1, 0, '某服装公司', 1, 20, 99),
-(2, 1, '采购部', 2, 3, 99),
-(3, 1, '销售部', 4, 11, 99),
-(4, 1, '后勤部', 12, 13, 99),
-(5, 1, '仓库部', 14, 15, 99),
-(6, 3, '销售一部', 5, 6, 99),
-(7, 3, '销售二部', 7, 8, 99),
-(8, 1, '总经办', 16, 17, 99),
-(9, 1, '财务', 18, 19, 99),
-(10, 3, '网销部', 9, 10, 99);
+(1, 0, '某公司', 1, 14, 99),
+(9, 1, '生产车间', 2, 3, 99),
+(14, 1, '财务部', 4, 5, 99),
+(15, 1, '销售部', 6, 7, 99),
+(16, 1, '采购部', 8, 9, 99),
+(17, 1, '后勤', 10, 11, 99),
+(18, 1, '总经办', 12, 13, 99);
 
 -- --------------------------------------------------------
 
@@ -1297,16 +1077,17 @@ CREATE TABLE IF NOT EXISTS `x_goods` (
   KEY `factory_code` (`factory_code`),
   KEY `store_max` (`store_max`),
   KEY `pinyin` (`pinyin`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
 --
 -- 转存表中的数据 `x_goods`
 --
 
 INSERT INTO `x_goods` (`id`, `goods_category_id`, `name`, `pinyin`, `measure`, `price`, `factory_code`, `store_min`, `store_max`) VALUES
-(1, 12, '长裤A', 'CKA', '件', '200.00', '001', '100.00', '0.00'),
-(2, 7, '某零部件', 'MLBJ', '件', '100.00', '002', '100.00', '0.00'),
-(12, 4, '某成品产品', 'MCPCP', '件', '100.00', '001', '0.00', '0.00');
+(1, 7, '长裤A', 'CKA', '件', '200.00', '001', '100.00', '0.00'),
+(2, 8, '某零部件', 'MLBJ', '件', '100.00', '002', '100.00', '0.00'),
+(12, 2, '地埋式一体化生活污水处理设备', 'DMSYTHSHWSCLSB', '件', '100.00', '001', '0.00', '0.00'),
+(17, 2, 'MBR', 'MBR', '套', '200000.00', '002', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -1328,20 +1109,21 @@ CREATE TABLE IF NOT EXISTS `x_goods_category` (
   KEY `parentid` (`pid`),
   KEY `pinyin` (`pinyin`),
   KEY `bind_model` (`bind_model`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `x_goods_category`
 --
 
 INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lft`, `rgt`, `listorder`) VALUES
-(1, 0, '主节点（不要删除）', 0, NULL, 1, 14, 99),
-(2, 1, '成品系列', 1, 'CPXL', 2, 5, 99),
-(3, 1, '成品零部件', 0, 'CPLBJ', 6, 9, 99),
-(4, 2, '成品A', 1, 'CPA', 3, 4, 98),
-(5, 3, '成品零部件A', 0, 'CPLBJA', 7, 8, 99),
-(6, 1, '零部件系列', 0, 'LBJXL', 10, 13, 99),
-(7, 6, '零部件A', 1, 'LBJA', 11, 12, 99);
+(1, 0, '主节点不要删除', 0, NULL, 1, 16, 99),
+(5, 1, '产品分类', 1, 'CP', 2, 9, 99),
+(6, 1, '固定资产分类', 1, 'GDZCFL', 10, 15, 99),
+(7, 5, '产品原料', 1, 'CPYL', 3, 4, 99),
+(8, 5, '产品零部件', 1, 'CPLBJ', 5, 6, 99),
+(9, 5, '成品产品', 1, 'CPCP', 7, 8, 99),
+(10, 6, '办公用品', 1, 'BGYP', 11, 12, 99),
+(11, 6, '车间耗材', 4, 'CJHC', 13, 14, 99);
 
 -- --------------------------------------------------------
 
@@ -5022,32 +4804,28 @@ INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
 CREATE TABLE IF NOT EXISTS `x_relationship_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `email` varchar(200) DEFAULT NULL,
-  `contact` varchar(20) DEFAULT NULL,
-  `region_id` smallint(6) NOT NULL,
-  `address` varchar(255) DEFAULT NULL,
+  `pinyin` varchar(50) NOT NULL,
+  `discount` smallint(2) NOT NULL DEFAULT '100',
   `user_id` int(11) NOT NULL,
+  `group_id` smallint(5) NOT NULL,
   `dateline` varchar(12) NOT NULL,
-  `is_customer` tinyint(1) NOT NULL DEFAULT '1',
-  `is_supplier` tinyint(1) NOT NULL DEFAULT '1',
   `status` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`user_id`),
   KEY `dateline` (`dateline`,`status`),
-  KEY `region_id` (`region_id`),
-  KEY `is_customer` (`is_customer`)
+  KEY `group_id` (`group_id`),
+  KEY `pinyin` (`pinyin`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- 转存表中的数据 `x_relationship_company`
 --
 
-INSERT INTO `x_relationship_company` (`id`, `name`, `phone`, `email`, `contact`, `region_id`, `address`, `user_id`, `dateline`, `is_customer`, `is_supplier`, `status`) VALUES
-(5, '私有客户测试', '13999', '2304809@qq.com', '老二', 2439, '123123123', 2, '1384948362', 1, 1, 1),
-(15, '王宾田', '1321231582', '32655689@qq.com', '二王', 420, 'wadian', 9, '1386379690', 1, 1, 1),
-(21, '诸城兴芳制衣', '18953602326', 'zcxf007@163.com', '于总', 2439, '诸城市南外环孔戈庄', 10, '1387435824', 1, 1, 1),
-(22, '义昌印染', '15005362150', 'grhzcyc@126.com', '管部长', 2439, '山东省诸城市经济开发区和平北街北段东侧', 10, '1387436049', 1, 1, 1);
+INSERT INTO `x_relationship_company` (`id`, `name`, `pinyin`, `discount`, `user_id`, `group_id`, `dateline`, `status`) VALUES
+(5, '私有客户测试', '', 100, 1, 1, '1384948362', 1),
+(15, '王宾田', '', 100, 1, 1, '1386379690', 1),
+(21, '诸城兴芳制衣', '', 100, 1, 1, '1387435824', 1),
+(22, '义昌印染', '', 100, 1, 1, '1387436049', 1);
 
 -- --------------------------------------------------------
 
@@ -5060,7 +4838,17 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company_group` (
   `name` varchar(30) NOT NULL,
   `discount` smallint(2) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `x_relationship_company_group`
+--
+
+INSERT INTO `x_relationship_company_group` (`id`, `name`, `discount`) VALUES
+(1, '普通客户', 100),
+(2, '普通VIP', 90),
+(3, '普通供应商', 100),
+(4, '外协加工商', 100);
 
 -- --------------------------------------------------------
 
@@ -5072,26 +4860,27 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company_linkman` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `relationship_company_id` int(11) NOT NULL,
   `contact` varchar(20) NOT NULL,
-  `phone1` varchar(50) NOT NULL,
-  `phone2` varchar(50) DEFAULT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `tel` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `qq` varchar(20) DEFAULT NULL,
   `extra` text,
   `dateline` varchar(12) NOT NULL,
+  `is_primary` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `customer_id` (`relationship_company_id`,`dateline`)
+  KEY `customer_id` (`relationship_company_id`,`dateline`),
+  KEY `is_primary` (`is_primary`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- 转存表中的数据 `x_relationship_company_linkman`
 --
 
-INSERT INTO `x_relationship_company_linkman` (`id`, `relationship_company_id`, `contact`, `phone1`, `phone2`, `email`, `qq`, `extra`, `dateline`) VALUES
-(8, 5, '老二', '13999', NULL, '2304809@qq.com', NULL, NULL, '1384948362'),
-(18, 15, '二王', '1321231582', NULL, '32655689@qq.com', NULL, NULL, '1386379690'),
-(21, 0, '123', '123', '123', '123@123.xx', '123', '123', '1387007639'),
-(23, 21, '于总', '18953602326', NULL, 'zcxf007@163.com', NULL, NULL, '1387435824'),
-(24, 22, '管部长', '15005362150', NULL, 'grhzcyc@126.com', NULL, NULL, '1387436049');
+INSERT INTO `x_relationship_company_linkman` (`id`, `relationship_company_id`, `contact`, `mobile`, `tel`, `email`, `qq`, `extra`, `dateline`, `is_primary`) VALUES
+(8, 5, '老二', '13999', NULL, '2304809@qq.com', '3333333', NULL, '1384948362', 0),
+(18, 15, '二王', '1321231582', NULL, '32655689@qq.com', NULL, NULL, '1386379690', 0),
+(23, 21, '于总', '18953602326', NULL, 'zcxf007@163.com', NULL, NULL, '1387435824', 0),
+(24, 22, '管部长', '15005362150', NULL, 'grhzcyc@126.com', NULL, NULL, '1387436049', 0);
 
 -- --------------------------------------------------------
 
@@ -5194,19 +4983,15 @@ CREATE TABLE IF NOT EXISTS `x_stock` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `total_num` (`total_num`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- 转存表中的数据 `x_stock`
 --
 
 INSERT INTO `x_stock` (`id`, `managers`, `name`, `total_num`) VALUES
-(1, '1,2,10', '成品库A', 772),
-(2, '', '次品库', 0),
-(3, '', '退换货库', 0),
-(9, '', '原料库', 0),
-(10, '', '一厂仓库', 0),
-(11, '1,8', '成品库B', 0);
+(1, '1', '成品库A', 772),
+(11, '', '成品库B', 0);
 
 -- --------------------------------------------------------
 
@@ -5216,6 +5001,7 @@ INSERT INTO `x_stock` (`id`, `managers`, `name`, `total_num`) VALUES
 
 CREATE TABLE IF NOT EXISTS `x_stockin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bill_id` varchar(30) NOT NULL,
   `subject` varchar(30) NOT NULL,
   `dateline` varchar(12) NOT NULL,
   `total_num` decimal(8,2) NOT NULL DEFAULT '0.00',
@@ -5226,18 +5012,19 @@ CREATE TABLE IF NOT EXISTS `x_stockin` (
   `stock_manager` int(11) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `bill_id` (`bill_id`),
   KEY `subject` (`subject`,`dateline`,`status`),
   KEY `user_id` (`user_id`),
   KEY `confirm_user_id` (`stock_manager`),
   KEY `source_model` (`source_model`,`source_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `x_stockin`
 --
 
-INSERT INTO `x_stockin` (`id`, `subject`, `dateline`, `total_num`, `status`, `user_id`, `source_model`, `source_id`, `stock_manager`, `memo`) VALUES
-(1, '2014.03.25入库', '1395725741', '58.00', 0, 1, '', 0, 1, NULL);
+INSERT INTO `x_stockin` (`id`, `bill_id`, `subject`, `dateline`, `total_num`, `status`, `user_id`, `source_model`, `source_id`, `stock_manager`, `memo`) VALUES
+(4, 'RK5341252d81223', '下午盘点入库', '1396778240', '150.00', 2, 1, '', 0, 1, '还行吧');
 
 -- --------------------------------------------------------
 
@@ -5252,18 +5039,20 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
   `num` decimal(5,2) NOT NULL,
   `factory_code_all` varchar(40) NOT NULL,
   `stock_id` smallint(5) NOT NULL,
+  `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `stockin_id` (`stockin_id`,`goods_id`),
   KEY `factory_code_all` (`factory_code_all`),
   KEY `stock_id` (`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- 转存表中的数据 `x_stockin_detail`
 --
 
-INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`) VALUES
-(1, 1, 12, '58.00', '001-11-13', 1);
+INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`, `memo`) VALUES
+(9, 4, 1, '50.00', '001-15-11', 11, '不错'),
+(10, 4, 2, '100.00', '002-14-11', 1, '还行');
 
 -- --------------------------------------------------------
 
@@ -5346,14 +5135,17 @@ CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `factory_code_all` (`factory_code_all`,`stock_id`),
   KEY `goods_id` (`goods_id`,`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `x_stock_product_list`
 --
 
 INSERT INTO `x_stock_product_list` (`id`, `factory_code_all`, `goods_id`, `stock_id`, `num`) VALUES
-(1, '001-11-13', 12, 1, '100.00');
+(1, '001-13-11', 1, 1, '101.00'),
+(3, '001-14-11', 1, 11, '50.00'),
+(6, '001-15-11', 1, 11, '50.00'),
+(7, '002-14-11', 2, 1, '100.00');
 
 -- --------------------------------------------------------
 
@@ -5471,7 +5263,7 @@ INSERT INTO `x_types` (`id`, `type`, `alias`, `name`, `listorder`, `status`) VAL
 (12, 'receive', 'sale', '销售收入', 99, 1),
 (13, 'receive', 'other', '其他收入', 99, 1),
 (14, 'pay', 'purchase', '采购支出', 99, 1),
-(15, 'pay', 'other', '其他支出', 99, 1),
+(15, 'pay', 'other', '其他支出', 98, 1),
 (16, 'pay', 'returns', '退货支出', 99, 1),
 (17, 'voucher', '', '记', 99, 1);
 
@@ -5503,13 +5295,10 @@ CREATE TABLE IF NOT EXISTS `x_user` (
 --
 
 INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`) VALUES
-(1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '18653652795', 1, 8),
-(2, '123@lasjdlf.xx', '销售姓名', '销售姓名', '4297f44b13955235245b2497399d7a93', '123123', 1, 1),
-(8, 'cai@wu.com', '财务1', '财务1', '4297f44b13955235245b2497399d7a93', '123123', 1, 9),
-(6, 'kuguan@123.com', '库管姓名', '库管1', '4297f44b13955235245b2497399d7a93', '123123', 1, 5),
-(9, 'xiao@shou.com', '王龙锋', '小王啊', '4297f44b13955235245b2497399d7a93', '138838383838', 1, 10),
-(10, 'test@123.com', '小微企业版', '小微', '4297f44b13955235245b2497399d7a93', '123123', 1, 1),
-(11, 'test@2122.xx', '规模贸易版', '规模', '4297f44b13955235245b2497399d7a93', '123123', 1, 1);
+(1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '18653652795', 1, 3),
+(2, '123@lasjdlf.xx', '销售姓名', '1销售姓名', 'd41d8cd98f00b204e9800998ecf8427e', '123123', 1, 15),
+(8, 'cai@wu.com', '财务1', '财务1', '4297f44b13955235245b2497399d7a93', '123123', 1, 14),
+(6, 'kuguan@123.com', '库管姓名', '库管12', 'd41d8cd98f00b204e9800998ecf8427e', '133333333', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -5584,7 +5373,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow_node` (
   `prev_node_id` varchar(50) NOT NULL,
   `next_node_id` varchar(50) NOT NULL,
   `executor` varchar(255) NOT NULL,
-  `condition` text COMMENT '可执行上下文条件',
+  `cond` text COMMENT '可执行上下文条件',
   `default` smallint(1) NOT NULL DEFAULT '0' COMMENT '若有分支，默认执行',
   `execute_type` smallint(1) NOT NULL COMMENT '0一人执行,1所有人执行',
   `remind` int(11) NOT NULL COMMENT '是否提醒',
@@ -5603,7 +5392,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow_node` (
 -- 转存表中的数据 `x_workflow_node`
 --
 
-INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_file`, `listorder`, `prev_node_id`, `next_node_id`, `executor`, `condition`, `default`, `execute_type`, `remind`, `max_time`, `status_text`, `memo`, `btn_class`, `status_class`) VALUES
+INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_file`, `listorder`, `prev_node_id`, `next_node_id`, `executor`, `cond`, `default`, `execute_type`, `remind`, `max_time`, `status_text`, `memo`, `btn_class`, `status_class`) VALUES
 (1, 1, '申请财务审核', 2, 'RequireFinanceVerify', 2, '4', '2', 'g:1,5,9,10|d:3,6,7|u:1', NULL, 0, 0, 0, 100, '已提交财务审核', '', 'primary', 'info'),
 (2, 1, '财务审核通过', 2, 'FinanceVerifySuccess', 3, '1', '6', 'g:1,3,9,10|d:8|u:9', NULL, 1, 0, 0, 100, '财务审核通过，待生成出库单', '', 'success', 'success'),
 (3, 1, '财务审核不通过', 7, 'FinanceVerifyFailed', 3, '1', '1', 'g:1,3,9,10', NULL, 0, 0, 1, 300, '财务审核未通过', '', 'danger', ''),
@@ -5615,7 +5404,7 @@ INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_fil
 (10, 1, '完成订单', 3, 'Complete', 8, '9', '0', '', NULL, 0, 0, 0, 0, '订单已完成', NULL, 'success', 'success'),
 (11, 2, '新建入库单', 1, 'StartProcess', 0, '0', '14', 'g:1,2,9,10', NULL, 0, 0, 0, 0, '新入库单', NULL, 'success', 'normal'),
 (12, 2, '提交库管确认', 1, 'SubmitStockin', 2, '14', '13', 'g:1,2,9,10', NULL, 0, 0, 0, 0, '已提交库管确认', NULL, 'primary', 'info'),
-(13, 2, '确认入库', 1, 'ConfirmStockin', 3, '12', '0', 'g:1,2,9,10', 'method=checkStockManger', 0, 0, 0, 0, '已入库', NULL, 'success', 'success'),
+(13, 2, '确认入库', 1, 'ConfirmStockin', 3, '12', '0', 'g:1,2,9,10', 'method=checkStockManger', 0, 0, 0, 0, '已入库', '123', 'success', 'success'),
 (14, 2, '保存入库单', 1, 'SaveStockin', 1, '11', '12', 'g:1,2,9,10', NULL, 0, 0, 0, 0, '已保存待提交库管确认', NULL, 'success', 'info'),
 (15, 3, '新建退货单', 1, 'StartProcess', 0, '0', '16', 'g:1,5,9,10', NULL, 0, 0, 0, 0, '新退货单', NULL, 'success', ''),
 (16, 3, '保存退货单', 1, 'SaveReturnsPaper', 1, '15', '17', 'g:1,5,9,10', NULL, 0, 0, 0, 0, '退货单已保存', NULL, 'primary', 'info'),
@@ -5669,176 +5458,21 @@ CREATE TABLE IF NOT EXISTS `x_workflow_process` (
   PRIMARY KEY (`id`),
   KEY `workflow_id` (`workflow_id`,`node_id`,`start_time`,`end_time`,`status`,`user_id`),
   KEY `mainrow_id` (`mainrow_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=164 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- 转存表中的数据 `x_workflow_process`
 --
 
 INSERT INTO `x_workflow_process` (`id`, `workflow_id`, `node_id`, `mainrow_id`, `context`, `start_time`, `end_time`, `status`, `user_id`, `memo`) VALUES
-(1, 1, 5, 1, 'a:0:{}', '1386721749', '1386721755', 1, 1, ''),
-(2, 1, 4, 1, 'a:0:{}', '1386721755', '1386721755', 1, 1, ''),
-(3, 7, 40, 1, 'a:0:{}', '1386721755', '1386721779', 1, 1, ''),
-(4, 1, 1, 1, 'a:0:{}', '1386721755', '1386721755', 1, 1, ''),
-(5, 1, 2, 1, 'a:0:{}', '1386721755', '1386721847', 1, 1, ''),
-(6, 7, 41, 1, 'a:0:{}', '1386721779', '', 0, 1, ''),
-(7, 4, 21, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721847', '1386721889', 1, 1, ''),
-(8, 1, 6, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721847', '1386721889', 1, 1, ''),
-(9, 1, 7, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721889', '1386721912', 1, 1, ''),
-(10, 4, 22, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721889', '1386721908', 1, 1, ''),
-(11, 4, 24, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721908', '1386721912', 1, 1, ''),
-(12, 4, 25, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721912', '1386721912', 1, 1, ''),
-(13, 1, 10, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721912', '', 0, 1, ''),
-(14, 4, 27, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1386721912', '', 0, 1, ''),
-(15, 1, 5, 2, 'a:0:{}', '1386814093', '', 0, 1, ''),
-(16, 1, 5, 4, 'a:0:{}', '1386814132', '', 0, 1, ''),
-(17, 1, 5, 9, 'a:0:{}', '1386814340', '1386814497', 1, 1, ''),
-(18, 1, 4, 9, 'a:0:{}', '1386814497', '1386814497', 1, 1, ''),
-(19, 7, 40, 2, 'a:0:{}', '1386814497', '1386815053', 1, 1, ''),
-(20, 1, 1, 9, 'a:0:{}', '1386814497', '1386814497', 1, 1, ''),
-(21, 1, 2, 9, 'a:0:{}', '1386814497', '1386814501', 1, 1, ''),
-(22, 4, 21, 2, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:9;s:18:"sourceMainrowField";s:8:"order_id";}', '1386814501', '1386814522', 1, 1, ''),
-(23, 1, 6, 9, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:9;s:18:"sourceMainrowField";s:8:"order_id";}', '1386814501', '1386814522', 1, 1, ''),
-(24, 1, 7, 9, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:9;s:18:"sourceMainrowField";s:8:"order_id";}', '1386814522', '1386814525', 1, 1, ''),
-(25, 4, 22, 2, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:9;s:18:"sourceMainrowField";s:8:"order_id";}', '1386814522', '1386814525', 1, 1, ''),
-(26, 1, 10, 9, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:9;s:18:"sourceMainrowField";s:8:"order_id";}', '1386814525', '', 0, 1, ''),
-(27, 4, 27, 2, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:9;s:18:"sourceMainrowField";s:8:"order_id";}', '1386814525', '', 0, 1, ''),
-(28, 5, 29, 1, 'a:0:{}', '1386814551', '1386814593', 1, 1, ''),
-(29, 5, 30, 1, 'a:0:{}', '1386814593', '1386814595', 1, 1, ''),
-(30, 2, 11, 2, 'N;', '1386814595', '1386814595', 1, 1, ''),
-(31, 2, 14, 2, 'N;', '1386814595', '1386814595', 1, 1, ''),
-(32, 2, 14, 2, 'N;', '1386814595', '1386814613', 1, 1, ''),
-(33, 6, 33, 1, 'a:0:{}', '1386814595', '1386814951', 1, 1, ''),
-(34, 5, 31, 1, 'a:0:{}', '1386814595', '1386814614', 1, 1, ''),
-(35, 2, 12, 2, 'a:0:{}', '1386814613', '1386814614', 1, 1, ''),
-(36, 5, 32, 1, 'N;', '1386814614', '', 0, 1, ''),
-(37, 2, 13, 2, 'a:0:{}', '1386814614', '', 0, 1, ''),
-(38, 6, 37, 1, 'a:0:{}', '1386814951', '1386815023', 1, 1, ''),
-(39, 6, 34, 1, 'a:0:{}', '1386815023', '1386815036', 1, 1, '没有备注'),
-(40, 6, 36, 1, 'a:0:{}', '1386815036', '1386815041', 1, 1, ''),
-(41, 6, 39, 1, 'a:0:{}', '1386815041', '', 0, 1, ''),
-(42, 7, 41, 2, 'a:0:{}', '1386815053', '', 0, 1, ''),
-(43, 6, 33, 2, 'a:0:{}', '1386815061', '1386815079', 1, 1, ''),
-(44, 6, 37, 2, 'a:0:{}', '1386815079', '1386815082', 1, 1, ''),
-(45, 6, 34, 2, 'a:0:{}', '1386815082', '1386815084', 1, 1, 'NO_MEMO12'),
-(46, 6, 36, 2, 'a:0:{}', '1386815084', '1386815088', 1, 1, ''),
-(47, 6, 39, 2, 'a:0:{}', '1386815088', '', 0, 1, ''),
-(48, 5, 29, 2, 'a:0:{}', '1386990498', '1386990504', 1, 1, ''),
-(49, 5, 30, 2, 'a:0:{}', '1386990504', '1386990524', 1, 1, ''),
-(50, 2, 11, 3, 'N;', '1386990524', '1386990524', 1, 1, ''),
-(51, 2, 14, 3, 'N;', '1386990524', '1386990524', 1, 1, ''),
-(52, 2, 14, 3, 'N;', '1386990524', '1387434810', 1, 1, ''),
-(53, 5, 31, 2, 'a:0:{}', '1386990524', '1387434815', 1, 1, ''),
-(54, 8, 42, 2, 'a:0:{}', '1387069993', '1387546145', 1, 1, ''),
-(55, 1, 5, 10, 'a:0:{}', '1387433043', '1387433052', 1, 1, ''),
-(56, 1, 4, 10, 'a:0:{}', '1387433052', '1387433052', 1, 1, ''),
-(57, 7, 40, 3, 'a:0:{}', '1387433052', '', 0, 1, ''),
-(58, 1, 1, 10, 'a:0:{}', '1387433052', '1387433052', 1, 1, ''),
-(59, 1, 2, 10, 'a:0:{}', '1387433052', '1387433217', 1, 1, ''),
-(60, 1, 5, 11, 'a:0:{}', '1387433168', '1387433208', 1, 10, ''),
-(61, 1, 4, 11, 'a:0:{}', '1387433208', '1387433208', 1, 10, ''),
-(62, 7, 40, 4, 'a:0:{}', '1387433208', '', 0, 10, ''),
-(63, 1, 1, 11, 'a:0:{}', '1387433208', '1387433208', 1, 10, ''),
-(64, 1, 2, 11, 'a:0:{}', '1387433208', '', 0, 10, ''),
-(65, 4, 21, 3, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:10;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433217', '1387433807', 1, 1, ''),
-(66, 1, 6, 10, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:10;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433217', '1387433807', 1, 1, ''),
-(67, 1, 5, 12, 'a:0:{}', '1387433321', '1387433341', 1, 10, ''),
-(68, 1, 4, 12, 'a:0:{}', '1387433341', '1387433341', 1, 10, ''),
-(69, 7, 40, 5, 'a:0:{}', '1387433341', '', 0, 10, ''),
-(70, 1, 1, 12, 'a:0:{}', '1387433341', '1387433341', 1, 10, ''),
-(71, 1, 2, 12, 'a:0:{}', '1387433341', '1387433491', 1, 10, ''),
-(72, 4, 21, 4, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433491', '1387433550', 1, 10, ''),
-(73, 1, 6, 12, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433491', '1387433550', 1, 10, ''),
-(74, 1, 7, 12, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433550', '1387433868', 1, 10, ''),
-(75, 4, 22, 4, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433550', '1387433714', 1, 10, ''),
-(76, 4, 24, 4, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433714', '1387433868', 1, 10, ''),
-(77, 1, 28, 10, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:10;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433807', '', 0, 10, '木有货'),
-(78, 4, 23, 3, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:10;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433807', '', 0, 10, '木有货'),
-(79, 4, 25, 4, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433868', '1387433868', 1, 1, ''),
-(80, 1, 10, 12, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433868', '', 0, 1, ''),
-(81, 4, 27, 4, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:12;s:18:"sourceMainrowField";s:8:"order_id";}', '1387433868', '', 0, 1, ''),
-(82, 2, 11, 4, 'a:0:{}', '1387434722', '1387434772', 1, 10, ''),
-(83, 2, 14, 4, 'a:0:{}', '1387434772', '1387434809', 1, 10, ''),
-(84, 2, 12, 4, 'a:0:{}', '1387434809', '1387434813', 1, 10, ''),
-(85, 2, 12, 3, 'a:0:{}', '1387434810', '1387434815', 1, 10, ''),
-(86, 2, 13, 4, 'a:0:{}', '1387434813', '', 0, 10, ''),
-(87, 6, 33, 3, 'a:0:{}', '1387434815', '', 0, 10, ''),
-(88, 5, 32, 2, 'N;', '1387434815', '', 0, 10, ''),
-(89, 2, 13, 3, 'a:0:{}', '1387434815', '', 0, 10, ''),
-(90, 2, 11, 6, 'a:0:{}', '1387509253', '1387509447', 1, 1, ''),
-(91, 2, 14, 6, 'a:0:{}', '1387509447', '1387509452', 1, 1, ''),
-(92, 2, 12, 6, 'a:0:{}', '1387509452', '', 0, 1, ''),
-(93, 8, 43, 2, 'a:0:{}', '1387546145', '1388281380', 1, 1, ''),
-(94, 1, 5, 13, 'a:0:{}', '1387692946', '1387700466', 1, 1, ''),
-(95, 1, 4, 13, 'a:0:{}', '1387700466', '1387700466', 1, 1, ''),
-(96, 7, 40, 6, 'a:0:{}', '1387700466', '', 0, 1, ''),
-(97, 1, 1, 13, 'a:0:{}', '1387700466', '1387700466', 1, 1, ''),
-(98, 1, 2, 13, 'a:0:{}', '1387700466', '1387700799', 1, 1, ''),
-(99, 4, 21, 5, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:13;s:18:"sourceMainrowField";s:8:"order_id";}', '1387700799', '1388110062', 1, 1, ''),
-(100, 1, 6, 13, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:13;s:18:"sourceMainrowField";s:8:"order_id";}', '1387700799', '1388110062', 1, 1, ''),
-(101, 2, 11, 7, 'a:0:{}', '1387713354', '1387765316', 1, 1, ''),
-(102, 2, 14, 7, 'a:0:{}', '1387765316', '1387765322', 1, 1, ''),
-(103, 2, 12, 7, 'a:0:{}', '1387765322', '1387765665', 1, 1, ''),
-(104, 2, 13, 7, 'a:0:{}', '1387765665', '', 0, 1, ''),
-(105, 2, 11, 8, 'a:0:{}', '1387765675', '1387765696', 1, 1, ''),
-(106, 2, 14, 8, 'a:0:{}', '1387765696', '1387765702', 1, 1, ''),
-(107, 2, 12, 8, 'a:0:{}', '1387765702', '1387765707', 1, 1, ''),
-(108, 2, 13, 8, 'a:0:{}', '1387765707', '', 0, 1, ''),
-(109, 5, 29, 3, 'a:0:{}', '1388027215', '1388027413', 1, 1, ''),
-(110, 5, 30, 3, 'a:0:{}', '1388027413', '1388027415', 1, 1, ''),
-(111, 2, 11, 9, 'N;', '1388027415', '1388027415', 1, 1, ''),
-(112, 2, 14, 9, 'N;', '1388027415', '1388027415', 1, 1, ''),
-(113, 2, 14, 9, 'N;', '1388027415', '1388027434', 1, 1, ''),
-(114, 5, 31, 3, 'a:0:{}', '1388027415', '1388027435', 1, 1, ''),
-(115, 2, 12, 9, 'a:0:{}', '1388027434', '1388027435', 1, 1, ''),
-(116, 6, 33, 4, 'a:0:{}', '1388027435', '1388027632', 1, 1, ''),
-(117, 5, 32, 3, 'N;', '1388027435', '', 0, 1, ''),
-(118, 2, 13, 9, 'a:0:{}', '1388027435', '', 0, 1, ''),
-(119, 6, 37, 4, 'a:0:{}', '1388027632', '1388027635', 1, 1, ''),
-(120, 6, 34, 4, 'a:0:{}', '1388027635', '1388027642', 1, 1, 'NO_MEMO'),
-(121, 6, 36, 4, 'a:0:{}', '1388027642', '1388027646', 1, 1, ''),
-(122, 6, 39, 4, 'a:0:{}', '1388027646', '', 0, 1, ''),
-(123, 1, 7, 13, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:13;s:18:"sourceMainrowField";s:8:"order_id";}', '1388110062', '1388110065', 1, 1, ''),
-(124, 4, 22, 5, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:13;s:18:"sourceMainrowField";s:8:"order_id";}', '1388110062', '1388110065', 1, 1, ''),
-(125, 1, 10, 13, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:13;s:18:"sourceMainrowField";s:8:"order_id";}', '1388110065', '', 0, 1, ''),
-(126, 4, 27, 5, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:13;s:18:"sourceMainrowField";s:8:"order_id";}', '1388110065', '', 0, 1, ''),
-(127, 6, 33, 8, 'a:0:{}', '1388110771', '1388288533', 1, 1, ''),
-(128, 4, 21, 0, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:2;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388281380', '', 0, 1, ''),
-(129, 8, 44, 2, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:2;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388281380', '', 0, 1, ''),
-(130, 8, 42, 3, 'a:0:{}', '1388281413', '1388281457', 1, 1, ''),
-(131, 8, 43, 3, 'a:0:{}', '1388281457', '1388281663', 1, 1, ''),
-(132, 4, 21, 7, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388281663', '1388282002', 1, 1, ''),
-(133, 8, 44, 3, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388281663', '1388282002', 1, 1, ''),
-(134, 8, 45, 3, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388282002', '1388282002', 1, 1, ''),
-(135, 8, 46, 3, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388282002', '1388282008', 1, 1, ''),
-(136, 4, 22, 7, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388282002', '1388282008', 1, 1, ''),
-(137, 8, 46, 3, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388282008', '1388368601', 1, 1, ''),
-(138, 4, 27, 7, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388282008', '', 0, 1, ''),
-(139, 6, 37, 8, 'a:0:{}', '1388288533', '', 0, 1, ''),
-(140, 8, 47, 3, 'a:4:{s:11:"sourceModel";s:13:"StockTransfer";s:14:"sourceWorkflow";s:13:"stocktransfer";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:17:"stock_transfer_id";}', '1388368601', '', 0, 1, ''),
-(141, 1, 5, 14, 'a:0:{}', '1395334194', '1395334204', 1, 1, ''),
-(142, 1, 4, 14, 'a:0:{}', '1395334204', '1395334238', 1, 1, ''),
-(143, 1, 1, 14, 'a:0:{}', '1395334238', '1395334238', 1, 1, ''),
-(144, 1, 2, 14, 'a:0:{}', '1395334238', '1395334245', 1, 1, ''),
-(145, 4, 21, 8, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:14;s:18:"sourceMainrowField";s:8:"order_id";}', '1395334245', '1395334278', 1, 1, ''),
-(146, 1, 6, 14, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:14;s:18:"sourceMainrowField";s:8:"order_id";}', '1395334245', '1395334278', 1, 1, ''),
-(147, 1, 7, 14, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:14;s:18:"sourceMainrowField";s:8:"order_id";}', '1395334278', '', 0, 1, ''),
-(148, 4, 22, 8, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:14;s:18:"sourceMainrowField";s:8:"order_id";}', '1395334278', '', 0, 1, ''),
-(149, 2, 11, 10, 'a:0:{}', '1395334631', '1395334639', 1, 1, ''),
-(150, 2, 14, 10, 'a:0:{}', '1395334639', '1395334641', 1, 1, ''),
-(151, 2, 12, 10, 'a:0:{}', '1395334641', '1395334643', 1, 1, ''),
-(152, 2, 13, 10, 'a:0:{}', '1395334643', '', 0, 1, ''),
-(153, 5, 29, 4, 'a:0:{}', '1395334671', '1395334683', 1, 1, ''),
-(154, 5, 30, 4, 'a:0:{}', '1395334683', '', 0, 1, ''),
-(155, 5, 29, 5, 'a:0:{}', '1395334701', '1395334720', 1, 1, ''),
-(156, 5, 30, 5, 'a:0:{}', '1395334720', '1395334730', 1, 1, ''),
-(157, 2, 11, 11, 'N;', '1395334730', '', 0, 1, ''),
-(158, 5, 31, 5, 'a:0:{}', '1395334730', '', 0, 1, ''),
-(159, 2, 11, 12, 'a:0:{}', '1395385354', '1395385365', 1, 1, ''),
-(160, 2, 14, 12, 'a:0:{}', '1395385365', '1395385372', 1, 1, ''),
-(161, 2, 12, 12, 'a:0:{}', '1395385372', '1395385379', 1, 1, ''),
-(162, 2, 13, 12, 'a:0:{}', '1395385379', '', 0, 1, ''),
-(163, 1, 5, 15, 'a:0:{}', '1395385517', '', 0, 1, '');
+(8, 2, 13, 0, 'a:0:{}', '1396709073', '', 0, 1, ''),
+(5, 2, 11, 0, 'a:0:{}', '1396708821', '1396708886', 1, 1, ''),
+(6, 2, 14, 0, 'a:0:{}', '1396708886', '1396708945', 1, 1, ''),
+(7, 2, 12, 0, 'a:0:{}', '1396708945', '1396709073', 1, 1, ''),
+(20, 2, 13, 4, 'a:0:{}', '1396778353', '', 0, 1, ''),
+(19, 2, 12, 4, 'a:0:{}', '1396778315', '1396778353', 1, 1, ''),
+(18, 2, 14, 4, 'a:0:{}', '1396778306', '1396778315', 1, 1, ''),
+(17, 2, 11, 4, 'a:0:{}', '1396778285', '1396778306', 1, 1, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

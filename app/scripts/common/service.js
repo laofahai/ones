@@ -51,6 +51,9 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': {method: 'PUT'}});
         }])
+    .factory("GoodsTplRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/goodsTpl/:id.json", null, {'update': {method: 'PUT'}});
+        }])
     .factory("StockRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stock/:id.json", null, {'update': {method: 'PUT'}});
         }])
@@ -59,6 +62,9 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
         }])
     .factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
+        }])
+    .factory("OutsideRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/outside/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
     .factory("StockProductsRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockProductList/:id.json");

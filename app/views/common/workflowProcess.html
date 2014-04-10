@@ -6,7 +6,8 @@
                 <h4 class="aside-title ng-binding" ng-bind="i18n.lang.actions.viewWorkflowProcess"></h4>
             </div>
             <div class="aside-body ng-binding">
-                <h5 class="bolder">{{title.title}} <small>{{title.subTitle}}</small></h5>
+                <h6 class="bolder">{{title.bill_id}}</h5>
+                <h5 class="bolder">{{title.title}} <em><small>{{title.subTitle}}</small></em></h5>
                 <dl class="workflowProcessList tree tree-unselectable">
                     <dd class="tree-item" ng-repeat="item in content">
                         <div class="tree-item-name">

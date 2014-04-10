@@ -29,13 +29,16 @@ class GoodsAction extends CommonAction {
     }
     
     public function index() {
-        $model = D("Goods");
-        $data = $model->select();
+        $model = D("GoodsCatView");
+        $map = array();
+        $this->_filter($map);
+        $data = $model->where($map)->limit(10)->select();
         foreach($data as $k=>$v) {
             $data[$k]["combineId"] = sprintf("%s_%d_%d", $v["factory_code"], $v["id"], $v["goods_category_id"]);
-            $data[$k]["combineLabel"] = sprintf("%s_%s", $v["name"], $v["pinyin"]);
+            $data[$k]["combineLabel"] = sprintf("%s<span>%s_#%s</span>", $v["name"], $v["pinyin"], $v["factory_code"]);
         }
         
+//        echo count($data);exit;
         $this->response($data);
     }
     

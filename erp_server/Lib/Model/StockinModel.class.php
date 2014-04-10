@@ -33,11 +33,13 @@ class StockinModel extends CommonModel {
         $itemsModel = D("StockinDetail");
         foreach($billItems as $billItem) {
             $billItem["stockin_id"] = $billId;
-//            print_r($billItem);exit;
+//            print_r($billItem);
             $id = $itemsModel->add($billItem);
-            
             if(!$id) {
+//                echo $itemsModel->getLastSql();
+//                var_dump($id);
                 $this->rollback();
+                return false;
                 break;
             }
         }

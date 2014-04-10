@@ -6,6 +6,17 @@
         <title>Idea Tech ERP System</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <!-- build:css({.tmp,app}) styles/vendor.css -->
+        <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
+        <link rel="stylesheet" href="bower_components/select2/select2.css" />
+        <link rel="stylesheet" href="bower_components/select2/select2-bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+        <link rel="stylesheet" href="bower_components/angular-ui-select/dist/selectize.css" />
+        <link rel="stylesheet" href="styles/ace/css/chosen.css" />
+        <link rel="stylesheet" href="styles/bootstrap-additions.css" />
+        <link rel="stylesheet" href="styles/angular-motion.css" />
+        <!-- endbuild -->
         <!-- bower:css -->
         <!-- build:css({.tmp,app}) styles/ace.css -->
         <link rel="stylesheet" href="styles/ace/css/bootstrap.min.css" />
@@ -16,12 +27,7 @@
         <link rel="stylesheet" href="styles/ace/css/ace-skins.min.css" />
         <!-- endbuild -->
         <!-- endbower -->
-        <!-- build:css({.tmp,app}) styles/vendor.css -->
-        <link rel="stylesheet" href="bower_components/angular-grid/ng-grid.min.css" />
-        <link rel="stylesheet" href="styles/ace/css/chosen.css" />
-        <link rel="stylesheet" href="styles/bootstrap-additions.css" />
-        <link rel="stylesheet" href="styles/angular-motion.css" />
-        <!-- endbuild -->
+        
         <!-- build:css({.tmp,app}) styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
@@ -288,8 +294,11 @@
         <script src="bower_components/angular-animate/angular-animate.js"></script>
         <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
         <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+        <script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>
         <script src="bower_components/chosen/chosen.jquery.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
+        <script src="bower_components/select2/select2.js"></script>
+        <script src="bower_components/angular-ui-select/dist/select.js"></script>
         <!-- endbuild -->
         <!-- build:js({.tmp,app}) scripts/ace.js -->
         <script src="vendor/ace/uncompressed/ace.js"></script>
@@ -297,13 +306,15 @@
         <script src="vendor/ace/uncompressed/ace-elements.js"></script>
         <script src="vendor/ace/typeahead-bs2.min.js"></script>
         <!-- endbuild -->
+        
+        <!-- build:js({.tmp,app}) scripts/config.js -->
+        <script src="scripts/config.js"></script>
+        <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/app.js -->
         <script src="scripts/lib/function.js"></script>
-        
         <script src="scripts/lib/formMaker.js"></script>
         
-        <script src="scripts/config.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/common/commonView.js"></script>
         

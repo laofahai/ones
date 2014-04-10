@@ -164,7 +164,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                     returnPage: "/HOME/Workflow/viewSub/id/"+$routeParams.pid,
                     id: $routeParams.id
                 };
-                ComView.displayForm($scope, WorkflowNodeModel, WorkflowNodeRes, opts);
+                ComView.displayForm($scope, WorkflowNodeModel, WorkflowNodeRes, opts, true);
             }])
         .controller("WorkflowCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", 
             function($scope, WorkflowRes, WorkflowModel, ComView){
@@ -345,7 +345,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
                 ComView.displayGrid($scope, DataModelDataModel, DataModelDataRes, {
                     module: "/HOME/DataModelData",
                     subModule: $routeParams.modelId,
-                    extraParams: {modelId:$routeParams.modelId}
+                    queryExtraParams: {modelId:$routeParams.modelId}
                 });
             }])
         .controller("DataModelDataEditCtl", ["$scope", "DataModelDataModel", "DataModelDataRes","DataModelFieldsRes", "ComView", "$routeParams",

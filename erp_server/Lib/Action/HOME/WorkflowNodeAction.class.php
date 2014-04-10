@@ -23,6 +23,13 @@ class WorkflowNodeAction extends CommonAction {
         "7" => "条件判断"
     );
     
+    protected function pretreatment() {
+        if(IS_POST and $_POST["pid"]) {
+            $_POST["workflow_id"] = $_POST["pid"];
+            unset($_POST["pid"]);
+        }
+    }
+    
     protected function _filter(&$map) {
         if($_GET["workflow_id"]) {
             $map["workflow_id"] = abs(intval($_GET["workflow_id"]));

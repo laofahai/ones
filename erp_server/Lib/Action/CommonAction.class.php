@@ -91,7 +91,7 @@ class CommonAction extends RestAction {
      * 
      * 通用REST列表返回 
      **/
-    public function index() {
+    public function index($return=false) {
         if(method_exists($this, "_before_index")){
             $this->_before_index();
         }
@@ -111,8 +111,11 @@ class CommonAction extends RestAction {
         $this->_order($order);
         
         $list = $model->where($map)->order($order)->select();
-//        echo $model->getLastSql();exit;
-//        print_r($list);
+        
+        if($return) {
+            return $list;
+        }
+
         $this->response($list);
     }
     

@@ -18,22 +18,23 @@ class LoginAction extends CommonAction {
     }
     
     private function doLogin() {
+        
         if(IS_POST) {
             $user = D("UserRelation");
-            $theUser = $user->relation(true)->getByUsername($_POST["username"]);
+            $theUser = $user->relation(true)->getByUsername($_REQUEST["username"]);
             if($theUser["status"] < 1) {
                 $this->response(array(
                     "error" => 1,
                     "msg"   => L("user_not_exists")
-                ));
+                ));return;
                 //@todo 禁用用户
             }
             
-            if(!$theUser or $theUser["password"] !== getPwd($_POST["password"])) {
+            if(!$theUser or $theUser["password"] !== getPwd($_REQUEST["password"])) {
                 $this->response(array(
                     "error" => 1,
                     "msg"   => L("password_not_verified")
-                ));
+                ));return;
             }
             
             foreach($theUser["groups"] as $g) {

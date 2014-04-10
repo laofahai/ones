@@ -270,6 +270,7 @@ class Workflow {
         import("@.Workflow.WorkflowAbstract");
         $rs = import($file);
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
+//        echo $className;exit;
         if(!$className or !class_exists($className)) {
             throw_exception(sprintf(L("class_not_found")." %s", $className));
             return false;
