@@ -12,5 +12,11 @@
  * @author nemo
  */
 class TypesAction extends CommonAction {
-    //put your code here
+    
+    protected function _filter(&$map) {
+        if($_GET["type"]) {
+            $map["type"] = $_GET["type"];
+        }
+    }
+    
 }

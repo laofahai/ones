@@ -315,6 +315,113 @@ angular.module("erp.jxc.services", [])
 
                 return obj;
             }])
+        .service("OrdersModel", ["$rootScope", function($rootScope){
+            var obj = {};
+            obj.getFieldsStruct= function() {
+                var i18n = $rootScope.i18n.lang;
+                return {
+                    bill_id: {
+                        displayName: i18n.billId
+                    },
+                    sale_type_label: {
+                        displayName: i18n.type,
+                        hideInForm:true
+                    },
+                    sale_type: {
+                        displayName: i18n.type,
+                        listable: false
+                    },
+                    customer: {
+                        hideInForm: true
+                    },
+                    customer_id: {
+                        listable: false
+                    },
+                    total_num: {
+                        displayName: i18n.totalNum
+                    },
+                    total_price_real: {},
+                    dateline: {
+                        cellFilter: "dateFormat"
+                    },
+                    status_text: {
+                        displayName: i18n.status,
+                        field: "processes.status_text"
+                    },
+                    sponsor: {}
+                };
+            };
+            
+            return obj;
+        }])
+        .service("OrdersEditModel", ["$rootScope", "GoodsRes", "StockRes", "DataModelDataRes", 
+            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+                var obj = {};
+                obj.getFieldsStruct = function() {
+                    var i18n = $rootScope.i18n.lang;
+                    var fields = {
+                        id : {
+                            primary: true,
+                            billAble: false
+                        },
+                        goods_id: {
+                            displayName: i18n.goods,
+                            inputType: "select2",
+                            dataSource: GoodsRes,
+                            valueField: "combineId",
+                            nameField: "combineLabel",
+                            listAble: false,
+                            width: 300
+                        },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            inputType: "select",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            inputType: "select2",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
+                        },
+                        num: {
+                            inputType: "number",
+                            totalAble: true,
+                            "ui-event": "{blur: 'afterNumBlur($event)'}",
+                        },
+                        discount: {
+                            inputType: "number"
+                        },
+                        unit_price: {
+                            inputType: "number",
+                            "ui-event": "{blur: 'afterUnitPriceBlur($event)'}"
+                        },
+                        amount: {
+                            inputType: "number",
+                            totalAble: true
+                        },
+                        memo: {}
+
+                    };
+
+
+                    return fields;
+                };
+
+
+                return obj;
+            }])
         .service("StockWarningModel", ["$rootScope", function($rootScope){
             return {
                 getFieldsStruct: function(){

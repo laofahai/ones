@@ -135,6 +135,14 @@
                         "add"  : "新增拆装单",
                         "edit" : "修改拆装单"
                     }
+                },
+                "Orders": {
+                    "name": "销售订单",
+                    "actions": {
+                        "index": "订单列表",
+                        "add"  : "订单录入",
+                        "edit" : "订单修改"
+                    }
                 }
             }
         },
@@ -289,6 +297,7 @@
         "group": "组",
         "value": "值",
         "description": "描述",
+        "amount": "价格",
         "field": "字段",
         "stock": "仓库",
         "status": "状态",
@@ -303,14 +312,18 @@
         "sponsor": "制单人",
         "version": "型号",
         "subject": "主题",
+        "customer": "客户",
+        "total_price_real": "实收金额",
         "dateline": "时间",
         "standard": "规格",
-        "discount": "折扣",
+        "discount": "折扣率",
+        "discountAmount": "折扣额",
         "measure": "计量单位",
         "username": "用户名",
         "usergroup": "用户组",
         "truename": "姓名",
         "password": "密码",
+        "unit_price": "单价",
         "department": "部门",
         "stockManager": "库管员",
         "stockWarningOnly": "仅库存警告数据",

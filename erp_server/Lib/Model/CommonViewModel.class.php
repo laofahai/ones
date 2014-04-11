@@ -46,14 +46,14 @@ class CommonViewModel extends ViewModel{
             if($v["dateline"]) {
                 $data[$k]["dateline_lang"] = date("Y-m-d H:i:s", $v["dateline"]);
             }
-            if(isset($v["status"])) {
-                if(isset($this->status_lang)) {
-                    $data[$k]["status_lang"] = L($this->status_lang[$v["status"]]);
-                }
-                if($this->status_class) {
-                    $data[$k]["status_class"] = $this->status_class[$v["status"]];
-                }
-            }
+//            if(isset($v["status"])) {
+//                if(isset($this->status_lang)) {
+//                    $data[$k]["status_lang"] = L($this->status_lang[$v["status"]]);
+//                }
+//                if($this->status_class) {
+//                    $data[$k]["status_class"] = $this->status_class[$v["status"]];
+//                }
+//            }
             if(isset($v["factory_code"]) and $v["color_id"] and $v["standard_id"]) {
                 $data[$k]["factory_code_all"] = sprintf("%s-%s-%s", $v["factory_code"],$v["color_id"],$v["standard_id"]);
             }

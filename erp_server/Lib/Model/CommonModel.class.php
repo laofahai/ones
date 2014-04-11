@@ -61,14 +61,14 @@ class CommonModel extends AdvModel{
             if($v["dateline"]) {
                 $data[$k]["dateline_lang"] = date("Y-m-d H:i:s", $v["dateline"]);
             }
-            if(isset($v["status"])) {
-                if(isset($this->status_lang[$v["status"]])) {
-                    $data[$k]["status_lang"] = L($this->status_lang[$v["status"]]);
-                }
-                if($this->status_class) {
-                    $data[$k]["status_class"] = $this->status_class[$v["status"]];
-                }
-            }
+//            if(isset($v["status"])) {
+//                if(isset($this->status_lang[$v["status"]])) {
+//                    $data[$k]["status_lang"] = L($this->status_lang[$v["status"]]);
+//                }
+//                if($this->status_class) {
+//                    $data[$k]["status_class"] = $this->status_class[$v["status"]];
+//                }
+//            }
             
             $ids[] = $v[$this->workflowMainRowField];
         }

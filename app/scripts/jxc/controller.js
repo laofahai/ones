@@ -84,7 +84,141 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/edit.html',
                         controller:  'ProductTplEditCtl'
                     })
+                    //订单
+                    .when('/JXC/Orders', {
+                        templateUrl: 'views/common/grid.html',
+                        controller: 'JXCOrdersCtl'
+                    })
+                    .when('/JXC/Orders/add', {
+                        templateUrl: 'views/jxc/orders/edit.html',
+                        controller: 'JXCOrdersEditCtl'
+                    })
+                    .when('/JXC/Orders/edit/id/:id', {
+                        templateUrl: 'views/jxc/orders/edit.html',
+                        controller: 'JXCOrdersEditCtl'
+                    })
         }])
+        //订单
+        .controller("JXCOrdersCtl", ["$scope", "OrdersRes", "OrdersModel", "WorkflowNodeRes", "$location", "ComView",
+            function($scope, OrdersRes, OrdersModel, WorkflowNodeRes, $location, ComView) {
+                ComView.makeDefaultPageAction($scope, "JXC/Orders");
+                ComView.displayGrid($scope, OrdersModel, OrdersRes);
+                
+                $scope.workflowAble = true;
+                $scope.workflowAlias= "order";
+                
+                WorkflowNodeRes.query({workflow_alias: $scope.workflowAlias}).$promise.then(function(data){
+                    $scope.workflowActionList = data;
+                });
+                
+                $scope.doWorkflow = function(event, id) {
+//                    $scope.selectedItems = [];
+                    return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, OrdersRes);
+                };
+                $scope.workflowActionDisabled = function(id){
+                    return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
+                };
+                
+                
+                
+                //@todo 判断 两条数据 下步操作相同情况
+//                var ifWorkflowDisabled = function(){
+//                    var rs = $scope.$parent.workflowDisabled($scope.gridSelected);
+//                    return rs;
+//                };
+                
+                $scope.workflowDisabled = false;
+            }])
+        .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
+            function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelCompanyRes, $routeParams, TypesRes) {
+                ComView.makeDefaultPageAction($scope, "JXC/Orders");
+                
+                $scope.workflowAble = true;
+                $scope.selectAble = false;
+                $scope.showWeeks = true;
+                $scope.formMetaData = {
+                    inputTime : new Date(),
+                    total_amount_real: 0.00
+                };
+//                $scope.formMetaData.inputTime = new Date();
+                
+                ComView.displayBill($scope, OrdersEditModel, OrdersRes, {
+                    id: $routeParams.id
+                });
+                $scope.customerSelectOpts = {
+                    context: {
+                        field: "customer_id"
+                    },
+                    fieldDefine: {
+                        "ui-event": "{blur: 'afterNumBlur($event)'}",
+                        inputType: "select2",
+                        "ng-model": "formMetaData.customer_id",
+                        dataSource: RelCompanyRes
+                    }
+                };
+                $scope.typeSelectOpts = {
+                    context: {
+                        field: "sale_type"
+                    },
+                    fieldDefine: {
+                        inputType: "select",
+                        "ng-model": "formMetaData.sale_type",
+                        dataSource: TypesRes,
+                        queryParams: {
+                            type: "sale"
+                        }
+                    }
+                };
+                
+                $scope.$watch('formMetaData.customer_id', function(){
+                    if($scope.formMetaData.customer_id) {
+                        RelCompanyRes.get({
+                            id: $scope.formMetaData.customer_id
+                        }, function(data){
+                            data.discount = parseInt(data.discount);
+                            $scope.formMetaData.customerInfo = data;
+                        });
+                    }
+                });
+                
+                $scope.$watch('formMetaData.total_amount', function(){
+                    $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
+                });
+                
+                var countRowAmount = function(index, price, num, discount){
+                    discount = discount == undefined || 100;
+                    $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                };
+                
+                $scope.afterNumBlur = function(event){
+                    
+                    var context = getInputContext(event.target);
+                    
+                    if($scope.formData[context.trid] && $scope.formData[context.trid].goods_id) {
+                        var gid = $scope.formData[context.trid].goods_id.split("_");
+                        var goods = GoodsRes.get({
+                            id: gid[1]
+                        }).$promise.then(function(data){
+                            $scope.formData[context.trid].unit_price = Number(data.price);
+                        });
+                    }
+                    if($scope.formMetaData.customerInfo) {
+                        $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
+                    }
+                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                };
+                
+                $scope.afterUnitPriceBlur = function(event){
+                    var context = getInputContext(event.target);
+                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                };
+                
+                
+                $scope.maxDate = new Date();
+                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
+                $scope.format = $scope.formats[0];
+                
+            }])
         .controller("ProductTplCtl", ["$scope", "GoodsTplRes", "GoodsTplModel", "ComView", function($scope, res, model ,ComView){
             ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
             ComView.displayGrid($scope, model, res);
@@ -105,40 +239,15 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.selectAble = false;
                 ComView.displayGrid($scope, model, res);
                 
-                
-                
-                
             }])
         .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", "ComView",
             function($scope, StockModel, StockRes, $location, ComView){
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/JXC/Stock/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/Stock"
-                    }
-                ];
+                ComView.makeDefaultPageAction($scope, "JXC/Stock");
                 ComView.displayGrid($scope, StockModel, StockRes);
             }])
         .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "$routeParams", "ComView",
             function($scope, StockModel, StockRes, $routeParams, ComView) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/JXC/Stock/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/Stock"
-                    }
-                ];
+                ComView.makeDefaultPageAction($scope, "JXC/Stock");
                 $scope.selectAble = false;
                 var opts = {
                     name: "StockEdit",
@@ -151,18 +260,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         //入库单
         .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location", "ComView",
             function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location, ComView) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/JXC/Stockin/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/Stockin"
-                    }
-                ];
+                ComView.makeDefaultPageAction($scope, "JXC/Stockin");
                 ComView.displayGrid($scope, StockinModel, StockinRes);
                 
                 $scope.workflowAble = true;
@@ -196,18 +294,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
             }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
             function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/JXC/Stockin/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/Stockin"
-                    }
-                ];
+                ComView.makeDefaultPageAction($scope, "JXC/Stockin");
                 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -228,34 +315,12 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         //商品管理
         .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "ComView",
             function($scope, GoodsRes, JXCGoodsModel, ComView) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/JXC/Goods/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/Goods"
-                    }
-                ];
+                ComView.makeDefaultPageAction($scope, "JXC/Goods");
                 ComView.displayGrid($scope, JXCGoodsModel, GoodsRes);
             }])
         .controller("JXCGoodsEditCtl", ["$scope", "JXCGoodsModel", "GoodsRes", "$routeParams", "ComView",
             function($scope, JXCGoodsModel, GoodsRes, $routeParams, ComView) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/JXC/Goods/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/Goods"
-                    }
-                ];
+                ComView.makeDefaultPageAction($scope, "JXC/Goods");
                 $scope.selectAble = false;
                 
                 var opts = {

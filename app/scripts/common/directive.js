@@ -27,6 +27,26 @@ angular.module("erp.common.directives", ["erp.formMaker"])
                 }
             };
         }])
+        .directive("inputfield", ["$compile", "FormMaker", function($compile, FormMaker){
+            return {
+                restrict: "E",
+                replace: true,
+                scope: {
+                    config: "="
+                },
+                compile: function(element, attrs, transclude){
+                    return {
+                        pre: function($scope,iElement, iAttrs, controller){
+                            var fieldDefine = $scope.$parent[iAttrs.config].fieldDefine;
+                            var formMaker = new FormMaker.makeField($scope);
+                            var html = formMaker.maker.factory($scope.$parent[iAttrs.config].context, fieldDefine, $scope);
+                            
+                            iElement.append($compile(html)($scope.$parent));
+                        }
+                    };
+                }
+            };
+        }])
         .directive("bill", ["$compile", "FormMaker", function($compile, FormMaker){
             return {
                 restrict: "E",

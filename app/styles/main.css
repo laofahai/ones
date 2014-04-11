@@ -142,7 +142,9 @@ commonform {
     height:35px;
 }
 
-
+.chosen-container {
+    min-width: 80%;
+}
 .billBody .chosen-container {
     position:absolute;
     left:0;top:0;
@@ -222,16 +224,23 @@ commonform {
     overflow:hidden;
 }
 
+.selectize-control {
+    height:30px;
+}
+.selectize-input {
+    min-height:30px;
+}
 .selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
     border-radius: 0;
-    height:31px;
+    height:30px;
+    font-size:12px;
 }
 
 .ui-select-match {
     line-height:31px;
 }
 
-.billBody .ui-select-choices-row .option span, .ui-select-match span {
+.ui-select-choices-row .option span, .ui-select-match span {
     display:none;
 }
 .billBody .selectize-dropdown {
@@ -252,3 +261,6 @@ commonform {
     color:#fff;
 }
 
+.tdTotalAble {
+    font-weight:bold;
+}

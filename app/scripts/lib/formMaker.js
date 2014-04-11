@@ -17,7 +17,7 @@
                 'fields/email': '<input type="number" %s />',
                 'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
-                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" theme="selectize" reset-search-input="false">'+
+                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" %(event)s theme="selectize" reset-search-input="false">'+
                                     '<match ng-bind-html="$select.selected.label"></match>'+
                                     '<choices refresh="%(method)s_refresh($select.search)" refresh-delay="0" repeat="%(data)s in %(method)s | filter: $select.search">'+
                                       '<div ng-bind-html="%(data)s.label"></div>'+
@@ -44,7 +44,8 @@
         service.fieldsMakerFactory = function(fieldsMaker, opts) {
             this.$parent = fieldsMaker;
             var defaultOpts = {
-                multi: false
+                multi: false,
+                compile: false
             };
             this.opts = $.extend(defaultOpts, opts);
             this.opts.disabledAttrs = ["dataSource"];
@@ -70,17 +71,22 @@
                 if (context.text) {
                     fieldDefine.value = context.text;
                 }
-                if(context.trid !== undefined) {
+                if(context.trid !== undefined && this.opts.multi) {
                     fieldDefine["data-row-index"] = context.trid;
                 }
                 if (!fieldDefine.displayName) {
                     fieldDefine.displayName = this.$parent.scope.$parent.i18n.lang[context.field];
                 }
+                var html = false;
                 if (method in this) {
-                    return this[method](context.field, fieldDefine, $scope);
-                } else {
-                    return false;
+                    html = this[method](context.field, fieldDefine, $scope);
                 }
+                
+                if(html && this.opts.compile) {
+                    html = $compile(html)($scope);
+                }
+                
+                return html;
             },
             /**
              * 生成字段属性
@@ -116,6 +122,9 @@
             //多选框
             _checkbox: function(name, fieldDefine) {
                 
+            },
+            _static: function() {
+                return "";
             },
             _textarea: function(name, fieldDefine){
                 var value = fieldDefine.value;
@@ -212,13 +221,13 @@
                         $scope.$parent[methodName] = dataList;
                     });
                 };
-                
-                
+//                console.log(methodName);
                 var html = sprintf(this.$parent.templates['fields/select2'], {
                     method: methodName,
                     data: name,
                     label: nameField,
-                    model: fieldDefine["ng-model"]
+                    model: fieldDefine["ng-model"],
+                    event: fieldDefine["ui-event"] ? sprintf('ui-event="%s"', fieldDefine["ui-event"]) : ""
 //                    dataSource: dataSourceName
                 });
                 
@@ -304,7 +313,7 @@
                                         '<i class="icon icon-plus" ng-click="billAddRow($event.target)"></i> '+
                                         '<i class="icon icon-trash" ng-click="billRemoveRow($event.target)"></i> '+
                                     '</label></td>',
-                'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label %(event)s>%(label)s</label></td>',
+                'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" %(event)s>%(label)s</label></td>',
                 'bills/fields/typeaheadList.html': '<ul class="typeAheadList editAble" />'+
                         '<li ng-repeat="%(v)s in %(data)s" type="typeahead" data-typeahead-value="%(v)s.%(valueField)s" '+
                         'ng-click="billTypeaheadClick($event)">{{%(v)s.%(labelField)s}}</li></ul>'
@@ -327,11 +336,12 @@
                 });
             },
             makeHead: function(fieldsDefine){
+//                console.log(fieldsDefine);
                 var html = [];
                 angular.forEach(fieldsDefine, function(item){
                     if(item.billAble!==false) {
                         var attr = [];
-                        if("width" in item) {
+                        if(item && "width" in item) {
                             attr.push('width="'+item.width+'"');
                         }
                         html.push(sprintf('<th %s>%s</th>', attr.join(""), item.displayName));
@@ -405,7 +415,8 @@
                             type: item.inputType,
                             tdClass: false !== item.editAble ? "tdEditAble" : "",
                             event: false !== item.editAble ? 'ng-click="billFieldEdit($event.target)"' : "",
-                            label: label
+                            label: label,
+                            bind: sprintf('%s[%d].%s', self.opts.dataName, i, field)
                         }));
                     }
                 });
@@ -419,7 +430,7 @@
 
                 var self = this;
                 scope.$parent.billFieldEdit = function(ele){
-                    var context = self.getLabelContext(ele);
+                    var context = getLabelContext(ele);
 
                     //已经存在
                     if(context.td.find(".editAble").length) {
@@ -467,7 +478,7 @@
                     
                     //触发结束编辑事件
                     setTimeout(function(){
-                        context = self.getInputContext(ele);
+                        context = getInputContext(ele);
                         context.inputAble.trigger("click").focus();
                         context.inputAble.bind("keydown", function(e){
                             if(e.keyCode == 13) {
@@ -585,7 +596,7 @@
 //                    console.log(arguments);return;
 //                    self.scope.$parent.onTypeaheadBlur(event);
                     setTimeout(function(){
-                        var context = self.getInputContext(event.target);
+                        var context = getInputContext(event.target);
                         var tmp = self.scope.$parent[self.opts.dataName][context.trid];
                         self.opts.res.stockProduct.get({
                             factory_code_all: sprintf("%s-%s-%s", tmp.goods_id.factory_code, tmp.standard.value, tmp.version.value),
@@ -597,33 +608,7 @@
                     },100);
                 };
             },
-            //获取当前input的上下文数据
-            getInputContext : function(element){
-                var context = {};
-                context.ele = $(element);
-                context.eleValue = context.ele.val();
-                context.td = context.ele.parent();
-                context.label = context.td.find("label");
-                context.tr = context.td.parent();
-                context.trid = context.index = context.tr.data("trid");
-                context.field = context.td.data("bind-model");
-                context.inputType = context.td.data("input-type");
-                context.inputAble = context.td.find("input");
-                
-                return context;
-            },
-            getLabelContext: function(element) {
-                var context = {};
-                context.ele = $(element);
-                context.td =  context.ele.parent();
-                context.tr = context.td.parent();
-                context.trid = context.index = context.tr.data("trid");
-                context.field = context.td.data("bind-model");
-                context.text = context.ele.text();
-                context.inputType = context.td.data("input-type");
-                context.inputAble = context.td.find("input");
-                return context;
-            },
+            
             //重置TR的行数，并且重新计算数据
             reIndexTr: function() {
                 var trs = $("#billTable tbody tr");
@@ -636,7 +621,7 @@
             setNumberData: function(element, data, isBlur) {
                 if($(element).attr("totalAble")) {
                     var total = 0;
-                    var context = this.getInputContext(element);
+                    var context = getInputContext(element);
                     angular.forEach(this.scope.$parent[this.opts.dataName], function(item){
                         if(context.field in item) {
                             total += parseFloat(item[context.field]);
@@ -652,14 +637,14 @@
 
             },
             setData: function(element, data, isBlur) {
-                var context = this.getInputContext(element);
-                context.label.html(data);
+                var context = getInputContext(element);
+//                context.label.html(data);
                 context.td.find(".editAble").addClass("hide");
                 this.scope.$parent.billEndEdit(context.td, isBlur);
             },
             setTypeaheadData: function(ele, scope, isBlur) {
                 var val;
-                var context = this.getInputContext(ele);
+                var context = getInputContext(ele);
                 var self = this;
                 setTimeout(function(){
                     if(scope.$parent[self.opts.dataName][context.trid][context.field]) {
