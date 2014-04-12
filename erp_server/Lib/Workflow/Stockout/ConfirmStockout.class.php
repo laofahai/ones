@@ -18,22 +18,27 @@ class StockoutConfirmStockout extends WorkflowAbstract {
      */
     public function run() {
         if(!IS_POST) {
-            $map = array(
-                "source_id" => $this->context['sourceId'],
-                "source_model" => $this->context['sourceModel']
+            $data = array(
+                "type" => "redirect",
+                "location" => "/doWorkflow/Stockout/confirm/".$this->mainrowId
             );
-            $theStockout = D("Stockout")->where($map)->find();
-            $viewModel = D("Stockout{$this->context['sourceModel']}Relation");
-            $thePaper = $viewModel->relation(true)->find($this->mainrowId);
-//            print_r($thePaper);exit;
-            $paperDetail = D("Stockout".$thePaper["source_model"]."DetailView");
-            $thePaperDetail = $paperDetail->where("StockoutDetail.stockout_id=".$this->mainrowId)->group("StockoutDetail.id")->select();
-//            echo $paperDetail->getLastSql();exit;
-
-            $this->view->assign("lang_title", "confirm_stockout");
-            $this->view->assign("list", $thePaperDetail);
-            $this->view->assign("thePaper", $thePaper);
-            $this->view->display("../Common/Workflow/Stockout/confirmStockout");
+            echo json_encode($data);
+//            $map = array(
+//                "source_id" => $this->context['sourceId'],
+//                "source_model" => $this->context['sourceModel']
+//            );
+//            $theStockout = D("Stockout")->where($map)->find();
+//            $viewModel = D("Stockout{$this->context['sourceModel']}Relation");
+//            $thePaper = $viewModel->relation(true)->find($this->mainrowId);
+////            print_r($thePaper);exit;
+//            $paperDetail = D("Stockout".$thePaper["source_model"]."DetailView");
+//            $thePaperDetail = $paperDetail->where("StockoutDetail.stockout_id=".$this->mainrowId)->group("StockoutDetail.id")->select();
+////            echo $paperDetail->getLastSql();exit;
+//
+//            $this->view->assign("lang_title", "confirm_stockout");
+//            $this->view->assign("list", $thePaperDetail);
+//            $this->view->assign("thePaper", $thePaper);
+//            $this->view->display("../Common/Workflow/Stockout/confirmStockout");
 
             return "wait";
         }

@@ -179,6 +179,17 @@
                     }
                 }
             }
+        },
+        "doWorkflow": {
+            "name": "工作流执行",
+            "modules": {
+                "Stockout": {
+                    "name": "出库",
+                    "actions": {
+                        "confirm": "确认出库"
+                    }
+                }
+            }
         }
     },
     "lang": {

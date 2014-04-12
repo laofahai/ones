@@ -15,6 +15,24 @@ class StockoutAction extends CommonAction {
     
     protected $workflowAlias = "stockout";
     
-    protected $indexModel = "StockoutOrdersView";
+//    public function index() {
+//        $model = D("Stockout");
+//    }
+    
+    public function read() {
+        
+        $model = D("Stockout");
+        $data = $model->getStockoutBill($_GET["id"]);
+        $this->response($data);
+        exit;
+        $data = parent::read(true);
+        /**
+         * 工作流执行中
+         */
+        print_r($data);
+        
+        exit;
+        $this->response($data);
+    }
     
 }

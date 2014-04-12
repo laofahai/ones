@@ -17,22 +17,16 @@
                 'fields/email': '<input type="number" %s />',
                 'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
-                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" %(event)s theme="selectize" reset-search-input="false">'+
-                                    '<match ng-bind-html="$select.selected.label"></match>'+
-                                    '<choices refresh="%(method)s_refresh($select.search)" refresh-delay="0" repeat="%(data)s in %(method)s | filter: $select.search">'+
-                                      '<div ng-bind-html="%(data)s.label"></div>'+
-                                    '</choices>'+
-                                  '</ui-select>',
-//                            <ui-select ng-model="address.selected"
-//                                    reset-search-input="false"
-//                                    >
-//                           <match>{{$select.selected.name}}</match>
-//                           <choices repeat="address in addresses "
-//                                    refresh="refreshAddresses($select.search)"
-//                                    refresh-delay="0">
-//                             <div ng-bind-html="address.name | highlight: $select.search"></div>
-//                           </choices>
-//                         </ui-select>
+//                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" %(event)s theme="selectize" reset-search-input="false" %(attrs)s>'+
+//                                    '<match ng-bind-html="$select.selected.label"></match>'+
+//                                    '<choices refresh="%(method)s_refresh($select.search)" refresh-delay="0" repeat="%(data)s in %(method)s | filter: $select.search">'+
+//                                      '<div ng-bind-html="%(data)s.label"></div>'+
+//                                    '</choices>'+
+//                                  '</ui-select>',
+                "fields/select2": '<select %(attr)s '+
+                        'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
+                        'search_contains="true" '+
+                        'ui-select><option><option></select>',
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
@@ -225,9 +219,11 @@
                 var html = sprintf(this.$parent.templates['fields/select2'], {
                     method: methodName,
                     data: name,
+                    key: "forkey",
                     label: nameField,
                     model: fieldDefine["ng-model"],
-                    event: fieldDefine["ui-event"] ? sprintf('ui-event="%s"', fieldDefine["ui-event"]) : ""
+                    event: fieldDefine["ui-event"] ? sprintf('ui-event="%s"', fieldDefine["ui-event"]) : "",
+                    attr: this._attr(name, fieldDefine)
 //                    dataSource: dataSourceName
                 });
                 
@@ -594,9 +590,12 @@
                         self.setTypeaheadData(ele, self.scope);
                     }
                 };
-                scope.$parent.onStockSelectChange = function(event){
+                scope.$parent.onSelect2Keydown = function(event) {
+                    console.log(arguments);
+                }
+                scope.$parent.onStockBlur = function(event){
 //                    console.log(self);
-//                    console.log(arguments);return;
+                    console.log(arguments);return;
 //                    self.scope.$parent.onTypeaheadBlur(event);
                     setTimeout(function(){
                         var context = getInputContext(event.target);

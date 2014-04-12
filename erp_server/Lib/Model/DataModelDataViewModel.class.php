@@ -51,7 +51,6 @@ class DataModelDataViewModel extends CommonViewModel {
         foreach($tmp as $v) {
             $modelData[$v["id"]] = $v;
         }
-        
         foreach($sourceData as $k=>$v) {
             if(!$v["modelIds"]) {
                 continue;

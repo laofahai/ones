@@ -57,6 +57,9 @@ angular.module("erp.common.filters", [])
         })
         .filter("dateFormat", function() {
             return function(timestamp, format) {
+                if(!timestamp) {
+                    return;
+                }
                 var d = new Date(parseInt(timestamp) * 1000);
                 var year = d.getFullYear();
                 var month = d.getMonth() + 1;

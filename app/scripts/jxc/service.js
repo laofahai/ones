@@ -298,7 +298,8 @@ angular.module("erp.jxc.services", [])
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
                             inputType: "select2",
-                            dataSource: StockRes
+                            dataSource: StockRes,
+//                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {
                             displayName: i18n.storeNum,
@@ -590,3 +591,70 @@ angular.module("erp.jxc.services", [])
                 }
             };
         }])
+        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes", 
+            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+                var obj = {};
+                obj.getFieldsStruct = function() {
+                    var i18n = $rootScope.i18n.lang;
+                    var fields = {
+                        id : {
+                            primary: true,
+                            billAble: false
+                        },
+                        goods_id: {
+                            displayName: i18n.goods,
+                            inputType: "select2",
+                            dataSource: GoodsRes,
+                            valueField: "combineId",
+                            nameField: "combineLabel",
+                            listAble: false,
+                            width: 300
+                        },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            inputType: "select2",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            inputType: "select2",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
+                        },
+                        stock: {
+                            editAbleRequire: ["goods_id", "standard", "version"],
+                            inputType: "select2",
+                            dataSource: StockRes,
+//                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
+                        },
+                        store_num: {
+                            displayName: i18n.storeNum,
+                            editAble:false,
+                            min: -9999
+                        },
+                        num: {
+                            inputType: "number",
+                            totalAble: true
+                        },
+                        memo: {}
+
+                    };
+
+
+                    return fields;
+                };
+
+
+                return obj;
+            }])

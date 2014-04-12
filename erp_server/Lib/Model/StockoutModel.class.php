@@ -20,6 +20,44 @@ class StockoutModel extends CommonModel {
         array("stock_manager", 0)
     );
     
+    public function getStockoutBill($id) {
+        $data = $this->find($id);
+        $souceModel = D($data["source_model"]."View");
+        $data["source"] = $souceModel->find($data["source_id"]);
+        
+        $detailModel = D("StockoutDetailView");
+        $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
+//        echo $detailModel->getLastSql();exit;
+        
+        /**
+         * 每列信息处理
+         */
+        $modelIds = array();
+        foreach($data["rows"] as $k=>$v) {
+            $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+            $factory_code = array_shift($tmp);
+            $modelIds = array_merge($modelIds, $tmp);
+            $v["modelIds"] = $tmp;
+            $v["stock"] = $v["stock_id"];
+            $v["memo_label"] = $v["memo"];
+            $v["stock_label"] = $v["stock_name"];
+            $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
+            $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+            $v["num_label"] = $v["num"];
+            $data["rows"][$k] = $v;
+            $fca[] = $row["factory_code_all"];
+        }
+        
+        $dataModel = D("DataModelDataView");
+        $data["rows"] = $dataModel->assignModelData($data["rows"], $modelIds);
+//        print_r($modelIds);
+//        print_r($data["rows"]);exit;
+        return $data;
+    }
+    
+    /**
+     * 创建出库单
+     */
     public function makeStockoutPaper($sourceModelName, $sourceId, $sourceUidField="saler_id", $sourceDetailForeignKey="", $sourceStockIdFeild="stock_id") {
         $sourceDetailForeignKey = $sourceDetailForeignKey ? $sourceDetailForeignKey : strtolower($sourceModel)."_id";
         $sourceModel = D($sourceModelName);

@@ -340,7 +340,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                 service.displayBill = function($scope, fieldsDefine, resource, opts) {
 
                     var defaultOpt = {
-                        dataName: "formData"
+                        dataName: "formData",
+                        queryExtraParams: {}
                     };
 
                     if(typeof(fieldsDefine) == "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
@@ -366,7 +367,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     
                     if($routeParams.id) {
                         opts.isEdit = true;
-                        resource.get({id: $routeParams.id, includeRows: true}).$promise.then(function(data){
+                        var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
+                        resource.get(queryExtraParams).$promise.then(function(data){
                             $scope.$broadcast("bill.dataLoaded", data);
                         });
                     }

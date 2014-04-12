@@ -264,7 +264,7 @@ class CommonAction extends RestAction {
         }
 
         // 结束信息返回true、或者没有任何返回值时跳转
-        if(true === $rs or !$rs) {
+        if(true === $rs or empty($rs)) {
             $this->success();
         }
     }

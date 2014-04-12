@@ -16,6 +16,7 @@ var ERP = angular.module('erp', [
     'erp.common',
     'erp.commonView',
     'erp.config',
+    'erp.doWorkflow',
     
     'erp.passport',
     'erp.home',
@@ -111,12 +112,24 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                         workflow: true,
                         node_id: node_id,
                         id: selectedItems[i].id
+                    }).$promise.then(function(data){
+                        if(data.type) {
+                            switch(data.type) {
+                                case "redirect":
+                                    $location.url(data.location);
+                                    return;
+                                    break;
+                            }
+                        }
                     });
                 }
                 $scope.$broadcast("gridData.changed");
             };
             $scope.workflowActionDisabled = function(id, selectedItems) {
                 selectedItems = selectedItems || [];
+                if(selectedItems.length > 1) {
+                    return true;
+                }
                 if(!selectedItems.length) {
                     return true;
                 }
@@ -127,12 +140,12 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                         result = true;
                         break;
                     }
-                    for(var j=0;j<item.processes.nextNodes.length;j++) {
-                        if(item.processes.nextNodes[j].id == id) {
+                    angular.forEach(item.processes.nextNodes, function(node){
+                        if(node.id === id) {
                             result = false;
-                            break;
+                            return;
                         }
-                    }
+                    });
                 }
                 return result;
             };

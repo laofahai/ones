@@ -98,14 +98,22 @@ class CommonModel extends AdvModel{
         if($data["dateline"]) {
             $data["dateline_lang"] = date("Y-m-d H:i:s", $data["dateline"]);
         }
-        if(isset($data["status"])) {
-            if(isset($this->status_lang)) {
-                $data["status_lang"] = L($this->status_lang[$data["status"]]);
-            }
-            if(isset($this->status_class)) {
-                $data["status_class"] = $this->status_class[$data["status"]];
-            }
+        
+        if($this->workflowAlias and false !== $this->includeWorkflowProcess) {
+            import("@.Workflow.Workflow");
+            $workflow = new Workflow($this->workflowAlias);
+            $processData = $workflow->getCurrentProcess($data["id"]);
+            $data["processes"] = $processData;
         }
+        
+//        if(isset($data["status"])) {
+//            if(isset($this->status_lang)) {
+//                $data["status_lang"] = L($this->status_lang[$data["status"]]);
+//            }
+//            if(isset($this->status_class)) {
+//                $data["status_class"] = $this->status_class[$data["status"]];
+//            }
+//        }
         return $data;
     }
     
