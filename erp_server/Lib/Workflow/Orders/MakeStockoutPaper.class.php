@@ -13,7 +13,6 @@
 class OrdersMakeStockoutPaper extends WorkflowAbstract {
     
     public function run() {
-        
         $stockout = D("Stockout");
         $stockoutId = $stockout->makeStockoutPaper("Orders", $this->mainrowId, "saler_id", "order_id");
         

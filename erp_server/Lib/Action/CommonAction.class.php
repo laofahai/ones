@@ -145,6 +145,7 @@ class CommonAction extends RestAction {
         $this->_filter($map);
         
         $item = $model->where($map)->find();
+        
         if($return) {
             return $item;
         }
@@ -220,19 +221,29 @@ class CommonAction extends RestAction {
         $model = M($name);
         if (!empty($model)) {
             $pk = $model->getPk();
+            if($this->relation) {
+                $model = $model->relation(true);
+            }
             $id = $_REQUEST [$pk];
             if (isset($id)) {
                 $condition = array($pk => array('in', $id));
-                $list = $model->where($condition)->delete();
-                if ($list !== false) {
-                    $this->success('删除成功！');
-                } else {
-                    $this->httpError(500);
+                $rs = $model->where($condition)->save(array("deleted"=>1));
+                if(!$rs) {
+                    $rs = $model->where($condition)->delete();
                 }
+//                try {
+//                    $rs = $model->where($condition)->save(array("deleted"=>1));
+//                } catch(Exception $e) {
+//                    $rs = $model->where($condition)->delete();
+//                }
             } else {
                 $this->httpError(500);
             }
         }
+    }
+    
+    public function foreverDelete() {
+        
     }
     
     /**
@@ -251,9 +262,7 @@ class CommonAction extends RestAction {
         if(false === $rs) {
             $this->error("not_allowed");
         }
-        
-        
-        
+
         // 结束信息返回true、或者没有任何返回值时跳转
         if(true === $rs or !$rs) {
             $this->success();

@@ -125,7 +125,8 @@
                     "name": "库存管理",
                     "actions": {
                         "index": ["库存商品列表"],
-                        "Export": "导出库存清单"
+                        "Export": "导出库存清单",
+                        "edit": "修改库存产品信息"
                     }
                 },
                 "ProductTpl": {
@@ -142,6 +143,12 @@
                         "index": "订单列表",
                         "add"  : "订单录入",
                         "edit" : "订单修改"
+                    }
+                },
+                "Stockout": {
+                    "name": "出库单",
+                    "actions": {
+                        "index": "出库单列表"
                     }
                 }
             }
@@ -219,7 +226,10 @@
             "user_group": "用户组管理",
             "department": "部门管理",
             "workflow": "工作流程",
-            "clear_cache": "清除缓存"
+            "clear_cache": "清除缓存",
+            "produce": "生产管理",
+            "outside_bill": "外协单",
+            "produce_and_install": "生产组装单"
         },
         "inputType": {
             "text": "单行文本",
@@ -246,7 +256,7 @@
             "submit" : "提交",
             "reset"  : "重填",
             "return" : "返回",
-            "add": "增加",
+            "add": "新增",
             "save": "保存",
             "close": "关闭",
             "addChild": "增加子项",
@@ -304,16 +314,20 @@
         "alias" : "别名",
         "phone" : "电话",
         "owner" : "所属者",
+        "bill_id": "单据编号",
         "billId": "单据编号",
         "mobile" : "手机",
         "telephone": "电话",
         "linkMan": "联系人",
+        "total_num": "总数",
         "totalNum": "总数",
         "sponsor": "制单人",
         "version": "型号",
         "subject": "主题",
         "customer": "客户",
+        "outStockTime": "出库时间",
         "total_price_real": "实收金额",
+        "total_amount_real": "实收金额",
         "dateline": "时间",
         "standard": "规格",
         "discount": "折扣率",
@@ -325,6 +339,7 @@
         "password": "密码",
         "unit_price": "单价",
         "department": "部门",
+        "stock_manager": "库管员",
         "stockManager": "库管员",
         "stockWarningOnly": "仅库存警告数据",
         "bindDataModel": "绑定数据模型",

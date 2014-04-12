@@ -50,20 +50,19 @@ class OrdersAction extends CommonAction {
             unset($data["rows"][$k]["standard"]);
             unset($data["rows"][$k]["version"]);
         }
-//        $data["OrdersDetail"] = $data["rows"];
-        unset($data["customerInfo"]);
-        unset($data["discount"]);
-        unset($data["inputTime"]);
-//        unset($data["rows"]);
         
         $data["bill_id"] = uniqid("XS");
         $data["dateline"] = strtotime($data["inputTime"]);
         $data["saler_id"] = $this->user["id"];
         
+        unset($data["customerInfo"]);
+        unset($data["discount"]);
+        unset($data["inputTime"]);
+        
         $model = D("OrdersRel");
         $orderId = $model->newOrder($data);
         if(!$orderId) {
-            $this->httpError("500");
+            $this->error($model->getError());
         }
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);

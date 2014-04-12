@@ -29,9 +29,9 @@ class StockProductListAction extends CommonAction {
     );
     
     protected function _filter(&$map) {
-        if($_GET["id"]) {
+        if($_GET["stock_id"]) {
             unset($map["id"]);
-            $map["stock_id"] = abs(intval($_GET["id"]));
+            $map["stock_id"] = abs(intval($_GET["stock_id"]));
         }
         if($_GET["factory_code_all"]) {
             $map["factory_code_all"] = $_GET["factory_code_all"];

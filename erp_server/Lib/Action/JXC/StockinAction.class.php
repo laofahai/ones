@@ -49,6 +49,8 @@ class StockinAction extends CommonAction {
         
         $rowData = $dataModel->assignModelData($rowData, $modelIds);
         
+//        print_r($rowData);exit;
+        
         $formData["rows"] = reIndex($rowData);
         $this->response($formData);
         

@@ -147,35 +147,40 @@ angular.module("erp.jxc.services", [])
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
                 return {
-                    id : {
-                        primary: true,
-                        displayName: "ID"
-                    },
-                    factory_code_all: {
-                        displayName: i18n.factoryCodeAll
-                    },
-                    goods_name: {
-                        displayName: i18n.name
-                    },
+                    factory_code_all: {},
+                    goods_name: {},
+                    standard: {},
+                    version: {},
+                    unit_price: {},
                     category_name: {
                         displayName: i18n.category
                     },
                     stock_name: {
                         displayName: i18n.stock
                     },
-                    standard: {},
-                    version: {},
                     num: {
                         displayName: i18n.storeNum
                     },
+                    measure: {},
                     store_min: {},
-                    store_max: {},
-                    measure: {}
+                    store_max: {}
                 };
                 
             };
             return obj;
         }])
+    .service("StockProductEditModel", ["$rootScope", function($rootScope){
+            return {
+                getFieldsStruct: function(){
+                    return {
+                        id: {primary: true},
+                        unit_price: {
+                            inputType: "number"
+                        }
+                    };
+                }
+            };
+    }])
     .service("StockProductExportModel", ["$rootScope", "StockRes", "GoodsCategoryRes", "$q", 
         function($rootScope, StockRes, GoodsCategoryRes, $q) {
             var service = {
@@ -340,7 +345,7 @@ angular.module("erp.jxc.services", [])
                     total_num: {
                         displayName: i18n.totalNum
                     },
-                    total_price_real: {},
+                    total_amount_real: {},
                     dateline: {
                         cellFilter: "dateFormat"
                     },
@@ -559,6 +564,29 @@ angular.module("erp.jxc.services", [])
                     };
                     
                     return struct;
+                }
+            };
+        }])
+        .service('StockoutModel', ["$rootScope", function($rootScope){
+            return {
+                getFieldsStruct: function(){
+                    return {
+                        bill_id : {},
+                        source_model: {},
+                        total_num: {},
+                        stock_manager: {},
+                        dateline: {
+                            cellFilter: "dateFormat"
+                        },
+                        status_text: {
+                            displayName: $rootScope.i18n.lang.status,
+                            field: "processes.status_text"
+                        },
+                        outtime: {
+                            displayName: $rootScope.i18n.lang.outStockTime,
+                            cellFilter: "dateFormat"
+                        }
+                    };
                 }
             };
         }])

@@ -63,6 +63,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/grid.html',
                         controller: 'StockProductsCtl'
                     })
+                    .when('/JXC/StockProductList/edit/id/:id', {
+                        templateUrl: 'views/common/edit.html',
+                        controller: 'StockProductsEditCtl'
+                    })
                     .when('/JXC/StockProductList/Export', {
                         templateUrl: 'views/jxc/stockProductList/export.html',
                         controller: 'StockProductsExportCtl'
@@ -97,7 +101,34 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/jxc/orders/edit.html',
                         controller: 'JXCOrdersEditCtl'
                     })
+                    //出库
+                    .when('/JXC/Stockout', {
+                        templateUrl: 'views/common/grid.html',
+                        controller: 'StockoutCtl'
+                    })
         }])
+        //出库单
+        .controller("StockoutCtl", ["$scope", "StockoutRes", "StockoutModel", "WorkflowNodeRes", "ComView",
+            function($scope, res, model, WorkflowNodeRes, ComView) {
+                ComView.makeDefaultPageAction($scope, "JXC/Stockout");
+                ComView.displayGrid($scope, model, res);
+                
+                $scope.workflowAble = true;
+                $scope.workflowAlias= "stockout";
+                
+                WorkflowNodeRes.query({workflow_alias: $scope.workflowAlias}).$promise.then(function(data){
+                    $scope.workflowActionList = data;
+                });
+                
+                $scope.doWorkflow = function(event, id) {
+                    return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, res);
+                };
+                $scope.workflowActionDisabled = function(id){
+                    return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
+                };
+                
+                $scope.workflowDisabled = false;
+            }])
         //订单
         .controller("JXCOrdersCtl", ["$scope", "OrdersRes", "OrdersModel", "WorkflowNodeRes", "$location", "ComView",
             function($scope, OrdersRes, OrdersModel, WorkflowNodeRes, $location, ComView) {
@@ -118,14 +149,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.workflowActionDisabled = function(id){
                     return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
                 };
-                
-                
-                
-                //@todo 判断 两条数据 下步操作相同情况
-//                var ifWorkflowDisabled = function(){
-//                    var rs = $scope.$parent.workflowDisabled($scope.gridSelected);
-//                    return rs;
-//                };
                 
                 $scope.workflowDisabled = false;
             }])
@@ -374,8 +397,27 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         href  : "/JXC/StockProductList/Export"
                     }
                 ];
-                $scope.selectAble = false;
+                $scope.selectAble = true;
                 ComView.displayGrid($scope, StockProductModel, StockProductsRes);
+            }])
+        .controller("StockProductsEditCtl", ["$scope", "ComView", "StockProductsRes", "StockProductEditModel", "$routeParams",
+            function($scope, ComView, res, model, $routeParams){
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.list,
+                        class : "primary",
+                        href  : "/JXC/StockProductList"
+                    },
+                    {
+                        label : $scope.i18n.lang.actions.export,
+                        class : "success",
+                        href  : "/JXC/StockProductList/Export"
+                    }
+                ];
+                $scope.selectAble = false;
+                ComView.displayForm($scope, model, res, {
+                    id: $routeParams.id
+                });
             }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "erp.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {

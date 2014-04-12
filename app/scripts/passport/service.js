@@ -30,7 +30,7 @@ angular.module("erp.passport.services", [])
                                 hideInForm: true
                             },
                             usergroup: {
-                                inputType: "select2",
+                                inputType: "select",
                                 multiple: "multiple",
                                 nameField: "title",
                                 valueField: "id",
@@ -42,8 +42,9 @@ angular.module("erp.passport.services", [])
                             },
                             department_id: {
                                 displayName: $rootScope.i18n.lang.department,
+                                nameField: "title",
                                 listable: false,
-                                inputType: "select2"
+                                inputType: "select"
                             }
                         };
 
@@ -76,7 +77,7 @@ angular.module("erp.passport.services", [])
                         name: {},
                         title: {},
                         category: {
-                            inputType: "select2",
+                            inputType: "select",
                             dataSource: [
                                 {id: "accounting", name: "高级财务模块"},
                                 {id: "all", name: "公用模块"},

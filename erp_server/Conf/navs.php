@@ -41,12 +41,13 @@ return array(
         ),
         "icon" => "pencil",
     ),
-//    "produce" => array(
-//        "childs" => array(
-//            "produce_and_install" => "Produce/ProduceInstall"
-//        ),
-//        "icon" => "retweet",
-//    ),
+    "produce" => array(
+        "childs" => array(
+            "produce_and_install" => "Produce/ProduceInstall",
+            "outside_bill" => "Product/Outside"
+        ),
+        "icon" => "retweet",
+    ),
     "rel_company" => array(
         "childs" => array(
             "relCompanyRecord" => "CRM/RelCompany",

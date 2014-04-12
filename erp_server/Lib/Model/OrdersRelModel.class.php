@@ -33,15 +33,18 @@ class OrdersRelModel extends RelationModel {
         $this->startTrans();
         
         $orderId = $this->add($data);
-        
+
         if(!$orderId) {
+                    echo $this->getLastSql();exit;
             $this->rollback();
+            return false;
         }
-        
+//        print_r($data["rows"]);exit;
         $detail = D("OrdersDetail");
         foreach($data["rows"] as $row) {
             $row["order_id"] = $orderId;
             if(!$detail->add($row)) {
+//                echo $detail->getLastSql();exit;
                 $this->rollback();
                 break;
             }

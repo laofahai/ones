@@ -400,14 +400,17 @@
                 var self = this;
                 var html = [this.opts.templates['bills/fields/rowHead.html']];
                 defaultData = defaultData || [];
+                defaultData = dataFormat(fieldsDefine, defaultData);
                 this.scope.$parent[this.opts.dataName][i] = defaultData[i] || {};
                 var label;
+                var labelBind;
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble!==false) {
                         if(defaultData.length) {
-                            label = defaultData[i][item.field+"_label"] || "";
+                            self.scope.$parent[self.opts.dataName][i][item.field+"_label"] = defaultData[i][item.field+"_label"];
+                            labelBind = sprintf('%s[%d].%s_label', self.opts.dataName, i, field);
                         } else {
-                            label = "";
+                            labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, field);
                         }
                         item.inputType = item.inputType ? item.inputType : "text";
                         html.push(sprintf(self.templates['bills/fields/td.html'], {
@@ -416,7 +419,7 @@
                             tdClass: false !== item.editAble ? "tdEditAble" : "",
                             event: false !== item.editAble ? 'ng-click="billFieldEdit($event.target)"' : "",
                             label: label,
-                            bind: sprintf('%s[%d].%s', self.opts.dataName, i, field)
+                            bind: labelBind
                         }));
                     }
                 });

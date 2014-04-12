@@ -307,7 +307,7 @@ class Workflow {
             "mainrow_id" => $mainRowid
         );
         $hasProcessed = false;
-        if(false === $auto) {
+        if(false === $auto and false) {
             if(0 == $next->currentNode["listorder"]) {
                 $hasProcessed = $this->processModel->where($map)->find();
             } else {

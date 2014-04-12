@@ -67,13 +67,16 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
             return $resource(cnf.BSU + "jxc/outside/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
     .factory("StockProductsRes", ["$resource", "erp.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/stockProductList/:id.json");
+            return $resource(cnf.BSU + "jxc/stockProductList/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("GoodsCategoryRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goodsCategory/:id.json", null, {'update': {method: 'PUT'}});
         }])
+    .factory("StockoutRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/stockout/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
+        }])
     .factory("OrdersRes", ["$resource", "erp.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/orders/:id.json", null, {'update': {method: 'PUT'}});
+            return $resource(cnf.BSU + "jxc/orders/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
     .factory("RelCompanyGroupRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});

@@ -31,7 +31,8 @@ class StockProductListModel extends Model {
         );
         $tmp = $this->where($map)->select();
         foreach($tmp as $t) {
-            $old[$t["factory_code_all"]."-".$t["stock_id"]] = $t["num"];
+            $old[$t["factory_code_all"]."-".$t["stock_id"]]["num"] = $t["num"];
+            $old[$t["factory_code_all"]."-".$t["stock_id"]]["price"] = $t["unit_price"];
         }
         
         foreach($data as $k=>$v) {
@@ -43,10 +44,13 @@ class StockProductListModel extends Model {
 //                
 //            }
 //            print_r($v);exit;
+            //已存在记录
             if(array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $old)) {
-                $num = $v["num"]+$old[$v["factory_code_all"]."-".$v["stock_id"]];
+                $num = $v["num"]+$old[$v["factory_code_all"]."-".$v["stock_id"]]["num"];
+                $unitPrice = $old[$v["factory_code_all"]."-".$v["stock_id"]]["price"];
             } else {
                 $num = $v["num"];
+                $unitPrice = $v["price"];
             }
             $saveData = array(
                 "factory_code_all" => $v["factory_code_all"],
@@ -54,7 +58,8 @@ class StockProductListModel extends Model {
                 "stock_id" => $v["stock_id"],
                 "color_id" => $v["color_id"],
                 "standard_id" => $v["standard_id"],
-                "num" => $num
+                "num" => $num,
+                "unit_price" => $unitPrice
             );
             $rs = $this->add($saveData, array(), true);
 //            echo $this->getLastSql();exit;

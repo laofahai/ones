@@ -106,7 +106,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
                     return false;
                 }
-                
                 for(var i=0;i<selectedItems.length;i++) {
                     res.doWorkflow({
                         workflow: true,

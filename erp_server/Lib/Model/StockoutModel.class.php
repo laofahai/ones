@@ -29,32 +29,41 @@ class StockoutModel extends CommonModel {
             return false;
         }
         $data = array(
+            "bill_id"   => uniqid("CK"),
             "source_id" => $sourceId,
             "source_model" => $sourceModelName,
-            "stock_id" => $source[$sourceStockIdFeild],
+//            "stock_id" => $source[$sourceStockIdFeild],
             "total_num"=> $source["total_num"],
             "subject"  => $source["subject"],
             "dateline" => CTS,
-            "source_user_id" => $source[$sourceUidField]
+//            "source_user_id" => $source[$sourceUidField]
         );
         $this->startTrans();
-        
+   
         $stockoutId = $this->add($data);
+//        echo $this->getLastSql();exit;             
+        if(!$stockoutId) {
+            $this->rollback();
+            return false;
+        }
+        
 //        echo $this->getLastSql();exit;
 //        echo $stockoutId;exit;
         $stockoutDetail = D("StockoutDetail");
         $sourceDetail = D($sourceModelName."Detail");
         $details = $sourceDetail->where($sourceDetailForeignKey."=".$sourceId)->select();
-//        echo $sourceDetail->getLastSql();exit;
+
         if(!$details) {
-            //@todo
+//            echo $sourceDetail->getLastSql();exit;
+            $this->rollBack();
             return false;
         }
         foreach($details as $d) {
             $data = array(
-//                "source_id" => $sourceId,
-                "stockout_id" => $stockoutId,
-                "source_row_id" => $d["id"]
+                "goods_id" => $d["goods_id"],
+                "factory_code_all" => $d["factory_code_all"],
+                "stock_id" => 0,
+                "stockout_id" => $stockoutId
             );
             $rs = $stockoutDetail->add($data);
             if(!$rs) {
@@ -63,12 +72,7 @@ class StockoutModel extends CommonModel {
             }
         }
         
-        if(!$stockoutId) {
-            $this->rollBack();
-            return false;
-        } else {
-            $this->commit();
-        }
+        $this->commit();
         
         return $stockoutId;
     }
