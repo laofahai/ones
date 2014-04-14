@@ -382,7 +382,7 @@
                             html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s">0</td>', 
                                 {
                                     field: field,
-                                    dataBind: "formMetaData.total_"+field
+                                    dataBind: item.cellFilter ? "formMetaData.total_"+field + "|"+item.cellFilter : "formMetaData.total_"+field
                                 }));
                         } else {
                             html.push("<td></td>");
@@ -413,6 +413,11 @@
                         } else {
                             labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, item.labelField ? field+"_label" : field);
                         }
+                        //过滤器
+                        if(item.cellFilter) {
+                            labelBind = sprintf("%s|%s", labelBind, item.cellFilter);
+                        }
+                        
                         item.inputType = item.inputType ? item.inputType : "text";
                         html.push(sprintf(self.templates['bills/fields/td.html'], {
                             field: field,
@@ -460,22 +465,28 @@
                             }
                         }
                     }
+                    
 
                     //支持的事件列表
                     var eventsList = ["blur", "click", "keydown", "focus", "change"];
-                    var events = {};
+                    var events = [];
                     angular.forEach(eventsList, function(e){
                         var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
+//                        console.log(m);
                         if(m in scope.$parent) {
-                            events["ng-"+e] = m;
+                            events.push(sprintf("%s:'%s($event)'", e, m));
                         } else {
                             m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
                             if(m in scope.$parent) {
-                                events["ng-"+e] = m;
+                                events.push(sprintf("%s:'%s($event)'", e, m));
                             }
                         }
                     });
-
+                    
+                    if(events.length) {
+                        struct["ui-event"] = sprintf("{%s}", events.join());
+                    }
+                    
                     var html = self.fm.maker.factory(context, struct, scope);
                     html = self.compile(html)(scope.$parent);
                     context.td.append(html);
@@ -564,11 +575,13 @@
                         window.event.returnValue=false;
                     }
                 };
-                scope.$parent.onNumberBlur = function(event) {
-                    var ele = $(event.target);
-                    scope.$parent.billEndEdit(ele.parent(), true);
-                    self.setNumberData(ele, ele.val(), true);
-                };
+                if(scope.$parent.onNumberBlur === undefined) {
+                    scope.$parent.onNumberBlur = function(event) {
+                        var ele = $(event.target);
+                        scope.$parent.billEndEdit(ele.parent(), true);
+                        self.setNumberData(ele, ele.val(), true);
+                    };
+                }
                 scope.$parent.onNumberKeydown = function(event) {
                     if(event.keyCode == 9 && !event.shiftKey) {
                         window.event.returnValue=false;
@@ -598,7 +611,7 @@
                 scope.$parent.onSelect2Keydown = function(event) {
                     console.log(arguments);
                 }
-                scope.$parent.onStockBlur = function(event){
+                scope.$parent.onStockSelect3Blur = function(event){
 //                    console.log(self);
                     console.log(arguments);return;
 //                    self.scope.$parent.onTypeaheadBlur(event);
@@ -813,6 +826,10 @@
                     'blur': "'doSelect3Blur($event)'",
                     'keydown': "'doSelect3Keydown($event)'"
                 };
+//                if(this.opts["ui-event"]) {
+//                    console.log($.parseJSON(this.opts["ui-event"]));
+//                }
+                
                 events = $.extend(events, this.opts.events);
                 var attrs = [
                     ["ui-event", angular.toJson(events).replace(/"/g, "")],
@@ -977,10 +994,8 @@
                     if(!keepFocus && self.opts.autoHide) {
 //                        $(".select3Input").addClass("hide");
                     }
-                    setTimeout(function(){
-                        $("#select3Container").remove();
-                        self.scope.select3Items = [];
-                    },200);
+                    $("#select3Container").remove();
+                    self.scope.select3Items = [];
                 };
                 
                 this.scope.doSelect3Click = function($event) {

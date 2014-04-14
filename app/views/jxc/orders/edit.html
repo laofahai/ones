@@ -1,9 +1,11 @@
 <pageactions></pageactions>
+{{formMetaData}}
 <div class="billContainer">
     <form name="ordersScript" ng-keydown="doKeydown($event);" novalidate>
         <div class="billHeader">
             <div class="row">
                 <div class="col-sm-3" id="abc">
+                    <label ng-bind="i18n.lang.customer"></label>:
                     <inputfield config="customerSelectOpts"></inputfield>
                 </div>
                 <div class="col-sm-3">
@@ -44,22 +46,28 @@
         </div>
         <div class="billFooter clearfix">
             <div class="row form-group">
-                <label class="col-sm-1 text-right" ng-bind="i18n.lang.total_price_real"></label>
+                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.total_price_real"></label>
                 <div class="col-sm-2">
                     <input type="text" ng-model="formMetaData.total_amount_real" class="input-medium text-right" />
                 </div>
-                <label class="col-sm-1 text-right" ng-bind="i18n.lang.memo"></label>
-                <div class="col-sm-8">
-                    <input type="number" ng-model="formMetaData.memo" class="width-100" />
+                <label class="col-sm-1" ng-bind="formMetaData.total_amount_real|currency:'￥'"></label>
+                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.rmbToBig"></label>
+                <label class="col-sm-4" ng-bind="formMetaData.total_amount_real|rmbToBig"></label>
+                
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.memo"></label>
+                <div class="col-sm-11">
+                    <input type="text" ng-model="formMetaData.memo" class="width-100" />
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-sm-1 text-right">
+                <label class="col-sm-1 text-right bolder">
                     {{i18n.lang.sponsor}}
-                </div>
-                <div class="col-sm-9">
+                </label>
+                <label class="col-sm-9">
                     <span ng-bind="$parent.userInfo.truename"></span>
-                </div>
+                </label>
                 <div class="col-sm-2 text-right">
                     <button type="button" class="btn btn-sm btn-primary" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
                 </div>

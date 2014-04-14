@@ -16,6 +16,7 @@ angular.module("erp.jxc.services", [])
                     measure: {},
                     price: {
                         inputType: "number",
+                        cellFilter: "currency:'￥'",
                         value: 0
                     },
                     goods_category_id: {
@@ -380,7 +381,8 @@ angular.module("erp.jxc.services", [])
                         },
                         goods_id: {
                             displayName: i18n.goods,
-                            inputType: "select2",
+                            labelField: true,
+                            inputType: "select3",
                             dataSource: GoodsRes,
                             valueField: "combineId",
                             nameField: "combineLabel",
@@ -390,10 +392,14 @@ angular.module("erp.jxc.services", [])
                         standard: {
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select",
+                            labelField: true,
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
                             queryParams: {
                                 fieldAlias: "standard"
                             }
@@ -401,10 +407,14 @@ angular.module("erp.jxc.services", [])
                         version: {
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            labelField: true,
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
                             queryParams: {
                                 fieldAlias: "version"
                             }
@@ -419,10 +429,12 @@ angular.module("erp.jxc.services", [])
                         },
                         unit_price: {
                             inputType: "number",
-                            "ui-event": "{blur: 'afterUnitPriceBlur($event)'}"
+                            "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
+                            cellFilter: "currency:'￥'"
                         },
                         amount: {
                             inputType: "number",
+                            cellFilter: "currency:'￥'",
                             totalAble: true
                         },
                         memo: {}

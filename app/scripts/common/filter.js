@@ -17,12 +17,10 @@ angular.module("erp.common.filters", [])
 //            };
 //            return filterfun;
         })
-        .filter("highlight", function() {
-            return function(str, search) {
-                if (!str) {
-                    return;
-                }
-                return str.replace(search, sprintf('<strong>%s</strong>', search));
+        .filter("rmbToBig", function() {
+            return function(amount) {
+                amount = amount || 0.00;
+                return rmbToBig(amount);
             };
         })
         .filter('propsFilter', function() {

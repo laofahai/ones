@@ -17,6 +17,14 @@ class LoginAction extends CommonAction {
         $this->doLogin();
     }
     
+    public function index() {
+        $this->doLogout();
+    }
+    
+    private function doLogout() {
+        session_destroy();
+    }
+    
     private function doLogin() {
         
         if(IS_POST) {

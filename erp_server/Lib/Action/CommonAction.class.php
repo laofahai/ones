@@ -28,6 +28,7 @@ class CommonAction extends RestAction {
         import("@.Workflow.Workflow");
         import("@.ORG.Auth");
         if ($_SERVER["HTTP_SESSIONHASH"]) {
+//            session_destroy();
             session_id($_SERVER["HTTP_SESSIONHASH"]);
         }
         
@@ -36,6 +37,8 @@ class CommonAction extends RestAction {
         if(!$_REQUEST) {
             $_REQUEST = array_merge($_GET, $_POST);
         }
+        
+        $this->checkPermission();
     }
 
     protected function isLogin() {
@@ -43,8 +46,12 @@ class CommonAction extends RestAction {
     }
     
     protected function loginRequired() {
-        if (!$this->isLogin() and !in_array(MODULE_NAME . "." . ACTION_NAME, C("AUTH_CONFIG.AUTH_DONT_NEED"))) {
-            header('HTTP/1.1 401 Unauthorized');
+//        var_dump($_SESSION);
+//        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
+        if (!$this->isLogin() and 
+                !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME), 
+                        C("AUTH_CONFIG.AUTH_DONT_NEED"))) {
+            $this->httpError(401);
         }
     }
     
@@ -64,9 +71,11 @@ class CommonAction extends RestAction {
         if($action == "doWorkflow") {
             return true;
         }
-//        echo $rule;exit;
+        
         if(!$auth->check($rule, $_SESSION["user"]["id"])){
-            $this->error(L("Login_Required"));
+            return;
+            echo $rule;exit;
+//            $this->loginRequired();
         }
     }
     
@@ -119,6 +128,7 @@ class CommonAction extends RestAction {
             $model = $model->limit(10);
         }
         $list = $model->select();
+//        echo $model->getLastSql();exit;
 //        print_r($list);
         if($return) {
             return $list;

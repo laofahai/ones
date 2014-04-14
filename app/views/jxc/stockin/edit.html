@@ -1,5 +1,4 @@
 <pageactions></pageactions>
-{{formData}}
 <div class="billContainer">
     <form name="stockinScript" ng-keydown="doKeydown($event);" novalidate>
         <div class="billHeader">
@@ -56,11 +55,11 @@
                 <div class="col-sm-1 text-right">
                     {{i18n.lang.sponsor}}
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-10">
                     <span ng-bind="$parent.userInfo.truename"></span>
                 </div>
-                <div class="col-sm-7">
-                    <button type="button" class="btn btn-sm btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
+                <div class="col-sm-1 text-right">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
                 </div>
             </div>
         </div>

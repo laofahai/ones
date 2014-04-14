@@ -168,8 +168,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         field: "customer_id"
                     },
                     fieldDefine: {
-                        "ui-event": "{blur: 'afterNumBlur($event)'}",
-                        inputType: "select2",
+//                        "ui-event": "{blur: 'afterNumBlur($event)'}",
+                        inputType: "select3",
                         "ng-model": "formMetaData.customer_id",
                         dataSource: RelCompanyRes
                     }
@@ -194,7 +194,11 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                             id: $scope.formMetaData.customer_id
                         }, function(data){
                             data.discount = parseInt(data.discount);
-                            $scope.formMetaData.customerInfo = data;
+                            $scope.formMetaData.customerInfo = {
+                                id: data.id,
+                                name: data.name,
+                                discount: parseInt(data.discount)
+                            };
                         });
                     }
                 });
@@ -207,9 +211,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     discount = discount == undefined || 100;
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
                 };
-                
-                $scope.afterNumBlur = function(event){
-                    
+                $scope.onNumberBlur = function(event){
                     var context = getInputContext(event.target);
                     
                     if($scope.formData[context.trid] && $scope.formData[context.trid].goods_id) {
@@ -226,7 +228,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
                 };
                 
-                $scope.afterUnitPriceBlur = function(event){
+                $scope.onUnitPriceBlur = function(event){
                     var context = getInputContext(event.target);
                     countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
                 };
@@ -435,7 +437,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 $scope.doSubmit = function(){
                     var url = cnf.BSU+'JXC/StockProductList/Export';
-                    console.log($scope.exportData);
                     if($scope.exportData.stock) {
                         url+= "/stock/"+$scope.exportData.stock.join('_');
                     }

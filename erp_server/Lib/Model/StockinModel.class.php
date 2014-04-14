@@ -24,11 +24,12 @@ class StockinModel extends CommonModel {
      */
     public function newBill($billData, $billItems) {
         if(!$billItems) {
-            return;
+            echo 222;exit;
+            return false;
         }
-        
         $this->startTrans();
         $billId = $this->add($billData);
+//        echo $this->getLastSql();exit;
 //        echo $billId;exit;
         $itemsModel = D("StockinDetail");
         foreach($billItems as $billItem) {
@@ -36,7 +37,8 @@ class StockinModel extends CommonModel {
 //            print_r($billItem);
             $id = $itemsModel->add($billItem);
             if(!$id) {
-//                echo $itemsModel->getLastSql();
+                echo 123;exit;
+                echo $itemsModel->getLastSql();
 //                var_dump($id);
                 $this->rollback();
                 return false;

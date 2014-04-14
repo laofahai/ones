@@ -74,6 +74,14 @@ var ERP = angular.module('erp', [
  * */
 ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "ComView", "WorkflowNodeRes",
         function($scope, $rootScope, $location, $http, conf, ComView, WorkflowNodeRes) {
+            
+            $scope.$watch(function(){
+                return $location.$$url;
+            }, function(){
+                $scope.currentURI = encodeURI(encodeURIComponent($location.$$url));
+            });
+            
+            
             if (!loginHash) {
                 window.location.href = 'index.html';
             }

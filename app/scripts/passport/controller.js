@@ -58,7 +58,17 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
                 templateUrl: 'views/common/edit.html',
                 controller: 'DepartmentEditCtl'
             })
+            .when("/Passport/Logout", {
+                templateUrl: 'views/common/blank.html',
+                controller: 'LogoutCtl'
+            })
         }])
+    .controller("LogoutCtl", ["$scope", "$http", "erp.config", function($scope, $http, conf){
+        $http.get(conf.BSU+"passport/userLogout").success(function(){
+            window.location.href="index.html";
+        });
+        
+    }])
     .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams",
         function($scope, AuthGroupRuleRes, $routeParams){
             $scope.permissionData = [];

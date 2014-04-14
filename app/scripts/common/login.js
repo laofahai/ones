@@ -11,8 +11,8 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','erp.config',
         };
         $scope.error.message = null;
         $scope.loginInfo = {
-            username: null,
-            password: null,
+            username: "administrator",
+            password: "123123",
             remember: false
         };
         $scope.doLogin = function() {

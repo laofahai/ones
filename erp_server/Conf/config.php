@@ -38,7 +38,7 @@ return array(
         'AUTH_RULE' => 'x_auth_rule', //权限规则表
         'AUTH_USER' => 'x_user',//用户信息表
         'AUTH_DONT_NEED' => array(
-            "passport.userLogin"
+            "Passport.Login.insert"
         )
     ),
     

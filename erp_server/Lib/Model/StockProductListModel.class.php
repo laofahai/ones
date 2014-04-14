@@ -35,7 +35,20 @@ class StockProductListModel extends Model {
             $old[$t["factory_code_all"]."-".$t["stock_id"]]["price"] = $t["unit_price"];
         }
         
+        /**
+         * 数据预处理，合并相同项目
+         */
+        $cleanData = array();
         foreach($data as $k=>$v) {
+            if(array_key_exists($v["factory_code_all"], $cleanData)) {
+                $cleanData[$v["factory_code_all"]]["num"] += $v["num"];
+            } else {
+                $cleanData[$v["factory_code_all"]] = $v;
+            }
+            
+        }
+        
+        foreach($cleanData as $k=>$v) {
 //            $tmp = $this->where("factory_code_all='{$v["factory_code_all"]}'")->find();
 //            //已存在记录，update
 //            if($tmp) {
@@ -52,6 +65,7 @@ class StockProductListModel extends Model {
                 $num = $v["num"];
                 $unitPrice = $v["price"];
             }
+//            print_r($v);
             $saveData = array(
                 "factory_code_all" => $v["factory_code_all"],
                 "goods_id" => $v["goods_id"],
@@ -65,6 +79,7 @@ class StockProductListModel extends Model {
 //            echo $this->getLastSql();exit;
 //            echo 123;exit;
             if(!$rs) {
+                echo $this->getLastSql();exit;
                 return false;
             }
             
