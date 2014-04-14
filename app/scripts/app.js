@@ -31,7 +31,12 @@ var ERP = angular.module('erp', [
         .config(["$httpProvider", function($httpProvider) {
             var interceptor = ['$rootScope', '$q', function(scope, $q) {
                     function success(response) {
-                        return response;
+                        if(parseInt(response.data.error) > 0) {
+                            scope.$broadcast('event:serverError', response.data.msg);
+                            return $q.reject(response);
+                        } else {
+                            return response;
+                        }
                     }
                     function error(response) {
                         var status = response.status;
@@ -67,8 +72,8 @@ var ERP = angular.module('erp', [
 /**
  * Root Ctrl
  * */
-ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "$modal", "ComView",
-        function($scope, $rootScope, $location, $http, conf, $modal, ComView) {
+ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "ComView", "WorkflowNodeRes",
+        function($scope, $rootScope, $location, $http, conf, ComView, WorkflowNodeRes) {
             if (!loginHash) {
                 window.location.href = 'index.html';
             }
@@ -80,8 +85,9 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 ComView.alert($rootScope.i18n.lang.messages.permissionDenied, "danger");
             });
             
-            $scope.$on("event:serverError", function() {
-                ComView.alert($rootScope.i18n.lang.messages.serverError, "danger");
+            $scope.$on("event:serverError", function(evt, message) {
+                message = message || $rootScope.i18n.lang.messages.serverError;
+                ComView.alert(message, "danger");
             });
             
 //            $scope.openModal = function(controller){
@@ -101,6 +107,20 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
 //                });
 //            };
             
+            $scope.removeDefaultKey = function() {
+                
+            };
+            
+            $scope.assignWorkflowNodes = function(sourceScope){
+                if(sourceScope.workflowAlias) {
+                    WorkflowNodeRes.query({
+                        workflow_alias: sourceScope.workflowAlias,
+                        only_active: true
+                    }).$promise.then(function(data){
+                        sourceScope.workflowActionList = data;
+                    });
+                }
+            };
             
             $scope.doWorkflow = function(event, node_id, selectedItems, res){
                 selectedItems = selectedItems || [];

@@ -22,13 +22,13 @@ class RelationshipCompanyAction extends CommonAction {
         }
     }
     
-    public function index() {
-        $data = parent::index(true);
-        foreach($data as $k=>$v) {
-            $data[$k]["name"] = $v["name"].sprintf('<span>%s</span>', $v["pinyin"]);
-        }
-        
-        $this->response($data);
-    }
+//    public function index() {
+//        $data = parent::index(true);
+//        foreach($data as $k=>$v) {
+////            $data[$k]["name"] = $_REQUEST["typeahead"] ? $v["name"].sprintf('<span>%s</span>', $v["pinyin"]) : $v["name"];
+//        }
+//        
+//        $this->response($data);
+//    }
     
 }

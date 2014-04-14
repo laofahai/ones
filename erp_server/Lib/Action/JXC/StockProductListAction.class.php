@@ -54,9 +54,9 @@ class StockProductListAction extends CommonAction {
         
         $data = $model->where($map)->order("stock_id ASC")->select();
 //        echo $model->getLastSql();
-        print_r($data);exit;
+//        print_r($data);exit;
 //        
-        $this->doExport(sprintf("export_kcqd_%s.xls", date("YmdHis", CTS)), $data);
+        $this->doExport(sprintf("export_kcqd_%s", date("YmdHis", CTS)), $data);
     }
     
 }

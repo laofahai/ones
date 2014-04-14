@@ -32,6 +32,10 @@ class CommonAction extends RestAction {
         }
         
         $this->user = $_SESSION["user"];
+        
+        if(!$_REQUEST) {
+            $_REQUEST = array_merge($_GET, $_POST);
+        }
     }
 
     protected function isLogin() {
@@ -115,7 +119,6 @@ class CommonAction extends RestAction {
             $model = $model->limit(10);
         }
         $list = $model->select();
-//        echo $model->getLastSql();exit;
 //        print_r($list);
         if($return) {
             return $list;
@@ -128,7 +131,7 @@ class CommonAction extends RestAction {
      * 通用REST GET方法
      */
     public function read($return=false) {
-        if("true" === $_GET["workflow"]) {
+        if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }
         
@@ -157,6 +160,11 @@ class CommonAction extends RestAction {
      * 通用REST插入方法
      */
     public function insert() {
+        
+        if($_REQUEST["workflow"]) {
+            return $this->doWorkflow();
+        }
+        
         $name = $this->insertModel ? $this->insertModel : $this->getActionName();
         $model = D($name);
         
@@ -187,6 +195,11 @@ class CommonAction extends RestAction {
      * 更新
      */
     public function update() {
+        
+        if($_REQUEST["workflow"]) {
+            return $this->doWorkflow();
+        }
+        
         $name = $this->updateModel ? $this->updateModel : $this->getActionName();
         $model = D($name);
         
@@ -250,8 +263,8 @@ class CommonAction extends RestAction {
      * 执行工作流节点
      */
     protected function doWorkflow() {
-        $mainRowid = abs(intval($_GET["id"]));
-        $nodeId = abs(intval($_GET["node_id"]));
+        $mainRowid = abs(intval($_REQUEST["id"]));
+        $nodeId = abs(intval($_REQUEST["node_id"]));
         
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
            $this->error("not_allowed");

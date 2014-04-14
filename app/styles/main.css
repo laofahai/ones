@@ -136,10 +136,13 @@ commonform {
     background:#fff !important;
     border:1px solid #4BB8F3;
     border:0;
-    box-shadow:0 1px 2px 1px rgba(0, 0, 0, 0.1) inset !important;
-    box-shadow:none important;
+    box-shadow:0 !important;
     border-radius: 0;
     height:35px;
+    color:#000;
+}
+.billBody input.editAble:focus {
+    box-shadow:0 0px 2px 1px #12a4ed !important;
 }
 
 .chosen-container {
@@ -263,4 +266,35 @@ commonform {
 
 .tdTotalAble {
     font-weight:bold;
+}
+
+
+
+/** select3 */
+.select3Container {
+    position:absolute;
+    z-index:90;
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    border-top:1px solid #ddd;
+    list-style:none;
+    margin:0;
+    padding:0;
+    box-shadow:0 1px 2px 1px #12a4ed !important;
+}
+.select3Container li{
+    height:26px;line-height:26px;overflow:hidden;
+    padding:0 5px;
+    font-size:12px;
+    cursor:pointer;
+    border:1px solid #ddd;
+    border-top:0;border-bottom:0;
+}
+.select3Container li span {
+    display:none;
+}
+.select3Container li.active {
+    background:#2290e5;
+    color:#fff;
+    border-color:#2290e5;
 }

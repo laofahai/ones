@@ -1,7 +1,7 @@
 (function(){
     'use struct';
     angular.module("erp.formMaker", [])
-    .service("FormMaker", ["$compile", "$q", function($compile, $q) {
+    .service("FormMaker", ["$compile", "$q", "$parse", function($compile, $q, $parse) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -17,16 +17,16 @@
                 'fields/email': '<input type="number" %s />',
                 'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
-//                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" %(event)s theme="selectize" reset-search-input="false" %(attrs)s>'+
-//                                    '<match ng-bind-html="$select.selected.label"></match>'+
-//                                    '<choices refresh="%(method)s_refresh($select.search)" refresh-delay="0" repeat="%(data)s in %(method)s | filter: $select.search">'+
-//                                      '<div ng-bind-html="%(data)s.label"></div>'+
-//                                    '</choices>'+
-//                                  '</ui-select>',
-                "fields/select2": '<select %(attr)s '+
-                        'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
-                        'search_contains="true" '+
-                        'ui-select><option><option></select>',
+                'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" %(event)s theme="selectize" reset-search-input="false" %(attrs)s>'+
+                                    '<match ng-bind-html="$select.selected.label"></match>'+
+                                    '<choices refresh="%(method)s_refresh($select.search)" refresh-delay="0" repeat="%(data)s in %(method)s | filter: $select.search">'+
+                                      '<div ng-bind-html="%(data)s.label"></div>'+
+                                    '</choices>'+
+                                  '</ui-select>',
+//                "fields/select2": '<select ngyn-select2 %(attrs)s '+
+//                        'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
+//                        'search_contains="true" '+
+//                        'ui-select><option><option></select>',
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
@@ -75,7 +75,6 @@
                 if (method in this) {
                     html = this[method](context.field, fieldDefine, $scope);
                 }
-                
                 if(html && this.opts.compile) {
                     html = $compile(html)($scope);
                 }
@@ -177,6 +176,15 @@
 
 
             },
+            _select3: function(name, fieldDefine, $scope) {
+                var key = name+"Select3Config";
+                fieldDefine.dataName = this.opts.dataName
+                $scope.$parent[key] = {
+                    name: name,
+                    fieldDefine: fieldDefine
+                };
+                return sprintf('<select3 config="%s"></select3>', key);
+            },
             _select2: function(name, fieldDefine, $scope) {
                 var methodName = name + "DataSource";
                 var nameField = fieldDefine.nameField || "name";
@@ -223,21 +231,12 @@
                     label: nameField,
                     model: fieldDefine["ng-model"],
                     event: fieldDefine["ui-event"] ? sprintf('ui-event="%s"', fieldDefine["ui-event"]) : "",
-                    attr: this._attr(name, fieldDefine)
+                    attrs: this._attr(name, fieldDefine)
 //                    dataSource: dataSourceName
                 });
                 
 //                console.log(html);
                 return html;
-                /*
-                <ui-select ng-model="formData[0].goods_id" 
-                theme="selectize" reset-search-input="false">
-                <match>{{$select.selected.combineLabel}}</match>
-                <choices refresh="goods_idDataSource_refresh" refresh-delay="0" 
-                repeat="goods_id in goods_idDataSource | filter: $select.search">
-                <div ng-bind-html="goods_id.combineLabel | highlight: $select.search">
-                </div></choices></ui-select> 
-                */
                 
             },
             _typeahead: function(name, fieldDefine, $scope) {
@@ -403,10 +402,16 @@
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble!==false) {
                         if(defaultData.length) {
-                            self.scope.$parent[self.opts.dataName][i][item.field+"_label"] = defaultData[i][item.field+"_label"];
-                            labelBind = sprintf('%s[%d].%s_label', self.opts.dataName, i, field);
+                            var curRowData = self.scope.$parent[self.opts.dataName][i];
+                            //判断返回数据中是否有_label显示的字段
+                            if(item.field+"_label" in curRowData) {
+                                curRowData[item.field+"_label"] = defaultData[i][item.field+"_label"];
+                                labelBind = sprintf('%s[%d].%s_label', self.opts.dataName, i, field);
+                            } else {
+                                labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, field);
+                            }
                         } else {
-                            labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, field);
+                            labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, item.labelField ? field+"_label" : field);
                         }
                         item.inputType = item.inputType ? item.inputType : "text";
                         html.push(sprintf(self.templates['bills/fields/td.html'], {
@@ -469,9 +474,9 @@
                                 events["ng-"+e] = m;
                             }
                         }
-                    }); 
+                    });
 
-                    var html = self.fm.maker.factory(context, struct, scope, events);
+                    var html = self.fm.maker.factory(context, struct, scope);
                     html = self.compile(html)(scope.$parent);
                     context.td.append(html);
                     
@@ -716,7 +721,9 @@
             
             $scope.$parent.doKeydown = function(event){
                 if(event.keyCode == 13) {
-                    $scope.$parent.doSubmit();
+                    event.preventDefault();
+                    event.stopPropagation();
+//                    $scope.$parent.doSubmit();
                 }
             };
             
@@ -775,6 +782,221 @@
                 });
             }
 
+        };
+        
+        
+        /**
+         * select3字段
+         * */
+        service.select3 = function($scope){
+            this.defaultOpts = {
+                autoQuery: false,
+                inputTpl: '<input type="text" ng-model="%(model)s_label" %(attr)s /><input type="hidden" ng-model="%(model)s" />',
+                selectTpl: '<ul class="select3Container" id="select3Container">'+
+                        '<li ng-repeat="s3it in select3Items" ng-class="{active:$index==selectedItem}" data-value="{{s3it.value}}" ng-bind="s3it.label" ui-event="%(events)s"></li>'+
+                        '</ul>'
+            };
+            var defaultOpts = {};
+            $.extend(defaultOpts, this.defaultOpts);
+            
+            $scope.$parent.select3Configs = $scope.$parent.select3Configs || {};
+            $scope.$parent.select3Configs[$scope.config.fieldDefine.field] = $scope.config.fieldDefine;
+            this.opts = $.extend(defaultOpts, $scope.$parent.select3Configs[$scope.config.fieldDefine.field]);
+            this.scope = $scope;
+        };
+        service.select3.prototype = {
+            makeHTML: function(){
+                this.bindEvents();
+                //绑定输入框事件
+                var events = {
+                    'focus': "'doSelect3Focus($event)'",
+                    'blur': "'doSelect3Blur($event)'",
+                    'keydown': "'doSelect3Keydown($event)'"
+                };
+                events = $.extend(events, this.opts.events);
+                var attrs = [
+                    ["ui-event", angular.toJson(events).replace(/"/g, "")],
+                    ["class", "select3Input editAble"],
+                    ["data-field", this.opts.field]
+                ];
+                var attrHTML = [];
+                angular.forEach(attrs, function(item){
+                    attrHTML.push(sprintf('%s="%s"', item[0], item[1]));
+                });
+                
+                var html = sprintf(this.opts.inputTpl, {
+                    attr: attrHTML.join(" "), 
+                    model: this.opts["ng-model"]
+                });
+                return html;
+            },
+            bindEvents: function(){
+                var self = this;
+                this.scope.$parent.doSelect3Focus = function($event){
+                    var defaultOpts = {};
+                    $.extend(defaultOpts, self.defaultOpts);
+                    self.opts = $.extend(defaultOpts, self.scope.$parent.select3Configs[$($event.target).data("field")]);
+                    
+                    var val = $event.target.value;
+                    if(self.opts.autoReset || (!val && self.opts.autoQuery)) {
+                        val = "_";
+                    }
+                    if(val) {
+                        self.scope.$parent.doSelect3Query(val);
+                    }
+                };
+                
+                this.scope.$parent.doSelect3Keydown = function($event){
+                    var Keys = {
+                        Enter: 13,
+                        Tab: 9,
+                        Up: 38,
+                        Down: 40,
+                        Escape: 27
+                    };
+                    //监听键盘事件
+                    setTimeout(function(){
+                        switch($event.keyCode) {
+                            case Keys.Enter:
+                                if(!$("#select3Container li").length) {
+                                    return false;
+                                }
+                                
+                                self.scope.setValue($("#select3Container li.active"));
+                                
+//
+//                                $parse(self.opts["ng-model"]).assign(value, self.scope);
+//                                $(".select3Input:focus").next().val(value);
+                                break;
+                            case Keys.Tab:
+                            case Keys.Escape:
+                                self.scope.$parent.hideSelect3Options();
+                                break;
+                            case Keys.Up:
+                                if(!self.scope.select3Items.length) {
+                                    return;
+                                }
+                                if(self.scope.selectedItem-1 < 0) {
+                                    self.scope.selectedItem = self.scope.select3Items.length-1;
+                                } else {
+                                    self.scope.selectedItem--;
+                                }
+                                break;
+                            case Keys.Down: 
+                                if(!self.scope.select3Items.length) {
+                                    return;
+                                }
+                                if(self.scope.selectedItem+1 >= self.scope.select3Items.length) {
+                                    self.scope.selectedItem = 0;
+                                } else {
+                                    self.scope.selectedItem++;
+                                }
+                                break;
+                            default:
+                                if($($event.target).is("input")) {
+                                    self.scope.$parent.doSelect3Query($event.target.value);
+                                }
+                                break;
+                        }
+                    });
+                };
+                this.scope.$parent.doSelect3Query = function(val){
+                    self.scope.select3Items = [];
+                    //非数组形式数据源
+                    if(!angular.isArray(self.opts.dataSource)) {
+                        if(!$.trim(val)) {
+                            self.scope.$parent.hideSelect3Options(true);
+                            return;
+                        }
+                        var queryParams = self.opts.queryParams || {};
+                        queryParams.typeahead = $.trim(val);
+                        if('queryWithExistsData' in self.opts) {
+                            angular.forEach(self.opts.queryWithExistsData, function(qItem){
+                                queryParams[qItem] = self.opts["data-row-index"] !== undefined
+                                                    ? self.scope.$parent[self.opts.dataName][self.opts["data-row-index"]][qItem]
+                                                    : self.scope.$parent[self.opts.dataName][qItem];
+                            });
+                        }
+                        self.opts.dataSource.query(queryParams).$promise.then(function(data){
+                            if(data.length < 1) {
+                                self.scope.$parent.hideSelect3Options(true);
+                                console.log('no result');
+                                return;
+                            }
+                            angular.forEach(data, function(item){
+                                self.scope.select3Items.push({
+                                    label: item[self.opts.nameField || "name"],
+                                    value: item[self.opts.valueField || "id"]
+                                });
+                            });
+                            self.scope.$parent.displaySelect3Options();
+                        });
+                    } else {
+                        if(self.opts.dataSource.length < 1) {
+                            //@todo no result
+                            self.scope.$parent.hideSelect3Options(true);
+                            console.log('no result');
+                            return;
+                        }
+                        angular.forEach(self.opts.dataSource, function(item){
+                            self.scope.select3Items.push({
+                                label: item[self.opts.nameField || "name"],
+                                value: item[self.opts.valueField || "id"]
+                            });
+                        });
+                        self.scope.$parent.displaySelect3Options();
+                    }
+                };
+                
+                this.scope.$parent.doSelect3Blur = function(){
+                    self.scope.$parent.hideSelect3Options();
+                };
+                
+                this.scope.$parent.displaySelect3Options = function(){
+                    if($("#select3Container").length) {
+                        return;
+                    }
+                    var selectHTML = sprintf(self.opts.selectTpl, {
+                        events: "{keydown:'doSelect3Keydown($event)', click:'doSelect3Click($event)'}"
+                    });
+                    var selectHTMLCompiled = $compile(selectHTML)(self.scope);
+                    $("body").append(selectHTMLCompiled);
+                    var currentInput = $(".select3Input:focus");
+                    
+                    $("#select3Container").css({
+                        minWidth: currentInput.outerWidth(),
+                        left: currentInput.offset().left,
+                        top: currentInput.offset().top+currentInput.outerHeight()
+                    });
+                    self.scope.selectedItem = 0;
+                };
+                this.scope.$parent.hideSelect3Options = function(keepFocus){
+                    if(!keepFocus) {
+                        $(".select3Input:focus").blur();
+                    }
+                    if(!keepFocus && self.opts.autoHide) {
+//                        $(".select3Input").addClass("hide");
+                    }
+                    setTimeout(function(){
+                        $("#select3Container").remove();
+                        self.scope.select3Items = [];
+                    },200);
+                };
+                
+                this.scope.doSelect3Click = function($event) {
+                    self.scope.setValue($event.target);
+                };
+                this.scope.setValue = function(element){
+                    var getter = $parse(self.opts["ng-model"]);
+                    getter.assign(self.scope.$parent, $(element).data("value"));
+                    
+                    //label
+                    getter = $parse(self.opts["ng-model"]+"_label");
+                    getter.assign(self.scope.$parent, $(element).text());
+                    
+                    self.scope.$parent.hideSelect3Options();
+                };
+            }
         };
 
         return service;

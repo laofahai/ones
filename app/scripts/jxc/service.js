@@ -190,7 +190,8 @@ angular.module("erp.jxc.services", [])
                         stock: {
                             inputType: "select",
                             required: false,
-                            multiple: true
+                            multiple: true,
+                            dataSource: StockRes
                         },
                         category: {
                             inputType: "select",
@@ -213,13 +214,9 @@ angular.module("erp.jxc.services", [])
                         }
                     };
                     var defer = $q.defer();
-                    StockRes.query(function(data){
-                        struct.stock.dataSource = data;
-                    }).$promise.then(function(){
-                        GoodsCategoryRes.query(function(data){
-                            struct.category.dataSource = data;
-                            defer.resolve(struct);
-                        });
+                    GoodsCategoryRes.query(function(data){
+                        struct.category.dataSource = data;
+                        defer.resolve(struct);
                     });
                     return defer.promise;
                 }
@@ -266,7 +263,8 @@ angular.module("erp.jxc.services", [])
                         },
                         goods_id: {
                             displayName: i18n.goods,
-                            inputType: "select2",
+                            labelField: true,
+                            inputType: "select3",
                             dataSource: GoodsRes,
                             valueField: "combineId",
                             nameField: "combineLabel",
@@ -276,10 +274,14 @@ angular.module("erp.jxc.services", [])
                         standard: {
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            labelField: true,
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
                             queryParams: {
                                 fieldAlias: "standard"
                             }
@@ -287,18 +289,24 @@ angular.module("erp.jxc.services", [])
                         version: {
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            labelField: true,
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
                             queryParams: {
                                 fieldAlias: "version"
                             }
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
-                            inputType: "select2",
+                            inputType: "select3",
                             dataSource: StockRes,
+                            autoQuery: true,
+                            autoHide: true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {
@@ -601,36 +609,18 @@ angular.module("erp.jxc.services", [])
                             primary: true,
                             billAble: false
                         },
+                        factory_code_all: {
+                            editAble: false
+                        },
                         goods_id: {
                             displayName: i18n.goods,
-                            inputType: "select2",
-                            dataSource: GoodsRes,
-                            valueField: "combineId",
-                            nameField: "combineLabel",
-                            listAble: false,
-                            width: 300
+                            editAble: false
                         },
                         standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            inputType: "select2",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
+                            editAble: false
                         },
                         version: {
-                            nameField: "data",
-                            valueField: "id",
-                            inputType: "select2",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
+                            editAble: false
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
@@ -640,14 +630,15 @@ angular.module("erp.jxc.services", [])
                         },
                         store_num: {
                             displayName: i18n.storeNum,
-                            editAble:false,
-                            min: -9999
+                            editAble:false
                         },
                         num: {
                             inputType: "number",
                             totalAble: true
                         },
-                        memo: {}
+                        memo: {
+                            editAble:false
+                        }
 
                     };
 

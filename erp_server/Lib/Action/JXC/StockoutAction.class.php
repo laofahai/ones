@@ -20,7 +20,10 @@ class StockoutAction extends CommonAction {
 //    }
     
     public function read() {
-        
+        if($_GET["workflow"]) {
+            parent::read();
+            return;
+        }
         $model = D("Stockout");
         $data = $model->getStockoutBill($_GET["id"]);
         $this->response($data);

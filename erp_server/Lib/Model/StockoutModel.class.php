@@ -39,11 +39,9 @@ class StockoutModel extends CommonModel {
             $modelIds = array_merge($modelIds, $tmp);
             $v["modelIds"] = $tmp;
             $v["stock"] = $v["stock_id"];
-            $v["memo_label"] = $v["memo"];
             $v["stock_label"] = $v["stock_name"];
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
-            $v["num_label"] = $v["num"];
             $data["rows"][$k] = $v;
             $fca[] = $row["factory_code_all"];
         }
@@ -51,7 +49,7 @@ class StockoutModel extends CommonModel {
         $dataModel = D("DataModelDataView");
         $data["rows"] = $dataModel->assignModelData($data["rows"], $modelIds);
 //        print_r($modelIds);
-//        print_r($data["rows"]);exit;
+//        print_r($data);exit;
         return $data;
     }
     

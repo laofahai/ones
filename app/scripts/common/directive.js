@@ -47,6 +47,28 @@ angular.module("erp.common.directives", ["erp.formMaker"])
                 }
             };
         }])
+        .directive("select3", ["$compile", "FormMaker", function($compile,FormMaker){
+            return {
+                restrict: "E",
+                replace: true,
+                scope: {
+                    config: "="
+                },
+                transclusion: true,
+                compile: function(element, attrs, transclude) {
+                    return {
+                        pre: function($scope, iElement, iAttrs, controller) {
+                            var b = new FormMaker.select3($scope);
+                            setTimeout(function(){
+                                $(iElement).after($compile(b.makeHTML())($scope.$parent));
+                                iElement.remove();
+                            });
+                            
+                        }
+                    };
+                }
+            };
+        }])
         .directive("bill", ["$compile", "FormMaker", function($compile, FormMaker){
             return {
                 restrict: "E",

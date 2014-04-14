@@ -39,6 +39,9 @@ class WorkflowNodeAction extends CommonAction {
             $workflow = $model->getByAlias($_GET["workflow_alias"]);
             $map["workflow_id"] = $workflow["id"];
         }
+        if($_GET["only_active"]) {
+            $map["type"] = array("NOT IN", "2,3");
+        }
     }
     
     protected function _order(&$order) {

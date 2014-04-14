@@ -69,14 +69,22 @@ abstract class WorkflowAbstract implements WorkflowInterface{
         return $rs;
     }
     
-    protected function displayLeaveMemo() {
-        import("@.Form.Form");
-        $form = new Form("WorkflowMemo");
-        $this->view->assign("FormHTML", $form->makeForm(""));
-        $this->view->assign("lang_title", "leave_memo");
-        $this->view->display("../Common/Workflow/leaveMemo");
-        
-        return "wait";
+    //AJAX返回JSON数据，如流程节点中断等
+    protected function response($data) {
+        echo json_encode($data);exit;
+    }
+    
+    protected function error($msg) {
+        $this->response(array(
+            "error" => 1,
+            "msg"   => $msg
+        ));
+    }
+    protected function success($msg) {
+        $this->response(array(
+            "error" => 0,
+            "msg"   => $msg
+        ));
     }
     
     public function checkPermission($condition) {

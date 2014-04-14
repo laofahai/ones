@@ -238,6 +238,7 @@ class Workflow {
             );
             //判断proccess表中是否有数据
             $currentProcess = $this->processModel->where($map)->order("start_time DESC")->find();
+//            print_r($currentProcess);exit;
             unset($map["mainrow_id"]);
             if(!$currentProcess) {
                 $node = $this->nodeModel->where($map)->order("listorder ASC")->limit(1)->find();
@@ -249,8 +250,6 @@ class Workflow {
                 $node = $this->nodeModel->where($map)->order("listorder ASC")->find();
             }
         }
-//        echo $this->nodeModel->getLastSql();exit;
-//        var_dump($node);exit;
         if(!$node and !$ignoreCheck) {
             throw_exception(L("workflow_not_found"));
             return false;
@@ -270,7 +269,7 @@ class Workflow {
         import("@.Workflow.WorkflowAbstract");
         $rs = import($file);
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
-//        echo $className;exit;
+//        echo $className;
         if(!$className or !class_exists($className)) {
             throw_exception(sprintf(L("class_not_found")." %s", $className));
             return false;
@@ -297,7 +296,14 @@ class Workflow {
      *        
      */
     public function doNext($mainRowid, $nodeId="", $ignoreCheck=false, $auto=true) {
+        
         $next = $this->getCurrentNode($mainRowid, $nodeId, $ignoreCheck);
+        
+//        var_dump($next) ;
+//        if($this->workflowAlias == "order"){
+//            var_dump($next);exit;
+//        }
+        
         if(!$next) {
             return false; //@todo
         }
@@ -342,6 +348,7 @@ class Workflow {
         
 //        var_dump($next);
         $context = $next->context ? $next->context : $this->context;
+//        var_dump($rs);exit;
         if(true === $rs or !$rs) {
             $this->afterRun($mainRowid, $next->currentNode["id"], $context, $next);
         }

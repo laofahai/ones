@@ -17,70 +17,66 @@ class StockoutConfirmStockout extends WorkflowAbstract {
      * 2、修改出库单状态
      */
     public function run() {
-        if(!IS_POST) {
+        if(!$_REQUEST["donext"]) {
             $data = array(
                 "type" => "redirect",
-                "location" => "/doWorkflow/Stockout/confirm/".$this->mainrowId
+                "location" => sprintf("/doWorkflow/Stockout/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
             );
-            echo json_encode($data);
-//            $map = array(
-//                "source_id" => $this->context['sourceId'],
-//                "source_model" => $this->context['sourceModel']
-//            );
-//            $theStockout = D("Stockout")->where($map)->find();
-//            $viewModel = D("Stockout{$this->context['sourceModel']}Relation");
-//            $thePaper = $viewModel->relation(true)->find($this->mainrowId);
-////            print_r($thePaper);exit;
-//            $paperDetail = D("Stockout".$thePaper["source_model"]."DetailView");
-//            $thePaperDetail = $paperDetail->where("StockoutDetail.stockout_id=".$this->mainrowId)->group("StockoutDetail.id")->select();
-////            echo $paperDetail->getLastSql();exit;
-//
-//            $this->view->assign("lang_title", "confirm_stockout");
-//            $this->view->assign("list", $thePaperDetail);
-//            $this->view->assign("thePaper", $thePaper);
-//            $this->view->display("../Common/Workflow/Stockout/confirmStockout");
-
-            return "wait";
+            $this->response($data);
         }
         
-        $sourceDetail = D($this->context['sourceModel']."DetailView");
-        $details = $sourceDetail->where($this->context['sourceMainrowField']."=".$this->context['sourceId'])->select();
-        if(!$details) {
-            echo "nothings";exit;
-            //@todo 单据中无数据
-        }
         
+        
+        //减少库存
+        $data = $_POST["data"];
         $stockout = D("Stockout");
+        $detailModel = D("StockoutDetailView");
+        
+//        print_r($details);exit;
+        $stockout->startTrans();
+        
+        //更新出库单信息
         $theStockout = $stockout->where("id=".$this->mainrowId)->find();
         $stockout->where("id=".$this->mainrowId)->save(array(
+            "memo"   => $data["memo"],
             "status" => 1,
             "outtime" => CTS,
             "stock_manager" => getCurrentUid()
-        )); //@todo 
-//        echo $stockout->getLastSql();exit;
-        $stockout->startTrans();
+        ));
+        //获取当前需要的库存数量
         //减少库存
         $storeProduct = D("StockProductList");
         $success = true;
-        foreach($details as $k=>$v) {
-            if($v["store_num"] < $v["num"]) {
-                $success = false;
+        foreach($data["rows"] as $k=>$v) {
+            if(!$v["stock"]) {
                 $stockout->rollback();
-                //@todo 库存不足
-                //echo "not_full";exit;
-                break;
+                $this->error("请选择出库仓库");
             }
-            
-            $storeProduct->where("id=".$v["stock_product_id"])->setDec("num", $v["num"]);
+            $storeProduct->where(array(
+                "factory_code_all" => $v["factory_code_all"],
+                "stock_id" => $v["stock"]
+            ))->setDec("num", $v["num"]);
+//            echo $storeProduct->getLastSql();exit;
         }
-        if($success) {
-            $stockout->commit();
-        } 
-        //进行订单流程，查看订单状态
+//        if(!$success) {
+//            $this->error(sprintf("%s %s %s", $nfFca, $nfName, L("store_num_not_full")));
+//        }
+        
+        //不允许负数库存存在, 库存自动清零
+        //@todo 判断库存数量
+        if(!DBC("allow_negative_store")) {
+            $storeProduct->where("num<0")->save(array(
+                "num" => 0
+            ));
+        }
+//        $stockout->commit();
+        //自动执行外部下一工作流程，查看订单状态
 //        import("@.Workflow.Workflow");
+        
         $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
 //        var_dump($workflow);exit;
         $workflow->doNext($theStockout["source_id"], "", true);
+        
     }
     
 }

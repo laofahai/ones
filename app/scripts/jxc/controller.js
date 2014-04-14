@@ -108,17 +108,15 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     })
         }])
         //出库单
-        .controller("StockoutCtl", ["$scope", "StockoutRes", "StockoutModel", "WorkflowNodeRes", "ComView",
-            function($scope, res, model, WorkflowNodeRes, ComView) {
+        .controller("StockoutCtl", ["$scope", "StockoutRes", "StockoutModel", "ComView",
+            function($scope, res, model, ComView) {
                 ComView.makeDefaultPageAction($scope, "JXC/Stockout");
                 ComView.displayGrid($scope, model, res);
                 
                 $scope.workflowAble = true;
                 $scope.workflowAlias= "stockout";
                 
-                WorkflowNodeRes.query({workflow_alias: $scope.workflowAlias}).$promise.then(function(data){
-                    $scope.workflowActionList = data;
-                });
+                $scope.$parent.assignWorkflowNodes($scope);
                 
                 $scope.doWorkflow = function(event, id) {
                     return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, res);
@@ -130,17 +128,14 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.workflowDisabled = false;
             }])
         //订单
-        .controller("JXCOrdersCtl", ["$scope", "OrdersRes", "OrdersModel", "WorkflowNodeRes", "$location", "ComView",
-            function($scope, OrdersRes, OrdersModel, WorkflowNodeRes, $location, ComView) {
+        .controller("JXCOrdersCtl", ["$scope", "OrdersRes", "OrdersModel", "$location", "ComView",
+            function($scope, OrdersRes, OrdersModel, $location, ComView) {
                 ComView.makeDefaultPageAction($scope, "JXC/Orders");
                 ComView.displayGrid($scope, OrdersModel, OrdersRes);
                 
                 $scope.workflowAble = true;
                 $scope.workflowAlias= "order";
-                
-                WorkflowNodeRes.query({workflow_alias: $scope.workflowAlias}).$promise.then(function(data){
-                    $scope.workflowActionList = data;
-                });
+                $scope.$parent.assignWorkflowNodes($scope);
                 
                 $scope.doWorkflow = function(event, id) {
 //                    $scope.selectedItems = [];
@@ -440,6 +435,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 
                 $scope.doSubmit = function(){
                     var url = cnf.BSU+'JXC/StockProductList/Export';
+                    console.log($scope.exportData);
                     if($scope.exportData.stock) {
                         url+= "/stock/"+$scope.exportData.stock.join('_');
                     }

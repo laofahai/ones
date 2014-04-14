@@ -9,7 +9,7 @@
 function getPwd($source) {
     return md5($source);
 }
-
+//用户缓存
 function getUserCache() {
     $userData = F("User/All");
     if (!$userData) {
@@ -34,6 +34,7 @@ function getUserTruenameArray() {
 function toDate($str, $format = "Y-m-d H:i:s") {
     return date($format, $str);
 }
+//根据UID返回用户真实姓名
 function toTruename($uid) {
     if (!$uid) {
         return L("Unnamed");
@@ -41,12 +42,32 @@ function toTruename($uid) {
     $userData = getUserCache();
     return $userData[$uid]["truename"];
 }
+
+//根据UID返回用户名
 function toUsername($uid) {
     if (!$uid) {
         return L("Unnamed");
     }
     $userData = getUserCache();
     return $userData[$uid]["username"];
+}
+
+//数据库字段配置缓存
+function makeDBConfigCache() {
+    $config = F("Config/DB");
+    if (!$config) {
+        $model = D("Config");
+        $tmp = $model->select();
+        foreach ($tmp as $v) {
+            $config[$v["alias"]] = $v["value"];
+        }
+    }
+    return $config;
+}
+//字段配置调用
+function DBC($name="") {
+    $config = makeDBConfigCache();
+    return $name ? $config[$name] : $config;
 }
 
 /**

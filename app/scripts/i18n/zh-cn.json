@@ -242,6 +242,11 @@
             "outside_bill": "外协单",
             "produce_and_install": "生产组装单"
         },
+        "modules": {
+            "Orders": "订单",
+            "Stockin": "入库单",
+            "Stockout": "出库单"
+        },
         "inputType": {
             "text": "单行文本",
             "number": "数字",
