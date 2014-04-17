@@ -1,7 +1,7 @@
 (function(){
     'use struct';
     angular.module("erp.formMaker", [])
-    .service("FormMaker", ["$compile", "$q", "$parse", function($compile, $q, $parse) {
+    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductsRes", function($compile, $q, $parse, StockProductsRes) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -313,6 +313,8 @@
                         '<li ng-repeat="%(v)s in %(data)s" type="typeahead" data-typeahead-value="%(v)s.%(valueField)s" '+
                         'ng-click="billTypeaheadClick($event)">{{%(v)s.%(labelField)s}}</li></ul>'
             };
+            
+            this.opts.storeAPI = StockProductsRes;
 
             this.fm = new service.makeField($scope, {
                 multi: true, //指定为表单绑定多条数据
@@ -472,8 +474,8 @@
                     var events = [];
                     angular.forEach(eventsList, function(e){
                         var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
-//                        console.log(m);
                         if(m in scope.$parent) {
+//                            console.log(m);
                             events.push(sprintf("%s:'%s($event)'", e, m));
                         } else {
                             m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
@@ -486,6 +488,8 @@
                     if(events.length) {
                         struct["ui-event"] = sprintf("{%s}", events.join());
                     }
+                    
+//                    console.log(struct["ui-event"]);
                     
                     var html = self.fm.maker.factory(context, struct, scope);
                     html = self.compile(html)(scope.$parent);
@@ -613,19 +617,24 @@
                 }
                 scope.$parent.onStockSelect3Blur = function(event){
 //                    console.log(self);
-                    console.log(arguments);return;
+//                    console.log(event.target);return;
 //                    self.scope.$parent.onTypeaheadBlur(event);
-                    setTimeout(function(){
-                        var context = getInputContext(event.target);
-                        var tmp = self.scope.$parent[self.opts.dataName][context.trid];
-                        self.opts.res.stockProduct.get({
-                            factory_code_all: sprintf("%s-%s-%s", tmp.goods_id.factory_code, tmp.standard.value, tmp.version.value),
-                            id: self.scope.$parent[self.opts.dataName][context.trid].stock.value
-                        }).$promise.then(function(data){
-                            context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
-            //                self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num;
-                        });
-                    },100);
+                    var context = getInputContext(event.target);
+                    var tmp = self.scope.$parent[self.opts.dataName][context.trid];
+                    var queryParams = {
+                        id: 0,
+                        stock_id: tmp.stock
+                    };
+                    if(tmp.factory_code_all) {
+                        queryParams.factory_code_all = tmp.factory_code_all;
+                    } else {
+                        queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
+                    }
+                    self.opts.storeAPI.get(queryParams).$promise.then(function(data){
+                        self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num || 0;
+//                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
+        //                self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num;
+                    });
                 };
             },
             
@@ -826,9 +835,18 @@
                     'blur': "'doSelect3Blur($event)'",
                     'keydown': "'doSelect3Keydown($event)'"
                 };
-//                if(this.opts["ui-event"]) {
+                if(this.opts["ui-event"]) {
+                    var tmpEvents;
+                    eval('tmpEvents='+this.opts["ui-event"]);
+                    angular.forEach(tmpEvents, function(evt, key){
+                        if(key in events) {
+//                            console.log(events[key].replace(")'", ");"+evt+"'"));
+                            events[key] = events[key].replace(")'", ");"+evt+"'");
+                        }
+                    });
+//                    console.log(events);
 //                    console.log($.parseJSON(this.opts["ui-event"]));
-//                }
+                }
                 
                 events = $.extend(events, this.opts.events);
                 var attrs = [

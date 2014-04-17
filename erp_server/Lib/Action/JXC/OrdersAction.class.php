@@ -59,11 +59,12 @@ class OrdersAction extends CommonAction {
         unset($data["discount"]);
         unset($data["inputTime"]);
         
-        $model = D("OrdersRel");
+        $model = D("Orders");
         $orderId = $model->newOrder($data);
         if(!$orderId) {
             $this->error($model->getError());
         }
+        
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $node = $workflow->doNext($orderId, "", true);

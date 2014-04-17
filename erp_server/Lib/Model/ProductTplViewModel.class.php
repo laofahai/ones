@@ -13,7 +13,7 @@
  */
 class ProductTplViewModel extends CommonViewModel {
     protected $viewFields = array(
-        "ProductTpl" => array("id", "name", "goods_id", "factory_code_all", "memo"),
+        "ProductTpl" => array("id", "goods_id", "factory_code_all", "memo"),
         "Goods" => array("name"=>"goods_name","factory_code", "measure", "_on"=>"Goods.id=ProductTpl.goods_id"),
     );
 }

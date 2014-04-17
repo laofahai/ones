@@ -51,8 +51,11 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("GoodsTplRes", ["$resource", "erp.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/goodsTpl/:id.json", null, {'update': {method: 'PUT'}});
+    .factory("ProductTplRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/productTpl/:id.json", null, {'update': {method: 'PUT'}});
+        }])
+    .factory("ProductTplDetailRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/productTplDetail/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("StockRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stock/:id.json", null, {'update': {method: 'PUT'}});

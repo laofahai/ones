@@ -10,7 +10,7 @@
  * @Description
  * 
  */
-class OrdersDetailModel extends RelationModel {
+class OrdersDetailModel extends CommonModel {
     
     protected $_link = array(
         "Orders" => array(

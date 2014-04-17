@@ -115,7 +115,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                                 if(data.error) {
                                     service.alert(data.msg);
                                 } else {
-                                    $location.url(opts.returnPage);
+//                                    $location.url(opts.returnPage);
                                 }
                             });
                         }
@@ -372,23 +372,23 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                             $scope.$broadcast("bill.dataLoaded", data);
                         });
                     }
+                    
                     $scope.config = opts;
 
                     //默认表单提交方法，可自动判断是否编辑/新建
                     $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
                         var data = $.extend($scope.formMetaData, {rows: $scope[opts.dataName]});
+                        var getParams = {};
+                        for (var k in $routeParams) {
+                            getParams[k] = $routeParams[k];
+                        }
                         if (opts.id) {
-                            var getParams = {};
-                            for (var k in $routeParams) {
-                                getParams[k] = $routeParams[k];
-                            }
                             getParams.id = opts.id;
                             resource.update(getParams, data);
                         } else {
-                            resource.save(data);
+                            resource.save(getParams,data);
                         }
-                        
-//                        $location.url(opts.returnPage);
+                        $location.url(opts.returnPage);
 
                     };
                 };

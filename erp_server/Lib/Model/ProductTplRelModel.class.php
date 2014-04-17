@@ -7,23 +7,20 @@
  */
 
 /**
- * Description of OrdersRelModel
+ * Description of ProductTplRelModel
  *
  * @author nemo
  */
-class OrdersRelModel extends RelationModel {
+class ProductTplRelModel extends RelationModel {
     
-    protected $tableName = "Orders";
+    protected $tableName = "product_tpl";
     
     protected $_link = array(
-        "OrdersDetail" => array(
+        "ProductTplDetail" => array(
             "mapping_type" => HAS_MANY,
-            "class_name" => "OrdersDetail",
-            "mapping_name" => "rows",
-            "foreign_key" => "order_id"
+            "foreign_key"  => "tpl_id",
+            "mapping_name"  => "rows"
         )
     );
-    
-    
     
 }

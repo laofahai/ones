@@ -88,6 +88,10 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/edit.html',
                         controller:  'ProductTplEditCtl'
                     })
+                    .when('/JXC/ProductTpl/viewSub/id/:pid', {
+                        templateUrl: 'views/jxc/productTpl/edit.html',
+                        controller: 'ProductTplDetailCtl'
+                    })
                     //订单
                     .when('/JXC/Orders', {
                         templateUrl: 'views/common/grid.html',
@@ -163,6 +167,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 ComView.displayBill($scope, OrdersEditModel, OrdersRes, {
                     id: $routeParams.id
                 });
+                //客户选择字段定义
                 $scope.customerSelectOpts = {
                     context: {
                         field: "customer_id"
@@ -174,6 +179,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         dataSource: RelCompanyRes
                     }
                 };
+                //销售类型字段定义
                 $scope.typeSelectOpts = {
                     context: {
                         field: "sale_type"
@@ -188,6 +194,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     }
                 };
                 
+                //客户ID变动时 更新当前的折扣率
                 $scope.$watch('formMetaData.customer_id', function(){
                     if($scope.formMetaData.customer_id) {
                         RelCompanyRes.get({
@@ -203,10 +210,12 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     }
                 });
                 
+                //实收金额
                 $scope.$watch('formMetaData.total_amount', function(){
                     $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
                 });
                 
+                //一行总价
                 var countRowAmount = function(index, price, num, discount){
                     discount = discount == undefined || 100;
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
@@ -239,14 +248,34 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.format = $scope.formats[0];
                 
             }])
-        .controller("ProductTplCtl", ["$scope", "GoodsTplRes", "GoodsTplModel", "ComView", function($scope, res, model ,ComView){
+        .controller("ProductTplCtl", ["$scope", "ProductTplRes", "ProductTplModel", "ComView", function($scope, res, model ,ComView){
             ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
+            $scope.viewSubAble = true;
             ComView.displayGrid($scope, model, res);
         }])
-        .controller("ProductTplEditCtl", ["$scope", "GoodsTplRes", "GoodsTplModel", "ComView", function($scope, res, model ,ComView){
+        .controller("ProductTplEditCtl", ["$scope", "ProductTplRes", "ProductTplModel", "ComView", "$routeParams", function($scope, res, model ,ComView, $routeParams){
             ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
-            ComView.displayForm($scope, model, res);
+                ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
+                $scope.selectAble = false;
+                
+                ComView.displayForm($scope, model, res, {
+                    id: $routeParams.id
+                });
+                
+                
+                $scope.formMetaData = {};
         }])
+        .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",
+            function($scope, res, model, ComView, $routeParams){
+                $scope.formMetaData = {};
+                $scope.selectAble = false;
+                $routeParams.id = $routeParams.pid;
+                ComView.displayBill($scope, model, res, {
+                    id: $routeParams.pid,
+                    module: "/JXC/ProductTplDetail",
+                    editExtraParams: "/pid/"+$routeParams.pid
+                });
+            }])
         .controller("StockWarningCtl", ["$scope", "StockWarningRes", "StockWarningModel", "ComView", 
             function($scope, res, model, ComView){
                 $scope.pageActions = [

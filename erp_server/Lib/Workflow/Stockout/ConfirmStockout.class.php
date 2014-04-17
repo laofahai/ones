@@ -31,6 +31,7 @@ class StockoutConfirmStockout extends WorkflowAbstract {
         $data = $_POST["data"];
         $stockout = D("Stockout");
         $detailModel = D("StockoutDetailView");
+        $dm = D("StockoutDetail");
         
 //        print_r($details);exit;
         $stockout->startTrans();
@@ -47,11 +48,20 @@ class StockoutConfirmStockout extends WorkflowAbstract {
         //减少库存
         $storeProduct = D("StockProductList");
         $success = true;
+//        print_r($data["rows"]);exit;
         foreach($data["rows"] as $k=>$v) {
+            if(!$v) {
+                continue;
+            }
             if(!$v["stock"]) {
                 $stockout->rollback();
                 $this->error("请选择出库仓库");
             }
+            $dm->where("id=".$v["id"])->save(array(
+                "stock_id" => $v["stock"],
+//                "memo"     => $v["memo"],
+                "num"      => $v["num"]
+            ));
             $storeProduct->where(array(
                 "factory_code_all" => $v["factory_code_all"],
                 "stock_id" => $v["stock"]
@@ -69,7 +79,7 @@ class StockoutConfirmStockout extends WorkflowAbstract {
                 "num" => 0
             ));
         }
-//        $stockout->commit();
+        $stockout->commit();
         //自动执行外部下一工作流程，查看订单状态
 //        import("@.Workflow.Workflow");
         

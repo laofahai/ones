@@ -486,7 +486,7 @@ angular.module("erp.jxc.services", [])
                         },
                         goods_id: {
                             displayName: i18n.goods,
-                            inputType: "select2",
+                            inputType: "select3",
                             dataSource: GoodsRes,
                             valueField: "combineId",
                             nameField: "combineLabel",
@@ -496,7 +496,7 @@ angular.module("erp.jxc.services", [])
                         standard: {
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
@@ -507,7 +507,7 @@ angular.module("erp.jxc.services", [])
                         version: {
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
@@ -517,7 +517,7 @@ angular.module("erp.jxc.services", [])
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
-                            inputType: "select2",
+                            inputType: "select3",
                             dataSource: StockRes
                         },
                         store_num: {
@@ -537,12 +537,11 @@ angular.module("erp.jxc.services", [])
                     return fields;
                 };
             }])
-        .service("GoodsTplModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope, GoodsRes,DataModelDataRes){
+        .service("ProductTplModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope, GoodsRes,DataModelDataRes){
             return {
                 getFieldsStruct: function(structOnly) {
                     var struct = {
                         id: {primary:true},
-                        name: {},
                         factory_code_all: {
                             hideInForm:true
                         },
@@ -552,7 +551,7 @@ angular.module("erp.jxc.services", [])
                         goods_id: {
                             displayName: $rootScope.i18n.lang.goods,
                             listable: false,
-                            inputType: "select2",
+                            inputType: "select3",
                             dataSource: GoodsRes
                         },
                         measure: {
@@ -562,10 +561,11 @@ angular.module("erp.jxc.services", [])
                             field: "standard_label",
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
                             queryParams: {
                                 fieldAlias: "standard"
                             }
@@ -574,10 +574,11 @@ angular.module("erp.jxc.services", [])
                             field: "version_label",
                             nameField: "data",
                             valueField: "id",
-                            inputType: "select2",
+                            inputType: "select3",
                             editAbleRequire: "goods_id",
                             dataSource: DataModelDataRes,
                             queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
                             queryParams: {
                                 fieldAlias: "version"
                             }
@@ -588,6 +589,95 @@ angular.module("erp.jxc.services", [])
                 }
             };
         }])
+        .service('ProductTplEditModel', ["$rootScope", "StockRes", "GoodsRes", 
+            function($rootScope, StockRes, GoodsRes){
+                return {
+                    getFieldsStruct: function(){
+                        return {
+                            factory_code_all: {
+                                hideInForm:true
+                            },
+                            goods_name: {
+                                hideInForm:true
+                            },
+                            goods_id: {
+                                displayName: $rootScope.i18n.lang.goods,
+                                listable: false,
+                                dataSource: GoodsRes
+                            },
+                            num: {},
+                            stock_id: {
+                                displayName: $rootScope.i18n.lang.stock,
+                                inputType: "select",
+                                dataSource: StockRes
+                            }
+                        };
+                    }
+                };
+            }])
+        .service('ProductTplDetailModel', ["$rootScope", "StockRes", "GoodsRes","DataModelDataRes", 
+            function($rootScope,StockRes,GoodsRes,DataModelDataRes){
+                return {
+                    getFieldsStruct: function() {
+                        var i18n = $rootScope.i18n.lang;
+                        return {
+                            goods_id: {
+                                displayName: i18n.goods,
+                                labelField: true,
+                                inputType: "select3",
+                                dataSource: GoodsRes,
+                                valueField: "combineId",
+                                nameField: "combineLabel",
+                                listAble: false,
+                                width: 300
+                            },
+                            standard: {
+                                nameField: "data",
+                                valueField: "id",
+                                labelField: true,
+                                inputType: "select3",
+                                editAbleRequire: "goods_id",
+                                dataSource: DataModelDataRes,
+                                queryWithExistsData: ["goods_id"],
+                                autoQuery: true,
+                                autoReset: true,
+                                autoHide: true,
+                                queryParams: {
+                                    fieldAlias: "standard"
+                                }
+                            },
+                            version: {
+                                nameField: "data",
+                                valueField: "id",
+                                labelField: true,
+                                inputType: "select3",
+                                editAbleRequire: "goods_id",
+                                dataSource: DataModelDataRes,
+                                queryWithExistsData: ["goods_id"],
+                                autoQuery: true,
+                                autoReset: true,
+                                autoHide: true,
+                                queryParams: {
+                                    fieldAlias: "version"
+                                }
+                            },
+                            stock: {
+                                editAbleRequire: ["goods_id", "standard", "version"],
+                                inputType: "select3",
+                                dataSource: StockRes,
+                                autoQuery: true,
+                                autoHide: true
+    //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
+                            },
+                            num: {
+                                inputType: "number",
+                                totalAble: true
+                            },
+                            memo: {}
+                        };
+                    }
+                };
+            }])
         .service('StockoutModel', ["$rootScope", function($rootScope){
             return {
                 getFieldsStruct: function(){
@@ -636,8 +726,9 @@ angular.module("erp.jxc.services", [])
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
-                            inputType: "select2",
+                            inputType: "select3",
                             dataSource: StockRes,
+                            autoQuery:true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {

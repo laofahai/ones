@@ -24,7 +24,6 @@ class DataModelDataViewModel extends CommonViewModel {
      * @param $sourceData 源多条数据
      */
     public function assignModelData($sourceData, $modelIds) {
-        
         if(false === $modelIds) {
             $modelIds = array();
             foreach($sourceData as $k=>$v) {
@@ -38,7 +37,6 @@ class DataModelDataViewModel extends CommonViewModel {
                 $sourceData[$k]["modelIds"] = $tmp;
             }
         }
-        
         if(empty($modelIds)) {
             return $sourceData;
         }
@@ -52,6 +50,7 @@ class DataModelDataViewModel extends CommonViewModel {
             $modelData[$v["id"]] = $v;
         }
         foreach($sourceData as $k=>$v) {
+//            print_r($v);exit;
             if(!$v["modelIds"]) {
                 continue;
             }

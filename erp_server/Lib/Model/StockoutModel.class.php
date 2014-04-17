@@ -99,7 +99,8 @@ class StockoutModel extends CommonModel {
                 "goods_id" => $d["goods_id"],
                 "factory_code_all" => $d["factory_code_all"],
                 "stock_id" => 0,
-                "stockout_id" => $stockoutId
+                "stockout_id" => $stockoutId,
+                "num" => $d["num"]
             );
             $rs = $stockoutDetail->add($data);
             if(!$rs) {

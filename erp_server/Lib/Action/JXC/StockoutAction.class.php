@@ -15,6 +15,8 @@ class StockoutAction extends CommonAction {
     
     protected $workflowAlias = "stockout";
     
+    protected $indexModel = "StockoutView";
+    
 //    public function index() {
 //        $model = D("Stockout");
 //    }

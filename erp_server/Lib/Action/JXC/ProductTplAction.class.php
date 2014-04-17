@@ -16,6 +16,7 @@ class ProductTplAction extends CommonAction {
     protected $indexModel = "ProductTplView";
     
     public function index() {
+        
         $data = parent::index(true);
         
         $dataModel = D("DataModelDataView");
@@ -25,11 +26,21 @@ class ProductTplAction extends CommonAction {
         $this->response($data);
     }
     
-    public function insert() {
-        
-        print_r($_POST);
-        exit;
-        
+    protected function pretreatment() {
+        switch($this->_method) {
+            case "put":
+            case "post":
+                $goods = D("Goods")->find($_POST["goods_id"]);
+                $_POST["factory_code_all"] = sprintf("%s-%d-%d", $goods["factory_code"], $_POST["standard"], $_POST["version"]);
+        }
+//        print_r($_POST);exit;
     }
+    
+//    public function insert() {
+//        
+//        print_r($_POST);
+//        exit;
+//        
+//    }
     
 }
