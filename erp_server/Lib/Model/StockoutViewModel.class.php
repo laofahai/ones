@@ -16,7 +16,7 @@ class StockoutViewModel extends CommonViewModel {
     
     protected $viewFields = array(
         "Stockout" => array("id","bill_id","source_id","source_model","dateline","outtime","total_num","stock_manager"=>"stock_manager_id","status"),
-        "User" => array("truename"=>"stock_manager", "_on"=>"User.id=Stockout.stock_manager")
+        "User" => array("truename"=>"stock_manager", "_on"=>"User.id=Stockout.stock_manager", "_type"=>"left")
     );
     
 }

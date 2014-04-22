@@ -13,7 +13,7 @@
 class GoodsCatViewModel extends CommonViewModel {
     protected $tableName = "Goods";
     protected $viewFields = array(
-        "Goods" => array("id","goods_category_id","name","pinyin","price","measure","factory_code","store_min","store_max"),
+        "Goods" => array("*","_type"=>"left"),
         "GoodsCategory" => array("name" => "category_name", "bind_model"=>"bind_model_id", "_on"=>"GoodsCategory.id=Goods.goods_category_id")
     );
     

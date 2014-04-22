@@ -110,6 +110,12 @@ class CommonAction extends RestAction {
         }
         $name = $this->indexModel ? $this->indexModel : $this->getActionName();
         $model = D($name);
+        
+        /**
+         * 查看是否在fields列表中
+         */
+//        var_dump($model->getDbFields());
+        
         if (empty($model)) {
             $this->error(L("Server error"));
         }
@@ -118,7 +124,9 @@ class CommonAction extends RestAction {
             $model = $model->relation(true);
         }
 
-        $map = array();
+//        $map = array(
+//            "deleted" => 0
+//        );
         $this->_filter($map);
         $order = "id DESC";
         $this->_order($order);
@@ -239,20 +247,43 @@ class CommonAction extends RestAction {
     /**
      * 删除
      */
-    public function delete() {
+    public function delete($return = false) {
         $name = $this->getActionName();
-        $model = M($name);
+        
+        $model = D($name);
+        $pk = $model->getPk();
+        $id = $_REQUEST [$pk];
+        
+        $rs = $model->doDelete($id);
+        
+        if($return) {
+            return $rs;
+        } 
+        
+        if(!$rs) {
+            $this->error(L("operate_failed"));
+        }
+        
+        return;
         if (!empty($model)) {
-            $pk = $model->getPk();
+            
             if($this->relation) {
                 $model = $model->relation(true);
             }
-            $id = $_REQUEST [$pk];
+            
             if (isset($id)) {
                 $condition = array($pk => array('in', $id));
-                $rs = $model->where($condition)->save(array("deleted"=>1));
-                if(!$rs) {
+                var_dump($model->fields);exit;
+                if(in_array("deleted", $model->fields)) {
+//                    echo 123;exit;
+                    $rs = $model->where($condition)->save(array("deleted"=>1));
+                } else {
+//                    echo 222;exit;
                     $rs = $model->where($condition)->delete();
+                }
+                
+                if($return) {
+                    return $rs;
                 }
 //                try {
 //                    $rs = $model->where($condition)->save(array("deleted"=>1));

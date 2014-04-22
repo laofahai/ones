@@ -30,6 +30,10 @@ class OrdersAction extends CommonAction {
     
     protected $relationModel = "Stockout";
     
+    protected function _filter(&$map) {
+        $map["deleted"] = 0;
+    }
+    
     
     /**
      * 
@@ -72,6 +76,13 @@ class OrdersAction extends CommonAction {
         
 //        $this->success(L("operate_success"));
     }
+    
+//    public function delete() {
+//        if(parent::delete(true)) {
+//            $model = D("OrdersDetail");
+//            $model->where($map)->delete();
+//        }
+//    }
             
 }
 

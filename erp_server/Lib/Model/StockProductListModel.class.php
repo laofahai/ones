@@ -33,6 +33,7 @@ class StockProductListModel extends Model {
         foreach($tmp as $t) {
             $old[$t["factory_code_all"]."-".$t["stock_id"]]["num"] = $t["num"];
             $old[$t["factory_code_all"]."-".$t["stock_id"]]["price"] = $t["unit_price"];
+            $old[$t["factory_code_all"]."-".$t["stock_id"]]["cost"] = $t["cost"];
         }
         
         /**
@@ -61,9 +62,11 @@ class StockProductListModel extends Model {
             if(array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $old)) {
                 $num = $v["num"]+$old[$v["factory_code_all"]."-".$v["stock_id"]]["num"];
                 $unitPrice = $old[$v["factory_code_all"]."-".$v["stock_id"]]["price"];
+                $cost = $old[$v["factory_code_all"]."-".$v["stock_id"]]["cost"];
             } else {
                 $num = $v["num"];
                 $unitPrice = $v["price"];
+                $cost = $v["cost"];
             }
 //            print_r($v);
             $saveData = array(
@@ -73,7 +76,8 @@ class StockProductListModel extends Model {
                 "color_id" => $v["color_id"],
                 "standard_id" => $v["standard_id"],
                 "num" => $num,
-                "unit_price" => $unitPrice
+                "unit_price" => $unitPrice,
+                "cost" => $cost
             );
             $rs = $this->add($saveData, array(), true);
 //            echo $this->getLastSql();exit;

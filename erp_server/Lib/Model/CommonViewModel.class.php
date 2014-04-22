@@ -40,7 +40,9 @@ class CommonViewModel extends ViewModel{
     public function select($options = array()) {
         $data = parent::select($options);
         
-//        echo $this->getLastSql();exit;
+//        var_dump($this);
+        
+//        echo $this->getLastSql();
         
         if(!$data) {
             return $data;

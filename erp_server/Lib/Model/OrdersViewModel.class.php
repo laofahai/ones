@@ -15,7 +15,7 @@ class OrdersViewModel extends CommonViewModel {
     protected $workflowAlias = "order";
     
     protected $viewFields = array(
-        "Orders" => array("id","bill_id","sale_type","saler_id","customer_id","total_num","total_amount","total_amount_real","dateline","status","memo"),
+        "Orders" => array("*"),
         "User" => array("truename" => "sponsor", "_on" => "Orders.saler_id=User.id"),
         "RelationshipCompany" => array("name"=>"customer", "_on"=>"RelationshipCompany.id=Orders.customer_id"),
         "Types" => array("name"=>"sale_type_label", "_on"=>"Types.id=Orders.sale_type")
