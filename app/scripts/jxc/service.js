@@ -17,7 +17,12 @@ angular.module("erp.jxc.services", [])
                     price: {
                         inputType: "number",
                         cellFilter: "currency:'￥'",
-                        value: 0
+                        value: 0.00
+                    },
+                    cost: {
+                        inputType: "number",
+                        cellFilter: "currency:'￥'",
+                        value: 0.00
                     },
                     goods_category_id: {
                         displayName: i18n.category,
@@ -152,7 +157,12 @@ angular.module("erp.jxc.services", [])
                     goods_name: {},
                     standard: {},
                     version: {},
-                    unit_price: {},
+                    unit_price: {
+                        cellFilter: "currency:'￥'",
+                    },
+                    cost: {
+                        cellFilter: "currency:'￥'",
+                    },
                     category_name: {
                         displayName: i18n.category
                     },
@@ -176,6 +186,9 @@ angular.module("erp.jxc.services", [])
                     return {
                         id: {primary: true},
                         unit_price: {
+                            inputType: "number"
+                        },
+                        cost: {
                             inputType: "number"
                         }
                     };
