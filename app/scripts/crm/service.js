@@ -19,7 +19,7 @@ angular.module("erp.crm.services", [])
                 }
             };
         }])
-        .factory("RelCompanyModel", ["$rootScope", function($rootScope){
+        .factory("RelCompanyModel", ["$rootScope", "RelCompanyGroupRes", function($rootScope, RelCompanyGroupRes){
             return {
                 getFieldsStruct: function(){
                     return {
@@ -28,7 +28,9 @@ angular.module("erp.crm.services", [])
                         },
                         name: {},
                         group: {
-                            field: "Group.name"
+                            field: "Group.name",
+                            dataSource: RelCompanyGroupRes,
+                            inputType: "select"
                         },
                         discount: {},
                         owner: {

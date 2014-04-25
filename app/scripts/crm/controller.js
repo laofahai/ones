@@ -44,7 +44,7 @@ angular.module("erp.crm", ['erp.crm.services', 'ngGrid', 'erp.common.directives'
                 ComView.makeDefaultPageAction($scope, "CRM/RelCompany");
                 ComView.displayGrid($scope, RelCompanyModel, RelCompanyRes);
             }])
-        .controller("RelCompanyEditCtl", ["$scope", "RelCompanyRes", "RelCompanyGroupModel", "$routeParams","ComView", 
+        .controller("RelCompanyEditCtl", ["$scope", "RelCompanyRes", "RelCompanyModel", "$routeParams","ComView", 
             function($scope, RelCompanyRes, RelCompanyModel, $routeParams, ComView){
                 ComView.makeDefaultPageAction($scope, "CRM/RelCompany");
                 ComView.displayForm($scope, RelCompanyModel, RelCompanyRes, {

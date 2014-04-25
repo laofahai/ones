@@ -1,7 +1,8 @@
 angular.module("erp.jxc.services", [])
-        .service("JXCGoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", function($rootScope, GoodsCategoryRes, $q) {
+        .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", function($rootScope, GoodsCategoryRes, $q) {
             var obj = {};
             obj.getFieldsStruct = function(structOnly) {
+                console.log($rootScope.$root, 123);
                 var i18n = $rootScope.i18n.lang;
                 var struct = {
                     id: {

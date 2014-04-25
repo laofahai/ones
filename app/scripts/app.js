@@ -63,10 +63,7 @@ var ERP = angular.module('erp', [
             $http.defaults.headers.common["sessionHash"] = loginHash;
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-//            var transReqFunc = function(data) {
-//                return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
-//            };
-//            $http.defaults.transformRequest.push(transReqFunc);
+            
         }]);
 
 /**
@@ -81,10 +78,11 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 $scope.currentURI = encodeURI(encodeURIComponent($location.$$url));
             });
             
-            
             if (!loginHash) {
                 window.location.href = 'index.html';
             }
+            
+            //监听全局事件
             $scope.$on("event:loginRequired", function() {
                 window.location.href = 'index.html';
             });
@@ -98,23 +96,7 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 ComView.alert(message, "danger");
             });
             
-//            $scope.openModal = function(controller){
-//                var modalInstance = $modal.open({
-//                    templateUrl: 'myModalContent.html',
-//                    controller: ModalInstanceCtrl,
-//                    resolve: {
-//                        items: function () {
-//                            return $scope.items;
-//                        }
-//                    }
-//                });
-//                modalInstance.result.then(function (selectedItem) {
-//                    $scope.selected = selectedItem;
-//                }, function () {
-//                    console.log('Modal dismissed at: ' + new Date());
-//                });
-//            };
-            
+            //去除默认快捷键
             $scope.removeDefaultKey = function() {
                 
             };
@@ -202,51 +184,70 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             /**
              * 加载语言包
              * */
-            $http.get("scripts/i18n/zh-cn.json").success(function(data) {
-                $rootScope.i18n = data;
-                /**
-                 * 监控路由变化
-                 * */
-                $scope.$watch(function() {
-                    return $location.path();
-                }, function() {
-                    //设置当前页面信息
-                    var fullPath = $location.path().split("/").slice(1, 4);
-                    var group = fullPath[0];
-                    var module = fullPath[1];
-                    var action = fullPath[2];
-                    group = group ? group : "HOME";
-                    module = module ? module : "Index";
-                    action = action && isNaN(parseInt(action)) ? action : "index";
-                    $scope.currentPage = {};
-                    if (group in $rootScope.i18n.urlMap) {
-                        $scope.currentPage.group = $rootScope.i18n.urlMap[group].name;
-                        if (module in $rootScope.i18n.urlMap[group].modules) {
-                            $scope.currentPage.module = $rootScope.i18n.urlMap[group].modules[module].name;
-                            if (action in $rootScope.i18n.urlMap[group].modules[module].actions) {
-                                $scope.currentPage.action = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
-                                                            ? $rootScope.i18n.urlMap[group].modules[module].actions[action][0]
-                                                            : $rootScope.i18n.urlMap[group].modules[module].actions[action];
-                                $scope.currentPage.actionDesc = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
-                                                            ? $rootScope.i18n.urlMap[group].modules[module].actions[action][1] : "";
+            $rootScope.i18n = angular.fromJson(localStorage.getItem(conf.Prefix+"i18n"));
+            if(conf.DEBUG || !$rootScope.i18n) {
+                $http.get("scripts/i18n/zh-cn.json").success(function(data) {
+                    $rootScope.i18n = data;
+                    localStorage.setItem(conf.Prefix+"i18n", angular.toJson(data));
+                    
+                    /**
+                     * 监控路由变化
+                     * */
+                    $scope.$watch(function() {
+                        return $location.path();
+                    }, function() {
+                        /**
+                         * 设置当前页面信息
+                         * 两种URL模式： 普通模式 group/module/action
+                         *             URL友好模式 action(list|add|edit)/module
+                         * */
+                        var actionList = ['list', 'add', 'edit'], fullPath,group,module,action;
+                        fullPath = $location.path().split("/").slice(1, 4);
+                        group = fullPath[0];
+                        //友好模式
+                        if(actionList.indexOf(fullPath[1]) >= 0) {
+                            module= fullPath[2].ucfirst();
+                            action= fullPath[1];
+                        } else {
+                            module = fullPath[1];
+                            action = fullPath[2];
+                        }
+
+                        group = group ? group : "HOME";
+                        module = module ? module : "Index";
+                        action = action && isNaN(parseInt(action)) ? action : "list";
+    //                    console.log(module);
+                        $scope.currentPage = {};
+                        if (group in $rootScope.i18n.urlMap) {
+                            $scope.currentPage.group = $rootScope.i18n.urlMap[group].name;
+                            if (module in $rootScope.i18n.urlMap[group].modules) {
+                                $scope.currentPage.module = $rootScope.i18n.urlMap[group].modules[module].name;
+                                if (action in $rootScope.i18n.urlMap[group].modules[module].actions) {
+                                    $scope.currentPage.action = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
+                                                                ? $rootScope.i18n.urlMap[group].modules[module].actions[action][0]
+                                                                : $rootScope.i18n.urlMap[group].modules[module].actions[action];
+                                    $scope.currentPage.actionDesc = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
+                                                                ? $rootScope.i18n.urlMap[group].modules[module].actions[action][1] : "";
+                                }
                             }
                         }
-                    }
+                    });
                 });
-
-                /**
-                 * 获取页面基本信息
-                 * */
-                $http.get(conf.BSU+"HOME/Index/index").success(function(data){
-                    $rootScope.uesrInfo = data.user;
-                    $scope.$broadcast("initDataLoaded", data);
-                });
-                
-                $scope.$on("initDataLoaded", function(event, data){
-                    $scope.userInfo = data.user;
-                });
-                
+            }
+            
+            
+            /**
+             * 获取页面基本信息
+             * */
+            $http.get(conf.BSU+"HOME/Index/index").success(function(data){
+                $rootScope.uesrInfo = data.user;
+                $scope.$broadcast("initDataLoaded", data);
             });
+
+            $scope.$on("initDataLoaded", function(event, data){
+                $scope.userInfo = data.user;
+            });
+
 
         }]);
 

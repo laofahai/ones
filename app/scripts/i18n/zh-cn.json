@@ -6,7 +6,7 @@
                 "User": {
                     "name": "用户管理",
                     "actions": {
-                        "index": ["用户列表"],
+                        "list": ["用户列表"],
                         "add": ["新增用户"],
                         "edit": ["修改用户信息"]
                     }
@@ -14,7 +14,7 @@
                 "AuthRule": {
                     "name": "权限节点",
                     "actions": {
-                        "index": ["权限节点列表"],
+                        "list": ["权限节点列表"],
                         "add": ["新增权限节点"],
                         "edit": ["修改权限节点信息"]
                     }
@@ -22,7 +22,7 @@
                 "AuthGroup": {
                     "name": "用户组",
                     "actions": {
-                        "index": ["用户组列表"],
+                        "list": ["用户组列表"],
                         "add"  : ["新增用户组"],
                         "edit" : ["修改用户组"]
                     }
@@ -30,7 +30,7 @@
                 "Department": {
                     "name": "部门",
                     "actions": {
-                        "index": ["部门列表"],
+                        "list": ["部门列表"],
                         "add"  : ["新增部门"],
                         "edit" : ["修改部门"]
                     }
@@ -49,7 +49,7 @@
                 "DataModel": {
                     "name": "数据模型",
                     "actions": {
-                        "index": ["数据模型管理"],
+                        "list": ["数据模型管理"],
                         "add": ["新建数据模型"],
                         "edit": ["修改数据模型基础信息"],
                         "viewSub": ["查看数据模型字段"]
@@ -58,7 +58,7 @@
                 "DataModelData": {
                     "name": "模型数据",
                     "actions": {
-                        "index": ["模型数据管理"],
+                        "list": ["模型数据管理"],
                         "add": ["新增模型数据"],
                         "edit": ["修改模型数据"]
                     }
@@ -72,7 +72,7 @@
                 "Types": {
                     "name": "类型管理",
                     "actions" : {
-                        "index": ["类型管理列表"],
+                        "list": ["类型管理列表"],
                         "add": ["新增类型"],
                         "edit": ["修改类型"]
                     }
@@ -80,7 +80,7 @@
                 "Workflow": {
                     "name": "工作流管理",
                     "actions": {
-                        "index": ["工作流列表"]
+                        "list": ["工作流列表"]
                     }
                 }
             }
@@ -91,7 +91,7 @@
                 "Goods": {
                     "name": "商品管理",
                     "actions": {
-                        "index": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
+                        "list": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
                         "add": ["新增商品"],
                         "edit": ["修改商品信息"]
                     }
@@ -99,7 +99,7 @@
                 "GoodsCategory": {
                     "name": "商品分类",
                     "actions": {
-                        "index": ["商品分类列表"],
+                        "list": ["商品分类列表"],
                         "add": ["新增分类"],
                         "edit": ["修改分类"]
                     }
@@ -107,7 +107,7 @@
                 "Stock" : {
                     "name": "仓库管理",
                     "actions": {
-                        "index": ["仓库列表"],
+                        "list": ["仓库列表"],
                         "add": ["新建仓库"],
                         "edit": ["修改仓库信息"],
                         "warning": "库存警告"
@@ -116,7 +116,7 @@
                 "Stockin": {
                     "name": "入库单",
                     "actions": {
-                        "index": ["入库单列表"],
+                        "list": ["入库单列表"],
                         "add": ["新建入库单"],
                         "edit": ["入库单信息"]
                     }
@@ -124,7 +124,7 @@
                 "StockProductList": {
                     "name": "库存管理",
                     "actions": {
-                        "index": ["库存商品列表"],
+                        "list": ["库存商品列表"],
                         "Export": "导出库存清单",
                         "edit": "修改库存产品信息"
                     }
@@ -132,7 +132,7 @@
                 "ProductTpl": {
                     "name": "产品拆装单模板",
                     "actions": {
-                        "index": "拆装单模板列表",
+                        "list": "拆装单模板列表",
                         "add"  : "新增拆装单模板",
                         "edit" : "修改拆装单模板",
                         "viewSub": "拆装单模板详情"
@@ -141,7 +141,7 @@
                 "Orders": {
                     "name": "销售订单",
                     "actions": {
-                        "index": "订单列表",
+                        "list": "订单列表",
                         "add"  : "订单录入",
                         "edit" : "订单修改"
                     }
@@ -149,7 +149,7 @@
                 "Stockout": {
                     "name": "出库单",
                     "actions": {
-                        "index": "出库单列表"
+                        "list": "出库单列表"
                     }
                 }
             }
@@ -160,7 +160,7 @@
                 "RelCompanyGroup": {
                     "name": "往来单位分组",
                     "actions": {
-                        "index": "往来单位分组列表",
+                        "list": "往来单位分组列表",
                         "add"  : "新增分组",
                         "edit" : "修改分组信息"
                     }
@@ -168,13 +168,13 @@
                 "RelationshipCompany": {
                     "name": "客户基本信息",
                     "actions": {
-                        "index": "客户列表"
+                        "list": "客户列表"
                     }
                 },
                 "RelCompany": {
                     "name": "客户基本信息",
                     "actions": {
-                        "index": "客户列表",
+                        "list": "客户列表",
                         "add": "新增客户",
                         "edit": "修改客户信息"
                     }
@@ -380,7 +380,7 @@
         "listorder": "排序",
         "checkAll_uncheck": "全选/取消",
         "authRuleNode": "权限节点",
-        
+        "source_model": "来源模型",
         "prev_node_id": "上一流程节点",
         "next_node_id": "下一流程节点",
         "cond": "条件",
