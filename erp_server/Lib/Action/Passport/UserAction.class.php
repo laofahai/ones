@@ -42,7 +42,7 @@ class UserAction extends CommonAction {
             $id = $_POST["id"];
             $model = D("AuthGroupAccess");
             $model->where("uid=".$id)->delete();
-            foreach($_POST["usergroup"] as $g) {
+            foreach((array)$_POST["usergroup"] as $g) {
                 $data = array(
                     "uid" => $id,
                     "group_id" => $g

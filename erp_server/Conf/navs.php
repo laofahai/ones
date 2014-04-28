@@ -19,39 +19,39 @@ return array(
     ),
     "stock" => array(
         "childs" => array(
-            "stock_list" => "JXC/StockProductList",
-            "stockin_paper" => "JXC/Stockin",
-            "stockout_paper" => "JXC/Stockout",
-            "shipment_paper" => "JXC/Shipment",
-            "stock_transfer" => "JXC/StockTransfer"
+            "stock_list" => "JXC/list/stockProductList",
+            "stockin_paper" => "JXC/list/stockin",
+            "stockout_paper" => "JXC/list/stockout",
+            "shipment_paper" => "JXC/list/shipment",
+            "stock_transfer" => "JXC/list/stockTransfer"
         ),
         "icon" => "th-large",
     ),
     "purchase" => array(
         "childs" => array(
-            "add_new_purchase" => "JXC/Purchase/add",
-            "purchase_list" => "JXC/Purchase"
+            "add_new_purchase" => "JXC/add/purchase",
+            "purchase_list" => "JXC/list/purchase"
         ),
         "icon" => "shopping-cart"
     ),
     "sale" => array(
         "childs" => array(
-            "orders" => "JXC/Orders",
-            "returns"=> "JXC/Returns",
+            "orders" => "JXC/list/orders",
+            "returns"=> "JXC/list/returns",
         ),
         "icon" => "pencil",
     ),
     "produce" => array(
         "childs" => array(
-            "produce_and_install" => "Produce/ProduceInstall",
-            "outside_bill" => "Product/Outside"
+            "produce_and_install" => "Produce/list/produceInstall",
+            "outside_bill" => "Product/list/outside"
         ),
         "icon" => "retweet",
     ),
     "rel_company" => array(
         "childs" => array(
-            "relCompanyRecord" => "CRM/RelCompany",
-            "relCompanyGroup" => "CRM/RelCompanyGroup",
+            "relCompanyRecord" => "CRM/list/relCompany",
+            "relCompanyGroup" => "CRM/list/relCompanyGroup",
         ),
         "icon" => "link"
     ),
@@ -59,10 +59,10 @@ return array(
         "icon" => "money",
         "childs" => array(
 //            "accounting_voucher" => "Accounting/AccountingVoucher",
-            "finance_account" => "Finance/FinanceAccount",
-            "finance_record" => "Finance/FinanceRecord",
-            "finance_receive_plan" => "Finance/FinanceReceivePlan",
-            "finance_pay_plan" => "Finance/FinancePayPlan",
+            "finance_account" => "Finance/list/financeAccount",
+            "finance_record" => "Finance/list/financeRecord",
+            "finance_receive_plan" => "Finance/list/financeReceivePlan",
+            "finance_pay_plan" => "Finance/list/financePayPlan",
         )
     ),
     "statistics" => array(
@@ -76,22 +76,22 @@ return array(
     ),
     "settings" => array(
         "childs" => array(
-            "field_set" => "HOME/Config",
+            "field_set" => "HOME/list/config",
             "base_data_set" => array(
-                "goods_setting" => "JXC/Goods",
-                "goods_tpl"     => "JXC/ProductTpl",
-                "goods_category"=> "JXC/GoodsCategory",
-                "stock_manage"  => "JXC/Stock",
-                "data_model"   => "HOME/DataModel",
-                "types_manage"  => "HOME/Types"
+                "goods_setting" => "JXC/list/goods",
+                "goods_tpl"     => "JXC/list/productTpl",
+                "goods_category"=> "JXC/list/GoodsCategory",
+                "stock_manage"  => "JXC/list/stock",
+                "data_model"   => "HOME/list/dataModel",
+                "types_manage"  => "HOME/list/types"
             ),
             "organization_set" => array(
-                "user_setting" => "Passport/User",
-                "auth_rule_node" => "Passport/AuthRule",
-                "user_group"   => "Passport/AuthGroup",
-                "department"   => "Passport/Department"
+                "user_setting" => "Passport/list/user",
+                "auth_rule_node" => "Passport/list/authRule",
+                "user_group"   => "Passport/list/authGroup",
+                "department"   => "Passport/list/department"
             ),
-            "workflow" => "HOME/Workflow",
+            "workflow" => "HOME/list/workflow",
             "clear_cache" => "HOME/Settings/clearCache"
         ),
         "icon" => "cog"

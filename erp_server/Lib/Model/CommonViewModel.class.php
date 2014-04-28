@@ -118,6 +118,33 @@ class CommonViewModel extends ViewModel{
         return $data;
     }
     
+    /**
+     * 执行删除
+     */
+    public function doDelete($ids, $pk, $modelName = null) {
+        if(!$modelName) {
+            $model = $this;
+        } else {
+            $model = D($modelName);
+        }
+        
+        $pk = $pk ? $pk : $model->getPk();
+        
+        $condition = array(
+            $pk => array("IN", is_array($ids) ? implode(",", $ids) : $ids)
+        );
+        
+        if(in_array("deleted", $model->fields)) {
+            $rs = $model->where($condition)->save(array("deleted"=>1));
+        } else {
+//                    echo 222;exit;
+            $rs = $model->where($condition)->delete();
+        }
+        
+        return $rs;
+        
+    }
+    
 }
 
 ?>

@@ -34,6 +34,9 @@ class WorkflowNodeAction extends CommonAction {
         if($_GET["workflow_id"]) {
             $map["workflow_id"] = abs(intval($_GET["workflow_id"]));
         }
+        if($_GET["pid"]) {
+            $map["workflow_id"] = abs(intval($_GET["pid"]));
+        }
         if($_GET["workflow_alias"]) {
             $model = D("Workflow");
             $workflow = $model->getByAlias($_GET["workflow_alias"]);

@@ -20,6 +20,8 @@ class RelationshipCompanyAction extends CommonAction {
             $this->relation = false;
             $map["_string"] = str_replace("__", strtoupper($_GET["typeahead"]), "name LIKE '%__%' OR pinyin LIKE '%__%'");
         }
+        
+        $map["deleted"] = 0;
     }
     
 //    public function index() {

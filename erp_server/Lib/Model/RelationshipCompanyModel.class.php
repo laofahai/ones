@@ -11,7 +11,7 @@
  *
  * @author 志鹏
  */
-class RelationshipCompanyModel extends RelationModel {
+class RelationshipCompanyModel extends CommonRelationModel {
     
     protected $_link = array(
         "User" => BELONGS_TO,
