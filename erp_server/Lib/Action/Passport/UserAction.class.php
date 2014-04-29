@@ -40,9 +40,10 @@ class UserAction extends CommonAction {
     public function _after_update() {
         if($_POST["usergroup"]) {
             $id = $_POST["id"];
+            $usergroup = is_array($_POST["usergroup"]) ? $_POST["usergroup"] : explode(",", $_POST["usergroup"]);
             $model = D("AuthGroupAccess");
             $model->where("uid=".$id)->delete();
-            foreach((array)$_POST["usergroup"] as $g) {
+            foreach($usergroup as $g) {
                 $data = array(
                     "uid" => $id,
                     "group_id" => $g
