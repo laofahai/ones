@@ -78,7 +78,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
         }])
     .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig",
         function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
-            var extraParams = parseParams($routeParams.extra) || "";
+//            var extraParams = parseParams($routeParams.extra) || "";
             var module,group,res,model,actions;
             
             group = $routeParams.group;
@@ -86,7 +86,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
             
             res = $injector.get(module.ucfirst()+"Res");
             model = $injector.get(module.ucfirst()+"Model");
-            
+//            console.log(res);
             //可跳转按钮
             actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
             ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra);

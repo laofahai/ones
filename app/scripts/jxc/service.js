@@ -151,33 +151,54 @@ angular.module("erp.jxc.services", [])
             
             return obj;
         }])
-        .service("StockProductModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
-            var obj = {};
+        .service("StockProductListModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
+            var obj = {
+                deleteAble: false
+            };
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
                 return {
-                    factory_code_all: {},
-                    goods_name: {},
-                    standard: {},
-                    version: {},
+                    factory_code_all: {
+                        hideInForm: true
+                    },
+                    goods_name: {
+                        inputType: "static"
+                    },
+                    standard: {
+                        inputType: "static"
+                    },
+                    version: {
+                        inputType: "static"
+                    },
                     unit_price: {
                         cellFilter: "currency:'￥'",
+                        inputType: "number"
                     },
                     cost: {
                         cellFilter: "currency:'￥'",
+                        inputType: "number"
                     },
                     category_name: {
+                        hideInForm: true,
                         displayName: i18n.category
                     },
                     stock_name: {
+                        inputType: "static",
                         displayName: i18n.stock
                     },
                     num: {
+                        hideInForm: true,
                         displayName: i18n.storeNum
                     },
-                    measure: {},
-                    store_min: {},
-                    store_max: {}
+                    measure: {
+                        hideInForm: true,
+                    },
+                    store_min: {
+                        hideInForm: true,
+                    },
+                    store_max: {
+                        hideInForm: true,
+                    }
                 };
                 
             };
@@ -242,7 +263,8 @@ angular.module("erp.jxc.services", [])
         }])
         .service("StockinModel", ["$rootScope", function($rootScope){
             var obj = {
-                isBill: true
+                isBill: true,
+                workflowAlias: "stockin"
             };
             obj.getFieldsStruct= function() {
                 var i18n = $rootScope.i18n.lang;

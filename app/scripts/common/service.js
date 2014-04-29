@@ -69,7 +69,7 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("OutsideRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/outside/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
-    .factory("StockProductsRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockProductListRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockProductList/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("GoodsCategoryRes", ["$resource", "erp.config", function($resource, cnf) {

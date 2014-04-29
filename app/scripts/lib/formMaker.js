@@ -1,7 +1,7 @@
 (function(){
     'use struct';
     angular.module("erp.formMaker", [])
-    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductsRes", function($compile, $q, $parse, StockProductsRes) {
+    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductListRes", function($compile, $q, $parse, StockProductListRes) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -14,6 +14,7 @@
                         'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
                         'search_contains="true" '+
                         '><option><option></select>',
+                'fields/static': '<span ng-bind="%s"></span>',
                 'fields/email': '<input type="number" %s />',
                 'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
@@ -116,8 +117,9 @@
             _checkbox: function(name, fieldDefine) {
                 
             },
-            _static: function() {
+            _static: function(name, fieldDefine) {
                 return "";
+                return sprintf(this.$parent.templates["fields/static"], fieldDefine["ng-model"]);
             },
             _textarea: function(name, fieldDefine){
                 var value = fieldDefine.value;
@@ -314,7 +316,7 @@
                         'ng-click="billTypeaheadClick($event)">{{%(v)s.%(labelField)s}}</li></ul>'
             };
             
-            this.opts.storeAPI = StockProductsRes;
+            this.opts.storeAPI = StockProductListRes;
 
             this.fm = new service.makeField($scope, {
                 multi: true, //指定为表单绑定多条数据

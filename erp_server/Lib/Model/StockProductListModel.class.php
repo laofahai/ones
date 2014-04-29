@@ -68,6 +68,8 @@ class StockProductListModel extends Model {
                 $unitPrice = $v["price"];
                 $cost = $v["cost"];
             }
+            
+            $cost = $cost ? $cost : 0.00;
 //            print_r($v);
             $saveData = array(
                 "factory_code_all" => $v["factory_code_all"],
@@ -83,7 +85,7 @@ class StockProductListModel extends Model {
 //            echo $this->getLastSql();exit;
 //            echo 123;exit;
             if(!$rs) {
-                echo $this->getLastSql();exit;
+//                echo $this->getLastSql();exit;
                 return false;
             }
             

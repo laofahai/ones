@@ -333,8 +333,11 @@ module.exports = function (grunt) {
              '<%= yeoman.app %>/bower_components/angular-animate/angular-animate.js',
              '<%= yeoman.app %>/bower_components/angular-strap/dist/angular-strap.js',
              '<%= yeoman.app %>/bower_components/angular-strap/dist/angular-strap.tpl.js',
+             '<%= yeoman.app %>/bower_components/angular-ui-utils/ui-utils.min.js',
              '<%= yeoman.app %>/bower_components/chosen/chosen.jquery.js',
-             '<%= yeoman.app %>/bower_components/angular-chosen-localytics/chosen.js'
+             '<%= yeoman.app %>/bower_components/angular-chosen-localytics/chosen.js',
+             '<%= yeoman.app %>/bower_components/select2/select2.js',
+             '<%= yeoman.app %>/bower_components/angular-ui-select/dist/select.js',
            ],
            '<%= yeoman.dist %>/scripts/ace.js': [
              '<%= yeoman.app %>/vendor/ace/typeahead-bs2.min.js',
@@ -346,7 +349,6 @@ module.exports = function (grunt) {
              '<%= yeoman.app %>/scripts/**/*.js'
            ],
            '<%= yeoman.dist %>/scripts/login.js': [
-               '<%= yeoman.app %>/scripts/common/config.js',
              '<%= yeoman.app %>/scripts/common/login.js'
            ]
          }
