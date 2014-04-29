@@ -14,6 +14,6 @@
 * 独特的CommonView功能，无需重复编写的前端文件
 
 ## 链接
-演示见：http://demo.ng-erp.com
+演示见：http://42.121.114.198
 
 讨论/反馈：http://forum.cnidea-tech.com
