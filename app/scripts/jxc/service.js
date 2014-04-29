@@ -2,7 +2,6 @@ angular.module("erp.jxc.services", [])
         .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", function($rootScope, GoodsCategoryRes, $q) {
             var obj = {};
             obj.getFieldsStruct = function(structOnly) {
-                console.log($rootScope.$root, 123);
                 var i18n = $rootScope.i18n.lang;
                 var struct = {
                     id: {
@@ -59,8 +58,11 @@ angular.module("erp.jxc.services", [])
             };
             return obj;
         }])
-        .service("JXCGoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
-            var obj = {};
+        .service("GoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
+            var obj = {
+                subAble: true,
+                viewSubAble: false
+            };
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
                 var struct = {
@@ -239,7 +241,9 @@ angular.module("erp.jxc.services", [])
             return service;
         }])
         .service("StockinModel", ["$rootScope", function($rootScope){
-            var obj = {};
+            var obj = {
+                isBill: true
+            };
             obj.getFieldsStruct= function() {
                 var i18n = $rootScope.i18n.lang;
                 return {
@@ -345,7 +349,10 @@ angular.module("erp.jxc.services", [])
                 return obj;
             }])
         .service("OrdersModel", ["$rootScope", function($rootScope){
-            var obj = {};
+            var obj = {
+                isBill: true,
+                workflowAlias: "order"
+            };
             obj.getFieldsStruct= function() {
                 var i18n = $rootScope.i18n.lang;
                 return {
@@ -694,6 +701,8 @@ angular.module("erp.jxc.services", [])
             }])
         .service('StockoutModel', ["$rootScope", function($rootScope){
             return {
+                isBill: true,
+                workflowAlias: "stockout",
                 getFieldsStruct: function(){
                     return {
                         bill_id : {},
@@ -717,7 +726,9 @@ angular.module("erp.jxc.services", [])
         }])
         .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes", 
             function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
-                var obj = {};
+                var obj = {
+                    isBill: true
+                };
                 obj.getFieldsStruct = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {

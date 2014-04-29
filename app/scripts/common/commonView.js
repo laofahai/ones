@@ -15,14 +15,38 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
             templateUrl: 'views/common/grid.html',
             controller : 'ComViewGridCtl'
         })
+        //列表 with extraParams
+        .when('/:group/list/:module/:extra*', {
+            templateUrl: 'views/common/grid.html',
+            controller : 'ComViewGridCtl'
+        })
+        //新增
         .when('/:group/add/:module', {
             templateUrl: 'views/common/edit.html',
             controller : 'ComViewEditCtl'
         })
+        //新增 with extraParams
+        .when('/:group/add/:module/:extra*', {
+            templateUrl: 'views/common/edit.html',
+            controller : 'ComViewEditCtl'
+        })
+        //修改
         .when('/:group/edit/:module/id/:id', {
             templateUrl: 'views/common/edit.html',
             controller : 'ComViewEditCtl'
-        });
+        })
+        //修改 with extraParams
+        .when('/:group/edit/:module/id/:id/:extra*', {
+            templateUrl: 'views/common/edit.html',
+            controller : 'ComViewEditCtl'
+        })
+        //新增子项
+        .when('/:group/addChild/:module/pid/:pid', {
+            templateUrl: 'views/common/edit.html',
+            controller : 'ComViewEditCtl'
+        })
+        //子项列表
+        ;
     }])
     .value('ComViewConfig', {
         actionClasses : {
@@ -30,74 +54,51 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
             "list": "default"
         }
     })
-    .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig",
-        function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
-            
+    .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location",
+        function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location){
             var module,group,res,model,actions,pageActions=[];
             
             group = $routeParams.group;
-            module = $routeParams.module.ucfirst();
+            module = $routeParams.module;
             
-            res = $injector.get(module+"Res");
-            model = $injector.get(module+"Model");
+            res = $injector.get(module.ucfirst()+"Res");
+            model = $injector.get(module.ucfirst()+"Model");
             
             //Grid 可跳转按钮
-            actions = $rootScope.i18n.urlMap[group].modules[module].actions;
-            angular.forEach(actions, function(act, k){
-                if(k === "edit") {
-                    return;
-                }
-                pageActions.push({
-                    label: $rootScope.i18n.lang.actions[k],
-                    class: ComViewConfig.actionClasses[k],
-                    href : sprintf("/%(group)s/%(action)s/%(module)s", {
-                        group: group,
-                        action: k,
-                        module: $routeParams.module
-                    })
-                });
-            });
-            $scope.pageActions = pageActions;
-            ComView.displayGrid($scope, model, res);
+            actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+            ComView.makeGridLinkActions($scope, actions, model.isBill);
+            ComView.makeGridSelectedActions($scope, model, res, group, module);
+            
+            var opts = {};
+            if($routeParams.extra) {
+                opts.queryExtraParams = parseParams($routeParams.extra);
+            }
+            
+            ComView.displayGrid($scope, model, res, opts);
         }])
     .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig",
         function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
-            
-            var module,group,res,model,actions,pageActions=[];
+            var extraParams = parseParams($routeParams.extra) || "";
+            var module,group,res,model,actions;
             
             group = $routeParams.group;
-            module = $routeParams.module.ucfirst();
+            module = $routeParams.module;
             
-            res = $injector.get(module+"Res");
-            model = $injector.get(module+"Model");
+            res = $injector.get(module.ucfirst()+"Res");
+            model = $injector.get(module.ucfirst()+"Model");
             
-            //Grid 可跳转按钮
-            actions = $rootScope.i18n.urlMap[group].modules[module].actions;
-            angular.forEach(actions, function(act, k){
-                if(k === "edit") {
-                    return;
-                }
-                pageActions.push({
-                    label: $rootScope.i18n.lang.actions[k],
-                    class: ComViewConfig.actionClasses[k],
-                    href : sprintf("/%(group)s/%(action)s/%(module)s", {
-                        group: group,
-                        action: k,
-                        module: $routeParams.module
-                    })
-                });
-            });
-            
-            console.log(model.getFieldsStruct());
-            
+            //可跳转按钮
+            actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+            ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra);
+//            
             $scope.selectAble = false;
-            $scope.pageActions = pageActions;
+//            $scope.pageActions = pageActions;
             ComView.displayForm($scope, model, res, {
                 id: $routeParams.id
             });
         }])
-    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes",
-        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes){
+    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector",
+        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector){
             var service = {};
             /**
              * 通用alert
@@ -134,7 +135,10 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     id: null, //如为编辑，需传递此参数
                     dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
                     dataObject: null, //数据绑定到$scope的名字
-                    returnPage: $location.$$url.split("/").splice(0, 3).join("/") //表单提交之后的返回页面地址
+                    returnPage: sprintf("/%(group)s/list/%(module)s", {
+                        group: $routeParams.group,
+                        module: $routeParams.module
+                    }) //表单提交之后的返回页面地址
                 };
                 opts = $.extend(defaultOpts, opts);
                 opts.dataObject = opts.name + "Data";
@@ -158,10 +162,10 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                 /**
                  * 自动获取字段
                  * */
-                if(typeof(fieldsDefine) == "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
+                if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
                     var model = fieldsDefine;
                     var field = model.getFieldsStruct();
-                    if(remote || typeof(field.then) == "function") { //需要获取异步数据
+                    if(remote || typeof(field.then) === "function") { //需要获取异步数据
                         field.then(function(data){
 //                            fieldsDefine = data;
                             doDefine(data);
@@ -176,11 +180,13 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     doDefine();
                 }
 
+                //提交表单
                 $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
                     if (!$scope[opts.name].$valid) {
                         service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                         return;
                     }
+                    //编辑
                     if (opts.id) {
                         var getParams = {};
                         for (var k in $routeParams) {
@@ -194,6 +200,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                                 $location.url(opts.returnPage);
                             }
                         });
+                    //新增
                     } else {
                         for (var k in $routeParams) {
                             $scope[opts.dataObject][k] = $routeParams[k];
@@ -203,7 +210,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                             getParams[k] = $routeParams[k];
                         }
                         var params = $.extend(getParams, $scope[opts.dataObject]);
-                        resource.save($scope[opts.dataObject], function(data){
+                        params = $.extend(params, $scope[opts.dataObject]);
+                        resource.save(params, function(data){
                             if(data.error) {
                                 service.alert(data.msg);
                             } else {
@@ -344,23 +352,6 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     $scope.gridSelected = [];
                 };
 
-                //查看工作进程
-                $scope.doViewWorkflowProcesses = function(){
-                    if(!$scope.gridSelected.length) {
-                        return false;
-                    }
-                    WorkflowProcessRes.query({
-                        id: $scope.gridSelected[0].id,
-                        workflowAlias: $scope.workflowAlias
-                    }).$promise.then(function(data){
-                        service.aside({
-                            bill_id: $scope.gridSelected[0].bill_id,
-                            title: $scope.gridSelected[0].subject,
-                            subTitle: $scope.gridSelected[0].dateline_lang
-                        }, data, "views/common/workflowProcess.html");
-                    });
-                };
-
                 //导出excel
                 $scope.doExport = function(){};
 
@@ -484,7 +475,204 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
 
                 };
             };
+            
+            service.makeGridSelectedActions = function($scope, model, res, group, module){
+                //选中项操作
+                //编辑
+                $scope.selectedActions = [];
+                var extraParams = "";
+                if($routeParams.extra) {
+                    var tmp = parseParams($routeParams.extra);
+                    angular.forEach(tmp, function(item, key){
+                        extraParams = extraParams+sprintf("/%s/%s", key, item);
+                    });
+                }
+                
+                //编辑
+                if(model.editAble === undefined || model.editAble) {
+                    $scope.selectedActions.push({
+                        label: $rootScope.i18n.lang.actions.edit,
+                        action: function(){
+                            if($scope.gridSelected.length > 1) {
+                                return;
+                            }
+                            var action = "edit";
+                            //如果是单据形式的
+                            if(model.isBill) {
+                                action = "editBill";
+                            }
+                            $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)s', {
+                                group : group,
+                                action: action,
+                                module: module,
+                                id: $scope.gridSelected[0].id
+                            })+extraParams);
+                        },
+                        class: "default",
+                        multi: false
+                    });
+                }
 
+                //增加/查看 子项
+                if(model.subAble) {
+                    if(false !== model.addSubAble) {
+                        $scope.selectedActions.push({
+                            label: $rootScope.i18n.lang.actions.addChild,
+                            class: "primary",
+                            multi: false,
+                            action: function(){
+                                $location.url(sprintf('/%(group)s/addChild/%(module)s/pid/%(id)d', {
+                                    group : group,
+                                    module: module,
+                                    id: Number($scope.gridSelected[0].id)
+                                })+extraParams);
+                            }
+                        });
+                    }
+                    
+                    //查看子项
+                    if(false !== model.viewSubAble) {
+                        $scope.selectedActions.push({
+                            label: $rootScope.i18n.lang.actions.viewChild,
+                            class: "primary",
+                            multi: false,
+                            action: function(){
+                                $location.url(sprintf('/%(group)s/viewChild/%(module)s/pid/%(id)d', {
+                                    group : group,
+                                    module: module,
+                                    id: Number($scope.gridSelected[0].id)
+                                })+extraParams);
+                            }
+                        });
+                    }
+                }
+                //查看数据模型
+                //工作流
+                if(model.workflowAlias) {
+                    $scope.workflowAble = true;
+                    $scope.workflowAlias = model.workflowAlias;
+                    var workflowNodeRes = $injector.get("WorkflowNodeRes");
+                    workflowNodeRes.query({
+                        workflow_alias: model.workflowAlias,
+                        only_active: true
+                    }).$promise.then(function(data){
+                        $scope.workflowActionList = data;
+                    });
+                    
+                    $scope.doWorkflow = function(event, node_id){
+                        var selectedItems = $scope.gridSelected || [];
+//                        console.log(arguments);
+                        if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
+                            return false;
+                        }
+                        for(var i=0;i<selectedItems.length;i++) {
+                            res.doWorkflow({
+                                workflow: true,
+                                node_id: node_id,
+                                id: selectedItems[i].id
+                            }).$promise.then(function(data){
+                                if(data.type) {
+                                    switch(data.type) {
+                                        case "redirect":
+                                            $location.url(data.location);
+                                            return;
+                                            break;
+                                    }
+                                }
+                            });
+                        }
+                        $scope.$broadcast("gridData.changed");
+                    };
+                    $scope.workflowActionDisabled = function(id) {
+                        var selectedItems = $scope.gridSelected || [];
+                        if(selectedItems.length > 1) {
+                            return true;
+                        }
+                        if(!selectedItems.length) {
+                            return true;
+                        }
+                        var result = true;
+                        for(var i=0;i<selectedItems.length;i++) {
+                            var item = selectedItems[i];
+                            if(!item["processes"]) {
+                                result = true;
+                                break;
+                            }
+                            angular.forEach(item.processes.nextNodes, function(node){
+                                if(node.id === id) {
+                                    result = false;
+                                    return;
+                                }
+                            });
+                        }
+                        return result;
+                    };
+                    //查看工作进程
+                    $scope.doViewWorkflowProcesses = function(){
+                        if(!$scope.gridSelected.length) {
+                            return false;
+                        }
+                        WorkflowProcessRes.query({
+                            id: $scope.gridSelected[0].id,
+                            workflowAlias: $scope.workflowAlias
+                        }).$promise.then(function(data){
+                            service.aside({
+                                bill_id: $scope.gridSelected[0].bill_id,
+                                title: $scope.gridSelected[0].subject,
+                                subTitle: $scope.gridSelected[0].dateline_lang
+                            }, data, "views/common/workflowProcess.html");
+                        });
+                    };
+                }
+                //删除
+                if(model.deleteAble === undefined || model.deleteAble) {
+                    $scope.selectedActions.push({
+                        label: $rootScope.i18n.lang.actions.delete,
+                        action: function(){
+                            var ids = [];
+                            angular.forEach($scope.gridSelected, function(item){
+                                ids.push(item.id);
+                            });
+                            if (!confirm(sprintf($rootScope.i18n.lang.confirm_delete, $scope.gridSelected.length))) {
+                                return false;
+                            }
+                            res.delete({id: ids.join()}, function(data) {
+                                $scope.$broadcast("gridData.changed");
+                            });
+
+                            $scope.gridOptions.selectedItems = [];
+                            $scope.gridSelected = [];
+                        },
+                        class: "danger",
+                        multi: true
+                    });
+                }
+            }
+            service.makeGridLinkActions = function($scope, actions, isBill, extraParams){
+                //可跳转按钮
+//                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
+                extraParams = extraParams ? "/"+extraParams : "";
+                var available = ["add", "list", "export", "print"];
+                $scope.pageActions = [];
+                angular.forEach(actions, function(act, k){
+                    if(available.indexOf(k) < 0) {
+                        return;
+                    }
+                    var action = k;
+                    if(isBill && k === "add") {
+                        action = "addBill";
+                    }
+                    $scope.pageActions.push({
+                        label: $rootScope.i18n.lang.actions[k],
+                        class: ComViewConfig.actionClasses[k],
+                        href : sprintf("/%(group)s/%(action)s/%(module)s", {
+                            group: $routeParams.group,
+                            action: action,
+                            module: $routeParams.module
+                        })+extraParams
+                    });
+                });
+            }
             service.makeDefaultPageAction = function($scope, module, actions){
                 actions = actions || ["add", "list"];
 

@@ -4,59 +4,13 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
         .config(["$routeProvider", function($routeProvider) {
             $routeProvider
                     //入库
-                    .when('/JXC/Stockin', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'JXCStockinCtl'
-                    })
-                    .when('/JXC/Stockin/add', {
+                    .when('/JXC/addBill/stockin', {
                         templateUrl: 'views/jxc/stockin/edit.html',
                         controller: 'JXCStockinEditCtl'
                     })
-                    .when('/JXC/Stockin/edit/id/:id', {
+                    .when('/JXC/editBill/stockin/id/:id', {
                         templateUrl: 'views/jxc/stockin/edit.html',
                         controller: 'JXCStockinEditCtl'
-                    })
-                    //商品基础
-                    .when('/JXC/Goods', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'JXCGoodsCtl'
-                    })
-                    .when('/JXC/Goods/add', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCGoodsEditCtl'
-                    })
-                    .when('/JXC/Goods/edit/dataModel/id/:id', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCGoodsEditModelCtl'
-                    })
-                    .when('/JXC/Goods/edit/id/:id', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCGoodsEditCtl'
-                    })
-                    .when('/JXC/GoodsCategory', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'JXCGoodsCategoryCtl'
-                    })
-                    .when('/JXC/GoodsCategory/add/pid/:pid', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCGoodsCategoryEditCtl'
-                    })
-                    .when('/JXC/GoodsCategory/edit/id/:id', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCGoodsCategoryEditCtl'
-                    })
-                    //仓库管理
-                    .when('/JXC/Stock', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'JXCStockCtl'
-                    })
-                    .when('/JXC/Stock/add', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCStockEditCtl'
-                    })
-                    .when('/JXC/Stock/edit/id/:id', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'JXCStockEditCtl'
                     })
                     //库存列表
                     .when('/JXC/StockProductList', {
@@ -93,22 +47,13 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'ProductTplDetailCtl'
                     })
                     //订单
-                    .when('/JXC/Orders', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'JXCOrdersCtl'
-                    })
-                    .when('/JXC/Orders/add', {
+                    .when('/JXC/addBill/orders', {
                         templateUrl: 'views/jxc/orders/edit.html',
                         controller: 'JXCOrdersEditCtl'
                     })
                     .when('/JXC/Orders/edit/id/:id', {
                         templateUrl: 'views/jxc/orders/edit.html',
                         controller: 'JXCOrdersEditCtl'
-                    })
-                    //出库
-                    .when('/JXC/Stockout', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'StockoutCtl'
                     })
         }])
         //出库单
@@ -377,7 +322,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     id: $routeParams["id"]
                 };
                 ComView.displayForm($scope, JXCGoodsModel, GoodsRes, opts, true);
-                
             }])
         
         //商品分类管理

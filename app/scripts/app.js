@@ -96,90 +96,90 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                 ComView.alert(message, "danger");
             });
             
-            //去除默认快捷键
+            //屏蔽默认快捷键
             $scope.removeDefaultKey = function() {
                 
             };
             
-            $scope.assignWorkflowNodes = function(sourceScope){
-                if(sourceScope.workflowAlias) {
-                    WorkflowNodeRes.query({
-                        workflow_alias: sourceScope.workflowAlias,
-                        only_active: true
-                    }).$promise.then(function(data){
-                        sourceScope.workflowActionList = data;
-                    });
-                }
-            };
-            
-            $scope.doWorkflow = function(event, node_id, selectedItems, res){
-                selectedItems = selectedItems || [];
-                if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
-                    return false;
-                }
-                for(var i=0;i<selectedItems.length;i++) {
-                    res.doWorkflow({
-                        workflow: true,
-                        node_id: node_id,
-                        id: selectedItems[i].id
-                    }).$promise.then(function(data){
-                        if(data.type) {
-                            switch(data.type) {
-                                case "redirect":
-                                    $location.url(data.location);
-                                    return;
-                                    break;
-                            }
-                        }
-                    });
-                }
-                $scope.$broadcast("gridData.changed");
-            };
-            $scope.workflowActionDisabled = function(id, selectedItems) {
-                selectedItems = selectedItems || [];
-                if(selectedItems.length > 1) {
-                    return true;
-                }
-                if(!selectedItems.length) {
-                    return true;
-                }
-                var result = true;
-                for(var i=0;i<selectedItems.length;i++) {
-                    var item = selectedItems[i];
-                    if(!item["processes"]) {
-                        result = true;
-                        break;
-                    }
-                    angular.forEach(item.processes.nextNodes, function(node){
-                        if(node.id === id) {
-                            result = false;
-                            return;
-                        }
-                    });
-                }
-                return result;
-            };
-            $scope.workflowDisabled = function(selectedItems) {
-                if(!selectedItems.length) {
-                    return true;
-                }
-                var next = null;
-                var disable = true;
-                for(var i=0;i<selectedItems.length;i++) {
-                    var item = selectedItems[i];
-                    if(!item["processes"]) {
-                        disable = true;
-                        break;
-                    }
-                    if(next !== null && next !== item["processes"]["nextActions"]) {
-                        disable = true;
-                        break;
-                    }
-                    disable = false;
-                    next = item["processes"]["nextActions"];
-                }
-                return disable;
-            };
+//            $scope.assignWorkflowNodes = function(sourceScope){
+//                if(sourceScope.workflowAlias) {
+//                    WorkflowNodeRes.query({
+//                        workflow_alias: sourceScope.workflowAlias,
+//                        only_active: true
+//                    }).$promise.then(function(data){
+//                        sourceScope.workflowActionList = data;
+//                    });
+//                }
+//            };
+//            
+//            $scope.doWorkflow = function(event, node_id, selectedItems, res){
+//                selectedItems = selectedItems || [];
+//                if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
+//                    return false;
+//                }
+//                for(var i=0;i<selectedItems.length;i++) {
+//                    res.doWorkflow({
+//                        workflow: true,
+//                        node_id: node_id,
+//                        id: selectedItems[i].id
+//                    }).$promise.then(function(data){
+//                        if(data.type) {
+//                            switch(data.type) {
+//                                case "redirect":
+//                                    $location.url(data.location);
+//                                    return;
+//                                    break;
+//                            }
+//                        }
+//                    });
+//                }
+//                $scope.$broadcast("gridData.changed");
+//            };
+//            $scope.workflowActionDisabled = function(id, selectedItems) {
+//                selectedItems = selectedItems || [];
+//                if(selectedItems.length > 1) {
+//                    return true;
+//                }
+//                if(!selectedItems.length) {
+//                    return true;
+//                }
+//                var result = true;
+//                for(var i=0;i<selectedItems.length;i++) {
+//                    var item = selectedItems[i];
+//                    if(!item["processes"]) {
+//                        result = true;
+//                        break;
+//                    }
+//                    angular.forEach(item.processes.nextNodes, function(node){
+//                        if(node.id === id) {
+//                            result = false;
+//                            return;
+//                        }
+//                    });
+//                }
+//                return result;
+//            };
+//            $scope.workflowDisabled = function(selectedItems) {
+//                if(!selectedItems.length) {
+//                    return true;
+//                }
+//                var next = null;
+//                var disable = true;
+//                for(var i=0;i<selectedItems.length;i++) {
+//                    var item = selectedItems[i];
+//                    if(!item["processes"]) {
+//                        disable = true;
+//                        break;
+//                    }
+//                    if(next !== null && next !== item["processes"]["nextActions"]) {
+//                        disable = true;
+//                        break;
+//                    }
+//                    disable = false;
+//                    next = item["processes"]["nextActions"];
+//                }
+//                return disable;
+//            };
 
             /**
              * 加载语言包
@@ -201,9 +201,10 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                          * 两种URL模式： 普通模式 group/module/action
                          *             URL友好模式 action(list|add|edit)/module
                          * */
-                        var actionList = ['list', 'add', 'edit'], fullPath,group,module,action;
+                        var actionList = ['list', 'add', 'edit', 'addChild', 'viewChild'], fullPath,group,module,action;
                         fullPath = $location.path().split("/").slice(1, 4);
                         group = fullPath[0];
+                        fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
                         //友好模式
                         if(actionList.indexOf(fullPath[1]) >= 0) {
                             module= fullPath[2].ucfirst();
@@ -216,7 +217,7 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
                         group = group ? group : "HOME";
                         module = module ? module : "Index";
                         action = action && isNaN(parseInt(action)) ? action : "list";
-    //                    console.log(module);
+//                        console.log(module);
                         $scope.currentPage = {};
                         if (group in $rootScope.i18n.urlMap) {
                             $scope.currentPage.group = $rootScope.i18n.urlMap[group].name;
@@ -238,6 +239,10 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.co
             
             /**
              * 获取页面基本信息
+             * @return {
+             *  user: {},
+             *  navs: {}
+             * }
              * */
             $http.get(conf.BSU+"HOME/Index/index").success(function(data){
                 $rootScope.uesrInfo = data.user;

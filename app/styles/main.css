@@ -75,16 +75,17 @@ commonform {
 .actionsBtnLeft {
     float:left;
     display:inline;
-    margin-left:15px;
 }
 .actionsBtnRight {
     float:right;
     display:inline;
-    margin-right:15px;
 }
 
 .dropdown-menu li.disabled a,.dropdown-menu li.disabled a:hover,.dropdown-menu li.disabled a:visited{
     color:#ddd;
+}
+.dropdown-menu {
+    min-width:0;
 }
 
 /**

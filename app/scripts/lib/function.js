@@ -16,6 +16,25 @@ function uriParamsGet(key) {
     }
     return key ? args[key] : args;
 }
+//解析参数  pid/1/other/value
+function parseParams(str) {
+    if(!str) {
+        return {};
+    }
+    var params = {};
+    str = str.split("/");
+    if(str.length > 1) {
+//        console.log(str);
+        for(var i=0;i<str.length;i++) {
+            if((i+1) % 2 == 0) {
+                continue;
+            }
+//            console.log(str[1]);
+            params[str[i]] = str[i+1];
+        }
+    }
+    return params;
+}
 
 Array.prototype.in_array = function(e)
 {
@@ -53,7 +72,7 @@ String.prototype.ucfirst = function() {
 
         // Put it back together but uppercase the first letter and
         // lowercase the rest of the word.
-        x[i] = parts[1].toUpperCase() + parts[2].toLowerCase();
+        x[i] = parts[1].toUpperCase() + parts[2];
     }
 
     // Rejoin the string and return.

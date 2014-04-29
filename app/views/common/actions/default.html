@@ -1,29 +1,40 @@
 <section class="actionsBtn row clearfix">
-    <div class="actionsBtnLeft btn-group">
-        <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
-        <a class="btn btn-sm btn-light" href="#/HOME/goTo/url/{{$parent.currentURI}}"><i class="icon icon-refresh"></i></a>
-        <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
-        <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
+    <div class="col-lg-4">
+        <div class="actionsBtnLeft btn-group">
+            <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
+            <a class="btn btn-sm btn-light" href="#/HOME/goTo/url/{{$parent.currentURI}}"><i class="icon icon-refresh"></i></a>
+            <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
+            <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
+        </div>
     </div>
-    <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
-        <button class="btn btn-sm btn-primary disabled">{{i18n.lang.selected_action|sprintf:gridSelected.length}}</button>
-        <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble" ng-class="{disabled: workflowDisabled}">
-            {{i18n.lang.workflow}}
-            <span class="icon-caret-down icon-on-right"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-default">
-            <li>
-                <a ng-click="doViewWorkflowProcesses()" ng-bind="i18n.lang.actions.viewWorkflowProcess"></a>
-            </li>
-            <li ng-repeat="w in workflowActionList" ng-class="{disabled: workflowActionDisabled(w.id)}">
-                <a ng-click="doWorkflow($event, w.id);">{{w.name}}</a>
-            </li>
-        </ul>
-        <button class="btn btn-sm btn-success" ng-click="doAddChild()" ng-class="{disabled: gridSelected.length != 1}" ng-show="addChildAble">{{i18n.lang.actions.addChild}}</button>
-        <button class="btn btn-sm btn-primary" ng-click="doViewSub()" ng-class="{disabled: gridSelected.length != 1}" ng-show="viewSubAble">{{i18n.lang.actions.viewSub}}</button>
-        <button class="btn btn-sm btn-primary" ng-click="doViewDataModel()" ng-class="{disabled: gridSelected.length != 1 || gridSelected[0].id <= 0}" ng-show="viewDataAble">{{i18n.lang.actions.viewModelData}}</button>
-        <button class="btn btn-sm btn-default" ng-click="doEditSelected()" ng-class="{disabled: gridSelected.length != 1}">{{i18n.lang.actions.edit}}</button>
-        <button class="btn btn-sm btn-danger"  ng-click="doDeleteSelected()" ng-class="{disabled: !gridSelected.length}">{{i18n.lang.actions.delete}}</button>
-
+    <div class="col-lg-8 right">
+        <!--//工作流-->
+        <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
+            <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble">
+                {{i18n.lang.workflow}}
+                <span class="icon-caret-down icon-on-right"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-success pull-right">
+                <li>
+                    <a ng-click="doViewWorkflowProcesses()" ng-bind="i18n.lang.actions.viewWorkflowProcess"></a>
+                </li>
+                <li ng-repeat="w in workflowActionList" ng-class="{disabled: workflowActionDisabled(w.id)}">
+                    <a ng-click="doWorkflow($event, w.id);">{{w.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <!--//选中项操作-->
+        <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
+            <button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length}">
+                {{i18n.lang.selected_action|sprintf:gridSelected.length}}
+                <i class="icon-caret-down icon-on-right"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-primary pull-right">
+                <li class="{{sa.class}}" ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}" ng-repeat="sa in selectedActions">
+                    <a ng-click="sa.action($event)" ng-bind="sa.label"></a>
+                </li>
+            </ul>
+        </div>
     </div>
+    
 </section>

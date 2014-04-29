@@ -2,42 +2,43 @@
 
 angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.directives'])
         .config(["$routeProvider", function($routeProvider) {
-            $routeProvider.when("/Passport/User", {
-                templateUrl: 'views/common/grid.html',
-                controller: 'UserListCtl'
-            })
-            .when("/Passport/User/add", {
-                templateUrl: 'views/common/edit.html',
-                controller: 'UserEditCtl'
-            })
-            .when("/Passport/User/edit/id/:id", {
-                templateUrl: 'views/common/edit.html',
-                controller: 'UserEditCtl'
-            })
-            .when("/Passport/AuthRule", {
-                templateUrl: 'views/common/grid.html',
-                controller: 'AuthRuleCtl'
-            })
-            .when("/Passport/AuthRule/add", {
-                templateUrl: 'views/common/edit.html',
-                controller: 'AuthRuleEditCtl'
-            })
-            .when("/Passport/AuthRule/edit/id/:id", {
-                templateUrl: 'views/common/edit.html',
-                controller: 'AuthRuleEditCtl'
-            })
-            .when("/Passport/AuthGroup", {
-                templateUrl: 'views/common/grid.html',
-                controller: 'AuthGroupCtl'
-            })
-            .when("/Passport/AuthGroup/add", {
-                templateUrl: 'views/common/edit.html',
-                controller: 'AuthGroupEditCtl'
-            })
-            .when("/Passport/AuthGroup/edit/id/:id", {
-                templateUrl: 'views/common/edit.html',
-                controller: 'AuthGroupEditCtl'
-            })
+            $routeProvider
+//            .when("/Passport/User", {
+//                templateUrl: 'views/common/grid.html',
+//                controller: 'UserListCtl'
+//            })
+//            .when("/Passport/User/add", {
+//                templateUrl: 'views/common/edit.html',
+//                controller: 'UserEditCtl'
+//            })
+//            .when("/Passport/User/edit/id/:id", {
+//                templateUrl: 'views/common/edit.html',
+//                controller: 'UserEditCtl'
+//            })
+//            .when("/Passport/AuthRule", {
+//                templateUrl: 'views/common/grid.html',
+//                controller: 'AuthRuleCtl'
+//            })
+//            .when("/Passport/AuthRule/add", {
+//                templateUrl: 'views/common/edit.html',
+//                controller: 'AuthRuleEditCtl'
+//            })
+//            .when("/Passport/AuthRule/edit/id/:id", {
+//                templateUrl: 'views/common/edit.html',
+//                controller: 'AuthRuleEditCtl'
+//            })
+//            .when("/Passport/AuthGroup", {
+//                templateUrl: 'views/common/grid.html',
+//                controller: 'AuthGroupCtl'
+//            })
+//            .when("/Passport/AuthGroup/add", {
+//                templateUrl: 'views/common/edit.html',
+//                controller: 'AuthGroupEditCtl'
+//            })
+//            .when("/Passport/AuthGroup/edit/id/:id", {
+//                templateUrl: 'views/common/edit.html',
+//                controller: 'AuthGroupEditCtl'
+//            })
             .when("/Passport/AuthGroup/viewSub/id/:pid", {
                 templateUrl: 'views/passport/assignPermission.html',
                 controller: 'AuthGroupAssignPermissionCtl'

@@ -2,7 +2,11 @@
 
 angular.module("erp.home.services", [])
          .service("DataModelModel", function() {
-            var obj = {};
+            var obj = {
+                subAble: true,
+                addSubAble: false,
+                subTpl: '/%(group)s/%(action)s/'
+            };
             obj.getFieldsStruct = function(){
                 return {
                     id: {
@@ -15,58 +19,6 @@ angular.module("erp.home.services", [])
             };
             return obj;
          })
-         .service("TypesModel", ["$rootScope",function($rootScope){
-             var obj = {};
-             obj.getFieldsStruct = function(){
-                 var i18n = $rootScope.i18n.lang;
-                 return {
-                     id: {
-                         primary: true
-                     },
-                     type: {
-                         inputType: "select",
-                         dataSource: [
-                             {id: "purchase", name:i18n.types.purchase},
-                             {id: "sale", name:i18n.types.sale},
-                             {id: "returns", name:i18n.types.returns},
-                             {id: "shipment", name:i18n.types.shipment},
-                             {id: "freight", name:i18n.types.freight},
-                             {id: "receive", name:i18n.types.receive},
-                             {id: "pay", name:i18n.types.pay},
-                             {id: "voucher", name:i18n.types.voucher}
-                         ]
-                     },
-                     alias: {},
-                     name: {},
-                     listorder: {
-                         inputType: "number",
-                         value: 99
-                     },
-                     status: {
-                         inputType: "checkbox"
-                     }
-                 };
-             };
-             return obj;
-         }])
-         .service("configModel", ["$rootScope", function($rootScope){
-                return {
-                    getFieldsStruct : function(){
-                        return {
-                            id: {primary: true},
-                            alias: {},
-                            name: {},
-                            value: {
-                                inputType: "textarea"
-                            },
-                            description: {
-                                inputType: "textarea",
-                                required: false
-                            }
-                        };
-                    }
-                };
-         }])
          .service("DataModelFieldsModel", ["$rootScope", function($rootScope) {
             var obj = {};
             obj.getFieldsStruct = function(){
@@ -147,8 +99,62 @@ angular.module("erp.home.services", [])
                 };
                 return obj;
              }])
+         .service("TypesModel", ["$rootScope",function($rootScope){
+             var obj = {};
+             obj.getFieldsStruct = function(){
+                 var i18n = $rootScope.i18n.lang;
+                 return {
+                     id: {
+                         primary: true
+                     },
+                     type: {
+                         inputType: "select",
+                         dataSource: [
+                             {id: "purchase", name:i18n.types.purchase},
+                             {id: "sale", name:i18n.types.sale},
+                             {id: "returns", name:i18n.types.returns},
+                             {id: "shipment", name:i18n.types.shipment},
+                             {id: "freight", name:i18n.types.freight},
+                             {id: "receive", name:i18n.types.receive},
+                             {id: "pay", name:i18n.types.pay},
+                             {id: "voucher", name:i18n.types.voucher}
+                         ]
+                     },
+                     alias: {},
+                     name: {},
+                     listorder: {
+                         inputType: "number",
+                         value: 99
+                     },
+                     status: {
+                         inputType: "checkbox"
+                     }
+                 };
+             };
+             return obj;
+         }])
+         .service("ConfigModel", ["$rootScope", function($rootScope){
+                return {
+                    getFieldsStruct : function(){
+                        return {
+                            id: {primary: true},
+                            alias: {},
+                            name: {},
+                            value: {
+                                inputType: "textarea"
+                            },
+                            description: {
+                                inputType: "textarea",
+                                required: false
+                            }
+                        };
+                    }
+                };
+         }])
         .service("WorkflowModel", ["$rootScope", function($rootScope){
             return {
+                subAble: true,
+                addSubAble: false,
                 getFieldsStruct: function(){
                     return {
                         id: {
@@ -167,6 +173,10 @@ angular.module("erp.home.services", [])
         .service("WorkflowNodeModel", ["$rootScope", "WorkflowNodeRes", "$routeParams", "$q",
             function($rootScope, res, $route, $q){
                 var service = {
+                    extraParams: {
+                        pid: $route.pid
+                    },
+                    listUrl: sprintf("/HOME/viewChild"),
                     getFieldsStruct: function(structOnly){
                         var struct = {
                             id: {primary: true},

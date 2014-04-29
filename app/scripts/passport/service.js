@@ -42,7 +42,7 @@ angular.module("erp.passport.services", [])
                             },
                             department_id: {
                                 displayName: $rootScope.i18n.lang.department,
-                                nameField: "title",
+                                nameField: "prefix_name",
                                 listable: false,
                                 inputType: "select"
                             }
@@ -97,6 +97,8 @@ angular.module("erp.passport.services", [])
         }])
         .factory("DepartmentModel", ["$rootScope", function($rootScope){
             return {
+                subAble: true,
+                viewSubAble: false,
                 getFieldsStruct: function(){
                     var i18n = $rootScope.i18n.lang;
                     return {

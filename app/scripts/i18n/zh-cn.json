@@ -31,7 +31,7 @@
                     "name": "部门",
                     "actions": {
                         "list": ["部门列表"],
-                        "add"  : ["新增部门"],
+                        "addChild"  : ["新增部门"],
                         "edit" : ["修改部门"]
                     }
                 }
@@ -44,6 +44,14 @@
                     "name": "",
                     "actions": {
                         "dashboard": ["控制面板"]
+                    }
+                },
+                "Config": {
+                    "name": "Key-Value 配置设置",
+                    "actions": {
+                        "list": "配置字段列表",
+                        "add" : "新增字段配置",
+                        "edit":"修改字段配置"
                     }
                 },
                 "DataModel": {
@@ -80,7 +88,16 @@
                 "Workflow": {
                     "name": "工作流管理",
                     "actions": {
-                        "list": ["工作流列表"]
+                        "list": ["工作流列表"],
+                        "viewChild": "工作流节点"
+                    }
+                },
+                "WorkflowNode": {
+                    "name": "工作流节点",
+                    "actions": {
+                        "list": "工作流节点列表",
+                        "edit": "修改工作流节点",
+                        "add" : "新增工作流节点"
                     }
                 }
             }
@@ -100,8 +117,8 @@
                     "name": "商品分类",
                     "actions": {
                         "list": ["商品分类列表"],
-                        "add": ["新增分类"],
-                        "edit": ["修改分类"]
+                        "edit": ["修改分类"],
+                        "addChild": "新增商品分类"
                     }
                 },
                 "Stock" : {
@@ -149,6 +166,7 @@
                 "Stockout": {
                     "name": "出库单",
                     "actions": {
+                        "add" : "新增出库单",
                         "list": "出库单列表"
                     }
                 }
@@ -277,6 +295,7 @@
             "save": "保存",
             "close": "关闭",
             "addChild": "增加子项",
+            "viewChild": "查看子项",
             "export": "导出",
             "edit": "编辑",
             "delete": "删除",
@@ -304,7 +323,7 @@
         
         "confirm_delete": "确定要删除这 %d 项吗？",
         "move_to_trash": "移到回收站",
-        "selected_action" : "选中%s项：",
+        "selected_action" : "选中 %s 项",
         "cache_temp": "项目缓存",
         "cache_log": "错误日志",
         "cache_data": "数据缓存",
@@ -354,6 +373,7 @@
         "username": "用户名",
         "usergroup": "用户组",
         "truename": "姓名",
+        "operation": "操作",
         "password": "密码",
         "unit_price": "单价",
         "department": "部门",
