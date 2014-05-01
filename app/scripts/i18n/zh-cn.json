@@ -142,7 +142,7 @@
                     "name": "库存管理",
                     "actions": {
                         "list": ["库存商品列表"],
-                        "Export": "导出库存清单",
+                        "export": "导出库存清单",
                         "edit": "修改库存产品信息"
                     }
                 },
@@ -285,7 +285,9 @@
             "permissionDenied": "您没有权限进行此操作",
             "serverError": "服务器返回错误，请联系系统管理员",
             "chosen_select_text" : "请选择",
-            "chosen_no_result_text" : "'没有找到相关结果'"
+            "chosen_no_result_text" : "'没有找到相关结果'",
+            "USER_NOT_EXISTS": "登录信息有误，请确认",
+            "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认"
         },
         "actions": {
             "submit" : "提交",
@@ -342,6 +344,8 @@
         "goods": "商品",
         "group": "组",
         "value": "值",
+        "logout": "安全退出",
+        "myprofile": "我的资料",
         "description": "描述",
         "amount": "价格",
         "field": "字段",

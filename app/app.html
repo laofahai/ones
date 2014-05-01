@@ -34,23 +34,17 @@
     </head>
     <body ng-app="erp" ng-controller="MainCtl">
         <div class="navbar navbar-default" id="navbar">
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('navbar', 'fixed')
-                } catch (e) {
-                }
-            </script>
             <div class="navbar-container" id="navbar-container">
                 <div class="navbar-header pull-left">
                     <a href="#" class="navbar-brand">
                         <small>
                             <i class="icon-leaf"></i>
-                            CN Idea Tech ERP System
+                            ONES ERP
                         </small>
                     </a><!-- /.brand -->
                 </div><!-- /.navbar-header -->
 
-                <div class="navbar-header pull-right" role="navigation" ng-controller="navHeaderCtl">
+                <div class="navbar-header pull-right navbar-user" role="navigation" ng-controller="navHeaderCtl">
                     <ul class="nav ace-nav">
                         <li class="light-blue">
                             <a data-toggle="dropdown" class="dropdown-toggle">
@@ -65,16 +59,9 @@
 
                             <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                                 <li>
-                                    <a href="#">
-                                        <i class="icon-cog"></i>
-                                        Settings
-                                    </a>
-                                </li>
-
-                                <li>
                                     <a href="#/Passport/Profile">
                                         <i class="icon-user"></i>
-                                        Profile
+                                        <span ng-bind="i18n.lang.myprofile"></span>
                                     </a>
                                 </li>
 
@@ -83,7 +70,7 @@
                                 <li>
                                     <a href="#/Passport/Logout">
                                         <i class="icon-off"></i>
-                                        Logout
+                                        <span ng-bind="i18n.lang.logout"></span>
                                     </a>
                                 </li>
                             </ul>
@@ -95,25 +82,12 @@
 
 
         <div class="main-container" id="main-container">
-            <script type="text/javascript">
-                try {
-                    ace.settings.check('main-container', 'fixed')
-                } catch (e) {
-                }
-            </script>
             <div class="main-container-inner">
                 <a class="menu-toggler" id="menu-toggler" href="#">
                     <span class="menu-text"></span>
                 </a>
 
                 <div class="sidebar" id="sidebar">
-                    <script type="text/javascript">
-                        try {
-                            ace.settings.check('sidebar', 'fixed')
-                        } catch (e) {
-                        }
-                    </script>
-
                     <div class="sidebar-shortcuts" id="sidebar-shortcuts">
                         <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
                             <button class="btn btn-success">
@@ -173,23 +147,10 @@
                     <div class="sidebar-collapse" id="sidebar-collapse">
                         <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
                     </div>
-
-                    <script type="text/javascript">
-                        try {
-                            ace.settings.check('sidebar', 'collapsed')
-                        } catch (e) {
-                        }
-                    </script>
                 </div>
 
                 <div class="main-content">
                     <div class="breadcrumbs" id="breadcrumbs">
-                        <script type="text/javascript">
-                            try {
-                                ace.settings.check('breadcrumbs', 'fixed')
-                            } catch (e) {
-                            }
-                        </script>
                         
                         <ul class="breadcrumb">
                             <li>

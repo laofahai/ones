@@ -540,6 +540,7 @@ function session($name,$value='') {
             session_id($_REQUEST[C('VAR_SESSION_ID')]);
         }elseif(isset($name['id'])) {
             session_id($name['id']);
+//            print_r($_SESSION);exit;
         }
         ini_set('session.auto_start', 0);
         if(isset($name['name']))            session_name($name['name']);

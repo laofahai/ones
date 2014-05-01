@@ -141,7 +141,7 @@ abstract class RestAction {
             if(isset($input[$args[0]])) { // 取值操作
                 $data	 =	 $input[$args[0]];
                 $fun  =  $args[1]?$args[1]:C('DEFAULT_FILTER');
-                $data	 =	 $fun($data); // 参数过滤
+                $data	 = function_exists($fun) ? $fun($data) : $data; // 参数过滤
             }else{ // 变量默认值
                 $data	 =	 isset($args[2])?$args[2]:NULL;
             }

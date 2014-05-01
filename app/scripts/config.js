@@ -3,7 +3,7 @@
  * */
 var ERPBaseConf = {
     //Base Server Uri 所有与服务器交互绝对路径开始
-    BSU : "../erp_server/index.php/",
+    BSU : "http://127.0.0.1/vhosts/newopenx/erp_server/index.php/",
     DEBUG: true,
     
     Prefix: "idea-erp",

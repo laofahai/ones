@@ -51,7 +51,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
     .value('ComViewConfig', {
         actionClasses : {
             "add" : "primary",
-            "list": "default"
+            "list": "default",
+            "export": "success"
         }
     })
     .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location",

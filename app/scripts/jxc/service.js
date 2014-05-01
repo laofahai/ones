@@ -153,7 +153,8 @@ angular.module("erp.jxc.services", [])
         }])
         .service("StockProductListModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
             var obj = {
-                deleteAble: false
+                deleteAble: false,
+                exportAble: true
             };
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;

@@ -27,9 +27,27 @@ class CommonAction extends RestAction {
         
         import("@.Workflow.Workflow");
         import("@.ORG.Auth");
+//        session(array());
         if ($_SERVER["HTTP_SESSIONHASH"]) {
 //            session_destroy();
+            $isSameDomain = false;
+            $tmp = sprintf("http://%s", $_SERVER["SERVER_NAME"]);
+//            echo $_SERVER["HTTP_REFERER"];exit;
+            if(substr($_SERVER["HTTP_REFERER"], 0, strlen($tmp)) == $tmp) {
+                $isSameDomain = true;
+            }
+            if(!$isSameDomain) {
+                session_destroy();
+            }
             session_id($_SERVER["HTTP_SESSIONHASH"]);
+            session_start();
+//            echo 123;exit;
+//            session(array(
+//                "id" => $this->_server("HTTP_SESSIONHASH")
+//            ));
+//            echo $_SERVER["HTTP_SESSIONHASH"];
+//            var_dump(session_id());
+//            print_r($_SESSION);
         }
         
         $this->user = $_SESSION["user"];
@@ -47,6 +65,7 @@ class CommonAction extends RestAction {
     
     protected function loginRequired() {
 //        var_dump($_SESSION);
+//        var_dump($this->isLogin());exit;
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
         if (!$this->isLogin() and 
                 !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME), 

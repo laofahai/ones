@@ -2,9 +2,16 @@ a{
     cursor:pointer;
 }
 
+.navbar-container {
+    padding:0;
+}
+.navbar-user .nav li{
+    min-width:160px;
+}
 .gridStyle {
     height:550px;
     border:1px solid #ddd;
+    margin-bottom:20px;
 }
 .ngHeaderContainer {
     border-bottom:1px solid #ddd;
@@ -84,7 +91,7 @@ commonform {
 .dropdown-menu li.disabled a,.dropdown-menu li.disabled a:hover,.dropdown-menu li.disabled a:visited{
     color:#ddd;
 }
-.dropdown-menu {
+.actionsBtn .dropdown-menu {
     min-width:0;
 }
 

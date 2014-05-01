@@ -21,7 +21,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/edit.html',
                         controller: 'StockProductsEditCtl'
                     })
-                    .when('/JXC/StockProductList/Export', {
+                    .when('/JXC/export/stockProductList', {
                         templateUrl: 'views/jxc/stockProductList/export.html',
                         controller: 'StockProductsExportCtl'
                     })

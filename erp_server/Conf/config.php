@@ -12,6 +12,10 @@ return array(
     'DB_CHARSET'         =>    'utf8',            // 数据库编码
     'SECURE_CODE'        =>    'the_x',    // 数据加密密钥
     
+    'SESSION_TYPE' => 'DB', 
+    'SESSION_TABLE' => 'x_session', 
+    'SESSION_EXPIRE' => 3600,
+    
     'DEFAULT_FILTER'     => "",
     
     'LOG_RECORD' => true, // 开启日志记录
