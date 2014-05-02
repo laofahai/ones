@@ -262,6 +262,37 @@ angular.module("erp.jxc.services", [])
             };
             return service;
         }])
+        .service("StockTransferModel", ["$rootScope", function($rootScope){
+            var obj = {
+                isBill: true,
+                workflowAlias: "stocktransfer"
+            };
+            obj.getFieldsStruct= function() {
+                var i18n = $rootScope.i18n.lang;
+                return {
+                    bill_id: {
+                        displayName: i18n.billId
+                    },
+                    subject: {},
+                    total_num: {
+                        displayName: i18n.totalNum
+                    },
+                    dateline: {
+                        cellFilter: "dateFormat"
+                    },
+                    status_text: {
+                        displayName: i18n.status,
+                        field: "processes.status_text"
+                    },
+                    sponsor: {},
+                    stock_manager: {
+                        displayName: i18n.stockManager
+                    }
+                };
+            };
+            
+            return obj;
+        }])
         .service("StockinModel", ["$rootScope", function($rootScope){
             var obj = {
                 isBill: true,

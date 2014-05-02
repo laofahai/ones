@@ -66,6 +66,9 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockin/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
+    .factory("StockTransferRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/stockTransfer/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
+        }])
     .factory("OutsideRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/outside/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])

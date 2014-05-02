@@ -4,6 +4,8 @@
  * 允许跨域请求
  */
 
+error_reporting(E_ALL^E_NOTICE);
+
 header("Access-Control-Allow-Origin: *");
 
 if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {

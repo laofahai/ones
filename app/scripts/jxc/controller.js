@@ -13,14 +13,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         controller: 'JXCStockinEditCtl'
                     })
                     //库存列表
-                    .when('/JXC/StockProductList', {
-                        templateUrl: 'views/common/grid.html',
-                        controller: 'StockProductsCtl'
-                    })
-                    .when('/JXC/StockProductList/edit/id/:id', {
-                        templateUrl: 'views/common/edit.html',
-                        controller: 'StockProductsEditCtl'
-                    })
                     .when('/JXC/export/stockProductList', {
                         templateUrl: 'views/jxc/stockProductList/export.html',
                         controller: 'StockProductsExportCtl'
@@ -38,8 +30,8 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/common/edit.html',
                         controller:  'ProductTplEditCtl'
                     })
-                    .when('/JXC/ProductTpl/edit/id/:id', {
-                        templateUrl: 'views/common/edit.html',
+                    .when('/JXC/edit/productTpl/id/:id', {
+                        templateUrl: 'views/jxc/productTpl/edit.html',
                         controller:  'ProductTplEditCtl'
                     })
                     .when('/JXC/ProductTpl/viewSub/id/:pid', {
@@ -198,17 +190,15 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
             $scope.viewSubAble = true;
             ComView.displayGrid($scope, model, res);
         }])
-        .controller("ProductTplEditCtl", ["$scope", "ProductTplRes", "ProductTplModel", "ComView", "$routeParams", function($scope, res, model ,ComView, $routeParams){
-            ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
-                ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
-                $scope.selectAble = false;
-                
-                ComView.displayForm($scope, model, res, {
-                    id: $routeParams.id
-                });
-                
-                
-                $scope.formMetaData = {};
+        .controller("ProductTplEditCtl", ["$scope", "ProductTplRes", "ProductTplEditModel", "ComView", "$routeParams", function($scope, res, model ,ComView, $routeParams){
+            ComView.makeDefaultPageAction($scope, "JXC/productTpl", ['addBill', 'list']);
+            $scope.selectAble = false;
+
+            ComView.displayForm($scope, model, res, {
+                id: $routeParams.id
+            });
+
+            $scope.formMetaData = {};
         }])
         .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $routeParams){
@@ -220,71 +210,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     module: "/JXC/ProductTplDetail",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });
-            }])
-        .controller("StockWarningCtl", ["$scope", "StockWarningRes", "StockWarningModel", "ComView", 
-            function($scope, res, model, ComView){
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.export,
-                        class : "success",
-                        href  : "/JXC/StockWarning/Export"
-                    }
-                ];
-                $scope.selectAble = false;
-                ComView.displayGrid($scope, model, res);
-                
-            }])
-        .controller("JXCStockCtl", ["$scope", "StockModel", "StockRes", "$location", "ComView",
-            function($scope, StockModel, StockRes, $location, ComView){
-                ComView.makeDefaultPageAction($scope, "JXC/Stock");
-                ComView.displayGrid($scope, StockModel, StockRes);
-            }])
-        .controller("JXCStockEditCtl", ["$scope", "StockModel", "StockRes", "$routeParams", "ComView",
-            function($scope, StockModel, StockRes, $routeParams, ComView) {
-                ComView.makeDefaultPageAction($scope, "JXC/Stock");
-                $scope.selectAble = false;
-                var opts = {
-                    name: "StockEdit",
-                    id: $routeParams["id"]
-                };
-                
-                ComView.displayForm($scope, StockModel, StockRes, opts, true);
-                
-            }])
-        //入库单
-        .controller("JXCStockinCtl", ["$scope", "StockinRes", "StockinModel", "WorkflowNodeRes", "$location", "ComView",
-            function($scope, StockinRes, StockinModel, WorkflowNodeRes, $location, ComView) {
-                ComView.makeDefaultPageAction($scope, "JXC/Stockin");
-                ComView.displayGrid($scope, StockinModel, StockinRes);
-                
-                $scope.workflowAble = true;
-                $scope.workflowAlias= "stockin";
-                
-                WorkflowNodeRes.query({workflow_alias: "stockin"}).$promise.then(function(data){
-                    $scope.workflowActionList = data;
-                });
-                
-                $scope.doWorkflow = function(event, id) {
-//                    $scope.selectedItems = [];
-                    return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, StockinRes);
-                };
-                $scope.workflowActionDisabled = function(id){
-                    return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
-                };
-                //@todo 判断 两条数据 下步操作相同情况
-                var ifWorkflowDisabled = function(){
-                    var rs = $scope.$parent.workflowDisabled($scope.gridSelected);
-                    return rs;
-                };
-                
-                
-                
-                $scope.workflowDisabled = false;
-//                $scope.$watch(function(){
-//                    return $scope.selectedItems;
-//                }, function(){
-//                    $scope.workflowDisabled = ifWorkflowDisabled();
-//                });
             }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
             function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
@@ -305,89 +230,6 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
                 $scope.format = $scope.formats[0];
                 
-            }])
-        //商品管理
-        .controller("JXCGoodsCtl", ["$scope", "GoodsRes", "JXCGoodsModel", "ComView",
-            function($scope, GoodsRes, JXCGoodsModel, ComView) {
-                ComView.makeDefaultPageAction($scope, "JXC/Goods");
-                ComView.displayGrid($scope, JXCGoodsModel, GoodsRes);
-            }])
-        .controller("JXCGoodsEditCtl", ["$scope", "JXCGoodsModel", "GoodsRes", "$routeParams", "ComView",
-            function($scope, JXCGoodsModel, GoodsRes, $routeParams, ComView) {
-                ComView.makeDefaultPageAction($scope, "JXC/Goods");
-                $scope.selectAble = false;
-                
-                var opts = {
-                    name: "JXCGoodsEdit",
-                    id: $routeParams["id"]
-                };
-                ComView.displayForm($scope, JXCGoodsModel, GoodsRes, opts, true);
-            }])
-        
-        //商品分类管理
-        .controller("JXCGoodsCategoryCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "ComView",
-            function($scope, model, res, ComView){
-                ComView.displayGrid($scope, model, res, {
-                    multiSelect: false
-                });
-                $scope.addChildAble = true;
-                $scope.viewDataAble = true;
-            }])
-        .controller("JXCGoodsCategoryEditCtl", ["$scope", "JXCGoodsCategoryModel", "GoodsCategoryRes", "$routeParams", "ComView",
-            function($scope, model, res, $routeParams, ComView) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/GoodsCategory"
-                    }
-                ];
-                $scope.selectAble = false;
-                
-                var opts = {
-                    name: "JXCGoodsCategoryEdit",
-                    id: $routeParams["id"]
-                };
-                ComView.displayForm($scope, model, res, opts, true);
-                
-            }])
-        
-        //库存列表
-        .controller("StockProductsCtl", ["$scope", "StockProductsRes", "StockProductModel", "ComView",
-            function($scope, StockProductsRes, StockProductModel, ComView) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/StockProductList"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.export,
-                        class : "success",
-                        href  : "/JXC/StockProductList/Export"
-                    }
-                ];
-                $scope.selectAble = true;
-                ComView.displayGrid($scope, StockProductModel, StockProductsRes);
-            }])
-        .controller("StockProductsEditCtl", ["$scope", "ComView", "StockProductsRes", "StockProductEditModel", "$routeParams",
-            function($scope, ComView, res, model, $routeParams){
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/JXC/StockProductList"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.export,
-                        class : "success",
-                        href  : "/JXC/StockProductList/Export"
-                    }
-                ];
-                $scope.selectAble = false;
-                ComView.displayForm($scope, model, res, {
-                    id: $routeParams.id
-                });
             }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "erp.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {

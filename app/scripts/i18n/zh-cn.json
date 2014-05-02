@@ -290,6 +290,7 @@
             "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认"
         },
         "actions": {
+            "addBill": "新增",
             "submit" : "提交",
             "reset"  : "重填",
             "return" : "返回",

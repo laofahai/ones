@@ -13,15 +13,15 @@ var ERP = angular.module('erp', [
     'ui.utils',
     'ui.select',
     
-    'erp.common',
-    'erp.commonView',
-    'erp.config',
-    'erp.doWorkflow',
-    
     'erp.passport',
     'erp.home',
     'erp.jxc',
-    'erp.crm'
+    'erp.crm',
+    
+    'erp.common',
+    'erp.config',
+    'erp.doWorkflow',
+    'erp.commonView', //需要先加载模块，让模块路由优先匹配
 //    'erp.service'
 ])
         /**

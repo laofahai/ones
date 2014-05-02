@@ -683,7 +683,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     $scope.pageActions.push({
                         label: $scope.i18n.lang.actions[actions[i]],
                         class: cssClass[i],
-                        href : sprintf("/%s/%s", module, actions[i] === "list" ? "" : actions[i])
+                        href : module.replace("/", sprintf('/%s/', actions[i]))
                     });
                 }
 
