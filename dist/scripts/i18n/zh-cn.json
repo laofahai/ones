@@ -1,0 +1,419 @@
+{
+    "urlMap": {
+        "Passport": {
+            "name": "用户账户模块",
+            "modules": {
+                "User": {
+                    "name": "用户管理",
+                    "actions": {
+                        "list": ["用户列表"],
+                        "add": ["新增用户"],
+                        "edit": ["修改用户信息"]
+                    }
+                },
+                "AuthRule": {
+                    "name": "权限节点",
+                    "actions": {
+                        "list": ["权限节点列表"],
+                        "add": ["新增权限节点"],
+                        "edit": ["修改权限节点信息"]
+                    }
+                },
+                "AuthGroup": {
+                    "name": "用户组",
+                    "actions": {
+                        "list": ["用户组列表"],
+                        "add"  : ["新增用户组"],
+                        "edit" : ["修改用户组"]
+                    }
+                },
+                "Department": {
+                    "name": "部门",
+                    "actions": {
+                        "list": ["部门列表"],
+                        "addChild"  : ["新增部门"],
+                        "edit" : ["修改部门"]
+                    }
+                }
+            }
+        },
+        "HOME": {
+            "name": "基础模块",
+            "modules": {
+                "Index": {
+                    "name": "",
+                    "actions": {
+                        "dashboard": ["控制面板"]
+                    }
+                },
+                "Config": {
+                    "name": "Key-Value 配置设置",
+                    "actions": {
+                        "list": "配置字段列表",
+                        "add" : "新增字段配置",
+                        "edit":"修改字段配置"
+                    }
+                },
+                "DataModel": {
+                    "name": "数据模型",
+                    "actions": {
+                        "list": ["数据模型管理"],
+                        "add": ["新建数据模型"],
+                        "edit": ["修改数据模型基础信息"],
+                        "viewSub": ["查看数据模型字段"]
+                    }
+                },
+                "DataModelData": {
+                    "name": "模型数据",
+                    "actions": {
+                        "list": ["模型数据管理"],
+                        "add": ["新增模型数据"],
+                        "edit": ["修改模型数据"]
+                    }
+                },
+                "Settings": {
+                    "name": "系统设置",
+                    "actions": {
+                        "clearCache": ["清除缓存"]
+                    }
+                },
+                "Types": {
+                    "name": "类型管理",
+                    "actions" : {
+                        "list": ["类型管理列表"],
+                        "add": ["新增类型"],
+                        "edit": ["修改类型"]
+                    }
+                },
+                "Workflow": {
+                    "name": "工作流管理",
+                    "actions": {
+                        "list": ["工作流列表"],
+                        "viewChild": "工作流节点"
+                    }
+                },
+                "WorkflowNode": {
+                    "name": "工作流节点",
+                    "actions": {
+                        "list": "工作流节点列表",
+                        "edit": "修改工作流节点",
+                        "add" : "新增工作流节点"
+                    }
+                }
+            }
+        },
+        "JXC": {
+            "name": "进销存",
+            "modules": {
+                "Goods": {
+                    "name": "商品管理",
+                    "actions": {
+                        "list": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
+                        "add": ["新增商品"],
+                        "edit": ["修改商品信息"]
+                    }
+                },
+                "GoodsCategory": {
+                    "name": "商品分类",
+                    "actions": {
+                        "list": ["商品分类列表"],
+                        "edit": ["修改分类"],
+                        "addChild": "新增商品分类"
+                    }
+                },
+                "Stock" : {
+                    "name": "仓库管理",
+                    "actions": {
+                        "list": ["仓库列表"],
+                        "add": ["新建仓库"],
+                        "edit": ["修改仓库信息"],
+                        "warning": "库存警告"
+                    }
+                },
+                "Stockin": {
+                    "name": "入库单",
+                    "actions": {
+                        "list": ["入库单列表"],
+                        "add": ["新建入库单"],
+                        "edit": ["入库单信息"]
+                    }
+                },
+                "StockProductList": {
+                    "name": "库存管理",
+                    "actions": {
+                        "list": ["库存商品列表"],
+                        "export": "导出库存清单",
+                        "edit": "修改库存产品信息"
+                    }
+                },
+                "ProductTpl": {
+                    "name": "产品拆装单模板",
+                    "actions": {
+                        "list": "拆装单模板列表",
+                        "add"  : "新增拆装单模板",
+                        "edit" : "修改拆装单模板",
+                        "viewSub": "拆装单模板详情"
+                    }
+                },
+                "Orders": {
+                    "name": "销售订单",
+                    "actions": {
+                        "list": "订单列表",
+                        "add"  : "订单录入",
+                        "edit" : "订单修改"
+                    }
+                },
+                "Stockout": {
+                    "name": "出库单",
+                    "actions": {
+                        "add" : "新增出库单",
+                        "list": "出库单列表"
+                    }
+                }
+            }
+        },
+        "CRM": {
+            "name": "客户关系管理",
+            "modules": {
+                "RelCompanyGroup": {
+                    "name": "往来单位分组",
+                    "actions": {
+                        "list": "往来单位分组列表",
+                        "add"  : "新增分组",
+                        "edit" : "修改分组信息"
+                    }
+                },
+                "RelationshipCompany": {
+                    "name": "客户基本信息",
+                    "actions": {
+                        "list": "客户列表"
+                    }
+                },
+                "RelCompany": {
+                    "name": "客户基本信息",
+                    "actions": {
+                        "list": "客户列表",
+                        "add": "新增客户",
+                        "edit": "修改客户信息"
+                    }
+                }
+            }
+        },
+        "doWorkflow": {
+            "name": "工作流执行",
+            "modules": {
+                "Stockout": {
+                    "name": "出库",
+                    "actions": {
+                        "confirm": "确认出库"
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "dashboard": "控制面板",
+            "stock": "库存管理",
+            "stock_list": "库存列表",
+            "stockin_paper": "入库单",
+            "stockout_paper": "出库单",
+            "shipment_paper": "发货单",
+            "stock_transfer": "库存调拨",
+            "purchase": "采购",
+            "add_new_purchase": "新建采购单",
+            "purchase_list": "采购单列表",
+            "sale": "销售",
+            "orders": "订单",
+            "returns": "退货单",
+            "rel_company": "往来单位管理",
+            "relCompanyGroup": "分组",
+            "relCompanyRecord": "基础档案",
+            "list": "列表",
+            "add_new": "新增",
+            "finance": "财务管理",
+            "finance_account": "财务管理",
+            "finance_record" : "收支记录",
+            "finance_receive_plan": "财务收入计划",
+            "finance_pay_plan": "财务付款计划",
+            "statistics": "统计分析",
+            "sale_statistics": "销售统计",
+            "stock_warning": "库存警告",
+            "statics_overview": "统计总览",
+            "statics_product_overview": "产品进销存表",
+            "settings": "设置",
+            "field_set": "字段设置",
+            "base_data_set": "基础数据管理",
+            "goods_setting": "商品管理",
+            "goods_tpl" : "商品拆装模板",
+            "goods_category": "商品分类管理",
+            "stock_manage": "仓库管理",
+            "data_model": "数据模型管理",
+            "types_manage": "类型管理",
+            "organization_set": "组织机构管理",
+            "user_setting" : "用户管理",
+            "auth_rule_node": "权限节点",
+            "user_group": "用户组管理",
+            "department": "部门管理",
+            "workflow": "工作流程",
+            "clear_cache": "清除缓存",
+            "produce": "生产管理",
+            "outside_bill": "外协单",
+            "produce_and_install": "生产组装单"
+        },
+        "modules": {
+            "Orders": "订单",
+            "Stockin": "入库单",
+            "Stockout": "出库单"
+        },
+        "inputType": {
+            "text": "单行文本",
+            "number": "数字",
+            "select": "下拉选择框"
+        },
+        "widgetTitles": {
+            "fill_the_form": "请填写下面的表单",
+            "operate_options": "操作选项"
+        },
+        "messages": {
+            "cacheCleared": "缓存已成功清除",
+            "addSuccess": "新增%s成功",
+            "editSuccess": "修改%s成功",
+            "deleteSuccess": "删除%s成功",
+            "operateSuccess": "操作成功",
+            "fillTheForm": "请完整填写表单",
+            "permissionDenied": "您没有权限进行此操作",
+            "serverError": "服务器返回错误，请联系系统管理员",
+            "chosen_select_text" : "请选择",
+            "chosen_no_result_text" : "'没有找到相关结果'",
+            "USER_NOT_EXISTS": "登录信息有误，请确认",
+            "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认"
+        },
+        "actions": {
+            "addBill": "新增",
+            "submit" : "提交",
+            "reset"  : "重填",
+            "return" : "返回",
+            "add": "新增",
+            "save": "保存",
+            "close": "关闭",
+            "addChild": "增加子项",
+            "viewChild": "查看子项",
+            "export": "导出",
+            "edit": "编辑",
+            "delete": "删除",
+            "list": "列表",
+            "view": "查看",
+            "viewSub": "查看子项",
+            "clearCache": "清除缓存",
+            "viewModelData": "查看模型数据",
+            "viewWorkflowProcess": "查看工作流进程"
+        },
+        "types" : {
+            "purchase": "采购类型",
+            "sale": "销售类型",
+            "returns": "退货类型",
+            "shipment": "物流方式",
+            "freight" : "运费类型",
+            "receive" : "收款类别",
+            "pay"     : "付款类别",
+            "voucher" : "凭证字号"
+        },
+        "navigation": {
+            "back": "后退",
+            "forward": "前进"
+        },
+        
+        "confirm_delete": "确定要删除这 %d 项吗？",
+        "move_to_trash": "移到回收站",
+        "selected_action" : "选中 %s 项",
+        "cache_temp": "项目缓存",
+        "cache_log": "错误日志",
+        "cache_data": "数据缓存",
+        "yes": "是",
+        "no" : "否",
+        "id" : "ID",
+        "qq" : "QQ",
+        "num": "数量",
+        "memo": "备注",
+        "name": "名称",
+        "type": "类型",
+        "data": "数据",
+        "title": "标题",
+        "email": "邮箱",
+        "total": "合计",
+        "goods": "商品",
+        "group": "组",
+        "value": "值",
+        "logout": "安全退出",
+        "myprofile": "我的资料",
+        "description": "描述",
+        "amount": "价格",
+        "field": "字段",
+        "stock": "仓库",
+        "status": "状态",
+        "alias" : "别名",
+        "phone" : "电话",
+        "owner" : "所属者",
+        "bill_id": "单据编号",
+        "billId": "单据编号",
+        "mobile" : "手机",
+        "telephone": "电话",
+        "linkMan": "联系人",
+        "total_num": "总数",
+        "totalNum": "总数",
+        "rmbToBig": "大写",
+        "sponsor": "制单人",
+        "version": "型号",
+        "subject": "主题",
+        "customer": "客户",
+        "outStockTime": "出库时间",
+        "total_price_real": "实收金额",
+        "total_amount_real": "实收金额",
+        "dateline": "时间",
+        "standard": "规格",
+        "discount": "折扣率",
+        "discountAmount": "折扣额",
+        "measure": "计量单位",
+        "username": "用户名",
+        "usergroup": "用户组",
+        "truename": "姓名",
+        "operation": "操作",
+        "password": "密码",
+        "unit_price": "单价",
+        "department": "部门",
+        "stock_manager": "库管员",
+        "stockManager": "库管员",
+        "stockWarningOnly": "仅库存警告数据",
+        "bindDataModel": "绑定数据模型",
+        "displayName": "显示名称",
+        "firstChar": "拼音首字母",
+        "factory_code": "基础原厂编码",
+        "factoryCodeAll": "原厂编码",
+        "factory_code_all": "原厂编码",
+        "goods_name": "产品",
+        "measure": "计量单位",
+        "price": "销售价格",
+        "cost": "成本价格",
+        "workflow": "工作流",
+        "workflow_file": "工作流逻辑目录",
+        "category_id": "分类ID",
+        "category": "分类",
+        "storeNum": "库存数量",
+        "store_min": "库存下限",
+        "store_max": "库存上限",
+        "listorder": "排序",
+        "checkAll_uncheck": "全选/取消",
+        "authRuleNode": "权限节点",
+        "source_model": "来源模型",
+        "prev_node_id": "上一流程节点",
+        "next_node_id": "下一流程节点",
+        "cond": "条件",
+        "execute_type": "执行类型",
+        "status_text" : "状态文本",
+        "executor": "执行者",
+        "default" : "默认",
+        "remind": "提醒",
+        "execute_file": "执行文件"
+    }
+}
