@@ -29,8 +29,9 @@ return array(
     ),
     "purchase" => array(
         "childs" => array(
-            "add_new_purchase" => "JXC/add/purchase",
-            "purchase_list" => "JXC/list/purchase"
+            "add_new_purchase" => "JXC/addBill/purchase",
+            "purchase_list" => "JXC/list/purchase",
+            "purchase_return" => "JXC/list/purchase_return"
         ),
         "icon" => "shopping-cart"
     ),

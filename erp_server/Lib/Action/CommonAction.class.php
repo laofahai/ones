@@ -52,9 +52,9 @@ class CommonAction extends RestAction {
         
         $this->user = $_SESSION["user"];
         
-        if(!$_REQUEST) {
-            $_REQUEST = array_merge($_GET, $_POST);
-        }
+//        if(!$_REQUEST) {
+//            $_REQUEST = array_merge($_GET, $_POST);
+//        }
         
         $this->checkPermission();
     }
@@ -323,6 +323,7 @@ class CommonAction extends RestAction {
      * 执行工作流节点
      */
     protected function doWorkflow() {
+//        print_r($this->_post());exit;
         $mainRowid = abs(intval($_REQUEST["id"]));
         $nodeId = abs(intval($_REQUEST["node_id"]));
         

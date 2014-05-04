@@ -16,7 +16,17 @@ class StockinConfirmStockin extends WorkflowAbstract {
      * @todo 更新仓库总量
      */
     public function run() {
+        
+        if(!$_REQUEST["donext"]) {
+            $data = array(
+                "type" => "redirect",
+                "location" => sprintf("/doWorkflow/Stockin/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
+            );
+            $this->response($data);
+        }
+        
         $id = $this->mainrowId;
+        
         if(!$id) {
             $this->error(L("params_error"));
         }

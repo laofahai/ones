@@ -104,6 +104,7 @@ abstract class RestAction {
      * @return mixed
      */
     public function __call($method,$args) {
+        
         if( 0 === strcasecmp($method,ACTION_NAME)) {
             if(method_exists($this,$method.'_'.$this->_method.'_'.$this->_type)) { // RESTFul方法支持
                 $fun  =  $method.'_'.$this->_method.'_'.$this->_type;

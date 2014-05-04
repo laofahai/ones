@@ -34,9 +34,9 @@ class StockoutAction extends CommonAction {
         /**
          * 工作流执行中
          */
-        print_r($data);
-        
-        exit;
+//        print_r($data);
+//        
+//        exit;
         $this->response($data);
     }
     

@@ -891,19 +891,22 @@
                         Down: 40,
                         Escape: 27
                     };
-                    //监听键盘事件
+                    if($event.keyCode === Keys.Up || $event.keyCode === Keys.down) {
+                        window.event.returnValue =false;
+                    }
                     setTimeout(function(){
+                        //监听键盘事件
                         switch($event.keyCode) {
                             case Keys.Enter:
                                 if(!$("#select3Container li").length) {
                                     return false;
                                 }
-                                
+
                                 self.scope.setValue($("#select3Container li.active"));
-                                
-//
-//                                $parse(self.opts["ng-model"]).assign(value, self.scope);
-//                                $(".select3Input:focus").next().val(value);
+
+    //
+    //                                $parse(self.opts["ng-model"]).assign(value, self.scope);
+    //                                $(".select3Input:focus").next().val(value);
                                 break;
                             case Keys.Tab:
                             case Keys.Escape:
@@ -935,6 +938,7 @@
                                 }
                                 break;
                         }
+                        self.scope.$parent.$digest();
                     });
                 };
                 this.scope.$parent.doSelect3Query = function(val){
@@ -986,7 +990,9 @@
                 };
                 
                 this.scope.$parent.doSelect3Blur = function(){
-                    self.scope.$parent.hideSelect3Options();
+                    setTimeout(function(){
+                        self.scope.$parent.hideSelect3Options();
+                    }, 50);
                 };
                 
                 this.scope.$parent.displaySelect3Options = function(){

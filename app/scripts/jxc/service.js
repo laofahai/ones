@@ -379,6 +379,7 @@ angular.module("erp.jxc.services", [])
                             inputType: "select3",
                             dataSource: StockRes,
                             autoQuery: true,
+                            autoReset: true,
                             autoHide: true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
@@ -831,3 +832,27 @@ angular.module("erp.jxc.services", [])
 
                 return obj;
             }])
+        .service("PurchaseModel", ["$rootScope", function($rootScope){
+            return {
+                isBill: true,
+                workflowAlias: "purchase",
+                getFieldsStruct: function(){
+                    return {
+                        bill_id: {},
+                        purchase_type: {
+                            billAble: false
+                        },
+                        purchase_type_label: {
+                            displayName: $rootScope.i18n.lang.type
+                        },
+                        user_id: {},
+                        supplier: {},
+                        quantity: {},
+                        total_price: {},
+                        total_price_real: {},
+                        dateline: {},
+                        status_text: {}
+                    };
+                }
+            };
+        }])

@@ -1,4 +1,4 @@
-#ONES is niubility ERP system
+#ONES is a niubility ERP system
 
 作者：闫志鹏 <335454250@qq.com>
 

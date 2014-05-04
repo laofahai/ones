@@ -45,6 +45,10 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
             templateUrl: 'views/common/edit.html',
             controller : 'ComViewEditCtl'
         })
+        .otherwise({
+            templateUrl: "views/common/404.html",
+            controller : "ComViewError404Ctl"
+        })
         //子项列表
         ;
     }])
@@ -55,6 +59,9 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
             "export": "success"
         }
     })
+    .controller('ComViewError404Ctl', ["$scope", function($scope){
+        $scope.hidePageHeader = true;
+    }])
     .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location",
         function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location){
             var module,group,res,model,actions,pageActions=[];
@@ -458,9 +465,21 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                 }
 
                 $scope.config = opts;
+                
+//                //监控数据变化，是否保存
+//                $scope.watch(function(){
+//                    return $scope[opts.dataName];
+//                }, function(){
+//                    
+//                });
 
-                //默认表单提交方法，可自动判断是否编辑/新建
+                //默认单据提交方法，可自动判断是否编辑/新建
                 $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
+                    if(!opts.returnPage) {
+                        var tmp = $location.$$url.split("/").slice(1,4);
+                        tmp[1] = "list";
+                        opts.returnPage = "/"+tmp.join("/");
+                    }
                     var data = $.extend($scope.formMetaData, {rows: $scope[opts.dataName]});
                     var getParams = {};
                     for (var k in $routeParams) {
@@ -473,7 +492,6 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         resource.save(getParams,data);
                     }
                     $location.url(opts.returnPage);
-
                 };
             };
             

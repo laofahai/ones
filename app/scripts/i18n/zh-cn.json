@@ -121,6 +121,17 @@
                         "addChild": "新增商品分类"
                     }
                 },
+                "Purchase": {
+                    "name": "采购",
+                    "actions": {
+                        "list": "采购单列表",
+                        "edit": "修改采购单",
+                        "add" : "新增采购单"
+                    }
+                },
+                "Purchase_return": {
+                    "name": "采购退货"
+                },
                 "Stock" : {
                     "name": "仓库管理",
                     "actions": {
@@ -207,6 +218,12 @@
                     "actions": {
                         "confirm": "确认出库"
                     }
+                },
+                "Stockin": {
+                    "name": "入库",
+                    "actions": {
+                        "confirm": "确认入库"
+                    }
                 }
             }
         }
@@ -223,6 +240,7 @@
             "purchase": "采购",
             "add_new_purchase": "新建采购单",
             "purchase_list": "采购单列表",
+            "purchase_return": "采购退货",
             "sale": "销售",
             "orders": "订单",
             "returns": "退货单",

@@ -10,6 +10,10 @@ angular.module("erp.doWorkflow", ["erp.doWorkflow.service"])
                 controller: "WorkflowConfirmStockoutCtl",
                 templateUrl: "views/jxc/stockout/confirmStockout.html"
             })
+            .when('/doWorkflow/Stockin/confirm/:nodeId/:id', {
+                controller: "WorkflowConfirmStockinCtl",
+                templateUrl: "views/jxc/stockin/confirmStockin.html"
+            })
         }])
     .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutEditModel", "$location",
         function($scope, $routeParams, ComView, res, model, $location){
@@ -29,7 +33,29 @@ angular.module("erp.doWorkflow", ["erp.doWorkflow.service"])
                     data: $scope.formMetaData
                 }).$promise.then(function(data){
 //                    console.log(data);return;
-                    $location.url("/JXC/list/tockout");
+                    $location.url("/JXC/list/stockout");
+                });
+            };
+        }])
+    .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinEditModel", "$location",
+        function($scope, $routeParams, ComView, res, model, $location){
+            $scope.selectAble= false;
+            ComView.displayBill($scope, model, res, {
+                id: $routeParams.id,
+                queryExtraParams: {includeSource: true, workflowing: true}
+            });
+
+            $scope.doSubmit = function() {
+                $scope.formMetaData.rows = $scope.formData;
+                res.doPostWorkflow({
+                    workflow: true,
+                    node_id: $routeParams.nodeId,
+                    id: $routeParams.id,
+                    donext: true,
+                    data: $scope.formMetaData
+                }).$promise.then(function(data){
+//                    console.log(data);return;
+                    $location.url("/JXC/list/stockin");
                 });
             };
         }])

@@ -87,7 +87,8 @@ $urlRoutes = array_merge($base,
     routeMaker("jxc/stockProductList", "JXC/StockProductList", array("list", "get", "put")),
     routeMaker("jxc/stockin", "JXC/Stockin", null),
     routeMaker("jxc/stockout", "JXC/Stockout", null),
-    routeMaker("jxc/stockTransfer", "JXC/StockTransfer", null)
+    routeMaker("jxc/stockTransfer", "JXC/StockTransfer", null),
+    routeMaker("jxc/purchase", "JXC/Purchase")
 );
 
 //print_r($urlRoutes);
