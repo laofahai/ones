@@ -53,7 +53,7 @@ class CommonAction extends RestAction {
         $this->user = $_SESSION["user"];
         
 //        if(!$_REQUEST) {
-//            $_REQUEST = array_merge($_GET, $_POST);
+            $_REQUEST = array_merge($_GET, $_POST);
 //        }
         
         $this->checkPermission();

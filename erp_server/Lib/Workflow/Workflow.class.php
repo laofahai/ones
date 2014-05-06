@@ -27,8 +27,10 @@ class Workflow {
         $this->workflowAlias = $workflowAlias;
         $this->context = $context;
         $this->currentWorkflow = D("Workflow")->getByAlias($workflowAlias);//("alias='".$workflowAlias."'")->find();
+//        echo D("Workflow")->getLastSql();exit;
         if(!$this->currentWorkflow) {
             //@todo
+            throw_exception(L("workflow_not_found").": ".$workflowAlias);
         }
         $this->nodeModel = D("WorkflowNode");
         $this->processModel = D("WorkflowProcess");
@@ -250,6 +252,8 @@ class Workflow {
                 $node = $this->nodeModel->where($map)->order("listorder ASC")->find();
             }
         }
+        
+//        echo $this->nodeModel->getLastSql();exit;
         if(!$node and !$ignoreCheck) {
             throw_exception(L("workflow_not_found"));
             return false;
@@ -271,7 +275,7 @@ class Workflow {
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
 //        echo $className;
         if(!$className or !class_exists($className)) {
-            throw_exception(sprintf(L("class_not_found")." %s", $className));
+            throw_exception(L("class_not_found").": ".$className);
             return false;
         }
         $node["context"] = unserialize($node["context"]);
@@ -469,7 +473,9 @@ class Workflow {
         $workflows = $workflowModel->where(array(
             "workflow_file" => array("IN", implode(",", $models))
         ))->select();
-        
+//        print_r($relationModels);
+//        echo $workflowModel->getLastSql();exit;
+//        print_r($workflows);exit;
         foreach($workflows as $v) {
             $theWorkflows[$v["workflow_file"]] = $v["id"];
         }

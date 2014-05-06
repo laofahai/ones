@@ -27,6 +27,7 @@ class StockinAction extends CommonAction {
         
         $rowModel = D("StockinDetailView");
         $rows = $rowModel->where("stockin_id=".$formData["id"])->select();
+//        print_r($rows);exit;
         $modelIds = array();
         $rowData = array();
         foreach($rows as $v) {
@@ -40,16 +41,16 @@ class StockinAction extends CommonAction {
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
             $rowData[$v["id"]] = $v;
         }
-        array_flip(array_flip($modelIds));
+//        array_flip(array_flip($modelIds));
 
         $dataModel = D("DataModelDataView");
         
         
         $rowData = $dataModel->assignModelData($rowData, $modelIds);
         
-//        print_r($rowData);exit;
-        
         $formData["rows"] = reIndex($rowData);
+        
+        
         $this->response($formData);
         
     }

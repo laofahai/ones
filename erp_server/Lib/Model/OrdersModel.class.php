@@ -35,7 +35,7 @@ class OrdersModel extends CommonModel {
         $orderId = $this->add($data);
 
         if(!$orderId) {
-                    echo $this->getLastSql();exit;
+            echo $this->getLastSql();exit;
             $this->rollback();
             return false;
         }

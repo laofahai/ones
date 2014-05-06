@@ -16,13 +16,11 @@ class WorkflowProcessAction extends CommonAction {
         $mainrowId = $_GET["id"];
         $workflowAlias = $_GET["workflowAlias"];
         
-        $workflow = D("Workflow")->getByAlias($workflowAlias);
+        $modelName = ucfirst($workflowAlias);
+        $model =  D($modelName);
         
-        $model = D("WorkflowProcessView");
-        $process = $model->where(array(
-            "workflow_id" => $workflow["id"],
-            "mainrow_id"  => $mainrowId
-        ))->order("start_time ASC")->select();
+        $workflow = new Workflow($workflowAlias);
+        $process = $workflow->getItemProcesses($modelName, $mainrowId, $model->relationModels);
         
         $this->response($process);
     }

@@ -42,7 +42,7 @@ class CommonViewModel extends ViewModel{
         
 //        var_dump($this);
         
-//        echo $this->getLastSql();
+//        echo $this->getLastSql()."<br />";
         
         if(!$data) {
             return $data;
@@ -109,6 +109,7 @@ class CommonViewModel extends ViewModel{
          * 工作流
          */
         if($this->workflowAlias) {
+            print_r($processData);exit;
             import("@.Workflow.Workflow");
             $workflow = new Workflow($this->workflowAlias);
             $processData = $workflow->getCurrentProcess($data[$this->workflowMainRowField]);

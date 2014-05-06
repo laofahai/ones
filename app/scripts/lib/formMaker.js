@@ -288,7 +288,6 @@
         };
 
         service.makeBill = function($scope){
-
             var defaultOpts = {
                 minRows: 9,
                 dataName: "formData",
@@ -335,10 +334,9 @@
                 });
             },
             makeHead: function(fieldsDefine){
-//                console.log(fieldsDefine);
                 var html = [];
                 angular.forEach(fieldsDefine, function(item){
-                    if(item.billAble!==false) {
+                    if(item.billAble !== false) {
                         var attr = [];
                         if(item && "width" in item) {
                             attr.push('width="'+item.width+'"');

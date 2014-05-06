@@ -45,6 +45,12 @@ class WorkflowNodeAction extends CommonAction {
         if($_GET["only_active"]) {
             $map["type"] = array("NOT IN", "2,3");
         }
+        
+        //通过某NODE获取工作流所有节点
+        if($_GET["by_node_id"]) {
+            $tmp = D("WorkflowNode")->find($_GET["by_node_id"]);
+            $map["workflow_id"] = $tmp["workflow_id"];
+        }
     }
     
     protected function _order(&$order) {

@@ -24,10 +24,14 @@ class StockinModel extends CommonModel {
      */
     public function newBill($billData, $billItems) {
         if(!$billItems) {
-            echo 222;exit;
             return false;
         }
         $this->startTrans();
+        
+        if(!$billData["bill_id"]){
+            $billData["bill_id"] = uniqid("RK");
+        }
+        
         $billId = $this->add($billData);
 //        echo $this->getLastSql();exit;
 //        echo $billId;exit;
@@ -37,12 +41,8 @@ class StockinModel extends CommonModel {
 //            print_r($billItem);
             $id = $itemsModel->add($billItem);
             if(!$id) {
-                echo 123;exit;
-                echo $itemsModel->getLastSql();
-//                var_dump($id);
                 $this->rollback();
                 return false;
-                break;
             }
         }
         

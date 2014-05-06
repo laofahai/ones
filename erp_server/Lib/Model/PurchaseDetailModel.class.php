@@ -10,11 +10,7 @@
  * @Description
  * 
  */
-class PurchaseDetailModel extends RelationModel {
-    
-    protected $_link = array(
-        "Purchase" => BELONGS_TO
-    );
+class PurchaseDetailModel extends CommonModel {
     
 }
 

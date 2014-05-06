@@ -105,8 +105,8 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                 id: $routeParams.id
             });
         }])
-    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector",
-        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector){
+    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "erp.config",
+        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf){
             var service = {};
             /**
              * 通用alert
@@ -491,6 +491,11 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                     } else {
                         resource.save(getParams,data);
                     }
+                    
+                    if(conf.DEBUG) {
+                        return;
+                    }
+                    
                     $location.url(opts.returnPage);
                 };
             };
@@ -612,11 +617,13 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         }
                         var result = true;
                         for(var i=0;i<selectedItems.length;i++) {
+                            
                             var item = selectedItems[i];
                             if(!item["processes"]) {
                                 result = true;
                                 break;
                             }
+                            
                             angular.forEach(item.processes.nextNodes, function(node){
                                 if(node.id === id) {
                                     result = false;

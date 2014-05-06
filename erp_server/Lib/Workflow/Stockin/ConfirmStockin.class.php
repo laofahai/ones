@@ -17,7 +17,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
      */
     public function run() {
         
-        if(!$_REQUEST["donext"]) {
+        if(!$_POST["donext"]) {
             $data = array(
                 "type" => "redirect",
                 "location" => sprintf("/doWorkflow/Stockin/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)

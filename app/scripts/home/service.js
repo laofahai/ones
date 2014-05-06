@@ -224,7 +224,7 @@ angular.module("erp.home.services", [])
                         if(!structOnly) {
                             var defer = $q.defer();
                             res.query({
-                                workflow_id: $route.pid
+                                by_node_id: $route.id
                             }, function(data){
                                 struct.prev_node_id.dataSource = data;
                                 struct.next_node_id.dataSource = data;
