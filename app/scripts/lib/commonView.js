@@ -619,6 +619,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                         for(var i=0;i<selectedItems.length;i++) {
                             
                             var item = selectedItems[i];
+//                            console.log(item);
                             if(!item["processes"]) {
                                 result = true;
                                 break;

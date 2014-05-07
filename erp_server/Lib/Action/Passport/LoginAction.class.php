@@ -27,7 +27,7 @@ class LoginAction extends CommonAction {
     
     private function doLogin() {
 //        echo 123;
-//        print_r($_REQUEST);exit;
+//        var_dump($_REQUEST);exit;
         if(IS_POST) {
             $user = D("UserRelation");
             $theUser = $user->relation(true)->getByUsername($_REQUEST["username"]);

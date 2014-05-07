@@ -13,6 +13,8 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
+$_REQUEST = array_merge($_GET, $_POST, $_COOKIE);
+
 //REST模式
 define('MODE_NAME', 'rest');
 define('__EXT__', 'json');

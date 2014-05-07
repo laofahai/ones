@@ -18,48 +18,47 @@ class ReturnsMakeStockinPaper extends WorkflowAbstract {
         $returnDetail = D("ReturnsDetail");
         $theReturnsDetail = $returnDetail->where("returns_id=".$theReturns["id"])->select();
         
-//        $returns->startTrans();
         $data = array(
-            "subject" => $theReturns["subject"],
+            "subject" => "退货入库",
             "dateline"=> CTS,
             "total_num" => $theReturns["total_num"],
             "status"  => 1,
             "user_id" => getCurrentUid(),
-            "source_model" => "Returns",
+            "source_model" => "Purchase",
             "source_id"    => $this->mainrowId,
             "stock_manager"=> 0,
-            "stock_id"     => $theReturns["stock_id"],
             "memo" => $theReturns["memo"]
         );
         
         $stockin = D("Stockin");
-        $stockinDetail = D("StockinDetail");
-        
-        $lastId = $stockin->add($data);
+//        $stockinDetail = D("StockinDetail");
+//        
+//        $stockin->startTrans();
+//        
+//        $lastId = $stockin->add($data);
 //        echo $lastId;exit;
-//        var_dump($theReturnsDetail);exit;
+//        var_dump($thePurchaseDetail);exit;
         foreach($theReturnsDetail as $trd) {
-            $data = array(
-                "stockin_id" => $lastId,
+            $items[] = array(
                 "goods_id"   => $trd["goods_id"],
-                "color_id"   => $trd["color_id"],
-                "standard_id"=> $trd["standard_id"],
                 "num"        => $trd["num"],
-                "factory_code_all" => $trd["factory_code_all"]
+                "factory_code_all" => $trd["factory_code_all"],
+                "stock_id"   => 0,
+                "memo"       => $trd["memo"]
             );
 //            print_r($data);exit;
-            $stockinDetail->add($data);
+//            if(!$stockinDetail->add($data)) {
+//                $stockin->rollback();
+//                return false;
+//            }
             
         }
         
-        //新建入库流程
-        import("@.Workflow.Workflow");
-        $workflow = new Workflow("stockin", $this->action);
-        $rs = $workflow->doNext($lastId, "", true, true); //新建
-//        $rs = $workflow->doNext($lastId, "", true, true); //保存
-//        $rs = $workflow->doNext($lastId, "", true, true); //提交确认
-//        var_dump($rs);exit;
-        return true;
+        if(!$stockin->newBill($data, $items)) {
+            $this->response(array(
+                "error"=> 1
+            ));
+        }
 //        exit;
     }
     

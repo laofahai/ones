@@ -21,6 +21,36 @@ class ReturnsModel extends CommonModel {
         array("saler_id", "getCurrentUid", 1, "function"),
     );
     
+    
+    public function newReturns($data) {
+        if(!$data["rows"]) {
+            return false;
+        }
+        
+        $this->startTrans();
+        
+        $returnsId = $this->add($data);
+
+        if(!$returnsId) {
+            echo $this->getLastSql();exit;
+            $this->rollback();
+            return false;
+        }
+//        print_r($data["rows"]);exit;
+        $detail = D("ReturnsDetail");
+        foreach($data["rows"] as $row) {
+            $row["returns_id"] = $returnsId;
+            if(!$detail->add($row)) {
+                echo $detail->getLastSql();exit;
+                $this->rollback();
+                break;
+            }
+        }
+        
+        $this->commit();
+        
+        return $returnsId;
+    }
 }
 
 ?>

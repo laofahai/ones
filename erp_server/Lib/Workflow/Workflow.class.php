@@ -167,7 +167,7 @@ class Workflow {
             "id" => array("IN", implode(",", $ids)),
 //            "type" => array("NEQ", 3) //排除等待外部响应的节点
         ))->select();
-//        print_r($ids);exit;
+//        print_r($tmp);exit;
         foreach($tmp as $k=>$v) {
             $theNodes[$v["id"]] = $v;
         }
@@ -527,6 +527,9 @@ class Workflow {
      * u: user
      */
     private function checkExecutorPermission($rules) {
+//        print_r($_SESSION);exit;
+//        return true;
+//        echo $rules;exit;
         $rules = explode("|", $rules);
         $user = $_SESSION["user"];
         foreach($rules as $item) {

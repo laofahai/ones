@@ -103,3 +103,12 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
     .factory("RelCompanyRes", ["$resource", "erp.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relCompany/:id.json", null, {'update': {method: 'PUT'}});
         }])
+    .factory("ReturnsRes", ["$resource", "erp.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/returns/:id.json", null, 
+            {
+                'doWorkflow': {method: 'GET'}, 
+                'doPostWorkflow': {method: 'POST'}, 
+                'update': {method: 'PUT'}
+            });
+        }])
+    ;

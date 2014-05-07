@@ -47,6 +47,15 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         templateUrl: 'views/jxc/orders/edit.html',
                         controller: 'JXCOrdersEditCtl'
                     })
+                    //订单退货
+                    .when('/JXC/addBill/returns', {
+                        templateUrl: 'views/jxc/returns/edit.html',
+                        controller: 'JXCReturnsEditCtl'
+                    })
+                    .when('/JXC/editBill/returns/id/:id', {
+                        templateUrl: 'views/jxc/returns/edit.html',
+                        controller: 'JXCReturnsEditCtl'
+                    })
                     //采购
                     .when('/JXC/addBill/purchase', {
                         templateUrl: 'views/jxc/purchase/edit.html',
@@ -118,7 +127,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                     fieldDefine: {
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
-                        "ng-model": "formMetaData.supplier_id",
+                        "ng-model": "formMetaData.customer_id",
                         dataSource: RelCompanyRes
                     }
                 };
@@ -173,7 +182,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
             }])
         .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
             function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelCompanyRes, $routeParams, TypesRes) {
-                ComView.makeDefaultPageAction($scope, "JXC/Orders");
+                ComView.makeDefaultPageAction($scope, "JXC/orders");
                 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -210,6 +219,87 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                         dataSource: TypesRes,
                         queryParams: {
                             type: "sale"
+                        }
+                    }
+                };
+                
+                //实收金额
+                $scope.$watch('formMetaData.total_amount', function(){
+                    $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
+                });
+                
+                //一行总价
+                var countRowAmount = function(index, price, num, discount){
+                    discount = discount == undefined || 100;
+                    $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                };
+                $scope.onNumberBlur = function(event){
+                    var context = getInputContext(event.target);
+                    
+                    if($scope.formData[context.trid] && $scope.formData[context.trid].goods_id) {
+                        var gid = $scope.formData[context.trid].goods_id.split("_");
+                        var goods = GoodsRes.get({
+                            id: gid[1]
+                        }).$promise.then(function(data){
+                            $scope.formData[context.trid].unit_price = Number(data.price);
+                        });
+                    }
+                    if($scope.formMetaData.customerInfo) {
+                        $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
+                    }
+                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                };
+                
+                $scope.onUnitPriceBlur = function(event){
+                    var context = getInputContext(event.target);
+                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                };
+                
+                
+                $scope.maxDate = new Date();
+                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
+                $scope.format = $scope.formats[0];
+                
+            }])
+        .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
+            function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelCompanyRes, $routeParams, TypesRes) {
+                ComView.makeDefaultPageAction($scope, "JXC/returns");
+                
+                $scope.workflowAble = true;
+                $scope.selectAble = false;
+                $scope.showWeeks = true;
+                $scope.formMetaData = {
+                    inputTime : new Date(),
+                    total_amount_real: 0.00
+                };
+//                $scope.formMetaData.inputTime = new Date();
+                
+                ComView.displayBill($scope, ReturnsEditModel, OrdersRes, {
+                    id: $routeParams.id
+                });
+                //客户选择字段定义
+                $scope.customerSelectOpts = {
+                    context: {
+                        field: "customer_id"
+                    },
+                    fieldDefine: {
+//                        "ui-event": "{blur: 'afterNumBlur($event)'}",
+                        inputType: "select3",
+                        "ng-model": "formMetaData.customer_id",
+                        dataSource: RelCompanyRes
+                    }
+                };
+                //销售类型字段定义
+                $scope.typeSelectOpts = {
+                    context: {
+                        field: "returns_type"
+                    },
+                    fieldDefine: {
+                        inputType: "select",
+                        "ng-model": "formMetaData.returns_type",
+                        dataSource: TypesRes,
+                        queryParams: {
+                            type: "returns"
                         }
                     }
                 };
@@ -296,7 +386,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
 //            }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
             function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
-                ComView.makeDefaultPageAction($scope, "JXC/Stockin");
+                ComView.makeDefaultPageAction($scope, "JXC/stockin");
                 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;

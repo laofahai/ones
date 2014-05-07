@@ -180,6 +180,14 @@
                         "add" : "新增出库单",
                         "list": "出库单列表"
                     }
+                },
+                "Returns": {
+                    "name": "销售退货",
+                    "actions": {
+                        "add": "新增退货",
+                        "list": "销售退货记录",
+                        "edit": "修改退货单"
+                    }
                 }
             }
         },
@@ -384,6 +392,7 @@
         "sponsor": "制单人",
         "version": "型号",
         "subject": "主题",
+        "saler"  : "销售员",
         "buyer"  : "采购员",
         "supplier": "供应商",
         "customer": "客户",
@@ -394,6 +403,7 @@
         "standard": "规格",
         "quantity": "数量",
         "total_price": "总金额",
+        "total_amount": "总金额",
         "discount": "折扣率",
         "discountAmount": "折扣额",
         "measure": "计量单位",
