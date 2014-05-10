@@ -24,7 +24,7 @@ class AuthGroupRuleAction extends CommonAction {
         $tmp = $groupRuleModel->where("group_id=".$id)->select();
         foreach($tmp as $v){
             $selectedRules[] = $v["rule_id"];
-            $selectedRulesArray[$v["rule_id"]] = true;
+            $selectedRulesArray["id_".$v["rule_id"]] = true;
         }
 //        $selectedRules = explode(",", $theGroup["rules"]);
         
@@ -45,26 +45,37 @@ class AuthGroupRuleAction extends CommonAction {
             "selected" => $selectedRulesArray,
             "rules"    => $rsRules
         );
+        
+//        print_r($return);exit;
         $this->response($return);
         
     }
     
     
+    /**
+     * @todo php://input 无法获取PUT数据
+     */
     public function update() {
+//        print_r($_POST);
+//        var_dump(file_get_contents("php://input"));
+        $putData = I("put.");
+        $putData = $putData ? $putData : $_POST;
+//        print_r($putData);exit;
+        
         $gid = abs(intval($_GET["id"]));
         //@todo 整合到model
         $model = D("AuthGroupRule");
         $model->startTrans();
         $model->where("group_id=".$gid)->delete();
         
-        $putData = I("put.");
+        
         $ids = array();
         $insertData = array();
         foreach($putData as $k=>$v) {
-            if("true" === $v) {
+            if("true" === $v or $v > 0) {
                 if(!$model->add(array(
                     "group_id" => $gid,
-                    "rule_id"  => $k,
+                    "rule_id"  => str_replace("id_", "", $k),
                     "flag"     => 0
                 ))){
                     $model->rollback();
