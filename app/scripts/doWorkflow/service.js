@@ -1,1 +1,1 @@
-angular.module("erp.doWorkflow.service", []);
+angular.module("ones.doWorkflow.service", []);

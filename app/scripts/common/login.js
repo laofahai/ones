@@ -1,9 +1,9 @@
 /**
  * 登陆页面逻辑处理
  * */
-var LoginModule = angular.module('login', ["erp.config"]);
+var LoginModule = angular.module('login', ["ones.config"]);
 
-LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','erp.config',
+LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
     function($scope, $http, $rootScope, conf) {
         $scope.error = {
             isError : false,

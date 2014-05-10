@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.home.services", [])
+angular.module("ones.home.services", [])
          .service("DataModelModel", function() {
             var obj = {
                 subAble: true,

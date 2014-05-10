@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.crm", ['erp.crm.services', 'ngGrid', 'erp.common.directives'])
+angular.module("ones.crm", ['ones.crm.services', 'ngGrid', 'ones.common.directives'])
 //        .config(["$routeProvider", function($routeProvider){
 //            $routeProvider.when("/CRM/RelCompanyGroup", {
 //                controller: "RelCompanyGroupCtl",

@@ -3,7 +3,7 @@
 /**
  * 表单生成
  * */
-angular.module("erp.common.directives", ["erp.formMaker"])
+angular.module("ones.common.directives", ["ones.formMaker"])
         .directive("commonform", ["$compile", "FormMaker", function($compile, FormMaker) {
             return {
                 restrict: "E",

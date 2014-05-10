@@ -3,7 +3,7 @@
  * 工作流节点额外操作处理
  * 如：出库单 确认出库时需要一个界面显示出库信息以供确认
  * */
-angular.module("erp.doWorkflow", ["erp.doWorkflow.service"])
+angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
     .config(["$routeProvider",function($routeProvider) {
         $routeProvider
             .when('/doWorkflow/Stockout/confirm/:nodeId/:id', {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.crm.services", [])
+angular.module("ones.crm.services", [])
         .factory("RelCompanyGroupModel", ["$rootScope", function($rootScope){
             return {
                 getFieldsStruct: function(){

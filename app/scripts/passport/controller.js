@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.directives'])
+angular.module("ones.passport", ['ones.passport.services', 'ngGrid', 'ones.common.directives'])
         .config(["$routeProvider", function($routeProvider) {
             $routeProvider
 //            .when("/Passport/User", {
@@ -64,7 +64,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
                 controller: 'LogoutCtl'
             })
         }])
-    .controller("LogoutCtl", ["$scope", "$http", "erp.config", function($scope, $http, conf){
+    .controller("LogoutCtl", ["$scope", "$http", "ones.config", function($scope, $http, conf){
         $http.get(conf.BSU+"passport/userLogout").success(function(){
             window.location.href="index.html";
         });

@@ -1,7 +1,7 @@
 'use strict';
 
 var loginHash = uriParamsGet('hash');
-var ERP = angular.module('erp', [
+var ERP = angular.module('ones', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
@@ -13,16 +13,17 @@ var ERP = angular.module('erp', [
     'ui.utils',
     'ui.select',
     
-    'erp.passport',
-    'erp.home',
-    'erp.jxc',
-    'erp.crm',
+    'ones.passport',
+    'ones.home',
+    'ones.jxc',
+    'ones.crm',
+    'ones.finance',
     
-    'erp.common',
-    'erp.config',
-    'erp.doWorkflow',
-    'erp.commonView', //需要先加载模块，让模块路由优先匹配
-//    'erp.service'
+    'ones.common',
+    'ones.config',
+    'ones.doWorkflow',
+    'ones.commonView', //需要先加载模块，让模块路由优先匹配
+//    'ones.service'
 ])
         /**
          * $http interceptor.
@@ -78,7 +79,7 @@ var ERP = angular.module('erp', [
 /**
  * Root Ctrl
  * */
-ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "erp.config", "ComView", "WorkflowNodeRes",
+ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "WorkflowNodeRes",
         function($scope, $rootScope, $location, $http, conf, ComView, WorkflowNodeRes) {
             
             $scope.$watch(function(){

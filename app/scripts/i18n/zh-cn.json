@@ -219,6 +219,18 @@
                 }
             }
         },
+        "Finance": {
+            "name": "财务模块", 
+            "modules": {
+                "FinanceRecord": {
+                    "name": "财务收支记录",
+                    "actions": {
+                        "list": "列表",
+                        "add": "新增"
+                    }
+                }
+            }
+        },
         "doWorkflow": {
             "name": "工作流执行",
             "modules": {
@@ -251,6 +263,7 @@
             "purchase_list": "采购单列表",
             "purchase_return": "采购退货",
             "sale": "销售",
+            "add_new_orders": "新增销售订单",
             "orders": "订单",
             "returns": "退货单",
             "rel_company": "往来单位管理",
@@ -259,7 +272,7 @@
             "list": "列表",
             "add_new": "新增",
             "finance": "财务管理",
-            "finance_account": "财务管理",
+            "finance_account": "财务账户管理",
             "finance_record" : "收支记录",
             "finance_receive_plan": "财务收入计划",
             "finance_pay_plan": "财务付款计划",
@@ -375,7 +388,7 @@
         "logout": "安全退出",
         "myprofile": "我的资料",
         "description": "描述",
-        "amount": "价格",
+        "amount": "金额",
         "field": "字段",
         "stock": "仓库",
         "status": "状态",
@@ -390,7 +403,7 @@
         "total_num": "总数",
         "totalNum": "总数",
         "rmbToBig": "大写",
-        "sponsor": "制单人",
+        "sponsor": "发起者",
         "version": "型号",
         "subject": "主题",
         "saler"  : "销售员",
@@ -447,6 +460,10 @@
         "executor": "执行者",
         "default" : "默认",
         "remind": "提醒",
-        "execute_file": "执行文件"
+        "execute_file": "执行文件",
+        "balance_direction": "余额方向",
+        "record_type": "记录类型",
+        "account": "账户",
+        "financer": "财务员"
     }
 }

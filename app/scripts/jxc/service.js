@@ -1,4 +1,4 @@
-angular.module("erp.jxc.services", [])
+angular.module("ones.jxc.services", [])
         .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", function($rootScope, GoodsCategoryRes, $q) {
             var obj = {};
             obj.getFieldsStruct = function(structOnly) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directives'])
+angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.directives'])
         .config(["$routeProvider",function($routeProvider) {
             $routeProvider
                     .when('/HOME/goTo/url/:url', {
@@ -63,7 +63,7 @@ angular.module("erp.home", ['erp.home.services', 'ngGrid', 'erp.common.directive
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
             $location.url($routeParams.url);
         }])
-        .controller("clearCacheCtl", ["$scope", "$http", "erp.config", "ComView", function($scope, $http, conf, ComView){
+        .controller("clearCacheCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
             $scope.cacheTypes = [null, true, true, true];
             $scope.doClearCache = function() {
                 $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){

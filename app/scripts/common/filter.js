@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.common.filters", [])
+angular.module("ones.common.filters", [])
         .filter("sprintf", function() {
             var filterFun = function(fmt, argv, _argv) {
                 return sprintf(fmt, argv, _argv);

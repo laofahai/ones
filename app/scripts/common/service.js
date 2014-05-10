@@ -3,67 +3,67 @@
 /**
  * 定义资源
  * */
-ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cnf) {
+ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, cnf) {
         return $resource(cnf.BSU + "passport/profile.json", null, {'update': {method: 'PUT'}});
     }])
-    .factory("UserRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("UserRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "user/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("DepartmentRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("DepartmentRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "passport/department/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("AuthRuleRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("AuthRuleRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "passport/authRule/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("AuthGroupRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("AuthGroupRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "passport/authGroup/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("AuthGroupRuleRes", ["$resource", "erp.config", function($resource, cnf){
+    .factory("AuthGroupRuleRes", ["$resource", "ones.config", function($resource, cnf){
         return $resource(cnf.BSU + "passport/authGroupRule/:id.json", null, {
             'update': {method: 'PUT'},
             'query' : {isArray: false}
         });
     }])
-    .factory("WorkflowRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("WorkflowRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "workflow/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("WorkflowNodeRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("WorkflowNodeRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "workflow/nodes/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("WorkflowProcessRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("WorkflowProcessRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "workflow/process/:id.json", {type: "@type"});
         }])
-    .factory("TypesRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("TypesRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "types/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("ConfigRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("ConfigRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "config/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("DataModelRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("DataModelRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "home/dataModel/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("DataModelFieldsRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("DataModelFieldsRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "home/dataModelFields/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("DataModelDataRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("DataModelDataRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "home/dataModelData/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("GoodsRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("GoodsRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("ProductTplRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("ProductTplRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/productTpl/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("ProductTplDetailRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("ProductTplDetailRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/productTplDetail/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("StockRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stock/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("StockWarningRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockWarningRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockWarning.json");
         }])
-    .factory("StockinRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockinRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockin/:id.json", null, 
             {
                 'doWorkflow': {method: 'GET'}, 
@@ -71,19 +71,19 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
                 'update': {method: 'PUT'}
             });
         }])
-    .factory("StockTransferRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockTransferRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockTransfer/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
-    .factory("OutsideRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("OutsideRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/outside/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
-    .factory("StockProductListRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockProductListRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockProductList/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("GoodsCategoryRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("GoodsCategoryRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goodsCategory/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("StockoutRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("StockoutRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockout/:id.json", null, 
             {
                 'doWorkflow': {method: 'GET'}, 
@@ -91,19 +91,19 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
                 'update': {method: 'PUT'}
             });
         }])
-    .factory("OrdersRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("OrdersRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/orders/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
-    .factory("PurchaseRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("PurchaseRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/purchase/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
-    .factory("RelCompanyGroupRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("RelCompanyGroupRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("RelCompanyRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("RelCompanyRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relCompany/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("ReturnsRes", ["$resource", "erp.config", function($resource, cnf) {
+    .factory("ReturnsRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/returns/:id.json", null, 
             {
                 'doWorkflow': {method: 'GET'}, 
@@ -111,4 +111,8 @@ ERP.factory("UserProfileRes", ["$resource", "erp.config", function($resource, cn
                 'update': {method: 'PUT'}
             });
         }])
+    //财务模块
+    .factory("FinanceRecordRes", ["$resource", "ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"finance/financeRecord/:id.json", null, {});
+    }])
     ;

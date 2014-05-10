@@ -3,7 +3,7 @@
  * 
  * */
 (function(){
-angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
+angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
     /**
      * 通用路由适配
      * 使用通用Controller
@@ -105,7 +105,7 @@ angular.module("erp.commonView", ["erp.formMaker", 'mgcrea.ngStrap'])
                 id: $routeParams.id
             });
         }])
-    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "erp.config",
+    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config",
         function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf){
             var service = {};
             /**

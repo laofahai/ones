@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('erp.common', ['erp.common.filters', 'erp.common.directives'])
+angular.module('ones.common', ['ones.common.filters', 'ones.common.directives'])
         .config(["$routeProvider", function($routeProvider) {
             $routeProvider
                     .when('/', {

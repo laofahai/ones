@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("erp.passport.services", [])
+angular.module("ones.passport.services", [])
         .factory("UserModel", ["DepartmentRes", "AuthGroupRes", "$q", "$rootScope", 
             function(DepartmentRes, AuthGroupRes, $q, $rootScope){
             

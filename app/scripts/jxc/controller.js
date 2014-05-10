@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'])
+angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directives'])
         .config(["$routeProvider", function($routeProvider) {
             $routeProvider
                     //入库
@@ -404,7 +404,7 @@ angular.module("erp.jxc", ['erp.jxc.services', 'ngGrid', 'erp.common.directives'
                 $scope.format = $scope.formats[0];
                 
             }])
-        .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "erp.config",
+        .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "ones.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {
                 $scope.pageActions = [
                     {

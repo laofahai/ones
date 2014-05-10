@@ -1,6 +1,6 @@
 (function(){
     'use struct';
-    angular.module("erp.formMaker", [])
+    angular.module("ones.formMaker", [])
     .service("FormMaker", ["$compile", "$q", "$parse", "StockProductListRes", function($compile, $q, $parse, StockProductListRes) {
         var service = {};
         service.makeField = function(scope, opts) {
@@ -990,7 +990,7 @@
                 this.scope.$parent.doSelect3Blur = function(){
                     setTimeout(function(){
                         self.scope.$parent.hideSelect3Options();
-                    }, 50);
+                    }, 100);
                 };
                 
                 this.scope.$parent.displaySelect3Options = function(){
