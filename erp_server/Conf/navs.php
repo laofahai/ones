@@ -37,6 +37,7 @@ return array(
     ),
     "sale" => array(
         "childs" => array(
+            "add_new_orders" => "JXC/addBill/orders",
             "orders" => "JXC/list/orders",
             "returns"=> "JXC/list/returns",
         ),
@@ -60,10 +61,10 @@ return array(
         "icon" => "money",
         "childs" => array(
 //            "accounting_voucher" => "Accounting/AccountingVoucher",
-            "finance_account" => "Finance/list/financeAccount",
             "finance_record" => "Finance/list/financeRecord",
             "finance_receive_plan" => "Finance/list/financeReceivePlan",
             "finance_pay_plan" => "Finance/list/financePayPlan",
+            "finance_account" => "Finance/list/financeAccount",
         )
     ),
     "statistics" => array(
