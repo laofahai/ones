@@ -24,7 +24,8 @@
                     "actions": {
                         "list": ["用户组列表"],
                         "add"  : ["新增用户组"],
-                        "edit" : ["修改用户组"]
+                        "edit" : ["修改用户组"],
+                        "viewChild": "用户组赋权"
                     }
                 },
                 "Department": {

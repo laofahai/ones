@@ -11,16 +11,16 @@
             <td>
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" class="ace" />
-                        <span class="lbl"></span>
+                        <input type="checkbox" class="ace" ng-click="toggleThisLine($event)" />
+                        <span class="lbl">{{itemList}}</span>
                     </label>
                 </div>
             </td>
             <td>
                 <div class="checkbox checkboxContainer">
                     <label ng-repeat="item in itemList">
-                        <input type="checkbox" class="ace" ng-model="permissionData[item.id]" />
-                        <span class="lbl"> {{item.title}}</span>
+                        <input type="checkbox" class="ace" ng-model="permissionData['id_'+item.id]" />
+                        <span class="lbl" ng-bind="' '+item.title"> {{item.title}}</span>
                     </label>
                 </div>
             </td>

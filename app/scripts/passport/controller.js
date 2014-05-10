@@ -39,7 +39,7 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
 //                templateUrl: 'views/common/edit.html',
 //                controller: 'AuthGroupEditCtl'
 //            })
-            .when("/Passport/AuthGroup/viewSub/id/:pid", {
+            .when("/Passport/viewChild/authGroup/pid/:pid", {
                 templateUrl: 'views/passport/assignPermission.html',
                 controller: 'AuthGroupAssignPermissionCtl'
             })
@@ -70,8 +70,8 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
         });
         
     }])
-    .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams",
-        function($scope, AuthGroupRuleRes, $routeParams){
+    .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams", "$location",
+        function($scope, AuthGroupRuleRes, $routeParams, $location){
             $scope.permissionData = [];
             $scope.selectAble = false;
             $scope.dataList = [];
@@ -81,8 +81,9 @@ angular.module("erp.passport", ['erp.passport.services', 'ngGrid', 'erp.common.d
             });
             
             $scope.doSubmit = function(){
+                console.log($scope.permissionData);
                 AuthGroupRuleRes.update({id: $routeParams.pid}, $scope.permissionData).$promise.then(function(data){
-                    
+//                    $location.url("/Passport/list/authGroup");
                 });
             };
         }])

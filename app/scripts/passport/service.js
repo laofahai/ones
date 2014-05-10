@@ -119,6 +119,8 @@ angular.module("erp.passport.services", [])
         }])
         .factory("AuthGroupModel", ["$rootScope", function($rootScope){
             return {
+                subAble: true,
+                addSubAble: false,
                 getFieldsStruct: function(){
                     var i18n = $rootScope.i18n.lang;
                     return {

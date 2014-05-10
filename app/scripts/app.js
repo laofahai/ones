@@ -60,16 +60,16 @@ var ERP = angular.module('erp', [
         }])
         .run(["$http","$location", function($http, $locationProvider) {
             //设置HTTP请求默认头
-//            $locationProvider.html5Mode(false);
-            $http.defaults.useXDomain = true;
-//            delete $http.defaults.headers.common['X-Requested-With'];
-            $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-            $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-            $http.defaults.headers.common["sessionHash"] = loginHash;
-//            $http.defaults.transformRequest = function (data) {
-//                return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
-//            };
-            return;
+////            $locationProvider.html5Mode(false);
+//            $http.defaults.useXDomain = true;
+////            delete $http.defaults.headers.common['X-Requested-With'];
+//            $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+//            $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+//            $http.defaults.headers.common["sessionHash"] = loginHash;
+////            $http.defaults.transformRequest = function (data) {
+////                return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
+////            };
+//            return;
             $http.defaults.headers.common["sessionHash"] = loginHash;
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
