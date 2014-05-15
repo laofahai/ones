@@ -512,31 +512,34 @@
                  * @todo 回调方法
                  * */
                 scope.$parent.billEndEdit = function(td, isBlur){
-                    var next = false;
-                    var tdEditAbles = td.parent().find(".tdEditAble");
-        //            console.log(tdEditAbles);
-                    var tds = [];
-                    angular.forEach(tdEditAbles, function(td){
-                        tds.push(td);
-                    });
-                    if(tds.length > 1 && tds.indexOf(td[0])+1 < tds.length) {
-                        next = $(tds).eq(tds.indexOf(td[0])+1);
-                    }
-
-                    //自动跳到下一可编辑元素
-                    if(self.opts.autoFocusNext && !isBlur) {
-                        
-                        if(!next) { //当前行无下一元素
-                            if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
-                                self.scope.$parent.billAddRow(null, true);
-                            }
-                            next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
-                        }
-                        setTimeout(function(){
-                            self.scope.$parent.billFieldEdit($(next).find("label"));
+                    setTimeout(function(){
+                        var next = false;
+                        var tdEditAbles = td.parent().find(".tdEditAble");
+            //            console.log(tdEditAbles);
+                        var tds = [];
+                        angular.forEach(tdEditAbles, function(td){
+                            tds.push(td);
                         });
-                    }
-                    self.scope.editing = false;
+                        if(tds.length > 1 && tds.indexOf(td[0])+1 < tds.length) {
+                            next = $(tds).eq(tds.indexOf(td[0])+1);
+                        }
+
+                        //自动跳到下一可编辑元素
+                        if(self.opts.autoFocusNext && !isBlur) {
+
+                            if(!next) { //当前行无下一元素
+                                if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
+                                    self.scope.$parent.billAddRow(null, true);
+                                }
+                                next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
+                            }
+                            setTimeout(function(){
+                                self.scope.$parent.billFieldEdit($(next).find("label"));
+                            });
+                        }
+                        self.scope.editing = false;
+                    },150);
+                    
                 };
 
                 //增删行
@@ -990,7 +993,7 @@
                 this.scope.$parent.doSelect3Blur = function(){
                     setTimeout(function(){
                         self.scope.$parent.hideSelect3Options();
-                    }, 100);
+                    }, 150);
                 };
                 
                 this.scope.$parent.displaySelect3Options = function(){

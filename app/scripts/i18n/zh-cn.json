@@ -72,6 +72,12 @@
                         "edit": ["修改模型数据"]
                     }
                 },
+                "DataModelFields": {
+                    "name": "模型数据字段",
+                    "actions": {
+                        "list": "", "add": "", "edit": ""
+                    }
+                },
                 "Settings": {
                     "name": "系统设置",
                     "actions": {
@@ -107,19 +113,19 @@
             "name": "进销存",
             "modules": {
                 "Goods": {
-                    "name": "商品管理",
+                    "name": "物料(成品)管理",
                     "actions": {
-                        "list": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
-                        "add": ["新增商品"],
-                        "edit": ["修改商品信息"]
+                        "list": ["物料(成品)基础信息", "物料(成品)基本信息管理，包括编码、名称、基本价格等"],
+                        "add": ["新增物料(成品)"],
+                        "edit": ["修改物料(成品)信息"]
                     }
                 },
                 "GoodsCategory": {
-                    "name": "商品分类",
+                    "name": "物料(成品)分类",
                     "actions": {
-                        "list": ["商品分类列表"],
+                        "list": ["物料(成品)分类列表"],
                         "edit": ["修改分类"],
-                        "addChild": "新增商品分类"
+                        "addChild": "新增物料(成品)分类"
                     }
                 },
                 "Purchase": {
@@ -153,18 +159,18 @@
                 "StockProductList": {
                     "name": "库存管理",
                     "actions": {
-                        "list": ["库存商品列表"],
+                        "list": ["库存物料(成品)列表"],
                         "export": "导出库存清单",
                         "edit": "修改库存产品信息"
                     }
                 },
                 "ProductTpl": {
-                    "name": "产品拆装单模板",
+                    "name": "BOM物料清单",
                     "actions": {
-                        "list": "拆装单模板列表",
-                        "add"  : "新增拆装单模板",
-                        "edit" : "修改拆装单模板",
-                        "viewSub": "拆装单模板详情"
+                        "list": "",
+                        "add"  : "",
+                        "edit" : "",
+                        "viewSub": "BOM单详情"
                     }
                 },
                 "Orders": {
@@ -178,7 +184,6 @@
                 "Stockout": {
                     "name": "出库单",
                     "actions": {
-                        "add" : "新增出库单",
                         "list": "出库单列表"
                     }
                 },
@@ -227,6 +232,24 @@
                     "actions": {
                         "list": "列表",
                         "add": "新增"
+                    }
+                }, 
+                "FinanceAccount": {
+                    "name": "财务账户",
+                    "actions": {
+                        "add": "",
+                        "list": ""
+                    }
+                },
+                "FinancePayPlan": {
+                    "name": "财务支出计划",
+                    "actions": {}
+                },
+                "FinanceReceivePlan": {
+                    "name": "财务收入计划",
+                    "actions": {
+                        "add": "",
+                        "list": ""
                     }
                 }
             }
@@ -284,9 +307,9 @@
             "settings": "设置",
             "field_set": "字段设置",
             "base_data_set": "基础数据管理",
-            "goods_setting": "商品管理",
-            "goods_tpl" : "商品拆装模板",
-            "goods_category": "商品分类管理",
+            "goods_setting": "物料(成品)管理",
+            "goods_tpl" : "BOM物料清单",
+            "goods_category": "物料(成品)分类管理",
             "stock_manage": "仓库管理",
             "data_model": "数据模型管理",
             "types_manage": "类型管理",
@@ -382,7 +405,7 @@
         "title": "标题",
         "email": "邮箱",
         "total": "合计",
-        "goods": "商品",
+        "goods": "物料(成品)",
         "group": "组",
         "value": "值",
         "logout": "安全退出",
@@ -464,6 +487,7 @@
         "balance_direction": "余额方向",
         "record_type": "记录类型",
         "account": "账户",
-        "financer": "财务员"
+        "financer": "财务员",
+        "balance": "余额"
     }
 }

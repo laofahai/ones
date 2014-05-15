@@ -46,15 +46,16 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
             });
 
             $scope.doSubmit = function() {
+                
                 $scope.formMetaData.rows = $scope.formData;
-                res.doPostWorkflow({
+                var data = {
                     workflow: true,
                     node_id: $routeParams.nodeId,
                     id: $routeParams.id,
                     donext: true,
-                    data: $scope.formMetaData
-                }).$promise.then(function(data){
-//                    console.log(data);return;
+//                    data: $scope.formMetaData
+                };
+                res.doPostWorkflow(data).$promise.then(function(data){
                     $location.url("/JXC/list/stockin");
                 });
             };

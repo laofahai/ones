@@ -112,7 +112,26 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
             });
         }])
     //财务模块
+    .factory("FinanceAccountRes", ["$resource", "ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"finance/financeAccount/:id.json", null, {'update': {method: 'PUT'}});
+    }])
     .factory("FinanceRecordRes", ["$resource", "ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"finance/financeRecord/:id.json", null, {});
     }])
+    .factory("FinanceReceivePlanRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "finance/financeReceivePlan/:id.json", null, 
+            {
+                'doWorkflow': {method: 'GET'}, 
+                'doPostWorkflow': {method: 'POST'}, 
+                'update': {method: 'PUT'}
+            });
+        }])
+    .factory("FinancePayPlanRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "finance/financePayPlan/:id.json", null, 
+            {
+                'doWorkflow': {method: 'GET'}, 
+                'doPostWorkflow': {method: 'POST'}, 
+                'update': {method: 'PUT'}
+            });
+        }])
     ;

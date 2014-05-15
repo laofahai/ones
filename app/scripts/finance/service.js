@@ -23,3 +23,57 @@ angular.module("ones.finance.service", [])
                     }
                 };
         }])
+        .service("FinanceAccountModel", ["$rootScope", function(){
+                return {
+                    getFieldsStruct: function() {
+                        return {
+                            id: {},
+                            name: {},
+                            balance: {},
+                            listorder: {}
+                        };
+                    }
+                };
+        }])
+        .service("FinancePayPlanModel", ["$rootScope", function(){
+                return {
+                    getFieldsStruct: function(){
+                        return {
+                            id: {},
+                            subject: {},
+                            type: {},
+                            sponsor: {},
+                            financer: {},
+                            account: {},
+                            amount: {},
+                            create_dateline: {
+                                cellFilter: "dateFormat"
+                            },
+                            pay_dateline: {
+                                cellFilter: "dateFormat"
+                            }
+                        };
+                    }
+                };
+        }])
+        .service("FinanceReceivePlanModel", ["$rootScope", function(){
+                return {
+                    getFieldsStruct: function(){
+                        return {
+                            id: {},
+                            subject: {},
+                            type: {},
+                            sponsor: {},
+                            financer: {},
+                            account: {},
+                            amount: {},
+                            create_dateline: {
+                                cellFilter: "dateFormat"
+                            },
+                            receive_dateline: {
+                                cellFilter: "dateFormat"
+                            }
+                        };
+                    }
+                };
+        }])

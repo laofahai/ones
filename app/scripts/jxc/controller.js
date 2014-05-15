@@ -223,6 +223,23 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     }
                 };
                 
+                //客户ID变动时 更新当前的折扣率
+                $scope.$watch('formMetaData.customer_id', function(){
+                    if($scope.formMetaData.customer_id) {
+                        RelCompanyRes.get({
+                            id: $scope.formMetaData.customer_id
+                        }, function(data){
+                            data.discount = parseInt(data.discount);
+                            $scope.formMetaData.customerInfo = {
+                                id: data.id,
+                                name: data.name,
+                                discount: parseInt(data.discount)
+                            };
+                            angular.forEach($scope.formData);
+                        });
+                    }
+                });
+                
                 //实收金额
                 $scope.$watch('formMetaData.total_amount', function(){
                     $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
@@ -304,21 +321,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     }
                 };
                 
-                //客户ID变动时 更新当前的折扣率
-                $scope.$watch('formMetaData.customer_id', function(){
-                    if($scope.formMetaData.customer_id) {
-                        RelCompanyRes.get({
-                            id: $scope.formMetaData.customer_id
-                        }, function(data){
-                            data.discount = parseInt(data.discount);
-                            $scope.formMetaData.customerInfo = {
-                                id: data.id,
-                                name: data.name,
-                                discount: parseInt(data.discount)
-                            };
-                        });
-                    }
-                });
+                
                 
                 //实收金额
                 $scope.$watch('formMetaData.total_amount', function(){

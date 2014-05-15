@@ -7,10 +7,10 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         controller: "HOMERedirectCtl",
                         templateUrl: "views/common/blank.html",
                     })
-                    .when('/HOME/DataModel', {
-                        templateUrl: "views/common/grid.html",
-                        controller: "DataModelCtl"
-                    })
+//                    .when('/HOME/DataModel', {
+//                        templateUrl: "views/common/grid.html",
+//                        controller: "DataModelCtl"
+//                    })
                     .when('/HOME/DataModel/add', {
                         templateUrl: "views/common/edit.html",
                         controller: "DataModelEditCtl"
@@ -19,7 +19,7 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         templateUrl: "views/common/edit.html",
                         controller: "DataModelEditCtl"
                     })
-                    .when('/HOME/DataModel/viewSub/id/:pid', {
+                    .when('/HOME/viewChild/dataModel/pid/:pid', {
                         templateUrl: "views/common/grid.html",
                         controller: "DataModelFieldsCtl"
                     })
@@ -111,105 +111,108 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                 };
                 ComView.displayForm($scope, WorkflowNodeModel, WorkflowNodeRes, opts, true);
             }])
-        .controller("WorkflowCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", 
-            function($scope, WorkflowRes, WorkflowModel, ComView){
-                $scope.pageActions = [
-                    {
-                        label: $scope.i18n.lang.actions.add,
-                        class: "success",
-                        href: "/HOME/Types/add"
-                    },
-                    {
-                        label: $scope.i18n.lang.actions.list,
-                        class: "primary",
-                        href: "/HOME/Types"
-                    }
-                ];
-                $scope.viewSubAble = true;
-                ComView.displayGrid($scope,WorkflowModel,WorkflowRes);
-            }])
-        .controller("WorkflowEditCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", "$routeParams",
-            function($scope, WorkflowRes, WorkflowModel, ComView, $routeParams) {
-                $scope.pageActions = [
-                    {
-                        label: $scope.i18n.lang.actions.add,
-                        class: "success",
-                        href: "/HOME/Types/add"
-                    },
-                    {
-                        label: $scope.i18n.lang.actions.list,
-                        class: "primary",
-                        href: "/HOME/Types"
-                    }
-                ];
-                $scope.selectAble = false;
-                
-                var opts = {
-                    name: "TypesEdit",
-                    id: $routeParams.id
-                };
-                ComView.displayForm($scope,WorkflowModel,WorkflowRes,opts);
-            }])
-        .controller("DataModelCtl", ["$scope", "DataModelRes", "DataModelModel", "ComView",
-            function($scope, DataModelRes, DataModelModel, ComView) {
-                $scope.pageActions = [
-                    {
-                        label: $scope.i18n.lang.actions.add,
-                        class: "success",
-                        href: "/HOME/DataModel/add"
-                    },
-                    {
-                        label: $scope.i18n.lang.actions.list,
-                        class: "primary",
-                        href: "/HOME/DataModel"
-                    }
-                ];
-                $scope.viewSubAble = true;
-                ComView.displayGrid($scope, DataModelModel, DataModelRes);
-            }])
-        .controller("DataModelEditCtl", ["$scope", "DataModelModel", "DataModelRes", "ComView", "$routeParams",
-            function($scope, DataModelModel, DataModelRes, ComView, $routeParams) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/HOME/DataModel/add"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/HOME/DataModel/"
-                    }
-                ];
-                $scope.selectAble = false;
-                
-                var opts = {
-                    name: "DataModelEdit",
-                    id: $routeParams.id
-                };
-                ComView.displayForm($scope,DataModelModel,DataModelRes, opts);
-            }])
+//        .controller("WorkflowCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", 
+//            function($scope, WorkflowRes, WorkflowModel, ComView){
+//                $scope.pageActions = [
+//                    {
+//                        label: $scope.i18n.lang.actions.add,
+//                        class: "success",
+//                        href: "/HOME/Types/add"
+//                    },
+//                    {
+//                        label: $scope.i18n.lang.actions.list,
+//                        class: "primary",
+//                        href: "/HOME/Types"
+//                    }
+//                ];
+//                $scope.viewSubAble = true;
+//                ComView.displayGrid($scope,WorkflowModel,WorkflowRes);
+//            }])
+//        .controller("WorkflowEditCtl", ["$scope", "WorkflowRes", "WorkflowModel", "ComView", "$routeParams",
+//            function($scope, WorkflowRes, WorkflowModel, ComView, $routeParams) {
+//                $scope.pageActions = [
+//                    {
+//                        label: $scope.i18n.lang.actions.add,
+//                        class: "success",
+//                        href: "/HOME/Types/add"
+//                    },
+//                    {
+//                        label: $scope.i18n.lang.actions.list,
+//                        class: "primary",
+//                        href: "/HOME/Types"
+//                    }
+//                ];
+//                $scope.selectAble = false;
+//                
+//                var opts = {
+//                    name: "TypesEdit",
+//                    id: $routeParams.id
+//                };
+//                ComView.displayForm($scope,WorkflowModel,WorkflowRes,opts);
+//            }])
+//        .controller("DataModelCtl", ["$scope", "DataModelRes", "DataModelModel", "ComView",
+//            function($scope, DataModelRes, DataModelModel, ComView) {
+//                $scope.pageActions = [
+//                    {
+//                        label: $scope.i18n.lang.actions.add,
+//                        class: "success",
+//                        href: "/HOME/DataModel/add"
+//                    },
+//                    {
+//                        label: $scope.i18n.lang.actions.list,
+//                        class: "primary",
+//                        href: "/HOME/DataModel"
+//                    }
+//                ];
+//                $scope.viewSubAble = true;
+//                ComView.displayGrid($scope, DataModelModel, DataModelRes);
+//            }])
+//        .controller("DataModelEditCtl", ["$scope", "DataModelModel", "DataModelRes", "ComView", "$routeParams",
+//            function($scope, DataModelModel, DataModelRes, ComView, $routeParams) {
+//                $scope.pageActions = [
+//                    {
+//                        label : $scope.i18n.lang.actions.add,
+//                        class : "success",
+//                        href  : "/HOME/DataModel/add"
+//                    },
+//                    {
+//                        label : $scope.i18n.lang.actions.list,
+//                        class : "primary",
+//                        href  : "/HOME/DataModel/"
+//                    }
+//                ];
+//                $scope.selectAble = false;
+//                
+//                var opts = {
+//                    name: "DataModelEdit",
+//                    id: $routeParams.id
+//                };
+//                ComView.displayForm($scope,DataModelModel,DataModelRes, opts);
+////            }])
         .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "ComView", "$routeParams",
-            function($scope, DataModelFieldsRes, DataModelFieldsModel, ComView, $routeParams) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/HOME/DataModelFields/add/pid/"+$routeParams.pid
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/HOME/DataModel/viewSub/id/"+$routeParams.pid
-                    }
-                ];
-                ComView.displayGrid($scope,DataModelFieldsModel,DataModelFieldsRes,{
+            function($scope, res, model, ComView, $routeParams) {
+                $routeParams.group = "HOME";
+                $routeParams.module = "DataModelFields";
+                var actions = $scope.$parent.i18n.urlMap.HOME.modules.DataModelFields.actions;
+                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
+                ComView.makeGridSelectedActions($scope, model, res, "HOME", "DataModelFields"); 
+                ComView.displayGrid($scope,model,res, {
                     queryExtraParams: {
                         modelId: $routeParams.pid
                     },
                     module: "/HOME/DataModelFields",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });
+                
+//                ComView.makeGridLinkActions($scope, actions, false, "/pid/"+$routeParams.pid);
+//                ComView.makeGridSelectedActions($scope, model, res, "HOME", "WorkflowNode"); 
+//                ComView.displayGrid($scope,model,res,{
+//                    queryExtraParams: {
+//                        modelId: $routeParams.pid
+//                    },
+//                    module: "/HOME/DataModelFields",
+//                    editExtraParams: "/pid/"+$routeParams.pid
+//                });
             }])
         
         .controller("DataModelFieldsEditCtl", ["$scope", "DataModelFieldsModel", "DataModelFieldsRes", "ComView", "$routeParams",

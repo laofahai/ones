@@ -21,6 +21,10 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             controller : 'ComViewGridCtl'
         })
         //新增
+        .when('/:group/viewChild/:module/pid/:pid', {
+//            templateUrl: 'views/common/grid.html',
+            controller : 'ComViewChildCtl'
+        })
         .when('/:group/add/:module', {
             templateUrl: 'views/common/edit.html',
             controller : 'ComViewEditCtl'
@@ -59,6 +63,9 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             "export": "success"
         }
     })
+//    .controller('ComViewChildCtl', ["$scope", "$location", "$routeParams", function($scope, $location, $routeParams){
+//        $location.url(sprintf('/%(group)s/list/%(module)s'));
+//    }])
     .controller('ComViewError404Ctl', ["$scope", function($scope){
         $scope.hidePageHeader = true;
     }])
@@ -72,15 +79,18 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             res = $injector.get(module.ucfirst()+"Res");
             model = $injector.get(module.ucfirst()+"Model");
             
-            //Grid 可跳转按钮
-            actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
-            ComView.makeGridLinkActions($scope, actions, model.isBill);
-            ComView.makeGridSelectedActions($scope, model, res, group, module);
+            
             
             var opts = {};
             if($routeParams.extra) {
                 opts.queryExtraParams = parseParams($routeParams.extra);
+                var extra = $routeParams.extra;
             }
+            
+            //Grid 可跳转按钮
+            actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+            ComView.makeGridLinkActions($scope, actions, model.isBill, extra);
+            ComView.makeGridSelectedActions($scope, model, res, group, module);
             
             ComView.displayGrid($scope, model, res, opts);
         }])
@@ -492,9 +502,9 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         resource.save(getParams,data);
                     }
                     
-                    if(conf.DEBUG) {
-                        return;
-                    }
+//                    if(conf.DEBUG) {
+//                        return;
+//                    }
                     
                     $location.url(opts.returnPage);
                 };

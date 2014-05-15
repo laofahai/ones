@@ -149,16 +149,22 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.c
                         action = action && isNaN(parseInt(action)) ? action : "list";
 //                        console.log(module);
                         $scope.currentPage = {};
-                        if (group in $rootScope.i18n.urlMap) {
-                            $scope.currentPage.group = $rootScope.i18n.urlMap[group].name;
-                            if (module in $rootScope.i18n.urlMap[group].modules) {
-                                $scope.currentPage.module = $rootScope.i18n.urlMap[group].modules[module].name;
-                                if (action in $rootScope.i18n.urlMap[group].modules[module].actions) {
-                                    $scope.currentPage.action = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
-                                                                ? $rootScope.i18n.urlMap[group].modules[module].actions[action][0]
-                                                                : $rootScope.i18n.urlMap[group].modules[module].actions[action];
-                                    $scope.currentPage.actionDesc = $rootScope.i18n.urlMap[group].modules[module].actions[action] instanceof Array 
-                                                                ? $rootScope.i18n.urlMap[group].modules[module].actions[action][1] : "";
+                        var urlmap = $rootScope.i18n.urlMap;
+                        if (group in urlmap) {
+                            $scope.currentPage.group = urlmap[group].name;
+//                            console.log(module);
+                            if (module in urlmap[group].modules) {
+                                $scope.currentPage.module = urlmap[group].modules[module].name;
+                                if (action in urlmap[group].modules[module].actions) {
+                                    $scope.currentPage.action = urlmap[group].modules[module].actions[action] instanceof Array 
+                                                                ? urlmap[group].modules[module].actions[action][0]
+                                                                : urlmap[group].modules[module].actions[action];
+                                    $scope.currentPage.actionDesc = urlmap[group].modules[module].actions[action] instanceof Array 
+                                                                ? urlmap[group].modules[module].actions[action][1] : "";
+                                } 
+                                if(!$scope.currentPage.action){
+                                    $scope.currentPage.action = urlmap[group].modules[module].name;
+                                    $scope.currentPage.actionDesc = $rootScope.i18n.lang.actions[action];
                                 }
                             }
                         }
