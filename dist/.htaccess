@@ -29,14 +29,14 @@
 # http://blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html
 # http://hacks.mozilla.org/2011/11/using-cors-to-load-webgl-textures-from-cross-domain-images/
 
-<IfModule mod_setenvif.c>
-    <IfModule mod_headers.c>
-        <FilesMatch "\.(gif|ico|jpe?g|png|svg|svgz|webp)$">
-            SetEnvIf Origin ":" IS_CORS
-            Header set Access-Control-Allow-Origin "*" env=IS_CORS
-        </FilesMatch>
-    </IfModule>
-</IfModule>
+#<IfModule mod_setenvif.c>
+#    <IfModule mod_headers.c>
+#        <FilesMatch "\.(gif|ico|jpe?g|png|svg|svgz|webp)$">
+#            SetEnvIf Origin ":" IS_CORS
+#            Header set Access-Control-Allow-Origin "*" env=IS_CORS
+#        </FilesMatch>
+#    </IfModule>
+#</IfModule>
 
 # ------------------------------------------------------------------------------
 # | Web fonts access                                                           |
@@ -45,9 +45,7 @@
 # Allow access from all domains for web fonts
 
 <IfModule mod_headers.c>
-    <FilesMatch "\.(eot|font.css|otf|ttc|ttf|woff)$">
-        Header set Access-Control-Allow-Origin "*"
-    </FilesMatch>
+    Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
 

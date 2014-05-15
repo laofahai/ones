@@ -24,7 +24,8 @@
                     "actions": {
                         "list": ["用户组列表"],
                         "add"  : ["新增用户组"],
-                        "edit" : ["修改用户组"]
+                        "edit" : ["修改用户组"],
+                        "viewChild": "用户组赋权"
                     }
                 },
                 "Department": {
@@ -71,6 +72,12 @@
                         "edit": ["修改模型数据"]
                     }
                 },
+                "DataModelFields": {
+                    "name": "模型数据字段",
+                    "actions": {
+                        "list": "", "add": "", "edit": ""
+                    }
+                },
                 "Settings": {
                     "name": "系统设置",
                     "actions": {
@@ -106,20 +113,31 @@
             "name": "进销存",
             "modules": {
                 "Goods": {
-                    "name": "商品管理",
+                    "name": "物料(成品)管理",
                     "actions": {
-                        "list": ["商品基础信息", "商品基本信息管理，包括编码、名称、基本价格等"],
-                        "add": ["新增商品"],
-                        "edit": ["修改商品信息"]
+                        "list": ["物料(成品)基础信息", "物料(成品)基本信息管理，包括编码、名称、基本价格等"],
+                        "add": ["新增物料(成品)"],
+                        "edit": ["修改物料(成品)信息"]
                     }
                 },
                 "GoodsCategory": {
-                    "name": "商品分类",
+                    "name": "物料(成品)分类",
                     "actions": {
-                        "list": ["商品分类列表"],
+                        "list": ["物料(成品)分类列表"],
                         "edit": ["修改分类"],
-                        "addChild": "新增商品分类"
+                        "addChild": "新增物料(成品)分类"
                     }
+                },
+                "Purchase": {
+                    "name": "采购",
+                    "actions": {
+                        "list": "采购单列表",
+                        "edit": "修改采购单",
+                        "add" : "新增采购单"
+                    }
+                },
+                "Purchase_return": {
+                    "name": "采购退货"
                 },
                 "Stock" : {
                     "name": "仓库管理",
@@ -141,18 +159,18 @@
                 "StockProductList": {
                     "name": "库存管理",
                     "actions": {
-                        "list": ["库存商品列表"],
+                        "list": ["库存物料(成品)列表"],
                         "export": "导出库存清单",
                         "edit": "修改库存产品信息"
                     }
                 },
                 "ProductTpl": {
-                    "name": "产品拆装单模板",
+                    "name": "BOM物料清单",
                     "actions": {
-                        "list": "拆装单模板列表",
-                        "add"  : "新增拆装单模板",
-                        "edit" : "修改拆装单模板",
-                        "viewSub": "拆装单模板详情"
+                        "list": "",
+                        "add"  : "",
+                        "edit" : "",
+                        "viewSub": "BOM单详情"
                     }
                 },
                 "Orders": {
@@ -166,8 +184,15 @@
                 "Stockout": {
                     "name": "出库单",
                     "actions": {
-                        "add" : "新增出库单",
                         "list": "出库单列表"
+                    }
+                },
+                "Returns": {
+                    "name": "销售退货",
+                    "actions": {
+                        "add": "新增退货",
+                        "list": "销售退货记录",
+                        "edit": "修改退货单"
                     }
                 }
             }
@@ -199,6 +224,36 @@
                 }
             }
         },
+        "Finance": {
+            "name": "财务模块", 
+            "modules": {
+                "FinanceRecord": {
+                    "name": "财务收支记录",
+                    "actions": {
+                        "list": "列表",
+                        "add": "新增"
+                    }
+                }, 
+                "FinanceAccount": {
+                    "name": "财务账户",
+                    "actions": {
+                        "add": "",
+                        "list": ""
+                    }
+                },
+                "FinancePayPlan": {
+                    "name": "财务支出计划",
+                    "actions": {}
+                },
+                "FinanceReceivePlan": {
+                    "name": "财务收入计划",
+                    "actions": {
+                        "add": "",
+                        "list": ""
+                    }
+                }
+            }
+        },
         "doWorkflow": {
             "name": "工作流执行",
             "modules": {
@@ -206,6 +261,12 @@
                     "name": "出库",
                     "actions": {
                         "confirm": "确认出库"
+                    }
+                },
+                "Stockin": {
+                    "name": "入库",
+                    "actions": {
+                        "confirm": "确认入库"
                     }
                 }
             }
@@ -223,7 +284,9 @@
             "purchase": "采购",
             "add_new_purchase": "新建采购单",
             "purchase_list": "采购单列表",
+            "purchase_return": "采购退货",
             "sale": "销售",
+            "add_new_orders": "新增销售订单",
             "orders": "订单",
             "returns": "退货单",
             "rel_company": "往来单位管理",
@@ -232,7 +295,7 @@
             "list": "列表",
             "add_new": "新增",
             "finance": "财务管理",
-            "finance_account": "财务管理",
+            "finance_account": "财务账户管理",
             "finance_record" : "收支记录",
             "finance_receive_plan": "财务收入计划",
             "finance_pay_plan": "财务付款计划",
@@ -244,9 +307,9 @@
             "settings": "设置",
             "field_set": "字段设置",
             "base_data_set": "基础数据管理",
-            "goods_setting": "商品管理",
-            "goods_tpl" : "商品拆装模板",
-            "goods_category": "商品分类管理",
+            "goods_setting": "物料(成品)管理",
+            "goods_tpl" : "BOM物料清单",
+            "goods_category": "物料(成品)分类管理",
             "stock_manage": "仓库管理",
             "data_model": "数据模型管理",
             "types_manage": "类型管理",
@@ -342,13 +405,13 @@
         "title": "标题",
         "email": "邮箱",
         "total": "合计",
-        "goods": "商品",
+        "goods": "物料(成品)",
         "group": "组",
         "value": "值",
         "logout": "安全退出",
         "myprofile": "我的资料",
         "description": "描述",
-        "amount": "价格",
+        "amount": "金额",
         "field": "字段",
         "stock": "仓库",
         "status": "状态",
@@ -363,15 +426,21 @@
         "total_num": "总数",
         "totalNum": "总数",
         "rmbToBig": "大写",
-        "sponsor": "制单人",
+        "sponsor": "发起者",
         "version": "型号",
         "subject": "主题",
+        "saler"  : "销售员",
+        "buyer"  : "采购员",
+        "supplier": "供应商",
         "customer": "客户",
         "outStockTime": "出库时间",
         "total_price_real": "实收金额",
         "total_amount_real": "实收金额",
         "dateline": "时间",
         "standard": "规格",
+        "quantity": "数量",
+        "total_price": "总金额",
+        "total_amount": "总金额",
         "discount": "折扣率",
         "discountAmount": "折扣额",
         "measure": "计量单位",
@@ -414,6 +483,11 @@
         "executor": "执行者",
         "default" : "默认",
         "remind": "提醒",
-        "execute_file": "执行文件"
+        "execute_file": "执行文件",
+        "balance_direction": "余额方向",
+        "record_type": "记录类型",
+        "account": "账户",
+        "financer": "财务员",
+        "balance": "余额"
     }
 }

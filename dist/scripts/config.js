@@ -14,5 +14,5 @@ var ERPBaseConf = {
     ]
 };
 
-angular.module("erp.config", [])
-        .value("erp.config", ERPBaseConf);
+angular.module("ones.config", [])
+        .value("ones.config", ERPBaseConf);
