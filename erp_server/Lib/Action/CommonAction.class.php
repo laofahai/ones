@@ -282,37 +282,37 @@ class CommonAction extends RestAction {
         if(!$rs) {
             $this->error(L("operate_failed"));
         }
-        
-        return;
-        if (!empty($model)) {
-            
-            if($this->relation) {
-                $model = $model->relation(true);
-            }
-            
-            if (isset($id)) {
-                $condition = array($pk => array('in', $id));
-                var_dump($model->fields);exit;
-                if(in_array("deleted", $model->fields)) {
-//                    echo 123;exit;
-                    $rs = $model->where($condition)->save(array("deleted"=>1));
-                } else {
-//                    echo 222;exit;
-                    $rs = $model->where($condition)->delete();
-                }
-                
-                if($return) {
-                    return $rs;
-                }
-//                try {
+//        
+//        return;
+//        if (!empty($model)) {
+//            
+//            if($this->relation) {
+//                $model = $model->relation(true);
+//            }
+//            
+//            if (isset($id)) {
+//                $condition = array($pk => array('in', $id));
+//                var_dump($model->fields);exit;
+//                if(in_array("deleted", $model->fields)) {
+////                    echo 123;exit;
 //                    $rs = $model->where($condition)->save(array("deleted"=>1));
-//                } catch(Exception $e) {
+//                } else {
+////                    echo 222;exit;
 //                    $rs = $model->where($condition)->delete();
 //                }
-            } else {
-                $this->httpError(500);
-            }
-        }
+//                
+//                if($return) {
+//                    return $rs;
+//                }
+////                try {
+////                    $rs = $model->where($condition)->save(array("deleted"=>1));
+////                } catch(Exception $e) {
+////                    $rs = $model->where($condition)->delete();
+////                }
+//            } else {
+//                $this->httpError(500);
+//            }
+//        }
     }
     
     public function foreverDelete() {
@@ -323,18 +323,18 @@ class CommonAction extends RestAction {
      * 执行工作流节点
      */
     protected function doWorkflow() {
-//        print_r($this->_post());exit;
+        $_REQUEST = $_REQUEST ? $_REQUEST : $_POST;
         $mainRowid = abs(intval($_REQUEST["id"]));
         $nodeId = abs(intval($_REQUEST["node_id"]));
         
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
-           $this->error("not_allowed");
+           $this->error("not_allowed1");exit;
         }
         
         $workflow = new Workflow($this->workflowAlias);
         $rs = $workflow->doNext($mainRowid, $nodeId, false, false);
         if(false === $rs) {
-            $this->error("not_allowed");
+            $this->error("not_allowed");exit;
         }
 
         // 结束信息返回true、或者没有任何返回值时跳转
