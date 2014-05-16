@@ -27,6 +27,7 @@ class Dispatcher {
      */
     static public function dispatch() {
         $urlMode  =  C('URL_MODEL');
+        
         if($urlMode == URL_COMPAT || !empty($_GET[C('VAR_PATHINFO')])){
             // 兼容模式判断
             define('PHP_FILE',_PHP_FILE_.'?'.C('VAR_PATHINFO').'=');

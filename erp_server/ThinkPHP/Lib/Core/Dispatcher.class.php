@@ -94,6 +94,7 @@ class Dispatcher {
             }
         }
         $depr = C('URL_PATHINFO_DEPR');
+//        echo $urlMode;exit;
         if(!empty($_SERVER['PATH_INFO'])) {
             tag('path_info');
             $part =  pathinfo($_SERVER['PATH_INFO']);

@@ -23,7 +23,7 @@ return array(
     
     'APP_GROUP_LIST' => 'HOME,Passport,CRM,SCM,JXC,OA,Finance,Statistics,Produce,OA,Accounting', //项目分组设定
     'DEFAULT_GROUP'  => 'HOME', //默认分组
-    'URL_MODEL' => 1,
+    'URL_MODEL' => 0,
     'URL_ROUTE_RULES' => require "route.php",
     
     /**
