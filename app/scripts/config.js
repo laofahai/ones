@@ -6,7 +6,7 @@ var ERPBaseConf = {
     BSU : "../erp_server/gateway.php?s=/",
     DEBUG: true,
     
-    Prefix: "idea-erp",
+    Prefix: "ones",
     
     yesNoDataSource: [
         {id:0, name:"No"},

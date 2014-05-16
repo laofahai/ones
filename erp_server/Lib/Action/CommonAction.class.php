@@ -29,10 +29,10 @@ class CommonAction extends RestAction {
         import("@.ORG.Auth");
 //        session(array());
         if ($_SERVER["HTTP_SESSIONHASH"]) {
-//            session_destroy();
+
             $isSameDomain = false;
             $tmp = sprintf("http://%s", $_SERVER["SERVER_NAME"]);
-//            echo $_SERVER["HTTP_REFERER"];exit;
+
             if(substr($_SERVER["HTTP_REFERER"], 0, strlen($tmp)) == $tmp) {
                 $isSameDomain = true;
             }
@@ -41,13 +41,6 @@ class CommonAction extends RestAction {
             }
             session_id($_SERVER["HTTP_SESSIONHASH"]);
             session_start();
-//            echo 123;exit;
-//            session(array(
-//                "id" => $this->_server("HTTP_SESSIONHASH")
-//            ));
-//            echo $_SERVER["HTTP_SESSIONHASH"];
-//            var_dump(session_id());
-//            print_r($_SESSION);
         }
         
         $this->user = $_SESSION["user"];
@@ -66,7 +59,6 @@ class CommonAction extends RestAction {
     protected function loginRequired() {
 //        var_dump($_SESSION);
 //        var_dump($this->isLogin());exit;
-//        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
         if (!$this->isLogin() and 
                 !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME), 
                         C("AUTH_CONFIG.AUTH_DONT_NEED"))) {
@@ -90,10 +82,13 @@ class CommonAction extends RestAction {
         if($action == "doWorkflow") {
             return true;
         }
-        
-        if(!$auth->check($rule, $_SESSION["user"]["id"])){
-            return;
-            echo $rule;exit;
+//        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
+        $path = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);
+        if(!$auth->check($rule, $_SESSION["user"]["id"]) and 
+                !in_array($path, 
+                        C("AUTH_CONFIG.AUTH_DONT_NEED"))){
+            $this->error("Permission Denied:".$path);
+            exit;
 //            $this->loginRequired();
         }
     }
