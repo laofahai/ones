@@ -99,13 +99,13 @@ class Auth{
                 $name = array($name);
             }
         }
-//        print_r($authList);exit;
         $list = array(); //有权限的name
         foreach ($authList as $val) {
             if (in_array($val, $name)) {
                 $list[] = $val;
             }
         }
+        
         if ($relation=='or' and !empty($list)) {
             return true;
         }

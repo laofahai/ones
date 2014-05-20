@@ -78,6 +78,8 @@ class CommonAction extends RestAction {
         $action = ACTION_NAME;
         $action = ACTION_NAME == "insert" ? "add" : $action;
         $action = ACTION_NAME == "update" ? "edit" : $action;
+        $action = ACTION_NAME == "index" ? "read" : $action;
+        
         $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
         if($action == "doWorkflow") {
             return true;

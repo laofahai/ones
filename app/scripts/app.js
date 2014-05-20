@@ -18,6 +18,7 @@ var ERP = angular.module('ones', [
     'ones.jxc',
     'ones.crm',
     'ones.finance',
+    'ones.produce',
     
     'ones.common',
     'ones.config',

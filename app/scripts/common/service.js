@@ -111,6 +111,9 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
                 'update': {method: 'PUT'}
             });
         }])
+    .factory("CraftRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/craft/:id.json", null, {'update': {method: 'PUT'}});
+        }])
     //财务模块
     .factory("FinanceAccountRes", ["$resource", "ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"finance/financeAccount/:id.json", null, {'update': {method: 'PUT'}});
@@ -134,4 +137,8 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
                 'update': {method: 'PUT'}
             });
         }])
+    //生产模块
+    .factory("ProducePlanRes", ["$resource","ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"produce/producePlan/:id.json", null, {'update': {method: 'PUT'}});
+    }])
     ;

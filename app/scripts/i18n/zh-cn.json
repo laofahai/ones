@@ -194,6 +194,33 @@
                         "list": "销售退货记录",
                         "edit": "修改退货单"
                     }
+                },
+                "Craft": {
+                    "name": "工艺管理",
+                    "actions": {
+                        "add": "",
+                        "list": "",
+                        "edit": ""
+                    }
+                }
+            }
+        },
+        "Produce": {
+            "name": "生产管理",
+            "modules": {
+                "ProducePlan": {
+                    "name": "生产计划",
+                    "actions": {
+                        "list": "",
+                        "add": "",
+                        "edit": ""
+                    }
+                },
+                "ProducePlanDetail": {
+                    "name": "生产计划详情",
+                    "actions": {
+                        "list": ""
+                    }
                 }
             }
         },
@@ -310,6 +337,7 @@
             "goods_setting": "物料(成品)管理",
             "goods_tpl" : "BOM物料清单",
             "goods_category": "物料(成品)分类管理",
+            "craft_manage": "工艺管理",
             "stock_manage": "仓库管理",
             "data_model": "数据模型管理",
             "types_manage": "类型管理",
@@ -321,6 +349,8 @@
             "workflow": "工作流程",
             "clear_cache": "清除缓存",
             "produce": "生产管理",
+            "produce_plan": "生产计划",
+            "produce_plan_detail": "生产计划详情",
             "outside_bill": "外协单",
             "produce_and_install": "生产组装单"
         },
@@ -380,7 +410,8 @@
             "freight" : "运费类型",
             "receive" : "收款类别",
             "pay"     : "付款类别",
-            "voucher" : "凭证字号"
+            "voucher" : "凭证字号",
+            "produce" : "生产计划类型"
         },
         "navigation": {
             "back": "后退",
@@ -453,6 +484,9 @@
         "department": "部门",
         "stock_manager": "库管员",
         "stockManager": "库管员",
+        "create_time": "创建时间",
+        "start_time": "开始时间",
+        "end_time": "结束时间",
         "stockWarningOnly": "仅库存警告数据",
         "bindDataModel": "绑定数据模型",
         "displayName": "显示名称",

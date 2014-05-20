@@ -26,14 +26,14 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         templateUrl: 'views/common/grid.html',
                         controller:  'ProductTplCtl'
                     })
-                    .when('/JXC/ProductTpl/add', {
-                        templateUrl: 'views/common/edit.html',
-                        controller:  'ProductTplEditCtl'
-                    })
-                    .when('/JXC/edit/productTpl/id/:id', {
-                        templateUrl: 'views/jxc/productTpl/edit.html',
-                        controller:  'ProductTplEditCtl'
-                    })
+//                    .when('/JXC/ProductTpl/add', {
+//                        templateUrl: 'views/common/edit.html',
+//                        controller:  'ProductTplEditCtl'
+//                    })
+//                    .when('/JXC/edit/productTpl/id/:id', {
+//                        templateUrl: 'views/jxc/productTpl/edit.html',
+//                        controller:  'ProductTplEditCtl'
+//                    })
                     .when('/JXC/ProductTpl/viewSub/id/:pid', {
                         templateUrl: 'views/jxc/productTpl/edit.html',
                         controller: 'ProductTplDetailCtl'

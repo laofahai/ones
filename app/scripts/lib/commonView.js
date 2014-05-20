@@ -79,8 +79,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             res = $injector.get(module.ucfirst()+"Res");
             model = $injector.get(module.ucfirst()+"Model");
             
-            
-            
             var opts = {};
             if($routeParams.extra) {
                 opts.queryExtraParams = parseParams($routeParams.extra);

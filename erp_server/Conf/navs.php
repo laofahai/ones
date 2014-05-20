@@ -45,8 +45,9 @@ return array(
     ),
     "produce" => array(
         "childs" => array(
-            "produce_and_install" => "Produce/list/produceInstall",
-            "outside_bill" => "Product/list/outside"
+            "produce_plan" => "Produce/list/producePlan",
+            "produce_plan_detail" => "Produce/list/producePlanDetail",
+            "outside_bill" => "Produce/list/outside"
         ),
         "icon" => "retweet",
     ),
@@ -85,7 +86,8 @@ return array(
                 "goods_category"=> "JXC/list/GoodsCategory",
                 "stock_manage"  => "JXC/list/stock",
                 "data_model"   => "HOME/list/dataModel",
-                "types_manage"  => "HOME/list/types"
+                "types_manage"  => "HOME/list/types",
+                "craft_manage"  => "JXC/list/craft",
             ),
             "organization_set" => array(
                 "user_setting" => "Passport/list/user",

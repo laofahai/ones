@@ -1045,4 +1045,23 @@ angular.module("ones.jxc.services", [])
                     }
                 };
             }])
+        .service("CraftModel", ["$rootScope", function($rootScope){
+                return {
+                    getFieldsStruct: function(){
+                        return {
+                            id: {primary: true},
+                            name: {},
+                            listorder: {
+                                inputType: "number",
+                                placeholder: 0,
+                                required: false
+                            },
+                            memo: {
+                                inputType: "textarea",
+                                required: false
+                            }
+                        };
+                    }
+                };
+            }])
         ;
