@@ -111,9 +111,7 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
                 'update': {method: 'PUT'}
             });
         }])
-    .factory("CraftRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/craft/:id.json", null, {'update': {method: 'PUT'}});
-        }])
+    
     //财务模块
     .factory("FinanceAccountRes", ["$resource", "ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"finance/financeAccount/:id.json", null, {'update': {method: 'PUT'}});
@@ -138,7 +136,16 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
             });
         }])
     //生产模块
+    .factory("CraftRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "produce/craft/:id.json", null, {'update': {method: 'PUT'}});
+        }])
     .factory("ProducePlanRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"produce/producePlan/:id.json", null, {'update': {method: 'PUT'}});
+    }])
+    .factory("ProducePlanDetailRes", ["$resource","ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"produce/producePlanDetail/:id.json", null, {'update': {method: 'PUT'}});
+    }])
+    .factory("GoodsCraftRes", ["$resource","ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"produce/goodsCraft/:id.json", null, {'update': {method: 'PUT'}});
     }])
     ;

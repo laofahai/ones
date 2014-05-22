@@ -69,8 +69,8 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
     .controller('ComViewError404Ctl', ["$scope", function($scope){
         $scope.hidePageHeader = true;
     }])
-    .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location",
-        function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location){
+    .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal",
+        function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal){
             var module,group,res,model,actions,pageActions=[];
             
             group = $routeParams.group;
@@ -96,7 +96,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
         function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
 //            var extraParams = parseParams($routeParams.extra) || "";
             var module,group,res,model,actions;
-            
             group = $routeParams.group;
             module = $routeParams.module;
             
@@ -116,6 +115,32 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
     .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config",
         function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf){
             var service = {};
+            
+            /**
+             * 通用产品工艺设置
+             * */
+            $rootScope.doSetProductCraft = function(id, name, scope) {
+                var res = $injector.get("GoodsCraftRes");
+                var modal = $injector.get("$modal");
+                res.query({goods_id: id}).$promise.then(function(data){
+                    $rootScope.craftsList = data;
+                });
+
+                var theModal = modal({
+                    scope: scope,
+                    title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, name),
+                    contentTemplate: 'views/produce/productCraft.html',
+                    show: false
+                });
+                theModal.$promise.then(theModal.show);
+
+                scope.doSaveCraft = function(){
+                    res.update({id: id}, scope.craftsList, function(data){
+                        theModal.hide();
+                    });
+                };
+            };
+            
             /**
              * 通用alert
              * */
@@ -147,7 +172,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             };
             service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
                 var defaultOpts = {
-                    name: null, //表单名称
+                    name: "form", //表单名称
                     id: null, //如为编辑，需传递此参数
                     dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
                     dataObject: null, //数据绑定到$scope的名字
@@ -164,7 +189,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         fieldsDefine: fd,
                         name: opts.name
                     };
-
                     if (opts.id) {
                         resource.get({id: opts.id}).$promise.then(function(defaultData) {
                             $scope[opts.dataObject] = dataFormat($scope.config.fieldsDefine, defaultData);
@@ -178,7 +202,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 /**
                  * 自动获取字段
                  * */
-                if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
+                if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) === "function") {
                     var model = fieldsDefine;
                     var field = model.getFieldsStruct();
                     if(remote || typeof(field.then) === "function") { //需要获取异步数据
@@ -682,7 +706,17 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         multi: true
                     });
                 }
-            }
+                
+                //其他扩展操作，在model中定义
+                if(model.extraSelectActions) {
+                    angular.forEach(model.extraSelectActions, function(item){
+                        item.scope = $scope;
+                        item.injector = $injector;
+                        $scope.selectedActions.push(item);
+                    });
+                }
+                
+            };
             service.makeGridLinkActions = function($scope, actions, isBill, extraParams){
                 //可跳转按钮
 //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
@@ -707,7 +741,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         })+extraParams
                     });
                 });
-            }
+            };
             service.makeDefaultPageAction = function($scope, module, actions){
                 actions = actions || ["add", "list"];
 

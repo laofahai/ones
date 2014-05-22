@@ -1,7 +1,8 @@
 (function(){
     'use struct';
     angular.module("ones.formMaker", [])
-    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductListRes", function($compile, $q, $parse, StockProductListRes) {
+    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductListRes", "$injector",
+    function($compile, $q, $parse, StockProductListRes, $injector) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -31,7 +32,8 @@
                 'fields/typeahead': '<input type="text" ' +
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
-                        'data-html="true" bs-typeahead />'
+                        'data-html="true" bs-typeahead />',
+                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>',
             };
             this.maker = new service.fieldsMakerFactory(this, this.opts);
         };
@@ -74,7 +76,7 @@
                 }
                 var html = false;
                 if (method in this) {
-                    html = this[method](context.field, fieldDefine, $scope);
+                    html = this[method](context.field, fieldDefine, $scope, context);
                 }
                 if(html && this.opts.compile) {
                     html = $compile(html)($scope);
@@ -102,6 +104,11 @@
                 }
                 return html.join(" ");
             },
+            _hidden: function(name, fieldDefine) {
+                return sprintf('<input type="hidden" ng-bind="%(bind)s" />', {
+                    bind: fieldDefine["ng-model"]
+                });
+            },
             _text: function(name, fieldDefine) {
                 return sprintf(this.$parent.templates["fields/text"], this._attr(name, fieldDefine));
             },
@@ -120,6 +127,41 @@
             _static: function(name, fieldDefine) {
                 return "";
                 return sprintf(this.$parent.templates["fields/static"], fieldDefine["ng-model"]);
+            },
+            _craft: function(name, fieldDefine, $scope, context) {
+                context.td.html("");
+                var res = $injector.get("GoodsCraftRes");
+                var queryParams = {};
+                var self = this;
+                if(fieldDefine.queryWithExistsData) {
+                    angular.forEach(fieldDefine.queryWithExistsData, function(qItem){
+                        queryParams[qItem] = fieldDefine["data-row-index"] !== undefined
+                                            ? $scope.$parent[self.opts.dataName][fieldDefine["data-row-index"]][qItem]
+                                            : $scope.$parent[self.opts.dataName][qItem];
+                    });
+                }
+                
+                var goods_id = queryParams["goods_id"].split("_");
+                goods_id = goods_id[1];
+                
+                var crafts = [];
+                res.query({
+                    goods_id: goods_id,
+                    only_defined: true
+                }).$promise.then(function(data){
+                    angular.forEach(data, function(item){
+                        crafts.push(item.name);
+                    });
+                    $scope.$parent.formData[context.trid].craft = crafts.join(">");
+                });
+                
+                var action = sprintf('doSetProductCraft(%d, \'%s\', this)',parseInt(goods_id), "");
+                
+                return sprintf(this.$parent.templates["fields/craft"], {
+                    label: fieldDefine["ng-model"],
+                    action:action
+                });
+                
             },
             _textarea: function(name, fieldDefine){
                 var value = fieldDefine.value;
@@ -729,11 +771,12 @@
                             '<div class="col-xs-12 col-sm-4">%(inputHTML)s</div>' +
                             '<div class="help-block col-xs-12 col-sm-reset" ng-hide="!%(formname)s.%(fieldname)s.$dirty||%(formname)s.%(fieldname)s.$valid">{{%(formname)s.%(fieldname)s.$error}}</div>' +
                             '</div>',
+                    "commonForm/hide.html": '%(inputHTML)s',
                     "text": '<input type="text" %s />',
                     "number": '<input type="number" %s />',
                     "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>',
                 },
-                dataName: ""
+                dataName: "formData"
             };
 
             this.opts = $.extend(true, defaultOpts, config);
@@ -745,7 +788,7 @@
             $scope[this.opts.dataName] = {};
             
             $scope.$parent.doKeydown = function(event){
-                if(event.keyCode == 13) {
+                if(event.keyCode === 13) {
                     event.preventDefault();
                     event.stopPropagation();
 //                    $scope.$parent.doSubmit();
@@ -764,7 +807,13 @@
                 var self = this;
                 var fieldHTML, finalHTML = [];
                 var boxHTML = this.opts.templates["commonForm/box.html"];
+                //隐藏字段
                 angular.forEach(this.opts.fieldsDefine, function(struct, field){
+                    if(struct.inputType === "hidden") {
+                        boxHTML = self.opts.templates["commonForm/hide.html"];
+                    } else {
+                        boxHTML = self.opts.templates["commonForm/box.html"];
+                    }
                     struct.class = "width-100";
                     struct["ng-model"] = self.opts.dataName+"."+field;
                     if(struct.required !== false) {
@@ -772,15 +821,15 @@
                     } else {
                         delete(struct.required);
                     }
-
+                    self.scope.$parent[self.opts.dataName][field] = "";
+                    //默认值
                     if(struct.value) {
                         self.scope.$parent[self.opts.dataName][field] = struct.value;
                     }
 
                     if(!struct.hideInForm && !struct.primary) {
-                        self.scope.$parent[self.opts.dataName][field] = "";
                         fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
-                        if (false != fieldHTML) {
+                        if (false !== fieldHTML) {
                             finalHTML.push(sprintf(boxHTML, {
                                 formname: self.opts.name,
                                 fieldname: struct.name ? struct.name : field,

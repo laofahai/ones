@@ -194,14 +194,6 @@
                         "list": "销售退货记录",
                         "edit": "修改退货单"
                     }
-                },
-                "Craft": {
-                    "name": "工艺管理",
-                    "actions": {
-                        "add": "",
-                        "list": "",
-                        "edit": ""
-                    }
                 }
             }
         },
@@ -212,7 +204,7 @@
                     "name": "生产计划",
                     "actions": {
                         "list": "",
-                        "add": "",
+                        "add": ["新增生产计划","请录入产出成品"],
                         "edit": ""
                     }
                 },
@@ -220,6 +212,14 @@
                     "name": "生产计划详情",
                     "actions": {
                         "list": ""
+                    }
+                },
+                "Craft": {
+                    "name": "工艺管理",
+                    "actions": {
+                        "add": "",
+                        "list": "",
+                        "edit": ""
                     }
                 }
             }
@@ -366,6 +366,7 @@
         },
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单",
+            "_product_craft": "产品 %s 工序管理",
             "operate_options": "操作选项"
         },
         "messages": {
@@ -380,7 +381,8 @@
             "chosen_select_text" : "请选择",
             "chosen_no_result_text" : "'没有找到相关结果'",
             "USER_NOT_EXISTS": "登录信息有误，请确认",
-            "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认"
+            "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认",
+            "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行"
         },
         "actions": {
             "addBill": "新增",
@@ -397,6 +399,7 @@
             "delete": "删除",
             "list": "列表",
             "view": "查看",
+            "viewCraft": "查看生产工艺",
             "viewSub": "查看子项",
             "clearCache": "清除缓存",
             "viewModelData": "查看模型数据",
@@ -437,6 +440,7 @@
         "email": "邮箱",
         "total": "合计",
         "goods": "物料(成品)",
+        "craft": "工艺",
         "group": "组",
         "value": "值",
         "logout": "安全退出",
@@ -452,6 +456,7 @@
         "bill_id": "单据编号",
         "billId": "单据编号",
         "mobile" : "手机",
+        "product": "产品",
         "telephone": "电话",
         "linkMan": "联系人",
         "total_num": "总数",
@@ -470,6 +475,7 @@
         "dateline": "时间",
         "standard": "规格",
         "quantity": "数量",
+        "undefined": "未定义",
         "total_price": "总金额",
         "total_amount": "总金额",
         "discount": "折扣率",

@@ -51,10 +51,10 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         templateUrl: "views/common/edit.html",
                         controller: "WorkflowNodeEditCtl"
                     })
-                    .when('/HOME/WorkflowNode/edit/id/:id/pid/:pid', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "WorkflowNodeEditCtl"
-                    })
+//                    .when('/HOME/WorkflowNode/edit/id/:id/pid/:pid', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "WorkflowNodeEditCtl"
+//                    })
                     .when('/HOME/Settings/clearCache', {
                         templateUrl: "views/home/clearCache.html",
                         controller: "clearCacheCtl"
@@ -76,7 +76,7 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                 $routeParams.group = "HOME";
                 $routeParams.module = "workflowNode";
                 var actions = $scope.$parent.i18n.urlMap.HOME.modules.WorkflowNode.actions;
-                ComView.makeGridLinkActions($scope, actions, false, "/pid/"+$routeParams.pid);
+                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
                 ComView.makeGridSelectedActions($scope, WorkflowNodeModel, WorkflowNodeRes, "HOME", "WorkflowNode"); 
 //                function($scope, model, res, group, module);
 //                $scope.currentPage.action = "某工作流";
@@ -90,18 +90,18 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
             }])
         .controller("WorkflowNodeEditCtl", ["$scope", "WorkflowNodeModel", "WorkflowNodeRes", "ComView", "$routeParams",
             function($scope, WorkflowNodeModel, WorkflowNodeRes, ComView, $routeParams) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/HOME/WorkflowNode/add/pid/"+$routeParams.pid
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/HOME/Workflow/viewSub/id/"+$routeParams.pid
-                    }
-                ];
+//                $scope.pageActions = [
+//                    {
+//                        label : $scope.i18n.lang.actions.add,
+//                        class : "success",
+//                        href  : "/HOME/WorkflowNode/add/pid/"+$routeParams.pid
+//                    },
+//                    {
+//                        label : $scope.i18n.lang.actions.list,
+//                        class : "primary",
+//                        href  : "/HOME/Workflow/viewSub/id/"+$routeParams.pid
+//                    }
+//                ];
                 $scope.selectAble = false;
                 var opts = {
                     name: "DataModelEdit",

@@ -219,14 +219,26 @@ angular.module("ones.home.services", [])
                             status_text: {},
                             memo: {
                                 required: false
-                            },
+                            }
                         };
 
                         if(!structOnly) {
                             var defer = $q.defer();
-                            res.query({
-                                by_node_id: $route.id
-                            }, function(data){
+                            var queryParams = {
+                                
+                            };
+                            var extraParams = $route.extra.split("/");
+                            if(extraParams[0] === "pid") {
+                                struct.workflow_id = {
+                                    value: extraParams[1],
+                                    inputType: "hidden",
+                                    listable: false
+                                };
+                                queryParams.pid = extraParams[1];
+                            } else {
+                                queryParams.by_node_id = $route.id;
+                            }
+                            res.query(queryParams, function(data){
                                 struct.prev_node_id.dataSource = data;
                                 struct.next_node_id.dataSource = data;
                                 defer.resolve(struct);

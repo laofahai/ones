@@ -1,6 +1,36 @@
 angular.module("ones.jxc.services", [])
-        .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", function($rootScope, GoodsCategoryRes, $q) {
+        .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal",
+        function($rootScope, GoodsCategoryRes, $q, $location, $modal) {
             var obj = {};
+            obj.extraSelectActions = [
+                {
+                    label: $rootScope.i18n.lang.actions.viewCraft,
+                    action: function($event, selectedItems){
+                        var scope = obj.extraSelectActions[0].scope;
+                        var injector = obj.extraSelectActions[0].injector;
+                        var item = selectedItems[0];
+                        var res = injector.get("GoodsCraftRes");
+                        
+                        res.query({goods_id: item.id}).$promise.then(function(data){
+                            scope.craftsList = data;
+                        });
+                        
+                        var theModal = $modal({
+                            scope: scope,
+                            title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, item.name),
+                            contentTemplate: 'views/produce/productCraft.html',
+                            show: false
+                        });
+                        theModal.$promise.then(theModal.show);
+                        
+                        scope.doSaveCraft = function(){
+                            res.update({id: item.id}, scope.craftsList, function(data){
+                                theModal.hide();
+                            });
+                        };
+                    }
+                }
+            ];
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
                 var struct = {

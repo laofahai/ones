@@ -14,6 +14,7 @@ angular.module('ones.common', ['ones.common.filters', 'ones.common.directives'])
                     .when('/', {
                         redirectTo: '/HOME/Index/dashboard'
                     })
+                    ;
 //                    .otherwise({
 //                        redirectTo: '/HOME/Index/dashboard'
 //                    });
