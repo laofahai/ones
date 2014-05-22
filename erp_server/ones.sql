@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2014-05-15 22:44:01
+-- Generation Time: 2014-05-22 19:05:34
 -- 服务器版本： 5.1.73
 -- PHP Version: 5.4.24
 
@@ -397,191 +397,134 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
 --
 
 INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
-(1, 104, 0),
-(1, 145, 0),
-(1, 100, 0),
-(1, 99, 0),
-(1, 98, 0),
-(1, 97, 0),
-(1, 96, 0),
-(1, 95, 0),
-(1, 117, 0),
-(1, 77, 0),
-(1, 76, 0),
-(1, 75, 0),
-(1, 74, 0),
-(1, 73, 0),
-(1, 72, 0),
-(1, 71, 0),
-(1, 70, 0),
-(1, 149, 0),
-(1, 60, 0),
-(1, 59, 0),
-(1, 58, 0),
-(1, 55, 0),
-(1, 54, 0),
-(1, 53, 0),
-(1, 52, 0),
-(1, 51, 0),
-(1, 147, 0),
-(1, 148, 0),
-(1, 3, 0),
-(1, 94, 0),
-(1, 81, 0),
-(1, 80, 0),
-(1, 79, 0),
-(1, 78, 0),
-(1, 69, 0),
-(1, 68, 0),
-(1, 67, 0),
-(1, 63, 0),
-(1, 62, 0),
-(1, 61, 0),
-(1, 50, 0),
-(1, 49, 0),
-(1, 48, 0),
-(1, 47, 0),
-(1, 28, 0),
-(1, 26, 0),
-(1, 25, 0),
-(1, 24, 0),
-(1, 23, 0),
-(1, 22, 0),
-(2, 4, 0),
-(2, 65, 0),
-(2, 59, 0),
-(2, 58, 0),
-(2, 55, 0),
-(2, 54, 0),
-(2, 53, 0),
-(2, 52, 0),
-(2, 51, 0),
-(2, 64, 0),
-(2, 3, 0),
-(2, 8, 0),
-(2, 60, 0),
-(2, 56, 0),
-(2, 45, 0),
-(2, 66, 0),
-(2, 10, 0),
-(2, 9, 0),
-(2, 7, 0),
-(2, 6, 0),
-(2, 5, 0),
-(1, 21, 0),
-(1, 20, 0),
-(1, 19, 0),
-(1, 18, 0),
-(1, 17, 0),
-(1, 16, 0),
-(1, 15, 0),
-(1, 14, 0),
-(1, 13, 0),
-(1, 12, 0),
-(1, 11, 0),
-(1, 57, 0),
-(1, 56, 0),
-(2, 70, 0),
-(2, 73, 0),
-(2, 74, 0),
-(2, 75, 0),
-(2, 76, 0),
-(2, 77, 0),
-(1, 46, 0),
-(1, 45, 0),
 (1, 2, 0),
-(1, 150, 0),
-(1, 135, 0),
-(1, 134, 0),
-(1, 133, 0),
-(1, 132, 0),
-(1, 131, 0),
-(1, 130, 0),
-(1, 129, 0),
-(1, 128, 0),
-(1, 127, 0),
-(1, 126, 0),
-(1, 123, 0),
-(1, 122, 0),
-(1, 121, 0),
-(1, 120, 0),
-(1, 119, 0),
+(1, 3, 0),
+(1, 11, 0),
+(1, 12, 0),
+(1, 13, 0),
+(1, 14, 0),
+(1, 15, 0),
+(1, 16, 0),
+(1, 17, 0),
+(1, 18, 0),
+(1, 19, 0),
+(1, 20, 0),
+(1, 21, 0),
+(1, 22, 0),
+(1, 23, 0),
+(1, 24, 0),
+(1, 25, 0),
+(1, 26, 0),
+(1, 27, 0),
+(1, 28, 0),
+(1, 29, 0),
+(1, 30, 0),
+(1, 31, 0),
+(1, 32, 0),
+(1, 33, 0),
+(1, 34, 0),
+(1, 35, 0),
+(1, 36, 0),
+(1, 37, 0),
+(1, 38, 0),
+(1, 39, 0),
+(1, 40, 0),
+(1, 41, 0),
+(1, 42, 0),
+(1, 43, 0),
+(1, 44, 0),
+(1, 46, 0),
+(1, 47, 0),
+(1, 48, 0),
+(1, 49, 0),
+(1, 50, 0),
+(1, 51, 0),
+(1, 52, 0),
+(1, 53, 0),
+(1, 55, 0),
+(1, 56, 0),
+(1, 57, 0),
+(1, 58, 0),
+(1, 60, 0),
+(1, 63, 0),
+(1, 64, 0),
+(1, 65, 0),
+(1, 67, 0),
+(1, 68, 0),
+(1, 69, 0),
+(1, 70, 0),
+(1, 71, 0),
+(1, 72, 0),
+(1, 73, 0),
+(1, 74, 0),
+(1, 75, 0),
+(1, 76, 0),
+(1, 77, 0),
+(1, 78, 0),
+(1, 79, 0),
+(1, 80, 0),
+(1, 81, 0),
+(1, 94, 0),
+(1, 96, 0),
+(1, 97, 0),
+(1, 98, 0),
+(1, 100, 0),
+(1, 104, 0),
+(1, 110, 0),
+(1, 111, 0),
+(1, 112, 0),
+(1, 113, 0),
+(1, 114, 0),
+(1, 116, 0),
 (1, 118, 0),
-(1, 140, 0),
-(1, 139, 0),
-(1, 138, 0),
-(1, 137, 0),
+(1, 119, 0),
+(1, 120, 0),
+(1, 122, 0),
+(1, 126, 0),
+(1, 127, 0),
+(1, 128, 0),
+(1, 129, 0),
+(1, 130, 0),
+(1, 132, 0),
+(1, 133, 0),
+(1, 134, 0),
 (1, 136, 0),
-(1, 144, 0),
+(1, 137, 0),
+(1, 138, 0),
+(1, 140, 0),
+(1, 141, 0),
 (1, 142, 0),
 (1, 143, 0),
-(1, 114, 0),
-(1, 113, 0),
-(1, 112, 0),
-(1, 111, 0),
-(1, 110, 0),
-(1, 44, 0),
-(1, 43, 0),
-(1, 42, 0),
-(1, 41, 0),
-(1, 40, 0),
-(1, 39, 0),
-(1, 38, 0),
-(1, 37, 0),
-(1, 36, 0),
-(1, 35, 0),
-(1, 34, 0),
-(1, 33, 0),
-(1, 32, 0),
-(1, 31, 0),
-(1, 30, 0),
-(1, 29, 0),
-(1, 65, 0),
-(1, 64, 0),
-(1, 153, 0),
-(1, 152, 0),
-(1, 151, 0),
-(1, 141, 0),
-(7, 64, 0),
-(7, 65, 0),
-(7, 29, 0),
-(7, 30, 0),
-(7, 31, 0),
-(7, 32, 0),
-(7, 33, 0),
-(7, 34, 0),
-(7, 35, 0),
-(7, 36, 0),
-(7, 37, 0),
-(7, 38, 0),
-(7, 39, 0),
-(7, 40, 0),
-(7, 41, 0),
-(7, 42, 0),
-(7, 43, 0),
-(7, 44, 0),
-(7, 110, 0),
-(7, 111, 0),
-(7, 112, 0),
-(7, 113, 0),
-(7, 114, 0),
-(7, 136, 0),
-(7, 137, 0),
-(7, 138, 0),
-(7, 139, 0),
-(7, 140, 0),
-(7, 96, 0),
-(7, 97, 0),
-(7, 98, 0),
-(7, 99, 0),
-(7, 100, 0),
-(7, 104, 0),
-(1, 27, 0),
+(1, 144, 0),
 (1, 146, 0),
-(1, 116, 0),
-(5, 2, 0),
-(5, 45, 0),
-(5, 46, 0);
+(1, 147, 0),
+(1, 148, 0),
+(1, 149, 0),
+(1, 150, 0),
+(1, 151, 0),
+(1, 152, 0),
+(1, 153, 0),
+(1, 154, 0),
+(1, 155, 0),
+(1, 156, 0),
+(1, 157, 0),
+(1, 158, 0),
+(1, 159, 0),
+(1, 160, 0),
+(1, 161, 0),
+(1, 162, 0),
+(1, 163, 0),
+(1, 164, 0),
+(1, 165, 0),
+(1, 166, 0),
+(1, 167, 0),
+(1, 168, 0),
+(1, 169, 0),
+(1, 170, 0),
+(1, 171, 0),
+(1, 172, 0),
+(1, 173, 0),
+(1, 174, 0);
 
 -- --------------------------------------------------------
 
@@ -599,7 +542,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_rule` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `category` (`category`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=154 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=175 ;
 
 --
 -- 转存表中的数据 `x_auth_rule`
@@ -608,125 +551,132 @@ CREATE TABLE IF NOT EXISTS `x_auth_rule` (
 INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `condition`, `category`) VALUES
 (2, 'JXC.Orders.add', '新建订单', 1, '', 'sale'),
 (3, 'JXC.Stockin.add', '新建入库单', 1, '', 'stock'),
-(150, 'Produce.ProduceInstall.index', '生产组装单列表', 1, '', 'produce'),
-(148, 'JXC.StockTransfer.viewDetail', '库存调拨单详情', 1, '', 'stock'),
-(147, 'JXC.StockTransfer.foreverdelete', '删除库存调拨单', 1, '', 'stock'),
-(11, 'HOME.AuthGroup.viewDetail', '权限组查看详情', 1, '', 'set'),
-(12, 'HOME.AuthRule.add', '添加权限设定', 1, '', 'set'),
-(13, 'HOME.AuthRule.edit', '编辑权限设定', 1, '', 'set'),
-(14, 'HOME.AuthRule.foreverdelete', '删除权限设定', 1, '', 'set'),
-(15, 'HOME.Department.add', '添加部门', 1, '', 'set'),
-(16, 'HOME.Department.edit', '编辑部门', 1, '', 'set'),
-(17, 'HOME.Department.foreverdelete', '删除部门', 1, '', 'set'),
-(18, 'HOME.User.add', '添加用户', 1, '', 'set'),
-(19, 'HOME.User.edit', '编辑用户', 1, '', 'set'),
-(20, 'HOME.User.viewDetail', '查看用户详情', 1, '', 'set'),
-(21, 'HOME.User.changeStatus', '修改用户状态', 1, '', 'set'),
+(150, 'Produce.ProduceInstall.read', '生产组装单列表', 1, '', 'produce'),
+(148, 'JXC.StockTransfer.read', '库存调拨单详情', 1, '', 'stock'),
+(147, 'JXC.StockTransfer.delete', '删除库存调拨单', 1, '', 'stock'),
+(11, 'Passport.AuthGroup.read', '权限组查看详情', 1, '', 'set'),
+(12, 'Passport.AuthRule.add', '添加权限设定', 1, '', 'set'),
+(13, 'Passport.AuthRule.edit', '编辑权限设定', 1, '', 'set'),
+(14, 'Passport.AuthRule.delete', '删除权限设定', 1, '', 'set'),
+(15, 'Passport.Department.add', '添加部门', 1, '', 'set'),
+(16, 'Passport.Department.edit', '编辑部门', 1, '', 'set'),
+(17, 'Passport.Department.delete', '删除部门', 1, '', 'set'),
+(18, 'Passport.User.add', '添加用户', 1, '', 'set'),
+(19, 'Passport.User.edit', '编辑用户', 1, '', 'set'),
+(20, 'Passport.User.read', '查看用户详情', 1, '', 'set'),
+(21, 'Passport.User.delete', '删除用户', 1, '', 'set'),
 (22, 'HOME.Workflow.add', '添加工作流', 1, '', 'set'),
 (23, 'HOME.Workflow.edit', '修改工作流', 1, '', 'set'),
 (24, 'HOME.WorkflowNode.add', '添加工作流节点', 1, '', 'set'),
 (25, 'HOME.WorkflowNode.edit', '修改工作流节点', 1, '', 'set'),
-(26, 'HOME.WorkflowNode.foreverdelete', '删除工作流节点', 1, '', 'set'),
-(27, 'Statistics.Sale.index', '销售统计分析', 1, '', 'statistics'),
-(28, 'HOME.AuthRule.index', '权限设定列表', 1, '', 'set'),
-(29, 'JXC.Goods.index', '产品列表', 1, '', 'basedata'),
+(26, 'HOME.WorkflowNode.delete', '删除工作流节点', 1, '', 'set'),
+(27, 'Statistics.Sale.read', '销售统计分析', 1, '', 'statistics'),
+(28, 'Passport.AuthRule.read', '权限设定列表', 1, '', 'set'),
+(29, 'JXC.Goods.read', '产品列表', 1, '', 'basedata'),
 (30, 'JXC.Goods.add', '新增产品', 1, '', 'basedata'),
 (31, 'JXC.Goods.edit', '编辑产品', 1, '', 'basedata'),
-(32, 'JXC.Goods.foreverdelete', '删除产品', 1, '', 'basedata'),
+(32, 'JXC.Goods.delete', '删除产品', 1, '', 'basedata'),
 (33, 'JXC.GoodsCategory.add', '添加产品分类', 1, '', 'basedata'),
 (34, 'JXC.GoodsCategory.edit', '修改产品分类', 1, '', 'basedata'),
-(35, 'JXC.GoodsCategory.foreverdelete', '删除产品分类', 1, '', 'basedata'),
-(36, 'JXC.GoodsCategory.index', '产品分类列表', 1, '', 'basedata'),
-(37, 'JXC.GoodsColor.index', '产品颜色列表', 1, '', 'basedata'),
+(35, 'JXC.GoodsCategory.delete', '删除产品分类', 1, '', 'basedata'),
+(36, 'JXC.GoodsCategory.read', '产品分类列表', 1, '', 'basedata'),
+(37, 'JXC.GoodsColor.read', '产品颜色列表', 1, '', 'basedata'),
 (38, 'JXC.GoodsColor.add', '添加产品颜色', 1, '', 'basedata'),
 (39, 'JXC.GoodsColor.edit', '修改产品颜色', 1, '', 'basedata'),
-(40, 'JXC.GoodsColor.foreverdelete', '删除产品颜色', 1, '', 'basedata'),
-(41, 'JXC.GoodsStandard.index', '产品规格列表', 1, '', 'basedata'),
+(40, 'JXC.GoodsColor.delete', '删除产品颜色', 1, '', 'basedata'),
+(41, 'JXC.GoodsStandard.read', '产品规格列表', 1, '', 'basedata'),
 (42, 'JXC.GoodsStandard.add', '新增产品规格', 1, '', 'basedata'),
 (43, 'JXC.GoodsStandard.edit', '修改产品规格', 1, '', 'basedata'),
-(44, 'JXC.GoodsStandard.foreverdelete', '删除产品规格', 1, '', 'basedata'),
-(45, 'JXC.Orders.index', '订单列表', 1, '', 'sale'),
-(46, 'JXC.OrdersDetail.index', '订单明细列表', 1, '', 'sale'),
-(47, 'JXC.Stock.index', '仓库列表', 1, '', 'set'),
+(44, 'JXC.GoodsStandard.delete', '删除产品规格', 1, '', 'basedata'),
+(46, 'JXC.OrdersDetail.read', '订单明细列表', 1, '', 'sale'),
+(47, 'JXC.Stock.read', '仓库列表', 1, '', 'set'),
 (48, 'JXC.Stock.add', '新增仓库', 1, '', 'set'),
 (49, 'JXC.Stock.edit', '修改仓库', 1, '', 'set'),
-(50, 'JXC.Stock.foreverdelete', '删除仓库', 1, '', 'set'),
-(51, 'JXC.StockProductList.index', '库存清单', 1, '', 'stock'),
-(52, 'JXC.Stockin.index', '入库单列表', 1, '', 'stock'),
+(50, 'JXC.Stock.delete', '删除仓库', 1, '', 'set'),
+(51, 'JXC.StockProductList.read', '库存清单', 1, '', 'stock'),
+(52, 'JXC.Stockin.read', '入库单列表', 1, '', 'stock'),
 (53, 'JXC.Stockin.editDetail', '修改入库单明细', 1, '', 'stock'),
-(54, 'JXC.Stockin.viewDetail', '查看入库单明细', 1, '', 'stock'),
 (55, 'JXC.Stockin.delete', '删除入库单', 1, '', 'stock'),
-(56, 'JXC.Orders.viewDetail', '查看订单明细', 1, '', 'sale'),
+(56, 'JXC.Orders.read', '查看订单明细', 1, '', 'sale'),
 (57, 'JXC.Orders.editDetail', '编辑订单明细', 1, '', 'sale'),
-(58, 'JXC.Stockout.index', '出库单列表', 1, '', 'stock'),
-(59, 'JXC.Stockout.viewDetail', '查看出库单详情', 1, '', 'stock'),
+(58, 'JXC.Stockout.read', '出库单列表', 1, '', 'stock'),
 (60, 'JXC.Stock.warning', '库存警告', 1, '', 'stock'),
-(61, 'HOME.User.index', '用户列表', 1, '', 'set'),
-(62, 'HOME.AuthGroup.index', '用户组列表', 1, '', 'set'),
-(63, 'HOME.Department.index', '部门列表', 1, '', 'set'),
-(64, 'HOME.Index.index', '基础首页', 1, '', 'all'),
+(63, 'Passport.Department.read', '部门列表', 1, '', 'set'),
+(64, 'HOME.Index.read', '基础首页', 1, '', 'all'),
 (65, 'HOME.Index.dashboard', '首页控制面板', 1, '', 'all'),
-(149, 'JXC.StockTransfer.editDetail', '编辑库存调拨单明细', 1, '', 'stock'),
-(67, 'HOME.Workflow.index', '工作流列表', 1, '', 'set'),
-(68, 'HOME.WorkflowNode.index', '工作流节点列表', 1, '', 'set'),
+(149, 'JXC.StockTransfer.edit', '编辑库存调拨单明细', 1, '', 'stock'),
+(67, 'HOME.Workflow.read', '工作流列表', 1, '', 'set'),
+(68, 'HOME.WorkflowNode.read', '工作流节点列表', 1, '', 'set'),
 (69, 'HOME.WorkflowNode.setPermission', '设置工作流节点权限', 1, '', 'set'),
-(70, 'JXC.Returns.index', '退货单列表', 1, '', 'stock'),
+(70, 'JXC.Returns.read', '退货单列表', 1, '', 'stock'),
 (71, 'JXC.Returns.add', '新建退货单', 1, '', 'stock'),
 (72, 'JXC.Returns.edit', '修改退货单', 1, '', 'stock'),
-(73, 'JXC.Shipment.index', '发货单列表', 1, '', 'stock'),
+(73, 'JXC.Shipment.read', '发货单列表', 1, '', 'stock'),
 (74, 'JXC.Shipment.add', '新建发货单', 1, '', 'stock'),
 (75, 'JXC.Shipment.edit', '修改发货单', 1, '', 'stock'),
-(76, 'JXC.Returns.foreverdelete', '删除退货单', 1, '', 'stock'),
+(76, 'JXC.Returns.delete', '删除退货单', 1, '', 'stock'),
 (77, 'JXC.Shipment.forverdelete', '删除发货单', 1, '', 'stock'),
-(78, 'HOME.Config.index', '字段配置列表', 1, '', 'set'),
+(78, 'HOME.Config.read', '字段配置列表', 1, '', 'set'),
 (79, 'HOME.Config.add', '添加字段配置', 1, '', 'set'),
 (80, 'HOME.Config.edit', '修改字段配置', 1, '', 'set'),
-(81, 'HOME.Config.foreverdelete', '删除字段配置', 1, '', 'set'),
-(117, 'JXC.Returns.viewDetail', '查看退货单详情', 1, '', 'stock'),
+(81, 'HOME.Config.delete', '删除字段配置', 1, '', 'set'),
 (94, 'HOME.Settings.clearCache', '清除缓存', 1, '', 'set'),
-(95, 'JXC.Shipment.viewDetail', '发货单详情', 1, '', 'stock'),
-(96, 'JXC.Purchase.index', '采购单列表', 1, '', 'stock'),
+(96, 'JXC.Purchase.read', '采购单列表', 1, '', 'stock'),
 (97, 'JXC.Purchase.add', '新建采购单', 1, '', 'stock'),
 (98, 'JXC.Purchase.edit', '编辑采购单', 1, '', 'stock'),
-(99, 'JXC.Purchase.viewDetail', '采购单详情', 1, '', 'stock'),
 (100, 'JXC.Purchase.editDetail', '编辑采购单详情', 1, '', 'stock'),
-(145, 'JXC.StockTransfer.index', '库存调拨列表', 1, '', 'stock'),
-(104, 'JXC.Purchase.foreverdelete', '删除采购单', 1, '', 'stock'),
+(104, 'JXC.Purchase.delete', '删除采购单', 1, '', 'stock'),
 (146, 'JXC.StockTransfer.add', '新建库存调拨', 1, '', 'stock'),
 (143, 'CRM.RelationshipCompanyLinkman.edit', '编辑往来单位联系人', 1, '', 'crm'),
 (142, 'CRM.RelationshipCompanyLinkman.add', '新增往来单位联系人', 1, '', 'crm'),
 (116, 'JXC.Returns.editDetail', '退货单详情', 1, '', 'stock'),
-(110, 'HOME.Types.index', '类型管理', 1, '', 'basedata'),
+(110, 'HOME.Types.read', '类型管理', 1, '', 'basedata'),
 (111, 'HOME.Types.add', '新增类型', 1, '', 'basedata'),
 (112, 'HOME.Types.edit', '修改类型', 1, '', 'basedata'),
-(113, 'HOME.Types.foreverdelete', '删除类型', 1, '', 'basedata'),
+(113, 'HOME.Types.delete', '删除类型', 1, '', 'basedata'),
 (114, 'HOME.Types.updateStatus', '更改类型状态', 1, '', 'basedata'),
-(144, 'CRM.RelationshipCompanyLinkman.foreverdelete', '删除往来单位联系人', 1, '', 'crm'),
-(118, 'Finance.FinanceAccount.index', '财务账户列表', 1, '', 'finance'),
+(144, 'CRM.RelationshipCompanyLinkman.delete', '删除往来单位联系人', 1, '', 'crm'),
+(118, 'Finance.FinanceAccount.read', '财务账户列表', 1, '', 'finance'),
 (119, 'Finance.FinanceAccount.add', '新建财务账户', 1, '', 'finance'),
 (120, 'Finance.FinanceAccount.edit', '修改财务账户', 1, '', 'finance'),
-(121, 'Finance.FinanceAccount.viewDetail', '查看财务账户详情', 1, '', 'finance'),
-(122, 'Finance.FinanceRecord.index', '财务收支记录', 1, '', 'finance'),
-(123, 'Finance.FinanceRecord.viewDetail', '查看财务收支记录详情', 1, '', 'finance'),
+(122, 'Finance.FinanceRecord.read', '财务收支记录', 1, '', 'finance'),
 (126, 'Finance.FinanceRecord.add', '新建财务记录', 1, '', 'finance'),
-(127, 'Finance.FinanceRecord.foreverdelete', '删除财务记录', 1, '', 'finance'),
-(128, 'Finance.FinancePayPlan.index', '财务支出计划', 1, '', 'finance'),
+(127, 'Finance.FinanceRecord.delete', '删除财务记录', 1, '', 'finance'),
+(128, 'Finance.FinancePayPlan.read', '财务支出计划', 1, '', 'finance'),
 (129, 'Finance.FinancePayPlan.add', '新增财务支出计划', 1, '', 'finance'),
 (130, 'Finance.FinancePayPlan.edit', '修改财务支出计划', 1, '', 'finance'),
-(131, 'Finance.FinancePayPlan.viewDetail', '查看财务支出计划详情', 1, '', 'finance'),
-(132, 'Finance.FinanceReceivePlan.index', '财务收款计划列表', 1, '', 'finance'),
+(132, 'Finance.FinanceReceivePlan.read', '财务收款计划列表', 1, '', 'finance'),
 (133, 'Finance.FinanceReceivePlan.add', '新建财务收款计划', 1, '', 'finance'),
 (134, 'Finance.FinanceReceivePlan.edit', '修改财务收款计划', 1, '', 'finance'),
-(135, 'Finance.FinanceReceivePlan.viewDetail', '查看财务收款详情', 1, '', 'finance'),
-(136, 'CRM.RelationshipCompany.index', '往来单位列表', 1, '', 'crm'),
+(136, 'CRM.RelationshipCompany.read', '往来单位列表', 1, '', 'crm'),
 (137, 'CRM.RelationshipCompany.add', '添加往来单位', 1, '', 'crm'),
 (138, 'CRM.RelationshipCompany.edit', '修改往来单位', 1, '', 'crm'),
-(139, 'CRM.RelationshipCompany.viewDetail', '查看往来单位详情', 1, '', 'crm'),
-(140, 'CRM.RelationshipCompany.foreverdelete', '删除往来单位', 1, '', 'crm'),
-(141, 'Statistics.Overview.index', '统计总览', 1, '', 'statistics'),
-(151, 'Statistics.ProductView.index', '产品进销存表', 1, '', 'statistics'),
-(152, 'Accounting.AccountingVoucher.index', '记账凭证列表', 1, '', 'accounting'),
-(153, 'Accounting.AccountingVoucher.add', '录凭证', 1, '', 'accounting');
+(140, 'CRM.RelationshipCompany.delete', '删除往来单位', 1, '', 'crm'),
+(141, 'Statistics.Overview.read', '统计总览', 1, '', 'statistics'),
+(151, 'Statistics.ProductView.read', '产品进销存表', 1, '', 'statistics'),
+(152, 'Accounting.AccountingVoucher.read', '记账凭证列表', 1, '', 'accounting'),
+(153, 'Accounting.AccountingVoucher.add', '录凭证', 1, '', 'accounting'),
+(154, 'JXC.ProductTpl.add', '新增BOM单', 1, '', 'basedata'),
+(155, 'JXC.ProductTpl.read', 'BOM单列表', 1, '', 'basedata'),
+(156, 'JXC.ProductTpl.edit', '修改BOM单', 1, '', 'basedata'),
+(157, 'JXC.ProductTpl.delete', '删除BOM单', 1, '', 'basedata'),
+(158, 'Produce.Craft.read', '查看基本工艺', 1, '', 'basedata'),
+(159, 'Produce.Craft.add', '新增基本工艺', 1, '', 'basedata'),
+(160, 'Produce.Craft.edit', '修改基本工艺信息', 1, '', 'basedata'),
+(161, 'Produce.Craft.delete', '删除基本工艺信息', 1, '', 'basedata'),
+(162, 'Passport.AuthGroupRule.read', '查看用户组权限', 1, '', 'department'),
+(163, 'Passport.AuthGroupRule.edit', '用户组权限编辑', 1, '', 'department'),
+(164, 'HOME.DataModelData.read', '数据模型数据', 1, '', 'basedata'),
+(165, 'HOME.DataModelData.add', '新增数据模型数据', 1, '', 'basedata'),
+(166, 'HOME.DataModelData.edit', '修改数据模型数据', 1, '', 'basedata'),
+(167, 'HOME.DataModelData.delete', '删除数据模型数据', 1, '', 'basedata'),
+(168, 'Produce.ProducePlan.read', '生产计划', 1, '', 'produce'),
+(169, 'Produce.ProducePlan.add', '新增生产计划', 1, '', 'produce'),
+(170, 'Produce.ProducePlan.edit', '修改生产计划', 1, '', 'produce'),
+(171, 'Produce.ProducePlan.delete', '删除生产计划', 1, '', 'produce'),
+(172, 'Produce.GoodsCraft.read', '查看产品工序', 1, '', 'produce'),
+(173, 'Produce.GoodsCraft.edit', '修改产品工序', 1, '', 'produce'),
+(174, 'HOME.WorkflowProcess.read', '查看工作流进程', 1, '', 'basedata');
 
 -- --------------------------------------------------------
 
@@ -745,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `x_config` (
   KEY `name` (`name`,`value`),
   KEY `alias` (`alias`),
   KEY `deleted` (`deleted`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- 转存表中的数据 `x_config`
@@ -756,7 +706,35 @@ INSERT INTO `x_config` (`id`, `alias`, `name`, `value`, `description`, `deleted`
 (2, 'company_address', '公司地址', '山东省诸城市人民东路', NULL, 0),
 (3, 'company_phone', '联系电话', '0536-6086084', NULL, 0),
 (8, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0),
-(9, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0);
+(9, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0),
+(10, 'backup.sendto.email', '备份文件发送邮箱', 'xx@xx.com', '定期备份发送至邮箱，需服务器邮件发送支持。', 0),
+(11, 'backup.days', '定期备份', '1', '以天位单位。', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `x_craft`
+--
+
+CREATE TABLE IF NOT EXISTS `x_craft` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `listorder` smallint(3) NOT NULL DEFAULT '99',
+  `memo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `listorder` (`listorder`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- 转存表中的数据 `x_craft`
+--
+
+INSERT INTO `x_craft` (`id`, `name`, `listorder`, `memo`) VALUES
+(1, '工艺1', 99, '工艺1'),
+(2, '工艺2', 99, ''),
+(3, '工艺3', 99, ''),
+(4, '工艺4', 99, ''),
+(5, '工艺5', 99, '');
 
 -- --------------------------------------------------------
 
@@ -1099,6 +1077,29 @@ INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lf
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `x_goods_craft`
+--
+
+CREATE TABLE IF NOT EXISTS `x_goods_craft` (
+  `goods_id` int(11) NOT NULL AUTO_INCREMENT,
+  `craft_id` smallint(5) NOT NULL,
+  `listorder` smallint(3) NOT NULL DEFAULT '99',
+  KEY `goods_id` (`goods_id`,`craft_id`,`listorder`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `x_goods_craft`
+--
+
+INSERT INTO `x_goods_craft` (`goods_id`, `craft_id`, `listorder`) VALUES
+(1, 1, 1),
+(1, 3, 3),
+(1, 4, 4),
+(1, 5, 2);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `x_messages`
 --
 
@@ -1236,6 +1237,69 @@ CREATE TABLE IF NOT EXISTS `x_produce_install_detail` (
   KEY `order_id` (`order_id`,`goods_id`,`color_id`,`standard_id`,`num`),
   KEY `factory_code_all` (`factory_code_all`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `x_produce_plan`
+--
+
+CREATE TABLE IF NOT EXISTS `x_produce_plan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(4) NOT NULL,
+  `start_time` varchar(12) NOT NULL,
+  `end_time` varchar(12) NOT NULL,
+  `create_time` varchar(12) NOT NULL,
+  `status` smallint(1) NOT NULL DEFAULT '0',
+  `memo` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`,`start_time`,`end_time`,`create_time`,`status`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `x_produce_plan`
+--
+
+INSERT INTO `x_produce_plan` (`id`, `type`, `start_time`, `end_time`, `create_time`, `status`, `memo`) VALUES
+(1, 19, '1400566038', '', '1400566038', 0, '某生产计划');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `x_produce_plan_detail`
+--
+
+CREATE TABLE IF NOT EXISTS `x_produce_plan_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plan_id` int(11) NOT NULL,
+  `goods_id` int(11) NOT NULL,
+  `factory_code_all` varchar(40) NOT NULL,
+  `num` decimal(10,2) NOT NULL,
+  `start_time` varchar(12) NOT NULL,
+  `end_time` varchar(12) NOT NULL,
+  `status` smallint(1) NOT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `plan_id` (`plan_id`,`goods_id`,`factory_code_all`,`start_time`,`end_time`,`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `x_produce_process`
+--
+
+CREATE TABLE IF NOT EXISTS `x_produce_process` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plan_id` int(11) NOT NULL,
+  `plan_detail_id` int(11) NOT NULL,
+  `start_time` varchar(12) NOT NULL,
+  `end_time` varchar(12) DEFAULT NULL,
+  `status` smallint(1) NOT NULL DEFAULT '0',
+  `memo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `plan_id` (`plan_id`,`plan_detail_id`,`start_time`,`end_time`,`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -4965,7 +5029,7 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 --
 
 INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
-('gqf6pc27b2o2rkglkp852sjdp3', 1400168388, 0x757365727c613a31313a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223138363533363532373935223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223135223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a363a7b733a323a226964223b733a323a223135223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e99480e594aee983a8223b733a333a226c6674223b733a313a2238223b733a333a22726774223b733a313a2239223b733a393a226c6973746f72646572223b733a323a223939223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d7d);
+('t038jbldeui4ljrpu1tv60fct1', 1400760212, 0x757365727c613a31313a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223135223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a363a7b733a323a226964223b733a323a223135223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e99480e594aee983a8223b733a333a226c6674223b733a313a2238223b733a333a22726774223b733a313a2239223b733a393a226c6973746f72646572223b733a323a223939223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d7d);
 
 -- --------------------------------------------------------
 
@@ -5303,7 +5367,7 @@ CREATE TABLE IF NOT EXISTS `x_types` (
   KEY `type` (`type`,`listorder`),
   KEY `alias` (`alias`),
   KEY `deleted` (`deleted`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用类型列表' AUTO_INCREMENT=18 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用类型列表' AUTO_INCREMENT=20 ;
 
 --
 -- 转存表中的数据 `x_types`
@@ -5326,7 +5390,9 @@ INSERT INTO `x_types` (`id`, `type`, `alias`, `name`, `listorder`, `status`, `de
 (14, 'pay', 'purchase', '采购支出', 99, 1, 0),
 (15, 'pay', 'other', '其他支出', 98, 1, 0),
 (16, 'pay', 'returns', '退货支出', 99, 1, 0),
-(17, 'voucher', '', '记', 99, 1, 0);
+(17, 'voucher', '', '记', 99, 1, 0),
+(18, 'produce', 'storage_produce', '库存生产', 99, 0, 0),
+(19, 'produce', 'order_convert', '订单转化', 99, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -5356,7 +5422,7 @@ CREATE TABLE IF NOT EXISTS `x_user` (
 --
 
 INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`) VALUES
-(1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '18653652795', 1, 15),
+(1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '13325251626', 1, 15),
 (2, '123@lasjdlf.xx', '销售姓名', '1销售姓名', 'd41d8cd98f00b204e9800998ecf8427e', '123123', 1, 15),
 (8, 'cai@wu.com', '财务1', '财务1', '4297f44b13955235245b2497399d7a93', '123123', 1, 14),
 (6, 'kuguan@123.com', '库管姓名', '库管12', 'd41d8cd98f00b204e9800998ecf8427e', '133333333', 1, 3);
@@ -5450,7 +5516,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow_node` (
   KEY `workflow_id` (`workflow_id`,`prev_node_id`,`next_node_id`,`remind`),
   KEY `listorder` (`listorder`),
   KEY `default` (`default`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
 
 --
 -- 转存表中的数据 `x_workflow_node`
@@ -5503,7 +5569,10 @@ INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_fil
 (47, 8, '确认入库', 1, 'ConfirmStockin', 5, '46', '48', 'g:1', NULL, 0, 0, 0, 0, '已入库', NULL, 'success', 'success'),
 (48, 10, '新建外协加工单', 1, 'OutsideStartProcess', 0, '', '49', 'g:1', NULL, -1, 0, 0, 0, '新外协单', NULL, '', ''),
 (49, 10, '提交库管确认出库', 1, 'OutsideStockout', 99, '48', '', 'g:1', NULL, -1, 0, 0, 0, '已提交库管确认出库', NULL, '', ''),
-(50, 1, '提交生产计划', 3, 'MakeProductionPlan', 5, '6', '7', 'g:1', '', -1, 0, 0, 0, '已提交生产计划', '', '', '');
+(50, 1, '提交生产计划', 3, 'MakeProductionPlan', 5, '6', '7', 'g:1', '', -1, 0, 0, 0, '已提交生产计划', '', '', ''),
+(54, 9, '新生产计划', 1, 'StartProcess', 1, '', '55', 'g:1', '', -1, 0, 0, 0, '新生产计划', '', '', ''),
+(55, 9, '查看物料清单', 1, 'MakeBoms', 2, '54', '56', 'g:1', '', -1, 0, 0, 0, '已生成物料清单', '', '', ''),
+(56, 9, '保存物料清单', 1, 'SaveBoms', 99, '55', '', 'g:1', '', 1, 0, 0, 0, '物料清单已保存', '', '', '');
 
 -- --------------------------------------------------------
 
