@@ -87,7 +87,7 @@ return array(
                 "stock_manage"  => "JXC/list/stock",
                 "data_model"   => "HOME/list/dataModel",
                 "types_manage"  => "HOME/list/types",
-                "craft_manage"  => "JXC/list/craft",
+                "craft_manage"  => "Produce/list/craft",
             ),
             "organization_set" => array(
                 "user_setting" => "Passport/list/user",

@@ -7,13 +7,10 @@
  */
 
 /**
- * Description of ProducePlanAction
+ * Description of ProducePlanModel
  *
  * @author nemo
  */
-class ProducePlanAction extends CommonAction {
-    
+class ProducePlanModel extends CommonModel {
     public $workflowAlias = "produce";
-    
-    protected $indexModel = "ProducePlanView";
 }

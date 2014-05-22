@@ -28,6 +28,9 @@ class WorkflowNodeAction extends CommonAction {
             $_POST["workflow_id"] = $_POST["pid"];
             unset($_POST["pid"]);
         }
+        if($_GET["pid"]) {
+            $_POST["workflow_id"] = $_GET["pid"];
+        }
     }
     
     protected function _filter(&$map) {
