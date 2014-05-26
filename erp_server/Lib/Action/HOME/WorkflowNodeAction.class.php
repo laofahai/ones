@@ -31,6 +31,14 @@ class WorkflowNodeAction extends CommonAction {
         if($_GET["pid"]) {
             $_POST["workflow_id"] = $_GET["pid"];
         }
+        
+        if(is_array($_POST["prev_node_id"])) {
+            $_POST["prev_node_id"] = implode(",", $_POST["prev_node_id"]);
+        }
+        if(is_array($_POST["next_node_id"])) {
+            $_POST["next_node_id"] = implode(",", $_POST["next_node_id"]);
+        }
+        
     }
     
     protected function _filter(&$map) {
@@ -58,6 +66,30 @@ class WorkflowNodeAction extends CommonAction {
     
     protected function _order(&$order) {
         $order="listorder ASC, id ASC";
+    }
+    
+    public function index() {
+        //获取所有节点
+        if(!$_GET["mainrow_id"]) {
+            return parent::index();
+        }
+        //仅获取当前数据的下一ID
+        
+//        $map = array();
+//        $this->_filter($map);
+        
+        import("@.Workflow.Workflow");
+        $workflow = new Workflow($_GET["workflow_alias"]);
+        $process = $workflow->getCurrentProcess($_GET["mainrow_id"]);
+        $this->response(reIndex($process["nextNode"]));
+        
+    }
+    
+    public function read() {
+        $data = parent::read(true);
+        $data["prev_node_id"] = explode(",", $data["prev_node_id"]);
+        $data["next_node_id"] = explode(",", $data["next_node_id"]);
+        $this->response($data);
     }
     
 //    public function index() {
@@ -158,5 +190,3 @@ class WorkflowNodeAction extends CommonAction {
 //    }
     
 }
-
-?>

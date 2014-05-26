@@ -10,7 +10,7 @@
  * @Description
  * 
  */
-abstract class WorkflowAbstract implements WorkflowInterface{
+abstract class WorkflowAbstract implements WorkflowInterface {
     
     protected $mainrowId;
     
@@ -27,6 +27,12 @@ abstract class WorkflowAbstract implements WorkflowInterface{
     
     public function init() {}
     
+    /**
+     * @return mixed 
+     *   boolean true : doNext()
+     *   mixed any empty thing : doNext();
+     *   mixed any thing == true : pause
+     */
     public function run() {}
     
     public function save() {}

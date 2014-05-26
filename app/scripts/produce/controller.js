@@ -7,8 +7,8 @@ angular.module("ones.produce", ["ones.produce.service"])
                 controller : "ProducePlanEditCtl"
             });
         }])
-        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailModel", "ProducePlanDetailRes", "ComView", "$routeParams","TypesRes",
-            function($scope, model, res, comView, $routeParams, TypesRes){
+        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams","TypesRes",
+            function($scope, model, res, detailRes, comView, $routeParams, TypesRes){
                 
                 $scope.selectAble = false;
                 
@@ -24,13 +24,15 @@ angular.module("ones.produce", ["ones.produce.service"])
                     },
                     fieldDefine: {
                         inputType: "select",
-                        "ng-model": "formMetaData.purchase_type",
+                        "ng-model": "formMetaData.type",
                         dataSource: TypesRes,
                         queryParams: {
                             type: "produce"
                         }
                     }
                 };
+                
+                
                 
                 comView.displayBill($scope, model, res, {
                     id: $routeParams.id

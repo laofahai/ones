@@ -13,5 +13,3 @@
 class OrdersStartProcess extends WorkflowAbstract {
     //put your code here
 }
-
-?>

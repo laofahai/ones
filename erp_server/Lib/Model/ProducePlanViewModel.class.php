@@ -15,7 +15,7 @@ class ProducePlanViewModel extends CommonViewModel {
     
     public $workflowAlias = "produce";
     
-    protected $viewFields = array(
+    public $viewFields = array(
         "ProducePlan"=> array("*", "_type"=>"left"),
         "Types" => array("name"=>"type_label", "_on"=>"ProducePlan.type=Types.id", "_type"=>"left")
     );

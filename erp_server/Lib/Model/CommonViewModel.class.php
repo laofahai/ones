@@ -79,6 +79,7 @@ class CommonViewModel extends ViewModel{
             foreach($data as $k=> $v) {
                 $data[$k]["processes"] = $processData[$v[$this->workflowMainRowField]];
             }
+//            print_r($data);exit;
         }
         return $data;
     }
@@ -110,7 +111,6 @@ class CommonViewModel extends ViewModel{
          * 工作流
          */
         if($this->workflowAlias) {
-            print_r($processData);exit;
             import("@.Workflow.Workflow");
             $workflow = new Workflow($this->workflowAlias);
             $processData = $workflow->getCurrentProcess($data[$this->workflowMainRowField]);

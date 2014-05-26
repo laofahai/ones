@@ -112,8 +112,8 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 id: $routeParams.id
             });
         }])
-    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config",
-        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf){
+    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config", "WorkflowNodeRes",
+        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf, WorkflowNodeRes){
             var service = {};
             
             /**
@@ -255,7 +255,11 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                             if(data.error) {
                                 service.alert(data.msg);
                             } else {
-//                                    $location.url(opts.returnPage);
+                                if(conf.DEBUG) {
+                                    service.alert("success", "success");
+                                    return;
+                                }
+                                $location.url(opts.returnPage);
                             }
                         });
                     }
@@ -466,10 +470,23 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     dataName: "formData",
                     queryExtraParams: {}
                 };
-
+                
+                //直接传入MODEL 
                 if(typeof(fieldsDefine) == "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
                     var model = fieldsDefine;
                     fieldsDefine = model.getFieldsStruct(true);
+                    
+                    //工作流按钮
+//                    console.log($routeParams);
+                    if(model.workflowAlias && $routeParams.id) {
+                        WorkflowNodeRes.query({
+                            workflow_alias: model.workflowAlias,
+                            mainrow_id: $routeParams.id
+                        }).$promise.then(function(data){
+                            $scope.mainrow_id = $routeParams.id;
+                            $scope.billWorkflowActions = data;
+                        });
+                    }
                 }
 
                 /**
@@ -524,9 +541,10 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         resource.save(getParams,data);
                     }
                     
-//                    if(conf.DEBUG) {
-//                        return;
-//                    }
+                    if(conf.DEBUG) {
+                        service.alert("success", "success");
+                        return;
+                    }
                     
                     $location.url(opts.returnPage);
                 };
@@ -615,17 +633,12 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         $scope.workflowActionList = data;
                     });
                     
-                    $scope.doWorkflow = function(event, node_id){
-                        var selectedItems = $scope.gridSelected || [];
-//                        console.log(arguments);
-                        if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
-                            return false;
-                        }
-                        for(var i=0;i<selectedItems.length;i++) {
+                    $scope.doWorkflow = function(event, node_id, mainrow_id){
+                        var doingWorkflow = function(mainrow_id) {
                             res.doWorkflow({
                                 workflow: true,
                                 node_id: node_id,
-                                id: selectedItems[i].id
+                                id: mainrow_id
                             }).$promise.then(function(data){
                                 if(data.type) {
                                     switch(data.type) {
@@ -633,10 +646,27 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                                             $location.url(data.location);
                                             return;
                                             break;
+                                        case "message":
+                                            service.alert(data.msg, data.error ? "danger" : "warning");
+                                            return;
+                                            break;
                                     }
                                 }
                             });
                         }
+                        if(mainrow_id) {
+                            doingWorkflow(mainrow_id);
+                        } else {
+                            var selectedItems = $scope.gridSelected || [];
+    //                        console.log(arguments);
+                            if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
+                                return false;
+                            }
+                            for(var i=0;i<selectedItems.length;i++) {
+                                doingWorkflow(selectedItems[i].id);
+                            }
+                        }
+                        
                         $scope.$broadcast("gridData.changed");
                     };
                     $scope.workflowActionDisabled = function(id) {

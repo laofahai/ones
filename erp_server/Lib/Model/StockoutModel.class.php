@@ -21,10 +21,11 @@ class StockoutModel extends CommonModel {
     );
     
     public function getStockoutBill($id) {
+       
         $data = $this->find($id);
-        $souceModel = D($data["source_model"]."View");
-        $data["source"] = $souceModel->find($data["source_id"]);
         
+        $sourceModel = D($data["source_model"]."View");
+        $data["source"] = $sourceModel->find($data["source_id"]);
         $detailModel = D("StockoutDetailView");
         $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
 //        echo $detailModel->getLastSql();exit;
@@ -46,10 +47,10 @@ class StockoutModel extends CommonModel {
             $fca[] = $row["factory_code_all"];
         }
         
+        
+        
         $dataModel = D("DataModelDataView");
         $data["rows"] = $dataModel->assignModelData($data["rows"], $modelIds);
-//        print_r($modelIds);
-//        print_r($data);exit;
         return $data;
     }
     

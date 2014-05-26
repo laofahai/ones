@@ -44,12 +44,12 @@ var ERP = angular.module('ones', [
                         var status = response.status;
                         var deferred = $q.defer();
                         if (401 === status) {
-                            scope.$broadcast('event:loginRequired');
+                            scope.$broadcast('event:loginRequired', response.data);
                             return deferred.promise;
                         } else if(403 === status) {
-                            scope.$broadcast('event:permissionDenied');
+                            scope.$broadcast('event:permissionDenied', response.data);
                         } else if(500 === status) {
-                            scope.$broadcast('event:serverError');
+                            scope.$broadcast('event:serverError', response.data);
                         }
                         return $q.reject(response);
                     }
@@ -98,13 +98,14 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.c
                 window.location.href = 'index.html';
             });
             
-            $scope.$on("event:permissionDenied", function() {
-                ComView.alert($rootScope.i18n.lang.messages.permissionDenied, "danger");
+            $scope.$on("event:permissionDenied", function(evt, msg) {
+                msg = $rootScope.i18n.lang.messages[msg] || $rootScope.i18n.lang.messages.permissionDenied;
+                ComView.alert(msg, "danger");
             });
             
-            $scope.$on("event:serverError", function(evt, message) {
-                message = message || $rootScope.i18n.lang.messages.serverError;
-                ComView.alert(message, "danger");
+            $scope.$on("event:serverError", function(evt, msg) {
+                msg = $rootScope.i18n.lang.messages[msg] || $rootScope.i18n.lang.messages.serverError;
+                ComView.alert(msg, "danger");
             });
             
             //屏蔽默认快捷键

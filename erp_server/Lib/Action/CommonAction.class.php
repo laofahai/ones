@@ -45,9 +45,9 @@ class CommonAction extends RestAction {
         
         $this->user = $_SESSION["user"];
         
-//        if(!$_REQUEST) {
-            
-//        }
+        if(!$_REQUEST) {
+            $_REQUEST = array_merge($_GET, $_POST);
+        }
         
         $this->checkPermission();
     }
@@ -56,11 +56,20 @@ class CommonAction extends RestAction {
         return $_SESSION["user"]["id"] ? 1 : 0;
     }
     
+    private function parseActionName() {
+        $action = ACTION_NAME;
+        $action = ACTION_NAME == "insert" ? "add" : $action;
+        $action = ACTION_NAME == "update" ? "edit" : $action;
+        $action = ACTION_NAME == "index" ? "read" : $action;
+        
+        return $action;
+    }
+    
     protected function loginRequired() {
 //        var_dump($_SESSION);
 //        var_dump($this->isLogin());exit;
         if (!$this->isLogin() and 
-                !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME), 
+                !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName()), 
                         C("AUTH_CONFIG.AUTH_DONT_NEED"))) {
             $this->httpError(401);
         }
@@ -73,19 +82,21 @@ class CommonAction extends RestAction {
         
         $this->loginRequired();
         
+        //工作流模式，通过工作流权限判断
+        if($_REQUEST["workflow"]) {
+            return true;
+        }
+        
         import('ORG.Util.Auth');//加载类库
         $auth=new Auth();
-        $action = ACTION_NAME;
-        $action = ACTION_NAME == "insert" ? "add" : $action;
-        $action = ACTION_NAME == "update" ? "edit" : $action;
-        $action = ACTION_NAME == "index" ? "read" : $action;
+        $action = $this->parseActionName();
         
         $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
         if($action == "doWorkflow") {
             return true;
         }
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
-        $path = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);
+        $path = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
         if(!$auth->check($rule, $_SESSION["user"]["id"]) and 
                 !in_array($path, 
                         C("AUTH_CONFIG.AUTH_DONT_NEED"))){
@@ -105,7 +116,8 @@ class CommonAction extends RestAction {
             "msg"   => $msg
         ));
     }
-    protected function httpError($code, $msg) {
+    protected function httpError($code, $msg=null) {
+        echo $msg;
         send_http_status($code);
         exit;
     }
@@ -194,7 +206,6 @@ class CommonAction extends RestAction {
      * 通用REST插入方法
      */
     public function insert() {
-        
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }
@@ -320,10 +331,10 @@ class CommonAction extends RestAction {
      * 执行工作流节点
      */
     protected function doWorkflow() {
-        $_REQUEST = $_REQUEST ? $_REQUEST : $_POST;
+//        $_REQUEST = $_REQUEST ? $_REQUEST : $_POST;
         $mainRowid = abs(intval($_REQUEST["id"]));
         $nodeId = abs(intval($_REQUEST["node_id"]));
-        
+//        var_dump($_REQUEST);exit;
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
            $this->error("not_allowed1");exit;
         }

@@ -441,8 +441,10 @@
                 defaultData = defaultData || [];
                 defaultData = dataFormat(fieldsDefine, defaultData);
                 this.scope.$parent[this.opts.dataName][i] = defaultData[i] || {};
+                this.fieldsDefine = fieldsDefine;
                 var label;
                 var labelBind;
+                
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble!==false) {
                         if(defaultData.length) {
@@ -580,6 +582,9 @@
                             });
                         }
                         self.scope.editing = false;
+                        if("callback" in self.fieldsDefine[$(td).data("bind-model")]) {
+                            self.fieldsDefine[$(td).data("bind-model")].callback($(td).parent());
+                        }
                     },150);
                     
                 };
@@ -659,7 +664,11 @@
                 };
                 scope.$parent.onSelect2Keydown = function(event) {
                     console.log(arguments);
-                }
+                };
+                scope.$parent.onSelect3Blur = function(event) {
+                    var context = getInputContext(event.target);
+                    self.scope.$parent.billEndEdit(context.td, true);
+                };
                 scope.$parent.onStockSelect3Blur = function(event){
 //                    console.log(self);
 //                    console.log(event.target);return;

@@ -80,10 +80,12 @@ class StockoutConfirmStockout extends WorkflowAbstract {
         $stockout->commit();
         //自动执行外部下一工作流程，查看订单状态
 //        import("@.Workflow.Workflow");
+        if($this->context["sourceWorkflow"]) {
+            $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
+    //        var_dump($workflow);exit;
+            $workflow->doNext($theStockout["source_id"], "", true);
+        }
         
-        $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
-//        var_dump($workflow);exit;
-        $workflow->doNext($theStockout["source_id"], "", true);
         
     }
     

@@ -295,6 +295,12 @@
                     "actions": {
                         "confirm": "确认入库"
                     }
+                },
+                "Produce": {
+                    "name": "生产管理",
+                    "actions": {
+                        "makeBoms": "生成物料清单"
+                    }
                 }
             }
         }
@@ -447,6 +453,7 @@
         "myprofile": "我的资料",
         "description": "描述",
         "amount": "金额",
+        "plan_id": "计划编号",
         "field": "字段",
         "stock": "仓库",
         "status": "状态",

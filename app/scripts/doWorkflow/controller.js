@@ -14,6 +14,11 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 controller: "WorkflowConfirmStockinCtl",
                 templateUrl: "views/jxc/stockin/confirmStockin.html"
             })
+            .when('/doWorkflow/Produce/makeBoms/:nodeId/:id', {
+                templateUrl: "views/produce/producePlan/makeBoms.html",
+                controller: "WorkflowMakeProduceBomsCtl"
+            })
+            ;
         }])
     .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutEditModel", "$location",
         function($scope, $routeParams, ComView, res, model, $location){
@@ -60,3 +65,29 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 });
             };
         }])
+    .controller("WorkflowMakeProduceBomsCtl", ["$scope", "ComView", "ProduceBomsRes", "ProduceBomsModel", "$routeParams",
+        function($scope, ComView, res, model, $routeParams){
+            $scope.selectAble=false;
+            
+            ComView.makeGridSelectedActions($scope, model, res, "Produce", "ProducePlan");
+            
+            ComView.displayBill($scope, model, res, {
+                id: $routeParams.id,
+                queryExtraParams: {workflowing: true}
+            });
+            
+            $scope.doSubmit = function() {
+                $scope.formMetaData.rows = $scope.formData;
+                res.doPostWorkflow({
+                    workflow: true,
+                    node_id: $routeParams.nodeId,
+                    id: $routeParams.id,
+                    donext: true,
+                    data: $scope.formMetaData
+                }).$promise.then(function(data){
+                    console.log(data);return;
+                    $location.url("/JXC/list/stockout");
+                });
+            };
+        }])
+    ;

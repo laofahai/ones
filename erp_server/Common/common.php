@@ -220,3 +220,34 @@ function Pinyin($zh) {
 function isModuleEnabled($moduleName) {
     return in_array($moduleName, C("ENABLED_MODULE"));
 }
+
+/**
+ * 生成原厂编码
+ */
+function makeFactoryCode($data, $factoryCode=null) {
+    $format = C("FactoryCodeFormat");
+    if($factoryCode) {
+        $data["factory_code"] = $factoryCode;
+    }
+    foreach($format as $v) {
+        if(!array_key_exists($v, $data)) {
+            return false;
+        }
+        $result[] = $data[$v];
+    }
+    
+    return implode(C("FactoryCodeSplit"), $result);
+    
+}
+
+/**
+ * 检查数组数据是否完整
+ */
+function checkParamsFull($data, $needed) {
+    foreach($needed as $v) {
+        if(!array_key_exists($v, $data)) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -13,5 +13,3 @@
 class WorkflowNodeModel extends CommonModel {
     //put your code here
 }
-
-?>

@@ -20,7 +20,10 @@ angular.module("ones.produce.service", [])
                         create_time: {
                             cellFilter: "dateFormat"
                         },
-                        status: {},
+                        status_text: {
+                            displayName: $rootScope.i18n.lang.status,
+                            field: "processes.status_text"
+                        },
                         memo: {}
                     };
                 }
@@ -41,7 +44,10 @@ angular.module("ones.produce.service", [])
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300
+                            width: 300,
+                            callback: function(tr) {
+                                tr.find("[data-bind-model='craft'] label").trigger("click");
+                            }
                         },
                         standard: {
                             nameField: "data",
@@ -83,6 +89,62 @@ angular.module("ones.produce.service", [])
                             totalAble: true
                         },
                         memo: {}
+                    };
+                }
+            };
+    }])
+    .service("ProduceBomsModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope,GoodsRes,DataModelDataRes){
+            return {
+                isBill: true,
+                workflowAlias: "produce",
+                getFieldsStruct: function(){
+                    return {
+                        plan_id: {
+                            editAble: false
+                        },
+                        goods_id: {
+                            displayName: $rootScope.i18n.lang.goods,
+                            labelField: true,
+                            inputType: "select3",
+                            dataSource: GoodsRes,
+                            valueField: "combineId",
+                            nameField: "combineLabel",
+                            listAble: false,
+                            width: 300,
+                        },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
+                        },
+                        num: {
+                            inputType: "number"
+                        }
                     };
                 }
             };

@@ -32,6 +32,10 @@ return array(
     "BILL_PREFIX" => array(
         "Stockin" => "RK"
     ),
+    "FactoryCodeFormat" => array(
+        "factory_code", "standard", "version"
+    ),
+    "FactoryCodeSplit"  => "-",
     
     
     /**
@@ -45,8 +49,8 @@ return array(
         'AUTH_RULE' => 'x_auth_rule', //权限规则表
         'AUTH_USER' => 'x_user',//用户信息表
         'AUTH_DONT_NEED' => array(
-            "Passport.Login.insert",
-            "Passport.Login.index"
+            "Passport.Login.add",
+            "Passport.Login.read"
         )
     ),
     

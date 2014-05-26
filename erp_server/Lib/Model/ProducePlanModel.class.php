@@ -12,5 +12,35 @@
  * @author nemo
  */
 class ProducePlanModel extends CommonModel {
+    
     public $workflowAlias = "produce";
+    
+    public function newPlan($data) {
+        $rows = $data["rows"];
+        unset($data["rows"]);
+        
+        $this->startTrans();
+        
+        $id = $this->add($data);
+        
+        if(!$id) {
+            $this->rollback();
+            return false;
+        }
+        
+        $detailModel = D("ProducePlanDetail");
+        foreach($rows as $row) {
+            $row["plan_id"] = $id;
+            $rs = $detailModel->add($row);
+            if(!$rs) {
+                $this->rollback();
+                return false;
+            }
+        }
+        
+        $this->commit();
+        
+        return $id;
+        
+    }
 }

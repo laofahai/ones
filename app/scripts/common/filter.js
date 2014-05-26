@@ -51,7 +51,7 @@ angular.module("ones.common.filters", [])
                 }
 
                 return out;
-            }
+            };
         })
         .filter("dateFormat", function() {
             return function(timestamp, format) {
@@ -67,5 +67,11 @@ angular.module("ones.common.filters", [])
                 var second = d.getSeconds();
                 return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
             };
-        });
+        })
+        .filter("idFormat", function(){
+            return function(id) {
+                return "#"+id;
+            };
+        })
+        ;
         

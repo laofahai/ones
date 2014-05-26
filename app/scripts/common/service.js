@@ -139,8 +139,20 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
     .factory("CraftRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "produce/craft/:id.json", null, {'update': {method: 'PUT'}});
         }])
+    .factory("ProduceBomsRes", ["$resource", "ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"produce/produceBoms/:id.json", null, {
+                update: {method: 'PUT'},
+                doWorkflow: {method: 'GET'}, 
+                doPostWorkflow: {method: 'POST'}
+            });
+    }])
     .factory("ProducePlanRes", ["$resource","ones.config", function($resource, cnf){
-            return $resource(cnf.BSU+"produce/producePlan/:id.json", null, {'update': {method: 'PUT'}});
+            return $resource(cnf.BSU+"produce/producePlan/:id.json", null, 
+            {
+                'doWorkflow': {method: 'GET'}, 
+                'doPostWorkflow': {method: 'POST'}, 
+                'update': {method: 'PUT'}
+            });
     }])
     .factory("ProducePlanDetailRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"produce/producePlanDetail/:id.json", null, {'update': {method: 'PUT'}});

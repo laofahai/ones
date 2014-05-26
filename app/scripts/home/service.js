@@ -191,11 +191,13 @@ angular.module("ones.home.services", [])
                             },
                             prev_node_id: {
                                 inputType: "select",
-                                required: false
+                                required: false,
+                                multiple: "multiple"
                             },
                             next_node_id: {
                                 inputType: "select",
-                                required: false
+                                required: false,
+                                multiple: "multiple"
                             },
                             executor: {
                                 listable: false,
@@ -227,15 +229,17 @@ angular.module("ones.home.services", [])
                             var queryParams = {
                                 
                             };
-                            var extraParams = $route.extra.split("/");
-                            if(extraParams[0] === "pid") {
-                                struct.workflow_id = {
-                                    value: extraParams[1],
-                                    inputType: "hidden",
-                                    listable: false
-                                };
-                                queryParams.pid = extraParams[1];
-                            } else {
+                            if($route.extra) {
+                                var extraParams = $route.extra.split("/");
+                                if(extraParams[0] === "pid") {
+                                    struct.workflow_id = {
+                                        value: extraParams[1],
+                                        inputType: "hidden",
+                                        listable: false
+                                    };
+                                    queryParams.pid = extraParams[1];
+                                }
+                            } else if($route.id) {
                                 queryParams.by_node_id = $route.id;
                             }
                             res.query(queryParams, function(data){
@@ -252,3 +256,4 @@ angular.module("ones.home.services", [])
 
                 return service;
             }])
+        ;

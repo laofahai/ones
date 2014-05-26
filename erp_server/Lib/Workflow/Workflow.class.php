@@ -73,7 +73,7 @@ class Workflow {
     /**
      * 获取当前流程所处进程
      */
-    public function getCurrentProcess($mainRowid) {
+    public function getCurrentProcess($mainRowid, $ignoreCheckPermission=true) {
         $map = array(
             "mainrow_id" => $mainRowid,
             "workflow_id"=> $this->currentWorkflow["id"]
@@ -106,7 +106,11 @@ class Workflow {
         $nextNode = explode(",", $currentNode["next_node_id"]);
         
         foreach($nextNode as $pn) {
-            if($pn and $this->checkExecutorPermission($allNodes[$pn]["executor"]) and $this->checkCondition($mainrowId, $allNodes[$pn])) {
+            if(!$ignoreCheckPermission and (!$this->checkExecutorPermission($allNodes[$pn]["executor"]) 
+                    or !$this->checkCondition($mainrowId, $allNodes[$pn]))) {
+                continue;
+            }
+            if($pn) {
                 $process["nextNode"][$pn] = $allNodes[$pn];
                 if($allNodes[$pn]["type"] != 3){ //外部响应节点
                     $process["nextActions"][$pn] = $allNodes[$pn];
@@ -526,7 +530,7 @@ class Workflow {
      * d: department
      * u: user
      */
-    private function checkExecutorPermission($rules) {
+    public function checkExecutorPermission($rules) {
 //        print_r($_SESSION);exit;
 //        return true;
 //        echo $rules;exit;
@@ -560,7 +564,7 @@ class Workflow {
     }
     
     /**
-     * 检查节点权限
+     * 检查节点执行条件
      */
     private function checkCondition($mainrowId, $node) {
         $file = sprintf("@.Workflow.%s.%s", $this->currentWorkflow["workflow_file"], $node["execute_file"]);
@@ -580,5 +584,3 @@ class Workflow {
     }
     
 }
-
-?>
