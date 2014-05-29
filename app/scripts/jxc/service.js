@@ -895,7 +895,9 @@ angular.module("ones.jxc.services", [])
                 getFieldsStruct: function(){
                     return {
                         bill_id : {},
-                        source_model: {},
+                        source_model: {
+                            cellFilter: "lang"
+                        },
                         total_num: {},
                         stock_manager: {},
                         dateline: {

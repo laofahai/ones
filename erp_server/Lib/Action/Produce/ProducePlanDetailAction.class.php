@@ -12,5 +12,15 @@
  * @author nemo
  */
 class ProducePlanDetailAction extends CommonAction {
-    //put your code here
+    
+    protected $indexModel = "ProducePlanDetailView";
+    
+//    public function index() {
+//        $data = parent::index(true);
+//        
+//        $model = D("ProduceProcessViewModel");
+//        
+//        $data = $model->assignProcessData($data);
+//    }
+    
 }

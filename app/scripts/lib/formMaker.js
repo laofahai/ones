@@ -33,7 +33,7 @@
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />',
-                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>',
+                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s">未定义</a>',
             };
             this.maker = new service.fieldsMakerFactory(this, this.opts);
         };
@@ -673,22 +673,25 @@
 //                    console.log(self);
 //                    console.log(event.target);return;
 //                    self.scope.$parent.onTypeaheadBlur(event);
-                    var context = getInputContext(event.target);
-                    var tmp = self.scope.$parent[self.opts.dataName][context.trid];
-                    var queryParams = {
-                        id: 0,
-                        stock_id: tmp.stock
-                    };
-                    if(tmp.factory_code_all) {
-                        queryParams.factory_code_all = tmp.factory_code_all;
-                    } else {
-                        queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
-                    }
-                    self.opts.storeAPI.get(queryParams).$promise.then(function(data){
-                        self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num || 0;
-//                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
-        //                self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num;
-                    });
+                    setTimeout(function(){
+                        var context = getInputContext(event.target);
+                        var tmp = self.scope.$parent[self.opts.dataName][context.trid];
+                        var queryParams = {
+                            id: 0,
+                            stock_id: tmp.stock
+                        };
+                        if(tmp.factory_code_all) {
+                            queryParams.factory_code_all = tmp.factory_code_all;
+                        } else {
+                            queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
+                        }
+                        self.opts.storeAPI.get(queryParams).$promise.then(function(data){
+                            self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num || 0;
+    //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
+            //                self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num;
+                        });
+                    }, 200);
+                    
                 };
             },
             

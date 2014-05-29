@@ -7,7 +7,7 @@
                     <inputfield config="typeSelectOpts"></inputfield>
                 </div>
                 <div class="col-sm-3">
-                    <label>{{i18n.lang.dateline}}: </label>
+                    <label ng-bind="i18n.lang.start_time|colon"></label>
                     <span class="input-icon input-icon-right">
                         <input type="text" class="form-control" 
                                size="10"
@@ -19,19 +19,9 @@
                                bs-datepicker />
                         <i class="icon-calendar gray"></i>
                     </span>
-                    <span class="input-icon input-icon-right">
-                        <input type="text" size="8" 
-                               class="form-control" 
-                               ng-model="formMetaData.startTime" 
-                               data-time-format="HH:mm" 
-                               data-time-type="object" 
-                               data-autoclose="1" 
-                               bs-timepicker />
-                        <i class="icon-time gray"></i>
-                    </span>
                 </div>
                 <div class="col-sm-3">
-                    <label>{{i18n.lang.dateline}}: </label>
+                    <label ng-bind="i18n.lang.end_time|colon"></label>
                     <span class="input-icon input-icon-right">
                         <input type="text" class="form-control" 
                                size="10"
@@ -42,16 +32,6 @@
                                data-autoclose="true"
                                bs-datepicker />
                         <i class="icon-calendar gray"></i>
-                    </span>
-                    <span class="input-icon input-icon-right">
-                        <input type="text" size="8" 
-                               class="form-control" 
-                               ng-model="formMetaData.endTime" 
-                               data-time-format="HH:mm" 
-                               data-time-type="object" 
-                               data-autoclose="1" 
-                               bs-timepicker />
-                        <i class="icon-time gray"></i>
                     </span>
                 </div>
             </div>

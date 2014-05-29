@@ -7,7 +7,7 @@ angular.module("ones.produce", ["ones.produce.service"])
                 controller : "ProducePlanEditCtl"
             });
         }])
-        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams","TypesRes",
+        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailEditModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams","TypesRes",
             function($scope, model, res, detailRes, comView, $routeParams, TypesRes){
                 
                 $scope.selectAble = false;

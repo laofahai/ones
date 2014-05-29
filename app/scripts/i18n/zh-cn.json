@@ -299,7 +299,8 @@
                 "Produce": {
                     "name": "生产管理",
                     "actions": {
-                        "makeBoms": "生成物料清单"
+                        "makeBoms": "生成物料清单",
+                        "doCraft" : "执行生产工艺"
                     }
                 }
             }
@@ -406,6 +407,7 @@
             "list": "列表",
             "view": "查看",
             "viewCraft": "查看生产工艺",
+            "doCraft" : "执行生产工艺",
             "viewSub": "查看子项",
             "clearCache": "清除缓存",
             "viewModelData": "查看模型数据",
@@ -515,6 +517,7 @@
         "workflow_file": "工作流逻辑目录",
         "category_id": "分类ID",
         "category": "分类",
+        "plan_end_time": "计划结束时间",
         "storeNum": "库存数量",
         "store_min": "库存下限",
         "store_max": "库存上限",
@@ -535,6 +538,11 @@
         "record_type": "记录类型",
         "account": "账户",
         "financer": "财务员",
-        "balance": "余额"
+        "balance": "余额",
+        "current_craft": "当前工艺",
+        "next_craft": "下一工艺",
+        
+        "ProducePlan": "生产计划",
+        "Orders": "销售订单"
     }
 }

@@ -163,7 +163,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
              * 通用aslide
              * */
             service.aside = function(title, content, template){
-                template = template || "views/common/aside.html";
+                template = template || "views/common/asides/default.html";
                 $aside({
                     title: title,
                     content: content,
@@ -307,8 +307,11 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 var col;
                 for (var key in columnDefs) {
                     col = columnDefs[key];
-                    if (false == col.listable) {
+                    if (col.listable === false) {
+                        console.log(key);
+//                        delete(columnDefs[key]);
                         columnDefs.splice(key, 1);
+                        console.log(columnDefs);
                     }
                 }
 
@@ -653,7 +656,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                                     }
                                 }
                             });
-                        }
+                        };
                         if(mainrow_id) {
                             doingWorkflow(mainrow_id);
                         } else {
@@ -709,7 +712,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                                 bill_id: $scope.gridSelected[0].bill_id,
                                 title: $scope.gridSelected[0].subject,
                                 subTitle: $scope.gridSelected[0].dateline_lang
-                            }, data, "views/common/workflowProcess.html");
+                            }, data, "views/common/asides/workflowProcess.html");
                         });
                     };
                 }

@@ -33,7 +33,6 @@ class DataModelDataViewModel extends CommonViewModel {
                 $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
                 $factory_code = array_shift($tmp);
                 $modelIds = array_merge($modelIds, $tmp);
-                
                 $sourceData[$k]["modelIds"] = $tmp;
             }
         }

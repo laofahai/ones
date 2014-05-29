@@ -160,4 +160,7 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
     .factory("GoodsCraftRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"produce/goodsCraft/:id.json", null, {'update': {method: 'PUT'}});
     }])
+    .factory("DoCraftRes", ["$resource","ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"produce/doCraft/:id.json", null, {'update': {method: 'PUT'}});
+    }])
     ;

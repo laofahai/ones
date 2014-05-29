@@ -18,8 +18,13 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 templateUrl: "views/produce/producePlan/makeBoms.html",
                 controller: "WorkflowMakeProduceBomsCtl"
             })
+            .when('/doWorkflow/Produce/doCraft/:nodeId/:id', {
+                templateUrl: "views/produce/producePlan/doCraft.html",
+                controller : "WorkflowDoCraftCtl"
+            })
             ;
         }])
+    //确认出库
     .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutEditModel", "$location",
         function($scope, $routeParams, ComView, res, model, $location){
             $scope.selectAble= false;
@@ -42,6 +47,7 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 });
             };
         }])
+    //确认入库
     .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinEditModel", "$location",
         function($scope, $routeParams, ComView, res, model, $location){
             $scope.selectAble= false;
@@ -65,8 +71,9 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 });
             };
         }])
-    .controller("WorkflowMakeProduceBomsCtl", ["$scope", "ComView", "ProduceBomsRes", "ProduceBomsModel", "$routeParams",
-        function($scope, ComView, res, model, $routeParams){
+    //生成生产计划物料清单
+    .controller("WorkflowMakeProduceBomsCtl", ["$scope", "ComView", "ProduceBomsRes", "ProduceBomsModel", "$routeParams", "$location",
+        function($scope, ComView, res, model, $routeParams, $location){
             $scope.selectAble=false;
             
             ComView.makeGridSelectedActions($scope, model, res, "Produce", "ProducePlan");
@@ -85,9 +92,29 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                     donext: true,
                     data: $scope.formMetaData
                 }).$promise.then(function(data){
-                    console.log(data);return;
                     $location.url("/JXC/list/stockout");
                 });
             };
+        }])
+    /**
+     * 执行生产工序
+     * 提供当前生产计划成品列表，供操作员选择执行某个成品的某个工序，工序按照预定义顺序执行
+     * */
+    .controller("WorkflowDoCraftCtl", ["$scope", "ComView", "DoCraftRes", "DoCraftModel", "$routeParams",
+        function($scope, ComView, res, model, $routeParams){
+            
+            /**
+             * 扩展选择操作选项
+             * */
+            ComView.makeGridSelectedActions($scope, model, res, "Produce", "doCraft");
+            
+            
+            
+            ComView.displayGrid($scope, model, res, {
+                queryExtraParams: {
+                    plan_id: $routeParams.id,
+                    workflow: true
+                }
+            });
         }])
     ;

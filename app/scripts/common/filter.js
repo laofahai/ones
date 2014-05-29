@@ -54,7 +54,7 @@ angular.module("ones.common.filters", [])
             };
         })
         .filter("dateFormat", function() {
-            return function(timestamp, format) {
+            return function(timestamp, noTime) {
                 if(!timestamp) {
                     return;
                 }
@@ -65,7 +65,13 @@ angular.module("ones.common.filters", [])
                 var hour = d.getHours();
                 var minute = d.getMinutes();
                 var second = d.getSeconds();
-                return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+                
+                var rs = sprintf("%s-%s-%s", year, month, date);
+                if(!noTime) {
+                    rs = rs+ sprintf(" %s:%s:%s", hour, minute, second);
+                }
+                
+                return rs;
             };
         })
         .filter("idFormat", function(){
@@ -73,5 +79,20 @@ angular.module("ones.common.filters", [])
                 return "#"+id;
             };
         })
+        /**
+         * 加个冒号
+         * */
+        .filter("colon", function(){
+            return function(str, CJK) {
+                return str + (CJK ? "：" : ":");
+            };
+        })
+        //.filter("append|prepend")
+        .filter("lang", ["$injector", function($injector){
+            return function(str) {
+                var rootScope = $injector.get("$rootScope");
+                return rootScope.i18n.lang[str] || str;
+            };
+        }])
         ;
         
