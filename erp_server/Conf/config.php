@@ -48,9 +48,20 @@ return array(
         'AUTH_GROUP_ACCESS' => 'x_auth_group_access', //用户组明细表
         'AUTH_RULE' => 'x_auth_rule', //权限规则表
         'AUTH_USER' => 'x_user',//用户信息表
-        'AUTH_DONT_NEED' => array(
+        /**
+         * 无需登录模块
+         */
+        'AUTH_DONT_NEED_LOGIN' => array(
             "Passport.Login.add",
             "Passport.Login.read"
+        ),
+        /**
+         * 无需认证模块
+         */
+        'AUTH_DONT_NEED' => array(
+            "HOME.Types.read",
+            "HOME.WorkflowNode.read",
+            "HOME.WorkflowProcess.read",
         )
     ),
     

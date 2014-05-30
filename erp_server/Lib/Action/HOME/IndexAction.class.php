@@ -11,18 +11,6 @@ class IndexAction extends CommonAction {
         
         $this->response($data);
     }
-    
-    private function checkNavPermission($url) {
-        $auth=new Auth();
-        list($group, $module, $action) = explode("/", $url);
-        $action = $action ? $action : "index";
-        $authName = sprintf("%s.%s.%s", $group, $module, $action);
-        if($auth->check($authName, $_SESSION["user"]["id"])) {
-            return true;
-        }
-        return false;
-    }
-    
     /**
      * 根据AuthRule生成左侧导航，不同用户生成不同缓存
      * @todo 三级分类（快捷导航）
@@ -35,7 +23,8 @@ class IndexAction extends CommonAction {
         
         $navs = require APP_PATH.DS."Conf".DS."navs.php";
         
-        $auth=new Auth();
+        import("@.ORG.Auth");
+        $auth = new Auth();
         
         foreach($navs as $rootLabel => $data) {
             $theChild = array();
@@ -44,7 +33,7 @@ class IndexAction extends CommonAction {
                 // 包含三级菜单
                 if(is_array($childData)) {
                     foreach($childData as $thirdLabel => $thirdData) {
-                        if($this->checkNavPermission($thirdData) or true) {
+                        if($this->checkNavPermission($thirdData)) {
                             $theThird[] = array(
                                 "label" => $thirdLabel,
                                 "url"   => $thirdData,
@@ -57,24 +46,42 @@ class IndexAction extends CommonAction {
                 if($theThird) {
                     $theChild[$childLabel]["childs"] = $theThird;
                 } else {
-                    $theChild[$childLabel]["url"] = $childData;
+                    $tmpRs = $this->checkNavPermission($childData);
+//                    echo $childData;
+//                    var_dump($tmpRs);
+                    if($tmpRs) {
+                        $theChild[$childLabel]["url"] = $childData;
+                    }
                 }
-                $theChild[$childLabel]["label"] = $childLabel;
-                $theChild[$childLabel]["id"] = md5($childLabel.json_encode($childData));
+                if($theThird or $tmpRs) {
+                    $theChild[$childLabel]["label"] = $childLabel;
+                    $theChild[$childLabel]["id"] = md5($childLabel.json_encode($childData));
+                }
+                
             }
             $theChild = reIndex($theChild);
-            $theNav[$rootLabel] = array(
-                "childs" => $theChild,
-                "label"  => $rootLabel,
-                "icon"   => $data["icon"],
-                "id"     => md5($rootLabel.json_encode($data)),
-                "url"    => $data["action"] ? $data["action"] : ""
-            );
+            if($theChild or $this->checkNavPermission($data["action"])) {
+                $theNav[$rootLabel] = array(
+                    "childs" => $theChild,
+                    "label"  => $rootLabel,
+                    "icon"   => $data["icon"],
+                    "id"     => md5($rootLabel.json_encode($data)),
+                    "url"    => $data["action"] ? $data["action"] : ""
+                );
+            }
+            
             $theNav = reIndex($theNav);
         }
 //        F("Nav/".$this->user["id"], $theNav);
 //        print_r($theNav);exit;
         return $theNav;
+    }
+    
+    private function checkNavPermission($url) {
+        list($group, $action, $module) = explode("/", $url);
+        $module = ucfirst($module);
+        $action = $this->parseActionName($action);
+        return $this->checkPermission(sprintf("%s.%s.%s", $group, $module, $action), true);
     }
     
 }

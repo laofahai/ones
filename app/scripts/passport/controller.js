@@ -63,6 +63,7 @@ angular.module("ones.passport", ['ones.passport.services', 'ngGrid', 'ones.commo
                 templateUrl: 'views/common/blank.html',
                 controller: 'LogoutCtl'
             })
+            ;
         }])
     .controller("LogoutCtl", ["$scope", "$http", "ones.config", function($scope, $http, conf){
         $http.get(conf.BSU+"passport/userLogout").success(function(){
@@ -70,8 +71,8 @@ angular.module("ones.passport", ['ones.passport.services', 'ngGrid', 'ones.commo
         });
         
     }])
-    .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams", "$location",
-        function($scope, AuthGroupRuleRes, $routeParams, $location){
+    .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams", "$location", "ones.config",
+        function($scope, AuthGroupRuleRes, $routeParams, $location, conf){
             $scope.permissionData = [];
             $scope.selectAble = false;
             $scope.dataList = [];
@@ -81,9 +82,10 @@ angular.module("ones.passport", ['ones.passport.services', 'ngGrid', 'ones.commo
             });
             
             $scope.doSubmit = function(){
-                console.log($scope.permissionData);
                 AuthGroupRuleRes.update({id: $routeParams.pid}, $scope.permissionData).$promise.then(function(data){
-//                    $location.url("/Passport/list/authGroup");
+                    if(!conf.DEBUG) {
+                        $location.url("/Passport/list/authGroup");
+                    }
                 });
             };
         }])

@@ -57,11 +57,25 @@ class CommonAction extends RestAction {
         return $_SESSION["user"]["id"] ? 1 : 0;
     }
     
-    private function parseActionName() {
+    protected function parseActionName() {
         $action = ACTION_NAME;
-        $action = ACTION_NAME == "insert" ? "add" : $action;
-        $action = ACTION_NAME == "update" ? "edit" : $action;
-        $action = ACTION_NAME == "index" ? "read" : $action;
+        switch($action) {
+            case "insert":
+            case "add":
+            case "addBill":
+                $action = "add";
+                break;
+            case "update":
+            case "edit":
+                $action = "edit";
+            case "index":
+            case "read":
+                $action = read;
+                break;
+        }
+//        $action = ACTION_NAME == "insert" ? "add" : $action;
+//        $action = ACTION_NAME == "update" ? "edit" : $action;
+//        $action = ACTION_NAME == "index" ? "read" : $action;
         
         return $action;
     }
@@ -71,7 +85,7 @@ class CommonAction extends RestAction {
 //        var_dump($this->isLogin());exit;
         if (!$this->isLogin() and 
                 !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName()), 
-                        C("AUTH_CONFIG.AUTH_DONT_NEED"))) {
+                        C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"))) {
             $this->httpError(401);
         }
     }
@@ -79,8 +93,7 @@ class CommonAction extends RestAction {
     /**
      * 权限预检测
      */
-    private function checkPermission(){
-        
+    protected function checkPermission($path="", $return=false){
         $this->loginRequired();
         
         //工作流模式，通过工作流权限判断
@@ -93,18 +106,27 @@ class CommonAction extends RestAction {
         $auth=new Auth();
         $action = $this->parseActionName();
         
-        $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
+//        $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
         if($action == "doWorkflow") {
             return true;
         }
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
-        $path = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
-        if(!$auth->check($rule, $_SESSION["user"]["id"]) and 
-                !in_array($path, 
-                        C("AUTH_CONFIG.AUTH_DONT_NEED"))){
-            $this->error("Permission Denied:".$path);
-            exit;
-//            $this->loginRequired();
+        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
+        
+        if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
+            $rs = true;
+        } else {
+            $rs = $auth->check($rule, $_SESSION["user"]["id"]);
+        }
+        
+        if($return){
+            return $rs ? true : false;
+        } else {
+            if(!$rs) {
+                $this->error("Permission Denied:".$path);
+                exit;
+            }
+            
         }
     }
     
