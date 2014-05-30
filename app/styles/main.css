@@ -10,7 +10,6 @@ a{
 .gridStyle {
     height:550px;
     border:1px solid #ddd;
-    margin-bottom:20px;
 }
 .ngHeaderContainer {
     border-bottom:1px solid #ddd;
@@ -92,6 +91,10 @@ commonform {
 }
 .actionsBtn .dropdown-menu {
     min-width:0;
+}
+
+.footer-copy {
+    margin-top:20px;
 }
 
 /**

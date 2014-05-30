@@ -347,4 +347,12 @@ class DbMysql extends Db{
         }
         return $key;
     }
+    
+    
+    /**
+     * 获取当前所有数据表
+     */
+    public function listTables() {
+        return mysql_list_tables(C("DB_NAME"), $this->_linkID);
+    }
 }

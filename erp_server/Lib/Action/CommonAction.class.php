@@ -19,8 +19,9 @@ class CommonAction extends RestAction {
 
     public function __construct() {
         parent::__construct();
-        if(!IS_AJAX) {
-//            exit("Permission Denied");
+        
+        if(!IS_AJAX and !APP_DEBUG) {
+            exit("Permission Denied");
         }
         
         $_POST = json_decode(file_get_contents('php://input'), true);
@@ -83,6 +84,7 @@ class CommonAction extends RestAction {
         $this->loginRequired();
         
         //工作流模式，通过工作流权限判断
+        //重大安全漏洞
         if($_REQUEST["workflow"]) {
             return true;
         }

@@ -96,7 +96,12 @@ return array(
                 "department"   => "Passport/list/department"
             ),
             "workflow" => "HOME/list/workflow",
-            "clear_cache" => "HOME/Settings/clearCache"
+            "system_operation" => array(
+                "data_backup" => "HOME/Settings/dataBackup",
+                "clear_cache" => "HOME/Settings/clearCache",
+                "clear_data"  => "HOME/Settings/clearData"
+            )
+            
         ),
         "icon" => "cog"
     )

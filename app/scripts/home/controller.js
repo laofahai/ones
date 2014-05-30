@@ -59,6 +59,15 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         templateUrl: "views/home/clearCache.html",
                         controller: "clearCacheCtl"
                     })
+                    .when('/HOME/Settings/dataBackup', {
+                        templateUrl: "views/home/dataBackup.html",
+                        controller: "dataBackupCtl"
+                    })
+                    .when('/HOME/Settings/clearData', {
+                        templateUrl: "views/home/clearData.html",
+                        controller: "clearDataCtl"
+                    })
+                    ;
         }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
             $location.url($routeParams.url);
@@ -68,6 +77,26 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
             $scope.doClearCache = function() {
                 $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){
                     ComView.alert($scope.i18n.lang.messages.cacheCleared, "info");
+                });
+            };
+        }])
+        .controller("clearDataCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
+            $scope.cacheTypes = [null, true, true, true];
+            $scope.doClearCache = function() {
+                $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){
+                    ComView.alert($scope.i18n.lang.messages.cacheCleared, "info");
+                });
+            };
+        }])
+        .controller("dataBackupCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
+            $scope.options = {
+                send_email: true,
+                packit: true,
+                autodelete: true
+            };
+            $scope.doSubmit = function() {
+                $http({method: "POST", url:conf.BSU+'HOME/Settings/dataBackup', data:{options: $scope.options}}).success(function(data){
+                    ComView.alert(data, "info");
                 });
             };
         }])

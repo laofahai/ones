@@ -251,3 +251,92 @@ function checkParamsFull($data, $needed) {
     }
     return true;
 }
+
+/**
+ * 发送邮件
+ */
+function sendMail($subject, $to, $toName, $content, $attach=array()) {
+    import("@.ORG.phpmailer.Mail");
+    $mail = new PHPMailer(); //实例化 
+    $mail->IsSMTP(); // 启用SMTP 
+    $mail->Host = C("MAIL_SMTP"); //SMTP服务器 以163邮箱为例子 
+    $mail->Port = C("MAIL_SMTP_PORT") ? C("MAIL_SMTP_PORT") : 25;  //邮件发送端口 
+    $mail->SMTPAuth   = true;  //启用SMTP认证 
+
+    $mail->CharSet  = C("MAIL_CHARSET"); //字符集 
+    $mail->Encoding = C("MAIL_ENCODE") ? C("MAIL_ENCODE") : "base64"; //编码方式 
+
+    $mail->Username = C("MAIL_LOGINNAME");  //你的邮箱 
+    $mail->Password = C("MAIL_PASSWORD");  //你的密码 
+    $mail->Subject = $subject; //邮件标题 
+
+    $mail->From = C("MAIL_ADDRESS");  //发件人地址（也就是你的邮箱） 
+    $mail->FromName = C("MAIL_FORM");  //发件人姓名 
+
+    $mail->AddAddress($to, $toName);//添加收件人（地址，昵称） 
+    
+    if($attach) {
+        foreach($attach as $a) {
+            $rs = $mail->AddAttachment($a); // 添加附件,并指定名称 
+            if(!$rs) {
+                return $mail->ErrorInfo;
+            }
+        }
+    }
+    $mail->IsHTML(true); //支持html格式内容 
+    $mail->Body = $content;
+    if(!$mail->Send()) { 
+        return $mail->ErrorInfo; 
+    } else { 
+        return true;
+    } 
+    
+}
+
+/**
+ * 数据库备份
+ * @require sendMail
+ * @require php_zip
+ * @require mysql_dump
+ */
+function DBBackup($options=array()) {
+    set_time_limit(60);
+    $savename = $savename ? $savename : sprintf("%s/Data/Backup/DB_Backup_%s.sql", ENTRY_PATH, date("YmdHis", CTS));
+    $command = sprintf("mysqldump %s -u %s -p%s > %s", 
+                    C("DB_NAME"),
+                    C("DB_USER"),
+                    C("DB_PWD"),
+                    $savename
+                );
+    exec($command);
+    if(in_array("zip", $options)) {
+        sleep(2);
+        $zip = new ZipArchive;
+        $zipname = str_replace(".sql", ".zip", $savename);
+        if ($zip->open($zipname, ZIPARCHIVE::CREATE) === true) {
+            $zip->addFile($savename, basename($savename));
+            $zip->close();
+        } else {
+            return false;
+        }
+    }
+    
+    if(in_array("sendmail", $options)) {
+        sleep(2);
+        $file = in_array("zip", $options) ? $zipname : $savename;
+        $rs = sendMail("ONES DBBackup", DBC("backup.sendto.email"), "ONES Customer", "ONES Data Backup", array($file));
+        if(true !== $rs) {
+            return $rs;
+        }
+    }
+    if(in_array("autodelete", $options)) {
+        @unlink($savename);
+        @unlink($zipname);
+    }
+    return true;
+//        $rs = sendMail("hello", "335454250@qq.com", "老大", '123123', array(
+//            "/Users/nemo/wwwroot/newopenx/erp_server/1.zip"
+//        ));
+//        var_dump($rs);
+////        echo 123;exit; 
+}

@@ -81,7 +81,9 @@
                 "Settings": {
                     "name": "系统设置",
                     "actions": {
-                        "clearCache": ["清除缓存"]
+                        "clearCache": "清除缓存",
+                        "clearData" : "清除数据",
+                        "dataBackup": "数据备份"
                     }
                 },
                 "Types": {
@@ -354,7 +356,10 @@
             "user_group": "用户组管理",
             "department": "部门管理",
             "workflow": "工作流程",
+            "system_operation": "系统操作",
             "clear_cache": "清除缓存",
+            "data_backup": "数据备份",
+            "clear_data": "清除数据",
             "produce": "生产管理",
             "produce_plan": "生产计划",
             "produce_plan_detail": "生产计划详情",
@@ -502,6 +507,9 @@
         "create_time": "创建时间",
         "start_time": "开始时间",
         "end_time": "结束时间",
+        "send_to_mailbox": "发送至邮箱",
+        "packit": "压缩",
+        "autodelete": "自动删除",
         "stockWarningOnly": "仅库存警告数据",
         "bindDataModel": "绑定数据模型",
         "displayName": "显示名称",

@@ -63,49 +63,8 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     })
                     ;
         }])
-        //出库单
-//        .controller("StockoutCtl", ["$scope", "StockoutRes", "StockoutModel", "ComView",
-//            function($scope, res, model, ComView) {
-//                ComView.makeDefaultPageAction($scope, "JXC/Stockout");
-//                ComView.displayGrid($scope, model, res);
-//                
-//                $scope.workflowAble = true;
-//                $scope.workflowAlias= "stockout";
-//                
-//                $scope.$parent.assignWorkflowNodes($scope);
-//                
-//                $scope.doWorkflow = function(event, id) {
-//                    return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, res);
-//                };
-//                $scope.workflowActionDisabled = function(id){
-//                    return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
-//                };
-//                
-//                $scope.workflowDisabled = false;
-//            }])
-        //订单
-//        .controller("JXCOrdersCtl", ["$scope", "OrdersRes", "OrdersModel", "$location", "ComView",
-//            function($scope, OrdersRes, OrdersModel, $location, ComView) {
-//                ComView.makeDefaultPageAction($scope, "JXC/Orders");
-//                ComView.displayGrid($scope, OrdersModel, OrdersRes);
-//                
-//                $scope.workflowAble = true;
-//                $scope.workflowAlias= "order";
-//                $scope.$parent.assignWorkflowNodes($scope);
-//                
-//                $scope.doWorkflow = function(event, id) {
-////                    $scope.selectedItems = [];
-//                    return $scope.$parent.doWorkflow(event, id, $scope.gridSelected, OrdersRes);
-//                };
-//                $scope.workflowActionDisabled = function(id){
-//                    return $scope.$parent.workflowActionDisabled(id, $scope.gridSelected);
-//                };
-//                
-//                $scope.workflowDisabled = false;
-//            }])
         .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
             function($scope, res, GoodsRes, model, ComView, RelCompanyRes, $routeParams, TypesRes) {
-//                ComView.makeDefaultPageAction($scope, "JXC/Orders");
                 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -247,7 +206,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 
                 //一行总价
                 var countRowAmount = function(index, price, num, discount){
-                    discount = discount == undefined || 100;
+                    discount = discount === undefined || 100;
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
                 };
                 $scope.onNumberBlur = function(event){
@@ -361,32 +320,6 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 $scope.format = $scope.formats[0];
                 
             }])
-//        .controller("ProductTplCtl", ["$scope", "ProductTplRes", "ProductTplModel", "ComView", function($scope, res, model ,ComView){
-//            ComView.makeDefaultPageAction($scope, "JXC/ProductTpl");
-//            $scope.viewSubAble = true;
-//            ComView.displayGrid($scope, model, res);
-//        }])
-//        .controller("ProductTplEditCtl", ["$scope", "ProductTplRes", "ProductTplEditModel", "ComView", "$routeParams", function($scope, res, model ,ComView, $routeParams){
-//            ComView.makeDefaultPageAction($scope, "JXC/productTpl", ['addBill', 'list']);
-//            $scope.selectAble = false;
-//
-//            ComView.displayForm($scope, model, res, {
-//                id: $routeParams.id
-//            });
-//
-//            $scope.formMetaData = {};
-//        }])
-//        .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",
-//            function($scope, res, model, ComView, $routeParams){
-//                $scope.formMetaData = {};
-//                $scope.selectAble = false;
-//                $routeParams.id = $routeParams.pid;
-//                ComView.displayBill($scope, model, res, {
-//                    id: $routeParams.pid,
-//                    module: "/JXC/ProductTplDetail",
-//                    editExtraParams: "/pid/"+$routeParams.pid
-//                });
-//            }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
             function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "JXC/stockin");
@@ -436,3 +369,4 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     window.open(url);
                 };
             }])
+        ;

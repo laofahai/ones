@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-lg-8">
+        <label>
+            <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="options.send_email" />
+            <span class="lbl" ng-bind="i18n.lang.send_to_mailbox">  </span>
+        </label>
+        <label>
+            <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="options.packit" />
+            <span class="lbl" ng-bind="i18n.lang.packit">  </span>
+        </label>
+        <label>
+            <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="options.autodelete" />
+            <span class="lbl" ng-bind="i18n.lang.autodelete">  </span>
+        </label>
+    </div>
+    <div class="col-lg-8">
+        <button ng-click="doSubmit();" class="btn btn-primary" ng-bind="i18n.lang.actions.submit"></button>
+    </div>
+</div>
+<hr class="hr-10 hr-dotted" />

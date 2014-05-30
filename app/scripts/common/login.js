@@ -31,7 +31,6 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    console.log(data);
                     $scope.error.isError = true;
                     $scope.error.msg = 'Server Error.';
                 });

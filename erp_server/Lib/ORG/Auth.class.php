@@ -89,8 +89,9 @@ class Auth{
 
     //获得权限$name 可以是字符串或数组或逗号分割， uid为 认证的用户id， $or 是否为or关系，为true是， name为数组，只要数组中有一个条件通过则通过，如果为false需要全部条件通过。
     public function check($name, $uid, $relation='or') {
-        if (!$this->_config['AUTH_ON'])
+        if (!$this->_config['AUTH_ON']) {
             return true;
+        }
         $authList = $this->getAuthList($uid);
         if (is_string($name)) {
             if (strpos($name, ',') !== false) {
