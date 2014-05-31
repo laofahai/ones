@@ -15,7 +15,7 @@ return array(
     "dashboard" => array(
         "childs" => array(),
         "icon" => "home",
-        "action" => "HOME/Index/dashboard"
+        "action" => "HOME/dashboard/Index"
     ),
     "stock" => array(
         "childs" => array(
@@ -31,7 +31,7 @@ return array(
         "childs" => array(
             "add_new_purchase" => "JXC/addBill/purchase",
             "purchase_list" => "JXC/list/purchase",
-            "purchase_return" => "JXC/list/purchase_return"
+            "purchase_return" => "JXC/list/purchaseReturn"
         ),
         "icon" => "shopping-cart"
     ),

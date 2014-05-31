@@ -39,6 +39,8 @@ class IndexAction extends CommonAction {
                                 "url"   => $thirdData,
                                 "id"    => md5($thirdData.$thirdLabel)
                             );
+                        } else {
+//                            print_r($thirdData);
                         }
                     }
                 }
@@ -79,9 +81,25 @@ class IndexAction extends CommonAction {
     
     private function checkNavPermission($url) {
         list($group, $action, $module) = explode("/", $url);
-        $module = ucfirst($module);
-        $action = $this->parseActionName($action);
-        return $this->checkPermission(sprintf("%s.%s.%s", $group, $module, $action), true);
+//        var_dump(preg_match("/[A-Z]+.*/", $group));
+        //非rest模式， $action和$module对换
+        $notRest = preg_match("/^[A-Z]/", $action);
+        if($notRest) {
+//            echo $url."\n";
+//            echo $action."\n";
+            $tmp = $module;
+            $module = $action;
+            $action = $tmp ? $tmp : "Index";
+        } else {
+            $action = $this->parseActionName($action);
+            $module = ucfirst($module);
+        }
+//        echo $group."\n";
+//        echo $action."\n";
+//        echo $module."111\n";
+        $rule = sprintf("%s.%s.%s", $group, $module, $action);
+//        echo $rule."\n";
+        return $this->checkPermission($rule, true);
     }
     
 }

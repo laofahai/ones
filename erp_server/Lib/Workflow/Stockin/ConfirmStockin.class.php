@@ -16,7 +16,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
      * @todo 更新仓库总量
      */
     public function run() {
-        
+        //显示确认页面
         if(!$_POST["donext"]) {
             $data = array(
                 "type" => "redirect",
@@ -34,6 +34,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
         $map = array(
             "stockin_id" => $id
         );
+        
         $stockinDetailView = D("StockinDetailView");
         $data = $stockinDetailView->where($map)->select();
         
@@ -41,7 +42,6 @@ class StockinConfirmStockin extends WorkflowAbstract {
         $theStockin = $stockin->find($id);
         $stockProductListModel = D("StockProductList");
         $stockProductListModel->startTrans();
-//        print_r($data);exit;
         $rs = $stockProductListModel->updateStoreList($data);
         if(true === $rs) {
             $stockProductListModel->commit();

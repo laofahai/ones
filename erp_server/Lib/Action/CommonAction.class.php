@@ -57,8 +57,8 @@ class CommonAction extends RestAction {
         return $_SESSION["user"]["id"] ? 1 : 0;
     }
     
-    protected function parseActionName() {
-        $action = ACTION_NAME;
+    protected function parseActionName($action) {
+        $action = $action ? $action : ACTION_NAME;
         switch($action) {
             case "insert":
             case "add":
@@ -68,9 +68,11 @@ class CommonAction extends RestAction {
             case "update":
             case "edit":
                 $action = "edit";
+            case "Index":
             case "index":
             case "read":
-                $action = read;
+            case "list":
+                $action = "read";
                 break;
         }
 //        $action = ACTION_NAME == "insert" ? "add" : $action;
