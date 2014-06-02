@@ -199,7 +199,15 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                                 name: data.name,
                                 discount: parseInt(data.discount)
                             };
-                            angular.forEach($scope.formData);
+                            angular.forEach($scope.formData, function(item, k) {
+                                if(!item.goods_id) {
+                                    return;
+                                }
+                                $scope.formData[k].discount = parseInt(data.discount);
+//                                console.log(data.discount);
+//                                console.log(item);
+                                countRowAmount(k, item.unit_price, item.num, $scope.formData[k].discount);
+                            });
                         });
                     }
                 });
@@ -211,7 +219,9 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 
                 //一行总价
                 var countRowAmount = function(index, price, num, discount){
-                    discount = discount === undefined || 100;
+                    if(discount === undefined || parseInt(discount) === 0) {
+                        discount = 100;
+                    };
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
                 };
                 $scope.onNumberBlur = function(event){

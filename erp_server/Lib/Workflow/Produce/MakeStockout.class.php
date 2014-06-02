@@ -24,7 +24,7 @@ class ProduceMakeStockout extends WorkflowAbstract {
         $stockoutModel->startTrans();
         
         $theStockout = array(
-            "bill_id" => uniqid("CK"),
+            "bill_id" => makeBillCode("CK"),
             "source_id" => $this->mainrowId,
             "source_model" => "ProducePlan",
             "dateline"  => CTS,

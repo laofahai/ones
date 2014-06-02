@@ -95,7 +95,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             id: $routeParams.id,
             includeRows: true //包含子行
         }).$promise.then(function(data){
-            $scope.data = data;
+            $scope.data = data.datas ? data : {datas: [data]};
         });
         
         $scope.doPrint = function(){

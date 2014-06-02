@@ -46,7 +46,7 @@ class ReturnsAction extends CommonAction {
             unset($data["rows"][$k]["version"]);
         }
         
-        $data["bill_id"] = uniqid("ST");
+        $data["bill_id"] = makeBillCode("ST");
         $data["dateline"] = strtotime($data["inputTime"]);
         $data["saler_id"] = $this->user["id"];
         

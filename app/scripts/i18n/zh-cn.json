@@ -558,6 +558,7 @@
         "ProducePlan": "生产计划",
         "Orders": "销售订单",
         "Purchase": "采购",
-        "Stockout": "出库单"
+        "Stockout": "出库单",
+        "Stockin" : "入库单"
     }
 }

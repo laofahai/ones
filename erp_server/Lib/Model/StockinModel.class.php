@@ -29,7 +29,7 @@ class StockinModel extends CommonModel {
         $this->startTrans();
         
         if(!$billData["bill_id"]){
-            $billData["bill_id"] = uniqid("RK");
+            $billData["bill_id"] = makeBillCode("RK");
         }
         
         $billId = $this->add($billData);

@@ -18,7 +18,8 @@ class StockinAction extends CommonAction {
     protected $workflowAlias = "stockin";
     
     public function read() {
-        if(!$_GET["includeRows"]) {
+        
+        if(!$_GET["includeRows"] or $_GET['workflow']) {
             return parent::read();
         }
         
@@ -71,7 +72,7 @@ class StockinAction extends CommonAction {
         $stockinModel = D("Stockin");
         
         $billData = array(
-            "bill_id" => uniqid(C("BILL_PREFIX.Stockin")),
+            "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
             "subject" => $_POST["subject"],
             "dateline"=> strtotime($_POST["inputTime"]),
             "status"  => 0,

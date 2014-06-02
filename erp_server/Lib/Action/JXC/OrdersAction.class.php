@@ -55,7 +55,7 @@ class OrdersAction extends CommonAction {
             unset($data["rows"][$k]["version"]);
         }
         
-        $data["bill_id"] = uniqid("XS");
+        $data["bill_id"] = makeBillCode("XS");
         $data["dateline"] = strtotime($data["inputTime"]);
         $data["saler_id"] = $this->user["id"];
         

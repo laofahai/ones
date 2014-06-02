@@ -340,3 +340,10 @@ function DBBackup($options=array()) {
 //        var_dump($rs);
 ////        echo 123;exit; 
 }
+
+/**
+ * 生成单据编号
+ */
+function makeBillCode($prefix=""){
+    return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
+}

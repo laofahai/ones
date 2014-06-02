@@ -34,7 +34,7 @@ class StockoutModel extends CommonModel {
             return false;
         }
         $data = array(
-            "bill_id"   => uniqid("CK"),
+            "bill_id"   => makeBillCode("CK"),
             "source_id" => $sourceId,
             "source_model" => $sourceModelName,
 //            "stock_id" => $source[$sourceStockIdFeild],

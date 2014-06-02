@@ -340,6 +340,7 @@ angular.module("ones.jxc.services", [])
         .service("StockinModel", ["$rootScope", function($rootScope){
             var obj = {
                 isBill: true,
+                printAble: true,
                 workflowAlias: "stockin"
             };
             obj.getFieldsStruct= function() {
