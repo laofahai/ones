@@ -17,8 +17,44 @@ class ProducePlanAction extends CommonAction {
     
     protected $indexModel = "ProducePlanView";
     
-    public function insert() {
+    public function read() {
+        if(!$_GET["includeRows"] or $_GET['workflow']) {
+            return parent::read();
+        }
         
+        $formData = parent::read(true);
+        $formData["inputTime"] = $formData["dateline"]*1000;
+        
+        $rowModel = D("ProducePlanDetailView");
+        $rows = $rowModel->where("ProducePlanDetail.plan_id=".$formData["id"])->select();
+//        echo $rowModel->getLastSql();exit;
+        $modelIds = array();
+        $rowData = array();
+        foreach($rows as $v) {
+            $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+            $factory_code = array_shift($tmp);
+            $modelIds = array_merge($modelIds, $tmp);
+            $v["modelIds"] = $tmp;
+            $v["stock"] = $v["stock_id"];
+            $v["stock_label"] = $v["stock_name"];
+            $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
+            $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+            $rowData[$v["id"]] = $v;
+        }
+//        array_flip(array_flip($modelIds));
+
+        $dataModel = D("DataModelDataView");
+        
+        
+        $rowData = $dataModel->assignModelData($rowData, $modelIds);
+        
+        $formData["rows"] = reIndex($rowData);
+        
+        
+        $this->response($formData);
+    }
+    
+    public function insert() {
         
         $data = array(
             "start_time"=> strtotime($_POST["startTime"]),

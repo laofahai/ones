@@ -5,7 +5,12 @@ angular.module("ones.produce", ["ones.produce.service"])
             $route.when('/Produce/addBill/producePlan', {
                 templateUrl: "views/produce/producePlan/edit.html",
                 controller : "ProducePlanEditCtl"
-            });
+            })
+            .when('/Produce/editBill/producePlan/id/:id', {
+                templateUrl: 'views/produce/producePlan/edit.html',
+                controller: 'ProducePlanEditCtl'
+            })
+            ;
         }])
         .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailEditModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams","TypesRes",
             function($scope, model, res, detailRes, comView, $routeParams, TypesRes){
