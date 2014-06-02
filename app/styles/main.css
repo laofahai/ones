@@ -313,3 +313,34 @@ commonform {
 .craftSetLink {
     font-size:smaller;
 }
+
+
+/**
+打印
+*/
+.printAbleContainer h1 {
+    font-size:20px;text-align:center;
+    margin:0 auto;
+    padding:0 0 8px 0;
+    letter-spacing: 40px;
+    padding-left:40px;
+}
+.printAbleContainer table {
+    margin-bottom:10px;
+}
+.printAbleContainer table th, .printAbleContainer table td{
+    border-bottom:1px solid #666;
+    padding:2px 4px;
+}
+.printAbleContainer table tfoot td {
+    border:none;
+}
+@media print {
+    .navbar, .breadcrumbs, .sidebar, .page-header, pageactions, .unprintable, .ace-settings-container, .btn-scroll-up, .footer-copy {
+        display:none;
+    }
+    .main-content, .page-content {
+        margin: 0;
+    }
+    
+}

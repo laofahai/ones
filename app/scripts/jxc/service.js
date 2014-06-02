@@ -349,6 +349,9 @@ angular.module("ones.jxc.services", [])
                         displayName: i18n.billId
                     },
                     subject: {},
+                    source_model: {
+                        cellFilter: "lang"
+                    },
                     total_num: {
                         displayName: i18n.totalNum
                     },
@@ -937,6 +940,7 @@ angular.module("ones.jxc.services", [])
         .service('StockoutModel', ["$rootScope", function($rootScope){
             return {
                 isBill: true,
+                printAble: true,
                 workflowAlias: "stockout",
                 getFieldsStruct: function(){
                     return {
@@ -964,7 +968,8 @@ angular.module("ones.jxc.services", [])
         .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes", 
             function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
                 var obj = {
-                    isBill: true
+                    isBill: true,
+                    printAble: true
                 };
                 obj.getFieldsStruct = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -978,19 +983,49 @@ angular.module("ones.jxc.services", [])
                         },
                         goods_id: {
                             displayName: i18n.goods,
-                            editAble: false
+                            labelField: true,
+                            inputType: "select3",
+                            dataSource: GoodsRes,
+                            valueField: "combineId",
+                            nameField: "combineLabel",
+                            listAble: false,
+                            width: 300
                         },
                         standard: {
-                            editAble: false
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
                         },
                         version: {
-                            editAble: false
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
                             inputType: "select3",
                             dataSource: StockRes,
-                            autoQuery:true
+                            autoQuery:true,
+                            alwaysQueryAll: true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {

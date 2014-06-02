@@ -15,7 +15,7 @@ class StockinViewModel extends CommonViewModel {
     protected $workflowAlias = 'stockin';
     
     protected $viewFields = array(
-        "Stockin" => array("id","bill_id", "subject","dateline","status","total_num","user_id","stock_manager","memo"),
+        "Stockin" => array("*"),
     );
     
     protected $status_lang = array(

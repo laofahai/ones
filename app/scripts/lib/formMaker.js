@@ -1004,6 +1004,10 @@
                     });
                 };
                 this.scope.$parent.doSelect3Query = function(val){
+                    //总是取得所有数据
+                    if(self.opts.alwaysQueryAll) {
+                        val = "_";
+                    }
                     self.scope.select3Items = [];
                     //非数组形式数据源
                     if(!angular.isArray(self.opts.dataSource)) {

@@ -164,6 +164,8 @@ angular.module("ones.produce.service", [])
                         var scope = this.scope;
                         var injector = this.injector;
                         var res = injector.get("DoCraftRes");
+                        var conf = injector.get("one.config");
+                        var $location = injector.get("$location");
 
                         if(selectedItems.length <= 0) {
                             return;
@@ -176,7 +178,12 @@ angular.module("ones.produce.service", [])
                         res.update({
                             id: ids.join(),
                             workflow: true
-                        }, {}, function(){});
+                        }, {}, function(){
+                            if(!conf.DEBUG) {
+                                var url = "/HOME/goTo/url/"+encodeURI(encodeURIComponent($location.$$url));
+                                $location.url(url);
+                            }
+                        });
                     }
                 },
                 {

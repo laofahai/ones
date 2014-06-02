@@ -71,7 +71,7 @@ return array(
     "statistics" => array(
         "childs" => array(
             "sale_statistics" => "Statistics/Sale",
-            "stock_warning"  => "JXC/Stock/warning",
+            "stock_warning"  => "JXC/list/StockWarning",
             "statistics_overview" => "Statistics/Overview",
             "statistics_product_overview" => "Statistics/ProductView"
         ),

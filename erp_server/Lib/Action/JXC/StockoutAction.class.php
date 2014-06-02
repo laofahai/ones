@@ -26,8 +26,13 @@ class StockoutAction extends CommonAction {
             parent::read();
             return;
         }
-        $model = D("Stockout");
-        $data = $model->getStockoutBill($_GET["id"]);
+        $model = D("StockoutView");
+        if(false === strpos($_GET["id"], ",")) {
+            $data = $model->getStockoutBill($_GET["id"]);
+        } else {
+            $data["bills"] = $model->getStockoutBillsByIds(explode(",", $_GET["id"]));
+        }
+//        print_r($data);exit;
         $this->response($data);
         exit;
         $data = parent::read(true);

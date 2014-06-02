@@ -19,6 +19,45 @@ class StockoutViewModel extends CommonViewModel {
         "User" => array("truename"=>"stock_manager", "_on"=>"User.id=Stockout.stock_manager", "_type"=>"left")
     );
     
+    public function getStockoutBillsByIds($ids) {
+        foreach($ids as $id) {
+            $data[] = $this->getStockoutBill($id);
+        }
+        return $data;
+    }
+    
+    public function getStockoutBill($id) {
+       
+        $data = $this->find($id);
+        
+        $sourceModel = D($data["source_model"]."View");
+        $data["source"] = $sourceModel->find($data["source_id"]);
+        $detailModel = D("StockoutDetailView");
+        $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
+//        echo $detailModel->getLastSql();exit;
+        
+        /**
+         * 每列信息处理
+         */
+        $modelIds = array();
+        foreach($data["rows"] as $k=>$v) {
+            $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+            $factory_code = array_shift($tmp);
+            $modelIds = array_merge($modelIds, $tmp);
+            $v["modelIds"] = $tmp;
+            $v["stock"] = $v["stock_id"];
+            $v["stock_label"] = $v["stock_name"];
+            $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
+            $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+            $data["rows"][$k] = $v;
+            $fca[] = $row["factory_code_all"];
+        }
+        
+        
+        
+        $dataModel = D("DataModelDataView");
+        $data["rows"] = $dataModel->assignModelData($data["rows"], $modelIds);
+        return $data;
+    }
+    
 }
-
-?>

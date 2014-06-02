@@ -131,9 +131,9 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.c
                         /**
                          * 设置当前页面信息
                          * 两种URL模式： 普通模式 group/module/action
-                         *             URL友好模式 action(list|add|edit)/module
+                         *             URL友好模式 group/action(list|add|edit)/module
                          * */
-                        var actionList = ['list', 'export', 'add', 'edit', 'addChild', 'viewChild'], fullPath,group,module,action;
+                        var actionList = ['list', 'export', 'add', 'edit', 'addChild', 'viewChild', 'print'], fullPath,group,module,action;
                         fullPath = $location.path().split("/").slice(1, 4);
                         group = fullPath[0];
                         fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
@@ -154,7 +154,6 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.c
                         var urlmap = $rootScope.i18n.urlMap;
                         if (group in urlmap) {
                             $scope.currentPage.group = urlmap[group].name;
-//                            console.log(module);
                             if (module in urlmap[group].modules) {
                                 $scope.currentPage.module = urlmap[group].modules[module].name;
                                 if (action in urlmap[group].modules[module].actions) {

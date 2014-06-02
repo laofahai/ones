@@ -85,8 +85,6 @@ class IndexAction extends CommonAction {
         //非rest模式， $action和$module对换
         $notRest = preg_match("/^[A-Z]/", $action);
         if($notRest) {
-//            echo $url."\n";
-//            echo $action."\n";
             $tmp = $module;
             $module = $action;
             $action = $tmp ? $tmp : "Index";
@@ -94,12 +92,12 @@ class IndexAction extends CommonAction {
             $action = $this->parseActionName($action);
             $module = ucfirst($module);
         }
-//        echo $group."\n";
-//        echo $action."\n";
-//        echo $module."111\n";
+        
         $rule = sprintf("%s.%s.%s", $group, $module, $action);
-//        echo $rule."\n";
-        return $this->checkPermission($rule, true);
+
+        $result = $this->checkPermission($rule, true);
+        
+        return $result;
     }
     
 }

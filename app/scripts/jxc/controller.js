@@ -12,12 +12,17 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         templateUrl: 'views/jxc/stockin/edit.html',
                         controller: 'JXCStockinEditCtl'
                     })
+                    //出库
+                    .when('/JXC/editBill/stockout/id/:id', {
+                        templateUrl: 'views/jxc/stockout/edit.html',
+                        controller: 'JXCStockoutEditCtl'
+                    })
                     //库存列表
                     .when('/JXC/export/stockProductList', {
                         templateUrl: 'views/jxc/stockProductList/export.html',
                         controller: 'StockProductsExportCtl'
                     })
-                    .when('/JXC/Stock/warning', {
+                    .when('/JXC/list/StockWarning', {
                         templateUrl: 'views/common/grid.html',
                         controller: 'StockWarningCtl'
                     })
@@ -340,6 +345,19 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 $scope.format = $scope.formats[0];
                 
             }])
+        .controller("JXCStockoutEditCtl", ["$scope", "StockoutRes", "StockoutEditModel", "ComView", "$routeParams", "$route",
+            function($scope, res, model, ComView, $routeParams, $route) {
+                ComView.makeDefaultPageAction($scope, "JXC/stockout", [], model);
+                $scope.workflowAble = true;
+                $scope.selectAble = false;
+                
+                ComView.displayBill($scope, model, res, {
+                    id: $routeParams.id
+                });
+                
+                $scope.doSubmit = function() {};
+                
+            }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "ones.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {
                 $scope.pageActions = [
@@ -380,5 +398,18 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     module: "/JXC/ProductTplDetail",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });
+            }])
+        .controller("StockWarningCtl", ["$scope", "StockWarningRes", "StockWarningModel", "ComView", 
+            function($scope, res, model, ComView){
+                $scope.pageActions = [
+                    {
+                        label : $scope.i18n.lang.actions.export,
+                        class : "deafult",
+                        href  : "/JXC/export/StockWarning"
+                    }
+                ];
+                $scope.selectAble = false;
+                ComView.displayGrid($scope, model, res);
+                
             }])
         ;

@@ -20,7 +20,7 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
     
     if(in_array("get", $methods)) {
         array_push($return, array(
-            $resName."/:id\d", $mapUrl."/read", "", "get", "json"
+            $resName."/:id", $mapUrl."/read", "", "get", "json"
         ));
     }
     if(in_array("list", $methods)) {
@@ -30,7 +30,7 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
     }
     if(in_array("put", $methods)) {
         array_push($return, array(
-            $resName."/:id\d", $mapUrl."/update", "", "put", "json"
+            $resName."/:id", $mapUrl."/update", "", "put", "json"
         ));
     }
     if(in_array("post", $methods)) {

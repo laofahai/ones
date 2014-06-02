@@ -26,8 +26,8 @@ class StockinAction extends CommonAction {
         $formData["inputTime"] = $formData["dateline"]*1000;
         
         $rowModel = D("StockinDetailView");
-        $rows = $rowModel->where("stockin_id=".$formData["id"])->select();
-//        print_r($rows);exit;
+        $rows = $rowModel->where("StockinDetail.stockin_id=".$formData["id"])->select();
+//        echo $rowModel->getLastSql();exit;
         $modelIds = array();
         $rowData = array();
         foreach($rows as $v) {

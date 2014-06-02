@@ -75,6 +75,7 @@ class CommonAction extends RestAction {
                 $action = "read";
                 break;
         }
+        
 //        $action = ACTION_NAME == "insert" ? "add" : $action;
 //        $action = ACTION_NAME == "update" ? "edit" : $action;
 //        $action = ACTION_NAME == "index" ? "read" : $action;
@@ -105,16 +106,14 @@ class CommonAction extends RestAction {
         }
         
         import('ORG.Util.Auth');//加载类库
-        $auth=new Auth();
-        $action = $this->parseActionName();
-        
+        $auth = new Auth();
 //        $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
         if($action == "doWorkflow") {
             return true;
         }
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
-        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
-        
+        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
+//        echo $rule."\n";
         if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
             $rs = true;
         } else {

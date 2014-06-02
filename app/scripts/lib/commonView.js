@@ -49,6 +49,16 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             templateUrl: 'views/common/edit.html',
             controller : 'ComViewEditCtl'
         })
+        //打印
+        .when('/:group/print/:module/id/:id', {
+            controller : 'ComViewPrintCtl',
+            templateUrl: function(params){
+                return sprintf("views/%(group)s/%(module)s/printDetail.html", {
+                    group: params.group.toLowerCase(),
+                    module: params.module
+                });
+            }
+        })
         .otherwise({
             templateUrl: "views/common/404.html",
             controller : "ComViewError404Ctl"
@@ -68,6 +78,32 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 //    }])
     .controller('ComViewError404Ctl', ["$scope", function($scope){
         $scope.hidePageHeader = true;
+    }])
+    .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", function($scope, $injector, $routeParams) {
+        var group, module, res, model;
+
+        group = $routeParams.group;
+        module = $routeParams.module;
+        
+        res = $injector.get(module.ucfirst()+"Res");
+        model = $injector.get(module.ucfirst()+"Model");
+        
+        $scope.selectAble = false;
+        $scope.printModule = group+"_"+module;
+        
+        res.get({
+            id: $routeParams.id,
+            includeRows: true //包含子行
+        }).$promise.then(function(data){
+            $scope.data = data;
+        });
+        
+        $scope.doPrint = function(){
+            window.print();
+        };
+        
+//        $scope.doPrint();
+        
     }])
     .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal",
         function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal){
@@ -468,11 +504,22 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                  * 支持覆盖此方法
                  * */
                 $scope.gridDblClick = function(item){
-                    if(model.viewDetailAble !== false) {
+                    if(!item) {
+                        return;
+                    }
+                    if(model.editAble !== false) {
+                        //自动模式
+                        if($routeParams.group && $routeParams.module) {
+                            $location.url(sprintf("/%(group)s/%(action)s/%(module)s/id/%(id)d", {
+                                group: $routeParams.group,
+                                action: model.isBill ? "editBill" : "edit",
+                                module: $routeParams.module,
+                                id: parseInt(item.id)
+                            }));
+                        }
+                        
                         
                     } else if(model.subAble && model.viewSubAble) {
-                        
-                    } else if(model.editAble !== false) {
                         
                     }
                 };
@@ -753,6 +800,23 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         multi: true
                     });
                 }
+                if(model.printAble) {
+                    $scope.selectedActions.push({
+                        label: $rootScope.i18n.lang.actions.print,
+                        multi: true,
+                        action: function(){
+                            var ids = [];
+                            angular.forEach($scope.gridSelected, function(item){
+                                ids.push(item.id);
+                            });
+                            $location.url(sprintf("/%(group)s/print/%(module)s/id/%(id)s", {
+                                group: $routeParams.group,
+                                module: $routeParams.module,
+                                id: ids.join()
+                            }));
+                        }
+                    });
+                }
                 
                 //其他扩展操作，在model中定义
                 if(model.extraSelectActions) {
@@ -789,16 +853,26 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     });
                 });
             };
-            service.makeDefaultPageAction = function($scope, module, actions){
-                actions = actions || ["add", "list"];
+            service.makeDefaultPageAction = function($scope, module, actions, model){
+                actions = (actions && actions.length) || ["add", "list"];
 
-                var cssClass = ["success", "primary"];
+                var cssClass = ["default", "primary", "success"];
                 $scope.pageActions = [];
                 for(var i=0;i<actions.length;i++) {
                     $scope.pageActions.push({
                         label: $scope.i18n.lang.actions[actions[i]],
                         class: cssClass[i],
                         href : module.replace("/", sprintf('/%s/', actions[i]))
+                    });
+                }
+                
+                //打印按钮
+                if(model && model.printAble) {
+                    $scope.pageActions.push({
+                        label: $scope.i18n.lang.actions.print,
+                        class: "success",
+                        icon : "print",
+                        href : module.replace("/", "/print/")+"/id/"+$routeParams.id
                     });
                 }
 

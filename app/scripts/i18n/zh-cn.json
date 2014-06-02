@@ -144,11 +144,14 @@
                 "Stock" : {
                     "name": "仓库管理",
                     "actions": {
-                        "list": ["仓库列表"],
-                        "add": ["新建仓库"],
-                        "edit": ["修改仓库信息"],
-                        "warning": "库存警告"
+                        "list": "仓库列表",
+                        "add": "新建仓库",
+                        "edit": "修改仓库信息"
                     }
+                },
+                "StockWarning": {
+                    "name": "库存警告",
+                    "actions": {}
                 },
                 "Stockin": {
                     "name": "入库单",
@@ -411,6 +414,7 @@
             "delete": "删除",
             "list": "列表",
             "view": "查看",
+            "print": "打印",
             "viewCraft": "查看生产工艺",
             "doCraft" : "执行生产工艺",
             "viewSub": "查看子项",
@@ -552,6 +556,8 @@
         "next_craft": "下一工艺",
         
         "ProducePlan": "生产计划",
-        "Orders": "销售订单"
+        "Orders": "销售订单",
+        "Purchase": "采购",
+        "Stockout": "出库单"
     }
 }
