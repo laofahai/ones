@@ -308,10 +308,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 for (var key in columnDefs) {
                     col = columnDefs[key];
                     if (col.listable === false) {
-                        console.log(key);
-//                        delete(columnDefs[key]);
                         columnDefs.splice(key, 1);
-                        console.log(columnDefs);
                     }
                 }
 
@@ -347,6 +344,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
                     totalServerItems: 'totalServerItems',
                     i18n: "zh-cn",
+                    plugins: [ngGridDoubleClick],
                     //extra
                     module: $location.$$url.split("/").splice(0, 3).join("/"),
                     subModule: "",
@@ -464,6 +462,22 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     $scope.gridOptions.selectedItems = [];
                     getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
                 });
+                
+                /**
+                 * 双击事件，支持：viewDetail, viewSub, edit （优先级排序）
+                 * 支持覆盖此方法
+                 * */
+                $scope.gridDblClick = function(item){
+                    if(model.viewDetailAble !== false) {
+                        
+                    } else if(model.subAble && model.viewSubAble) {
+                        
+                    } else if(model.editAble !== false) {
+                        
+                    }
+                };
+                opts.dblClickFn = $scope.gridDblClick;
+                
                 $scope.gridOptions = opts;
             };
 

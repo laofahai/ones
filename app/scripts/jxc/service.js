@@ -91,7 +91,21 @@ angular.module("ones.jxc.services", [])
         .service("GoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
             var obj = {
                 subAble: true,
-                viewSubAble: false
+                viewSubAble: false,
+                extraSelectActions: [
+                    {
+                        label: $rootScope.i18n.lang.actions.viewDataModel,
+                        action: function($event, selectedItems){
+                            var scope = this.scope;
+                            var injector = this.injector;
+                            var location = injector.get("$location");
+                            if(!selectedItems.length) {
+                                return;
+                            }
+                            location.url("/HOME/DataModelData/catid/"+selectedItems[0].id);
+                        }
+                    }
+                ]
             };
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
@@ -749,6 +763,38 @@ angular.module("ones.jxc.services", [])
             }])
         .service("ProductTplModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope, GoodsRes,DataModelDataRes){
             return {
+//                extraSelectActions : [
+//                    {
+//                        label: $rootScope.i18n.lang.actions.viewCraft,
+//                        action: function($event, selectedItems){
+//                            var scope = this.scope;
+//                            var injector = this.injector;
+//                            var item = selectedItems[0];
+//                            var res = injector.get("GoodsCraftRes");
+//
+//                            res.query({goods_id: item.id}).$promise.then(function(data){
+//                                scope.craftsList = data;
+//                            });
+//
+//                            var theModal = $modal({
+//                                scope: scope,
+//                                title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, item.name),
+//                                contentTemplate: 'views/produce/productCraft.html',
+//                                show: false
+//                            });
+//                            theModal.$promise.then(theModal.show);
+//
+//                            scope.doSaveCraft = function(){
+//                                res.update({id: item.id}, scope.craftsList, function(data){
+//                                    theModal.hide();
+//                                });
+//                            };
+//                        }
+//                    }
+//                ],
+                subAble: true,
+                addSubAble: false,
+                viewSubAble : true,
                 getFieldsStruct: function(structOnly) {
                     var struct = {
                         id: {primary:true},
@@ -871,14 +917,14 @@ angular.module("ones.jxc.services", [])
                                     fieldAlias: "version"
                                 }
                             },
-                            stock: {
-                                editAbleRequire: ["goods_id", "standard", "version"],
-                                inputType: "select3",
-                                dataSource: StockRes,
-                                autoQuery: true,
-                                autoHide: true
-    //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
-                            },
+//                            stock: {
+//                                editAbleRequire: ["goods_id", "standard", "version"],
+//                                inputType: "select3",
+//                                dataSource: StockRes,
+//                                autoQuery: true,
+//                                autoHide: true
+//    //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
+//                            },
                             num: {
                                 inputType: "number",
                                 totalAble: true

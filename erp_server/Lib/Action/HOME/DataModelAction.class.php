@@ -13,4 +13,14 @@
  */
 class DataModelAction extends CommonAction {
     
+    protected function _filter(&$map) {
+        if($_GET["cat_id"]) {
+            $model = D("GoodsCategory");
+            $category = $model->find($_GET["cat_id"]);
+            if($category) {
+                $map["id"] = $category["bind_model"];
+            }
+        }
+    }
+    
 }

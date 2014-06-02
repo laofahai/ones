@@ -15,7 +15,7 @@ return array(
     "dashboard" => array(
         "childs" => array(),
         "icon" => "home",
-        "action" => "HOME/dashboard/Index"
+        "action" => "HOME/Index/dashboard"
     ),
     "stock" => array(
         "childs" => array(

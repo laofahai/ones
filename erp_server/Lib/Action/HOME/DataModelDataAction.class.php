@@ -42,6 +42,13 @@ class DataModelDataAction extends CommonAction {
                 }
             }
         }
+        if($_GET["cat_id"]) {
+            $model = D("GoodsCategory");
+            $category = $model->find($_GET["cat_id"]);
+            if($category) {
+                $map["model_id"] = $category["bind_model"];
+            }
+        }
     }
     
     protected function pretreatment() {

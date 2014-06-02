@@ -55,7 +55,7 @@ class ProductTplDetailAction extends CommonAction {
                 $model->add($data);
             }
         }
-        print_r($_POST);exit;
+//        print_r($_POST);exit;
     }
     
     /**
@@ -91,7 +91,8 @@ class ProductTplDetailAction extends CommonAction {
             $modelIds = array_merge($modelIds, $tmp);
             $rows[$k]["modelIds"] = $tmp;
         }
-//        print_r($modelIds);
+//        echo $rowsModel->getLastSql();
+//        print_r($rows);
         $dataModel = D("DataModelDataView");
         $rows = $dataModel->assignModelData($rows, $modelIds);
         

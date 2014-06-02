@@ -11,46 +11,50 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
 //                        templateUrl: "views/common/grid.html",
 //                        controller: "DataModelCtl"
 //                    })
-                    .when('/HOME/DataModel/add', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "DataModelEditCtl"
-                    })
-                    .when('/HOME/DataModel/edit/id/:id', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "DataModelEditCtl"
-                    })
+//                    .when('/HOME/DataModel/add', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "DataModelEditCtl"
+//                    })
+//                    .when('/HOME/DataModel/edit/id/:id', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "DataModelEditCtl"
+//                    })
                     .when('/HOME/viewChild/dataModel/pid/:pid', {
                         templateUrl: "views/common/grid.html",
                         controller: "DataModelFieldsCtl"
                     })
-                    .when('/HOME/DataModelFields/add/pid/:pid', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "DataModelFieldsEditCtl"
+//                    .when('/HOME/DataModelFields/add/pid/:pid', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "DataModelFieldsEditCtl"
+//                    })
+//                    .when('/HOME/DataModelFields/edit/id/:id/pid/:pid', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "DataModelFieldsEditCtl"
+//                    })
+                    .when('/HOME/DataModelData/catid/:catid', {
+                        templateUrl: "views/common/blank.html",
+                        controller: "DataModelDataCatidCtl"
                     })
-                    .when('/HOME/DataModelFields/edit/id/:id/pid/:pid', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "DataModelFieldsEditCtl"
-                    })
-                    .when('/HOME/DataModelData/:modelId', {
-                        templateUrl: "views/common/grid.html",
-                        controller: "DataModelDataCtl"
-                    })
-                    .when('/HOME/DataModelData/add/:modelId', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "DataModelDataEditCtl"
-                    })
-                    .when('/HOME/DataModelData/:modelId/edit/id/:id', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "DataModelDataEditCtl"
-                    })
+//                    .when('/HOME/DataModelData/:modelId', {
+//                        templateUrl: "views/common/grid.html",
+//                        controller: "DataModelDataCtl"
+//                    })
+//                    .when('/HOME/DataModelData/add/:modelId', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "DataModelDataEditCtl"
+//                    })
+//                    .when('/HOME/DataModelData/:modelId/edit/id/:id', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "DataModelDataEditCtl"
+//                    })
                     .when('/HOME/viewChild/workflow/pid/:pid', {
                         templateUrl: "views/common/grid.html",
                         controller: "WorkflowNodeCtl"
                     })
-                    .when('/HOME/WorkflowNode/add/pid/:pid', {
-                        templateUrl: "views/common/edit.html",
-                        controller: "WorkflowNodeEditCtl"
-                    })
+//                    .when('/HOME/WorkflowNode/add/pid/:pid', {
+//                        templateUrl: "views/common/edit.html",
+//                        controller: "WorkflowNodeEditCtl"
+//                    })
 //                    .when('/HOME/WorkflowNode/edit/id/:id/pid/:pid', {
 //                        templateUrl: "views/common/edit.html",
 //                        controller: "WorkflowNodeEditCtl"
@@ -266,6 +270,15 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                     id: $routeParams.id
                 };
                 ComView.displayForm($scope, DataModelFieldsModel, DataModelFieldsRes, opts);
+            }])
+        .controller("DataModelDataCatidCtl", ["$scope", "$location", "DataModelRes", "$routeParams",
+            function($scope, $location, res, $routeParams){
+                res.get({
+                    id: 0,
+                    cat_id: $routeParams.catid
+                }).$promise.then(function(data){
+                    $location.url("/HOME/list/DataModelData/modelId/"+data.id);
+                });
             }])
         .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "ComView", "$routeParams",
             function($scope, DataModelDataRes, DataModelDataModel, ComView, $routeParams) {

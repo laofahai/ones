@@ -22,10 +22,10 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         controller: 'StockWarningCtl'
                     })
                     //商品拆装模板
-                    .when('/JXC/ProductTpl', {
-                        templateUrl: 'views/common/grid.html',
-                        controller:  'ProductTplCtl'
-                    })
+//                    .when('/JXC/ProductTpl', {
+//                        templateUrl: 'views/common/grid.html',
+//                        controller:  'ProductTplCtl'
+//                    })
 //                    .when('/JXC/ProductTpl/add', {
 //                        templateUrl: 'views/common/edit.html',
 //                        controller:  'ProductTplEditCtl'
@@ -34,7 +34,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
 //                        templateUrl: 'views/jxc/productTpl/edit.html',
 //                        controller:  'ProductTplEditCtl'
 //                    })
-                    .when('/JXC/ProductTpl/viewSub/id/:pid', {
+                    .when('/JXC/viewChild/productTpl/pid/:pid', {
                         templateUrl: 'views/jxc/productTpl/edit.html',
                         controller: 'ProductTplDetailCtl'
                     })
@@ -368,5 +368,17 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     url+= "/warningonly/"+$scope.exportData.stockWarningOnly;
                     window.open(url);
                 };
+            }])
+        //BOM单详情
+        .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",
+            function($scope, res, model, ComView, $routeParams){
+                $scope.formMetaData = {};
+                $scope.selectAble = false;
+                $routeParams.id = $routeParams.pid;
+                ComView.displayBill($scope, model, res, {
+                    id: $routeParams.pid,
+                    module: "/JXC/ProductTplDetail",
+                    editExtraParams: "/pid/"+$routeParams.pid
+                });
             }])
         ;

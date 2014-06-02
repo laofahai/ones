@@ -16,6 +16,6 @@ class ProductTplDetailViewModel extends CommonViewModel {
     protected $viewFields = array(
         "ProductTplDetail" => array("*", "_type"=>"left"),
         "Goods" => array("name"=>"goods_id_label", "_on"=>"Goods.id=ProductTplDetail.goods_id", "_type"=>"left"),
-        "Stock" => array("name"=>"stock_label", "_on"=>"Stock.id=ProductTplDetail.stock_id")
+//        "Stock" => array("name"=>"stock_label", "_on"=>"Stock.id=ProductTplDetail.stock_id")
     );
 }

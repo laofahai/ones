@@ -125,7 +125,7 @@ class CommonAction extends RestAction {
             return $rs ? true : false;
         } else {
             if(!$rs) {
-                $this->error("Permission Denied:".$path);
+                $this->error("Permission Denied:".$rule);
                 exit;
             }
             

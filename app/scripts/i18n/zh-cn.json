@@ -414,6 +414,7 @@
             "viewCraft": "查看生产工艺",
             "doCraft" : "执行生产工艺",
             "viewSub": "查看子项",
+            "viewDataModel": "查看数据模型",
             "clearCache": "清除缓存",
             "viewModelData": "查看模型数据",
             "viewWorkflowProcess": "查看工作流进程"
