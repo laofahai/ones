@@ -27,11 +27,13 @@
                                data-time-format="HH:mm" 
                                data-time-type="object" 
                                data-autoclose="1" 
+                               data-animation="none" 
                                bs-timepicker />
                         <i class="icon-time gray"></i>
                     </span>
                 </div>
                 <div class="col-sm-3">
+                    <inputfield config="typeSelectOpts"></inputfield>
                 </div>
                 <div class="col-sm-3 align-right" ng-show="formMetaData.bill_id">
                     <span>{{i18n.lang.billId}}:</span>

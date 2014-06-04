@@ -61,17 +61,6 @@ var ERP = angular.module('ones', [
             $httpProvider.responseInterceptors.push(interceptor);
         }])
         .run(["$http","$location", function($http, $locationProvider) {
-            //设置HTTP请求默认头
-////            $locationProvider.html5Mode(false);
-//            $http.defaults.useXDomain = true;
-////            delete $http.defaults.headers.common['X-Requested-With'];
-//            $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-//            $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-//            $http.defaults.headers.common["sessionHash"] = loginHash;
-////            $http.defaults.transformRequest = function (data) {
-////                return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
-////            };
-//            return;
             $http.defaults.headers.common["sessionHash"] = loginHash;
             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
@@ -127,6 +116,9 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.c
                  * */
                 var actionList = ['list', 'export', 'add', 'edit', 'addChild', 'viewChild', 'print'], fullPath,group,module,action;
                 fullPath = $location.path().split("/").slice(1, 4);
+                if(!fullPath[1]) {
+                    return;
+                }
                 group = fullPath[0];
                 fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
                 //友好模式

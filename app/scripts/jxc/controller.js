@@ -335,8 +335,8 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 $scope.format = $scope.formats[0];
                 
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
-            function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams", "TypesRes",
+            function($scope, StockinRes, StockinEditModel, ComView, $routeParams, TypesRes) {
                 ComView.makeDefaultPageAction($scope, "JXC/stockin");
                 
                 $scope.workflowAble = true;
@@ -346,6 +346,21 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 ComView.displayBill($scope, StockinEditModel, StockinRes, {
                     id: $routeParams.id
                 });
+                
+                //销售类型字段定义
+                $scope.typeSelectOpts = {
+                    context: {
+                        field: "stockin_type"
+                    },
+                    fieldDefine: {
+                        inputType: "select",
+                        "ng-model": "formMetaData.stockin_type",
+                        dataSource: TypesRes,
+                        queryParams: {
+                            type: "stockin"
+                        }
+                    }
+                };
                 
                 
                 $scope.formMetaData = {};

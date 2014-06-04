@@ -118,7 +118,8 @@ angular.module("ones.home.services", [])
                              {id: "receive", name:i18n.types.receive},
                              {id: "pay", name:i18n.types.pay},
                              {id: "voucher", name:i18n.types.voucher},
-                             {id: "produce", name:i18n.types.produce}
+                             {id: "produce", name:i18n.types.produce},
+                             {id: "stockin", name:i18n.types.stockin}
                          ]
                      },
                      alias: {},

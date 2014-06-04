@@ -430,7 +430,8 @@
             "receive" : "收款类别",
             "pay"     : "付款类别",
             "voucher" : "凭证字号",
-            "produce" : "生产计划类型"
+            "produce" : "生产计划类型",
+            "stockin" : "入库类型"
         },
         "navigation": {
             "back": "后退",
