@@ -113,65 +113,55 @@ ERP.controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.c
                 
             };
             
+            
             /**
-             * 加载语言包
+             * 监控路由变化
              * */
-            $rootScope.i18n = angular.fromJson(localStorage.getItem(conf.Prefix+"i18n"));
-            if(conf.DEBUG || !$rootScope.i18n) {
-                $http.get("scripts/i18n/zh-cn.json").success(function(data) {
-                    $rootScope.i18n = data;
-                    localStorage.setItem(conf.Prefix+"i18n", angular.toJson(data));
-                    
-                    /**
-                     * 监控路由变化
-                     * */
-                    $scope.$watch(function() {
-                        return $location.path();
-                    }, function() {
-                        /**
-                         * 设置当前页面信息
-                         * 两种URL模式： 普通模式 group/module/action
-                         *             URL友好模式 group/action(list|add|edit)/module
-                         * */
-                        var actionList = ['list', 'export', 'add', 'edit', 'addChild', 'viewChild', 'print'], fullPath,group,module,action;
-                        fullPath = $location.path().split("/").slice(1, 4);
-                        group = fullPath[0];
-                        fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
-                        //友好模式
-                        if(actionList.indexOf(fullPath[1]) >= 0) {
-                            module= fullPath[2].ucfirst();
-                            action= fullPath[1];
-                        } else {
-                            module = fullPath[1];
-                            action = fullPath[2];
-                        }
+            $scope.$watch(function() {
+                return $location.path();
+            }, function() {
+                /**
+                 * 设置当前页面信息
+                 * 两种URL模式： 普通模式 group/module/action
+                 *             URL友好模式 group/action(list|add|edit)/module
+                 * */
+                var actionList = ['list', 'export', 'add', 'edit', 'addChild', 'viewChild', 'print'], fullPath,group,module,action;
+                fullPath = $location.path().split("/").slice(1, 4);
+                group = fullPath[0];
+                fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
+                //友好模式
+                if(actionList.indexOf(fullPath[1]) >= 0) {
+                    module= fullPath[2].ucfirst();
+                    action= fullPath[1];
+                } else {
+                    module = fullPath[1];
+                    action = fullPath[2];
+                }
 
-                        group = group ? group : "HOME";
-                        module = module ? module : "Index";
-                        action = action && isNaN(parseInt(action)) ? action : "list";
+                group = group ? group : "HOME";
+                module = module ? module : "Index";
+                action = action && isNaN(parseInt(action)) ? action : "list";
 //                        console.log(module);
-                        $scope.currentPage = {};
-                        var urlmap = $rootScope.i18n.urlMap;
-                        if (group in urlmap) {
-                            $scope.currentPage.group = urlmap[group].name;
-                            if (module in urlmap[group].modules) {
-                                $scope.currentPage.module = urlmap[group].modules[module].name;
-                                if (action in urlmap[group].modules[module].actions) {
-                                    $scope.currentPage.action = urlmap[group].modules[module].actions[action] instanceof Array 
-                                                                ? urlmap[group].modules[module].actions[action][0]
-                                                                : urlmap[group].modules[module].actions[action];
-                                    $scope.currentPage.actionDesc = urlmap[group].modules[module].actions[action] instanceof Array 
-                                                                ? urlmap[group].modules[module].actions[action][1] : "";
-                                } 
-                                if(!$scope.currentPage.action){
-                                    $scope.currentPage.action = urlmap[group].modules[module].name;
-                                    $scope.currentPage.actionDesc = $rootScope.i18n.lang.actions[action];
-                                }
-                            }
+                $scope.currentPage = {};
+                var urlmap = $rootScope.i18n.urlMap;
+                if (group in urlmap) {
+                    $scope.currentPage.group = urlmap[group].name;
+                    if (module in urlmap[group].modules) {
+                        $scope.currentPage.module = urlmap[group].modules[module].name;
+                        if (action in urlmap[group].modules[module].actions) {
+                            $scope.currentPage.action = urlmap[group].modules[module].actions[action] instanceof Array 
+                                                        ? urlmap[group].modules[module].actions[action][0]
+                                                        : urlmap[group].modules[module].actions[action];
+                            $scope.currentPage.actionDesc = urlmap[group].modules[module].actions[action] instanceof Array 
+                                                        ? urlmap[group].modules[module].actions[action][1] : "";
+                        } 
+                        if(!$scope.currentPage.action){
+                            $scope.currentPage.action = urlmap[group].modules[module].name;
+                            $scope.currentPage.actionDesc = $rootScope.i18n.lang.actions[action];
                         }
-                    });
-                });
-            }
+                    }
+                }
+            });
             
             
             /**

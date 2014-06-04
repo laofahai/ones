@@ -23,10 +23,8 @@
                         <div class="login-container">
                             <div class="center">
                                 <h1>
-                                    <span class="red">ONES</span>
-                                    <small class="white">is a niubility ERP system</small>
+                                    <img src="styles/images/logo_mini_white.png" />
                                 </h1>
-                                <h4 class="blue">Present by <a href="#nogo">ONES Team</a> 2014</h4>
                             </div>
 
                             <div class="space-6"></div>
@@ -37,7 +35,7 @@
                                         <div class="widget-main">
                                             <h4 class="header blue lighter bigger">
                                                 <i class="icon-coffee green"></i>
-                                                Please Enter Your Information
+                                                {{i18n.lang.messages.please_enter_your_login_info}}
                                             </h4>
 
                                             <div class="space-6"></div>
@@ -65,13 +63,13 @@
 
                                                     <div class="clearfix">
                                                         <label class="inline">
-                                                            <input type="checkbox" class="ace" ng-model="loginInfo.remember" />
-                                                            <span class="lbl"> Remember Me</span>
+                                                            <input type="checkbox" class="ace" ng-model="loginInfo.remember" /> 
+                                                            <span class="lbl"> <small ng-bind="i18n.lang.messages.remember_me"></small></span>
                                                         </label>
 
                                                         <button type="button" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
                                                             <i class="icon-key"></i>
-                                                            Login
+                                                            {{i18n.lang.actions.login}}
                                                         </button>
                                                     </div>
 
@@ -85,7 +83,7 @@
                                                 <a href="#" onclick="show_box('forgot-box');
                                                             return false;" class="forgot-password-link">
                                                     <i class="icon-arrow-left"></i>
-                                                    I forgot my password
+                                                    {{i18n.lang.messages.i_fogot_password}}
                                                 </a>
                                             </div>
                                         </div>
@@ -143,9 +141,8 @@
         <!-- basic scripts -->
         
         <!-- build:js({.tmp,app}) scripts/bower.js -->
-        <script src="bower_components/jquery/jquery.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="dev/bower_components.min.js"></script>
+        <script src="dev/ace.min.js"></script>
         <!-- endbuild -->
         <!-- build:js({.tmp,app}) scripts/config.js -->
         <script src="scripts/config.js"></script>

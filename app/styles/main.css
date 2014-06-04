@@ -314,6 +314,12 @@ commonform {
     font-size:smaller;
 }
 
+.navbar-brand {
+    width:97px;height:40px;display:block;
+    background:url(images/logo_mini_white.png) no-repeat;
+    margin:2px 0 0 5px;
+}
+
 
 /**
 打印

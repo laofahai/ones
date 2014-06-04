@@ -15,4 +15,17 @@ var ERPBaseConf = {
 };
 
 angular.module("ones.config", [])
-        .value("ones.config", ERPBaseConf);
+        .value("ones.config", ERPBaseConf)
+        .run(["$rootScope", "$http", function($rootScope, $http){
+            /**
+             * 加载语言包
+             * */
+            $rootScope.i18n = angular.fromJson(localStorage.getItem(ERPBaseConf.Prefix+"i18n"));
+            if(ERPBaseConf.DEBUG || !$rootScope.i18n) {
+                $http.get("scripts/i18n/zh-cn.json").success(function(data) {
+                    $rootScope.i18n = data;
+                    localStorage.setItem(ERPBaseConf.Prefix+"i18n", angular.toJson(data));
+                });
+            }
+        }])
+        ;

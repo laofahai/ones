@@ -397,13 +397,17 @@
             "chosen_no_result_text" : "'没有找到相关结果'",
             "USER_NOT_EXISTS": "登录信息有误，请确认",
             "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认",
-            "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行"
+            "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行",
+            "please_enter_your_login_info": "请输入您的登录信息",
+            "remember_me": "记住我",
+            "i_fogot_password": "我忘记了密码"
         },
         "actions": {
             "addBill": "新增",
             "submit" : "提交",
             "reset"  : "重填",
             "return" : "返回",
+            "login"  : "登陆",
             "add": "新增",
             "save": "保存",
             "close": "关闭",
