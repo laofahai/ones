@@ -487,7 +487,7 @@
                 scope.$parent.billFieldEdit = function(ele){
                     var context = getLabelContext(ele);
 
-                    //已经存在
+                    //已经存在input
                     if(context.td.find(".editAble").length) {
                         context.td.find(".editAble").removeClass("hide").find("input");
                         context.inputAble.trigger("click").focus();
@@ -542,9 +542,9 @@
                     //触发结束编辑事件
                     setTimeout(function(){
                         context = getInputContext(ele);
-                        context.inputAble.trigger("click").focus();
+                        context.inputAble.focus();
                         context.inputAble.bind("keydown", function(e){
-                            if(e.keyCode == 13) {
+                            if(e.keyCode === 13) {
                                 self.scope.$parent.billEndEdit(context.td);
                             }
                         });
@@ -585,7 +585,7 @@
                         if("callback" in self.fieldsDefine[$(td).data("bind-model")]) {
                             self.fieldsDefine[$(td).data("bind-model")].callback($(td).parent());
                         }
-                    },150);
+                    },200);
                     
                 };
 

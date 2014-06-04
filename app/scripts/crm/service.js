@@ -19,7 +19,7 @@ angular.module("ones.crm.services", [])
                 }
             };
         }])
-        .factory("RelationshipCompanyModel", ["$rootScope", "RelationshipCompanyGroupRes", function($rootScope, RelCompanyGroupRes){
+        .factory("RelationshipCompanyModel", ["$rootScope", "RelationshipCompanyGroupRes", function($rootScope, RelationshipCompanyGroupRes){
             return {
                 getFieldsStruct: function(){
                     return {

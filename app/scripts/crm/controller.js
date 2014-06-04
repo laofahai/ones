@@ -39,15 +39,15 @@ angular.module("ones.crm", ['ones.crm.services', 'ngGrid', 'ones.common.directiv
 //                    id: $routeParams.id
 //                });
 //            }])
-//        .controller("RelCompanyCtl", ["$scope", "RelCompanyRes", "RelCompanyModel","ComView",
-//            function($scope, RelCompanyRes, RelCompanyModel, ComView){
+//        .controller("RelCompanyCtl", ["$scope", "RelationshipCompanyRes", "RelCompanyModel","ComView",
+//            function($scope, RelationshipCompanyRes, RelCompanyModel, ComView){
 //                ComView.makeDefaultPageAction($scope, "CRM/RelCompany");
-//                ComView.displayGrid($scope, RelCompanyModel, RelCompanyRes);
+//                ComView.displayGrid($scope, RelCompanyModel, RelationshipCompanyRes);
 //            }])
-//        .controller("RelCompanyEditCtl", ["$scope", "RelCompanyRes", "RelCompanyModel", "$routeParams","ComView", 
-//            function($scope, RelCompanyRes, RelCompanyModel, $routeParams, ComView){
+//        .controller("RelCompanyEditCtl", ["$scope", "RelationshipCompanyRes", "RelCompanyModel", "$routeParams","ComView", 
+//            function($scope, RelationshipCompanyRes, RelCompanyModel, $routeParams, ComView){
 //                ComView.makeDefaultPageAction($scope, "CRM/RelCompany");
-//                ComView.displayForm($scope, RelCompanyModel, RelCompanyRes, {
+//                ComView.displayForm($scope, RelCompanyModel, RelationshipCompanyRes, {
 //                    id: $routeParams.id
 //                });
 //            }])

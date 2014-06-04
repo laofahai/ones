@@ -240,7 +240,7 @@
                         "edit" : "修改分组信息"
                     }
                 },
-                "RelCompany": {
+                "RelationshipCompany": {
                     "name": "客户基本信息",
                     "actions": {
                         "list": "客户列表",

@@ -68,8 +68,8 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     })
                     ;
         }])
-        .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
-            function($scope, res, GoodsRes, model, ComView, RelCompanyRes, $routeParams, TypesRes) {
+        .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes",
+            function($scope, res, GoodsRes, model, ComView, RelationshipCompanyRes, $routeParams, TypesRes) {
                 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -92,7 +92,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
                         "ng-model": "formMetaData.customer_id",
-                        dataSource: RelCompanyRes
+                        dataSource: RelationshipCompanyRes
                     }
                 };
                 //销售类型字段定义
@@ -144,8 +144,8 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 $scope.format = $scope.formats[0];
                 
             }])
-        .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
-            function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelCompanyRes, $routeParams, TypesRes) {
+        .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes",
+            function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams, TypesRes) {
                 ComView.makeDefaultPageAction($scope, "JXC/orders");
                 
                 $scope.workflowAble = true;
@@ -169,7 +169,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
                         "ng-model": "formMetaData.customer_id",
-                        dataSource: RelCompanyRes
+                        dataSource: RelationshipCompanyRes
                     }
                 };
                 //销售类型字段定义
@@ -190,7 +190,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 //客户ID变动时 更新当前的折扣率
                 $scope.$watch('formMetaData.customer_id', function(){
                     if($scope.formMetaData.customer_id) {
-                        RelCompanyRes.get({
+                        RelationshipCompanyRes.get({
                             id: $scope.formMetaData.customer_id
                         }, function(data){
                             data.discount = parseInt(data.discount);
@@ -252,8 +252,8 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 $scope.format = $scope.formats[0];
                 
             }])
-        .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelCompanyRes", "$routeParams", "TypesRes",
-            function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelCompanyRes, $routeParams, TypesRes) {
+        .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes",
+            function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams, TypesRes) {
                 ComView.makeDefaultPageAction($scope, "JXC/returns");
                 
                 $scope.workflowAble = true;
@@ -277,7 +277,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
                         "ng-model": "formMetaData.customer_id",
-                        dataSource: RelCompanyRes
+                        dataSource: RelationshipCompanyRes
                     }
                 };
                 //销售类型字段定义
