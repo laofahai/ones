@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("ones.crm.services", [])
-        .factory("RelCompanyGroupModel", ["$rootScope", function($rootScope){
+        .factory("RelationshipCompanyGroupModel", ["$rootScope", function($rootScope){
             return {
                 getFieldsStruct: function(){
                     return {
@@ -19,7 +19,7 @@ angular.module("ones.crm.services", [])
                 }
             };
         }])
-        .factory("RelCompanyModel", ["$rootScope", "RelCompanyGroupRes", function($rootScope, RelCompanyGroupRes){
+        .factory("RelationshipCompanyModel", ["$rootScope", "RelationshipCompanyGroupRes", function($rootScope, RelCompanyGroupRes){
             return {
                 getFieldsStruct: function(){
                     return {

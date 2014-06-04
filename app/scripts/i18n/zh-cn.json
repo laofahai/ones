@@ -232,18 +232,12 @@
         "CRM": {
             "name": "客户关系管理",
             "modules": {
-                "RelCompanyGroup": {
+                "RelationshipCompanyGroup": {
                     "name": "往来单位分组",
                     "actions": {
                         "list": "往来单位分组列表",
                         "add"  : "新增分组",
                         "edit" : "修改分组信息"
-                    }
-                },
-                "RelationshipCompany": {
-                    "name": "客户基本信息",
-                    "actions": {
-                        "list": "客户列表"
                     }
                 },
                 "RelCompany": {

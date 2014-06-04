@@ -53,8 +53,8 @@ return array(
     ),
     "rel_company" => array(
         "childs" => array(
-            "relCompanyRecord" => "CRM/list/relCompany",
-            "relCompanyGroup" => "CRM/list/relCompanyGroup",
+            "relCompanyRecord" => "CRM/list/relationshipCompany",
+            "relCompanyGroup" => "CRM/list/relationshipCompanyGroup",
         ),
         "icon" => "link"
     ),

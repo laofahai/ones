@@ -97,10 +97,10 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
     .factory("PurchaseRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/purchase/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])
-    .factory("RelCompanyGroupRes", ["$resource", "ones.config", function($resource, cnf) {
+    .factory("RelationshipCompanyGroupRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});
         }])
-    .factory("RelCompanyRes", ["$resource", "ones.config", function($resource, cnf) {
+    .factory("RelationshipCompanyRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relCompany/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("ReturnsRes", ["$resource", "ones.config", function($resource, cnf) {
