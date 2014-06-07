@@ -1178,4 +1178,13 @@ angular.module("ones.jxc.services", [])
                     }
                 };
             }])
+        .service("ShipmentModel", ["$rootScope", function($rootScope) {
+                return {
+                    getFieldsStruct: function() {
+                        return {
+                            id: {primary: true}
+                        };
+                    }
+                }
+        }])
         ;

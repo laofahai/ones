@@ -40,7 +40,7 @@ class ReturnsConfirmStockin extends WorkflowAbstract {
         } else {
             $stockProductListModel->rollback();
             return false;
-            $this->action->error(L("operate_failed"));
+            $this->action->error("operate_failed");
         }
     }
     

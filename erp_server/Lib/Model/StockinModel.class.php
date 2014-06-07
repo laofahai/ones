@@ -56,7 +56,79 @@ class StockinModel extends CommonModel {
         
     }
     
+    public function editBill($bill, $rows) {
+        $detailModel = D("StockinDetail");
+        $this->startTrans();
+        
+        unset($bill["dateline"]);
+        unset($bill["status"]);
+        unset($bill["bill_id"]);
+        unset($bill["user_id"]);
+        unset($bill["source_model"]);
+        unset($bill["source_id"]);
+        
+        if(!$this->save($bill)) {
+            $this->rollback();
+            return false;
+        }
+        
+        foreach($rows as $row) {
+            if(!$detailModel->save($row)) {
+                $this->rollback();
+                return false;
+            }
+        }
+        
+        $this->commit();
+        return true;
+    }
+    
+    /**
+     * 格式化POST或者PUT的数据
+     */
+    public function formatData($postData) {
+        $stockinModel = $this;
+        
+        $billData = array(
+            "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
+            "subject" => $postData["subject"],
+            "dateline"=> strtotime($postData["inputTime"]),
+            "status"  => 0,
+            "user_id" => getCurrentUid(),
+            "stock_manager" => 0,
+            "total_num"=> $postData["total_num"],
+            "memo"    => $postData["memo"]
+        );
+        
+        $id = abs(intval($_GET["id"]));
+        if($id) {
+            $billData["id"] = $id;
+        }
+        
+        $data = $postData["rows"];
+        $billItems = array();
+        foreach($data as $k=> $billItem) {
+            if(!$billItem) {
+                continue;
+            }
+            list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);
+            $billItems[$k] = array(
+                "goods_id"   => $goodsId,
+                "num"        => $billItem["num"],
+                "factory_code_all" => sprintf("%s-%d-%d", 
+                        $factory_code, 
+                        $billItem["standard"],
+                        $billItem["version"]),
+                "memo" => $billItem["memo"],
+                "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
+            );
+        }
+        
+        return array(
+            $billData,
+            reIndex($billItems)
+        );
+    }
+    
     
 }
-
-?>

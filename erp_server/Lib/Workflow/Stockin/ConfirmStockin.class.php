@@ -24,11 +24,9 @@ class StockinConfirmStockin extends WorkflowAbstract {
             );
             $this->response($data);
         }
-        
         $id = $this->mainrowId;
-        
         if(!$id) {
-            $this->error(L("params_error"));
+            $this->error("params_error");
         }
         
         $map = array(
@@ -53,7 +51,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
             $this->updateStatus("Stockin", $id, 2);
         } else {
             $stockProductListModel->rollback();
-            $this->error(L("operate_failed"));
+            $this->error("operate_failed");
 //            $this->action->error(L("operate_failed"));
         }
         //若外部生成，走外部下一流程

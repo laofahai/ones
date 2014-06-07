@@ -10,6 +10,11 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 controller: "WorkflowConfirmStockoutCtl",
                 templateUrl: "views/jxc/stockout/confirmStockout.html"
             })
+            //发货单
+            .when('/doWorkflow/Stockout/makeShipment/:nodeId/:id', {
+                controller: "WorkflowMakeShipmentCtl",
+                templateUrl: "views/common/edit.html"
+            })
             .when('/doWorkflow/Stockin/confirm/:nodeId/:id', {
                 controller: "WorkflowConfirmStockinCtl",
                 templateUrl: "views/jxc/stockin/confirmStockin.html"
@@ -22,7 +27,13 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 templateUrl: "views/produce/producePlan/doCraft.html",
                 controller : "WorkflowDoCraftCtl"
             })
+            
             ;
+        }])
+    //生成发货单
+    .controller("WorkflowMakeShipmentCtl", ["$scope", "ShipmentRes", "ShipmentModel", "ComView",
+        function($scope, res, model, ComView){
+            
         }])
     //确认出库
     .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutEditModel", "$location",

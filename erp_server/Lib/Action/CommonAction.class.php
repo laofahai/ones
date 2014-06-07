@@ -313,7 +313,7 @@ class CommonAction extends RestAction {
         } 
         
         if(!$rs) {
-            $this->error(L("operate_failed"));
+            $this->error("operate_failed");
         }
 //        
 //        return;

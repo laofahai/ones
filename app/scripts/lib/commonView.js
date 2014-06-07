@@ -602,7 +602,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         getParams.id = opts.id;
                         resource.update(getParams, data);
                     } else {
-                        resource.save(getParams,data);
+                        resource.save(getParams, data);
                     }
                     
                     if(conf.DEBUG) {

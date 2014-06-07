@@ -28,7 +28,6 @@ class StockinAction extends CommonAction {
         
         $rowModel = D("StockinDetailView");
         $rows = $rowModel->where("StockinDetail.stockin_id=".$formData["id"])->select();
-//        echo $rowModel->getLastSql();exit;
         $modelIds = array();
         $rowData = array();
         foreach($rows as $v) {
@@ -46,7 +45,6 @@ class StockinAction extends CommonAction {
 
         $dataModel = D("DataModelDataView");
         
-        
         $rowData = $dataModel->assignModelData($rowData, $modelIds);
         
         $formData["rows"] = reIndex($rowData);
@@ -54,6 +52,18 @@ class StockinAction extends CommonAction {
         
         $this->response($formData);
         
+    }
+    
+    public function update() {
+        $id = abs(intval($_GET["id"]));
+        $model = D("Stockin");
+        $data = $model->find($id);
+        if($data["status"] > 0) {
+            $this->error("in_workflow");
+        }
+        
+        list($bill, $rows) = $model->formatData($_POST);
+        $model->editBill($bill, $rows);
     }
     
     /**
@@ -69,44 +79,47 @@ class StockinAction extends CommonAction {
             return;
         }
         
+        
         $stockinModel = D("Stockin");
         
-        $billData = array(
-            "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
-            "subject" => $_POST["subject"],
-            "dateline"=> strtotime($_POST["inputTime"]),
-            "status"  => 0,
-            "user_id" => $this->user["id"],
-            "stock_manager" => 0,
-            "total_num"=> $_POST["total_num"],
-            "memo"    => $_POST["memo"]
-        );
+        list($bill, $rows) = $stockinModel->formatData($_POST);
         
-        $data = $_POST["rows"];
-        $billItems = array();
-        foreach($data as $k=> $billItem) {
-            if(!$billItem) {
-                continue;
-            }
-            list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);
-            $billItems[$k] = array(
-                "goods_id"   => $goodsId,
-                "num"        => $billItem["num"],
-                "factory_code_all" => sprintf("%s-%d-%d", 
-                        $factory_code, 
-                        $billItem["standard"],
-                        $billItem["version"]),
-                "memo" => $billItem["memo"],
-                "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
-            );
-        }
+//        $billData = array(
+//            "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
+//            "subject" => $_POST["subject"],
+//            "dateline"=> strtotime($_POST["inputTime"]),
+//            "status"  => 0,
+//            "user_id" => $this->user["id"],
+//            "stock_manager" => 0,
+//            "total_num"=> $_POST["total_num"],
+//            "memo"    => $_POST["memo"]
+//        );
+//        
+//        $data = $_POST["rows"];
+//        $billItems = array();
+//        foreach($data as $k=> $billItem) {
+//            if(!$billItem) {
+//                continue;
+//            }
+//            list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);
+//            $billItems[$k] = array(
+//                "goods_id"   => $goodsId,
+//                "num"        => $billItem["num"],
+//                "factory_code_all" => sprintf("%s-%d-%d", 
+//                        $factory_code, 
+//                        $billItem["standard"],
+//                        $billItem["version"]),
+//                "memo" => $billItem["memo"],
+//                "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
+//            );
+//        }
         
 //        print_r($billData);
 //        print_r($billItems);exit;
 //        
-        $billId = $stockinModel->newBill($billData, $billItems);
+        $billId = $stockinModel->newBill($bill, $rows);
         
-        var_dump($billId);
+//        var_dump($billId);
     }
     
     public function _after_delete() {

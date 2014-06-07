@@ -286,7 +286,8 @@
                 "Stockout": {
                     "name": "出库",
                     "actions": {
-                        "confirm": "确认出库"
+                        "confirm": "确认出库",
+                        "makeShipment": "生成发货单"
                     }
                 },
                 "Stockin": {

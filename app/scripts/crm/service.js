@@ -29,7 +29,7 @@ angular.module("ones.crm.services", [])
                         name: {},
                         group: {
                             field: "Group.name",
-                            dataSource: RelCompanyGroupRes,
+                            dataSource: RelationshipCompanyGroupRes,
                             inputType: "select"
                         },
                         discount: {},

@@ -91,6 +91,12 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
                 'update': {method: 'PUT'}
             });
         }])
+    .factory("ShipmentRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "jxc/shipment/:id.json", null, 
+            {
+                'update': {method: 'PUT'}
+            });
+        }])
     .factory("OrdersRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/orders/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])

@@ -17,5 +17,3 @@ class StockinSaveStockin extends WorkflowAbstract {
     }
     
 }
-
-?>
