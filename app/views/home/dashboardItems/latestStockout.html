@@ -1,0 +1,58 @@
+<div ng-controller="DashboardStockoutCtl">
+    <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+            <h4 class="lighter">
+                <i class="icon-signout"></i>
+                <a href="#/JXC/list/stockout" ng-bind="i18n.lang.widgetTitles.latestStockout"></a>
+            </h4>
+            <div class="widget-toolbar">
+                <a data-action="collapse">
+                    <i class="icon-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="widget-body"><div class="widget-body-inner" style="display: block;">
+                <div class="widget-main no-padding">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thin-border-bottom">
+                            <tr>
+                                <th>
+                                    <i class="icon-caret-right blue"></i>
+                                    <span ng-bind="i18n.lang.bill_id"></span>
+                                </th>
+
+                                <th>
+                                    <i class="icon-caret-right blue"></i>
+                                    <span ng-bind="i18n.lang.source_model"></span>
+                                </th>
+
+                                <th class="hidden-480">
+                                    <i class="icon-caret-right blue"></i>
+                                    <span ng-bind="i18n.lang.num"></span>
+                                </th>
+                                <th class="hidden-480">
+                                    <i class="icon-caret-right blue"></i>
+                                    <span ng-bind="i18n.lang.status"></span>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="item in items">
+                                <td>
+                                    <a ng-href="#/JXC/editBill/stockout/{{item.id}}">{{item.bill_id}}</a>
+                                </td>
+                                <td>{{item.source_model|lang}} {{item.source_id|idFormat}}</td>
+                                <td ng-bind="item.total_num"></td>
+                                <td>
+                                    <span class="label label-{{item.processes.currentNode.status_class}} arrowed-right arrowed-in" ng-bind="item.processes.currentNode.status_text"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /widget-main -->
+            </div>
+        </div><!-- /widget-body -->
+    </div>
+</div>

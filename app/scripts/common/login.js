@@ -37,7 +37,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
         };
         
         $scope.doKeyDown = function(event){
-            if(event.keyCode == "13") {
+            if(event.keyCode === 13) {
                 $scope.doLogin();
             }
         };

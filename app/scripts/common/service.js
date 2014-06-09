@@ -71,6 +71,11 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
                 'update': {method: 'PUT'}
             });
         }])
+    .factory("UserDesktopRes", ["$resource", "ones.config", function($resource, cnf){
+            return $resource(cnf.BSU + "home/userDesktop/:id.json", null, {
+                update: {method: "PUT"}
+            });
+    }])
     .factory("StockTransferRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/stockTransfer/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
         }])

@@ -108,6 +108,13 @@
                         "edit": "修改工作流节点",
                         "add" : "新增工作流节点"
                     }
+                },
+                "UserDesktop": {
+                    "name" : "用户桌面项",
+                    "actions": {
+                        "list": "",
+                        "add" : ""
+                    }
                 }
             }
         },
@@ -362,7 +369,8 @@
             "produce_plan": "生产计划",
             "produce_plan_detail": "生产计划详情",
             "outside_bill": "外协单",
-            "produce_and_install": "生产组装单"
+            "produce_and_install": "生产组装单",
+            "user_desktop": "用户桌面项"
         },
         "modules": {
             "Orders": "订单",
@@ -376,6 +384,10 @@
         },
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单",
+            "latestStockin": "最近入库",
+            "latestStockout": "最近出库",
+            "needStockout": "待处理出库单",
+            "needStockin" : "待处理入库单",
             "_product_craft": "产品 %s 工序管理",
             "operate_options": "操作选项"
         },
@@ -477,6 +489,7 @@
         "mobile" : "手机",
         "product": "产品",
         "telephone": "电话",
+        "template": "模板",
         "linkMan": "联系人",
         "total_num": "总数",
         "totalNum": "总数",

@@ -62,6 +62,7 @@ return array(
             "HOME.Types.read",
             "HOME.WorkflowNode.read",
             "HOME.WorkflowProcess.read",
+            "HOME.UserDesktop.read"
         )
     ),
     

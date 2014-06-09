@@ -99,18 +99,21 @@ angular.module("ones.common.directives", ["ones.formMaker"])
             return {
                 restrict: "E",
                 scope: {
-                    wtitle: "="
+                    wtitle: "=",
+                    wclass: "="
                 },
                 replace: false,
                 transclusion: true,
                 compile: function(element, attrs){
-                    var template = '<div class="widget-box">'+
+                    var template = '<div class="widget-box %(class)s">'+
                             '<div class="widget-header widget-header-flat"><h5>%(title)s</h5></div>'+
                             '<div class="widget-body"><div class="widget-main no-padding">%(inner)s</div></div>'+
                         '</div>';
+                    var titles = $rootScope.i18n.lang.widgetTitles;
                     element.html(sprintf(template, {
-                        title : $rootScope.i18n.lang.widgetTitles[attrs.wtitle],
-                        inner : element.html()
+                        title : (attrs.wtitle in titles) ? titles[attrs.wtitle] : attrs.wtitle,
+                        inner : element.html(),
+                        class : attrs.wclass
                     }));
                 }
             };

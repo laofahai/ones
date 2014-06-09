@@ -17,6 +17,16 @@ class StockoutAction extends CommonAction {
     
     protected $indexModel = "StockoutView";
     
+    protected function _filter(&$map) {
+        if(isset($_GET["unhandled"])) {
+            $map["status"] = array("LT", 1);
+        }
+        
+        if(isset($_GET["handled"])) {
+            $map["status"] = array("EGT", 1);
+        }
+    }
+    
 //    public function index() {
 //        $model = D("Stockout");
 //    }

@@ -15,6 +15,7 @@ var ERP = angular.module('ones', [
     
     'ones.passport',
     'ones.home',
+    'ones.home.dashboard',
     'ones.jxc',
     'ones.crm',
     'ones.finance',

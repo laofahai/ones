@@ -17,6 +17,7 @@ class StockinAction extends CommonAction {
     
     protected $workflowAlias = "stockin";
     
+    
     public function read() {
         
         if(!$_GET["includeRows"] or $_GET['workflow']) {

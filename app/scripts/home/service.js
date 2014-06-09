@@ -1,6 +1,21 @@
 'use strict';
 
 angular.module("ones.home.services", [])
+        .service("UserDesktopModel", function(){
+            return {
+                getFieldsStruct: function(){
+                    return {
+                        id: {primary: true},
+                        name: {},
+                        template: {},
+                        listorder: {
+                            inputType: "number",
+                            value: 99
+                        }
+                    };
+                } 
+            };
+        })
          .service("DataModelModel", function() {
             var obj = {
                 subAble: true,

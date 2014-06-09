@@ -185,8 +185,15 @@ class CommonAction extends RestAction {
         $this->_order($order);
         
         $model = $model->where($map)->order($order);
+        $limit = 0;
         if(isset($_GET["typeahead"])) {
-            $model = $model->limit(10);
+            $limit = 10;
+        }
+        if(isset($_GET["limit"])) {
+            $limit = abs(intval($_GET["limit"]));
+        }
+        if($limit) {
+            $model = $model->limit($limit);
         }
         $list = $model->select();
 //        echo $model->getLastSql();exit;

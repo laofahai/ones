@@ -88,6 +88,7 @@ return array(
                 "data_model"   => "HOME/list/dataModel",
                 "types_manage"  => "HOME/list/types",
                 "craft_manage"  => "Produce/list/craft",
+                "user_desktop"  => "HOME/list/userDesktop"
             ),
             "organization_set" => array(
                 "user_setting" => "Passport/list/user",

@@ -4,20 +4,12 @@ angular.module('ones.common', ['ones.common.filters', 'ones.common.directives'])
         .config(["$routeProvider", function($routeProvider) {
             $routeProvider
                     .when('/', {
-                        templateUrl: 'views/home/dashboard.html',
-                        controller: 'MainCtl'
+                        redirectTo: '/HOME/Index/dashboard'
                     })
-                    .when('/HOME/Index/dashboard', {
-                        templateUrl: 'views/home/dashboard.html',
-                        controller: 'MainCtl'
-                    })
-                    .when('/', {
+                    .otherwise({
                         redirectTo: '/HOME/Index/dashboard'
                     })
                     ;
-//                    .otherwise({
-//                        redirectTo: '/HOME/Index/dashboard'
-//                    });
         }])
         .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
             $scope.$on("initDataLoaded", function(event, data){
