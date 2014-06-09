@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2014-06-02 23:34:14
+-- Generation Time: 2014-06-09 07:29:48
 -- 服务器版本： 5.1.73
--- PHP Version: 5.4.24
+-- PHP Version: 5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -529,7 +529,14 @@ INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
 (1, 194, 0),
 (1, 195, 0),
 (1, 196, 0),
-(1, 197, 0);
+(1, 197, 0),
+(1, 198, 0),
+(1, 199, 0),
+(1, 200, 0),
+(1, 201, 0),
+(1, 202, 0),
+(1, 203, 0),
+(1, 204, 0);
 
 -- --------------------------------------------------------
 
@@ -547,7 +554,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_rule` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `category` (`category`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=198 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=205 ;
 
 --
 -- 转存表中的数据 `x_auth_rule`
@@ -704,7 +711,14 @@ INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `condition`, `catego
 (194, 'JXC.ProductTplDetail.read', '查看BOM单详情', 1, '', 'produce'),
 (195, 'JXC.ProductTplDetail.add', '新增BOM单详情', 1, '', 'produce'),
 (196, 'JXC.ProductTplDetail.edit', '修改BOM单详情', 1, '', 'produce'),
-(197, 'JXC.ProductTplDetail.delete', '删除BOM单详情', 1, '', 'produce');
+(197, 'JXC.ProductTplDetail.delete', '删除BOM单详情', 1, '', 'produce'),
+(198, 'CRM.RelationshipCompanyGroup.read', '查看往来单位分组', 1, '', 'crm'),
+(199, 'CRM.RelationshipCompanyGroup.add', '新增往来单位分组', 1, '', 'crm'),
+(200, 'CRM.RelationshipCompanyGroup.edit', '修改往来单位分组', 1, '', 'crm'),
+(201, 'CRM.RelationshipCompanyGroup.delete', '删除往来单位分组', 1, '', 'crm'),
+(202, 'HOME.UserDesktop.add', '新增用户桌面项', 1, '', 'basedata'),
+(203, 'HOME.UserDesktop.edit', '修改用户桌面项', 1, '', 'basedata'),
+(204, 'HOME.UserDesktop.delete', '删除用户桌面项', 1, '', 'basedata');
 
 -- --------------------------------------------------------
 
@@ -1175,7 +1189,15 @@ CREATE TABLE IF NOT EXISTS `x_orders` (
   KEY `sale_type` (`sale_type`),
   KEY `saler_id` (`saler_id`),
   KEY `deleted` (`deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `x_orders`
+--
+
+INSERT INTO `x_orders` (`id`, `bill_id`, `sale_type`, `saler_id`, `customer_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`, `deleted`) VALUES
+(1, 'XS1406071559581', 2, 1, 22, '1.00', '270000.00', '270000.00', '1402127975', 1, '客户说快当地哈', 0),
+(3, 'XS1406091526182', 0, 1, 5, '0.00', '600000.00', '600000.00', '1402298761', 1, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1194,7 +1216,15 @@ CREATE TABLE IF NOT EXISTS `x_orders_detail` (
   `order_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`,`factory_code_all`,`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `x_orders_detail`
+--
+
+INSERT INTO `x_orders_detail` (`id`, `goods_id`, `factory_code_all`, `num`, `unit_price`, `amount`, `discount`, `order_id`) VALUES
+(1, 1, '001-15-12', '1.00', '300000.00', '270000.00', 90, 1),
+(3, 1, '001-15-12', '2.00', '300000.00', '600000.00', 100, 3);
 
 -- --------------------------------------------------------
 
@@ -5014,7 +5044,7 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 --
 
 INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
-('danh7fs9ar6fpvq5dno3o150d5', 1401726844, 0x757365727c613a31313a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223135223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a363a7b733a323a226964223b733a323a223135223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e99480e594aee983a8223b733a333a226c6674223b733a313a2238223b733a333a22726774223b733a313a2239223b733a393a226c6973746f72646572223b733a323a223939223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d7d);
+('292543057a83b1c54275edadc2d6378e', 1402302551, 0x757365727c613a31313a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223135223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a363a7b733a323a226964223b733a323a223135223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e99480e594aee983a8223b733a333a226c6674223b733a313a2238223b733a333a22726774223b733a313a2239223b733a393a226c6973746f72646572223b733a323a223939223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d7d);
 
 -- --------------------------------------------------------
 
@@ -5024,8 +5054,8 @@ INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
 
 CREATE TABLE IF NOT EXISTS `x_shipment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stockout_id` int(11) NOT NULL DEFAULT '0',
-  `shipment_type` int(11) NOT NULL,
+  `stockout_id` int(11) DEFAULT '0',
+  `shipment_type` smallint(4) NOT NULL,
   `from_name` varchar(50) NOT NULL,
   `from_company` varchar(100) NOT NULL,
   `from_address` varchar(255) NOT NULL,
@@ -5079,13 +5109,14 @@ INSERT INTO `x_stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES
 CREATE TABLE IF NOT EXISTS `x_stockin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(30) NOT NULL,
-  `subject` varchar(30) NOT NULL,
+  `type_id` smallint(5) NOT NULL,
+  `subject` varchar(30) DEFAULT NULL,
   `dateline` varchar(12) NOT NULL,
   `total_num` decimal(8,2) NOT NULL DEFAULT '0.00',
   `status` smallint(1) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `source_model` varchar(30) NOT NULL,
-  `source_id` int(11) NOT NULL DEFAULT '0',
+  `source_model` varchar(30) DEFAULT NULL,
+  `source_id` int(11) DEFAULT '0',
   `stock_manager` int(11) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -5093,8 +5124,16 @@ CREATE TABLE IF NOT EXISTS `x_stockin` (
   KEY `subject` (`subject`,`dateline`,`status`),
   KEY `user_id` (`user_id`),
   KEY `confirm_user_id` (`stock_manager`),
-  KEY `source_model` (`source_model`,`source_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `source_model` (`source_model`,`source_id`),
+  KEY `type_id` (`type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `x_stockin`
+--
+
+INSERT INTO `x_stockin` (`id`, `bill_id`, `type_id`, `subject`, `dateline`, `total_num`, `status`, `user_id`, `source_model`, `source_id`, `stock_manager`, `memo`) VALUES
+(1, 'RK1406071558385', 0, 'tesat', '1402127886', '153.00', 2, 1, NULL, 0, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -5114,7 +5153,15 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
   KEY `stockin_id` (`stockin_id`,`goods_id`),
   KEY `factory_code_all` (`factory_code_all`),
   KEY `stock_id` (`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `x_stockin_detail`
+--
+
+INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`, `memo`) VALUES
+(1, 1, 1, '133.00', '001-15-12', 11, NULL),
+(2, 1, 2, '20.00', '002-15-11', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -5138,7 +5185,15 @@ CREATE TABLE IF NOT EXISTS `x_stockout` (
   KEY `source_id` (`source_id`,`dateline`,`outtime`,`stock_manager`),
   KEY `status` (`status`),
   KEY `source_model` (`source_model`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `x_stockout`
+--
+
+INSERT INTO `x_stockout` (`id`, `bill_id`, `source_id`, `source_model`, `dateline`, `outtime`, `total_num`, `stock_manager`, `shipment_id`, `status`, `memo`) VALUES
+(1, 'CK1406071600090', 1, 'Orders', '1402128009', '1402128038', '1.00', 1, 0, 1, NULL),
+(2, 'CK1406091526573', 3, 'Orders', '1402298817', NULL, '0.00', 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -5156,7 +5211,15 @@ CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
   PRIMARY KEY (`id`),
   KEY `stockout_id` (`stockout_id`),
   KEY `factory_code_all` (`factory_code_all`,`goods_id`,`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `x_stockout_detail`
+--
+
+INSERT INTO `x_stockout_detail` (`id`, `stockout_id`, `factory_code_all`, `goods_id`, `stock_id`, `num`) VALUES
+(1, 1, '001-15-12', 1, 11, '1.00'),
+(2, 2, '001-15-12', 1, 0, '2.00');
 
 -- --------------------------------------------------------
 
@@ -5175,7 +5238,15 @@ CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `factory_code_all` (`factory_code_all`,`stock_id`),
   KEY `goods_id` (`goods_id`,`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `x_stock_product_list`
+--
+
+INSERT INTO `x_stock_product_list` (`id`, `factory_code_all`, `goods_id`, `stock_id`, `unit_price`, `cost`, `num`) VALUES
+(1, '001-15-12', 1, 11, '300000.00', '0.00', '132.00'),
+(2, '002-15-11', 2, 1, '180000.00', '0.00', '20.00');
 
 -- --------------------------------------------------------
 
@@ -5263,7 +5334,7 @@ CREATE TABLE IF NOT EXISTS `x_types` (
   KEY `type` (`type`,`listorder`),
   KEY `alias` (`alias`),
   KEY `deleted` (`deleted`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用类型列表' AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用类型列表' AUTO_INCREMENT=23 ;
 
 --
 -- 转存表中的数据 `x_types`
@@ -5288,7 +5359,10 @@ INSERT INTO `x_types` (`id`, `type`, `alias`, `name`, `listorder`, `status`, `de
 (16, 'pay', 'returns', '退货支出', 99, 1, 0),
 (17, 'voucher', '', '记', 99, 1, 0),
 (18, 'produce', 'storage_produce', '库存生产', 99, 0, 0),
-(19, 'produce', 'order_convert', '订单转化', 99, 0, 0);
+(19, 'produce', 'order_convert', '订单转化', 99, 0, 0),
+(20, 'stockin', 'store_check', '库存盘点', 99, 0, 0),
+(21, 'stockin', 'other', '其他', 100, 0, 0),
+(22, 'stockin', 'outside', '外部来源', 99, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -5331,25 +5405,23 @@ INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`
 
 CREATE TABLE IF NOT EXISTS `x_user_desktop` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `block_name` varchar(50) NOT NULL,
-  `listrows` tinyint(3) NOT NULL DEFAULT '5',
-  `listorder` tinyint(3) NOT NULL DEFAULT '99',
-  `position` tinyint(1) NOT NULL DEFAULT '1',
+  `name` varchar(50) NOT NULL,
+  `template` varchar(255) NOT NULL,
+  `width` smallint(2) NOT NULL DEFAULT '6',
+  `listorder` smallint(3) NOT NULL DEFAULT '99',
   PRIMARY KEY (`id`),
-  KEY `uid` (`uid`,`block_name`,`listorder`),
-  KEY `position` (`position`)
+  KEY `listorder` (`listorder`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `x_user_desktop`
 --
 
-INSERT INTO `x_user_desktop` (`id`, `uid`, `block_name`, `listrows`, `listorder`, `position`) VALUES
-(1, 1, 'NeedShipment', 5, 99, 2),
-(2, 1, 'NeedStockin', 5, 99, 2),
-(3, 1, 'NeedStockout', 5, 50, 1),
-(4, 1, 'TodaySale', 5, 99, 1);
+INSERT INTO `x_user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
+(1, '最近入库', 'latestStockin.html', 6, 99),
+(2, '最近出库', 'latestStockout.html', 6, 99),
+(3, '出库待处理', 'needStockout.html', 6, 99),
+(4, '入库待处理', 'needStockin.html', 6, 99);
 
 -- --------------------------------------------------------
 
@@ -5492,8 +5564,32 @@ CREATE TABLE IF NOT EXISTS `x_workflow_process` (
   PRIMARY KEY (`id`),
   KEY `workflow_id` (`workflow_id`,`node_id`,`start_time`,`end_time`,`status`,`user_id`),
   KEY `mainrow_id` (`mainrow_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=106 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
+--
+-- 转存表中的数据 `x_workflow_process`
+--
+
+INSERT INTO `x_workflow_process` (`id`, `workflow_id`, `node_id`, `mainrow_id`, `context`, `start_time`, `end_time`, `status`, `user_id`, `memo`) VALUES
+(1, 2, 11, 1, 'a:0:{}', '1402127918', '1402127926', 1, 1, ''),
+(2, 2, 14, 1, 'a:0:{}', '1402127926', '1402127930', 1, 1, ''),
+(3, 2, 12, 1, 'a:0:{}', '1402127930', '1402127950', 1, 1, ''),
+(4, 2, 13, 1, 'a:0:{}', '1402127950', '', 0, 1, ''),
+(5, 1, 5, 1, 'a:0:{}', '1402127998', '1402128004', 1, 1, ''),
+(6, 1, 4, 1, 'a:0:{}', '1402128004', '1402128004', 1, 1, ''),
+(7, 1, 1, 1, 'a:0:{}', '1402128004', '1402128004', 1, 1, ''),
+(8, 1, 2, 1, 'a:0:{}', '1402128004', '1402128009', 1, 1, ''),
+(9, 4, 21, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1402128009', '1402128038', 1, 1, ''),
+(10, 1, 6, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1402128009', '1402128038', 1, 1, ''),
+(11, 1, 7, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1402128038', '', 0, 1, ''),
+(12, 4, 22, 1, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:1;s:18:"sourceMainrowField";s:8:"order_id";}', '1402128038', '', 0, 1, ''),
+(13, 1, 5, 2, 'a:0:{}', '1402298773', '', 0, 1, ''),
+(14, 1, 5, 3, 'a:0:{}', '1402298778', '1402298814', 1, 1, ''),
+(15, 1, 4, 3, 'a:0:{}', '1402298814', '1402298814', 1, 1, ''),
+(16, 1, 1, 3, 'a:0:{}', '1402298814', '1402298814', 1, 1, ''),
+(17, 1, 2, 3, 'a:0:{}', '1402298814', '1402298817', 1, 1, ''),
+(18, 4, 21, 2, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:8:"order_id";}', '1402298817', '', 0, 1, ''),
+(19, 1, 6, 3, 'a:4:{s:11:"sourceModel";s:6:"Orders";s:14:"sourceWorkflow";s:5:"order";s:8:"sourceId";i:3;s:18:"sourceMainrowField";s:8:"order_id";}', '1402298817', '', 0, 1, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
