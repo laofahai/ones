@@ -3,7 +3,10 @@
 /**
  * 定义资源
  * */
-ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, cnf) {
+ERP.factory("ConfigRes", ["$resource", function($resource) {
+            return $resource(window.BSU + "config/:id.json", null, {'update': {method: 'PUT'}});
+        }])
+    .factory("UserProfileRes", ["$resource", "ones.config", function($resource, cnf) {
         return $resource(cnf.BSU + "passport/profile.json", null, {'update': {method: 'PUT'}});
     }])
     .factory("UserRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -35,9 +38,6 @@ ERP.factory("UserProfileRes", ["$resource", "ones.config", function($resource, c
         }])
     .factory("TypesRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "types/:id.json", null, {'update': {method: 'PUT'}});
-        }])
-    .factory("ConfigRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "config/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("DataModelRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "home/dataModel/:id.json", null, {'update': {method: 'PUT'}});

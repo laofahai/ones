@@ -337,7 +337,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
             }])
         .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams", "TypesRes",
             function($scope, StockinRes, StockinEditModel, ComView, $routeParams, TypesRes) {
-                ComView.makeDefaultPageAction($scope, "JXC/stockin");
+                ComView.makeDefaultPageAction($scope, "JXC/stockin", null, StockinEditModel);
                 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;

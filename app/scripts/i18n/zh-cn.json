@@ -206,6 +206,14 @@
                         "list": "销售退货记录",
                         "edit": "修改退货单"
                     }
+                },
+                "Shipment": {
+                    "name": "发货单",
+                    "actions": {
+                        "add": "",
+                        "list": "",
+                        "edit": ""
+                    }
                 }
             }
         },
@@ -572,6 +580,21 @@
         "Orders": "销售订单",
         "Purchase": "采购",
         "Stockout": "出库单",
-        "Stockin" : "入库单"
+        "Stockin" : "入库单",
+        
+        "shipment_type" : "发货类型",
+        "freight_type" : "运费类型",
+        "shipment_to_company": "收件公司",
+        "shipment_to_name": "收件人",
+        "shipment_to_phone": "收件人电话",
+        "shipment_to_address": "收件人地址",
+        "shipment_from_company": "发件公司",
+        "shipment_from_name": "发件人",
+        "shipment_from_phone": "发件人电话",
+        "shipment_from_address": "发件人地址",
+        "freight_type": "运费类型",
+        "freight": "运费",
+        "weight": "重量",
+        "total_num": ""
     }
 }

@@ -41,7 +41,7 @@
                         <tbody>
                             <tr ng-repeat="item in items">
                                 <td>
-                                    <a ng-href="#/JXC/editBill/stockout/{{item.id}}">{{item.bill_id}}</a>
+                                    <a ng-href="#/JXC/editBill/stockout/id/{{item.id}}">{{item.bill_id}}</a>
                                 </td>
                                 <td>{{item.source_model|lang}} {{item.source_id|idFormat}}</td>
                                 <td ng-bind="item.total_num"></td>

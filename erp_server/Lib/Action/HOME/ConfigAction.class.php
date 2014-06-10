@@ -12,5 +12,18 @@
  * @author nemo
  */
 class ConfigAction extends CommonAction {
-    //put your code here
+    
+    public function index() {
+        $tmp = parent::index(true);
+        if(!$_GET["queryAll"]) {
+            return $tmp;
+        }
+        
+        $tmp[] = array(
+            "alias" => "DEBUG",
+            "value" => APP_DEBUG
+        );
+        $this->response($tmp);
+    }
+    
 }

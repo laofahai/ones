@@ -140,7 +140,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 //            console.log(res);
             //可跳转按钮
             actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
-            ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra);
+            ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra, model);
 //            
             $scope.selectAble = false;
 //            $scope.pageActions = pageActions;
@@ -225,8 +225,13 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         fieldsDefine: fd,
                         name: opts.name
                     };
-                    if (opts.id) {
-                        resource.get({id: opts.id}).$promise.then(function(defaultData) {
+                    if (opts.id || opts.isEdit) {
+                        //
+                        var tmpParams = opts.queryParams || {};
+                        if(opts.id) {
+                            tmpParams.id = opts.id;
+                        }
+                        resource.get(tmpParams).$promise.then(function(defaultData) {
                             $scope[opts.dataObject] = dataFormat($scope.config.fieldsDefine, defaultData);
                         });
                     }
@@ -316,9 +321,9 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 //                console.log(typeof(fieldsDefine));
 //                console.log("getFieldsStruct" in fieldsDefine);
 //                console.log(typeof(fieldsDefine.getFieldsStruct) == "function");
-                if(typeof(fieldsDefine) == "object" 
+                if(typeof(fieldsDefine) === "object" 
                         && "getFieldsStruct" in fieldsDefine 
-                        && typeof(fieldsDefine.getFieldsStruct) == "function") {
+                        && typeof(fieldsDefine.getFieldsStruct) === "function") {
                     var model = fieldsDefine;
                     fieldsDefine = model.getFieldsStruct(true);
                 }
@@ -340,14 +345,14 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 /**
                  * 过滤不显示字段
                  * */
-                var col;
-                for (var key in columnDefs) {
-                    col = columnDefs[key];
-                    if (col.listable === false) {
-                        columnDefs.splice(key, 1);
+                var tmp = columnDefs;
+                columnDefs = [];
+                for(var $i=0;$i<tmp.length;$i++) {
+                    if(tmp[$i].listable !== false) {
+                        columnDefs.push(tmp[$i]);
                     }
                 }
-
+                
                 /**
                  * 分页/过滤器默认项
                  * */
@@ -828,7 +833,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 }
                 
             };
-            service.makeGridLinkActions = function($scope, actions, isBill, extraParams){
+            service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){
                 //可跳转按钮
 //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
                 extraParams = extraParams ? "/"+extraParams : "";
@@ -852,6 +857,20 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         })+extraParams
                     });
                 });
+                
+                //打印按钮
+                if(model && model.printAble) {
+                    $scope.pageActions.push({
+                        label: $scope.i18n.lang.actions.print,
+                        class: "success",
+                        icon : "print",
+                        href : sprintf("/%(group)s/print/%(module)s/id/%(id)s", {
+                            group: $routeParams.group,
+                            module: $routeParams.module,
+                            id: $routeParams.id
+                        })
+                    });
+                }
             };
             service.makeDefaultPageAction = function($scope, module, actions, model){
                 actions = (actions && actions.length) || ["add", "list"];

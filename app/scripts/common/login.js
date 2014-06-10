@@ -1,7 +1,7 @@
 /**
  * 登陆页面逻辑处理
  * */
-var LoginModule = angular.module('login', ["ones.config"]);
+var LoginModule = angular.module('login', ["ones.configModule"]);
 
 LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
     function($scope, $http, $rootScope, conf) {

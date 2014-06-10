@@ -40,6 +40,7 @@ class StockoutAction extends CommonAction {
         if(false === strpos($_GET["id"], ",")) {
             $data = $model->getStockoutBill($_GET["id"]);
         } else {
+            //多条数据
             $data["datas"] = $model->getStockoutBillsByIds(explode(",", $_GET["id"]));
         }
 //        print_r($data);exit;
