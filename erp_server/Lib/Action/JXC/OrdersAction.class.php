@@ -45,8 +45,6 @@ class OrdersAction extends CommonAction {
         $this->readModel = "OrdersView";
         $formData = parent::read(true);
         
-//        print_r($formData);
-        
         $formData["inputTime"] = $formData["dateline"]*1000;
         
         $rowModel = D("OrdersDetailView");
@@ -80,36 +78,20 @@ class OrdersAction extends CommonAction {
         
     }
     
+    public function update() {
+        $model = D("Orders");
+        $data = $model->formatData($_POST);
+        $orderId = $model->newOrder($data);
+    }
+    
     
     /**
      * 
      */
     public function insert() {
         
-        $data = $_POST;
-        
-        foreach($data["rows"] as $k=>$row) {
-            if(!$row or !$row["goods_id"]) {
-                unset($data["rows"][$k]);
-                continue;
-            }
-            list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
-            $data["rows"][$k]["goods_id"] = $goods_id;
-            $data["rows"][$k]["factory_code_all"] = sprintf("%s-%s-%s", $fcCode, $row["standard"], $row["version"]);
-            
-            unset($data["rows"][$k]["standard"]);
-            unset($data["rows"][$k]["version"]);
-        }
-        
-        $data["bill_id"] = makeBillCode("XS");
-        $data["dateline"] = strtotime($data["inputTime"]);
-        $data["saler_id"] = $this->user["id"];
-        
-        unset($data["customerInfo"]);
-        unset($data["discount"]);
-        unset($data["inputTime"]);
-        
         $model = D("Orders");
+        $data = $model->formatData($_POST);
         $orderId = $model->newOrder($data);
         if(!$orderId) {
             $this->error($model->getError());
@@ -131,5 +113,3 @@ class OrdersAction extends CommonAction {
 //    }
             
 }
-
-?>

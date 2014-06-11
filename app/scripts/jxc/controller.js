@@ -119,6 +119,13 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 var countRowAmount = function(index, price, num){
                     $scope.formData[index].amount = Number(parseFloat(num * price).toFixed(2));
                 };
+                var recountTotalAmount = function() {
+                    var totalAmount = 0;
+                    angular.forEach($scope.formData, function(row){
+                        totalAmount += Number(row.amount);
+                    });
+                    $scope.formMetaData.total_amount = totalAmount;
+                };
                 $scope.onNumberBlur = function(event){
                     var context = getInputContext(event.target);
                     
@@ -127,10 +134,14 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         var goods = GoodsRes.get({
                             id: gid[1]
                         }).$promise.then(function(data){
-                            $scope.formData[context.trid].unit_price = Number(data.cost);
+                            $scope.formData[context.trid].unit_price = Number(data.price);
                         });
                     }
+                    if($scope.formMetaData.customerInfo) {
+                        $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
+                    }
                     countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                    recountTotalAmount();
                 };
                 
                 $scope.onUnitPriceBlur = function(event){
@@ -224,6 +235,13 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     };
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
                 };
+                var recountTotalAmount = function() {
+                    var totalAmount = 0;
+                    angular.forEach($scope.formData, function(row){
+                        totalAmount += Number(row.amount);
+                    });
+                    $scope.formMetaData.total_amount = totalAmount;
+                };
                 $scope.onNumberBlur = function(event){
                     var context = getInputContext(event.target);
                     
@@ -239,6 +257,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
                     }
                     countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                    recountTotalAmount();
                 };
                 
                 $scope.onUnitPriceBlur = function(event){
@@ -304,8 +323,17 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 
                 //一行总价
                 var countRowAmount = function(index, price, num, discount){
-                    discount = discount == undefined || 100;
+                    if(discount === undefined || parseInt(discount) === 0) {
+                        discount = 100;
+                    };
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                };
+                var recountTotalAmount = function() {
+                    var totalAmount = 0;
+                    angular.forEach($scope.formData, function(row){
+                        totalAmount += Number(row.amount);
+                    });
+                    $scope.formMetaData.total_amount = totalAmount;
                 };
                 $scope.onNumberBlur = function(event){
                     var context = getInputContext(event.target);
@@ -322,6 +350,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
                     }
                     countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
+                    recountTotalAmount();
                 };
                 
                 $scope.onUnitPriceBlur = function(event){
