@@ -55,7 +55,7 @@ class GoodsCategoryModel extends CommonTreeModel {
             // 缩进显示节点的名称
             $rightLength = count($right);
             if($rightLength > 0) {
-                $row["prefix"] = "|".str_repeat('---', $rightLength);
+                $row["prefix"] = "┗".str_repeat(' ━ ', $rightLength);
             } else {
                 $row["prefix"] = "";
             }
@@ -72,4 +72,3 @@ class GoodsCategoryModel extends CommonTreeModel {
  
     
 }
-?>

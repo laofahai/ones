@@ -14,19 +14,21 @@
 class DataModelDataAction extends CommonAction {
     
     protected $indexModel = "DataModelDataView";
+    protected $readModel = "DataModelDataView";
     
     protected function _filter(&$map) {
+        
         if($_GET["modelId"]) {
-            $map["model_id"] = abs(intval($_GET["modelId"]));
+            $map["DataModelData.model_id"] = abs(intval($_GET["modelId"]));
         }
         if($_GET['fieldAlias']) {
             $map["DataModelFields.field_name"] = $_GET['fieldAlias'];
         }
         if($_GET["typeahead"]) {
-            $map["data"] = array("LIKE", "%{$_GET["typeahead"]}%");
+            $map["DataModelData.data|DataModelData.pinyin"] = array("LIKE", "{$_GET["typeahead"]}%");
         }
         if($_GET["source_id"]) {
-            $map["source_id"] = abs(intval($_GET["source_id"]));
+            $map["DataModelData.source_id"] = abs(intval($_GET["source_id"]));
         }
         //根据分类查询对应的模型
         if($_GET["goods_id"]) {
@@ -35,13 +37,13 @@ class DataModelDataAction extends CommonAction {
                 $model = D("GoodsCategory");
                 $category = $model->find($catid);
                 if($category) {
-                    $map["model_id"] = $category["bind_model"];
+                    $map["DataModelData.model_id"] = $category["bind_model"];
                 }
             } else {
                 $model = D("GoodsCatView");
                 $category = $model->find($_GET["goods_id"]);
                 if($category) {
-                    $map["model_id"] = $category["bind_model_id"];
+                    $map["DataModelData.model_id"] = $category["bind_model_id"];
                 }
             }
         }
@@ -49,13 +51,17 @@ class DataModelDataAction extends CommonAction {
             $model = D("GoodsCategory");
             $category = $model->find($_GET["cat_id"]);
             if($category) {
-                $map["model_id"] = $category["bind_model"];
+                $map["DataModelData.model_id"] = $category["bind_model"];
             }
         }
+        
+        $map["DataModelData.deleted"] = 0;
+        
     }
     
     protected function pretreatment() {
         $_POST["model_id"] = $_POST["modelId"];
+        $_POST["pinyin"] = Pinyin($_POST["data"]);
     }
     
 }

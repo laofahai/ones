@@ -26,19 +26,6 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         templateUrl: 'views/common/grid.html',
                         controller: 'StockWarningCtl'
                     })
-                    //商品拆装模板
-//                    .when('/JXC/ProductTpl', {
-//                        templateUrl: 'views/common/grid.html',
-//                        controller:  'ProductTplCtl'
-//                    })
-//                    .when('/JXC/ProductTpl/add', {
-//                        templateUrl: 'views/common/edit.html',
-//                        controller:  'ProductTplEditCtl'
-//                    })
-//                    .when('/JXC/edit/productTpl/id/:id', {
-//                        templateUrl: 'views/jxc/productTpl/edit.html',
-//                        controller:  'ProductTplEditCtl'
-//                    })
                     .when('/JXC/viewChild/productTpl/pid/:pid', {
                         templateUrl: 'views/jxc/productTpl/edit.html',
                         controller: 'ProductTplDetailCtl'
@@ -379,14 +366,14 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     id: $routeParams.id
                 });
                 
-                //销售类型字段定义
+                //入库类型字段定义
                 $scope.typeSelectOpts = {
                     context: {
-                        field: "stockin_type"
+                        field: "type_id"
                     },
                     fieldDefine: {
                         inputType: "select",
-                        "ng-model": "formMetaData.stockin_type",
+                        "ng-model": "formMetaData.type_id",
                         dataSource: TypesRes,
                         queryParams: {
                             type: "stockin"

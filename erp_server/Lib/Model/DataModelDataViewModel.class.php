@@ -14,9 +14,9 @@
 class DataModelDataViewModel extends CommonViewModel {
     
     protected $viewFields = array(
-        "DataModelData" => array("id","source_id","model_id","field_id","data"),
-        "DataModel" => array("name" => "model_name",  "_on"=>"DataModel.id=DataModelData.model_id"),
-        "DataModelFields" => array("display_name", "field_name ", "_on"=>"DataModelData.field_id=DataModelFields.id")
+        "DataModelData" => array("*", "_type"=>"left"),
+        "DataModel" => array("name" => "model_name",  "_on"=>"DataModel.id=DataModelData.model_id", "_type"=>"left"),
+        "DataModelFields" => array("display_name", "field_name ", "_on"=>"DataModelData.field_id=DataModelFields.id", "_type"=>"left")
     );
     
     /**

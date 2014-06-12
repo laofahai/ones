@@ -19,10 +19,14 @@ class ConfigAction extends CommonAction {
             return $tmp;
         }
         
-        $tmp[] = array(
+        array_push($tmp, array(
+            "alias" => "remoteConfig.loaded",
+            "value" => true
+        ));
+        array_push($tmp, array(
             "alias" => "DEBUG",
             "value" => APP_DEBUG
-        );
+        ));
         $this->response($tmp);
     }
     

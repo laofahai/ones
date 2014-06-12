@@ -34,8 +34,10 @@ angular.module("ones.home.services", [])
             };
             return obj;
          })
-         .service("DataModelFieldsModel", ["$rootScope", function($rootScope) {
-            var obj = {};
+         .service("DataModelFieldsModel", ["$rootScope", "$routeParams", function($rootScope, $routeParams) {
+            var obj = {
+                returnPage: sprintf("/HOME/viewChild/dataModel/pid/"+$routeParams.pid)
+            };
             obj.getFieldsStruct = function(){
                 var i18n = $rootScope.i18n.lang;
                 return {
@@ -80,7 +82,15 @@ angular.module("ones.home.services", [])
                             primary: true,
                             displayName: "ID"
                         },
+                        model_id: {
+                            listable: false,
+                            inputType: "hidden"
+                        },
                         data: {},
+                        pinyin: {
+                            required: false,
+                            displayName: i18n.firstChar
+                        },
                         model_name: {
                             displayName: i18n.modelName,
                             hideInForm: true

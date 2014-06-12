@@ -18,10 +18,11 @@ class CommonAction extends RestAction {
     protected $user;
 
     public function __construct() {
+        
         parent::__construct();
         
-        if(!IS_AJAX and !APP_DEBUG) {
-            exit("Permission Denied");
+        if(!APP_DEBUG && !IS_AJAX) {
+            $this->error("Direct Visit");exit;
         }
         
         $_POST = json_decode(file_get_contents('php://input'), true);
@@ -223,6 +224,7 @@ class CommonAction extends RestAction {
         $map = array(
             "id" => abs(intval($_GET["id"]))
         );
+        
         $this->_filter($map);
         
         $item = $model->where($map)->find();
@@ -308,13 +310,10 @@ class CommonAction extends RestAction {
      */
     public function delete($return = false) {
         $name = $this->getActionName();
-        
         $model = D($name);
         $pk = $model->getPk();
         $id = $_REQUEST [$pk];
-        
         $rs = $model->doDelete($id);
-        
         if($return) {
             return $rs;
         } 

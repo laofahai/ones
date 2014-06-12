@@ -142,7 +142,7 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                 $routeParams.module = "DataModelFields";
                 var actions = $scope.$parent.i18n.urlMap.HOME.modules.DataModelFields.actions;
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
-                ComView.makeGridSelectedActions($scope, model, res, "HOME", "DataModelFields"); 
+                ComView.makeGridSelectedActions($scope, model, res, "HOME", "DataModelFields", "/pid/"+$routeParams.pid); 
                 ComView.displayGrid($scope,model,res, {
                     queryExtraParams: {
                         modelId: $routeParams.pid
@@ -164,23 +164,12 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
         
         .controller("DataModelFieldsEditCtl", ["$scope", "DataModelFieldsModel", "DataModelFieldsRes", "ComView", "$routeParams",
             function($scope, DataModelFieldsModel, DataModelFieldsRes, ComView, $routeParams) {
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.add,
-                        class : "success",
-                        href  : "/HOME/DataModelFields/add/pid/"+$routeParams.id
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.list,
-                        class : "primary",
-                        href  : "/HOME/DataModel/viewSub/id/"+$routeParams.pid
-                    }
-                ];
+                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
                 $scope.selectAble = false;
                 var opts = {
                     name: "DataModelEdit",
                     module: "/HOME/DataModelFields",
-                    returnPage: "/HOME/DataModel/viewSub/id/"+$routeParams.id,
+                    returnPage: "/HOME/viewChild/dataModel/pid/"+$routeParams.pid,
                     id: $routeParams.id
                 };
                 ComView.displayForm($scope, DataModelFieldsModel, DataModelFieldsRes, opts);

@@ -67,16 +67,23 @@ class StockinModel extends CommonModel {
         unset($bill["source_model"]);
         unset($bill["source_id"]);
         
-        if(!$this->save($bill)) {
+        if(false === $this->save($bill)) {
+//            echo $this->getLastSql();
             $this->rollback();
             return false;
         }
+//        echo $this->getLastSql();exit;
         
         foreach($rows as $row) {
-            if(!$detailModel->save($row)) {
+            if(!$row["id"]) {
+                continue;
+            }
+            if(false === $detailModel->save($row)) {
+//                echo $detailModel->getLastSql();exit;
                 $this->rollback();
                 return false;
             }
+            echo $detailModel->getLastSql();
         }
         
         $this->commit();
@@ -97,7 +104,8 @@ class StockinModel extends CommonModel {
             "user_id" => getCurrentUid(),
             "stock_manager" => 0,
             "total_num"=> $postData["total_num"],
-            "memo"    => $postData["memo"]
+            "memo"    => $postData["memo"],
+            "type_id" => $postData["type_id"]
         );
         
         $id = abs(intval($_GET["id"]));
@@ -115,13 +123,13 @@ class StockinModel extends CommonModel {
             $billItems[$k] = array(
                 "goods_id"   => $goodsId,
                 "num"        => $billItem["num"],
-                "factory_code_all" => sprintf("%s-%d-%d", 
-                        $factory_code, 
-                        $billItem["standard"],
-                        $billItem["version"]),
+                "factory_code_all" => makeFactoryCode($billItem, $factory_code),
                 "memo" => $billItem["memo"],
                 "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
             );
+            if($billItem["id"]) {
+                $billItems[$k]["id"] = $billItem["id"];
+            }
         }
         
         return array(

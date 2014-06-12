@@ -35,7 +35,7 @@ class ProductTplDetailAction extends CommonAction {
                 $stock_id = $row["stock_id"];
             } else {
                 list($fc,$goods_id,$catid) = explode("_", $row["goods_id"]);
-                $factory_code_all = sprintf("%s-%d-%d", $fc, $row["standard"], $row["version"]);
+                $factory_code_all = makeFactoryCode($row, $fc);
                 $stock_id = $row["stock"];
             }
             

@@ -1,0 +1,8 @@
+<?php 
+    if(APP_DEBUG): 
+        echo <<<EOF
+        {$e["file"]}-{$e["line"]}:{$e["message"]}
+EOF;
+    else:
+        echo "Server Error.";
+    endif;

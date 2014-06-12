@@ -800,10 +800,10 @@
             $scope[this.opts.dataName] = {};
             
             $scope.$parent.doKeydown = function(event){
-                if(event.keyCode === 13) {
+                if(event.keyCode === 13 && $(event.target).attr("ng-model")) {
                     event.preventDefault();
                     event.stopPropagation();
-//                    $scope.$parent.doSubmit();
+                    $scope.$parent.doSubmit();
                 }
             };
             

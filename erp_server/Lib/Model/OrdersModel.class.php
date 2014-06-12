@@ -76,7 +76,7 @@ class OrdersModel extends CommonModel {
             }
             list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
             $data["rows"][$k]["goods_id"] = $goods_id;
-            $data["rows"][$k]["factory_code_all"] = sprintf("%s-%s-%s", $fcCode, $row["standard"], $row["version"]);
+            $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
             
             unset($data["rows"][$k]["standard"]);
             unset($data["rows"][$k]["version"]);

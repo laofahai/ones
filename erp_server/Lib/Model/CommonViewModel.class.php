@@ -60,7 +60,7 @@ class CommonViewModel extends ViewModel{
 //                }
 //            }
             if(isset($v["factory_code"]) and $v["color_id"] and $v["standard_id"]) {
-                $data[$k]["factory_code_all"] = sprintf("%s-%s-%s", $v["factory_code"],$v["color_id"],$v["standard_id"]);
+                $data[$k]["factory_code_all"] = makeFactoryCode($v, $v["factory_code"]);
             }
             
             $ids[] = $v[$this->workflowMainRowField];
@@ -104,7 +104,7 @@ class CommonViewModel extends ViewModel{
             }
         }
         if(isset($data["factory_code"]) and $data["color_id"] and $data["standard_id"]) {
-            $data["factory_code_all"] = sprintf("%s-%s-%s", $data["factory_code"],$data["color_id"],$data["standard_id"]);
+            $data["factory_code_all"] = makeFactoryCode($data, $data["factory_code"]);
         }
         
         /**

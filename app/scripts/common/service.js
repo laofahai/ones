@@ -1,10 +1,11 @@
 'use strict';
-
 /**
  * 定义资源
  * */
-ERP.factory("ConfigRes", ["$resource", function($resource) {
-            return $resource(window.BSU + "config/:id.json", null, {'update': {method: 'PUT'}});
+(function(angular){
+    angular.module('ones.resources', [])
+    .factory("ConfigRes", ["$resource", "ones.config", function($resource, conf) {
+            return $resource(conf.BSU + "config/:id.json", null, {'update': {method: 'PUT'}});
         }])
     .factory("UserProfileRes", ["$resource", "ones.config", function($resource, cnf) {
         return $resource(cnf.BSU + "passport/profile.json", null, {'update': {method: 'PUT'}});
@@ -175,3 +176,4 @@ ERP.factory("ConfigRes", ["$resource", function($resource) {
             return $resource(cnf.BSU+"produce/doCraft/:id.json", null, {'update': {method: 'PUT'}});
     }])
     ;
+})(angular);

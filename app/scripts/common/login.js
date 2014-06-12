@@ -32,7 +32,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
                 }).
                 error(function(data, status, headers, config) {
                     $scope.error.isError = true;
-                    $scope.error.msg = 'Server Error.';
+                    $scope.error.msg = 'Server Error:'+data;
                 });
         };
         
@@ -54,7 +54,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
  * */
 LoginModule.run(["$http", function($http){
     $http.defaults.useXDomain = true;
-    delete $http.defaults.headers.common['X-Requested-With'];
+    $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
     $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     $http.defaults.transformRequest = function (data) {
         return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;

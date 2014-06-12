@@ -81,7 +81,7 @@ angular.module('ones.common', ['ones.common.filters', 'ones.common.directives'])
 			position:'right'
 		},
 		lineLegend: 'traditional'
-	}
+	};
         }])
         .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
             $scope.$on("initDataLoaded", function(event, data){

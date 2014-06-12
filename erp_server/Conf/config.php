@@ -27,6 +27,8 @@ return array(
     'URL_MODEL' => 0,
     'URL_ROUTE_RULES' => require "route.php",
     
+    'TMPL_EXCEPTION_FILE'=>'./App/Tpl/error.html',
+    
     /**
      * 单据编号前缀
      */

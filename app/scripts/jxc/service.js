@@ -207,13 +207,16 @@ angular.module("ones.jxc.services", [])
                         hideInForm: true
                     },
                     goods_name: {
-                        inputType: "static"
+                        inputType: "static",
+                        hideInForm: true
                     },
                     standard: {
-                        inputType: "static"
+                        inputType: "static",
+                        hideInForm: true
                     },
                     version: {
-                        inputType: "static"
+                        inputType: "static",
+                        hideInForm: true
                     },
                     unit_price: {
                         cellFilter: "currency:'￥'",
@@ -229,7 +232,8 @@ angular.module("ones.jxc.services", [])
                     },
                     stock_name: {
                         inputType: "static",
-                        displayName: i18n.stock
+                        displayName: i18n.stock,
+                        hideInForm: true
                     },
                     num: {
                         hideInForm: true,

@@ -31,7 +31,7 @@ class GoodsViewModel extends CommonModel {
             return $data;
         }
         foreach($data as $k=>$v) {
-            $data[$k]["factory_code_all"] = sprintf("%s-%s-%s", $v["factory_code"], $v["color_id"], $v["standard_id"]);
+            $data[$k]["factory_code_all"] = makeFactoryCode($v, $v["factory_code"]);
         }
         return $data;
     }

@@ -31,7 +31,8 @@ class ProductTplAction extends CommonAction {
             case "put":
             case "post":
                 $goods = D("Goods")->find($_POST["goods_id"]);
-                $_POST["factory_code_all"] = sprintf("%s-%d-%d", $goods["factory_code"], $_POST["standard"], $_POST["version"]);
+                $_POST["factory_code_all"] = makeFactoryCode($goods, $goods["factory_code"]);
+                //sprintf("%s-%d-%d", $goods["factory_code"], $_POST["standard"], $_POST["version"]);
         }
 //        print_r($_POST);exit;
     }

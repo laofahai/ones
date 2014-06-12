@@ -120,23 +120,23 @@ class CommonModel extends AdvModel{
     /**
      * 执行删除
      */
-    public function doDelete($ids, $pk, $modelName = null) {
+    public function doDelete($ids, $pk=null, $modelName = null) {
         if(!$modelName) {
             $model = $this;
         } else {
             $model = D($modelName);
         }
-        
         $pk = $pk ? $pk : $model->getPk();
-        
         $condition = array(
             $pk => array("IN", is_array($ids) ? implode(",", $ids) : $ids)
         );
         
+        /**
+         * 判断是否有deleted字段
+         */
         if(in_array("deleted", $model->fields)) {
             $rs = $model->where($condition)->save(array("deleted"=>1));
         } else {
-//                    echo 222;exit;
             $rs = $model->where($condition)->delete();
         }
         
@@ -145,5 +145,3 @@ class CommonModel extends AdvModel{
     }
     
 }
-
-?>

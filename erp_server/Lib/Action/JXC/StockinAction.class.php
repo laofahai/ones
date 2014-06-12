@@ -64,6 +64,8 @@ class StockinAction extends CommonAction {
         }
         
         list($bill, $rows) = $model->formatData($_POST);
+//        print_r($bill);
+//        print_r($rows);exit;
         $model->editBill($bill, $rows);
     }
     
@@ -123,18 +125,18 @@ class StockinAction extends CommonAction {
 //        var_dump($billId);
     }
     
-    public function _after_delete() {
-        $id = $_REQUEST["id"];
-        $model = D("StockinDetail");
-        $model->where(array(
-            "stockin_id" => array("IN", $id)
-        ))->delete();
-        $workflow = D("Workflow")->getByAlias($this->workflowAlias);
-        $model = D("WorkflowProcess");
-        $model->where(array(
-            "mainrow_id" => array("IN", $id),
-            "workflow_id"=> $workflow["id"]
-        ))->delete();
-    }
+//    public function _after_delete() {
+//        $id = $_REQUEST["id"];
+//        $model = D("StockinDetail");
+//        $model->where(array(
+//            "stockin_id" => array("IN", $id)
+//        ))->delete();
+//        $workflow = D("Workflow")->getByAlias($this->workflowAlias);
+//        $model = D("WorkflowProcess");
+//        $model->where(array(
+//            "mainrow_id" => array("IN", $id),
+//            "workflow_id"=> $workflow["id"]
+//        ))->delete();
+//    }
     
 }

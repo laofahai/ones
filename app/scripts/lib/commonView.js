@@ -114,7 +114,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             
             res = $injector.get(module.ucfirst()+"Res");
             model = $injector.get(module.ucfirst()+"Model");
-            
             var opts = {};
             if($routeParams.extra) {
                 opts.queryExtraParams = parseParams($routeParams.extra);
@@ -146,13 +145,17 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 var queryExtraParams = parseParams($routeParams.extra);
                 $routeParams = $.extend($routeParams, queryExtraParams);
             }
-//            
+//           console.log($routeParams); 
             $scope.selectAble = false;
 //            $scope.pageActions = pageActions;
-            ComView.displayForm($scope, model, res, {
+            var opts = {
                 id: $routeParams.id,
                 queryExtraParams: queryExtraParams
-            });
+            };
+            if(model.returnPage) {
+                opts.returnPage = model.returnPage;
+            }
+            ComView.displayForm($scope, model, res, opts);
         }])
     .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config", "WorkflowNodeRes",
         function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf, WorkflowNodeRes){
@@ -213,6 +216,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 });
             };
             service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
+//                console.log(arguments);
                 var defaultOpts = {
                     name: "form", //表单名称
                     id: null, //如为编辑，需传递此参数
@@ -269,6 +273,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 
                 //提交表单
                 $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
+//                    console.log(opts);return;
                     if (!$scope[opts.name].$valid) {
                         service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                         return;
@@ -278,6 +283,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         var getParams = {};
                         for (var k in $routeParams) {
                             getParams[k] = $routeParams[k];
+                            $scope[opts.dataObject][k] = $routeParams[k];
                         }
                         getParams.id = opts.id;
                         resource.update(getParams, $scope[opts.dataObject], function(data){
@@ -311,7 +317,8 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         });
                     }
 
-
+                    
+                    
                 };
             };
 
@@ -405,44 +412,44 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 /**
                  * 默认方法
                  * */
-                $scope.doAddChild = opts.doAddChild ? opts.doAddChild : function(){
-                    if ($scope.gridSelected.length) {
-                        $location.url(opts.module + opts.subModule + "/add/pid/"+$scope.gridSelected[0].id);
-                    }
-                };
-                $scope.doView = opts.doView ? opts.doView : function() {
-                    if ($scope.gridSelected.length) {
-                        $location.url(opts.module + opts.subModule + "/view/id/" + $scope.gridSelected[0].id);
-                    }
-                };
-                $scope.doViewSub = opts.doViewSub ? opts.doViewSub : function() {
-                    if ($scope.gridSelected.length) {
-                        $location.url(opts.module + opts.subModule + "/viewSub/id/" + $scope.gridSelected[0].id);
-                    }
-                };
-                $scope.doViewDataModel = opts.doViewDataModel ? opts.doViewDataModel : function() {
-                    $location.url("/HOME/DataModelData/" + $scope.gridSelected[0].bind_model);
-                };
-                $scope.doEditSelected = opts.doEditSeleted ? opts.doEditSelected : function() {
-                    if ($scope.gridSelected.length) {
-                        $location.url(opts.module + opts.subModule + "/edit/id/" + $scope.gridSelected[0].id+opts.editExtraParams);
-                    }
-                };
-                $scope.doDeleteSelected = opts.doDeleleSelected ? opts.doDeleleSelected : function() {
-                    if (!confirm(sprintf($scope.i18n.lang.confirm_delete, $scope.gridSelected.length))) {
-                        return false;
-                    }
-                    var ids = [];
-                    for (var i = 0; i < $scope.gridSelected.length; i++) {
-                        ids.push($scope.gridSelected[i].id);
-                    }
-                    resource.delete({id: ids.join(",")}, function(data) {
-                        $scope.$broadcast("gridData.changed");
-                    });
-
-                    $scope.gridOptions.selectedItems = [];
-                    $scope.gridSelected = [];
-                };
+//                $scope.doAddChild = opts.doAddChild ? opts.doAddChild : function(){
+//                    if ($scope.gridSelected.length) {
+//                        $location.url(opts.module + opts.subModule + "/add/pid/"+$scope.gridSelected[0].id);
+//                    }
+//                };
+//                $scope.doView = opts.doView ? opts.doView : function() {
+//                    if ($scope.gridSelected.length) {
+//                        $location.url(opts.module + opts.subModule + "/view/id/" + $scope.gridSelected[0].id);
+//                    }
+//                };
+//                $scope.doViewSub = opts.doViewSub ? opts.doViewSub : function() {
+//                    if ($scope.gridSelected.length) {
+//                        $location.url(opts.module + opts.subModule + "/viewSub/id/" + $scope.gridSelected[0].id);
+//                    }
+//                };
+//                $scope.doViewDataModel = opts.doViewDataModel ? opts.doViewDataModel : function() {
+//                    $location.url("/HOME/DataModelData/" + $scope.gridSelected[0].bind_model);
+//                };
+//                $scope.doEditSelected = opts.doEditSeleted ? opts.doEditSelected : function() {
+//                    if ($scope.gridSelected.length) {
+//                        $location.url(opts.module + opts.subModule + "/edit/id/" + $scope.gridSelected[0].id+opts.editExtraParams);
+//                    }
+//                };
+//                $scope.doDeleteSelected = opts.doDeleleSelected ? opts.doDeleleSelected : function() {
+//                    if (!confirm(sprintf($scope.i18n.lang.confirm_delete, $scope.gridSelected.length))) {
+//                        return false;
+//                    }
+//                    var ids = [];
+//                    for (var i = 0; i < $scope.gridSelected.length; i++) {
+//                        ids.push($scope.gridSelected[i].id);
+//                    }
+//                    resource.delete({id: ids.join(",")}, function(data) {
+//                        $scope.$broadcast("gridData.changed");
+//                    });
+//
+//                    $scope.gridOptions.selectedItems = [];
+//                    $scope.gridSelected = [];
+//                };
 
                 //导出excel
                 $scope.doExport = function(){};
@@ -519,17 +526,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         return;
                     }
                     if(model.editAble !== false) {
-                        //自动模式
-                        if($routeParams.group && $routeParams.module) {
-                            $location.url(sprintf("/%(group)s/%(action)s/%(module)s/id/%(id)d", {
-                                group: $routeParams.group,
-                                action: model.isBill ? "editBill" : "edit",
-                                module: $routeParams.module,
-                                id: parseInt(item.id)
-                            }));
-                        }
-                        
-                        
+                        $scope.doEditSelected($scope.gridSelected[0]);
                     } else if(model.subAble && model.viewSubAble) {
                         
                     }
@@ -625,11 +622,11 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 };
             };
             
-            service.makeGridSelectedActions = function($scope, model, res, group, module){
+            service.makeGridSelectedActions = function($scope, model, res, group, module, extraParams){
                 //选中项操作
+                extraParams = extraParams || "";
                 //编辑
                 $scope.selectedActions = [];
-                var extraParams = "";
                 if($routeParams.extra) {
                     var tmp = parseParams($routeParams.extra);
                     angular.forEach(tmp, function(item, key){
@@ -638,24 +635,27 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 }
                 
                 //编辑
+                $scope.doEditSelected = function(item){
+                    if(!item.id) {
+                        return;
+                    }
+                    var action = "edit";
+                    //如果是单据形式的
+                    if(model.isBill) {
+                        action = "editBill";
+                    }
+                    $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)s', {
+                        group : group,
+                        action: action,
+                        module: module,
+                        id: item.id
+                    })+extraParams);
+                };
                 if(model.editAble === undefined || model.editAble) {
                     $scope.selectedActions.push({
                         label: $rootScope.i18n.lang.actions.edit,
                         action: function(){
-                            if($scope.gridSelected.length > 1) {
-                                return;
-                            }
-                            var action = "edit";
-                            //如果是单据形式的
-                            if(model.isBill) {
-                                action = "editBill";
-                            }
-                            $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)s', {
-                                group : group,
-                                action: action,
-                                module: module,
-                                id: $scope.gridSelected[0].id
-                            })+extraParams);
+                            return $scope.doEditSelected($scope.gridSelected[0]);
                         },
                         class: "default",
                         multi: false
