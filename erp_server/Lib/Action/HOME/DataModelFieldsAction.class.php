@@ -26,5 +26,9 @@ class DataModelFieldsAction extends CommonAction {
     }
     
     
+    protected function pretreatment() {
+        $_POST["model_id"] = $_POST["pid"];
+    }
+    
     
 }
