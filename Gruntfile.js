@@ -337,8 +337,7 @@ module.exports = function (grunt) {
              '<%= yeoman.app %>/bower_components/chosen/chosen.jquery.js',
              '<%= yeoman.app %>/bower_components/angular-chosen-localytics/chosen.js',
              '<%= yeoman.app %>/bower_components/select2/select2.js',
-             '<%= yeoman.app %>/bower_components/angular-ui-select/dist/select.js',
-             '<%= yeoman.app %>/bower_components/d3/d3.min.js',
+             '<%= yeoman.app %>/bower_components/angular-ui-select/dist/select.js'
            ],
            '<%= yeoman.dist %>/scripts/ace.js': [
              '<%= yeoman.app %>/vendor/ace/typeahead-bs2.min.js',

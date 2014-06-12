@@ -12,7 +12,6 @@ var ERP = angular.module('ones', [
     'localytics.directives',
     'ui.utils',
     'ui.select',
-    'angularCharts',
     
     'ones.passport',
     'ones.home',
