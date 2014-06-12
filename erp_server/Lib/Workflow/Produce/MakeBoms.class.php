@@ -79,18 +79,21 @@ class ProduceMakeBoms extends WorkflowAbstract {
          * 生产计划详情
          */
         foreach($details as $row) {
-            $fcas[] = $row["factory_code_all"];
+            $fcas[$row["factory_code_all"]] = $row["factory_code_all"];
             $products[$row["factory_code_all"]] = $row;
         }
         
-        $fcas[] = $fcas[0];
+//        $fcas[] = $fcas[0];
         
         $tpls = $tplModel->where(array(
             "factory_code_all" => array("IN", sprintf("%s", implode(",", $fcas)))
         ))->select();
-//        echo $tplModel->getLastSql();
+//        echo $tplModel->getLastSql();exit;
 //        print_r($tpls);
 //      
+        if(!$tpls) {
+            $this->response($this->returnData);
+        }
         foreach($tpls as $tp) {
             $tplids[] = $tp["id"];
             $theTpls[$tp["id"]] = $tp;
@@ -99,6 +102,8 @@ class ProduceMakeBoms extends WorkflowAbstract {
         $boms = $tplDetailModel->where(array(
             "tpl_id" => array("IN", implode(",", $tplids))
         ))->select();
+        
+//        echo $tplDetailModel->getLastSql();exit;
         
         /**
          * 清单所有需用物料
@@ -109,7 +114,6 @@ class ProduceMakeBoms extends WorkflowAbstract {
 //            $boms[$k]["num"] = $bom["num"] * $products[$bom["factory_code_all"]]["num"];
         }
         
-//        print_r($theBoms);exit;
         
         /**
          * @ $k => 原厂编码

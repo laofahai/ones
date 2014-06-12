@@ -24,5 +24,3 @@ class FinancePayPlanModel extends CommonModel {
     );
     
 }
-
-?>

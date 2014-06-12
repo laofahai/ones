@@ -98,7 +98,12 @@ $urlRoutes = array_merge($base,
     routeMaker("produce/goodsCraft", "Produce/GoodsCraft", array("list", "put")),
     routeMaker("produce/producePlan", "Produce/ProducePlan"),
     routeMaker("produce/producePlanDetail", "Produce/ProducePlanDetail"),
-    routeMaker("produce/doCraft", "Produce/DoCraft")
+    routeMaker("produce/doCraft", "Produce/DoCraft"),
+        
+    routeMaker("finance/financeAccount", "Finance/FinanceAccount"),
+    routeMaker("finance/financeReceivePlan", "Finance/FinanceReceivePlan"),
+    routeMaker("finance/financePayPlan", "Finance/FinancePayPlan"),
+    routeMaker("finance/financeRecord", "Finance/FinanceRecord")
         
 //    routeMaker("jxc")
 );

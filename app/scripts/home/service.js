@@ -105,7 +105,11 @@ angular.module("ones.home.services", [])
                         return struct;
                     } else {
                         var defer = $q.defer();
-                        DataModelFieldsRes.query({modelId:$routeParams.modelId}, function(data){
+                        var params = {
+                            modelId:$routeParams.modelId
+                        };
+                        console.log($routeParams);
+                        DataModelFieldsRes.query(params, function(data){
                             struct.field_id.dataSource = data;
                             defer.resolve(struct);
                         });

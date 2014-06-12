@@ -31,7 +31,7 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
             $data = array(
                 "source_model" => "Orders",
                 "source_id" => $this->mainrowId,
-                "subject" => $theOrder["subject"],
+                "subject" => "",
                 "customer_id" => $theOrder["customer_id"],
                 "amount" => $theOrder["total_price_real"],
                 "create_dateline" => CTS,
@@ -43,7 +43,9 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
             $lastId = $financeModel->add($data);
 //            echo $lastId;exit;
 //            echo $financeModel->getLastSql();exit;
-        
+            if(!$lastId) {
+                return false;
+            }
             import("@.Workflow.Workflow");
             $workflow = new Workflow("financeReceive");
             $node = $workflow->doNext($lastId, "", true);
@@ -55,5 +57,3 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
     }
     
 }
-
-?>

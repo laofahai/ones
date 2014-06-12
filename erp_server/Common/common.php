@@ -347,3 +347,42 @@ function DBBackup($options=array()) {
 function makeBillCode($prefix=""){
     return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
 }
+
+/**
+ * 统一处理的类型
+ * **/
+function getTypes($type) {
+    $types = F("Types");
+    if(!$types) {
+        $tmp = D("Types")->order("listorder DESC,id ASC")->select();
+        foreach($tmp as $v) {
+            $types[$v["type"]][] = $v;
+        }
+        F("Types", $types);
+    }
+    return $types[$type];
+}
+
+function getTypesIndex($type, $idField="id", $field="name") {
+    $types = getTypes($type);
+    foreach($types as $k=>$v) {
+        $tmp[$v[$idField]] = $v[$field];
+    }
+    return $tmp;
+}
+function getTypeByAlias($type, $alias) {
+    $types = getTypes($type);
+    foreach($types as $t) {
+        if($t["alias"] == $alias) {
+            return $t;
+        }
+    }
+}
+function getTypeIdByAlias($type, $alias) {
+    $types = getTypes($type);
+    foreach($types as $t) {
+        if($t["alias"] == $alias) {
+            return $t["id"];
+        }
+    }
+}

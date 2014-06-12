@@ -5,6 +5,7 @@ angular.module("ones.finance.service", [])
                     getFieldsStruct: function(){
                         return {
                             id: {
+                                primary: true,
                                 width: "50"
                             },
                             balance_direction: {
@@ -27,10 +28,14 @@ angular.module("ones.finance.service", [])
                 return {
                     getFieldsStruct: function() {
                         return {
-                            id: {},
+                            id: {primary: true},
                             name: {},
-                            balance: {},
-                            listorder: {}
+                            balance: {
+                                inputType: "number"
+                            },
+                            listorder: {
+                                value: 99
+                            }
                         };
                     }
                 };
@@ -39,7 +44,7 @@ angular.module("ones.finance.service", [])
                 return {
                     getFieldsStruct: function(){
                         return {
-                            id: {},
+                            id: {primary: true},
                             subject: {},
                             type: {},
                             sponsor: {},
@@ -60,7 +65,7 @@ angular.module("ones.finance.service", [])
                 return {
                     getFieldsStruct: function(){
                         return {
-                            id: {},
+                            id: {primary: true},
                             subject: {},
                             type: {},
                             sponsor: {},

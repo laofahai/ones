@@ -27,7 +27,6 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 templateUrl: "views/produce/producePlan/doCraft.html",
                 controller : "WorkflowDoCraftCtl"
             })
-            
             ;
         }])
     //生成发货单
@@ -98,7 +97,6 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 id: $routeParams.id,
                 queryExtraParams: {includeSource: true, workflowing: true}
             });
-
             $scope.doSubmit = function() {
                 $scope.formMetaData.rows = $scope.formData;
                 res.doPostWorkflow({
@@ -133,7 +131,6 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
 //                    data: $scope.formMetaData
                 };
                 res.doPostWorkflow(data).$promise.then(function(data){
-                    return;
                     $location.url("/JXC/list/stockin");
                 });
             };
@@ -159,7 +156,7 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                     donext: true,
                     data: $scope.formMetaData
                 }).$promise.then(function(data){
-                    $location.url("/JXC/list/stockout");
+                    $location.url("/JXC/list/producePlan");
                 });
             };
         }])

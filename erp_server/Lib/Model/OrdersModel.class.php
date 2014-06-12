@@ -43,7 +43,6 @@ class OrdersModel extends CommonModel {
         }
         
         $orderId = $this->$method($data);
-//        echo $this->getLastSql();exit;
         if(false === $orderId) {
             $this->rollback();
             return false;
@@ -95,7 +94,7 @@ class OrdersModel extends CommonModel {
             unset($data["dateline"]);
         }
         
-        $data["saler_id"] = $this->user["id"];
+        $data["saler_id"] = getCurrentUid();
         
         unset($data["customerInfo"]);
         unset($data["discount"]);

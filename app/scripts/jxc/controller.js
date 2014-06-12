@@ -236,8 +236,11 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
                 };
                 var recountTotalAmount = function() {
-                    var totalAmount = 0;
+                    var totalAmount = new Number();
                     angular.forEach($scope.formData, function(row){
+                        if(!row.amount) {
+                            return;
+                        }
                         totalAmount += Number(row.amount);
                     });
                     $scope.formMetaData.total_amount = totalAmount;

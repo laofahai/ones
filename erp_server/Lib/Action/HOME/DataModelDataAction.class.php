@@ -25,6 +25,9 @@ class DataModelDataAction extends CommonAction {
         if($_GET["typeahead"]) {
             $map["data"] = array("LIKE", "%{$_GET["typeahead"]}%");
         }
+        if($_GET["source_id"]) {
+            $map["source_id"] = abs(intval($_GET["source_id"]));
+        }
         //根据分类查询对应的模型
         if($_GET["goods_id"]) {
             if(strpos($_GET["goods_id"], "_") !== false) {

@@ -191,7 +191,7 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                     id: 0,
                     cat_id: $routeParams.catid
                 }).$promise.then(function(data){
-                    $location.url("/HOME/list/DataModelData/modelId/"+data.id);
+                    $location.url("/HOME/list/DataModelData/modelId/"+data.id+"/source_id/"+$routeParams.catid);
                 });
             }])
         .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "ComView", "$routeParams",

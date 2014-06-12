@@ -141,11 +141,17 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             //可跳转按钮
             actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
             ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra, model);
+            
+            if($routeParams.extra) {
+                var queryExtraParams = parseParams($routeParams.extra);
+                $routeParams = $.extend($routeParams, queryExtraParams);
+            }
 //            
             $scope.selectAble = false;
 //            $scope.pageActions = pageActions;
             ComView.displayForm($scope, model, res, {
-                id: $routeParams.id
+                id: $routeParams.id,
+                queryExtraParams: queryExtraParams
             });
         }])
     .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config", "WorkflowNodeRes",
