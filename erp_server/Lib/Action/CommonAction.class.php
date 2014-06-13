@@ -120,7 +120,6 @@ class CommonAction extends RestAction {
         } else {
             $rs = $auth->check($rule, $_SESSION["user"]["id"]);
         }
-        
         if($return){
             return $rs ? true : false;
         } else {
@@ -197,7 +196,6 @@ class CommonAction extends RestAction {
             $model = $model->limit($limit);
         }
         $list = $model->select();
-//        echo $model->getLastSql();exit;
 //        print_r($list);
         if($return) {
             return $list;

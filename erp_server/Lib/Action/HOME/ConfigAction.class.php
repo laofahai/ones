@@ -16,7 +16,7 @@ class ConfigAction extends CommonAction {
     public function index() {
         $tmp = parent::index(true);
         if(!$_GET["queryAll"]) {
-            return $tmp;
+            $this->response($tmp);return;
         }
         
         array_push($tmp, array(

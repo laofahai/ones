@@ -44,5 +44,3 @@ class NetestCategoryAction extends CommonAction {
     }
     
 }
-
-?>

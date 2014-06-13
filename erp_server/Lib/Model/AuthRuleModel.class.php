@@ -13,5 +13,3 @@
 class AuthRuleModel extends CommonModel {
     //put your code here
 }
-
-?>

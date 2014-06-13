@@ -21,6 +21,10 @@ class CommonModel extends AdvModel{
         array("status",1)
     );
     
+//    protected $_filter = array(
+//       'deleted'=>array('contentWriteFilter','contentReadFilter'),
+//    );
+    
 //    protected $status_lang = array(
 //        "ineffective","effective"
 //    );
@@ -46,6 +50,13 @@ class CommonModel extends AdvModel{
             $return[$v[$key]] = $v[$value];
         }
         return $return;
+    }
+    
+    public function where($where, $parse = null) {
+        if($model->fields["_type"]["deleted"]) {
+            $where["deleted"] = 0;
+        }
+        return parent::where($where, $parse);
     }
     
     /**
@@ -121,6 +132,7 @@ class CommonModel extends AdvModel{
      * 执行删除
      */
     public function doDelete($ids, $pk=null, $modelName = null) {
+//        echo 123;exit;
         if(!$modelName) {
             $model = $this;
         } else {
@@ -134,12 +146,19 @@ class CommonModel extends AdvModel{
         /**
          * 判断是否有deleted字段
          */
-        if(in_array("deleted", $model->fields)) {
+//        var_dump($model->fields["deleted"]);
+//        print_r($model->fields);
+//        var_dump(in_array("deleted", $model->fields));exit;
+        if($model->fields["_type"]["deleted"]) {
             $rs = $model->where($condition)->save(array("deleted"=>1));
         } else {
+            if(method_exists($model, "relation")) {
+                $model = $model->relation(true);
+            }
             $rs = $model->where($condition)->delete();
         }
-        
+//        echo $model->getLastSql();exit;
+//        var_dump($rs);exit;
         return $rs;
         
     }

@@ -34,6 +34,23 @@ class CommonViewModel extends ViewModel{
         return $return;
     }
     
+    public function where($where, $parse = null) {
+//        echo substr($this->name, 0, -4);exit;
+        if($this->baseModelName) {
+            $model = D($this->baseModelName);
+        } else {
+            $model = D(substr($this->name, 0, -4));
+        }
+//        echo substr($this->name, 0, -4);exit;
+//        print_r($model->fields);
+//        var_dump($model->fields["_type"]["deleted"]);
+        if($model->fields["_type"]["deleted"]) {
+            $where["deleted"] = 0;
+        }
+//        print_r($where);
+        return parent::where($where, $parse);
+    }
+    
     /**
      * @override
      */

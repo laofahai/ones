@@ -31,7 +31,7 @@ class CommonRelationModel extends RelationModel {
             $pk => array("IN", is_array($ids) ? implode(",", $ids) : $ids)
         );
         
-        if(in_array("deleted", $model->fields)) {
+        if($model->fields["_type"]["deleted"]) {
             $rs = $model->where($condition)->save(array("deleted"=>1));
         } else {
             $model = $model->relation(true);

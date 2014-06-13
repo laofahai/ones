@@ -22,5 +22,3 @@ class GoodsCategoryAction extends NetestCategoryAction {
     }
     
 }
-
-?>

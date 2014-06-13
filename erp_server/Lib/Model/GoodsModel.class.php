@@ -19,9 +19,7 @@
  *  WHERE gc.id = g.goods_category_id
  *  
  */
-class GoodsModel extends Model {
+class GoodsModel extends CommonModel {
     
     
 }
-
-?>
