@@ -8,6 +8,11 @@ angular.module("ones.home.services", [])
                         id: {primary: true},
                         name: {},
                         template: {},
+                        width: {
+                            value: 6,
+                            max: 12,
+                            inputType: "number"
+                        },
                         listorder: {
                             inputType: "number",
                             value: 99

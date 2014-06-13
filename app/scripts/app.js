@@ -64,6 +64,14 @@
      * */
     .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "WorkflowNodeRes",
         function($scope, $rootScope, $location, $http, conf, ComView, WorkflowNodeRes) {
+            
+            $scope.onesConf = conf;
+            $scope.BSU = conf.BSU;
+            $scope.BSURoot = conf.BSURoot;
+            if(!$scope.BSURoot) {
+                var tmp = conf.BSU.split("/").slice(0, -2);
+                $scope.BSURoot = tmp.join("/");
+            }
 
             $scope.$watch(function() {
                 return $location.$$url;

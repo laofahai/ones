@@ -4,5 +4,6 @@ node_modules
 app/bower_components
 nbproject
 /demo/
-/erp_server/Runtime/
 /dist/
+/erp_server/Runtime/
+/erp_server/Data/Avatars/*.jpg

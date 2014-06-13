@@ -522,6 +522,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                  * 支持覆盖此方法
                  * */
                 $scope.gridDblClick = function(item){
+                    console.log(item);
                     if(!item) {
                         return;
                     }

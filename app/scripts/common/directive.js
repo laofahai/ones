@@ -125,4 +125,5 @@ angular.module("ones.common.directives", ["ones.formMaker"])
                 replace: false,
                 transclude: true
             };
-        }]);
+        }])
+    ;

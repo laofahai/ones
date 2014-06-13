@@ -56,7 +56,8 @@ return array(
          */
         'AUTH_DONT_NEED_LOGIN' => array(
             "Passport.Login.add",
-            "Passport.Login.read"
+            "Passport.Login.read",
+            "HOME.MyDesktop.read"
         ),
         /**
          * 无需认证模块
@@ -65,7 +66,8 @@ return array(
             "HOME.Types.read",
             "HOME.WorkflowNode.read",
             "HOME.WorkflowProcess.read",
-            "HOME.UserDesktop.read"
+            "HOME.UserDesktop.read",
+            "HOME.MyDesktop.add"
         )
     ),
     

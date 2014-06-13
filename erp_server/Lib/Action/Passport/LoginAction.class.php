@@ -48,8 +48,17 @@ class LoginAction extends CommonAction {
             
             foreach($theUser["groups"] as $g) {
                 $theUser["group_ids"][] = $g["id"];
+                $theUser["group_labels"][] = $g["title"];
             }
             
+            $tmp = D("Department")->getNodePath($theUser["department_id"]);
+            foreach($tmp as $d) {
+                $departmentPath[] = $d["name"];
+            }
+//            print_r($departmentPath);exit;
+            
+            $theUser["Department"]["path"] = implode(" > ", $departmentPath);
+//            print_r($theUser);exit;
             $_SESSION["user"] = $theUser;
             $this->response(array(
                 "error" => 0,

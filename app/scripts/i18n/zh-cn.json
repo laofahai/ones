@@ -35,6 +35,12 @@
                         "addChild"  : ["新增部门"],
                         "edit" : ["修改部门"]
                     }
+                },
+                "Profile": {
+                    "name": "个人资料",
+                    "actions": {
+                        "list": "查看我的资料"
+                    }
                 }
             }
         },
@@ -114,6 +120,12 @@
                     "actions": {
                         "list": "",
                         "add" : ""
+                    }
+                },
+                "MyDesktop": {
+                    "name": "我的桌面",
+                    "actions": {
+                        "list": ["管理我的桌面", "无权限项选中会报错并且不可用"]
                     }
                 }
             }
@@ -397,7 +409,8 @@
             "needStockout": "待处理出库单",
             "needStockin" : "待处理入库单",
             "_product_craft": "产品 %s 工序管理",
-            "operate_options": "操作选项"
+            "operate_options": "操作选项",
+            "produceInProcess": "在产"
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",
@@ -575,6 +588,9 @@
         "balance": "余额",
         "current_craft": "当前工艺",
         "next_craft": "下一工艺",
+        "my_desktop": "我的桌面",
+        
+        "width": "宽度",
         
         "ProducePlan": "生产计划",
         "Orders": "销售订单",

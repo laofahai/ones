@@ -215,16 +215,15 @@ class CommonTreeModel extends CommonModel {
     /**
      * 获取节点路径
      */
-    public function getNodePath($nodeid) {
+    public function getNodePath($nodeid, $includeSelf = true) {
 //        SELECT name FROM tree WHERE lft < 4 AND rgt >; 5 ORDER BY lft ASC;
         $node = $this->find($nodeid);
+        $type = $includeSelf ? "ELT" : "LT";
         $map = array(
-            "lft" => array("LT", $node["lft"]),
+            "lft" => array($type, $node["lft"]),
             "rgt" => array("EGT", $node["rgt"])
         );
         return $this->where($map)->order("lft ASC")->select();
     }
     
 }
-
-?>

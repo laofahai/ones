@@ -311,6 +311,7 @@ class CommonAction extends RestAction {
         $model = D($name);
         $pk = $model->getPk();
         $id = $_REQUEST [$pk];
+//        echo $id;exit;
         $rs = $model->doDelete($id);
         if($return) {
             return $rs;

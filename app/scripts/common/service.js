@@ -28,6 +28,9 @@
             'query' : {isArray: false}
         });
     }])
+    .factory("MyDesktopRes", ["$resource", "ones.config", function($resource, cnf){
+            return $resource(cnf.BSU+"home/myDesktop/:id.json");
+    }])
     .factory("WorkflowRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "workflow/:id.json", null, {'update': {method: 'PUT'}});
         }])

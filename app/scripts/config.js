@@ -59,7 +59,6 @@
                             localStorage.setItem(BaseConf.Prefix + "i18n", angular.toJson(data));
                         });
                     }
-
                 }])
             ;
 })();

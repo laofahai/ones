@@ -1,0 +1,60 @@
+<div id="user-profile-1" class="user-profile row">
+    <div class="col-xs-12 col-sm-3 center">
+        <div>
+            <span class="profile-picture">
+                <img id="avatar" class="editable img-responsive editable-click editable-empty" ng-src="{{BSURoot}}/Data/Avatars/avatar.php?email={{$parent.userInfo.email}}&s=200" style="display: block;" />
+            </span>
+            <div class="space-4"></div>
+
+            <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                <div class="inline position-relative">
+                    <i class="icon-circle light-green middle"></i>
+                    &nbsp;
+                    <span class="white" ng-bind="$parent.userInfo.truename"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-6"></div>
+    </div>
+
+    <div class="col-xs-12 col-sm-9">
+
+        <div class="profile-user-info profile-user-info-striped">
+            <div class="profile-info-row">
+                <div class="profile-info-name" ng-bind="i18n.lang.username"></div>
+
+                <div class="profile-info-value">
+                    <span id="username" ng-bind="$parent.userInfo.username"></span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name" ng-bind="i18n.lang.email"></div>
+
+                <div class="profile-info-value" ng-bind="$parent.userInfo.email"></div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name" ng-bind="i18n.lang.phone"></div>
+
+                <div class="profile-info-value" ng-bind="$parent.userInfo.phone"></div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name" ng-bind="i18n.lang.password"></div>
+                <div class="profile-info-value">
+                    <span class="editable editable-click" id="signup" ng-click="" ng-bind="i18n.lang.actions.edit"></span>
+                </div>
+            </div>
+
+            <div class="profile-info-row">
+                <div class="profile-info-name" ng-bind="i18n.lang.department"></div>
+                <div class="profile-info-value">
+                    <span ng-bind="$parent.userInfo.Department.path"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

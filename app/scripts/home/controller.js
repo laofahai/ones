@@ -11,58 +11,18 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         controller: "HOMEDashboardCtl",
                         templateUrl: "views/home/dashboard.html"
                     })
-//                    .when('/HOME/DataModel', {
-//                        templateUrl: "views/common/grid.html",
-//                        controller: "DataModelCtl"
-//                    })
-//                    .when('/HOME/DataModel/add', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "DataModelEditCtl"
-//                    })
-//                    .when('/HOME/DataModel/edit/id/:id', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "DataModelEditCtl"
-//                    })
                     .when('/HOME/viewChild/dataModel/pid/:pid', {
                         templateUrl: "views/common/grid.html",
                         controller: "DataModelFieldsCtl"
                     })
-//                    .when('/HOME/DataModelFields/add/pid/:pid', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "DataModelFieldsEditCtl"
-//                    })
-//                    .when('/HOME/DataModelFields/edit/id/:id/pid/:pid', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "DataModelFieldsEditCtl"
-//                    })
                     .when('/HOME/DataModelData/catid/:catid', {
                         templateUrl: "views/common/blank.html",
                         controller: "DataModelDataCatidCtl"
                     })
-//                    .when('/HOME/DataModelData/:modelId', {
-//                        templateUrl: "views/common/grid.html",
-//                        controller: "DataModelDataCtl"
-//                    })
-//                    .when('/HOME/DataModelData/add/:modelId', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "DataModelDataEditCtl"
-//                    })
-//                    .when('/HOME/DataModelData/:modelId/edit/id/:id', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "DataModelDataEditCtl"
-//                    })
                     .when('/HOME/viewChild/workflow/pid/:pid', {
                         templateUrl: "views/common/grid.html",
                         controller: "WorkflowNodeCtl"
                     })
-//                    .when('/HOME/WorkflowNode/add/pid/:pid', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "WorkflowNodeEditCtl"
-//                    })
-//                    .when('/HOME/WorkflowNode/edit/id/:id/pid/:pid', {
-//                        templateUrl: "views/common/edit.html",
-//                        controller: "WorkflowNodeEditCtl"
-//                    })
                     .when('/HOME/Settings/clearCache', {
                         templateUrl: "views/home/clearCache.html",
                         controller: "clearCacheCtl"
@@ -75,10 +35,24 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         templateUrl: "views/home/clearData.html",
                         controller: "clearDataCtl"
                     })
+                    .when('/HOME/list/myDesktop', {
+                        templateUrl: "views/home/myDesktop.html",
+                        controller: "HomeMyDesktopCtl"
+                    })
                     ;
         }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
             $location.url($routeParams.url);
+        }])
+        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", function($scope, res){
+//                $scope.$on("initDataLoaded", function(evt, initData){
+                    res.query().$promise.then(function(data){
+                        $scope.items = data;
+                    });
+//                });
+                $scope.doSubmit = function() {
+                    res.save($scope.items);
+                };
         }])
         .controller("clearCacheCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
             $scope.cacheTypes = [null, true, true, true];
