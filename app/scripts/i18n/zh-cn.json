@@ -611,6 +611,7 @@
         "freight_type": "运费类型",
         "freight": "运费",
         "weight": "重量",
-        "total_num": ""
+        
+        "address": "地址"
     }
 }

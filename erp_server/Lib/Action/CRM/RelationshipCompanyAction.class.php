@@ -24,6 +24,33 @@ class RelationshipCompanyAction extends CommonAction {
         $map["deleted"] = 0;
     }
     
+    /**
+     * 过渡性
+     */
+    public function insert() {
+//        print_r($_POST);exit;
+        $model = D("RelationshipCompany");
+        $data = array(
+            "name"=> $_POST["name"],
+            "pinyin"=> Pinyin($_POST["name"]),
+            "address"=> $_POST["address"],
+            "discount"=>abs(intval($_POST["discount"])),
+            "user_id" => getCurrentUid(),
+            "group_id"=> $_POST["group_id"],
+            "dateline"=> CTS,
+            "status"  => "0"
+        );
+        $id = $model->add($data);
+        
+        D("RelationshipCompanyLinkman")->add(array(
+            "relationship_company_id" => $id,
+            "contact" => $_POST["linkMan"],
+            "mobile" => $_POST["mobile"],
+            "dateline" => CTS,
+            "is_primary"=> 1
+        ));
+    }
+    
 //    public function index() {
 //        $data = parent::index(true);
 //        foreach($data as $k=>$v) {

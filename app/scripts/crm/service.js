@@ -27,12 +27,17 @@ angular.module("ones.crm.services", [])
                             primary: true
                         },
                         name: {},
-                        group: {
+                        group_id: {
                             field: "Group.name",
                             dataSource: RelationshipCompanyGroupRes,
-                            inputType: "select"
+                            inputType: "select",
+                            displayName: $rootScope.i18n.lang.group
                         },
-                        discount: {},
+                        discount: {
+                            inputType: "number",
+                            max: 100,
+                            value: 100
+                        },
                         owner: {
                             hideInForm: true,
                             field: "User.truename"
@@ -44,11 +49,17 @@ angular.module("ones.crm.services", [])
                             field: "Linkman[0].mobile"
                         },
                         telephone: {
-                            field: "Linkman[0].tel"
+                            field: "Linkman[0].tel",
+                            required: false
                         },
                         qq: {
-                            field: "Linkman[0].qq"
-                        },                     
+                            field: "Linkman[0].qq",
+                            required: false,
+                            listable: false
+                        },     
+                        address: {
+                            required: false
+                        }
                     };
                 }
             };

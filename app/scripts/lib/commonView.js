@@ -279,12 +279,15 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         return;
                     }
                     //编辑
-                    if (opts.id) {
-                        var getParams = {};
-                        for (var k in $routeParams) {
-                            getParams[k] = $routeParams[k];
-                            $scope[opts.dataObject][k] = $routeParams[k];
+                    var getParams = {};
+                    var tmp = ['group', 'module', 'action'];
+                    for (var k in $routeParams) {
+                        if(tmp.indexOf(k) >= 0) {
+                            continue;
                         }
+                        getParams[k] = $routeParams[k];
+                    }
+                    if (opts.id) {
                         getParams.id = opts.id;
                         resource.update(getParams, $scope[opts.dataObject], function(data){
                             if(data.error) {
@@ -295,15 +298,8 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         });
                     //新增
                     } else {
-                        for (var k in $routeParams) {
-                            $scope[opts.dataObject][k] = $routeParams[k];
-                        }
-                        var getParams = {};
-                        for (var k in $routeParams) {
-                            getParams[k] = $routeParams[k];
-                        }
+                        
                         var params = $.extend(getParams, $scope[opts.dataObject]);
-                        params = $.extend(params, $scope[opts.dataObject]);
                         resource.save(params, function(data){
                             if(data.error) {
                                 service.alert(data.msg);
