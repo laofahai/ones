@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2014-06-13 08:10:12
+-- Generation Time: 2014-06-13 15:25:27
 -- 服务器版本： 5.1.73
 -- PHP Version: 5.5.9
 
@@ -873,14 +873,15 @@ CREATE TABLE IF NOT EXISTS `x_department` (
   PRIMARY KEY (`id`),
   KEY `lft` (`lft`,`rgt`,`listorder`),
   KEY `parentid` (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- 转存表中的数据 `x_department`
 --
 
 INSERT INTO `x_department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
-(1, 0, '某公司', 1, 2, 99);
+(1, 0, '某公司', 1, 4, 99),
+(20, 1, '总经办', 2, 3, 99);
 
 -- --------------------------------------------------------
 
@@ -1094,6 +1095,27 @@ CREATE TABLE IF NOT EXISTS `x_messages` (
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`,`subject`,`dateline`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `x_my_desktop`
+--
+
+CREATE TABLE IF NOT EXISTS `x_my_desktop` (
+  `uid` int(11) NOT NULL,
+  `desk_id` smallint(3) NOT NULL,
+  `listorder` smallint(3) NOT NULL DEFAULT '99',
+  KEY `uid` (`uid`,`listorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `x_my_desktop`
+--
+
+INSERT INTO `x_my_desktop` (`uid`, `desk_id`, `listorder`) VALUES
+(1, 5, 3),
+(1, 3, 99);
 
 -- --------------------------------------------------------
 
@@ -4821,7 +4843,7 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company` (
 --
 
 INSERT INTO `x_relationship_company` (`id`, `name`, `pinyin`, `address`, `discount`, `user_id`, `group_id`, `dateline`, `status`, `deleted`) VALUES
-(1, '本厂', 'bc', NULL, 90, 0, 0, '', 0, 0);
+(1, '某客户', 'MKH', '123', 100, 1, 3, '1402670089', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -4866,7 +4888,14 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company_linkman` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`relationship_company_id`,`dateline`),
   KEY `is_primary` (`is_primary`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `x_relationship_company_linkman`
+--
+
+INSERT INTO `x_relationship_company_linkman` (`id`, `relationship_company_id`, `contact`, `mobile`, `tel`, `email`, `qq`, `extra`, `dateline`, `is_primary`) VALUES
+(1, 1, '老王', '123123', NULL, NULL, NULL, NULL, 'CTS', 1);
 
 -- --------------------------------------------------------
 
@@ -4928,7 +4957,8 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 --
 
 INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
-('2adf5fc2fa6a7f774d35fc19ba95ff82', 1402627557, 0x757365727c613a31313a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223135223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b4e3b733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d7d);
+('2adf5fc2fa6a7f774d35fc19ba95ff82', 1402675415, ''),
+('58c051f16f678beb591f71e29802c853', 1402676686, 0x757365727c613a31333a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223230223b733a323a227171223b733a393a22333335343534323530223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a373a7b733a323a226964223b733a323a223230223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e680bbe7bb8fe58a9e223b733a333a226c6674223b733a313a2232223b733a333a22726774223b733a313a2233223b733a393a226c6973746f72646572223b733a323a223939223b733a343a2270617468223b733a32313a22e69f90e585ace58fb8203e20e680bbe7bb8fe58a9e223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d733a31323a2267726f75705f6c6162656c73223b613a333a7b693a303b733a31353a22e8b685e7baa7e7aea1e79086e59198223b693a313b733a363a22e5ba93e7aea1223b693a323b733a363a22e98787e8b4ad223b7d7d);
 
 -- --------------------------------------------------------
 
@@ -5009,14 +5039,17 @@ CREATE TABLE IF NOT EXISTS `x_stockin` (
   KEY `confirm_user_id` (`stock_manager`),
   KEY `source_model` (`source_model`,`source_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- 转存表中的数据 `x_stockin`
 --
 
 INSERT INTO `x_stockin` (`id`, `bill_id`, `type_id`, `subject`, `dateline`, `total_num`, `status`, `user_id`, `source_model`, `source_id`, `stock_manager`, `memo`) VALUES
-(1, 'RK1406121443252', 20, '盘点', '1402555373', '16989.00', 2, 1, NULL, 0, 1, '123123');
+(1, 'RK1406121443252', 20, '盘点', '1402555373', '16989.00', 2, 1, NULL, 0, 1, '123123'),
+(2, 'RK1406131618064', 20, 'cc', '1402647467', '3.00', 2, 1, NULL, 0, 1, NULL),
+(3, 'RK1406131619483', 20, 'ttt', '1402647560', '17000.00', 2, 1, NULL, 0, 1, NULL),
+(4, 'RK1406131621237', 20, 'ss', '1402647668', '3.00', 2, 1, NULL, 0, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -5036,7 +5069,7 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
   KEY `stockin_id` (`stockin_id`,`goods_id`),
   KEY `factory_code_all` (`factory_code_all`),
   KEY `stock_id` (`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `x_stockin_detail`
@@ -5044,7 +5077,11 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
 
 INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`, `memo`) VALUES
 (1, 1, 1, '5000.00', '0012-3-6', 1, NULL),
-(2, 1, 1, '12000.00', '0012-4-2', 1, NULL);
+(2, 1, 1, '12000.00', '0012-4-2', 1, NULL),
+(3, 2, 1, '3.00', '0012-4-2', 1, NULL),
+(4, 3, 1, '12000.00', '0012-8-6', 1, NULL),
+(5, 3, 1, '5000.00', '0012-7-2', 1, NULL),
+(6, 4, 1, '3.00', '0012-8-6', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -5105,7 +5142,7 @@ CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `factory_code_all` (`factory_code_all`,`stock_id`),
   KEY `goods_id` (`goods_id`,`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `x_stock_product_list`
@@ -5113,7 +5150,9 @@ CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
 
 INSERT INTO `x_stock_product_list` (`id`, `factory_code_all`, `goods_id`, `stock_id`, `unit_price`, `cost`, `num`) VALUES
 (1, '0012-3-6', 1, 1, '0.00', '0.00', '5000.00'),
-(2, '0012-4-2', 1, 1, '0.00', '0.00', '12000.00');
+(3, '0012-4-2', 1, 1, '0.00', '0.00', '12003.00'),
+(5, '0012-7-2', 1, 1, '0.00', '0.00', '5000.00'),
+(6, '0012-8-6', 1, 1, '0.00', '0.00', '12003.00');
 
 -- --------------------------------------------------------
 
@@ -5237,23 +5276,25 @@ CREATE TABLE IF NOT EXISTS `x_user` (
   `phone` varchar(20) NOT NULL,
   `status` smallint(1) NOT NULL,
   `department_id` int(11) NOT NULL,
+  `qq` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_2` (`email`),
   UNIQUE KEY `username` (`username`),
   KEY `email` (`email`,`username`),
   KEY `department_id` (`department_id`),
   KEY `truename` (`truename`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- 转存表中的数据 `x_user`
 --
 
-INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`) VALUES
-(1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '13325251626', 1, 15),
-(2, '123@lasjdlf.xx', '销售姓名', '1销售姓名', 'd41d8cd98f00b204e9800998ecf8427e', '123123', 1, 15),
-(8, 'cai@wu.com', '财务1', '财务1', '4297f44b13955235245b2497399d7a93', '123123', 1, 14),
-(6, 'kuguan@123.com', '库管姓名', '库管12', 'd41d8cd98f00b204e9800998ecf8427e', '133333333', 1, 3);
+INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`, `qq`) VALUES
+(1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '13325251626', 1, 20, '335454250'),
+(2, '123@lasjdlf.xx', '销售姓名', '1销售姓名', 'd41d8cd98f00b204e9800998ecf8427e', '123123', 1, 15, NULL),
+(8, 'cai@wu.com', '财务1', '财务1', '4297f44b13955235245b2497399d7a93', '123123', 1, 14, NULL),
+(6, 'kuguan@123.com', '库管姓名', '库管12', 'd41d8cd98f00b204e9800998ecf8427e', '133333333', 1, 3, NULL),
+(12, '', '123123', 'test', '4297f44b13955235245b2497399d7a93', '123123', 0, 20, NULL);
 
 -- --------------------------------------------------------
 
@@ -5269,7 +5310,7 @@ CREATE TABLE IF NOT EXISTS `x_user_desktop` (
   `listorder` smallint(3) NOT NULL DEFAULT '99',
   PRIMARY KEY (`id`),
   KEY `listorder` (`listorder`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- 转存表中的数据 `x_user_desktop`
@@ -5279,7 +5320,7 @@ INSERT INTO `x_user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VA
 (1, '最近入库', 'latestStockin.html', 6, 99),
 (2, '最近出库', 'latestStockout.html', 6, 99),
 (3, '出库待处理', 'needStockout.html', 6, 99),
-(4, '入库待处理', 'needStockin.html', 6, 99);
+(5, '在产产品', 'producePlanDetail.html', 6, 99);
 
 -- --------------------------------------------------------
 
@@ -5422,7 +5463,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow_process` (
   PRIMARY KEY (`id`),
   KEY `workflow_id` (`workflow_id`,`node_id`,`start_time`,`end_time`,`status`,`user_id`),
   KEY `mainrow_id` (`mainrow_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- 转存表中的数据 `x_workflow_process`
@@ -5432,7 +5473,19 @@ INSERT INTO `x_workflow_process` (`id`, `workflow_id`, `node_id`, `mainrow_id`, 
 (1, 2, 11, 1, 'a:0:{}', '1402555405', '1402586124', 1, 1, ''),
 (2, 2, 14, 1, 'a:0:{}', '1402586124', '1402586127', 1, 1, ''),
 (3, 2, 12, 1, 'a:0:{}', '1402586127', '1402586133', 1, 1, ''),
-(4, 2, 13, 1, 'a:0:{}', '1402586133', '', 0, 1, '');
+(4, 2, 13, 1, 'a:0:{}', '1402586133', '', 0, 1, ''),
+(5, 2, 11, 2, 'a:0:{}', '1402647486', '1402647493', 1, 1, ''),
+(6, 2, 14, 2, 'a:0:{}', '1402647493', '1402647500', 1, 1, ''),
+(7, 2, 12, 2, 'a:0:{}', '1402647500', '1402647505', 1, 1, ''),
+(8, 2, 13, 2, 'a:0:{}', '1402647505', '', 0, 1, ''),
+(9, 2, 11, 3, 'a:0:{}', '1402647588', '1402647595', 1, 1, ''),
+(10, 2, 14, 3, 'a:0:{}', '1402647595', '1402647598', 1, 1, ''),
+(11, 2, 12, 3, 'a:0:{}', '1402647598', '1402647603', 1, 1, ''),
+(12, 2, 13, 3, 'a:0:{}', '1402647603', '', 0, 1, ''),
+(13, 2, 11, 4, 'a:0:{}', '1402647683', '1402647689', 1, 1, ''),
+(14, 2, 14, 4, 'a:0:{}', '1402647689', '1402647692', 1, 1, ''),
+(15, 2, 12, 4, 'a:0:{}', '1402647692', '1402647697', 1, 1, ''),
+(16, 2, 13, 4, 'a:0:{}', '1402647697', '', 0, 1, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

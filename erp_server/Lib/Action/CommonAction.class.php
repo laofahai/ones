@@ -219,10 +219,11 @@ class CommonAction extends RestAction {
             $model = $model->relation(true);
         }
         
-        $map = array(
-            "id" => abs(intval($_GET["id"]))
-        );
-        
+        $id = abs(intval($_GET["id"]));
+        $map = array();
+        if($id) {
+            $map["id"] = $id;
+        }
         $this->_filter($map);
         
         $item = $model->where($map)->find();
@@ -264,7 +265,7 @@ class CommonAction extends RestAction {
             ));
         } else {
             //失败提示
-            $this->httpError(500);
+            $this->error($model->getError());
         }
     }
     

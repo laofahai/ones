@@ -12,7 +12,6 @@
         'ui.select',
         'angularCharts',
         
-        'ones.validate',
         'ones.resources',
         'ones.passport',
         'ones.home',

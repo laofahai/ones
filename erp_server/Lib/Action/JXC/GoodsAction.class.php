@@ -22,6 +22,10 @@ class GoodsAction extends CommonAction {
             $map["pinyin"] = array("LIKE", "%{$typeahead}%");
             $map["_logic"] = "OR";
         }
+        
+        if($_GET["factory_code"]) {
+            $map["factory_code"] = trim($_GET["factory_code"]);
+        }
     }
     
     protected function _before_index() {
@@ -43,6 +47,7 @@ class GoodsAction extends CommonAction {
     }
     
     protected function pretreatment() {
+        
         switch($this->_method) {
             case "post":
             case "put":
@@ -52,5 +57,3 @@ class GoodsAction extends CommonAction {
     }
     
 }
-
-?>

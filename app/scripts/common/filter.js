@@ -102,6 +102,9 @@ angular.module("ones.common.filters", [])
                     var i18n = $rootScope.i18n.lang;
                     var tips = [];
                     angular.forEach(errors, function(err, k){
+//                        if(err) {
+//                            return;
+//                        }
                         tips.push(i18n.errors[k]);
                     });
                     return tips.join(", ");

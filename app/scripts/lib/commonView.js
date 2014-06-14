@@ -279,7 +279,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                             angular.forEach($scope[opts.name].$error, function(items, error){
                                 angular.forEach(items, function(item, k){
                                     item.$dirty = true;
-                                    item.$invalid = true;
+                                    item.$setValidity(false);
                                 });
                             });
                         } else {
