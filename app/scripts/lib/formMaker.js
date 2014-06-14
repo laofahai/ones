@@ -618,14 +618,14 @@
                     self.setData(ele, ele.val(), true);
                 };
                 scope.$parent.onTextKeydown = function(event) {
-                    if(event.keyCode == 9 && !event.shiftKey) {
+                    if(event.keyCode === 9 && !event.shiftKey) {
                         window.event.returnValue=false;
                         var ele = $(event.target);
                         self.setData(ele, ele.val());
-                    } else if(event.keyCode == 13) {
+                    } else if(event.keyCode === 13) {
                         var ele = $(event.target);
                         self.setData(ele, ele.val());
-                    } else if((event.shiftKey) && (event.keyCode==9)) {
+                    } else if((event.shiftKey) && (event.keyCode ===9)) {
                         window.event.returnValue=false;
                     }
                 };
@@ -781,7 +781,7 @@
                     "commonForm/box.html": '<div class="form-group" ng-class="{\'has-error\': %(formname)s.%(fieldname)s.$dirty&&%(formname)s.%(fieldname)s.$invalid}">' +
                             '<label class="col-sm-3 control-label no-padding-right">%(label)s</label>' +
                             '<div class="col-xs-12 col-sm-4">%(inputHTML)s</div>' +
-                            '<div class="help-block col-xs-12 col-sm-reset" ng-hide="!%(formname)s.%(fieldname)s.$dirty||%(formname)s.%(fieldname)s.$valid">{{%(formname)s.%(fieldname)s.$error}}</div>' +
+                            '<div class="help-block col-xs-12 col-sm-reset" ng-hide="%(formname)s.%(fieldname)s.$valid">{{%(formname)s.%(fieldname)s.$error|toError}}</div>' +
                             '</div>',
                     "commonForm/hide.html": '%(inputHTML)s',
                     "text": '<input type="text" %s />',
@@ -800,7 +800,7 @@
             $scope[this.opts.dataName] = {};
             
             $scope.$parent.doKeydown = function(event){
-                if(event.keyCode === 13 && $(event.target).attr("ng-model")) {
+                if(event.keyCode === 13 && $(event.target).attr("ng-model") && !$(event.target).hasClass("select3Input")) {
                     event.preventDefault();
                     event.stopPropagation();
                     $scope.$parent.doSubmit();

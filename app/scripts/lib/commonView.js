@@ -258,25 +258,34 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     var field = model.getFieldsStruct();
                     if(remote || typeof(field.then) === "function") { //需要获取异步数据
                         field.then(function(data){
-//                            fieldsDefine = data;
+                            fieldsDefine = data;
                             doDefine(data);
                         }, function(msg){
                             service.alert(msg);
                         });
                     } else {
-//                        fieldsDefine = model.getFieldsStruct();
+                        fieldsDefine = model.getFieldsStruct();
                         doDefine(field);
                     }
+                    
                 } else {
                     doDefine();
                 }
 
                 //提交表单
                 $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
-//                    console.log(opts);return;
                     if (!$scope[opts.name].$valid) {
-                        service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
-                        return;
+                        if($scope[opts.name].$error) {
+                            angular.forEach($scope[opts.name].$error, function(items, error){
+                                angular.forEach(items, function(item, k){
+                                    item.$dirty = true;
+                                    item.$invalid = true;
+                                });
+                            });
+                        } else {
+                            service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
+                        }
+                        return false;
                     }
                     //编辑
                     var getParams = {};
@@ -312,8 +321,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                             }
                         });
                     }
-
-                    
                     
                 };
             };

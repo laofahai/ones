@@ -10,7 +10,9 @@
         'localytics.directives',
         'ui.utils',
         'ui.select',
+        'angularCharts',
         
+        'ones.validate',
         'ones.resources',
         'ones.passport',
         'ones.home',
@@ -169,5 +171,6 @@
                 $scope.userInfo = data.user;
             });
 
-        }]);
+        }])
+    ;
 

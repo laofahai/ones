@@ -40,21 +40,41 @@ angular.module("ones.finance.service", [])
                     }
                 };
         }])
-        .service("FinancePayPlanModel", ["$rootScope", function(){
+        .service("FinancePayPlanModel", ["$rootScope","TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
                 return {
                     getFieldsStruct: function(){
                         return {
                             id: {primary: true},
                             subject: {},
-                            type: {},
-                            sponsor: {},
-                            financer: {},
-                            account: {},
-                            amount: {},
+                            type: {
+                                field: "type",
+                                inputType: "select",
+                                dataSource: TypesRes,
+                                queryParams: {
+                                    type: "pay"
+                                }
+                            },
+                            sponsor: {
+                                hideInForm: true
+                            },
+                            financer: {
+                                hideInForm: true
+                            },
+                            account: {
+                                inputType: "select",
+                                dataSource: FinanceAccountRes,
+                                nameField: "name",
+                                valueField: "id"
+                            },
+                            amount: {
+                                inputType: "number"
+                            },
                             create_dateline: {
+                                hideInForm: true,
                                 cellFilter: "dateFormat"
                             },
                             pay_dateline: {
+                                hideInForm: true,
                                 cellFilter: "dateFormat"
                             }
                         };

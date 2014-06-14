@@ -37,7 +37,9 @@ angular.module("ones.jxc.services", [])
                     id: {
                         primary: true
                     },
-                    factory_code: {},
+                    factory_code: {
+                        ensureunique: "GoodsRes"
+                    },
                     name: {},
                     pinyin: {
                         displayName: i18n.firstChar,

@@ -94,5 +94,18 @@ angular.module("ones.common.filters", [])
                 return rootScope.i18n.lang[str] || str;
             };
         }])
+        .filter("toError", ["$rootScope", function($rootScope){
+                return function(errors) {
+                    if(!errors) {
+                        return;
+                    }
+                    var i18n = $rootScope.i18n.lang;
+                    var tips = [];
+                    angular.forEach(errors, function(err, k){
+                        tips.push(i18n.errors[k]);
+                    });
+                    return tips.join(", ");
+                };
+        }])
         ;
         

@@ -296,7 +296,10 @@
                 },
                 "FinancePayPlan": {
                     "name": "财务支出计划",
-                    "actions": {}
+                    "actions": {
+                        "add": "",
+                        "list": ""
+                    }
                 },
                 "FinanceReceivePlan": {
                     "name": "财务收入计划",
@@ -430,6 +433,11 @@
             "remember_me": "记住我",
             "i_fogot_password": "我忘记了密码"
         },
+        "errors": {
+            "required": "必填",
+            "number"  : "必须是数字",
+            "unique"  : "必须唯一"
+        },
         "actions": {
             "addBill": "新增",
             "submit" : "提交",
@@ -544,6 +552,9 @@
         "stock_manager": "库管员",
         "stockManager": "库管员",
         "create_time": "创建时间",
+        "create_dateline": "创建时间",
+        "receive_dateline": "收到时间",
+        "pay_dateline": "付款时间",
         "start_time": "开始时间",
         "end_time": "结束时间",
         "send_to_mailbox": "发送至邮箱",
