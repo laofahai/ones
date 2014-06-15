@@ -20,7 +20,10 @@ angular.module("ones.common.directives", ["ones.formMaker"])
                                     var fm = new FormMaker.makeForm($scope);
                                     var html = fm.makeHTML();
                                     iElement.append($compile(html)($scope.$parent));
-                                    return;
+                                    setTimeout(function(){
+                                        var ele = iElement.find("input").eq(0);
+                                        $(ele).trigger("click").focus();
+                                    }, 200);
                                 });
                             }
                         };

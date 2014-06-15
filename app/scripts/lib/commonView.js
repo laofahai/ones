@@ -157,8 +157,8 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             }
             ComView.displayForm($scope, model, res, opts);
         }])
-    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config", "WorkflowNodeRes",
-        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf, WorkflowNodeRes){
+    .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "WorkflowProcessRes", "ComViewConfig", "$injector", "ones.config", "WorkflowNodeRes", "$timeout",
+        function($location, $rootScope, $routeParams, $q, $alert, $aside, WorkflowProcessRes, ComViewConfig, $injector, conf, WorkflowNodeRes, $timeout){
             var service = {};
             
             /**
@@ -274,6 +274,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 
                 //提交表单
                 $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
+//                    console.log("submit");
                     if (!$scope[opts.name].$valid) {
                         if($scope[opts.name].$error) {
                             angular.forEach($scope[opts.name].$error, function(items, error){
@@ -470,7 +471,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 };
                 //获取数据
                 var getPagedDataAsync = function(pageSize, page, searchText) {
-                    setTimeout(function() {
+                    $timeout(function(){
                         var data;
                         if (searchText) {
                             var ft = searchText.toLowerCase();

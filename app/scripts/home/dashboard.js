@@ -17,32 +17,20 @@
         }])
     
         .controller("DashboardProduceInProcess", ["$scope", "ProducePlanDetailRes", function($scope, res){
-                var func = function(){
-                    res.query({
-                        limit: 5
-                    }).$promise.then(function(data){
-                        $scope.items = data;
-                    });
-                };
-                setInterval(function(){
-                    func();
-                }, 60000);
-                func();
+                res.query({
+                    limit: 5
+                }).$promise.then(function(data){
+                    $scope.items = data;
+                });
         }])
     
         .controller("DashboardStockinCtl", ["$scope", "StockinRes", function($scope, res){
-                var func = function(){
-                    res.query({
-                        latest: true,
-                        limit: 5
-                    }).$promise.then(function(data){
-                        $scope.items = data;
-                    });
-                };
-                setInterval(function(){
-                    func();
-                }, 60000);
-                func();
+                res.query({
+                    latest: true,
+                    limit: 5
+                }).$promise.then(function(data){
+                    $scope.items = data;
+                });
         }])
     
         .controller("DashboardStockoutCtl", ["$scope", "StockoutRes", function($scope, res){

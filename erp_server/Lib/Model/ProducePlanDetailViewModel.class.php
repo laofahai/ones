@@ -21,7 +21,6 @@ class ProducePlanDetailViewModel extends CommonViewModel {
     
     public function select($options=array()) {
         $data = parent::select($options);
-        
         if(!$data) {
             return $data;
         }

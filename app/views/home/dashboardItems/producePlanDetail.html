@@ -18,22 +18,23 @@
                         <thead class="thin-border-bottom">
                             <tr>
                                 <th>
-                                    <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.bill_id"></span>
+                                    <span ng-bind="i18n.lang.plan_id"></span>
                                 </th>
 
                                 <th>
-                                    <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.subject"></span>
+                                    <span ng-bind="i18n.lang.goods_name"></span>
                                 </th>
-
+                                <th>
+                                    <span ng-bind="i18n.lang.standard"></span>
+                                </th>
+                                <th>
+                                    <span ng-bind="i18n.lang.version"></span>
+                                </th>
                                 <th class="hidden-480">
-                                    <i class="icon-caret-right blue"></i>
                                     <span ng-bind="i18n.lang.num"></span>
                                 </th>
                                 <th class="hidden-480">
-                                    <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.status"></span>
+                                    <span ng-bind="i18n.lang.end_time"></span>
                                 </th>
                             </tr>
                         </thead>
@@ -41,12 +42,14 @@
                         <tbody>
                             <tr ng-repeat="item in items">
                                 <td>
-                                    <a ng-href="#/JXC/editBill/stockin/id/{{item.id}}">{{item.bill_id}}</a>
+                                    <a ng-href="#/JXC/editBill/producePlan/id/{{item.plan_id}}">{{item.plan_id|idFormat}}</a>
                                 </td>
-                                <td ng-bind="item.subject"></td>
-                                <td ng-bind="item.total_num"></td>
-                                <td>
-                                    <span class="label label-{{item.processes.currentNode.status_class}} arrowed-right arrowed-in" ng-bind="item.processes.currentNode.status_text"></span>
+                                <td ng-bind="item.goods_name"></td>
+                                <td ng-bind="item.standard_label"></td>
+                                <td ng-bind="item.version_label"></td>
+                                <td ng-bind="item.num"></td>
+                                <td ng-bind="item.plan_end_time|dateFormat">
+
                                 </td>
                             </tr>
                         </tbody>

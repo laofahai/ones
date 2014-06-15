@@ -23,7 +23,7 @@ class DataModelDataViewModel extends CommonViewModel {
      * 包含模型数据
      * @param $sourceData 源多条数据
      */
-    public function assignModelData($sourceData, $modelIds) {
+    public function assignModelData($sourceData, $modelIds = false) {
         if(false === $modelIds) {
             $modelIds = array();
             foreach($sourceData as $k=>$v) {
