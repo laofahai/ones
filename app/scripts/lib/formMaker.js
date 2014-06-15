@@ -254,6 +254,7 @@
                         });
                     }
                     queryParams = $.extend(fieldDefine.queryParams || {}, {typeahead: val});
+                    queryParams.limit = queryParams.limit ? queryParams.limit : 5;
                     fieldDefine.dataSource.query(queryParams, function(data){
                         var dataList = [];
                         angular.forEach(data, function(item) {
