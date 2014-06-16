@@ -30,35 +30,24 @@ class LoginAction extends CommonAction {
 //        var_dump($_REQUEST);exit;
         if(IS_POST) {
             $user = D("UserRelation");
-            $theUser = $user->relation(true)->getByUsername($_REQUEST["username"]);
-            if($theUser["status"] < 1) {
+            $theUser = $user->getFullUserInfo($_REQUEST["username"], "username");
+
+            if(!$theUser or $theUser["status"] < 1) {
                 $this->response(array(
                     "error" => 1,
                     "msg"   => L("user_not_exists")
                 ));return;
                 //@todo 禁用用户
             }
-            
-            if(!$theUser or $theUser["password"] !== getPwd($_REQUEST["password"])) {
+
+            if($theUser["password"] !== getPwd($_REQUEST["password"])) {
                 $this->response(array(
                     "error" => 1,
                     "msg"   => L("password_not_verified")
                 ));return;
             }
-            
-            foreach($theUser["groups"] as $g) {
-                $theUser["group_ids"][] = $g["id"];
-                $theUser["group_labels"][] = $g["title"];
-            }
-            
-            $tmp = D("Department")->getNodePath($theUser["department_id"]);
-            foreach($tmp as $d) {
-                $departmentPath[] = $d["name"];
-            }
-//            print_r($departmentPath);exit;
-            
-            $theUser["Department"]["path"] = implode(" > ", $departmentPath);
-//            print_r($theUser);exit;
+
+            unset($theUser["password"]);
             $_SESSION["user"] = $theUser;
             $this->response(array(
                 "error" => 0,

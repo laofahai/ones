@@ -33,9 +33,19 @@ class UserAction extends CommonAction {
                 break;
         }
     }
-    
+
+    public function update() {
+        if(!$_GET['editMine']) {
+            return parent::update();
+        }
+        $this->pretreatment();
+        $model = D("User");
+        $model->where("id=".$this->user["id"])->save($_POST);
+    }
+
     /**
      * @todo relation 自动更新
+     * 更新用户组
      */
     public function _after_update() {
         if($_POST["usergroup"]) {
@@ -52,6 +62,15 @@ class UserAction extends CommonAction {
                 $model->add($data);
             }
         }
+
+        /**
+         * 更新SESSION
+        */
+        $user = D("UserRelation");
+        $theUser = $user->getFullUserInfo($_REQUEST["id"]);
+        unset($theUser["id"]);
+        $_SESSION["user"] = $theUser;
+
     }
     
     public function read() {

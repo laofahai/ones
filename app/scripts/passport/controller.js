@@ -190,7 +190,27 @@ angular.module("ones.passport", ['ones.passport.services', 'ngGrid', 'ones.commo
                     id: $routeParams.id
                 }, true);
             }])
-        .controller("PassportProfileCtl", ["$scope", function($scope){
-                
+        .controller("PassportProfileCtl", ["$scope", "$modal", "UserRes", function($scope, $modal, UserRes){
+                var modal = $modal({
+                    scope: $scope,
+                    title: $scope.$parent.i18n.lang.widgetTitles.editMyProfile,
+                    contentTemplate: 'views/passport/profileEdit.html',
+                    show: false
+                });
+                $scope.showProfileEdit = function(){
+                    $scope.userInfo = $scope.$parent.userInfo;
+                    modal.show();
+                };
+
+                $scope.doSubmitProfile = function() {
+                    $scope.$parent.userInfo = $scope.userInfo;
+                    UserRes.update({id: $scope.userInfo.id, editMine: true}, {
+                        phone: $scope.userInfo.phone,
+                        username: $scope.userInfo.username,
+                        password: $scope.userInfo.password
+                    }).$promise.then(function(data){
+                        modal.hide();
+                    });
+                };
         }])
         ;

@@ -413,7 +413,8 @@
             "needStockin" : "待处理入库单",
             "_product_craft": "产品 %s 工序管理",
             "operate_options": "操作选项",
-            "produceInProcess": "在产"
+            "produceInProcess": "在产",
+            "editMyProfile" : "修改我的资料"
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",
@@ -431,7 +432,8 @@
             "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行",
             "please_enter_your_login_info": "请输入您的登录信息",
             "remember_me": "记住我",
-            "i_fogot_password": "我忘记了密码"
+            "i_fogot_password": "我忘记了密码",
+            "leaveEmptyIfNotEdit": "不修改请留空"
         },
         "errors": {
             "required": "必填",

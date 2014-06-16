@@ -68,7 +68,39 @@ class UserRelationModel extends RelationModel {
         }
         return $data;
     }
+
+    public function getFullUserInfo($value, $field="id") {
+        switch($field) {
+            case "id":
+                $method = "find";
+                break;
+            case "username":
+                $method = "getByUsername";
+                break;
+            case "email":
+                $method = "getByEmail";
+                break;
+        }
+        $theUser = $this->relation(true)->$method($value);
+        if(!$theUser) {
+            return false;
+        }
+
+        foreach($theUser["groups"] as $g) {
+            $theUser["group_ids"][] = $g["id"];
+            $theUser["group_labels"][] = $g["title"];
+        }
+
+        $tmp = D("Department")->getNodePath($theUser["department_id"]);
+        foreach($tmp as $d) {
+            $departmentPath[] = $d["name"];
+        }
+//            print_r($departmentPath);exit;
+
+        $theUser["Department"]["path"] = implode(" > ", $departmentPath);
+
+        return $theUser;
+//            print_r($theUser);exit;
+    }
     
 }
-
-?>

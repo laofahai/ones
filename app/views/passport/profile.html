@@ -42,16 +42,14 @@
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name" ng-bind="i18n.lang.password"></div>
-                <div class="profile-info-value">
-                    <span class="editable editable-click" id="signup" ng-click="" ng-bind="i18n.lang.actions.edit"></span>
-                </div>
-            </div>
-
-            <div class="profile-info-row">
                 <div class="profile-info-name" ng-bind="i18n.lang.department"></div>
                 <div class="profile-info-value">
                     <span ng-bind="$parent.userInfo.Department.path"></span>
+                </div>
+            </div>
+            <div class="profile-info-row">
+                <div class="profile-info-value">
+                    <span class="editable editable-click" id="signup" ng-click="showProfileEdit();" ng-bind="i18n.lang.actions.edit"></span>
                 </div>
             </div>
         </div>

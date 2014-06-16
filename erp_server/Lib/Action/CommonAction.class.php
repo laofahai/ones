@@ -285,7 +285,7 @@ class CommonAction extends RestAction {
          * 对提交数据进行预处理
          */
         $this->pretreatment();
-        if (false === $model->create()) {
+        if (false === $model->create($_POST)) {
             $this->error($model->getError());
         }
         
@@ -294,6 +294,7 @@ class CommonAction extends RestAction {
         }
         // 更新数据
         $result = $model->save();
+//        ECHO $model->getLastSql();exit;
         if ($result !== false) { //保存成功
             $this->response(array(
                 "error" => 0

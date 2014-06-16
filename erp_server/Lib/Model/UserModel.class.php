@@ -27,4 +27,3 @@ class UserModel extends CommonModel {
     
 }
 
-?>
