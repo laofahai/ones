@@ -185,6 +185,7 @@ class CommonAction extends RestAction {
         $this->_order($order);
         
         $model = $model->where($map)->order($order);
+
         $limit = 0;
         if(isset($_GET["typeahead"])) {
             $limit = 10;
@@ -196,7 +197,8 @@ class CommonAction extends RestAction {
             $model = $model->limit($limit);
         }
         $list = $model->select();
-//        print_r($list);
+//        echo $model->getLastSql();
+//        print_r($list);exit;
         if($return) {
             return $list;
         }
@@ -238,7 +240,7 @@ class CommonAction extends RestAction {
     /**
      * 通用REST插入方法
      */
-    public function insert() {
+    public function insert($return = false) {
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }
@@ -257,8 +259,13 @@ class CommonAction extends RestAction {
             $model = $model->relation(true);
         }
         $result = $model->add();
+//        echo $model->getLastSql();exit;
+
 
         if ($result !== false) { //保存成功
+            if($return) {
+                return $result;
+            }
             $this->response(array(
                 "error" => 0,
                 "id" => $result
@@ -379,7 +386,7 @@ class CommonAction extends RestAction {
 
         // 结束信息返回true、或者没有任何返回值时跳转
         if(true === $rs or empty($rs)) {
-            $this->success();
+            $this->success("Success");
         }
     }
     

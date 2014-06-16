@@ -801,13 +801,13 @@
             $scope[this.opts.dataName] = {};
             
             $scope.$parent.doKeydown = function(event){
-                console.log("dokeydown")
+//                console.log("dokeydown")
 //                
-//                if(event.keyCode === 13 && $(event.target).attr("ng-model") && !$(event.target).hasClass("select3Input")) {
-//                    event.preventDefault();
-//                    event.stopPropagation();
-//                    $scope.$parent.doSubmit();
-//                }
+                if(event.keyCode === 13 && $(event.target).attr("ng-model") && !$(event.target).hasClass("select3Input")) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $scope.$parent.doSubmit();
+                }
             };
             
             //this.fieldsMaker

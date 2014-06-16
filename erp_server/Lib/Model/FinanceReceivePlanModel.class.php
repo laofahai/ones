@@ -16,13 +16,10 @@ class FinanceReceivePlanModel extends CommonModel {
     
     protected $_auto = array(
         array("create_dateline", CTS),
-        array("account_id", 0),
         array("status", 0),
         array("source_model", ""),
         array("source_id", ""),
         array("user_id", "getCurrentUid", 1, "function"),
     );
-    
-    public function newPlan() {}
     
 }

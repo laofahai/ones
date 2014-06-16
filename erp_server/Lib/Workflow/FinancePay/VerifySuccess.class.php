@@ -12,13 +12,13 @@
  */
 class FinancePayVerifySuccess extends WorkflowAbstract {
     
-    public function run() {
-        if(!IS_POST) {
-            return $this->displayLeaveMemo();
-        }
-        $this->memo = trim($_POST["memo"]);
-//        $this->updateMemo("financePay", $this->mainrowId, $this->currentNode["id"], trim($_POST["memo"]));
-    }
+//    public function run() {
+//        if(!IS_POST) {
+//            return $this->displayLeaveMemo();
+//        }
+//        $this->memo = trim($_POST["memo"]);
+////        $this->updateMemo("financePay", $this->mainrowId, $this->currentNode["id"], trim($_POST["memo"]));
+//    }
     
 }
 

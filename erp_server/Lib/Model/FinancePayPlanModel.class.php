@@ -16,7 +16,6 @@ class FinancePayPlanModel extends CommonModel {
     
     protected $_auto = array(
         array("create_dateline", CTS),
-        array("account_id", 0),
         array("status", 0),
         array("source_model", ""),
         array("source_id", ""),

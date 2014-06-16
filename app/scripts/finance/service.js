@@ -2,6 +2,8 @@
 angular.module("ones.finance.service", [])
         .service("FinanceRecordModel", ["$rootScope", function(){
                 return {
+                    editAble: false,
+                    addAble: false,
                     getFieldsStruct: function(){
                         return {
                             id: {
@@ -42,12 +44,14 @@ angular.module("ones.finance.service", [])
         }])
         .service("FinancePayPlanModel", ["$rootScope","TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
                 return {
+                    workflowAlias: "financePay",
                     getFieldsStruct: function(){
                         return {
                             id: {primary: true},
                             subject: {},
-                            type: {
+                            type_id: {
                                 field: "type",
+                                displayName: $rootScope.i18n.lang.type,
                                 inputType: "select",
                                 dataSource: TypesRes,
                                 queryParams: {
@@ -60,7 +64,9 @@ angular.module("ones.finance.service", [])
                             financer: {
                                 hideInForm: true
                             },
-                            account: {
+                            account_id: {
+                                field: "account_name",
+                                displayName: $rootScope.i18n.lang.account,
                                 inputType: "select",
                                 dataSource: FinanceAccountRes,
                                 nameField: "name",
@@ -76,29 +82,70 @@ angular.module("ones.finance.service", [])
                             pay_dateline: {
                                 hideInForm: true,
                                 cellFilter: "dateFormat"
+                            },
+                            status: {
+                                hideInForm: true,
+                                field: "processes.status_text"
+                            },
+                            memo: {
+                                required: false,
+                                listable: false
                             }
                         };
                     }
                 };
         }])
-        .service("FinanceReceivePlanModel", ["$rootScope", function(){
+        .service("FinanceReceivePlanModel", ["$rootScope", "TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
                 return {
+                    workflowAlias: "financeReceive",
                     getFieldsStruct: function(){
                         return {
                             id: {primary: true},
                             subject: {},
-                            type: {},
-                            sponsor: {},
-                            financer: {},
-                            account: {},
-                            amount: {},
+                            type_id: {
+                                field: "type",
+                                displayName: $rootScope.i18n.lang.type,
+                                inputType: "select",
+                                dataSource: TypesRes,
+                                queryParams: {
+                                    type: "receive"
+                                }
+                            },
+                            sponsor: {
+                                hideInForm: true
+                            },
+                            financer: {
+                                hideInForm: true
+                            },
+                            account_id: {
+                                field: "account_name",
+                                displayName: $rootScope.i18n.lang.account,
+                                inputType: "select",
+                                dataSource: FinanceAccountRes,
+                                nameField: "name",
+                                valueField: "id"
+                            },
+                            amount: {
+                                inputType: "number"
+                            },
                             create_dateline: {
+                                hideInForm: true,
                                 cellFilter: "dateFormat"
                             },
                             receive_dateline: {
+                                hideInForm: true,
                                 cellFilter: "dateFormat"
+                            },
+                            status: {
+                                hideInForm: true,
+                                field: "processes.status_text"
+                            },
+                            memo: {
+                                required: false,
+                                listable: false
                             }
                         };
                     }
                 };
         }])
+;

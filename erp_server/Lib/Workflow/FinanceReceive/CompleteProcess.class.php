@@ -13,21 +13,21 @@
 class FinanceReceiveCompleteProcess extends WorkflowAbstract {
     
     public function run() {
-        
-        if(!IS_POST) {
-            import("@.Form.Form");
-            $form = new Form("PlanInfo");
-            $this->view->assign("FormHTML", $form->makeForm(""));
-            $this->view->assign("lang_title", "leave_memo");
-            $this->view->display("../Common/Workflow/leaveMemo");
 
-            return "wait";
-        }
-        
         $model = D("FinanceReceivePlan");
         $plan = $model->find($this->mainrowId);
-        
-        $accountId = $_POST["account_id"];
+
+        if(!$plan["account_id"] and !IS_POST) {
+            $this->response(array(
+                "type" => "redirect",
+                "location" => sprintf("/doWorkflow/FinanceReceivePlan/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
+            ));
+        }
+
+        $accountId = $plan["account_id"] ? $plan["account_id"] : abs(intval($_POST["account_id"]));
+        if(!$accountId) {
+            $this->error("params_error");
+        }
         
         $data = array(
             "account_id" => $accountId,

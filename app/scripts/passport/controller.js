@@ -207,7 +207,8 @@ angular.module("ones.passport", ['ones.passport.services', 'ngGrid', 'ones.commo
                     UserRes.update({id: $scope.userInfo.id, editMine: true}, {
                         phone: $scope.userInfo.phone,
                         username: $scope.userInfo.username,
-                        password: $scope.userInfo.password
+                        password: $scope.userInfo.password,
+                        email: $scope.userInfo.email
                     }).$promise.then(function(data){
                         modal.hide();
                     });

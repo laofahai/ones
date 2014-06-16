@@ -12,5 +12,14 @@
  * @author nemo
  */
 class FinancePayPlanAction extends CommonAction {
-    //put your code here
+    public $workflowAlias = "financePay";
+    protected $indexModel = "FinancePayPlanView";
+
+    public function insert() {
+        $id = parent::insert(true);
+
+        import("@.Workflow.Workflow");
+        $workflow = new Workflow($this->workflowAlias);
+        $rs = $workflow->doNext($id, null, false, false);
+    }
 }

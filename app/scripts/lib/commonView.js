@@ -122,7 +122,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
             
             //Grid 可跳转按钮
             actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
-            ComView.makeGridLinkActions($scope, actions, model.isBill, extra);
+            ComView.makeGridLinkActions($scope, actions, model.isBill, extra, model);
             ComView.makeGridSelectedActions($scope, model, res, group, module);
             
             ComView.displayGrid($scope, model, res, opts);
@@ -849,6 +849,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
                 extraParams = extraParams ? "/"+extraParams : "";
                 var available = ["add", "list", "export", "print"];
+                var actEnabled;
                 $scope.pageActions = [];
                 angular.forEach(actions, function(act, k){
                     if(available.indexOf(k) < 0) {
@@ -858,6 +859,11 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     if(isBill && k === "add") {
                         action = "addBill";
                     }
+                    actEnabled = k+"Able";
+                    if(model && model[actEnabled] === false) {
+                        return;
+                    }
+
                     $scope.pageActions.push({
                         label: $rootScope.i18n.lang.actions[k],
                         class: ComViewConfig.actionClasses[k],

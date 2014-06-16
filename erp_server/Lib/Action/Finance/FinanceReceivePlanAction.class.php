@@ -12,5 +12,16 @@
  * @author nemo
  */
 class FinanceReceivePlanAction extends CommonAction {
-    //put your code here
+
+    public $workflowAlias = "financeReceive";
+    protected $indexModel = "FinanceReceivePlanView";
+
+    public function insert() {
+        $id = parent::insert(true);
+
+        import("@.Workflow.Workflow");
+        $workflow = new Workflow($this->workflowAlias);
+        $rs = $workflow->doNext($id, null, false, false);
+    }
+
 }

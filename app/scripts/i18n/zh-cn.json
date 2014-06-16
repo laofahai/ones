@@ -283,8 +283,8 @@
                 "FinanceRecord": {
                     "name": "财务收支记录",
                     "actions": {
-                        "list": "列表",
-                        "add": "新增"
+                        "list": "",
+                        "add": ""
                     }
                 }, 
                 "FinanceAccount": {

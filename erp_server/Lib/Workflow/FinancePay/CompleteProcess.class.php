@@ -13,25 +13,28 @@
 class FinancePayCompleteProcess extends WorkflowAbstract {
     
     public function run() {
-        
-        if(!IS_POST) {
-            import("@.Form.Form");
-            $form = new Form("PlanInfo");
-            $this->view->assign("FormHTML", $form->makeForm(""));
-            $this->view->assign("lang_title", "leave_memo");
-            $this->view->display("../Common/Workflow/leaveMemo");
 
-            return "wait";
-        }
-        
-        $accountId = abs(intval($_POST["account_id"]));
         $model = D("FinancePayPlan");
         $plan = $model->find($this->mainrowId);
+        
+        if(!$plan["account_id"] and !IS_POST) {
+            $this->response(array(
+                "type" => "redirect",
+                "location" => sprintf("/doWorkflow/FinancePayPlan/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
+            ));
+        }
+        
+        $accountId = $plan["account_id"] ? $plan["account_id"] : abs(intval($_POST["account_id"]));
+        if(!$accountId) {
+            $this->error("params_error");
+        }
+
 //        var_dump($plan);exit;
         $data = array(
             "account_id" => $accountId,
             "amount" => $plan["amount"],
-            "type_id" => $plan["type_id"]
+            "type_id" => $plan["type_id"],
+            "type" => 2
         );
         $recordModel = D("FinanceRecord");
         $recordId = $recordModel->addRecord($data);

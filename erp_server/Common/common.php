@@ -37,7 +37,7 @@ function toDate($str, $format = "Y-m-d H:i:s") {
 //根据UID返回用户真实姓名
 function toTruename($uid) {
     if (!$uid) {
-        return L("Unnamed");
+        return;
     }
     $userData = getUserCache();
     return $userData[$uid]["truename"];
