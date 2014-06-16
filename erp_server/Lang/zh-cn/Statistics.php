@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @filename Statistics.php 
+ * @filename statistics.php
  * @encoding UTF-8 
  * @author nemo.xiaolan <a href="mailto:335454250@qq.com">335454250@qq.com</a>
  * @link <a href="http://www.sep-v.com">http://www.sep-v.com</a>

@@ -16,7 +16,7 @@ class ProduceProcessViewModel extends CommonViewModel {
     protected $viewFields = array(
         "ProduceProcess" => array("*", "_type"=>"left"),
         "Craft" => array("name"=>"craft_name", "_on"=>"Craft.id=ProduceProcess.craft_id", "_type"=>"left"),
-        "GoodsCraft" => array("listorder"=>"craft_listorder", "_on"=>"ProduceProcess.goods_id=GoodsCraft.goods_id", "_type"=>"left"),
+        "GoodsCraft" => array("listorder"=>"craft_listorder", "_on"=>"ProduceProcess.goods_id=GoodsCraft.goods_id AND ProduceProcess.craft_id=GoodsCraft.craft_id", "_type"=>"left"),
         "Goods" => array("name"=>"goods_name", "_on"=>"ProduceProcess.goods_id=Goods.id","_type"=>"left")
     );
     
@@ -50,6 +50,7 @@ class ProduceProcessViewModel extends CommonViewModel {
         foreach($tmp as $k=>$v) {
             $processes[$v["plan_detail_id"]] = $v;
         }
+//        print_r($processes);exit;
 //        echo $this->getLastSql();exit;
         $goods_ids = array();
         foreach($data as $k=>$row) {
@@ -68,20 +69,21 @@ class ProduceProcessViewModel extends CommonViewModel {
             $map = array(
                 "GoodsCraft.goods_id" => array("IN", implode(",", $goods_ids))
             );
-            
-            $tmp = $goodsCraftModel->where($map)->order("listorder ASC")->select();
+            //取得所有列表产品需用到的工艺
+            $tmp = $goodsCraftModel->where($map)->select();
 //            echo $goodsCraftModel->getLastSql();exit;
             foreach($tmp as $gc) {
                 $goodsCrafts[$gc["goods_id"]][$gc["listorder"]] = $gc;
             }
-            
+//            print_r($goodsCrafts);exit;
             foreach($data as $k=>$row) {
                 if(array_key_exists($row["goods_id"], $goodsCrafts)) {
                     //下一道工艺
-                    foreach($goodsCrafts[$row["goods_id"]] as $listorder => $gcr) {
-                        if($listorder <= $row["processes"]["craft_listorder"]) {
-                            continue;
-                        } else {
+                    foreach($goodsCrafts[$row["goods_id"]] as $listOrder => $gcr) {
+                        if($listOrder == $row["processes"]["craft_listorder"]+1) {
+//                            print_r($row["processes"]);
+//                            print_r($gcr);
+//                            echo $listOrder;exit;
                             $data[$k]["processes"]["next_craft_name"] = $gcr["name"];
                             $data[$k]["processes"]["next_craft_id"] = $gcr["id"];
                             break;

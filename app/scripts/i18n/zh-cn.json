@@ -310,6 +310,17 @@
                 }
             }
         },
+        "Statistics": {
+            "name": "统计分析",
+            "modules": {
+                "ProductView": {
+                    "name": "产品进销存表",
+                    "actions": {
+                        "list": ""
+                    }
+                }
+            }
+        },
         "doWorkflow": {
             "name": "工作流执行",
             "modules": {
@@ -366,8 +377,8 @@
             "statistics": "统计分析",
             "sale_statistics": "销售统计",
             "stock_warning": "库存警告",
-            "statics_overview": "统计总览",
-            "statics_product_overview": "产品进销存表",
+            "statistics_overview": "统计总览",
+            "statistics_product_overview": "产品进销存表",
             "settings": "设置",
             "field_set": "字段设置",
             "base_data_set": "基础数据管理",
@@ -433,7 +444,8 @@
             "please_enter_your_login_info": "请输入您的登录信息",
             "remember_me": "记住我",
             "i_fogot_password": "我忘记了密码",
-            "leaveEmptyIfNotEdit": "不修改请留空"
+            "leaveEmptyIfNotEdit": "不修改请留空",
+            "all_craft_ended": "所有生产工序已执行完成"
         },
         "errors": {
             "required": "必填",
@@ -457,6 +469,7 @@
             "list": "列表",
             "view": "查看",
             "print": "打印",
+            "filters": "过滤器",
             "viewCraft": "查看生产工艺",
             "doCraft" : "执行生产工艺",
             "viewSub": "查看子项",
@@ -625,6 +638,12 @@
         "freight": "运费",
         "weight": "重量",
         
-        "address": "地址"
+        "address": "地址",
+
+        "stockin": "入库",
+        "stockout": "出库",
+        "sale": "销售",
+        "purchase": "采购",
+        "produce": "生产"
     }
 }

@@ -70,10 +70,10 @@ return array(
     ),
     "statistics" => array(
         "childs" => array(
-            "sale_statistics" => "Statistics/Sale",
+            "sale_statistics" => "Statistics/list/Sale",
             "stock_warning"  => "JXC/list/StockWarning",
-            "statistics_overview" => "Statistics/Overview",
-            "statistics_product_overview" => "Statistics/ProductView"
+            "statistics_overview" => "Statistics/list/overview",
+            "statistics_product_overview" => "Statistics/list/productView"
         ),
         "icon" => "bar-chart"
     ),

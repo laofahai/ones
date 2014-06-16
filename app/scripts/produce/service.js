@@ -164,7 +164,7 @@ angular.module("ones.produce.service", [])
                         var scope = this.scope;
                         var injector = this.injector;
                         var res = injector.get("DoCraftRes");
-                        var conf = injector.get("one.config");
+                        var conf = injector.get("ones.config");
                         var $location = injector.get("$location");
 
                         if(selectedItems.length <= 0) {

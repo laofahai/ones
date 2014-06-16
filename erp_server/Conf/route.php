@@ -104,7 +104,9 @@ $urlRoutes = array_merge($base,
     routeMaker("finance/financeAccount", "Finance/FinanceAccount"),
     routeMaker("finance/financeReceivePlan", "Finance/FinanceReceivePlan"),
     routeMaker("finance/financePayPlan", "Finance/FinancePayPlan"),
-    routeMaker("finance/financeRecord", "Finance/FinanceRecord")
+    routeMaker("finance/financeRecord", "Finance/FinanceRecord"),
+
+    routeMaker("statistics/productView", "Statistics/ProductView", array("list"))
         
 //    routeMaker("jxc")
 );

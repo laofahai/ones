@@ -5,6 +5,7 @@
             <a class="btn btn-sm btn-light" href="#/HOME/goTo/url/{{$parent.currentURI}}"><i class="icon icon-refresh"></i></a>
             <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
             <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
+
         </div>
     </div>
     <div class="col-lg-8 right">
@@ -34,6 +35,12 @@
                     <a ng-click="sa.action($event,gridSelected)" ng-bind="sa.label"></a>
                 </li>
             </ul>
+        </div>
+        <div class="actionsBtnRight btn-group" ng-click="showFiltersModal();" ng-show="showFilters">
+            <a class="btn btn-sm">
+                <i class="icon icon-search"></i>
+                <span ng-bind="i18n.lang.actions.filters"></span>
+            </a>
         </div>
     </div>
     

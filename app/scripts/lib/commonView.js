@@ -343,6 +343,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         && typeof(fieldsDefine.getFieldsStruct) === "function") {
                     var model = fieldsDefine;
                     fieldsDefine = model.getFieldsStruct(true);
+
                 }
 
                 /**
@@ -369,9 +370,25 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         columnDefs.push(tmp[$i]);
                     }
                 }
-                
+
                 /**
-                 * 分页/过滤器默认项
+                 * 自定义过滤器
+                 * */
+                if(model.filters) {
+                    $scope.filters = model.filters;
+                    $scope.showFilters = true;
+                    var modal;
+                    $scope.showFiltersModal = function(){
+                        modal = $injector.get("$modal")({
+                            title: $rootScope.i18n.lang.actions.filters,
+                            contentTemplate: "views/common/filters.html"
+                        });
+                    }
+                }
+
+
+                /**
+                 * 分页/Grid 过滤器默认项
                  * */
                 var pagingOptions = {
                     pageSizes: [15, 30, 50],
@@ -380,7 +397,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 };
                 var filterOptions = {
                     filterText: "",
-                    useExternalFilter: true
+                    useExternalFilter: false
                 };
 
                 //默认选项
@@ -413,47 +430,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 var opts = $.extend(defaults, options);
                 opts.subModule = opts.subModule ? "/" + opts.subModule : "";
 
-                /**
-                 * 默认方法
-                 * */
-//                $scope.doAddChild = opts.doAddChild ? opts.doAddChild : function(){
-//                    if ($scope.gridSelected.length) {
-//                        $location.url(opts.module + opts.subModule + "/add/pid/"+$scope.gridSelected[0].id);
-//                    }
-//                };
-//                $scope.doView = opts.doView ? opts.doView : function() {
-//                    if ($scope.gridSelected.length) {
-//                        $location.url(opts.module + opts.subModule + "/view/id/" + $scope.gridSelected[0].id);
-//                    }
-//                };
-//                $scope.doViewSub = opts.doViewSub ? opts.doViewSub : function() {
-//                    if ($scope.gridSelected.length) {
-//                        $location.url(opts.module + opts.subModule + "/viewSub/id/" + $scope.gridSelected[0].id);
-//                    }
-//                };
-//                $scope.doViewDataModel = opts.doViewDataModel ? opts.doViewDataModel : function() {
-//                    $location.url("/HOME/DataModelData/" + $scope.gridSelected[0].bind_model);
-//                };
-//                $scope.doEditSelected = opts.doEditSeleted ? opts.doEditSelected : function() {
-//                    if ($scope.gridSelected.length) {
-//                        $location.url(opts.module + opts.subModule + "/edit/id/" + $scope.gridSelected[0].id+opts.editExtraParams);
-//                    }
-//                };
-//                $scope.doDeleteSelected = opts.doDeleleSelected ? opts.doDeleleSelected : function() {
-//                    if (!confirm(sprintf($scope.i18n.lang.confirm_delete, $scope.gridSelected.length))) {
-//                        return false;
-//                    }
-//                    var ids = [];
-//                    for (var i = 0; i < $scope.gridSelected.length; i++) {
-//                        ids.push($scope.gridSelected[i].id);
-//                    }
-//                    resource.delete({id: ids.join(",")}, function(data) {
-//                        $scope.$broadcast("gridData.changed");
-//                    });
-//
-//                    $scope.gridOptions.selectedItems = [];
-//                    $scope.gridSelected = [];
-//                };
 
                 //导出excel
                 $scope.doExport = function(){};
@@ -470,7 +446,9 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     }
                 };
                 //获取数据
-                var getPagedDataAsync = function(pageSize, page, searchText) {
+                $scope.getPagedDataAsync = function(pageSize, page, searchText) {
+                    pageSize = pageSize || pagingOptions.pageSize;
+                    page = page || pagingOptions.currentPage;
                     $timeout(function(){
                         var data;
                         if (searchText) {
@@ -496,19 +474,19 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     $scope.filterOptions = opts.filterOptions = filterOptions;
                 }
 
-                getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage);
+                $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage);
 
                 /**
                  * 监视器
                  * */
                 $scope.$watch('pagingOptions', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+                        $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
                     }
                 }, true);
                 $scope.$watch('filterOptions', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+                        $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
                     }
                 }, true);
 
@@ -518,7 +496,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     return;
 //                        $scope.gridSelected = [];
                     $scope.gridOptions.selectedItems = [];
-                    getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+                    $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
                 });
                 
                 /**

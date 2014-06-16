@@ -178,5 +178,9 @@
     .factory("DoCraftRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"produce/doCraft/:id.json", null, {'update': {method: 'PUT'}});
     }])
+    //统计
+    .factory("ProductViewRes", ["$resource","ones.config", function($resource, cnf){
+        return $resource(cnf.BSU+"statistics/productView/:id.json");
+    }])
     ;
 })(angular);

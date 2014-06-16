@@ -156,7 +156,7 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                     donext: true,
                     data: $scope.formMetaData
                 }).$promise.then(function(data){
-                    $location.url("/JXC/list/producePlan");
+                    $location.url("/Produce/list/producePlan");
                 });
             };
         }])

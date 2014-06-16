@@ -35,6 +35,8 @@ class DoCraftAction extends CommonAction {
         
         $viewModel = D("ProduceProcessView");
         $data = $viewModel->assignProcessData($ids, true);
+
+//        print_r($data);exit;
         
         $doingData = array();
         foreach($data as $row) {
@@ -53,9 +55,15 @@ class DoCraftAction extends CommonAction {
         
         $proessModel = D("ProduceProcess");
         if($proessModel->doProcess($doingData)) {
-            $this->success();
+            $detailModel = D("ProducePlanDetail");
+            $detailModel->where(array(
+                "id" => array("IN", implode(",", $ids))
+            ))->save(array(
+                "status"=>1
+            ));
+//            $this->success();
         } else {
-            $this->error("server error");
+            $this->error("all_craft_ended");
         }
         
     }

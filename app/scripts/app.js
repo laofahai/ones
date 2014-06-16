@@ -23,6 +23,8 @@
         'ones.common',
         'ones.configModule',
         'ones.doWorkflow',
+        'ones.statistics',
+
         'ones.commonView', //需要先加载模块，让模块路由优先匹配
 //    'ones.service'
     ])

@@ -22,7 +22,7 @@ return array(
     'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR', // 只记录EMERG ALERT CRIT ERR 错误
     
     'APP_GROUP_LIST' => 'HOME,Passport,CRM,SCM,JXC,OA,Finance,Statistics,Produce,OA,Accounting', //项目分组设定
-    'ENABLED_MODULE' => 'Finance,CRM',
+    'ENABLED_MODULE' => 'Finance,CRM,Statistics',
     'DEFAULT_GROUP'  => 'HOME', //默认分组
     'URL_MODEL' => 0,
     'URL_ROUTE_RULES' => require "route.php",
