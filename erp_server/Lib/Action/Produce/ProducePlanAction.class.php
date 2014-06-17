@@ -55,6 +55,10 @@ class ProducePlanAction extends CommonAction {
     }
     
     public function insert() {
+
+        if($_REQUEST["workflow"]) {
+            return $this->doWorkflow();
+        }
         
         $data = array(
             "start_time"=> strtotime($_POST["startTime"]),

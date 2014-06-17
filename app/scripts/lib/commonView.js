@@ -215,6 +215,14 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     template: template
                 });
             };
+            /**
+             * 通用跳转
+             * */
+            service.redirectTo = function(url) {
+                var url = "/HOME/goTo/url/"+encodeURI(encodeURIComponent(url));
+                $location.url(url);
+            }
+
             service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
 //                console.log(arguments);
                 var defaultOpts = {
@@ -491,8 +499,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 }, true);
 
                 $scope.$on('gridData.changed', function() {
-                    var url = "/HOME/goTo/url/"+encodeURI(encodeURIComponent($location.$$url));
-                    $location.url(url);
+                    service.redirectTo($location.url());
                     return;
 //                        $scope.gridSelected = [];
                     $scope.gridOptions.selectedItems = [];

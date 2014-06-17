@@ -25,6 +25,7 @@ class ProduceProcessViewModel extends CommonViewModel {
      * 如没有信息，则取该产品的第一道工序
      * 
      * @params $data => ProducePlanDetail list
+     * @todo 最后一道工序时标识生产完成 ProducePlanDetail.status = 2
      */
     public function assignProcessData($data, $isId=false) {
         

@@ -16,7 +16,7 @@ class ProducePlanDetailViewModel extends CommonViewModel {
     protected $viewFields = array(
         "ProducePlanDetail" => array("*", "_type"=>"left"),
         "ProducePlan" => array("end_time"=>"plan_end_time", "_on"=>"ProducePlanDetail.plan_id=ProducePlan.id","_type"=>"left"),
-        "Goods" => array("name"=>"goods_name", "_on"=>"Goods.id=ProducePlanDetail.goods_id", "_type"=>"left")
+        "Goods" => array("name"=>"goods_name", "goods_category_id", "_on"=>"Goods.id=ProducePlanDetail.goods_id", "_type"=>"left")
     );
     
     public function select($options=array()) {

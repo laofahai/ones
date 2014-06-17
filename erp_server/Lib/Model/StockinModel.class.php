@@ -31,8 +31,10 @@ class StockinModel extends CommonModel {
         if(!$billData["bill_id"]){
             $billData["bill_id"] = makeBillCode("RK");
         }
-        
         $billId = $this->add($billData);
+        if(!$billId) {
+            $this->rollback();
+        }
 //        echo $this->getLastSql();exit;
 //        echo $billId;exit;
         $itemsModel = D("StockinDetail");
@@ -41,6 +43,7 @@ class StockinModel extends CommonModel {
 //            print_r($billItem);
             $id = $itemsModel->add($billItem);
             if(!$id) {
+                echo $itemsModel->getLastSql();exit;
                 $this->rollback();
                 return false;
             }
@@ -92,14 +95,16 @@ class StockinModel extends CommonModel {
     
     /**
      * 格式化POST或者PUT的数据
+     * @params $postData 提交的数据
+     * @params $forceInsert 强制定义为插入，而非修改（billItem是否包含ID）
      */
-    public function formatData($postData) {
+    public function formatData($postData, $forceInsert=false) {
         $stockinModel = $this;
         
         $billData = array(
             "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
             "subject" => $postData["subject"],
-            "dateline"=> strtotime($postData["inputTime"]),
+            "dateline"=> $postData["inputTime"] ? strtotime($postData["inputTime"]) : CTS,
             "status"  => 0,
             "user_id" => getCurrentUid(),
             "stock_manager" => 0,
@@ -107,6 +112,11 @@ class StockinModel extends CommonModel {
             "memo"    => $postData["memo"],
             "type_id" => $postData["type_id"]
         );
+
+        if($postData["source_model"]) {
+            $billData["source_model"] = $postData["source_model"];
+            $billData["source_id"] = $postData["source_id"];
+        }
         
         $id = abs(intval($_GET["id"]));
         if($id) {
@@ -127,7 +137,7 @@ class StockinModel extends CommonModel {
                 "memo" => $billItem["memo"],
                 "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
             );
-            if($billItem["id"]) {
+            if(!$forceInsert and $billItem["id"]) {
                 $billItems[$k]["id"] = $billItem["id"];
             }
         }

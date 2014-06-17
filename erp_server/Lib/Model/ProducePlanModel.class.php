@@ -14,7 +14,14 @@
 class ProducePlanModel extends CommonModel {
     
     public $workflowAlias = "produce";
-    
+
+    /*
+     * status: 0 新单据
+     *         1 已生成BOM
+     *         2 BOM已保存
+     *         3 已开始生产
+     *         4 生产结束
+     * **/
     public function newPlan($data) {
         $rows = $data["rows"];
         unset($data["rows"]);

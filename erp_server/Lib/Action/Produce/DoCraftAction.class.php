@@ -40,6 +40,7 @@ class DoCraftAction extends CommonAction {
         
         $doingData = array();
         foreach($data as $row) {
+            $planIds[] = $row["plan_id"];
             $doingData[] = array(
                 "plan_detail_id" => $row["id"],
                 "plan_id" => $row["plan_id"],
@@ -53,14 +54,22 @@ class DoCraftAction extends CommonAction {
             );
         }
         
-        $proessModel = D("ProduceProcess");
-        if($proessModel->doProcess($doingData)) {
+        $processModel = D("ProduceProcess");
+        if($processModel->doProcess($doingData)) {
+            //标识产品已进入生产工序
             $detailModel = D("ProducePlanDetail");
             $detailModel->where(array(
                 "id" => array("IN", implode(",", $ids))
             ))->save(array(
                 "status"=>1
             ));
+
+            D("ProducePlan")->where(array(
+                "id" => array("IN", implode(",",$planIds))
+            ))->save(array(
+                "status"=>3
+            ));
+
 //            $this->success();
         } else {
             $this->error("all_craft_ended");

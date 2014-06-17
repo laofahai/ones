@@ -402,7 +402,6 @@
                 return html.join("");
                 
                 if(this.opts.isEdit) {
-                    
                     this.scope.$on("bill.dataLoaded", function(evt, data){
                         self.opts.defaultData = data.rows;
                         delete(data.rows);

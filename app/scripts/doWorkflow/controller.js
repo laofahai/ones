@@ -27,6 +27,10 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 templateUrl: "views/produce/producePlan/doCraft.html",
                 controller : "WorkflowDoCraftCtl"
             })
+            .when('/doWorkflow/Produce/makeStockin/:nodeId/:id', {
+                templateUrl: "views/produce/producePlan/makeStockin.html",
+                controller : "WorkflowProduceMakeStockinCtl"
+            })
             ;
         }])
     //生成发货单
@@ -171,9 +175,7 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
              * 扩展选择操作选项
              * */
             ComView.makeGridSelectedActions($scope, model, res, "Produce", "doCraft");
-            
-            
-            
+
             ComView.displayGrid($scope, model, res, {
                 queryExtraParams: {
                     plan_id: $routeParams.id,
@@ -181,4 +183,28 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 }
             });
         }])
-    ;
+    /**
+     * 生成入库单
+     * */
+    .controller("WorkflowProduceMakeStockinCtl", ["$scope", "ProducePlanRes", "ProducePlanDetailEditModel", "ComView", "$routeParams", "$location",
+        function($scope, res, model, ComView, $routeParams, $location){
+            $scope.selectAble = false;
+            ComView.displayBill($scope, model, res, {
+                plan_id: $routeParams.id,
+                queryExtraParams: {workflowing: true}
+            });
+
+            $scope.doSubmit = function(){
+                $scope.formMetaData.rows = $scope.formData;
+                res.doPostWorkflow({
+                    workflow: true,
+                    node_id: $routeParams.nodeId,
+                    id: $routeParams.id,
+                    donext: true,
+                    data: $scope.formMetaData
+                }).$promise.then(function(data){
+                    $location.url("/Produce/list/producePlan");
+                });
+            };
+        }])
+;

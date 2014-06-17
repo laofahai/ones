@@ -341,7 +341,8 @@
                     "name": "生产管理",
                     "actions": {
                         "makeBoms": "生成物料清单",
-                        "doCraft" : "执行生产工艺"
+                        "doCraft" : "执行生产工艺",
+                        "makeStockin": "生成入库单"
                     }
                 }
             }

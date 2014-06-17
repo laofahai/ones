@@ -1,5 +1,5 @@
 angular.module("ones.doWorkflow.service", [])
-        .service("DoCraftModel", ["$rootScope", function($rootScope) {
+        .service("DoCraftModel", ["$rootScope", "$injector", function($rootScope, $injector) {
              return {
                  editAble: false,
                  deleteAble: false,
@@ -21,8 +21,13 @@ angular.module("ones.doWorkflow.service", [])
                             
                             res.update({
                                 id: ids.join(),
-                                workflow: true,
-                            }, {}, function(){});
+                                workflow: true
+                            }, {}, function(){
+                                //刷新当前页面
+                                var $location = $injector.get("$location");
+//                                console.log($location.url());
+                                $injector.get("ComView").redirectTo($location.url());
+                            });
                         }
                     }
                 ],

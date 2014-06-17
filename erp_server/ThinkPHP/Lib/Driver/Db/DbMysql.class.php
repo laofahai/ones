@@ -134,6 +134,11 @@ class DbMysql extends Db{
         } else {
             $this->numRows = mysql_affected_rows($this->_linkID);
             $this->lastInsID = mysql_insert_id($this->_linkID);
+            if(!$this->lastInsId) {
+                $tmp = mysql_query("SELECT LAST_INSERT_ID() as lastIns");
+                $tmp = mysql_fetch_array($tmp);
+                $this->lastInsID = $tmp["lastIns"];
+            }
             return $this->numRows;
         }
     }

@@ -48,10 +48,9 @@ class ProduceMakeBoms extends WorkflowAbstract {
                 }
             }
             //status 标识BOM单已保存
-            $planModel->save(array(
+            $planModel->where("id=".$this->mainrowId)->save(array(
                 "status" => 2
             ));
-            
             $bomModel->commit();
             
             return true;
@@ -148,7 +147,7 @@ class ProduceMakeBoms extends WorkflowAbstract {
         }
         
         //status 标识已生成BOM单
-        $planModel->save(array(
+        $planModel->where("id=".$this->mainrowId)->save(array(
             "status" => 1
         ));
         
