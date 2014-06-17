@@ -26,6 +26,10 @@ class GoodsAction extends CommonAction {
         if($_GET["factory_code"]) {
             $map["factory_code"] = trim($_GET["factory_code"]);
         }
+
+        if($_GET["excludeId"]) {
+            $map["id"] = array("NEQ", $_GET["excludeId"]);
+        }
     }
     
     protected function _before_index() {

@@ -37,7 +37,8 @@ angular.module("ones.common.directives", ["ones.formMaker"])
                         var res = $injector.get(attrs.ensureunique);
                         scope.$watch(attrs.ngModel, function() {
                             var queryParams = {
-                                id: 0
+                                id: 0,
+                                excludeId:  $injector.get("$routeParams").id
                             };
                             queryParams[attrs.name] = scope.$eval(attrs.ngModel);
                             res.get(queryParams).$promise.then(function(data){
