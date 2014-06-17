@@ -33,7 +33,9 @@ class StockinModel extends CommonModel {
         }
         $billId = $this->add($billData);
         if(!$billId) {
+//            echo $this->getLastSql();exit;
             $this->rollback();
+            return false;
         }
 //        echo $this->getLastSql();exit;
 //        echo $billId;exit;
@@ -43,7 +45,6 @@ class StockinModel extends CommonModel {
 //            print_r($billItem);
             $id = $itemsModel->add($billItem);
             if(!$id) {
-                echo $itemsModel->getLastSql();exit;
                 $this->rollback();
                 return false;
             }
@@ -137,6 +138,7 @@ class StockinModel extends CommonModel {
                 "memo" => $billItem["memo"],
                 "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
             );
+            $billData["total_num"] += $billItem["num"];
             if(!$forceInsert and $billItem["id"]) {
                 $billItems[$k]["id"] = $billItem["id"];
             }

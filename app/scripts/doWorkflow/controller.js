@@ -131,8 +131,8 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                     workflow: true,
                     node_id: $routeParams.nodeId,
                     id: $routeParams.id,
-                    donext: true
-//                    data: $scope.formMetaData
+                    donext: true,
+                    data: $scope.formMetaData
                 };
                 res.doPostWorkflow(data).$promise.then(function(data){
                     $location.url("/JXC/list/stockin");

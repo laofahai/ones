@@ -48,7 +48,7 @@ class CommonAction extends RestAction {
         $this->user = $_SESSION["user"];
         
         if(!$_REQUEST) {
-            $_REQUEST = array_merge($_GET, $_POST);
+            $_REQUEST = array_merge($_COOKIE, $_GET, $_POST);
         }
         
         $this->checkPermission();
@@ -327,7 +327,7 @@ class CommonAction extends RestAction {
         } 
         
         if(!$rs) {
-            $this->error("operate_failed");
+            $this->error("delete_failed");
         }
 //        
 //        return;
@@ -371,11 +371,17 @@ class CommonAction extends RestAction {
      */
     protected function doWorkflow() {
 //        $_REQUEST = $_REQUEST ? $_REQUEST : $_POST;
-        $mainRowid = abs(intval($_REQUEST["id"]));
-        $nodeId = abs(intval($_REQUEST["node_id"]));
+        $mainRowid = $_GET["id"] ? abs(intval($_GET['id'])) : abs(intval($_POST['id']));
+
+
+        $nodeId = $_GET["node_id"] ? abs(intval($_GET["node_id"])) : abs(intval($_POST["node_id"]));
+//        $nodeId = abs(intval($_REQUEST["node_id"]));
+//        print_r($_POST);
+//        print_r($_REQUEST);
+//        $this->error(123);exit;
 //        var_dump($_REQUEST);exit;
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
-           $this->error("not_allowed1");exit;
+            $this->error("not_allowed1");exit;
         }
         
         $workflow = new Workflow($this->workflowAlias);

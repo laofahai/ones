@@ -43,14 +43,15 @@ class PurchaseAction extends CommonAction {
         $data["user_id"] = $this->user["id"];
 //        print_r($data);exit;
         $model = D("Purchase");
-        $orderId = $model->newPurchase($data);
-        if(!$orderId) {
+        $billId = $model->newPurchase($data);
+        if(!$billId) {
             $this->error($model->getError());
+            return;
         }
         
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
-        $node = $workflow->doNext($orderId, "", true);
+        $node = $workflow->doNext($billId, "", true);
     }
     
 }

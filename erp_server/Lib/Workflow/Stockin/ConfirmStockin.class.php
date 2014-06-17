@@ -32,24 +32,52 @@ class StockinConfirmStockin extends WorkflowAbstract {
         $map = array(
             "stockin_id" => $id
         );
-        
-        $stockinDetailView = D("StockinDetailView");
-        $data = $stockinDetailView->where($map)->select();
-        
-        $stockin = D("Stockin");
-        $theStockin = $stockin->find($id);
+
+        //更新POST到得数据至入库单
+        $data = $_POST["data"];
+        $stockinModel = D("Stockin");
+        $stockinModel->where("id=".$this->mainrowId)->save(array(
+            "total_num" => $data["total_num"],
+            "memo" => $data["memo"]
+        ));
+        $stockinDetailModel = D("StockinDetail");
+
+        foreach($data["rows"] as $row) {
+            if($row["id"]) {
+                $stockinDetailModel->where("id=".$id)->save(array(
+                    "stock_id" => $row["stock"],
+                    "memo" => $row["memo"]
+                ));
+            } else {
+                list($fc,$goodsId,$catid) = explode("_", $row["goods_id"]);
+                $row["goods_id"] = $goodsId;
+                $stockinDetailModel->add(array(
+                    "stockin_id" => $this->mainrowId,
+                    "goods_id" => $goodsId,
+                    "num" => $row["num"],
+                    "factory_code_all" => makeFactoryCode($row, $fc),
+                    "stock_id" => $row["stock"],
+                    "memo" => $row["memo"]
+                ));
+            }
+        }
+
+        $theDetails = $stockinDetailModel->where($map)->select();
+
+        $theStockin = $stockinModel->find($id);
         $stockProductListModel = D("StockProductList");
         $stockProductListModel->startTrans();
-        $rs = $stockProductListModel->updateStoreList($data);
+        $rs = $stockProductListModel->updateStoreList($theDetails);
         if(true === $rs) {
             $stockProductListModel->commit();
             $data = array(
                 "status" => 2,
                 "stock_manager" => getCurrentUid()
             );
-            $stockin->where("id=".$id)->save($data);
+            $stockinModel->where("id=".$id)->save($data);
             $this->updateStatus("Stockin", $id, 2);
         } else {
+//            print_r($theDetails);
             $stockProductListModel->rollback();
             $this->error("operate_failed");
 //            $this->action->error(L("operate_failed"));

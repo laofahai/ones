@@ -1146,7 +1146,7 @@ angular.module("ones.jxc.services", [])
                         num: {
                             inputType: "number",
                             totalAble: true,
-                            "ui-event": "{blur: 'afterNumBlur($event)'}",
+                            "ui-event": "{blur: 'afterNumBlur($event)'}"
                         },
                         unit_price: {
                             inputType: "number",

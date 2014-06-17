@@ -20,6 +20,7 @@ class StockProductListModel extends Model {
         
 //        print_r($data);exit;
         if(!$data) {
+            $this->error = "no_data";
             return false;
         }
         
@@ -85,7 +86,7 @@ class StockProductListModel extends Model {
 //            echo $this->getLastSql();exit;
 //            echo 123;exit;
             if(!$rs) {
-//                echo $this->getLastSql();exit;
+//                return $this->getLastSql();
                 return false;
             }
             

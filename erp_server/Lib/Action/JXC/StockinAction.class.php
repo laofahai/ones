@@ -82,7 +82,6 @@ class StockinAction extends CommonAction {
             return;
         }
         
-        
         $stockinModel = D("Stockin");
         
         list($bill, $rows) = $stockinModel->formatData($_POST);
@@ -122,7 +121,7 @@ class StockinAction extends CommonAction {
 //        
         $billId = $stockinModel->newBill($bill, $rows);
         
-//        var_dump($billId);
+        var_dump($billId);
     }
     
 //    public function _after_delete() {

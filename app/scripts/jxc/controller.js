@@ -73,12 +73,12 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 //客户选择字段定义
                 $scope.customerSelectOpts = {
                     context: {
-                        field: "customer_id"
+                        field: "supplier_id"
                     },
                     fieldDefine: {
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
-                        "ng-model": "formMetaData.customer_id",
+                        "ng-model": "formMetaData.supplier_id",
                         dataSource: RelationshipCompanyRes
                     }
                 };
@@ -108,10 +108,16 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                 };
                 var recountTotalAmount = function() {
                     var totalAmount = 0;
+                    var totalNum = 0;
                     angular.forEach($scope.formData, function(row){
+                        if(!row.amount) {
+                            return;
+                        }
+                        totalNum += Number(row.num);
                         totalAmount += Number(row.amount);
                     });
                     $scope.formMetaData.total_amount = totalAmount;
+                    $scope.formMetaData.total_num = totalNum;
                 };
                 $scope.onNumberBlur = function(event){
                     var context = getInputContext(event.target);
