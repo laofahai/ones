@@ -132,7 +132,7 @@ angular.module("ones.finance.service", [])
                                 hideInForm: true,
                                 cellFilter: "dateFormat"
                             },
-                            receive_dateline: {
+                            pay_dateline: {
                                 hideInForm: true,
                                 cellFilter: "dateFormat"
                             },

@@ -73,6 +73,7 @@ class WorkflowNodeAction extends CommonAction {
         if(!$_GET["mainrow_id"]) {
             return parent::index();
         }
+
         //仅获取当前数据的下一ID
         
 //        $map = array();

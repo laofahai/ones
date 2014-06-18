@@ -54,41 +54,27 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
 //);
 
 $needMake = array(
-    array(
-        "passport/userLogin", "Passport/Login", "post",
-    ),
-    array(
-        "passport/userLogout", "Passport/Login", "list",
-    ),
-    array(
-        "user", "PassportUser",
-    ),
-    array(
-        "types", "HOME/Types",
-    ),
-    array(
-        "config", "HOME/Config"
-    ),
-    array(
-        "workflow/process", "HOME/WorkflowProcess", "get"
-    ),
-    array(
-        "jxc/stockWarning", "JXC/StockWarning", "list"
-    ),
-    array(
-        "jxc/stockProductList", "JXC/StockProductList", "list,get,put"
-    ),
-    array(
-        "produce/goodsCraft", "Product/GoodsCraft", "list,put"
-    ),
-    array(
-        "statistics/productView", "Statistics/ProductView", "list"
-    )
+    array("passport/userLogin", "Passport/Login", "post",),
+    array("passport/userLogout", "Passport/Login", "list",),
+    array("user", "PassportUser",),
+    array("types", "HOME/Types",),
+    array("config", "HOME/Config"),
+    array("workflow/process", "HOME/WorkflowProcess", "get"),
+    array("jxc/stockWarning", "JXC/StockWarning", "list"),
+    array("jxc/stockProductList", "JXC/StockProductList", "list,get,put"),
+    array("produce/goodsCraft", "Product/GoodsCraft", "list,put"),
+    array("statistics/productView", "Statistics/ProductView", "list"),
+    array("workflow/nodes", "HOME/WorkflowNode"),
+    array("workflow/process", "HOME/WorkflowProcess"),
+    array("workflow", "HOME/Workflow"),
 );
-
+//routeMaker("workflow/nodes", "HOME/WorkflowNode"),
+//    routeMaker("workflow/process", "HOME/WorkflowProcess", array("get")),
+////    routeMaker("workflow", "HOME/Workflow"),
 $urlRoutes = array();
 foreach($needMake as $v) {
-    $urlRoutes = array_merge($urlRoutes, routeMaker($v[0], $v[1], explode(",", $v[2])));
+    $act = $v[2] ? explode(",", $v[2]) : null;
+    $urlRoutes = array_merge($urlRoutes, routeMaker($v[0], $v[1], $act));
 }
 
 //$urlRoutes = array_merge($urlRoutes,
@@ -149,7 +135,6 @@ foreach($needMake as $v) {
 $groupMap = array(
     "jxc" => "JXC",
     "home" => "HOME",
-    "workflow" => "HOME",
     "crm" => "CRM"
 );
 $tmp = explode("/", $_GET["s"]);

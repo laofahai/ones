@@ -104,7 +104,7 @@ class OrdersAction extends CommonAction {
         
 //        $this->success(L("operate_success"));
     }
-    
+
 //    public function delete() {
 //        if(parent::delete(true)) {
 //            $model = D("OrdersDetail");

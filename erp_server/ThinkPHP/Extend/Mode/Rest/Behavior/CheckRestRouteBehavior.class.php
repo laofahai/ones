@@ -34,6 +34,7 @@ class CheckRestRouteBehavior extends Behavior {
         // 路由处理
         if(!empty($routes)) {
             $depr = C('URL_PATHINFO_DEPR');
+//            print_r($routes);exit;
             foreach ($routes as $key=>$route){
                 // 定义格式： array('路由规则或者正则','路由地址','路由参数','提交类型','资源类型')
                 if(isset($route[3]) && strtolower($_SERVER['REQUEST_METHOD']) != strtolower($route[3])) {

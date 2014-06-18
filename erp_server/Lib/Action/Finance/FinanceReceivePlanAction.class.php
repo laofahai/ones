@@ -23,5 +23,9 @@ class FinanceReceivePlanAction extends CommonAction {
         $workflow = new Workflow($this->workflowAlias);
         $rs = $workflow->doNext($id, null, false, false);
     }
+//
+//    public function update() {
+//        print_r($_POST);exit;
+//    }
 
 }

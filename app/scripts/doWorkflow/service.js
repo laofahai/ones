@@ -67,4 +67,23 @@ angular.module("ones.doWorkflow.service", [])
                  }
              };   
         }])
-        ;
+    .service("ConfirmReceiveModel", ["$rootScope", "FinanceAccountRes", function($rootScope,res){
+        return {
+            getFieldsStruct: function(){
+                return {
+                    amount: {
+                        inputType: "number"
+                    },
+                    account_id: {
+                        displayName: $rootScope.i18n.lang.account,
+                        inputType: "select",
+                        dataSource: res,
+                        nameField: "name",
+                        valueField: "id"
+                    }
+                };
+            }
+        };
+    }])
+
+;

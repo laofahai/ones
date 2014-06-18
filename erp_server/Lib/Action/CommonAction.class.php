@@ -306,7 +306,7 @@ class CommonAction extends RestAction {
             ));
         } else {
             //失败提示
-            $this->httpError(500);
+            $this->error($model->getError());
         }
     }
     

@@ -240,7 +240,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         }
                         totalAmount += Number(row.amount);
                     });
-                    $scope.formMetaData.total_amount = totalAmount;
+                    $scope.formMetaData.total_num = totalAmount;
                 };
                 $scope.onNumberBlur = function(event){
                     var context = getInputContext(event.target);

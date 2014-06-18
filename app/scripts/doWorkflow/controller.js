@@ -31,6 +31,10 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 templateUrl: "views/produce/producePlan/makeStockin.html",
                 controller : "WorkflowProduceMakeStockinCtl"
             })
+            .when('/doWorkflow/FinanceReceivePlan/confirm/:nodeId/:id', {
+                templateUrl: "views/finance/confirmReceive.html",
+                controller: "WorkflowFinanceReceiveConfirmCtl"
+            })
             ;
         }])
     //生成发货单
@@ -207,4 +211,26 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                 });
             };
         }])
-;
+    /**
+     * 确认收款
+     * */
+    .controller("WorkflowFinanceReceiveConfirmCtl", ["$scope", "ComView", "ConfirmReceiveModel", "FinanceReceivePlanRes", "$routeParams", "$location",
+        function($scope, ComView, model, res, $routeParams, $location){
+            $scope.selectAble = false;
+            ComView.displayForm($scope, model, res, {
+                id: $routeParams.id
+            });
+
+            $scope.doSubmit = function(){
+                res.doPostWorkflow({
+                    workflow: true,
+                    node_id: $routeParams.nodeId,
+                    id: $routeParams.id,
+                    donext: true,
+                    data: $scope.formMetaData
+                }).$promise.then(function(data){
+                    $location.url('/Finance/list/financeReceivePlan');
+                });
+            };
+        }])
+ ;

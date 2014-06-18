@@ -350,6 +350,12 @@
                         "doCraft" : "执行生产工艺",
                         "makeStockin": "生成入库单"
                     }
+                },
+                "FinanceReceivePlan": {
+                    "name": "财务收款计划",
+                    "actions": {
+                        "confirm": "确认收款"
+                    }
                 }
             }
         }
@@ -433,6 +439,7 @@
             "operate_options": "操作选项",
             "produceInProcess": "在产",
             "editMyProfile" : "修改我的资料",
+            "confirm_finance_receive": "财务确认收款",
             "statistics": {
                 "sale": "销售统计"
             }

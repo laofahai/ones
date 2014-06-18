@@ -218,7 +218,8 @@ function Pinyin($zh) {
  * 内置模块是否已启用
  */
 function isModuleEnabled($moduleName) {
-    return in_array($moduleName, C("ENABLED_MODULE"));
+    $modules = explode(",", C("ENABLED_MODULE"));
+    return in_array($moduleName, $modules);
 }
 
 /**

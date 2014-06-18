@@ -25,7 +25,6 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
         
         //财务
         if(isModuleEnabled("Finance")) {
-//            echo 123;
             $financeModel = D("FinanceReceivePlan");
             $theOrder = $order->find($this->mainrowId);
             $data = array(
@@ -33,7 +32,7 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
                 "source_id" => $this->mainrowId,
                 "subject" => "",
                 "customer_id" => $theOrder["customer_id"],
-                "amount" => $theOrder["total_price_real"],
+                "amount" => $theOrder["total_amount_real"],
                 "create_dateline" => CTS,
                 "status" => 0,
                 "type_id" => getTypeIdByAlias("receive", "sale"),
@@ -41,7 +40,7 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
             );
             
             $lastId = $financeModel->add($data);
-//            echo $lastId;exit;
+
 //            echo $financeModel->getLastSql();exit;
             if(!$lastId) {
                 return false;
@@ -51,6 +50,7 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
             $node = $workflow->doNext($lastId, "", true);
 //            var_dump($node);
         }
+        exit;
         
 //        exit;
 //        echo "RequireFinanceVerify";exit;
