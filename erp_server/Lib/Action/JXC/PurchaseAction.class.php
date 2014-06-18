@@ -18,40 +18,30 @@ class PurchaseAction extends CommonAction {
     protected $indexModel = "PurchaseView";
     
     public function insert() {
-        
-//        print_r($_POST);exit;
-        
-        $data = $_POST;
-        
-        foreach($data["rows"] as $k=>$row) {
-            if(!$row or !$row["goods_id"]) {
-                unset($data["rows"][$k]);
-                continue;
-            }
-            list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
-            $data["rows"][$k]["goods_id"] = $goods_id;
-            $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
-            
-            unset($data["rows"][$k]["standard"]);
-            unset($data["rows"][$k]["version"]);
-        }
-        $data["total_price_real"] = $data["total_amount_real"];
-        $data["total_price"] = $data["total_amount"];
-        $data["quantity"] = $data["total_num"];
-        $data["bill_id"] = makeBillCode("CG");
-        $data["dateline"] = strtotime($data["inputTime"]);
-        $data["user_id"] = $this->user["id"];
-//        print_r($data);exit;
         $model = D("Purchase");
-        $billId = $model->newPurchase($data);
+        $data = $model->formatData($_POST);
+        $billId = $model->newBill($data);
+
         if(!$billId) {
             $this->error($model->getError());
             return;
         }
-        
+
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $node = $workflow->doNext($billId, "", true);
+    }
+
+    public function update() {
+        $model = D("Purchase");
+        $data = $model->formatData($_POST);
+        $billId = $model->editBill($data);
+
+        if(!$billId) {
+            $this->error($model->getError());
+            return;
+        }
+
     }
 
     public function read() {
@@ -66,6 +56,7 @@ class PurchaseAction extends CommonAction {
         $formData["inputTime"] = $formData["dateline"]*1000;
         $formData["total_amount"] = $formData["total_price"];
         $formData["total_amount_real"] = $formData["total_price_real"];
+        $formData["total_num"] = $formData["quantity"];
 
         $rowModel = D("PurchaseDetailView");
         $rows = $rowModel->where("PurchaseDetail.purchase_id=".$formData["id"])->select();

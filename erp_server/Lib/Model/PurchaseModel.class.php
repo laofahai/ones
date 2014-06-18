@@ -26,7 +26,7 @@ class PurchaseModel extends CommonModel {
         array("saler_id", "getCurrentUid", 1, "function"),
     );
     
-    public function newPurchase($data) {
+    public function newBill($data) {
         if(!$data["rows"]) {
             return;
         }
@@ -53,6 +53,54 @@ class PurchaseModel extends CommonModel {
         $this->commit();
         
         return $purchaseId;
+    }
+
+    public function editBill($data) {
+        $this->startTrans();
+        $rows = $data["rows"];
+        unset($data["rows"]);
+
+        if(false === $this->save($data)) {
+            $this->rollback();
+            return false;
+        }
+
+        $detailModel = D("PurchaseDetail");
+        foreach($rows as $row) {
+            $row["purchase_id"] = $data["id"];
+            $row["price"] = $row["amount"];
+            $method = $row["id"] ? "save" : "add";
+            if(false === $detailModel->$method($row)) {
+                $this->rollback();
+                return false;
+            }
+        }
+
+        $this->commit();
+        return $data["id"];
+    }
+
+    public function formatData($data) {
+        foreach($data["rows"] as $k=>$row) {
+            if(!$row or !$row["goods_id"]) {
+                unset($data["rows"][$k]);
+                continue;
+            }
+            list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
+            $data["rows"][$k]["goods_id"] = $goods_id;
+            $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
+
+            unset($data["rows"][$k]["standard"]);
+            unset($data["rows"][$k]["version"]);
+        }
+        $data["total_price_real"] = $data["total_amount_real"];
+        $data["total_price"] = $data["total_amount"];
+        $data["quantity"] = $data["total_num"];
+        $data["bill_id"] = makeBillCode("CG");
+        $data["dateline"] = strtotime($data["inputTime"]);
+        $data["user_id"] = getCurrentUid();
+
+        return $data;
     }
     
 }

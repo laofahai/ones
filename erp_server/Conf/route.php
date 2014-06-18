@@ -48,10 +48,10 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
     
 }
 
-$base = array(
-    //array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
-    array("JXC/StockProductList/Export", "HOME/JXC/StockProductList/Export", "", "get", "json"),
-);
+//$base = array(
+//    //array("passport/userLogin", "HOME/Passport/userLogin", "", "get", "json"),
+////    array("JXC/StockProductList/Export", "HOME/JXC/StockProductList/Export", "", "get", "json"),
+//);
 
 $needMake = array(
     array(
@@ -88,7 +88,7 @@ $needMake = array(
 
 $urlRoutes = array();
 foreach($needMake as $v) {
-    $urlRoutes = array_merge($base, routeMaker($v[0], $v[1], explode(",", $v[2])));
+    $urlRoutes = array_merge($urlRoutes, routeMaker($v[0], $v[1], explode(",", $v[2])));
 }
 
 //$urlRoutes = array_merge($urlRoutes,
