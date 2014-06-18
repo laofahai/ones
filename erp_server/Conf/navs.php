@@ -70,8 +70,8 @@ return array(
     ),
     "statistics" => array(
         "childs" => array(
-            "sale_statistics" => "Statistics/list/Sale",
-            "stock_warning"  => "JXC/list/StockWarning",
+            "sale_statistics" => "Statistics/list/sale",
+            "stock_warning"  => "JXC/list/stockWarning",
             "statistics_overview" => "Statistics/list/overview",
             "statistics_product_overview" => "Statistics/list/productView"
         ),

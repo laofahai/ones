@@ -53,6 +53,10 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         templateUrl: 'views/jxc/purchase/edit.html',
                         controller: 'JXCPurchaseEditCtl'
                     })
+                    .when('/JXC/editBill/purchase/id/:id', {
+                        templateUrl: 'views/jxc/purchase/edit.html',
+                        controller: 'JXCPurchaseEditCtl'
+                    })
                     ;
         }])
         .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes",

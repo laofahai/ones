@@ -318,6 +318,12 @@
                     "actions": {
                         "list": ""
                     }
+                },
+                "Sale": {
+                    "name": "销售统计",
+                    "actions": {
+                        "list": ""
+                    }
                 }
             }
         },
@@ -426,7 +432,10 @@
             "_product_craft": "产品 %s 工序管理",
             "operate_options": "操作选项",
             "produceInProcess": "在产",
-            "editMyProfile" : "修改我的资料"
+            "editMyProfile" : "修改我的资料",
+            "statistics": {
+                "sale": "销售统计"
+            }
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",

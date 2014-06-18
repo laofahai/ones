@@ -1,4 +1,5 @@
 <?php
+    error_reporting("E_ERROR");
     $localPath = './'.md5(strtolower(trim($email))).'.jpg';
     
     $timeLimit = 1209600; //本地缓存时间
@@ -9,9 +10,10 @@
             $_GET["d"] ? $_GET["d"] : "mm",
             $_GET["r"] ? $_GET["r"] : "g"
     );
+
     if (!is_file($localPath) || (time() - filemtime($localPath)) > $timeLimit) {
+
         @copy($url, $localPath);
     }
-    
     header("Content-Type: image/jpeg");
     echo file_get_contents($localPath);

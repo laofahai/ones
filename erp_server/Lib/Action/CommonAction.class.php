@@ -20,7 +20,6 @@ class CommonAction extends RestAction {
     public function __construct() {
         
         parent::__construct();
-        
         if(!APP_DEBUG && !IS_AJAX) {
             $this->error("Direct Visit");exit;
         }
@@ -58,7 +57,7 @@ class CommonAction extends RestAction {
         return $_SESSION["user"]["id"] ? 1 : 0;
     }
     
-    protected function parseActionName($action) {
+    protected function parseActionName($action=null) {
         $action = $action ? $action : ACTION_NAME;
         switch($action) {
             case "insert":
@@ -113,8 +112,7 @@ class CommonAction extends RestAction {
             return true;
         }
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
-        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
-//        echo $rule."\n";
+        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, ucfirst(MODULE_NAME), $this->parseActionName());
         if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
             $rs = true;
         } else {
@@ -229,7 +227,7 @@ class CommonAction extends RestAction {
         $this->_filter($map);
         
         $item = $model->where($map)->find();
-        
+//        echo $model->getLastSql();exit;
         if($return) {
             return $item;
         }

@@ -18,7 +18,7 @@ class PurchaseViewModel extends CommonViewModel {
         "Purchase" => array("*", "_type"=>"left"),
         "Types"=> array("name"=>"purchase_type_label", "_on"=>"Purchase.purchase_type=Types.id", "_type"=>"left"),
         "User" => array("truename" => "buyer", "_on" => "Purchase.user_id=User.id", "_type"=>"left"),
-        "RelationshipCompany" => array("name"=>"supplier", "_on"=>"RelationshipCompany.id=Purchase.supplier_id", "_type"=>"left")
+        "RelationshipCompany" => array("name"=>"supplier_id_label", "_on"=>"RelationshipCompany.id=Purchase.supplier_id", "_type"=>"left"),
     );
     
 }
