@@ -80,6 +80,9 @@ angular.module("ones.doWorkflow.service", [])
                         dataSource: res,
                         nameField: "name",
                         valueField: "id"
+                    },
+                    memo: {
+                        required: false
                     }
                 };
             }

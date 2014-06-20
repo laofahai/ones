@@ -104,13 +104,13 @@ function clearCache($type = 0, $path = NULL) {
     $rs = delDirAndFile($path);
 }
 function delDirAndFile($dirName) {
-    if ($handle = opendir("$dirName")) {
+    if ($handle = opendir($dirName)) {
         while (false !== ( $item = readdir($handle) )) {
             if ($item != "." && $item != "..") {
-                if (is_dir("$dirName/$item")) {
-                    delDirAndFile("$dirName/$item");
+                if (is_dir($dirName."/".$item)) {
+                    delDirAndFile($dirName."/".$item);
                 } else {
-                    @ unlink("$dirName/$item");
+                    @ unlink($dirName."/".$item);
                 }
             }
         }
@@ -347,6 +347,28 @@ function DBBackup($options=array()) {
  */
 function makeBillCode($prefix=""){
     return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
+}
+
+/*
+ * 目录复制
+ * **/
+function recursionCopy($src,$dst) {  // 原目录，复制到的目录
+    $dir = opendir($src);
+    while(false !== ( $file = readdir($dir)) ) {
+        if($file === "__MACOSX") {
+            continue;
+        }
+        if (( $file != '.' ) && ( $file != '..' )) {
+            echo $src . '/' . $file;
+            if ( is_dir($src . '/' . $file) ) {
+                recurse_copy($src . '/' . $file, $dst . '/' . $file);
+            }
+            else {
+                copy($src . '/' . $file,$dst . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
 }
 
 /**

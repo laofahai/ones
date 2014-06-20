@@ -39,5 +39,7 @@ class SettingsAction extends CommonAction {
 //        var_dump($rs);
         echo true === $rs ? "success" : $rs;
     }
+
+
     
 }

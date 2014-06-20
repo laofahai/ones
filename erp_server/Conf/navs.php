@@ -100,7 +100,7 @@ return array(
             "system_operation" => array(
                 "data_backup" => "HOME/Settings/dataBackup",
                 "clear_cache" => "HOME/Settings/clearCache",
-                "clear_data"  => "HOME/Settings/clearData"
+                "system_update"  => "HOME/Update/systemUpdate"
             )
             
         ),

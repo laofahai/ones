@@ -31,9 +31,9 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                         templateUrl: "views/home/dataBackup.html",
                         controller: "dataBackupCtl"
                     })
-                    .when('/HOME/Settings/clearData', {
-                        templateUrl: "views/home/clearData.html",
-                        controller: "clearDataCtl"
+                    .when('/HOME/Update/systemUpdate', {
+                        templateUrl: "views/home/systemUpdate.html",
+                        controller: "systemUpdateCtl"
                     })
                     .when('/HOME/list/myDesktop', {
                         templateUrl: "views/home/myDesktop.html",
@@ -62,14 +62,44 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                 });
             };
         }])
-        .controller("clearDataCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
-            $scope.cacheTypes = [null, true, true, true];
-            $scope.doClearCache = function() {
-                $http({method: "POST", url:conf.BSU+'HOME/Settings/clearCache', data:{types: $scope.cacheTypes}}).success(function(data){
-                    ComView.alert($scope.i18n.lang.messages.cacheCleared, "info");
-                });
-            };
-        }])
+        //系统升级
+        .controller("systemUpdateCtl", ["$scope", "$http", "ones.config", "ComView", "$rootScope",
+            function($scope, $http, conf, ComView, $rootScope){
+                var uri = conf.BSU+"HOME/Update/systemUpdate";
+                var pageDesc = $scope.currentPage.actionDesc;
+                var getUpdates = function() {
+                    $http.get(uri).success(function(data){
+                        $scope.currentPage.actionDesc = sprintf("%s: %s. %s",
+                            $rootScope.i18n.lang.currentVersion,
+                            data.current_version,
+                            pageDesc
+                        );
+                        $scope.updates = data;
+                    });
+                }
+
+                getUpdates();
+
+                //下载更新文件
+                $scope.doDownload = function(id) {
+                    $http.post(uri, {
+                        doDownload: true,
+                        version: id
+                    }).success(function(data){
+                        getUpdates();
+                    });
+                };
+                //执行更新
+                $scope.doUpdate = function(id) {
+                    $http.post(uri, {
+                        doUpdate: true,
+                        version: id
+                    }).success(function(data){
+                        getUpdates();
+                    });
+                };
+
+            }])
         .controller("dataBackupCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
             $scope.options = {
                 send_email: true,

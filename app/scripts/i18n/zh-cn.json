@@ -92,6 +92,12 @@
                         "dataBackup": "数据备份"
                     }
                 },
+                "Update": {
+                    "name": "升级",
+                    "actions": {
+                        "systemUpdate": ["系统升级", "升级前请备份您的数据库"]
+                    }
+                },
                 "Types": {
                     "name": "类型管理",
                     "actions" : {
@@ -417,7 +423,8 @@
             "produce_plan_detail": "生产计划详情",
             "outside_bill": "外协单",
             "produce_and_install": "生产组装单",
-            "user_desktop": "用户桌面项"
+            "user_desktop": "用户桌面项",
+            "system_update": "系统升级"
         },
         "modules": {
             "Orders": "订单",
@@ -572,9 +579,15 @@
         "total_price": "总金额",
         "total_amount": "总金额",
         "discount": "折扣率",
+        "update": "升级",
+        "updateLog": "升级日志",
+        "updateVersion": "升级版本",
         "discountAmount": "折扣额",
+        "currentVersion": "当前版本",
         "measure": "计量单位",
         "username": "用户名",
+        "download": "下载",
+        "downloaded": "已下载",
         "usergroup": "用户组",
         "truename": "姓名",
         "operation": "操作",
