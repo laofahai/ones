@@ -22,7 +22,7 @@ class PurchaseMakeStockin extends WorkflowAbstract {
         $data = array(
             "subject" => "采购入库",
             "dateline"=> CTS,
-            "total_num" => $thePurchase["quantity"],
+            "total_num" => $thePurchase["total_num"],
             "status"  => 1,
             "user_id" => getCurrentUid(),
             "source_model" => "Purchase",
@@ -41,7 +41,7 @@ class PurchaseMakeStockin extends WorkflowAbstract {
 //        var_dump($thePurchaseDetail);exit;
         foreach($thePurchaseDetail as $trd) {
             $items[] = array(
-                "stockin_id" => $lastId,
+//                "stockin_id" => $lastId,
                 "goods_id"   => $trd["goods_id"],
                 "num"        => $trd["num"],
                 "factory_code_all" => $trd["factory_code_all"],
@@ -58,7 +58,8 @@ class PurchaseMakeStockin extends WorkflowAbstract {
         
         if(!$stockin->newBill($data, $items)) {
             $this->response(array(
-                "error"=> 1
+                "error"=> 1,
+                "msg" => $stockin->getError()
             ));
         }
         

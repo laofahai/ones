@@ -253,7 +253,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                             $scope[opts.dataObject] = dataFormat($scope.config.fieldsDefine, defaultData);
                         });
                     }
-                    setTimeout(function(){
+                    $timeout(function(){
                         $scope.$broadcast("commonForm.ready");
                     });
                 };
@@ -537,6 +537,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 if(typeof(fieldsDefine) == "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
                     var model = fieldsDefine;
                     fieldsDefine = model.getFieldsStruct(true);
+                    opts.relateMoney = model.relateMoney || false;
                     
                     //工作流按钮
 //                    console.log($routeParams);

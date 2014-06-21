@@ -24,7 +24,7 @@ class ReturnsMakeStockinPaper extends WorkflowAbstract {
             "total_num" => $theReturns["total_num"],
             "status"  => 1,
             "user_id" => getCurrentUid(),
-            "source_model" => "Purchase",
+            "source_model" => "Returns",
             "source_id"    => $this->mainrowId,
             "stock_manager"=> 0,
             "memo" => $theReturns["memo"]

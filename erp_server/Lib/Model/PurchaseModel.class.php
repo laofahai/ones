@@ -93,9 +93,9 @@ class PurchaseModel extends CommonModel {
             unset($data["rows"][$k]["standard"]);
             unset($data["rows"][$k]["version"]);
         }
-        $data["total_price_real"] = $data["total_amount_real"];
-        $data["total_price"] = $data["total_amount"];
-        $data["quantity"] = $data["total_num"];
+//        $data["total_price_real"] = $data["total_amount_real"];
+//        $data["total_price"] = $data["total_amount"];
+//        $data["quantity"] = $data["total_num"];
         $data["bill_id"] = makeBillCode("CG");
         $data["dateline"] = strtotime($data["inputTime"]);
         $data["user_id"] = getCurrentUid();

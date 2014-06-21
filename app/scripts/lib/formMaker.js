@@ -1,8 +1,8 @@
 (function(){
     'use struct';
     angular.module("ones.formMaker", [])
-    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductListRes", "$injector",
-    function($compile, $q, $parse, StockProductListRes, $injector) {
+    .service("FormMaker", ["$compile", "$q", "$parse", "StockProductListRes", "$injector", "$timeout",
+    function($compile, $q, $parse, StockProductListRes, $injector, $timeout) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -335,7 +335,8 @@
                 minRows: 9,
                 dataName: "formData",
                 autoFocusNext: true,
-                methods: {}
+                methods: {},
+                relateMoney: false
             };
 
             this.opts = $.extend(defaultOpts, $scope.config);
@@ -484,7 +485,8 @@
             bindEvents: function(scope){
 
                 var self = this;
-                scope.$parent.billFieldEdit = function(ele){
+                var parentScope = self.parentScope = scope.$parent;
+                parentScope.billFieldEdit = function(ele){
                     var context = getLabelContext(ele);
 
                     //已经存在input
@@ -501,51 +503,51 @@
                         if(struct.editAbleRequire instanceof Array) {
                             for(var i=0;i<struct.editAbleRequire.length;i++) {
                                 struct.editAbleRequire[i];
-                                if(!scope.$parent[self.opts.dataName][context.trid] || !scope.$parent[self.opts.dataName][context.trid][struct.editAbleRequire[i]]) {
+                                if(!parentScope[self.opts.dataName][context.trid] || !parentScope[self.opts.dataName][context.trid][struct.editAbleRequire[i]]) {
                                     return false;
                                 }
                             }
                         } else {
-                            if(!scope.$parent[self.opts.dataName][context.trid] || !scope.$parent[self.opts.dataName][context.trid][struct.editAbleRequire]) {
+                            if(!parentScope[self.opts.dataName][context.trid] || !parentScope[self.opts.dataName][context.trid][struct.editAbleRequire]) {
                                 return false;
                             }
                         }
                     }
-                    
+
 
                     //支持的事件列表
                     var eventsList = ["blur", "click", "keydown", "focus", "change"];
                     var events = [];
                     angular.forEach(eventsList, function(e){
                         var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
-                        if(m in scope.$parent) {
-//                            console.log(m);
+                        if(m in parentScope) {
+                            //                            console.log(m);
                             events.push(sprintf("%s:'%s($event)'", e, m));
                         } else {
                             m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
-                            if(m in scope.$parent) {
+                            if(m in parentScope) {
                                 events.push(sprintf("%s:'%s($event)'", e, m));
                             }
                         }
                     });
-                    
+
                     if(events.length) {
                         struct["ui-event"] = sprintf("{%s}", events.join());
                     }
-                    
-//                    console.log(struct["ui-event"]);
-                    
+
+                    //                    console.log(struct["ui-event"]);
+
                     var html = self.fm.maker.factory(context, struct, scope);
-                    html = self.compile(html)(scope.$parent);
+                    html = self.compile(html)(parentScope);
                     context.td.append(html);
-                    
+
                     //触发结束编辑事件
-                    setTimeout(function(){
+                    $timeout(function(){
                         context = getInputContext(ele);
                         context.inputAble.focus();
                         context.inputAble.bind("keydown", function(e){
                             if(e.keyCode === 13) {
-                                self.scope.$parent.billEndEdit(context.td);
+                                self.parentScope.billEndEdit(context.td);
                             }
                         });
                     }, 100);
@@ -555,11 +557,11 @@
                 /**
                  * @todo 回调方法
                  * */
-                scope.$parent.billEndEdit = function(td, isBlur){
-                    setTimeout(function(){
+                parentScope.billEndEdit = function(td, isBlur){
+                    $timeout(function(){
                         var next = false;
                         var tdEditAbles = td.parent().find(".tdEditAble");
-            //            console.log(tdEditAbles);
+                        //            console.log(tdEditAbles);
                         var tds = [];
                         angular.forEach(tdEditAbles, function(td){
                             tds.push(td);
@@ -573,12 +575,12 @@
 
                             if(!next) { //当前行无下一元素
                                 if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
-                                    self.scope.$parent.billAddRow(null, true);
+                                    self.parentScope.billAddRow(null, true);
                                 }
                                 next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
                             }
-                            setTimeout(function(){
-                                self.scope.$parent.billFieldEdit($(next).find("label"));
+                            $timeout(function(){
+                                self.parentScope.billFieldEdit($(next).find("label"));
                             });
                         }
                         self.scope.editing = false;
@@ -586,13 +588,13 @@
                             self.fieldsDefine[$(td).data("bind-model")].callback($(td).parent());
                         }
                     },200);
-                    
+
                 };
 
                 //增删行
-                scope.$parent.billAddRow = function(element, isTbody) {
+                parentScope.billAddRow = function(element, isTbody) {
                     var html = self.makeRow(self.opts.fieldsDefine, self.maxTrId+1);
-                    html = self.compile(html)(self.scope.$parent);
+                    html = self.compile(html)(self.parentScope);
                     if(true === isTbody) {
                         $("#billTable tbody").append(html);
                     } else {
@@ -600,24 +602,24 @@
                     }
                     self.reIndexTr();
                 };
-                scope.$parent.billRemoveRow = function(element) {
+                parentScope.billRemoveRow = function(element) {
                     if($("#billTable tbody tr").length < 3) {
                         alert("at least 2 rows");
                         return;
                     }
                     var tr = $(element).parents("tr");
-                    delete(scope.$parent[self.opts.dataName][tr.data("trid")])
+                    delete(parentScope[self.opts.dataName][tr.data("trid")])
                     tr.remove();
                     self.reIndexTr();
                 };
 
                 //不同字段不同事件
-                scope.$parent.onTextBlur = function(event) {
+                parentScope.onTextBlur = function(event) {
                     var ele = $(event.target);
-                    scope.$parent.billEndEdit(ele.parent(), true);
+                    parentScope.billEndEdit(ele.parent(), true);
                     self.setData(ele, ele.val(), true);
                 };
-                scope.$parent.onTextKeydown = function(event) {
+                parentScope.onTextKeydown = function(event) {
                     if(event.keyCode === 9 && !event.shiftKey) {
                         window.event.returnValue=false;
                         var ele = $(event.target);
@@ -629,14 +631,14 @@
                         window.event.returnValue=false;
                     }
                 };
-                if(scope.$parent.onNumberBlur === undefined) {
-                    scope.$parent.onNumberBlur = function(event) {
+                if(parentScope.onNumberBlur === undefined) {
+                    parentScope.onNumberBlur = function(event) {
                         var ele = $(event.target);
-                        scope.$parent.billEndEdit(ele.parent(), true);
+                        parentScope.billEndEdit(ele.parent(), true);
                         self.setNumberData(ele, ele.val(), true);
                     };
                 }
-                scope.$parent.onNumberKeydown = function(event) {
+                parentScope.onNumberKeydown = function(event) {
                     if(event.keyCode == 9 && !event.shiftKey) {
                         window.event.returnValue=false;
                         var ele = $(event.target);
@@ -648,11 +650,11 @@
                         window.event.returnValue=false;
                     }
                 };
-                scope.$parent.onTypeaheadBlur = function(event){
+                parentScope.onTypeaheadBlur = function(event){
                     var ele = $(event.target);
                     self.setTypeaheadData(ele, self.scope, true);
                 };
-                scope.$parent.onTypeaheadKeydown = function(event) {
+                parentScope.onTypeaheadKeydown = function(event) {
                     if(event.keyCode == 9) {
                         window.event.returnValue=false;
                         var ele = $(event.target);
@@ -662,20 +664,20 @@
                         self.setTypeaheadData(ele, self.scope);
                     }
                 };
-                scope.$parent.onSelect2Keydown = function(event) {
+                parentScope.onSelect2Keydown = function(event) {
                     console.log(arguments);
                 };
-                scope.$parent.onSelect3Blur = function(event) {
+                parentScope.onSelect3Blur = function(event) {
                     var context = getInputContext(event.target);
-                    self.scope.$parent.billEndEdit(context.td, true);
+                    parentScope.billEndEdit(context.td, true);
                 };
-                scope.$parent.onStockSelect3Blur = function(event){
-//                    console.log(self);
-//                    console.log(event.target);return;
-//                    self.scope.$parent.onTypeaheadBlur(event);
-                    setTimeout(function(){
+                parentScope.onStockSelect3Blur = function(event){
+                    //                    console.log(self);
+                    //                    console.log(event.target);return;
+                    //                    self.parentScope.onTypeaheadBlur(event);
+                    $timeout(function(){
                         var context = getInputContext(event.target);
-                        var tmp = self.scope.$parent[self.opts.dataName][context.trid];
+                        var tmp = self.parentScope[self.opts.dataName][context.trid];
                         var queryParams = {
                             id: 0,
                             stock_id: tmp.stock
@@ -686,14 +688,97 @@
                             queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
                         }
                         self.opts.storeAPI.get(queryParams).$promise.then(function(data){
-                            self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num || 0;
-    //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
-            //                self.scope.$parent[self.opts.dataName][context.trid].store_num=data.num;
+                            self.parentScope[self.opts.dataName][context.trid].store_num=data.num || 0;
+                            //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
+                            //                self.parentScope[self.opts.dataName][context.trid].store_num=data.num;
                         });
                     }, 200);
-                    
+
                 };
-            },
+
+                var countRowAmount = parentScope.countRowAmount = function(index){
+                    var price =  parentScope.formData[index].unit_price
+                    var num = parentScope.formData[index].num;
+                    var discount = parentScope.formData[index].discount;
+                    //计算折扣
+                    if(discount === undefined || parseInt(discount) === 0) {
+                        discount = 100;
+                    };
+                    parentScope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                };
+                var recountTotalAmount = parentScope.recountTotalAmount = function() {
+                    var totalAmount = 0;
+                    angular.forEach(parentScope.formData, function(row){
+                        if(!row.amount) {
+                            return;
+                        }
+                        totalAmount += Number(row.amount);
+                    });
+                    parentScope.formMetaData.total_amount = totalAmount;
+                };
+
+                /**
+                 * 数量变动时，计算行内总价，更新数量统计，更新总金额
+                 * */
+                parentScope.onNumNumberBlur = function(event){
+                    var context = getInputContext(event.target);
+
+                    if(!parentScope.formData[context.trid].discount && parentScope.formMetaData.customerInfo) {
+                        parentScope.formData[context.trid].discount = parentScope.formMetaData.customerInfo.discount;
+                    }
+                    var totalNum = 0;
+                    angular.forEach(parentScope.formData, function(item){
+                        if(!item.num) {
+                            return;
+                        }
+                        totalNum += Number(item.num);
+                    });
+                    parentScope.formMetaData.total_num = totalNum;
+                    if(parentScope.formData[context.trid] && parentScope.formData[context.trid].goods_id) {
+                        if(!parentScope.formData[context.trid].unit_price){
+                            var gid = parentScope.formData[context.trid].goods_id.split("_");
+                            var goods = $injector.get("GoodsRes").get({
+                                id: gid[1]
+                            }).$promise.then(function(data){
+                                parentScope.formData[context.trid].unit_price = Number(data.price);
+                                parentScope.countRowAmount(context.trid);
+                                parentScope.recountTotalAmount();
+                            });
+                        } else {
+                            parentScope.countRowAmount(context.trid);
+                            parentScope.recountTotalAmount();
+                        }
+                    }
+                };
+
+                /**
+                 * 如果涉及到金额，加入默认计算事件
+                 * */
+                if(self.opts.relateMoney) {
+                    //实收金额
+                    parentScope.$watch('formMetaData.total_amount', function(){
+                        parentScope.formMetaData.total_amount_real = parentScope.formMetaData.total_amount;
+                    });
+
+                    //单价
+                    parentScope.onUnit_priceNumberBlur = function(event){
+                        var context = getInputContext(event.target);
+                        countRowAmount(context.trid);
+                        recountTotalAmount();
+                    };
+                    //折扣
+                    parentScope.onDiscountNumberBlur = function(event){
+                        var context = getInputContext(event.target);
+                        countRowAmount(context.trid);
+                        recountTotalAmount();
+                    };
+                    //行内总价
+                    parentScope.onTotal_amountNumberBlur = function(event){
+                        var context = getInputContext(event.target);
+                        recountTotalAmount();
+                    };
+                }
+             },
             
             //重置TR的行数，并且重新计算数据
             reIndexTr: function() {
@@ -733,7 +818,7 @@
                 var val;
                 var context = getInputContext(ele);
                 var self = this;
-                setTimeout(function(){
+                $timeout(function(){
                     if(scope.$parent[self.opts.dataName][context.trid][context.field]) {
                         val = context.ele.val();
                     } else {
@@ -959,7 +1044,7 @@
                     if($event.keyCode === Keys.Up || $event.keyCode === Keys.down) {
                         window.event.returnValue =false;
                     }
-                    setTimeout(function(){
+                    $timeout(function(){
                         //监听键盘事件
                         switch($event.keyCode) {
                             case Keys.Enter:
@@ -1061,7 +1146,7 @@
                 };
                 
                 this.scope.$parent.doSelect3Blur = function(){
-                    setTimeout(function(){
+                    $timeout(function(){
                         self.scope.$parent.hideSelect3Options();
                     }, 150);
                 };

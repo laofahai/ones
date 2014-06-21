@@ -24,6 +24,7 @@ class StockinModel extends CommonModel {
      */
     public function newBill($billData, $billItems) {
         if(!$billItems) {
+            $this->error = "params_error";
             return false;
         }
         $this->startTrans();
@@ -33,8 +34,8 @@ class StockinModel extends CommonModel {
         }
         $billId = $this->add($billData);
         if(!$billId) {
-//            echo $this->getLastSql();exit;
             $this->rollback();
+            $this->error = "insert_error";
             return false;
         }
 //        echo $this->getLastSql();exit;

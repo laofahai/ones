@@ -88,7 +88,7 @@ class OrdersModel extends CommonModel {
         }
         
         $data["bill_id"] = makeBillCode("XS");
-        if($data["inputTime"]) {
+        if($data["inputTime"] && !$id) {
             $data["dateline"] = strtotime($data["inputTime"]);
         } else {
             unset($data["dateline"]);

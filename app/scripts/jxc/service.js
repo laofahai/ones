@@ -505,7 +505,9 @@ angular.module("ones.jxc.services", [])
         }])
         .service("OrdersEditModel", ["$rootScope", "GoodsRes", "StockRes", "DataModelDataRes", 
             function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
-                var obj = {};
+                var obj = {
+                    relateMoney: true
+                };
                 obj.getFieldsStruct = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
@@ -610,7 +612,10 @@ angular.module("ones.jxc.services", [])
         }])
         .service("ReturnsEditModel", ["$rootScope", "GoodsRes", "StockRes", "DataModelDataRes", 
             function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
-                var obj = {};
+                var obj = {
+                    relateMoney: true,
+                    workflowAlias: "returns"
+                };
                 obj.getFieldsStruct = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
@@ -1072,12 +1077,14 @@ angular.module("ones.jxc.services", [])
                             displayName: $rootScope.i18n.lang.type
                         },
                         buyer: {},
-                        supplier: {},
-                        quantity: {},
-                        total_price: {
+                        supplier: {
+                            field: "supplier_id_label"
+                        },
+                        total_num: {},
+                        total_amount: {
                             cellFilter: "currency:'￥'"
                         },
-                        total_price_real: {
+                        total_amount_real: {
                             cellFilter: "currency:'￥'"
                         },
                         dateline: {
@@ -1095,75 +1102,76 @@ angular.module("ones.jxc.services", [])
             function($rootScope, GoodsRes, DataModelDataRes, StockRes){
                 return {
                     isBill: true,
+                    relateMoney: true,
                     workflowAlias: "purchase",
                     getFieldsStruct: function(){
                         var i18n = $rootScope.i18n.lang;
-                        var fields = {
-                        id : {
-                            primary: true,
-                            billAble: false
-                        },
-                        goods_id: {
-                            displayName: i18n.goods,
-                            labelField: true,
-                            inputType: "select3",
-                            dataSource: GoodsRes,
-                            valueField: "combineId",
-                            nameField: "combineLabel",
-                            listAble: false,
-                            width: 300
-                        },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
-                        },
-                        num: {
-                            inputType: "number",
-                            totalAble: true,
-                            "ui-event": "{blur: 'afterNumBlur($event)'}"
-                        },
-                        unit_price: {
-                            inputType: "number",
-                            "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:'￥'"
-                        },
-                        amount: {
-                            inputType: "number",
-                            cellFilter: "currency:'￥'",
-                            totalAble: true
-                        },
-                        memo: {}
+                            var fields = {
+                            id : {
+                                primary: true,
+                                billAble: false
+                            },
+                            goods_id: {
+                                displayName: i18n.goods,
+                                labelField: true,
+                                inputType: "select3",
+                                dataSource: GoodsRes,
+                                valueField: "combineId",
+                                nameField: "combineLabel",
+                                listAble: false,
+                                width: 300
+                            },
+                            standard: {
+                                nameField: "data",
+                                valueField: "id",
+                                labelField: true,
+                                inputType: "select3",
+                                editAbleRequire: "goods_id",
+                                dataSource: DataModelDataRes,
+                                queryWithExistsData: ["goods_id"],
+                                autoQuery: true,
+                                autoReset: true,
+                                autoHide: true,
+                                queryParams: {
+                                    fieldAlias: "standard"
+                                }
+                            },
+                            version: {
+                                nameField: "data",
+                                valueField: "id",
+                                labelField: true,
+                                inputType: "select3",
+                                editAbleRequire: "goods_id",
+                                dataSource: DataModelDataRes,
+                                queryWithExistsData: ["goods_id"],
+                                autoQuery: true,
+                                autoReset: true,
+                                autoHide: true,
+                                queryParams: {
+                                    fieldAlias: "version"
+                                }
+                            },
+                            num: {
+                                inputType: "number",
+                                totalAble: true,
+                                "ui-event": "{blur: 'afterNumBlur($event)'}"
+                            },
+                            unit_price: {
+                                inputType: "number",
+                                "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
+                                cellFilter: "currency:'￥'"
+                            },
+                            amount: {
+                                inputType: "number",
+                                cellFilter: "currency:'￥'",
+                                totalAble: true
+                            },
+                            memo: {}
 
-                    };
+                        };
 
 
-                    return fields;
+                        return fields;
                     }
                 };
             }])

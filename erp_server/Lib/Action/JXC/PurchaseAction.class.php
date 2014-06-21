@@ -54,9 +54,9 @@ class PurchaseAction extends CommonAction {
         $formData = D("PurchaseView")->find($_GET['id']);
 
         $formData["inputTime"] = $formData["dateline"]*1000;
-        $formData["total_amount"] = $formData["total_price"];
-        $formData["total_amount_real"] = $formData["total_price_real"];
-        $formData["total_num"] = $formData["quantity"];
+//        $formData["total_amount"] = $formData["total_price"];
+//        $formData["total_amount_real"] = $formData["total_price_real"];
+//        $formData["total_num"] = $formData["quantity"];
 
         $rowModel = D("PurchaseDetailView");
         $rows = $rowModel->where("PurchaseDetail.purchase_id=".$formData["id"])->select();
