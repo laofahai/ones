@@ -101,7 +101,7 @@ function clearCache($type = 0, $path = NULL) {
         }
     }
 //    import("ORG.Io.Dir");
-    $rs = delDirAndFile($path);
+    delDirAndFile($path);
 }
 function delDirAndFile($dirName) {
     if ($handle = opendir($dirName)) {
@@ -110,7 +110,7 @@ function delDirAndFile($dirName) {
                 if (is_dir($dirName."/".$item)) {
                     delDirAndFile($dirName."/".$item);
                 } else {
-                    @ unlink($dirName."/".$item);
+                    unlink($dirName."/".$item) or die("Can't delete". $dirName."/".$item);
                 }
             }
         }
@@ -355,13 +355,13 @@ function makeBillCode($prefix=""){
 function recursionCopy($src,$dst) {  // 原目录，复制到的目录
     $dir = opendir($src);
     while(false !== ( $file = readdir($dir)) ) {
-        if($file === "__MACOSX") {
-            continue;
-        }
-        if (( $file != '.' ) && ( $file != '..' )) {
-            echo $src . '/' . $file;
+
+        if ($file != '.' && $file != '..' && $file != "__MACOSX") {
             if ( is_dir($src . '/' . $file) ) {
-                recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                if(!is_dir($dst . '/' . $file)) {
+                    mkdir($dst . '/' . $file, 0777);
+                }
+                recursionCopy($src . '/' . $file, $dst . '/' . $file);
             }
             else {
                 copy($src . '/' . $file,$dst . '/' . $file);

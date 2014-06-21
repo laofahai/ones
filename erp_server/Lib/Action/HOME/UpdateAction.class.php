@@ -63,21 +63,23 @@ class UpdateAction extends CommonAction {
                 $zip->extractTo($tmpFolder);
             }
             $zip->close();
+            unlink($this->local.$version["file"]);
             //暂定根目录为ENTRY_PATH上级目录
             //更新数据库
             $sqlFile = $tmpFolder."/upgrade.sql";
-            if(file_exists_case($sqlFile) and false) {
+            if(file_exists_case($sqlFile)) {
                 if(false === $this->executeSql($sqlFile)) {
                     $this->error("upgrade_failed");
                 }
                 unlink($sqlFile);
             }
+//            echo $tmpFolder;
+//            echo dirname(ENTRY_PATH);exit;
             //复制文件
             recursionCopy($tmpFolder, dirname(ENTRY_PATH));
+
             //删除更新文件
-            echo $tmpFolder;
             delDirAndFile($tmpFolder);
-            unlink($this->local.$version["file"]);
         }
 
 
@@ -96,16 +98,13 @@ class UpdateAction extends CommonAction {
     private function getUpdateVersions() {
         $url = $this->server."getUpdates/version/".$this->currentVersion;
         $versions = file_get_contents($url);
-        if(!$versions) {
-            $this->error("no_new_version");
-            return;
-        }
-
-        $versions = json_decode($versions, true);
+        if($versions) {
+            $versions = json_decode($versions, true);
 //            print_r($versions);exit;
-        foreach($versions as $k=>$ver) {
-            if(is_file($this->local.$ver["file"])) {
-                $versions[$k]["downloaded"] = true;
+            foreach($versions as $k=>$ver) {
+                if(is_file($this->local.$ver["file"])) {
+                    $versions[$k]["downloaded"] = true;
+                }
             }
         }
         $data["current_version"] = $this->currentVersion;

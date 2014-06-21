@@ -16,7 +16,7 @@ class SettingsAction extends CommonAction {
     //清除缓存
     public function clearCache() {
         foreach($_POST["types"] as $k=> $p) {
-            if("true" === $p) {
+            if($p) {
                 clearCache($k);
             }
         }

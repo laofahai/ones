@@ -469,7 +469,8 @@
             "remember_me": "记住我",
             "i_fogot_password": "我忘记了密码",
             "leaveEmptyIfNotEdit": "不修改请留空",
-            "all_craft_ended": "所有生产工序已执行完成"
+            "all_craft_ended": "所有生产工序已执行完成",
+            "systemUpdateNoNewVersion": "当前已是最新版本"
         },
         "errors": {
             "required": "必填",

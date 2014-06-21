@@ -69,6 +69,9 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                 var pageDesc = $scope.currentPage.actionDesc;
                 var getUpdates = function() {
                     $http.get(uri).success(function(data){
+                        if(!data.updates) {
+                            $scope.noNewVersion = true;
+                        }
                         $scope.currentPage.actionDesc = sprintf("%s: %s. %s",
                             $rootScope.i18n.lang.currentVersion,
                             data.current_version,

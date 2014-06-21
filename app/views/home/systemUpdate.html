@@ -19,9 +19,12 @@
                     <td>
                         <a ng-click="doDownload(u.id)" ng-bind="i18n.lang.download" ng-show="!u.downloaded"></a>
                         <span ng-bind="i18n.lang.downloaded" ng-show="u.downloaded"></span>
-                        <a ng-click="doUpdate(u.id)" ng-bind="i18n.lang.update"></a>
+                        <a ng-click="doUpdate(u.id)" ng-bind="i18n.lang.update" ng-show="u.downloaded"></a>
                         <a ng-click="showUpdateLog(u.id)" ng-bind="i18n.lang.updateLog"></a>
                     </td>
+                </tr>
+                <tr ng-show="noNewVersion">
+                    <td colspan="4" align="center" ng-bind="i18n.lang.messages.systemUpdateNoNewVersion"></td>
                 </tr>
                 </tbody>
             </table>
