@@ -1030,30 +1030,32 @@
                         self.opts.dataSource.query(queryParams).$promise.then(function(data){
                             if(data.length < 1) {
                                 self.scope.$parent.hideSelect3Options(true);
-                                console.log('no result');
                                 return;
                             }
+                            var tmpList = [];
                             angular.forEach(data, function(item){
-                                self.scope.select3Items.push({
+                                tmpList.push({
                                     label: item[self.opts.nameField || "name"],
                                     value: item[self.opts.valueField || "id"]
                                 });
                             });
+                            self.scope.select3Items = tmpList;
                             self.scope.$parent.displaySelect3Options();
                         });
                     } else {
                         if(self.opts.dataSource.length < 1) {
                             //@todo no result
                             self.scope.$parent.hideSelect3Options(true);
-                            console.log('no result');
                             return;
                         }
+                        var tmpList = [];
                         angular.forEach(self.opts.dataSource, function(item){
-                            self.scope.select3Items.push({
+                            tmpList.push({
                                 label: item[self.opts.nameField || "name"],
                                 value: item[self.opts.valueField || "id"]
                             });
                         });
+                        self.scope.select3Items = tmpList;
                         self.scope.$parent.displaySelect3Options();
                     }
                 };
