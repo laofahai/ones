@@ -22,4 +22,4 @@
 
 ## 链接
 演示见：http://42.121.114.198
-讨论/反馈：http://forum.cnidea-tech.com
+讨论/反馈：http://forum.ng-erp.com
