@@ -47,6 +47,15 @@ class CommonViewModel extends ViewModel{
         if($model->fields["_type"]["deleted"]) {
             $where["deleted"] = 0;
         }
+
+        $tmp = $this->viewFields;
+        foreach($tmp as $k=>$v) {
+            $tmpModel = D($k);
+            if($tmpModel->fields["_type"]["deleted"]) {
+                $where[$k.".deleted"] = 0;
+            }
+            break;
+        }
 //        print_r($where);
         return parent::where($where, $parse);
     }

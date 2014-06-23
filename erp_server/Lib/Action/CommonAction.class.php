@@ -232,7 +232,7 @@ class CommonAction extends RestAction {
 
             } else {
                 $fields = array(
-                    "name", "subject", "pinyin", "bill_id"
+                    "name", "subject", "pinyin", "bill_id", "alias", "factory_code", "factory_code_all"
                 );
                 foreach($fields as $f) {
                     if($model->fields["_type"][$f]) {
@@ -241,9 +241,11 @@ class CommonAction extends RestAction {
                 }
             }
 
-            if($where) {
+            if(count($where) > 1) {
                 $where["_logic"] = "OR";
                 $map["_complex"] = $where;
+            } else {
+                $map = $where;
             }
         }
 //        print_r($map);exit;

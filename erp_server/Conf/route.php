@@ -56,7 +56,7 @@ function routeMaker($resName, $mapUrl, $methods = array()) {
 $needMake = array(
     array("passport/userLogin", "Passport/Login", "post",),
     array("passport/userLogout", "Passport/Login", "list",),
-    array("user", "PassportUser",),
+    array("user", "Passport/User",),
     array("types", "HOME/Types",),
     array("config", "HOME/Config"),
     array("workflow/process", "HOME/WorkflowProcess", "get"),

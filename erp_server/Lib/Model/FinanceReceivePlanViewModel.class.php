@@ -17,6 +17,10 @@ class FinanceReceivePlanViewModel extends CommonViewModel {
         "RelationshipCompany" => array("name"=>"customer_name", "_on"=>"FinanceReceivePlan.customer_id=RelationshipCompany.id", "_type"=>"left")
     );
 
+    public $searchFields = array(
+        "FinanceAccount.name", "Types.name", "RelationshipCompany.name"
+    );
+
     public function select($options=array()) {
         $data = parent::select($options);
         if(!$data) {

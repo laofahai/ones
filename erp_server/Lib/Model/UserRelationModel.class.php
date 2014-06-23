@@ -33,6 +33,10 @@ class UserRelationModel extends RelationModel {
     protected $status_class = array(
         "", "success"
     );
+
+    public $searchFields = array(
+        "username", "truename", "email", "phone"
+    );
     
      /**
      * @override

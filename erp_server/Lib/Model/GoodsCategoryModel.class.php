@@ -28,6 +28,7 @@ class GoodsCategoryModel extends CommonTreeModel {
         
         $map = array(
             "lft" => array("between", array($node["lft"], $node["rgt"])),
+            "GoodsCategory.deleted" => 0
         );
         $data = $this->table(C("DB_PREFIX")."goods_category GoodsCategory")
                 ->field("GoodsCategory.*,DataModel.name AS bind_model_name")

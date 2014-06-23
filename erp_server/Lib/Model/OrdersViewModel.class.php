@@ -20,6 +20,10 @@ class OrdersViewModel extends CommonViewModel {
         "RelationshipCompany" => array("name"=>"customer", "_on"=>"RelationshipCompany.id=Orders.customer_id", "_type"=>"left"),
         "Types" => array("name"=>"sale_type_label", "_on"=>"Types.id=Orders.sale_type", "_type"=>"left")
     );
+
+    public $searchFields = array(
+        "Types.name", "bill_id", "RelationshipCompany.name","User.truename"
+    );
     
     /**
      * 订单状态

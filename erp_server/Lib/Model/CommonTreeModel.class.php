@@ -86,7 +86,9 @@ class CommonTreeModel extends CommonModel {
      */
     public function deleteNode($id) {
         //DELETE FROM category WHERE lft BETWEEN @myLeft AND @myRight;
-        
+        $this->where("id=".$id)->save(array(
+            "deleted" => 1
+        ));return true;
         $node = $this->find($id);
         if(!$node) {
             return false;
@@ -120,7 +122,8 @@ class CommonTreeModel extends CommonModel {
      */
     public function getChildren($parentid) {
         $map = array(
-            "parentid"=> $parentid
+            "parentid"=> $parentid,
+            "deleted" => 0
         );
         $childs = $this->where($map)->order("listorder DESC, lft ASC")->select();
         foreach($childs as $c) {
@@ -141,11 +144,11 @@ class CommonTreeModel extends CommonModel {
         
         $map = array(
             "lft" => array("between", array($node["lft"], $node["rgt"])),
+            "deleted" => 0
         );
         $data = $this->where($map)->order("lft ASC,listorder DESC")->select();
-//        echo $this->getLastSql();
-        $right = array();
         $items = array();
+        $right = array();
         foreach($data as $row) {
             
             // only check stack if there is one
@@ -184,7 +187,8 @@ class CommonTreeModel extends CommonModel {
     public function getTreeArray($pid, $perlimit=20) {
         $parent = $this->find($pid);
         $childs = $this->where(array(
-            "parentid" => $pid
+            "parentid" => $pid,
+            "deleted" => 0
         ))->order("listorder DESC, lft ASC")->select();
         if(!$childs) {
             return array();
@@ -195,7 +199,8 @@ class CommonTreeModel extends CommonModel {
             $_childs[$c["id"]] = $c;
         }
         $map = array(
-            "parentid" => array("in", implode(",", $cids))
+            "parentid" => array("in", implode(",", $cids)),
+            "deleted" => 0
         );
         $sonsons = $this->where($map)->order("listorder DESC, lft ASC")->select();
         if(!$sonsons) {
@@ -221,7 +226,8 @@ class CommonTreeModel extends CommonModel {
         $type = $includeSelf ? "ELT" : "LT";
         $map = array(
             "lft" => array($type, $node["lft"]),
-            "rgt" => array("EGT", $node["rgt"])
+            "rgt" => array("EGT", $node["rgt"]),
+            "deleted" => 0
         );
         return $this->where($map)->order("lft ASC")->select();
     }

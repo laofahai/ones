@@ -16,4 +16,9 @@ class ProductTplViewModel extends CommonViewModel {
         "ProductTpl" => array("id", "goods_id", "factory_code_all", "memo"),
         "Goods" => array("name"=>"goods_name","factory_code", "measure", "_on"=>"Goods.id=ProductTpl.goods_id"),
     );
+
+    protected $searchFields = array(
+        "Goods.name", "factory_code", "factory_code_all", "Goods.pinyin"
+    );
+
 }

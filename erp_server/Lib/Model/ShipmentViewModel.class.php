@@ -16,5 +16,9 @@ class ShipmentViewModel extends CommonViewModel {
         "Shipment" => array("*", "_type"=>"left"),
         "Types" => array("name" => "shipment_type_label", "alias" => "shipmentTypeAlias", "_on"=>"Shipment.shipment_type=Types.id", "_type"=>"left")
     );
+
+    public $searchFields = array(
+        "from_name","from_company","from_address","from_phone","to_name","to_company","to_address","to_phone", "Types.name"
+    );
     
 }

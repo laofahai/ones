@@ -19,4 +19,8 @@ class ProducePlanViewModel extends CommonViewModel {
         "ProducePlan"=> array("*", "_type"=>"left"),
         "Types" => array("name"=>"type_label", "_on"=>"ProducePlan.type=Types.id", "_type"=>"left")
     );
+
+    public $searchFields = array(
+        "bill_id"
+    );
 }

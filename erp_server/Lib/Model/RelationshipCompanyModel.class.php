@@ -28,6 +28,10 @@ class RelationshipCompanyModel extends CommonRelationModel {
             'mapping_order'=> 'is_primary DESC, id ASC',
        ),
     );
+
+    public $searchFields = array(
+        "name", "pinyin", "address"
+    );
     
     protected $status_lang = array(
         "private", "public"
@@ -35,6 +39,7 @@ class RelationshipCompanyModel extends CommonRelationModel {
     
     public function select($options=array()) {
         $data = parent::select($options);
+//        echo $this->getLastSql();exit;
         
 //        print_r($data);exit;
         

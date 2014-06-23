@@ -17,10 +17,12 @@ class GoodsAction extends CommonAction {
     protected function _filter(&$map) {
         $typeahead = strtoupper(trim(strip_tags($_GET["typeahead"])));
         if($typeahead) {
-            $map["name"] = array("LIKE", "%{$typeahead}%");
-            $map["factory_code"] = array("LIKE", "{$typeahead}%");
-            $map["pinyin"] = array("LIKE", "%{$typeahead}%");
-            $map["_logic"] = "OR";
+            $where["name"] = array("LIKE", "%{$typeahead}%");
+            $where["factory_code"] = array("LIKE", "{$typeahead}%");
+            $where["pinyin"] = array("LIKE", "%{$typeahead}%");
+            $where["_logic"] = "OR";
+            $map["_complex"] = $where;
+            $map["deleted"] = 0;
         }
         
         if($_GET["factory_code"]) {
@@ -37,7 +39,7 @@ class GoodsAction extends CommonAction {
         if(!$_GET["typeahead"]) {
             return parent::index();
         }
-        $model = D("GoodsCatView");
+        $model = D("Goods");
         $map = $this->beforeFilter($model);
         $this->_filter($map);
         $data = $model->where($map)->limit(10)->select();

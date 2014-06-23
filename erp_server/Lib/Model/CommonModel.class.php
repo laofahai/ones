@@ -83,6 +83,10 @@ class CommonModel extends AdvModel{
             
             $ids[] = $v[$this->workflowMainRowField];
         }
+
+        if($this->fields["_type"]["deleted"]) {
+            $where["deleted"] = 0;
+        }
         
         /**
          * 工作流

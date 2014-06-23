@@ -21,6 +21,10 @@ class StockProductListViewModel extends ViewModel {
     
     // 定义原厂编码格式
     protected $goodsCode = "factory_code-standard-version";
+
+    public $searchFields = array(
+        "Goods.name", "factory_code_all", "GoodsCategory.name", "Stock.name"
+    );
     
     /**
      * @override
