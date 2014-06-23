@@ -32,20 +32,20 @@ class GoodsAction extends CommonAction {
         }
     }
     
-    protected function _before_index() {
-        $this->indexModel = "Goods";
-    }
-    
+
     public function index() {
+        if(!$_GET["typeahead"]) {
+            return parent::index();
+        }
         $model = D("GoodsCatView");
-        $map = array();
+        $map = $this->beforeFilter($model);
         $this->_filter($map);
         $data = $model->where($map)->limit(10)->select();
         foreach($data as $k=>$v) {
             $data[$k]["combineId"] = sprintf("%s_%d_%d", $v["factory_code"], $v["id"], $v["goods_category_id"]);
             $data[$k]["combineLabel"] = sprintf("%s", $v["name"]);
         }
-        
+
 //        echo count($data);exit;
         $this->response($data);
     }

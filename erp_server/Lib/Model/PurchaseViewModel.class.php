@@ -20,6 +20,10 @@ class PurchaseViewModel extends CommonViewModel {
         "User" => array("truename" => "buyer", "_on" => "Purchase.user_id=User.id", "_type"=>"left"),
         "RelationshipCompany" => array("name"=>"supplier_id_label", "_on"=>"RelationshipCompany.id=Purchase.supplier_id", "_type"=>"left"),
     );
+
+    protected $searchFields = array(
+        "bill_id", "subject", "User.truename", "RelationshipCompany.name", "Types.name"
+    );
     
 }
 

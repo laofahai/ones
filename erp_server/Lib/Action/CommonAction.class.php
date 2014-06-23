@@ -170,38 +170,110 @@ class CommonAction extends RestAction {
         if (empty($model)) {
             $this->error(L("Server error"));
         }
+
+        $limit = $this->beforeLimit();
+        $map = $this->beforeFilter($model);
+        $order = $this->beforeOrder();
         
         if($this->relation) {
             $model = $model->relation(true);
         }
 
-//        $map = array(
-//            "deleted" => 0
-//        );
         $this->_filter($map);
         $order = "id DESC";
         $this->_order($order);
         
         $model = $model->where($map)->order($order);
 
-        $limit = 0;
+        //AutoComplete字段默认只取10条
         if(isset($_GET["typeahead"])) {
             $limit = 10;
         }
         if(isset($_GET["limit"])) {
             $limit = abs(intval($_GET["limit"]));
         }
+
         if($limit) {
             $model = $model->limit($limit);
         }
+
         $list = $model->select();
-//        echo $model->getLastSql();
-//        print_r($list);exit;
+
+//        echo $model->getLastSql();exit;
+
         if($return) {
             return $list;
         }
 
-        $this->response($list);
+        //包含总数
+        if($_GET["_ic"]) {
+            $total = $model->where($map)->count();
+//            echo $model->getLastSql();exit;
+            $return = array(
+                array("count" => $total),
+                $list
+            );
+            $this->response($return);
+        } else {
+            $this->response($list);
+        }
+    }
+
+    public function beforeFilter($model) {
+        //搜索
+        $map = array();
+        $where = array();
+        if($_GET["_kw"]) {
+            $kw = $_GET["_kw"];
+            if($model->searchFields) {
+                foreach($model->searchFields as $k => $sf) {
+                    $where[$sf] = array('like', "%{$kw}%");
+                }
+
+            } else {
+                $fields = array(
+                    "name", "subject", "pinyin", "bill_id"
+                );
+                foreach($fields as $f) {
+                    if($model->fields["_type"][$f]) {
+                        $where[$f] = array('like', "%{$kw}%");
+                    }
+                }
+            }
+
+            if($where) {
+                $where["_logic"] = "OR";
+                $map["_complex"] = $where;
+            }
+        }
+//        print_r($map);exit;
+        return $map;
+    }
+
+    public function beforeOrder() {
+        //排序
+        $order = array();
+        if($_GET["_si"]) {
+            $sortInfos = explode("|", $_GET["_si"]);
+            foreach($sortInfos as $s) {
+                $direct = substr($s, 0, 1);
+                $field = substr($s, 1, strlen($s));
+                $order[$field] = $direct === "+" ? "ASC" : "DESC";
+            }
+        }
+        return $order;
+    }
+
+    public function beforeLimit() {
+        //分页
+        if($_GET["_pn"] && $_GET["_ps"]) {
+            $ps = abs(intval($_GET["_ps"]));
+            $limit = sprintf("%d,%d",
+                (abs(intval($_GET["_pn"]))-1)*$ps,
+                $ps
+            );
+        }
+        return $limit;
     }
     
     /**

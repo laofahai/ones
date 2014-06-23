@@ -20,6 +20,9 @@
  *  
  */
 class GoodsModel extends CommonModel {
-    
+
+    public $searchFields = array(
+        "factory_code", "name", "pinyin"
+    );
     
 }

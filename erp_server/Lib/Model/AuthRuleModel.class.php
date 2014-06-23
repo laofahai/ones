@@ -11,5 +11,9 @@
  * @author 志鹏
  */
 class AuthRuleModel extends CommonModel {
-    //put your code here
+
+    public $searchFields = array(
+        "name", "title"
+    );
+
 }

@@ -398,14 +398,18 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 /**
                  * 分页/Grid 过滤器默认项
                  * */
-                var pagingOptions = {
+                $scope.pagingOptions = {
                     pageSizes: [15, 30, 50],
                     pageSize: 15,
                     currentPage: 1
                 };
-                var filterOptions = {
+                $scope.filterOptions = {
                     filterText: "",
                     useExternalFilter: false
+                };
+                $scope.sortInfo = {
+                    fields: ["id"],
+                    directions: ["DESC"]
                 };
 
                 //默认选项
@@ -422,10 +426,16 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     headerRowHeight: 40,
                     enableColumnResize: true,
                     selectedItems: $scope.gridSelected,
+                    pagingOptions: $scope.pagingOptions,
+                    filterOptions: $scope.filterOptions,
+                    keepLastSelected: true,
+//                    showGroupPanel: true,
+                    sortInfo: $scope.sortInfo,
+                    totalServerItems: "totalServerItems",
+                    useExternalSorting: true,
 //                        selectedItems: "gridSelected",
         //            enablePinning: true,  
 //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
-                    totalServerItems: 'totalServerItems',
                     i18n: "zh-cn",
                     plugins: [ngGridDoubleClick],
                     //extra
@@ -445,65 +455,111 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 
                 opts.columnDefs = columnDefs;
 
-                var setPagingData = function(data, page, pageSize) {
-                    var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-                    $scope.itemsList = pagedData;
-                    $scope.totalServerItems = data.length;
+                var setPagingData = function(remoteData, page, pageSize) {
+                    var data = [];
+                    if(remoteData && typeof(remoteData[0]) == "object" && ("count" in remoteData[0])) {
+                        data = remoteData[1];
+                        $scope.totalServerItems = remoteData[0].count;
+                    } else {
+                        data = remoteData;
+                        $scope.totalServerItems = remoteData.length;
+                    }
+//                    var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+                    $scope.itemsList = data;
                     if (!$scope.$$phase) {
                         $scope.$apply();
                     }
+
                 };
                 //获取数据
                 $scope.getPagedDataAsync = function(pageSize, page, searchText) {
                     pageSize = pageSize || pagingOptions.pageSize;
                     page = page || pagingOptions.currentPage;
+                    console.log($scope.sortInfo);
                     $timeout(function(){
                         var data;
+                        var sb = [];
+                        if($scope.sortInfo.fields) {
+                            for (var i = 0; i < $scope.sortInfo.fields.length; i++) {
+                                sb.push(sprintf("%s%s",
+                                    $scope.sortInfo.directions[i].toUpperCase() === "DESC" ? "-" : "+",
+                                    $scope.sortInfo.fields[i]
+                                ));
+                            }
+                        }
+                        /**
+                         * kw : 搜索关键字
+                         * pn : 当前页
+                         * ps : 一页N行
+                         * si : 排序
+                         * ic : 包含count info
+                         * */
+                        var p = {
+                            _kw: $scope.filterOptions.filterText,
+                            _pn: $scope.pagingOptions.currentPage,
+                            _ps: $scope.pagingOptions.pageSize,
+                            _si: sb.join("|"),
+                            _ic: 1
+                        };
+
+                        p = $.extend(opts.queryExtraParams, p);
                         if (searchText) {
                             var ft = searchText.toLowerCase();
-                            resource.query(opts.queryExtraParams, function(largeLoad) {
-                                data = largeLoad.filter(function(item) {
-                                    return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
-                                });
-                                setPagingData(data, page, pageSize);
+
+                            resource.query(p, function(remoteData) {
+                                setPagingData(remoteData, page, pageSize);
                             });
                         } else {
-                            resource.query(opts.queryExtraParams, function(largeLoad) {
-                                setPagingData(largeLoad, page, pageSize);
+                            resource.query(p, function(remoteData) {
+                                setPagingData(remoteData, page, pageSize);
                             });
                         }
                     }, 100);
                 };
 
-                if (!('pagingOptions' in opts)) {
-                    $scope.pagingOptions = opts.pagingOptions = pagingOptions;
-                }
-                if (!('filterOptions' in opts)) {
-                    $scope.filterOptions = opts.filterOptions = filterOptions;
-                }
+//                if (!('pagingOptions' in opts)) {
+//                    $scope.pagingOptions = opts.pagingOptions = pagingOptions;
+//                }
+//                if (!('filterOptions' in opts)) {
+//                    $scope.filterOptions = opts.filterOptions = filterOptions;
+//                }
 
-                $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage);
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+
+                var refresh = function(){
+                    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+                };
 
                 /**
                  * 监视器
                  * */
                 $scope.$watch('pagingOptions', function(newVal, oldVal) {
+                    console.log($scope);
                     if (newVal !== oldVal) {
-                        $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+                        refresh ();
                     }
                 }, true);
                 $scope.$watch('filterOptions', function(newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+                        refresh ();
                     }
                 }, true);
+                $scope.$watch('sortInfo', function (newVal, oldVal) {
+                    console.log(arguments);
+                    if (newVal !== oldVal) {
+                        refresh ();
+                    }
+                }, true);
+                $scope.sortData = function(){
+                    refresh ();
+                };
 
                 $scope.$on('gridData.changed', function() {
                     service.redirectTo($location.url());
                     return;
 //                        $scope.gridSelected = [];
                     $scope.gridOptions.selectedItems = [];
-                    $scope.getPagedDataAsync(pagingOptions.pageSize, pagingOptions.currentPage, filterOptions.filterText);
+                    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
                 });
                 
                 /**
@@ -511,7 +567,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                  * 支持覆盖此方法
                  * */
                 $scope.gridDblClick = function(item){
-                    console.log(item);
                     if(!item) {
                         return;
                     }
