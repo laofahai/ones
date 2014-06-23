@@ -475,7 +475,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 $scope.getPagedDataAsync = function(pageSize, page, searchText) {
                     pageSize = pageSize || pagingOptions.pageSize;
                     page = page || pagingOptions.currentPage;
-                    console.log($scope.sortInfo);
                     $timeout(function(){
                         var data;
                         var sb = [];
@@ -534,7 +533,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                  * 监视器
                  * */
                 $scope.$watch('pagingOptions', function(newVal, oldVal) {
-                    console.log($scope);
                     if (newVal !== oldVal) {
                         refresh ();
                     }
@@ -545,7 +543,6 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     }
                 }, true);
                 $scope.$watch('sortInfo', function (newVal, oldVal) {
-                    console.log(arguments);
                     if (newVal !== oldVal) {
                         refresh ();
                     }
