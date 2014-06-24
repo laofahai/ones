@@ -29,7 +29,11 @@ class CheckRestRouteBehavior extends Behavior {
         // 是否开启路由使用
         if(empty($regx) || !C('URL_ROUTER_ON')) $return =  false;
         // 路由定义文件优先于config中的配置定义
-        $routes = C('URL_ROUTE_RULES');
+        if(APP_DEBUG) {
+            $routes = C('URL_ROUTE_RULES');
+        } else {
+            $routes = require ENTRY_PATH."/Conf/route.php";
+        }
         if(is_array(C('routes')))  $routes = C('routes');
         // 路由处理
         if(!empty($routes)) {

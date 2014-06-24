@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 
 //$_REQUEST = array_merge($_GET, $_POST, $_COOKIE);
-
+//print_r($_GET);exit;
 //REST模式
 define('MODE_NAME', 'rest');
 define('__EXT__', 'json');
@@ -23,6 +23,6 @@ define("DS", DIRECTORY_SEPARATOR);
 define("ENTRY_PATH", dirname(__FILE__));
 define("APP_NAME", "ERP");
 
-define("APP_DEBUG", true);
+define("APP_DEBUG", false);
 
 require './ThinkPHP/ThinkPHP.php';

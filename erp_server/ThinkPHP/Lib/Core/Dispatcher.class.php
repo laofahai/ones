@@ -25,11 +25,13 @@ class Dispatcher {
      * @return void
      */
     static public function dispatch() {
+
         $urlMode  =  C('URL_MODEL');
         if(isset($_GET[C('VAR_PATHINFO')])) { // 判断URL里面是否有兼容模式参数
             $_SERVER['PATH_INFO']   = $_GET[C('VAR_PATHINFO')];
-            unset($_GET[C('VAR_PATHINFO')]);
+//            unset($_GET[C('VAR_PATHINFO')]);
         }
+
         if($urlMode == URL_COMPAT ){
             // 兼容模式判断
             define('PHP_FILE',_PHP_FILE_.'?'.C('VAR_PATHINFO').'=');
@@ -58,7 +60,7 @@ class Dispatcher {
                     if('www' != $subDomain && !in_array($subDomain,C('APP_SUB_DOMAIN_DENY'))) {
                         $rule =  $rules['*'];
                     }
-                }                
+                }
             }
 
             if(!empty($rule)) {
@@ -149,7 +151,7 @@ class Dispatcher {
             // 分组URL地址
             define('__GROUP__',(!empty($domainGroup) || strtolower(GROUP_NAME) == strtolower(C('DEFAULT_GROUP')) )?__APP__ : __APP__.'/'.(C('URL_CASE_INSENSITIVE') ? strtolower(GROUP_NAME) : GROUP_NAME));
         }
-        
+
         // 定义项目基础加载路径
         define('BASE_LIB_PATH', (defined('GROUP_NAME') && C('APP_GROUP_MODE')==1) ? APP_PATH.C('APP_GROUP_PATH').'/'.GROUP_NAME.'/' : LIB_PATH);
         if(defined('GROUP_NAME')) {
@@ -159,7 +161,7 @@ class Dispatcher {
                 $common_path    =   BASE_LIB_PATH.'Common/';
             }else{ // 普通分组模式
                 $config_path    =   CONF_PATH.GROUP_NAME.'/';
-                $common_path    =   COMMON_PATH.GROUP_NAME.'/';             
+                $common_path    =   COMMON_PATH.GROUP_NAME.'/';
             }
             // 加载分组配置文件
             if(is_file($config_path.'config.php'))
@@ -175,10 +177,10 @@ class Dispatcher {
                 include $common_path.'function.php';
         }else{
             C('CACHE_PATH',CACHE_PATH);
-        }       
+        }
         define('MODULE_NAME',self::getModule(C('VAR_MODULE')));
         define('ACTION_NAME',self::getAction(C('VAR_ACTION')));
-        
+
         // 当前模块和分组地址
         $moduleName    =   defined('MODULE_ALIAS')?MODULE_ALIAS:MODULE_NAME;
         if(defined('GROUP_NAME')) {
@@ -254,7 +256,7 @@ class Dispatcher {
                     return   '';
                 }
             }
-        }        
+        }
         return strip_tags(C('URL_CASE_INSENSITIVE')?strtolower($action):$action);
     }
 
