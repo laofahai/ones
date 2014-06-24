@@ -475,7 +475,8 @@
         "errors": {
             "required": "必填",
             "number"  : "必须是数字",
-            "unique"  : "必须唯一"
+            "unique"  : "必须唯一",
+            "email"   : "必须是email"
         },
         "actions": {
             "addBill": "新增",

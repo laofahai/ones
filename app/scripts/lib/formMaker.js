@@ -16,7 +16,7 @@
                         'search_contains="true" disable_search_threshold="10"'+
                         '><option><option></select>',
                 'fields/static': '<span ng-bind="%s"></span>',
-                'fields/email': '<input type="number" %s />',
+                'fields/email': '<input type="email" %s />',
                 'fields/textarea': '<textarea %s>%s</textarea>',
                 'fields/password': '<input type="password" %s />',
                 'fields/select2': '<ui-select ng-model="%(model)s" class="editAble" %(event)s theme="selectize" reset-search-input="false" %(attrs)s>'+
@@ -111,6 +111,9 @@
             },
             _text: function(name, fieldDefine) {
                 return sprintf(this.$parent.templates["fields/text"], this._attr(name, fieldDefine));
+            },
+            _email: function(name, fieldDefine) {
+                return sprintf(this.$parent.templates["fields/email"], this._attr(name, fieldDefine));
             },
             //数字
             _number: function(name, fieldDefine) {

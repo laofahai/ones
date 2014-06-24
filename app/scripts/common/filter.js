@@ -96,6 +96,7 @@ angular.module("ones.common.filters", [])
         }])
         .filter("toError", ["$rootScope", function($rootScope){
                 return function(errors) {
+                    console.log(errors);
                     if(!errors) {
                         return;
                     }
@@ -105,7 +106,12 @@ angular.module("ones.common.filters", [])
 //                        if(err) {
 //                            return;
 //                        }
-                        tips.push(i18n.errors[k]);
+                        if(k in i18n.errors) {
+                            tips.push(i18n.errors[k]);
+                        } else {
+                            tips.push(k);
+                        }
+
                     });
                     return tips.join(", ");
                 };
