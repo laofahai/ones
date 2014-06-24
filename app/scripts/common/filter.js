@@ -96,7 +96,6 @@ angular.module("ones.common.filters", [])
         }])
         .filter("toError", ["$rootScope", function($rootScope){
                 return function(errors) {
-                    console.log(errors);
                     if(!errors) {
                         return;
                     }

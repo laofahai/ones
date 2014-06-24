@@ -875,7 +875,7 @@
                     "commonForm/hide.html": '%(inputHTML)s',
                     "text": '<input type="text" %s />',
                     "number": '<input type="number" %s />',
-                    "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>',
+                    "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>'
                 },
                 dataName: "formData"
             };
