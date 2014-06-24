@@ -23,7 +23,7 @@ class UserAction extends CommonAction {
         switch($this->_method) {
             case "post":
                 $_POST["password"] = getPwd($_POST["password"]);
-                $_POST["status"] = 1;
+//                $_POST["status"] = 1;
                 break;
             case "put":
                 if($_POST["password"]) {

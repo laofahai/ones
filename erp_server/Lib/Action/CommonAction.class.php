@@ -297,6 +297,13 @@ class CommonAction extends RestAction {
         $map = array();
         if($id) {
             $map["id"] = $id;
+        } else {
+            foreach($_GET as $k=>$g) {
+                if(in_array($k, array("id", "s"))) {
+                    continue;
+                }
+                $map[$k] = $g;
+            }
         }
         $this->_filter($map);
         

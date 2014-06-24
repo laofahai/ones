@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("ones.passport.services", [])
-        .factory("UserModel", ["DepartmentRes", "AuthGroupRes", "$q", "$rootScope", 
+        .factory("UserModel", ["DepartmentRes", "AuthGroupRes", "$q", "$rootScope",
             function(DepartmentRes, AuthGroupRes, $q, $rootScope){
             
                 var service = {
@@ -12,9 +12,12 @@ angular.module("ones.passport.services", [])
                                 primary: true
                             },
                             email: {
-                                inputType: "email"
+                                inputType: "email",
+                                ensureunique: "UserRes"
                             },
-                            username: {},
+                            username: {
+                                ensureunique: "UserRes"
+                            },
                             password: {
                                 inputType: "password",
                                 listable: false,
@@ -45,6 +48,14 @@ angular.module("ones.passport.services", [])
                                 nameField: "prefix_name",
                                 listable: false,
                                 inputType: "select"
+                            },
+                            status: {
+                                displayName: $rootScope.i18n.lang.isEnable,
+                                inputType: "select",
+                                dataSource: [
+                                    {id: 1, name: $rootScope.i18n.lang.yes},
+                                    {id: -1, name: $rootScope.i18n.lang.no}
+                                ]
                             }
                         };
 
