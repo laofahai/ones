@@ -108,10 +108,11 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
     .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal",
         function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal){
             var module,group,res,model,actions,pageActions=[];
-            
+
+            $scope.selectAble = true;
+
             group = $routeParams.group;
             module = $routeParams.module;
-            
             res = $injector.get(module.ucfirst()+"Res");
             model = $injector.get(module.ucfirst()+"Model");
             var opts = {};
@@ -912,9 +913,9 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         })+extraParams
                     });
                 });
-                
+
                 //打印按钮
-                if(model && model.printAble) {
+                if(!$scope.selectAble && model && model.printAble) {
                     $scope.pageActions.push({
                         label: $scope.i18n.lang.actions.print,
                         class: "success",

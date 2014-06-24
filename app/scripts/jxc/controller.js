@@ -100,53 +100,6 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         }
                     }
                 };
-                
-                //实收金额
-//                $scope.$watch('formMetaData.total_amount', function(){
-//                    $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
-//                });
-//
-//                //一行总价
-//                var countRowAmount = function(index, price, num){
-//                    $scope.formData[index].amount = Number(parseFloat(num * price).toFixed(2));
-//                };
-//                var recountTotalAmount = function() {
-//                    var totalAmount = 0;
-//                    var totalNum = 0;
-//                    angular.forEach($scope.formData, function(row){
-//                        if(!row.amount) {
-//                            return;
-//                        }
-//                        totalNum += Number(row.num);
-//                        totalAmount += Number(row.amount);
-//                    });
-//                    $scope.formMetaData.total_amount = totalAmount;
-//                    $scope.formMetaData.total_num = totalNum;
-//                };
-//                $scope.onNumberBlur = function(event){
-//                    var context = getInputContext(event.target);
-//
-//                    if($scope.formData[context.trid] && $scope.formData[context.trid].goods_id) {
-//                        var gid = $scope.formData[context.trid].goods_id.split("_");
-//                        var goods = GoodsRes.get({
-//                            id: gid[1]
-//                        }).$promise.then(function(data){
-//                            $scope.formData[context.trid].unit_price = Number(data.price);
-//                        });
-//                    }
-//                    if($scope.formMetaData.customerInfo) {
-//                        $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
-//                    }
-//                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
-//                    recountTotalAmount();
-//                };
-//
-//                $scope.onUnitPriceBlur = function(event){
-//                    var context = getInputContext(event.target);
-//                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
-//                };
-                
-                
                 $scope.maxDate = new Date();
                 $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
                 $scope.format = $scope.formats[0];
@@ -219,60 +172,6 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                         });
                     }
                 });
-                
-                //实收金额
-//                $scope.$watch('formMetaData.total_amount', function(){
-//                    $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
-//                });
-                
-                //一行总价
-//                var countRowAmount = function(index){
-//                    var price =  $scope.formData[index].unit_price
-//                    var num = $scope.formData[index].num;
-//                    var discount = $scope.formData[index].discount;
-//                    if(discount === undefined || parseInt(discount) === 0) {
-//                        discount = 100;
-//                    };
-//                    $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
-//                };
-//                var recountTotalAmount = function() {
-//                    var totalAmount = 0;
-//                    angular.forEach($scope.formData, function(row){
-//                        if(!row.amount) {
-//                            return;
-//                        }
-//                        totalAmount += Number(row.amount);
-//                    });
-//                    $scope.formMetaData.total_amount = totalAmount;
-//                };
-                //Num字段更新
-//                $scope.onNumNumberBlur = function(event){
-//                    var context = getInputContext(event.target);
-//
-//                    if($scope.formMetaData.customerInfo) {
-//                        $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
-//                    }
-//
-//                    if($scope.formData[context.trid] && $scope.formData[context.trid].goods_id) {
-//                        var gid = $scope.formData[context.trid].goods_id.split("_");
-//                        var goods = GoodsRes.get({
-//                            id: gid[1]
-//                        }).$promise.then(function(data){
-//                            $scope.formData[context.trid].unit_price = Number(data.price);
-//                            countRowAmount(context.trid);
-//                            recountTotalAmount();
-//                        });
-//                    }
-//                };
-                //折扣字段更新
-                //金额字段更新
-//                $scope.onUnit_priceNumberBlur = function(event){
-//                    var context = getInputContext(event.target);
-//                    countRowAmount(context.trid);
-//                    recountTotalAmount();
-//                };
-                
-                
                 $scope.maxDate = new Date();
                 $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
                 $scope.format = $scope.formats[0];
@@ -321,50 +220,7 @@ angular.module("ones.jxc", ['ones.jxc.services', 'ngGrid', 'ones.common.directiv
                     }
                 };
                 
-                
-//
-//                //实收金额
-//                $scope.$watch('formMetaData.total_amount', function(){
-//                    $scope.formMetaData.total_amount_real = $scope.formMetaData.total_amount;
-//                });
-//
-//                //一行总价
-//                var countRowAmount = function(index, price, num, discount){
-//                    if(discount === undefined || parseInt(discount) === 0) {
-//                        discount = 100;
-//                    };
-//                    $scope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
-//                };
-//                var recountTotalAmount = function() {
-//                    var totalAmount = 0;
-//                    angular.forEach($scope.formData, function(row){
-//                        totalAmount += Number(row.amount);
-//                    });
-//                    $scope.formMetaData.total_amount = totalAmount;
-//                };
-//                $scope.onNumberBlur = function(event){
-//                    var context = getInputContext(event.target);
-//
-//                    if($scope.formData[context.trid] && $scope.formData[context.trid].goods_id) {
-//                        var gid = $scope.formData[context.trid].goods_id.split("_");
-//                        var goods = GoodsRes.get({
-//                            id: gid[1]
-//                        }).$promise.then(function(data){
-//                            $scope.formData[context.trid].unit_price = Number(data.price);
-//                        });
-//                    }
-//                    if($scope.formMetaData.customerInfo) {
-//                        $scope.formData[context.trid].discount = $scope.formMetaData.customerInfo.discount;
-//                    }
-//                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
-//                    recountTotalAmount();
-//                };
-//
-//                $scope.onUnitPriceBlur = function(event){
-//                    var context = getInputContext(event.target);
-//                    countRowAmount(context.trid, $scope.formData[context.trid].unit_price, $scope.formData[context.trid].num, $scope.formData[context.trid].discount);
-//                };
-                
+
                 
                 $scope.maxDate = new Date();
                 $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
