@@ -38,12 +38,14 @@ class DataModelDataAction extends CommonAction {
                 $category = $model->find($catid);
                 if($category) {
                     $map["DataModelData.model_id"] = $category["bind_model"];
+                    $map["DataModelData.source_id"] = $catid;
                 }
             } else {
                 $model = D("GoodsCatView");
                 $category = $model->find($_GET["goods_id"]);
                 if($category) {
                     $map["DataModelData.model_id"] = $category["bind_model_id"];
+                    $map["DataModelData.source_id"] = $category["goods_category_id"];
                 }
             }
         }
@@ -56,6 +58,8 @@ class DataModelDataAction extends CommonAction {
         }
         
         $map["DataModelData.deleted"] = 0;
+
+        print_r($map);
         
     }
     
