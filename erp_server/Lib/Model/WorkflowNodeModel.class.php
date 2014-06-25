@@ -11,5 +11,26 @@
  * 
  */
 class WorkflowNodeModel extends CommonModel {
-    //put your code here
+
+    public function find($options) {
+        $data = parent::find($options);
+        $executor = explode("|", $data["executor"]);
+        foreach($executor as $v) {
+            list($role, $ids) = explode(":", $v);
+            switch($role) {
+                case "g":
+                    $data["executor_group"] = explode(",", $ids);
+                    break;
+                case "d":
+                    $data["executor_department"] = explode(",", $ids);
+                    break;
+                case "u":
+                    $data["executor_user"] = explode(",", $ids);
+                    break;
+            }
+        }
+
+        return $data;
+    }
+
 }

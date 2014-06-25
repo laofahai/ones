@@ -4,7 +4,7 @@
      * 基本配置
      * */
     var BaseConf = {
-        DEBUG: false,
+        DEBUG: true,
         BSU: "../erp_server/gateway.php?s=/",
         Prefix: "ones"
     };

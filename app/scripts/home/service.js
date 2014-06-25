@@ -250,9 +250,28 @@ angular.module("ones.home.services", [])
                                 required: false,
                                 multiple: "multiple"
                             },
-                            executor: {
+                            executor_group: {
                                 listable: false,
-                                required: false
+                                required: false,
+                                dataSource: "AuthGroupRes",
+                                inputType: "select",
+                                multiple: "multiple",
+                                nameField: "title"
+                            },
+                            executor_department: {
+                                listable: false,
+                                required: false,
+                                dataSource: "DepartmentRes",
+                                inputType: "select",
+                                multiple: "multiple"
+                            },
+                            executor_user: {
+                                listable: false,
+                                required: false,
+                                dataSource: "UserRes",
+                                inputType: "select",
+                                multiple: "multiple",
+                                nameField: "truename"
                             },
                             cond: {
                                 listable: false,

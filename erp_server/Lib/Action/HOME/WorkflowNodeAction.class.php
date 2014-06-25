@@ -38,6 +38,25 @@ class WorkflowNodeAction extends CommonAction {
         if(is_array($_POST["next_node_id"])) {
             $_POST["next_node_id"] = implode(",", $_POST["next_node_id"]);
         }
+
+        if($_POST["executor_department"] or $_POST["executor_group"] or $_POST["executor_user"]) {
+            $executor = array();
+            if($_POST["executor_department"]) {
+                $executor["d"] = $_POST["executor_department"];
+            }
+            if($_POST["executor_group"]) {
+                $executor["g"] = $_POST["executor_group"];
+            }
+            if($_POST["executor_user"]) {
+                $executor["u"] = $_POST["executor_user"];
+            }
+
+            $tmp = array();
+            foreach($executor as $k=>$v) {
+                $tmp[] = sprintf("%s:%s", $k, implode(",", $v));
+            }
+            $_POST["executor"] = implode("|", $tmp);
+        }
         
     }
     

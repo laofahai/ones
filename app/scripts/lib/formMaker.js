@@ -181,7 +181,6 @@
                 fieldDefine.remoteDataField = fieldDefine.remoteDataField || name;
                 fieldDefine["data-placeholder"]= $scope.$parent.i18n.lang.messages.chosen_select_text;
                 fieldDefine["no-results-text"]= $scope.$parent.i18n.lang.messages.chosen_no_result_text;
-
                 if (fieldDefine.dataSource instanceof Array) {
                     for (var item in fieldDefine.dataSource) {
                         if (!item || !fieldDefine.dataSource[item][valueField]) {
@@ -193,8 +192,10 @@
                         });
                     }
                     $scope.$parent[fieldDefine.remoteDataField + "sSelect"] = data;
-
-                } else if (typeof (fieldDefine.dataSource) == "function") {
+                } else if (typeof (fieldDefine.dataSource) === "function" || typeof (fieldDefine.dataSource) === "string") {
+                    if(typeof (fieldDefine.dataSource) === "string") {
+                        fieldDefine.dataSource = $injector.get(fieldDefine.dataSource);
+                    }
                     var queryParams = fieldDefine.queryParams || {};
                     //需要使用已有数据作为参数进行查询
                     if(fieldDefine.queryWithExistsData) {
