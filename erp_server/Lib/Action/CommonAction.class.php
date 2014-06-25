@@ -380,7 +380,7 @@ class CommonAction extends RestAction {
         }
         // 更新数据
         $result = $model->save();
-//        ECHO $model->getLastSql();exit;
+
         if ($result !== false) { //保存成功
             $this->response(array(
                 "error" => 0
@@ -395,13 +395,20 @@ class CommonAction extends RestAction {
      * 删除
      */
     public function delete($return = false) {
+
         $name = $this->deleteModel ? $this->deleteModel : $this->getActionName();
+//        echo $name;exit;
         $model = D($name);
 //        var_dump($model);exit;
         $pk = $model->getPk();
         $id = $_REQUEST [$pk];
 //        echo $id;exit;
-        $rs = $model->doDelete($id);
+        if(method_exists($model, "doDelete")) {
+            $rs = $model->doDelete($id);
+        } else {
+            $rs = $model->where("id=".$id)->delete();
+        }
+
         if($return) {
             return $rs;
         } 
