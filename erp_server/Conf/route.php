@@ -58,7 +58,7 @@ $needMake = array(
     array("workflow/process", "HOME/WorkflowProcess", "get"),
     array("jxc/stockWarning", "JXC/StockWarning", "list"),
     array("jxc/stockProductList", "JXC/StockProductList", "list,get,put"),
-    array("produce/goodsCraft", "Product/GoodsCraft", "list,put"),
+    array("produce/goodsCraft", "Produce/GoodsCraft", "list,put"),
     array("statistics/productView", "Statistics/ProductView", "list"),
     array("workflow/nodes", "HOME/WorkflowNode"),
     array("workflow/process", "HOME/WorkflowProcess"),
@@ -103,5 +103,5 @@ if($ext == "json") {
 }
 
 unset($null, $tmp, $groupMap, $k, $action, $hasRule, $ext);
-
+//print_r($urlRoutes);
 return $urlRoutes;

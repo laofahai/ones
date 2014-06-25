@@ -14,7 +14,7 @@
 class GoodsCraftAction extends CommonAction {
     
     public function index() {
-        
+
         $goods_id = abs(intval($_GET["goods_id"]));
         
         $craftModel = D("Craft");
