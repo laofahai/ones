@@ -174,15 +174,15 @@ class CommonAction extends RestAction {
         $limit = $this->beforeLimit();
         $map = $this->beforeFilter($model);
         $order = $this->beforeOrder();
-        
+
+        $this->_filter($map);
+        $this->_order($order);
+
         if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
 
-        $this->_filter($map);
-        $order = "id DESC";
-        $this->_order($order);
-        
+
         $model = $model->where($map)->order($order);
 
         //AutoComplete字段默认只取10条
