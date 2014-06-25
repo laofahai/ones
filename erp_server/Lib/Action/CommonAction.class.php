@@ -406,7 +406,7 @@ class CommonAction extends RestAction {
             return $rs;
         } 
         
-        if(!$rs) {
+        if(false === $rs) {
             $this->error("delete_failed");
         }
 //        

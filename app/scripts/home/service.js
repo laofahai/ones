@@ -186,6 +186,22 @@ angular.module("ones.home.services", [])
                         };
                     }
                 };
+
+        return {
+            getFieldsStruct: function(){
+                return {
+                    id: {primary: true},
+                    name: {},
+                    age: {inputType: "number"},
+                    phone: {required: false},
+                    department_id: {
+                        inputType: "select",
+                        displayName: $rootScope.i18n.lang.department,
+                        dataSource: DepartmentRes
+                    }
+                };
+            }
+        };
          }])
         .service("WorkflowModel", ["$rootScope", function($rootScope){
             return {

@@ -53,7 +53,7 @@ class CommonModel extends AdvModel{
     }
     
     public function where($where, $parse = null) {
-        if($model->fields["_type"]["deleted"]) {
+        if($this->fields["_type"]["deleted"]) {
             $where["deleted"] = 0;
         }
         return parent::where($where, $parse);

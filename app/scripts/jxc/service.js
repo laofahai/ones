@@ -164,7 +164,9 @@ angular.module("ones.jxc.services", [])
                         primary: true,
                         displayName: "ID"
                     },
-                    name: {},
+                    name: {
+                        ensureunique: "StockRes"
+                    },
                     managers_name: {
                         displayName: $rootScope.i18n.lang.stockManager,
                         hideInForm:true
