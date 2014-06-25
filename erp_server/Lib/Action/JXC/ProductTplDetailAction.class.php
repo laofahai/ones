@@ -12,6 +12,8 @@
  * @author nemo
  */
 class ProductTplDetailAction extends CommonAction {
+
+
     
     public function _filter(&$map) {
         if($_GET["tpl_id"]) {

@@ -22,9 +22,7 @@ class CommonRelationModel extends RelationModel {
         } else {
             $model = D($modelName);
         }
-        
-        
-        
+
         $pk = $pk ? $pk : $model->getPk();
         
         $condition = array(
@@ -36,7 +34,7 @@ class CommonRelationModel extends RelationModel {
         } else {
             $model = $model->relation(true);
             $rs = $model->where($condition)->delete();
-//            echo $model->getLastSql();exit;
+            echo $model->getLastSql();exit;
         }
         return $rs;
         

@@ -16,6 +16,9 @@ class ProductTplAction extends CommonAction {
     protected $indexModel = "ProductTplView";
     
     protected $readModel = "ProductTplView";
+    protected $deleteModel = "ProductTplRel";
+
+    protected $relation = true;
     
     public function index() {
         

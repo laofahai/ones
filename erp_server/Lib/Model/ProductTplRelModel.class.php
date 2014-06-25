@@ -11,7 +11,7 @@
  *
  * @author nemo
  */
-class ProductTplRelModel extends RelationModel {
+class ProductTplRelModel extends CommonRelationModel {
     
     protected $tableName = "product_tpl";
     

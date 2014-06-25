@@ -175,7 +175,7 @@ class CommonAction extends RestAction {
         $map = $this->beforeFilter($model);
         $order = $this->beforeOrder();
         
-        if($this->relation) {
+        if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
 
@@ -289,7 +289,7 @@ class CommonAction extends RestAction {
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);
         
-        if($this->relation) {
+        if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
         
@@ -334,7 +334,7 @@ class CommonAction extends RestAction {
         if (false === $model->create()) {
             $this->error($model->getError());
         }
-        if ($this->relation) {
+        if ($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
         $result = $model->add();
@@ -375,7 +375,7 @@ class CommonAction extends RestAction {
             $this->error($model->getError());
         }
         
-        if($this->relation) {
+        if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
         // 更新数据
@@ -395,8 +395,9 @@ class CommonAction extends RestAction {
      * 删除
      */
     public function delete($return = false) {
-        $name = $this->getActionName();
+        $name = $this->deleteModel ? $this->deleteModel : $this->getActionName();
         $model = D($name);
+//        var_dump($model);exit;
         $pk = $model->getPk();
         $id = $_REQUEST [$pk];
 //        echo $id;exit;
