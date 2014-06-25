@@ -59,8 +59,6 @@ class DataModelDataAction extends CommonAction {
         
         $map["DataModelData.deleted"] = 0;
 
-        print_r($map);
-        
     }
     
     protected function pretreatment() {
