@@ -17,8 +17,8 @@ class StockProductListModel extends Model {
      * 更新库存
      */
     public function updateStoreList($data) {
-        
 //        print_r($data);exit;
+//        var_dump($data);exit;
         if(!$data) {
             $this->error = "no_data";
             return false;
@@ -79,8 +79,8 @@ class StockProductListModel extends Model {
                 "color_id" => $v["color_id"],
                 "standard_id" => $v["standard_id"],
                 "num" => $num,
-                "unit_price" => $unitPrice,
-                "cost" => $cost
+                "unit_price" => $unitPrice ? $unitPrice : 0,
+                "cost" => $cost ? $cost : 0
             );
             $rs = $this->add($saveData, array(), true);
 //            echo $this->getLastSql();exit;
@@ -92,7 +92,7 @@ class StockProductListModel extends Model {
             
 //            exit;
         }
-        
+
         return true;
         
     }

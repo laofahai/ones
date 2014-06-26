@@ -87,7 +87,7 @@
                 if (method in this) {
                     html = this[method](context.field, fieldDefine, $scope, context);
                 }
-                if(!$scope.formData[context.field] && fieldDefine.value){
+                if($scope.formData && !$scope.formData[context.field] && fieldDefine.value){
                     $scope.formData[context.field] = fieldDefine.value;
                 }
                 if(html && this.opts.compile) {

@@ -18,9 +18,18 @@ class ProductViewAction extends CommonAction{
         $dateStart = strtotime(date("Y-m"));
         $dateEnd   = CTS;
 
-        $voList = array(
+        if($_GET["_filter_dateline_start"]) {
+            $dateStart = $_GET["_filter_dateline_start"] / 1000;
+        }
+        if($_GET["_filter_dateline_end"]) {
+            $dateEnd = $_GET["_filter_dateline_end"] / 1000;
+        }
 
-        );
+        $limit = $this->beforeLimit();
+
+        $storeModel = D("StockProductList");
+        $storeModel->group("")->limit($limit)->select();
+
 
         $baseMap = array(
             "dateline" => array("BETWEEN", array($dateStart, $dateEnd)),
