@@ -26,6 +26,7 @@ class StockProductListModel extends Model {
         
         foreach($data as $k=>$v) {
             $fca[] = $v["factory_code_all"];
+            $goodsIds[$v["goods_id"]] = $v["goods_id"];
         }
         $map = array(
             "factory_code_all" => array("IN", implode(",", $fca)),
@@ -35,6 +36,15 @@ class StockProductListModel extends Model {
             $old[$t["factory_code_all"]."-".$t["stock_id"]]["num"] = $t["num"];
             $old[$t["factory_code_all"]."-".$t["stock_id"]]["price"] = $t["unit_price"];
             $old[$t["factory_code_all"]."-".$t["stock_id"]]["cost"] = $t["cost"];
+        }
+
+        //商品数据
+        $goodsModel = D("Goods");
+        $tmp = $goodsModel->where(array(
+            "id" => array("IN", implode(",", $goodsIds))
+        ))->select();
+        foreach($tmp as $v) {
+            $goodsInfo[$v["id"]] = $v;
         }
         
         /**
@@ -47,7 +57,6 @@ class StockProductListModel extends Model {
             } else {
                 $cleanData[$v["factory_code_all"]] = $v;
             }
-            
         }
         
         foreach($cleanData as $k=>$v) {
@@ -66,8 +75,8 @@ class StockProductListModel extends Model {
                 $cost = $old[$v["factory_code_all"]."-".$v["stock_id"]]["cost"];
             } else {
                 $num = $v["num"];
-                $unitPrice = $v["price"];
-                $cost = $v["cost"];
+                $unitPrice = $v["price"] ? $v["price"] : $goodsInfo[$v["goods_id"]]["price"];
+                $cost = $v["cost"] ? $v["cost"] : $goodsInfo[$v["goods_id"]]["cost"];
             }
             
             $cost = $cost ? $cost : 0.00;

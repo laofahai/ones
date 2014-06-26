@@ -110,7 +110,7 @@ class StockinModel extends CommonModel {
             "status"  => 0,
             "user_id" => getCurrentUid(),
             "stock_manager" => 0,
-            "total_num"=> $postData["total_num"],
+            "total_num"=> 0,
             "memo"    => $postData["memo"],
             "type_id" => $postData["type_id"]
         );
