@@ -25,6 +25,15 @@
                                       '<div ng-bind-html="%(data)s.label"></div>'+
                                     '</choices>'+
                                   '</ui-select>',
+                'fields/datepicker': '<span class="input-icon input-icon-right"> \
+                                    <input type="text" class="form-control" \
+                            size="%(size)s" \
+                            ng-model="%(model)s" \
+                            data-date-format="%(format)s" \
+                            data-autoclose="true" %(attrs)s \
+                            bs-datepicker /> \
+                                <i class="icon-calendar gray"></i> \
+                            </span>',
 //                "fields/select2": '<select ngyn-select2 %(attrs)s '+
 //                        'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
 //                        'search_contains="true" '+
@@ -122,6 +131,22 @@
             _password: function(name, fieldDefine) {
                 delete(fieldDefine.value);
                 return sprintf(this.$parent.templates["fields/password"], this._attr(name, fieldDefine));
+            },
+            _datepicker: function(name, fieldDefine) {
+                if(fieldDefine.max) {
+                    fieldDefine["data-date-max"] = fieldDefine.max;
+                    delete(fieldDefine.max);
+                }
+                if(fieldDefine.min) {
+                    fieldDefine["data-date-min"] = fieldDefine.min;
+                    delete(fieldDefine.min);
+                }
+                return sprintf(this.$parent.templates["fields/datepicker"], {
+                    attrs: this._attr(name, fieldDefine),
+                    model: fieldDefine["ng-model"],
+                    format: fieldDefine.format || "yyyy-MM-dd",
+                    size: fieldDefine.size || 10
+                });
             },
             //多选框
             _checkbox: function(name, fieldDefine) {

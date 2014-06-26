@@ -386,6 +386,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 if(model.filters) {
                     $scope.filters = model.filters;
                     $scope.showFilters = true;
+
                     var modal;
                     $scope.showFiltersModal = function(){
                         modal = $injector.get("$modal")({

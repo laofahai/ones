@@ -5,9 +5,15 @@
 (function(){
     angular.module("ones.statistics.service", [])
         .service("ProductViewModel", [function(){
+            var timestamp = Date.parse(new Date())/1000;
+            var startTime = timestamp-3600*24*30;
             return {
                 filters: {
-                    dateline: "between"
+                    between: {
+                        field: "dateline",
+                        defaultData: [startTime, timestamp],
+                        inputType: "datepicker"
+                    }
                 },
                 getFieldsStruct: function() {
                     return {
