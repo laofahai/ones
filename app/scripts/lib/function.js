@@ -36,6 +36,13 @@ function parseParams(str) {
     return params;
 }
 
+//是否空对象
+var isEmptyObject=function(v){
+    if(Object.prototype.toString.apply(v)!=='[object Object]')return false;
+    for(var p in v)if(v.hasOwnProperty(p))return false;
+    return true
+};
+
 
 
 Array.prototype.in_array = function(e)

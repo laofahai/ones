@@ -96,16 +96,16 @@ angular.module("ones.common.filters", [])
         }])
         .filter("toError", ["$rootScope", function($rootScope){
                 return function(errors) {
-
+                    console.log(errors);
                     if(!errors) {
                         return;
                     }
                     var i18n = $rootScope.i18n.lang;
                     var tips = [];
                     angular.forEach(errors, function(err, k){
-//                        if(err) {
-//                            return;
-//                        }
+                        if(err) {
+                            return;
+                        }
                         if(k in i18n.errors) {
                             tips.push(i18n.errors[k]);
                         } else {

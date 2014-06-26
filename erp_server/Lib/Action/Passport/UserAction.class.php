@@ -33,6 +33,9 @@ class UserAction extends CommonAction {
                 }
                 break;
         }
+        if($_POST["usergroup"]) {
+
+        }
     }
 
     public function update() {
@@ -49,6 +52,14 @@ class UserAction extends CommonAction {
      * 更新用户组
      */
     public function _after_update() {
+        $this->updateUserGroup();
+    }
+
+    public function _after_insert() {
+        $this->updateUserGroup();
+    }
+
+    private function updateUserGroup() {
         if($_POST["usergroup"]) {
             $id = $_POST["id"];
             $usergroup = is_array($_POST["usergroup"]) ? $_POST["usergroup"] : explode(",", $_POST["usergroup"]);
@@ -59,19 +70,20 @@ class UserAction extends CommonAction {
                     "uid" => $id,
                     "group_id" => $g
                 );
-                
+
                 $model->add($data);
             }
         }
 
-        /**
-         * 更新SESSION
-        */
-        $user = D("UserRelation");
-        $theUser = $user->getFullUserInfo($_REQUEST["id"]);
-        unset($theUser["id"]);
-        $_SESSION["user"] = $theUser;
-
+        if($id == $this->user["id"]) {
+            /**
+             * 更新SESSION
+             */
+            $user = D("UserRelation");
+            $theUser = $user->getFullUserInfo($_REQUEST["id"]);
+            unset($theUser["id"]);
+            $_SESSION["user"] = $theUser;
+        }
     }
     
     public function read() {

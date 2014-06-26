@@ -244,6 +244,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         fieldsDefine: fd,
                         name: opts.name
                     };
+                    //编辑
                     if (opts.id || opts.isEdit) {
                         //
                         var tmpParams = opts.queryParams || {};
@@ -254,9 +255,12 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                             $scope[opts.dataObject] = dataFormat($scope.config.fieldsDefine, defaultData);
                         });
                     }
-                    $timeout(function(){
-                        $scope.$broadcast("commonForm.ready");
-                    });
+                    //延时编译
+                    if(!opts.lazyload) {
+                        $timeout(function(){
+                            $scope.$broadcast("commonForm.ready");
+                        });
+                    }
                 };
 
                 /**
@@ -278,7 +282,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                     }
                     
                 } else {
-                    doDefine();
+                    doDefine(fieldsDefine);
                 }
 
                 //提交表单
@@ -386,12 +390,39 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 if(model.filters) {
                     $scope.filters = model.filters;
                     $scope.showFilters = true;
+                    var FieldsDefine = {};
+                    var fm = $injector.get("FormMaker");
+                    angular.forEach(model.filters, function(item, type){
+                        switch(type) {
+                            case "between":
+                                FieldsDefine["_filter_start_"+item.field] = {
+                                    displayName: $rootScope.i18n.lang[item.field] + $rootScope.i18n.lang.start,
+                                    inputType: item.inputType || "number",
+                                    value: item.defaultData[0] || 0
+                                };
+                                FieldsDefine["_filter_end_"+item.field] = {
+                                    displayName: $rootScope.i18n.lang[item.field] + $rootScope.i18n.lang.end,
+                                    inputType: item.inputType || "number",
+                                    value: item.defaultData[1] || 0
+                                };
+                                break;
+                        }
+                    });
 
                     var modal;
                     $scope.showFiltersModal = function(){
+                        service.displayForm($scope, FieldsDefine, null, {
+                            lazyload: true
+                        });
                         modal = $injector.get("$modal")({
                             title: $rootScope.i18n.lang.actions.filters,
+                            content: {
+                                config: $scope.config,
+                                defaultData: $scope.defaultData
+                            },
                             contentTemplate: "views/common/filters.html"
+                        }).$promise.then(function(){
+                            $scope.$broadcast("commonForm.ready");
                         });
                     }
                 }

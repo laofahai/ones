@@ -861,10 +861,12 @@
             }
         };
 
-        service.makeForm = function($scope) {
+        service.makeForm = function($scope, config) {
             this.scope = $scope;
-            var config = $scope.$parent.config || {};
-
+            config = config || {};
+            if(isEmptyObject(config)) {
+                config = $scope.$eval("$parent.config");
+            }
             if (!config.fieldsDefine) {
                 return false;
             }

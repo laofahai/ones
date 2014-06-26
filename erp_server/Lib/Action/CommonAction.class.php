@@ -223,6 +223,11 @@ class CommonAction extends RestAction {
         //搜索
         $map = array();
         $where = array();
+
+        if($_GET["excludeId"]) {
+            $map["id"] = array("NEQ", $_GET["excludeId"]);
+        }
+
         if($_GET["_kw"]) {
             $kw = $_GET["_kw"];
             if($model->searchFields) {
@@ -245,7 +250,7 @@ class CommonAction extends RestAction {
                 $where["_logic"] = "OR";
                 $map["_complex"] = $where;
             } else {
-                $map = $where;
+                $map = array_merge($map, $where);
             }
         }
 //        print_r($map);exit;
@@ -288,13 +293,16 @@ class CommonAction extends RestAction {
         
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);
+
+        $map = $this->beforeFilter($model);
         
         if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
         
         $id = abs(intval($_GET["id"]));
-        $map = array();
+
+
         if($id) {
             $map["id"] = $id;
         } else {

@@ -11,7 +11,7 @@
  * 
  */
 class GoodsCategoryAction extends NetestCategoryAction {
-    
+
     protected function pretreatment() {
         switch($this->_method) {
             case "post":
