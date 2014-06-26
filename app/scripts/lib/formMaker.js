@@ -42,7 +42,7 @@
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />',
-                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s">未定义</a>',
+                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s" ng-bind="i18n.lang.undefined"></a>'
             };
             this.maker = new service.fieldsMakerFactory(this, this.opts);
         };
@@ -86,6 +86,9 @@
                 var html = false;
                 if (method in this) {
                     html = this[method](context.field, fieldDefine, $scope, context);
+                }
+                if(!$scope.formData[context.field] && fieldDefine.value){
+                    $scope.formData[context.field] = fieldDefine.value;
                 }
                 if(html && this.opts.compile) {
                     html = $compile(html)($scope);
@@ -875,6 +878,7 @@
                 class: "form-horizontal",
                 submitAction: "doSubmit",
                 fieldsDefine: {},
+                includeFoot: true,
                 templates: {
                     "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" ng-keydown="doKeydown($event)" novalidate>%(html)s</form>',
                     "commonForm/footer.html": '<div class="clearfix form-actions">' +
@@ -970,8 +974,10 @@
                         }
                     }
                 });
+                if(self.opts.includeFoot) {
+                    finalHTML.push(this.makeActions());
+                }
 
-                finalHTML.push(this.makeActions());
                 self.scope.formBuilded = true;
                 return sprintf(self.opts.templates["commonForm/form.html"], {
                     name : self.opts.name,

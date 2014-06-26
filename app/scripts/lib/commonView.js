@@ -409,22 +409,44 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                         }
                     });
 
-                    var modal;
+                    var modal = null;
+                    var modalHtml = null;
+                    var $compile = $injector.get("$compile");
+                    var $modal = $injector.get("$modal");
+                    $scope.doFilter = function(){
+                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText, $scope.formData);
+                        modal.hide();
+                    };
                     $scope.showFiltersModal = function(){
-                        service.displayForm($scope, FieldsDefine, null, {
-                            lazyload: true
-                        });
-                        modal = $injector.get("$modal")({
+                        if(modal && modalHtml) {
+                            modal.show();
+                            $timeout(function(){
+                                $("#filterContainer").append($compile(modalHtml)($scope));
+                            });
+                            return;
+                        }
+                        modal = $modal({
+                            scope: $scope,
                             title: $rootScope.i18n.lang.actions.filters,
                             content: {
                                 config: $scope.config,
                                 defaultData: $scope.defaultData
                             },
                             contentTemplate: "views/common/filters.html"
-                        }).$promise.then(function(){
-                            $scope.$broadcast("commonForm.ready");
                         });
-                    }
+                        modal.$promise.then(function(){
+                            $timeout(function(){
+                                var FormMaker = $injector.get("FormMaker");
+                                var fm = new FormMaker.makeForm($scope, {
+                                    fieldsDefine: FieldsDefine,
+                                    includeFoot: false
+                                });
+                                modalHtml = fm.makeHTML();
+                                $("#filterContainer").append($compile(modalHtml)($scope));
+                            });
+                        });
+                    };
+
                 }
 
 
@@ -505,7 +527,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 
                 };
                 //获取数据
-                $scope.getPagedDataAsync = function(pageSize, page, searchText) {
+                $scope.getPagedDataAsync = function(pageSize, page, searchText, extraParams) {
                     pageSize = pageSize || pagingOptions.pageSize;
                     page = page || pagingOptions.currentPage;
                     $timeout(function(){
@@ -534,7 +556,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                             _ic: 1
                         };
 
-                        p = $.extend(opts.queryExtraParams, p);
+                        p = $.extend(opts.queryExtraParams, p, extraParams||{});
                         if (searchText) {
                             var ft = searchText.toLowerCase();
 

@@ -487,6 +487,7 @@
             "add": "新增",
             "save": "保存",
             "close": "关闭",
+            "cancel": "取消",
             "addChild": "增加子项",
             "viewChild": "查看子项",
             "export": "导出",
@@ -678,6 +679,8 @@
         "stockout": "出库",
         "sale": "销售",
         "purchase": "采购",
-        "produce": "生产"
+        "produce": "生产",
+        "start": "开始",
+        "end": "结束"
     }
 }
