@@ -27,29 +27,50 @@ class ProductViewAction extends CommonAction{
 
         $limit = $this->beforeLimit();
 
+        //库存信息
         $storeModel = D("StockProductList");
-        $storeModel->group("")->limit($limit)->select();
+        $tmp = $storeModel
+            ->table(C("DB_PREFIX")."stock_product_list StockProductList")
+            ->field("SUM(StockProductList.num) as total_num, goods_id, factory_code_all, goods.name as goods_name")
+            ->join(C("DB_PREFIX")."goods Goods ON Goods.id=StockProductList.goods_id")
+            ->group("factory_code_all")
+            ->order("total_num DESC")
+            ->limit($limit)->select();
 
+        $dataModel = D("DataModelDataView");
+        $tmp = $dataModel->assignModelData($tmp);
 
-        $baseMap = array(
-            "dateline" => array("BETWEEN", array($dateStart, $dateEnd)),
-            "status"   => array("GT", 1)
+        $storeInfo = array();
+        foreach($tmp as $v) {
+            $storeInfo[$v["factory_code_all"]] = $v;
+            $factoryCodes[] = $v["factory_code_all"];
+        }
+
+        //销售
+        $orderMap = array(
+            "OrdersDetail.factory_code_all" => array("IN", implode(",", $factoryCodes)),
+            "Orders.dateline" => array("BETWEEN", array($dateStart, $dateEnd)),
+            "Orders.status" => array("GT", 0),
+            "Orders.deleted" => 0
         );
+        $orderModel = D("OrdersDetailView");
+        $tmp = $orderModel->field(
+            "factory_code_all, SUM(OrdersDetail.amount) AS total_amount, SUM(OrdersDetail.num) as total_num"
+        )->where($orderMap)->group("OrdersDetail.factory_code_all")->select();
+        $ordersInfo = array();
+        foreach($tmp as $v) {
+            $ordersInfo[$v["factory_code_all"]] = $v;
+        }
+        //生产
+        //采购
 
-        $orderModel = D("Orders");
-        $theOrders = $orderModel->field("total_num, total_amount_real")
-            ->where($baseMap)->select();
-        foreach($theOrders as $o) {
-            $voList["orders_num"] += $o["total_num"];
-            $voList["orders_amount"] += $o["total_amount_real"];
+        foreach($storeInfo as $k=>$v) {
+            $storeInfo[$k]["sale_num"] = $ordersInfo[$k]["total_num"];
+            $storeInfo[$k]["sale_amount"] = $ordersInfo[$k]["total_amount"];
         }
 
-        $purchaseModel = D("Purchase");
-        $thePurchases = $purchaseModel->field("quantity,total_price_real")->where($baseMap)->select();
-        foreach($thePurchases as $p) {
-            $voList["purchase_num"] += $p["total_num"];
-            $voList["purchase_"] += $p["total_amount_real"];
-        }
+        print_r($storeInfo);exit;
+
     }
 
 } 

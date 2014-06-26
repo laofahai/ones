@@ -24,7 +24,7 @@ class StockoutConfirmStockout extends WorkflowAbstract {
             );
             $this->response($data);
         }
-        
+//        echo 123;exit;
         //减少库存
         $data = $_POST["data"];
         $stockout = D("Stockout");

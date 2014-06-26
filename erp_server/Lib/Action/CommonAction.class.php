@@ -45,11 +45,8 @@ class CommonAction extends RestAction {
         }
         
         $this->user = $_SESSION["user"];
-        
-        if(!$_REQUEST) {
-            $_REQUEST = array_merge($_COOKIE, $_GET, $_POST);
-        }
-        
+        $_REQUEST = array_merge((array)$_COOKIE, (array)$_GET, (array)$_POST);
+
         $this->checkPermission();
     }
 
@@ -108,7 +105,8 @@ class CommonAction extends RestAction {
         import('ORG.Util.Auth');//加载类库
         $auth = new Auth();
 //        $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
-        if($action == "doWorkflow") {
+        $action = $this->getActionName();
+        if($action == "doWorkflow" or $_POST["workflow"] or $_GET["workflow"]) {
             return true;
         }
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
