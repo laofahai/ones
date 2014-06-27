@@ -23,8 +23,9 @@ class CommonAction extends RestAction {
         if(!APP_DEBUG && !IS_AJAX) {
 //            $this->error("Direct Visit");exit;
         }
-        
-        $_POST = json_decode(file_get_contents('php://input'), true);
+        if($this->_method == "put") {
+            $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
+        }
         
         import("@.Workflow.Workflow");
         import("@.ORG.Auth");
@@ -43,6 +44,7 @@ class CommonAction extends RestAction {
             session_id($_SERVER["HTTP_SESSIONHASH"]);
             session_start();
         }
+
         
         $this->user = $_SESSION["user"];
         $_REQUEST = array_merge((array)$_COOKIE, (array)$_GET, (array)$_POST);
