@@ -681,6 +681,11 @@
         "purchase": "采购",
         "produce": "生产",
         "start": "开始",
-        "end": "结束"
+        "end": "结束",
+
+        "sale_num": "销售数量",
+        "sale_amount": "销售金额",
+        "purchase_num": "采购数量",
+        "purchase_amount": "采购金额"
     }
 }

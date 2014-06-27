@@ -40,7 +40,7 @@ class ProduceProcessViewModel extends CommonViewModel {
                 $produceDetailIds[] = $row["id"];
             }
         }
-        
+
         /**
          * 取得所有已进入生产工序的最后一个进程信息
          */
@@ -63,7 +63,7 @@ class ProduceProcessViewModel extends CommonViewModel {
             
             $goods_ids[] = $row["goods_id"]; //下一工序
         }
-        
+
         //下一工艺节点
         if($goods_ids) {
             $goodsCraftModel = D("GoodsCraftView");
@@ -76,7 +76,8 @@ class ProduceProcessViewModel extends CommonViewModel {
             foreach($tmp as $gc) {
                 $goodsCrafts[$gc["goods_id"]][$gc["listorder"]] = $gc;
             }
-//            print_r($goodsCrafts);exit;
+//            print_r($goodsCrafts[$row["goods_id"]]);exit;
+//            print_r($data);exit;
             foreach($data as $k=>$row) {
                 if(array_key_exists($row["goods_id"], $goodsCrafts)) {
                     //下一道工艺

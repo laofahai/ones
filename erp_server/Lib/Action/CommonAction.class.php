@@ -23,7 +23,7 @@ class CommonAction extends RestAction {
         if(!APP_DEBUG && !IS_AJAX) {
 //            $this->error("Direct Visit");exit;
         }
-        if($this->_method == "put") {
+        if(!$_POST) {
             $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
         }
         
