@@ -1,11 +1,15 @@
-<select ng-model='chartType'>
-    <option value="pie">pie</option>
-    <option value="bar">bar</option>
-    <option value="line">line</option>
-    <option value="point">point</option>
-    <option value="area">area</option>
-</select>
+<pageactions></pageactions>
 
-<div class='charts'>
-    <div ac-chart="chartType" ac-data="data" ac-config="config" id='saleChart' class='saleChart' style="width:100%;height:400px;"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <highchart type="column" data="barData"
+                   options="options"
+                   y-title="i18n.lang.rmbkyuan"
+                   height="400"
+                   y-Field="value"
+                   category-field="label"
+                   display-name="displayName"
+                >
+        </highchart>
+    </div>
 </div>

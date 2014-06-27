@@ -182,5 +182,8 @@
     .factory("ProductViewRes", ["$resource","ones.config", function($resource, cnf){
         return $resource(cnf.BSU+"statistics/productView/:id.json");
     }])
+    .factory("StatisticsSaleRes", ["$resource","ones.config", function($resource, cnf){
+        return $resource(cnf.BSU+"statistics/sale/:id.json");
+    }])
     ;
 })(angular);

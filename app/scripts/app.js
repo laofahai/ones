@@ -10,8 +10,7 @@
         'localytics.directives',
         'ui.utils',
         'ui.select',
-        'angularCharts',
-        
+
         'ones.resources',
         'ones.passport',
         'ones.home',

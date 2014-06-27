@@ -23,6 +23,6 @@ define("DS", DIRECTORY_SEPARATOR);
 define("ENTRY_PATH", dirname(__FILE__));
 define("APP_NAME", "ERP");
 
-define("APP_DEBUG", false);
+define("APP_DEBUG", true);
 
 require './ThinkPHP/ThinkPHP.php';

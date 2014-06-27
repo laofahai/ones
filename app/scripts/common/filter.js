@@ -55,23 +55,7 @@ angular.module("ones.common.filters", [])
         })
         .filter("dateFormat", function() {
             return function(timestamp, noTime) {
-                if(!timestamp) {
-                    return;
-                }
-                var d = new Date(parseInt(timestamp) * 1000);
-                var year = d.getFullYear();
-                var month = d.getMonth() + 1;
-                var date = d.getDate();
-                var hour = d.getHours();
-                var minute = d.getMinutes();
-                var second = d.getSeconds();
-                
-                var rs = sprintf("%s-%s-%s", year, month, date);
-                if(!noTime) {
-                    rs = rs+ sprintf(" %s:%s:%s", hour, minute, second);
-                }
-                
-                return rs;
+                return toDate(timestamp, noTime);
             };
         })
         .filter("idFormat", function(){

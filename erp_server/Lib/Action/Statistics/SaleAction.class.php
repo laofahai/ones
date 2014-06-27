@@ -14,8 +14,8 @@ class SaleAction extends CommonAction {
      * **/
     public function index() {
 
-        $time = $_GET["time"];
-        switch($time) {
+        $quick = $_GET["quickQuery"];
+        switch($quick) {
             case "today":
                 $starttime = strtotime(date("Y-m-d", CTS));
                 $endtime = strtotime(date("Y-m-d 23:59:59", CTS));
@@ -48,36 +48,27 @@ class SaleAction extends CommonAction {
                 $title = L("dayly_sale_bar");
                 break;
         }
-
-        if($_GET["date_start"]) {
-            $starttime = strtotime($_GET["date_start"]);
+        $_GET["_filter_start_dateline"] = str_replace('"', "", $_GET["_filter_start_dateline"]);
+        $_GET["_filter_end_dateline"] = str_replace('"', "", $_GET["_filter_end_dateline"]);
+        if($_GET["_filter_start_dateline"]) {
+            $starttime = substr($_GET["_filter_start_dateline"], -3, 3) == "000" ? $_GET["_filter_start_dateline"] / 1000 : strtotime($_GET["_filter_start_dateline"]);
         }
-        if($_GET["date_end"]) {
-            $endtime = strtotime($_GET["date_end"]);
+        if($_GET["_filter_end_dateline"]) {
+            $endtime = substr($_GET["_filter_end_dateline"], -3, 3) == "000" ? $_GET["_filter_end_dateline"] / 1000 : strtotime($_GET["_filter_end_dateline"]);
         }
 
 
         switch($_GET["type"]) {
             case "customer":
-                $model = "OrdersView";
-                $preTitle = L("customer_rank");
-                break;
             case "saler":
                 $model = "OrdersView";
-                $preTitle = L("saler_rank");
                 break;
             default:
                 $model = "Orders";
         }
 
-        if($_GET["type"] == "customer") {
-
-        }
-
-        $title = sprintf($preTitle." %s (%s~%s)", L($title), date("Y-m-d", $starttime), date("Y-m-d", $endtime));
-
         $map = array(
-            "status" => array("GT", 1),
+            "status" => array("EGT", 1),
             "dateline" => array("BETWEEN", array($starttime, $endtime))
         );
 
@@ -87,17 +78,20 @@ class SaleAction extends CommonAction {
 
 //        print_r($orderSourceData);exit;
 
-        $this->response($orderSourceData);
-//        switch($_GET["type"]) {
-//            case "customer":
-//                $this->ForCustomerRange($orderSourceData);
-//                break;
-//            case "saler":
-//                $this->ForSalerRange($orderSourceData);
-//                break;
-//            default:
-//                $this->ForSaleTotal($orderSourceData, $starttime, $endtime, $step, $format);
-//        }
+//        $this->response($orderSourceData);
+        switch($_GET["type"]) {
+            case "customer":
+                $this->ForCustomerRange($orderSourceData);
+                break;
+            case "saler":
+                $this->ForSalerRange($orderSourceData);
+                break;
+            default:
+                $data = $this->ForSaleTotal($orderSourceData, $starttime, $endtime, $step, $format);
+        }
+
+//        print_r($category);exit;
+        $this->response($data);
 //
 //        $this->makeFilter();
 //        $this->assign("chartTitle", $title);
@@ -166,54 +160,27 @@ class SaleAction extends CommonAction {
         $this->display();
     }
 
-    public function ajax_saleDaysLine() {
-        $days = abs(intval($_GET["days"]));
-        $days = $days ? $days : 10;
-        $endTime = CTS;
-        $startTime = CTS-3600*24*$days;
+    /*
+     * 销售，走势图
+     * **/
+    protected function ForSaleTotal($data, $start, $end, $step, $format="m-d") {
 
-        $order = D("Orders");
-        $map = array(
-            "dateline" => array("BETWEEN", array($startTime, $endTime)),
-            "status" => array("GT", "1")
-        );
-        $orders = $order->where($map)->select();
-//        echo $order->getLastSql();exit;
-
-        $tmp = range($startTime, $endTime, 24*3600);
-        $dateRange = array_map(create_function('$v', 'return date("m-d", $v);'), $tmp);
-
-        foreach($dateRange as $d) {
-            $data["total"][$d] = 0;
-            $data["real"][$d] = 0;
-            foreach($orders as $o) {
-                $key = date("m-d", $o["dateline"]);
-                if($key == $d) {
-                    $data["total"][$d] += $o["total_price"];
-                    $data["real"][$d] += $o["total_price_real"];
-//                    $data[$d]["num"] += 1;
+        $dateRange = makeDateRange($start, $end, $step, $format);
+        foreach($dateRange as $dr) {
+            $tmp[$dr]["displayName"] = "销售金额";
+            $tmp[$dr]["value"] = 0;
+            $tmp[$dr]["label"] = $dr;
+            foreach($data as $v) {
+                $key = date($format, $v["dateline"]);
+                if($dr == $key) {
+                    $tmp[$dr]["value"] += $v["total_amount_real"];
                 }
             }
         }
-        $data["total"] =ksortHaveNoIndex($data["total"]);
-        $data["real"] =ksortHaveNoIndex($data["real"]);
-
-//        print_r($orders);exit;
-        $returns = array(
-            array(
-                "name" => "销售金额",
-                "data" => $data["total"]
-            ),
-            array(
-                "name" => "实收金额",
-                "data" => $data["real"]
-            )
-        );
-
-        $this->ajaxReturn(array(
-            "dateRange" => $dateRange,
-            "series" => $returns
-        ));
+        foreach($tmp as $k=>$v) {
+            $tmp[$k]["value"] = $v["value"]/1000;
+        }
+        return reIndex($tmp);
     }
 
 } 

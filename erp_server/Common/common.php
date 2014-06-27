@@ -119,6 +119,17 @@ function delDirAndFile($dirName) {
     }
 }
 
+/*
+ * 生成日期序列
+ * **/
+function makeDateRange($start, $end, $step, $format = "m-d") {
+    $tmp = range($start, $end, $step);
+    foreach ($tmp as $v) {
+        $dateRange[] = date($format, $v);
+    }
+    return $dateRange;
+}
+
 /**
  * 
  */

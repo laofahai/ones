@@ -686,6 +686,7 @@
         "sale_num": "销售数量",
         "sale_amount": "销售金额",
         "purchase_num": "采购数量",
-        "purchase_amount": "采购金额"
+        "purchase_amount": "采购金额",
+        "rmbkyuan": "人民币（千元）"
     }
 }

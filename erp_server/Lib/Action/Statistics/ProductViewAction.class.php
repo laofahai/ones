@@ -18,11 +18,11 @@ class ProductViewAction extends CommonAction{
         $dateStart = strtotime(date("Y-m"));
         $dateEnd   = CTS;
 
-        if($_GET["_filter_dateline_start"]) {
-            $dateStart = $_GET["_filter_dateline_start"] / 1000;
+        if($_GET["_filter_start_dateline"]) {
+            $dateStart = strtotime($_GET["_filter_start_dateline"]);
         }
-        if($_GET["_filter_dateline_end"]) {
-            $dateEnd = $_GET["_filter_dateline_end"] / 1000;
+        if($_GET["_filter_end_dateline"]) {
+            $dateEnd = strtotime($_GET["_filter_end_dateline"]);
         }
 
         $limit = $this->beforeLimit();
