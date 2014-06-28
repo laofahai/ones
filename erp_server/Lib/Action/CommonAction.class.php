@@ -173,7 +173,7 @@ class CommonAction extends RestAction {
 
         $limit = $this->beforeLimit();
         $map = $this->beforeFilter($model);
-        $order = $this->beforeOrder();
+        $order = $this->beforeOrder($model);
 
         $this->_filter($map);
         $this->_order($order);
@@ -257,7 +257,7 @@ class CommonAction extends RestAction {
         return $map;
     }
 
-    public function beforeOrder() {
+    public function beforeOrder($model) {
         //排序
         $order = array();
         if($_GET["_si"]) {
@@ -265,7 +265,15 @@ class CommonAction extends RestAction {
             foreach($sortInfos as $s) {
                 $direct = substr($s, 0, 1);
                 $field = substr($s, 1, strlen($s));
-                $order[$field] = $direct === "+" ? "ASC" : "DESC";
+                if($model->orderFields && in_array($field, $model->orderFields)) {
+                    $order[$field] = $direct === "+" ? "ASC" : "DESC";
+                } else {
+                    //判断是否存在此字段
+                    //@todo 目前只是简单判断是不是有relationModel的字段
+                    if(strpos($field, ".") !== false) {
+                        continue;
+                    }
+                }
             }
         }
         return $order;
