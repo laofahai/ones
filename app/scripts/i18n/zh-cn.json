@@ -687,6 +687,11 @@
         "sale_amount": "销售金额",
         "purchase_num": "采购数量",
         "purchase_amount": "采购金额",
-        "rmbkyuan": "人民币（千元）"
+        "rmbkyuan": "人民币（千元）",
+
+        "show_by_day": "按天查看",
+        "show_by_month": "按月查看",
+        "show_by_year" : "按年查看",
+        "showType": "查看方式"
     }
 }

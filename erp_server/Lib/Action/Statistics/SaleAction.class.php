@@ -14,38 +14,25 @@ class SaleAction extends CommonAction {
      * **/
     public function index() {
 
-        $quick = $_GET["quickQuery"];
+        $quick = $_GET["_filter_timeStep"];
         switch($quick) {
-            case "today":
-                $starttime = strtotime(date("Y-m-d", CTS));
-                $endtime = strtotime(date("Y-m-d 23:59:59", CTS));
-                $step = 3600;
-                $format = "m-d H点";
-                $title = L("today_sale_bar");
-                break;
-            case "quarter":
-                break;
-            case "monthly":
-            case "mulyear":
-                $starttime = strtotime((date("Y", CTS)-3)."-00-00");
+            case "year":
+                $starttime = strtotime((date("Y", CTS)-5)."-00-00");
                 $endtime = strtotime((date("Y", CTS)+1)."-01-02");
                 $step = 24*3600*365;
                 $format = "Y";
-                $title = L("mulyearly_sale_bar");
                 break;
-            case "year":
+            case "month":
                 $starttime = strtotime(date("Y-01-01", CTS));
                 $endtime = strtotime(date("Y-12-31", CTS));
                 $step = 24*3600*31;
                 $format = "Y-m";
-                $title = L("monthly_sale_bar");
                 break;
             default:
                 $starttime = strtotime(date("Y-m", CTS));
-                $endtime = strtotime(date("Y-m-t"));
+                $endtime = strtotime(date("Y-m-d"));
                 $step = 24*3600;
                 $format = "m-d";
-                $title = L("dayly_sale_bar");
                 break;
         }
         $_GET["_filter_start_dateline"] = str_replace('"', "", $_GET["_filter_start_dateline"]);
@@ -164,8 +151,8 @@ class SaleAction extends CommonAction {
      * 销售，走势图
      * **/
     protected function ForSaleTotal($data, $start, $end, $step, $format="m-d") {
-
         $dateRange = makeDateRange($start, $end, $step, $format);
+//        print_r($dateRange);exit;
         foreach($dateRange as $dr) {
             $tmp[$dr]["displayName"] = "销售金额";
             $tmp[$dr]["value"] = 0;

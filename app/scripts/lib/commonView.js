@@ -246,6 +246,10 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                                 value: item.defaultData[1] || 0
                             };
                             break;
+                        case "select":
+                            FieldsDefine["_filter_"+item.field] = item;
+                            break;
+
                     }
                 });
 
