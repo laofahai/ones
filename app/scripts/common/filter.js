@@ -87,7 +87,7 @@ angular.module("ones.common.filters", [])
                     var i18n = $rootScope.i18n.lang;
                     var tips = [];
                     angular.forEach(errors, function(err, k){
-                        if(err) {
+                        if(!err || k === "false") {
                             return;
                         }
                         if(k in i18n.errors) {

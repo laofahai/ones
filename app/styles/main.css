@@ -390,3 +390,6 @@ commonform {
     background:none !important;
 }
 
+.optional-css-class {
+    background:red;
+}

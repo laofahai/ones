@@ -470,7 +470,8 @@
             "i_fogot_password": "我忘记了密码",
             "leaveEmptyIfNotEdit": "不修改请留空",
             "all_craft_ended": "所有生产工序已执行完成",
-            "systemUpdateNoNewVersion": "当前已是最新版本"
+            "systemUpdateNoNewVersion": "当前已是最新版本",
+            "no_file": "没有选择文件"
         },
         "errors": {
             "required": "必填",
@@ -484,6 +485,7 @@
             "reset"  : "重填",
             "return" : "返回",
             "login"  : "登陆",
+            "choose": "选择",
             "add": "新增",
             "save": "保存",
             "close": "关闭",

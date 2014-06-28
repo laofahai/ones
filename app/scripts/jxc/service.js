@@ -75,6 +75,9 @@ angular.module("ones.jxc.services", [])
                     store_max: {
                         inputType: "number",
                         value: 0
+                    },
+                    image: {
+                        inputType: "file"
                     }
                 };
                 if(structOnly) {

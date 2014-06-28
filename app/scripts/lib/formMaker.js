@@ -42,7 +42,14 @@
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />',
-                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s" ng-bind="i18n.lang.undefined"></a>'
+                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s" ng-bind="i18n.lang.undefined"></a>',
+                'fields/file': '<input type="file" ng-model="%(model)s" ng-file-select="%(action)s" multiple />',
+                'fileds/file_uploaded': '',
+//                'fields/file': '<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" \
+//                    ng-show="dropSupported">drop files here</div> \
+//                    <div ng-file-drop-available="dropSupported=true" \
+//                    ng-show="!dropSupported">HTML5 Drop File is not supported!</div> \
+//                    <button ng-click="upload.abort()">Cancel Upload</button>'
             };
             this.maker = new service.fieldsMakerFactory(this, this.opts);
         };
@@ -154,6 +161,14 @@
             //多选框
             _checkbox: function(name, fieldDefine) {
                 
+            },
+            //文件上传
+            _file: function(name, fieldDefine, $scope) {
+                $scope.doUpload = function(){};
+                return sprintf(this.$parent.templates["fields/file"], {
+                    model: fieldDefine["ng-model"],
+                    action: "doUpload()"
+                });
             },
             _static: function(name, fieldDefine) {
                 return "";

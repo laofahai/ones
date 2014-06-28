@@ -10,6 +10,7 @@
         'localytics.directives',
         'ui.utils',
         'ui.select',
+        'angularFileUpload',
 
         'ones.resources',
         'ones.passport',

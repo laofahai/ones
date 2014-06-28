@@ -30,6 +30,32 @@ angular.module("ones.common.directives", ["ones.formMaker"])
                     }
                 };
             }])
+        .directive("aceupload", ["$rootScope", function($rootScope){
+            return {
+                restrict: "E",
+                replace: true,
+                transclusion: true,
+                scope: {
+                    config: "="
+                },
+                compile: function() {
+                    return {
+                        pre: function($scope, iElement, iAttrs, controller) {
+                            var config = $scope.$parent.$eval(iAttrs.config);
+                            iElement.append('<input type="file" />');
+                            iElement.find("input").ace_file_input({
+                                no_file:'No File ...',
+                                btn_choose: 'Choose',
+                                btn_change: 'Change',
+                                droppable: false,
+                                onchange:null,
+                                thumbnail:false
+                            });
+                        }
+                    };
+                }
+            };
+        }])
         .directive('ensureunique', ['$http', "$injector", function($http, $injector) {
                 return {
                     require: 'ngModel',
