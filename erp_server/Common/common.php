@@ -130,6 +130,13 @@ function makeDateRange($start, $end, $step, $format = "m-d") {
     return $dateRange;
 }
 
+/*
+ * 判断是否JSON
+ * **/
+function is_not_json($str){
+    return is_null(json_decode($str));
+}
+
 /**
  * 
  */

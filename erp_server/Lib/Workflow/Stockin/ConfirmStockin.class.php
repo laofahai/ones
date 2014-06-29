@@ -24,6 +24,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
             );
             $this->response($data);
         }
+
         $id = $this->mainrowId;
         if(!$id) {
             $this->error("params_error");

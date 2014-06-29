@@ -472,7 +472,8 @@
             "all_craft_ended": "所有生产工序已执行完成",
             "systemUpdateNoNewVersion": "当前已是最新版本",
             "no_file": "没有选择文件",
-            "drag_or_chose_file": "拖拽文件到这里或者点击选择文件"
+            "drag_or_chose_file": "拖拽文件到这里或者点击选择文件",
+            "has_processed": "当前操作已进行过"
         },
         "errors": {
             "required": "必填",

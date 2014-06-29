@@ -320,8 +320,10 @@ class Workflow {
             "workflow_id" => $this->currentWorkflow["id"],
             "mainrow_id" => $mainRowid
         );
+//        var_dump($auto);
+//        var_dump($ignoreCheck);exit;
         $hasProcessed = false;
-        if(false === $auto and false) {
+        if(false === $auto) {
             if(0 == $next->currentNode["listorder"]) {
                 $hasProcessed = $this->processModel->where($map)->find();
             } else {
@@ -341,7 +343,7 @@ class Workflow {
         }
         
         if($hasProcessed) {
-            return true;
+            $next->error("has_processed");
         }
         
         if(!$this->checkCondition($mainRowid, $next->currentNode)) {

@@ -26,3 +26,4 @@ define("APP_NAME", "ERP");
 define("APP_DEBUG", true);
 
 require './ThinkPHP/ThinkPHP.php';
+

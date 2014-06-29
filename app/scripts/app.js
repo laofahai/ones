@@ -93,7 +93,12 @@
             });
 
             $scope.$on("event:serverError", function(evt, msg) {
-                msg = $rootScope.i18n.lang.messages[msg] || $rootScope.i18n.lang.messages.serverError;
+                if($rootScope.i18n.lang.messages[msg]) {
+                    msg = $rootScope.i18n.lang.messages[msg];
+                } else if(!conf.DEBUG) {
+                    msg = $rootScope.i18n.lang.messages.serverError;;
+                }
+//                msg = $rootScope.i18n.lang.messages[msg] || $rootScope.i18n.lang.messages.serverError;
                 ComView.alert(msg, "danger");
             });
 

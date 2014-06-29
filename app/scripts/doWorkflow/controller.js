@@ -120,8 +120,8 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
             };
         }])
     //确认入库
-    .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinEditModel", "$location",
-        function($scope, $routeParams, ComView, res, model, $location){
+    .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinEditModel", "$location", "$injector",
+        function($scope, $routeParams, ComView, res, model, $location, $injector){
             $scope.selectAble= false;
             ComView.displayBill($scope, model, res, {
                 id: $routeParams.id,
@@ -139,7 +139,9 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                     data: $scope.formMetaData
                 };
                 res.doPostWorkflow(data).$promise.then(function(data){
-                    $location.url("/JXC/list/stockin");
+                    if(!$injector.get("ones.config").DEBUG) {
+                        $location.url("/JXC/list/stockin");
+                    }
                 });
             };
         }])

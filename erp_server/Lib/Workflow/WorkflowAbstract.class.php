@@ -76,17 +76,17 @@ abstract class WorkflowAbstract implements WorkflowInterface {
     }
     
     //AJAX返回JSON数据，如流程节点中断等
-    protected function response($data) {
+    public function response($data) {
         echo json_encode($data);exit;
     }
     
-    protected function error($msg) {
+    public function error($msg) {
         $this->response(array(
             "error" => 1,
             "msg"   => $msg
         ));
     }
-    protected function success($msg) {
+    public function success($msg) {
         $this->response(array(
             "error" => 0,
             "msg"   => $msg

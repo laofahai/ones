@@ -192,7 +192,7 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
              * */
             service.alert = function(alertMsg, type, title, autohide) {
                 type = type || "warning";
-                title = title || type.ucfirst()+":"; 
+//                title = title || type.ucfirst()+":";
                 var erpalert = $alert({title: title, 
                     content: alertMsg, 
                     placement: 'top-right', type: type, show: true,

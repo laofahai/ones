@@ -23,6 +23,7 @@ class CommonAction extends RestAction {
         if(!APP_DEBUG && !IS_AJAX) {
 //            $this->error("Direct Visit");exit;
         }
+
         if(!$_POST) {
             $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
         }
@@ -44,7 +45,9 @@ class CommonAction extends RestAction {
             session_id($_SERVER["HTTP_SESSIONHASH"]);
             session_start();
         }
-
+//        if(IS_POST) {
+//            print_r(I());exit;
+//        }
         
         $this->user = $_SESSION["user"];
         $_REQUEST = array_merge((array)$_COOKIE, (array)$_GET, (array)$_POST);
@@ -596,3 +599,4 @@ class CommonAction extends RestAction {
         ));
     }
 }
+
