@@ -139,9 +139,7 @@ angular.module("ones.doWorkflow", ["ones.doWorkflow.service"])
                     data: $scope.formMetaData
                 };
                 res.doPostWorkflow(data).$promise.then(function(data){
-                    if(!$injector.get("ones.config").DEBUG) {
-                        $location.url("/JXC/list/stockin");
-                    }
+                    $location.url("/JXC/list/stockin");
                 });
             };
         }])

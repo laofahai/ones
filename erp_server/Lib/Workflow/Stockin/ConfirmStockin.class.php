@@ -42,10 +42,14 @@ class StockinConfirmStockin extends WorkflowAbstract {
             "memo" => $data["memo"]
         ));
         $stockinDetailModel = D("StockinDetail");
-
+//        print_r($data["rows"]);exit;
         foreach($data["rows"] as $row) {
+            if(!$row["stock"]) {
+                $this->error("fillTheForm");
+                break;
+            }
             if($row["id"]) {
-                $stockinDetailModel->where("id=".$id)->save(array(
+                $stockinDetailModel->where("id=".$row["id"])->save(array(
                     "stock_id" => $row["stock"],
                     "memo" => $row["memo"]
                 ));
@@ -76,7 +80,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 "stock_manager" => getCurrentUid()
             );
             $stockinModel->where("id=".$id)->save($data);
-            $this->updateStatus("Stockin", $id, 2);
+//            $this->updateStatus("Stockin", $id, 2);
         } else {
 //            print_r($theDetails);
             $stockProductListModel->rollback();
