@@ -28,10 +28,8 @@ class GoodsAction extends CommonAction {
         if($_GET["factory_code"]) {
             $map["factory_code"] = trim($_GET["factory_code"]);
         }
-
-
     }
-    
+
 
     public function index() {
         if(!$_GET["typeahead"]) {
@@ -40,7 +38,7 @@ class GoodsAction extends CommonAction {
         $model = D("Goods");
         $map = $this->beforeFilter($model);
         $this->_filter($map);
-        $data = $model->where($map)->limit(10)->select();
+        $data = $model->where($map)->limit(10)->order("LENGTH(pinyin) ASC")->select();
         foreach($data as $k=>$v) {
             $data[$k]["combineId"] = sprintf("%s_%d_%d", $v["factory_code"], $v["id"], $v["goods_category_id"]);
             $data[$k]["combineLabel"] = sprintf("%s", $v["name"]);
