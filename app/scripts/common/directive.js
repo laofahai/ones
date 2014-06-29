@@ -41,16 +41,22 @@ angular.module("ones.common.directives", ["ones.formMaker"])
                 compile: function() {
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
-                            var config = $scope.$parent.$eval(iAttrs.config);
-                            iElement.append('<input type="file" />');
-                            iElement.find("input").ace_file_input({
-                                no_file:'No File ...',
-                                btn_choose: 'Choose',
-                                btn_change: 'Change',
-                                droppable: false,
+                            console.log($scope.$parent);
+                            var config = $scope.$parent.$eval(iAttrs.config) || {};
+                            iElement.append(sprintf('<input type="file" %s />', config.multiple || ""));
+                            var conf = {
+                                btn_choose: $rootScope.i18n.lang.messages.drag_or_chose_file,
+                                btn_change: $rootScope.i18n.lang.messages.drag_or_chose_file,
+                                droppable: true,
                                 onchange:null,
-                                thumbnail:false
-                            });
+                                whitelist:'gif|png|jpg|jpeg',
+                                no_icon:'icon-cloud-upload',
+                                style: "well",
+                                thumbnail: "fit"
+                            }
+                            conf = $.extend(conf, config);
+                            console.log(conf);
+                            iElement.find("input").ace_file_input(conf);
                         }
                     };
                 }

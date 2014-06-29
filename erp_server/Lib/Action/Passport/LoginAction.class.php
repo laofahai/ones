@@ -26,11 +26,9 @@ class LoginAction extends CommonAction {
     }
     
     private function doLogin() {
-//        echo 123;
         if(IS_POST) {
             $user = D("UserRelation");
             $theUser = $user->getFullUserInfo($_REQUEST["username"], "username");
-
             if(!$theUser or $theUser["status"] < 1) {
                 $this->response(array(
                     "error" => 1,

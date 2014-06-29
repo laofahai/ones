@@ -76,9 +76,11 @@ angular.module("ones.jxc.services", [])
                         inputType: "number",
                         value: 0
                     },
-                    image: {
-                        inputType: "file"
-                    }
+//                    image: {
+//                        inputType: "file",
+//                        multiple: "multiple",
+//                        whitelist: "gif|png|jpg|jpeg"
+//                    }
                 };
                 if(structOnly) {
                     return struct;

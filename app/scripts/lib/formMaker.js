@@ -43,8 +43,7 @@
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />',
                 'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s" ng-bind="i18n.lang.undefined"></a>',
-                'fields/file': '<input type="file" ng-model="%(model)s" ng-file-select="%(action)s" multiple />',
-                'fileds/file_uploaded': '',
+                'fields/file': '<aceupload config="%(config)s"></aceupload>'
 //                'fields/file': '<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" \
 //                    ng-show="dropSupported">drop files here</div> \
 //                    <div ng-file-drop-available="dropSupported=true" \
@@ -164,10 +163,10 @@
             },
             //文件上传
             _file: function(name, fieldDefine, $scope) {
-                $scope.doUpload = function(){};
+                $scope.$parent[name+"FileConf"] = fieldDefine;
+                $scope.$parent.doUpload = function() {};
                 return sprintf(this.$parent.templates["fields/file"], {
-                    model: fieldDefine["ng-model"],
-                    action: "doUpload()"
+                    config: name+"FileConf"
                 });
             },
             _static: function(name, fieldDefine) {

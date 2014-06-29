@@ -390,6 +390,9 @@ commonform {
     background:none !important;
 }
 
-.optional-css-class {
-    background:red;
+.ace-file-multiple input[type=file] {
+    display:none;
+}
+.ace-file-input input[type=file] {
+    display:none;
 }
