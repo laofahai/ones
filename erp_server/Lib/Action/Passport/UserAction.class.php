@@ -33,6 +33,7 @@ class UserAction extends CommonAction {
                 }
                 break;
         }
+
     }
 
     public function update() {
@@ -44,6 +45,11 @@ class UserAction extends CommonAction {
         $model->where("id=".$this->user["id"])->save($_POST);
     }
 
+    public function insert() {
+        $id = parent::insert(true);
+        $this->updateUserGroup($id);
+    }
+
     /**
      * @todo relation 自动更新
      * 更新用户组
@@ -52,13 +58,9 @@ class UserAction extends CommonAction {
         $this->updateUserGroup();
     }
 
-    public function _after_insert() {
-        $this->updateUserGroup();
-    }
-
-    private function updateUserGroup() {
+    private function updateUserGroup($id=null) {
         if($_POST["usergroup"]) {
-            $id = $_POST["id"];
+            $id = $_POST["id"] ? $_POST["id"] : $id;
             $usergroup = is_array($_POST["usergroup"]) ? $_POST["usergroup"] : explode(",", $_POST["usergroup"]);
             $model = D("AuthGroupAccess");
             $model->where("uid=".$id)->delete();

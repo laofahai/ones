@@ -366,6 +366,9 @@ class CommonAction extends RestAction {
                 "id" => $result
             ));
         } else {
+            if($return) {
+                return false;
+            }
             //失败提示
             $this->error($model->getError());
         }
