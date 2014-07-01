@@ -361,9 +361,14 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
                 $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
 //                    console.log("submit");
                     if (!$scope[opts.name].$valid) {
+                        console.log($scope[opts.name]);
                         if($scope[opts.name].$error) {
                             angular.forEach($scope[opts.name].$error, function(items, error){
                                 angular.forEach(items, function(item, k){
+                                    delete($scope[opts.name].$error[items][k]["false"]);
+                                    if(k === "false") {
+                                        return;
+                                    }
                                     item.$dirty = true;
                                     item.$setValidity(false);
                                 });

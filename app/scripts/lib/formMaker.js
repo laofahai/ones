@@ -108,6 +108,7 @@
              * */
             _attr: function(name, fieldDefine) {
                 var k, v, html = [];
+                fieldDefine["autocomplete"] = "false";
                 //多行数据 如bill
                 if (!this.opts.multi) {
                     fieldDefine.id = "id_" + name;
@@ -916,7 +917,7 @@
                     "commonForm/box.html": '<div class="form-group" ng-class="{\'has-error\': %(formname)s.%(fieldname)s.$dirty&&%(formname)s.%(fieldname)s.$invalid}">' +
                             '<label class="col-sm-3 control-label no-padding-right">%(label)s</label>' +
                             '<div class="col-xs-12 col-sm-4">%(inputHTML)s</div>' +
-                            '<div class="help-block col-xs-12 col-sm-reset" ng-hide="!%(formname)s.%(fieldname)s.$dirty||%(formname)s.%(fieldname)s.$valid" ng-bind="%(formname)s.%(fieldname)s.$error|toError"></div>' +
+                            '<div class="help-block col-xs-12 col-sm-reset" ng-hide="%(formname)s.%(fieldname)s.$valid" ng-bind="%(formname)s.%(fieldname)s.$error|toError"></div>' +
                             '</div>',
                     "commonForm/hide.html": '%(inputHTML)s',
                     "text": '<input type="text" %s />',
