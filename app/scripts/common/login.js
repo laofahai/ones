@@ -10,11 +10,6 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
             msg: null
         };
         $scope.error.message = null;
-        $scope.loginInfo = {
-            username: "administrator",
-            password: "123123",
-            remember: false
-        };
         $scope.doLogin = function() {
             if($scope.LoginForm.$invalid) {
                 return false;
