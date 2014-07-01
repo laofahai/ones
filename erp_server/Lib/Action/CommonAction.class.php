@@ -199,11 +199,11 @@ class CommonAction extends RestAction {
 
         $list = $model->select();
 
-//        echo $model->getLastSql();exit;
-
         if($return) {
             return $list;
         }
+
+//        print_r($list);exit;
 
         //包含总数
         if($_GET["_ic"]) {
@@ -259,14 +259,14 @@ class CommonAction extends RestAction {
 
     public function beforeOrder($model) {
         //排序
-        $order = array();
+        $order = array("id DESC");
         if($_GET["_si"]) {
             $sortInfos = explode("|", $_GET["_si"]);
             foreach($sortInfos as $s) {
                 $direct = substr($s, 0, 1);
                 $field = substr($s, 1, strlen($s));
                 if($model->orderFields && in_array($field, $model->orderFields)) {
-                    $order[$field] = $direct === "+" ? "ASC" : "DESC";
+                    $order[] = $field." ".$direct === "+" ? "ASC" : "DESC";
                 } else {
                     //判断是否存在此字段
                     //@todo 目前只是简单判断是不是有relationModel的字段

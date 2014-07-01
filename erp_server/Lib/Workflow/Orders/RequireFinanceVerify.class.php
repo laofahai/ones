@@ -50,8 +50,6 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
             $node = $workflow->doNext($lastId, "", true);
 //            var_dump($node);
         }
-        exit;
-        
 //        exit;
 //        echo "RequireFinanceVerify";exit;
     }

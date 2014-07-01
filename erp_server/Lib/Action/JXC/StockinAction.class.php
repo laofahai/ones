@@ -73,7 +73,6 @@ class StockinAction extends CommonAction {
      * @override
      */
     public function insert() {
-        
         if($_POST["workflow"]) {
             return $this->doWorkflow();
         }

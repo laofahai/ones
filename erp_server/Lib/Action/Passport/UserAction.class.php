@@ -33,9 +33,6 @@ class UserAction extends CommonAction {
                 }
                 break;
         }
-        if($_POST["usergroup"]) {
-
-        }
     }
 
     public function update() {
