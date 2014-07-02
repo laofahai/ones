@@ -105,15 +105,23 @@ angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
 //        $scope.doPrint();
         
     }])
-    .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal",
-        function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal){
+    .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal", "ones.config",
+        function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal, conf){
             var module,group,res,model,actions,pageActions=[];
 
             $scope.selectAble = true;
 
             group = $routeParams.group;
             module = $routeParams.module;
-            res = $injector.get(module.ucfirst()+"Res");
+            try {
+                res = $injector.get(module.ucfirst()+"Res");
+            } catch(e) {
+                $resource = $injector.get("$resource");
+                res = $resource(sprintf("%s%s/%s/:id.json", group, module), null, {
+                    update: {method: "PUT"}
+                });
+            }
+
             model = $injector.get(module.ucfirst()+"Model");
             var opts = {};
             if($routeParams.extra) {

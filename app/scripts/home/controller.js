@@ -5,7 +5,7 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
             $routeProvider
                     .when('/HOME/goTo/url/:url', {
                         controller: "HOMERedirectCtl",
-                        templateUrl: "views/common/blank.html",
+                        templateUrl: "views/common/blank.html"
                     })
                     .when('/HOME/Index/dashboard', {
                         controller: "HOMEDashboardCtl",
@@ -235,3 +235,4 @@ angular.module("ones.home", ['ones.home.services', 'ngGrid', 'ones.common.direct
                 };
                 ComView.displayForm($scope,DataModelDataModel,DataModelDataRes,opts, true);
             }])
+;

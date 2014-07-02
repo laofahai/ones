@@ -67,7 +67,8 @@ return array(
             "HOME.WorkflowNode.read",
             "HOME.WorkflowProcess.read",
             "HOME.UserDesktop.read",
-            "HOME.MyDesktop.add"
+            "HOME.MyDesktop.add",
+            "HOME.Index.read"
         )
     ),
     
