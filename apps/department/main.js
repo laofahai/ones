@@ -218,6 +218,7 @@
             }])
 
         .controller("PassportProfileCtl", ["$scope", "$modal", "UserRes", function($scope, $modal, UserRes){
+
             var modal = $modal({
                 scope: $scope,
                 title: $scope.$parent.i18n.lang.widgetTitles.editMyProfile,

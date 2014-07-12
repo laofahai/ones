@@ -2,6 +2,7 @@ node_modules
 .tmp
 .sass-cache
 .idea
+.idea/*
 .settings
 app/bower_components
 nbproject

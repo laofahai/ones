@@ -25,6 +25,7 @@ class FrontEndRuntime {
         "base/config.js",
         "lib/function.js",
         "lib/formMaker.js",
+        "lib/plugin.js",
         "base/controller.js",
         "base/filter.js",
         "base/directive.js",

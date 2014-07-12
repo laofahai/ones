@@ -1,5 +1,6 @@
 (function(){
     'use strict';
+
     angular.module("ones.goods", [])
         .factory("GoodsRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': {method: 'PUT'}});
