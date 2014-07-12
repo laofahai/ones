@@ -18,7 +18,6 @@
 * 修改/server/Conf/config.php中的数据库信息
 * 访问/index.html
 
-项目中已包含压缩的组件依赖，位于/app/dev/目录下
 
 ## 链接
 演示见：http://42.121.114.198
