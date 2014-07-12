@@ -1,6 +1,7 @@
 {
     "alias": "finance",
     "requirements": ["crm", "department", "workflow"],
+    "workflow": ["FinancePay","FinanceReceive"],
     "navs": {
         "finance" : {
             "icon" : "money",

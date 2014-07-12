@@ -74,6 +74,10 @@ var appView = function(viewPath, app){
 
 }
 
+var isAppLoaded = function(app) {
+    return ones.loadedApps.indexOf("ones."+app) >= 0;
+};
+
 
 
 Array.prototype.in_array = function(e)

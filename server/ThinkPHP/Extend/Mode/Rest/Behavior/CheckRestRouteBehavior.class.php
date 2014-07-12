@@ -32,7 +32,7 @@ class CheckRestRouteBehavior extends Behavior {
         if(APP_DEBUG) {
             $routes = C('URL_ROUTE_RULES');
         } else {
-            $routes = require ENTRY_PATH."/Conf/route.php";
+            $routes = require ENTRY_PATH . "/Conf/route.php";
         }
         if(is_array(C('routes')))  $routes = C('routes');
         // 路由处理

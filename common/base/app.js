@@ -63,13 +63,13 @@
             function($scope, $rootScope, $location, $http, conf, ComView) {
 
                 //有需要的APP未能加载
-                if(window.unfoundApp) {
+                if(ones.unfoundApp) {
                     ComView.alert(
                         sprintf($rootScope.i18n.lang.messages.unfoundApp, window.unfoundApp.join()),
                         "danger",
                         "!",
                         false);
-                    $scope.unfoundApp = window.unfoundApp;
+                    $scope.unfoundApp = ones.unfoundApp;
                 }
 
                 $scope.onesConf = conf;

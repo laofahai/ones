@@ -38,7 +38,7 @@
                 }
             }
         },
-        "doworkflow_file": {
+        "doWorkflow": {
             "name": "工作流执行",
             "modules": {
                 "Stockout": {

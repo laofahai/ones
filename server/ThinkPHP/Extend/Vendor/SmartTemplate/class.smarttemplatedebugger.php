@@ -310,7 +310,7 @@
 			echo '</pre></td></tr></table>';
 
 			// Print Compiled Template
-			if (@include_once ("class.smarttemplateparser.php"))
+			if (@include_once("class.smarttemplateparser.php"))
 			{
 				$parser = new SmartTemplateParser($this->filename);
 				$compiled  =  $parser->compile();

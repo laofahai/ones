@@ -55,7 +55,7 @@ class Think {
             $mode   =  array();
         }
         // 加载核心惯例配置文件
-        C(include THINK_PATH.'Conf/convention.php');
+        C(include THINK_PATH . 'Conf/convention.php');
         if(isset($mode['config'])) {// 加载模式配置文件
             C( is_array($mode['config'])?$mode['config']:include $mode['config'] );
         }
@@ -72,7 +72,7 @@ class Think {
             if(isset($mode['extends'])) {
                 C('extends',is_array($mode['extends'])?$mode['extends']:include $mode['extends']);
             }else{ // 默认加载系统行为扩展定义
-                C('extends', include THINK_PATH.'Conf/tags.php');
+                C('extends', include THINK_PATH . 'Conf/tags.php');
             }
         }
 
@@ -132,7 +132,7 @@ class Think {
 
         if(APP_DEBUG) {
             // 调试模式加载系统默认的配置文件
-            C(include THINK_PATH.'Conf/debug.php');
+            C(include THINK_PATH . 'Conf/debug.php');
             // 读取调试模式的应用状态
             $status  =  C('APP_STATUS');
             // 加载对应的项目配置文件

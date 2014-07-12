@@ -1,6 +1,7 @@
 {
     "alias": "produce",
     "requirements": ["department", "workflow", "goods", "dataModel"],
+    "workflow": ["Produce"],
     "navs": {
         "produce": {
             "childs" : {

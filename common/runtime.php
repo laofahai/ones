@@ -228,7 +228,7 @@ switch($_GET["action"]) {
         echo $content;
         $runtime->afterLoadJS();
         if($runtime->unfoundApp) {
-            echo sprintf("window.unfoundApp=['%s'];", implode("','", $runtime->unfoundApp));
+            echo sprintf("ones.unfoundApp=['%s'];", implode("','", $runtime->unfoundApp));
         }
 
         break;

@@ -1,6 +1,7 @@
 {
     "alias": "purchase",
     "requirements": ["goods", "store", "store", "workflow", "crm", "department"],
+    "workflow": ["Purchase"],
     "navs": {
         "purchase": {
             "childs" : {

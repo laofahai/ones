@@ -26,5 +26,5 @@ define("APP_NAME", "ONES");
 
 define("APP_DEBUG", true);
 
-require '../ThinkPHP/ThinkPHP.php';
+require './ThinkPHP/ThinkPHP.php';
 

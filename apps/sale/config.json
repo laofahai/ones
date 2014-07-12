@@ -1,6 +1,7 @@
 {
     "alias": "sale",
     "requirements": ["goods", "store", "store", "workflow", "crm", "department"],
+    "workflow": ["Orders", "Returns"],
     "navs": {
         "sale" : {
             "icon": "pencil",

@@ -11,16 +11,17 @@
     };
     angular.module("ones.configModule", [])
         .factory("ones.config", [function() {
-                try{
-                    var localValue = angular.fromJson(localStorage.getItem("ones.config"));
-                    if (localValue) {
-                        return localValue;
-                    }
-                } catch(err) {
-                    return BaseConf;
+            ones.loadedApps = BaseConf.LoadedApps;
+            try{
+                var localValue = angular.fromJson(localStorage.getItem("ones.config"));
+                if (localValue) {
+                    return localValue;
                 }
+            } catch(err) {
                 return BaseConf;
-            }])
+            }
+            return BaseConf;
+        }])
         .run(["$rootScope", "$http", "$injector", "$location", function($rootScope, $http, $injector, $location) {
                 var loginHash = uriParamsGet('hash');
                 if ($location.url() && !loginHash) {

@@ -5,6 +5,8 @@
      *      'doOtherThink',
      *      'andMore...'
      *  ]
+     *
+     *  插件钩子/事件列表
      * */
     ones.pluginHooks = {};
 

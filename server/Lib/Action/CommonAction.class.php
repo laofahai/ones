@@ -24,6 +24,7 @@ class CommonAction extends RestAction {
     public function __construct() {
         
         parent::__construct();
+
         if(!APP_DEBUG && !IS_AJAX) {
 //            $this->error("Direct Visit");exit;
         }
@@ -58,15 +59,22 @@ class CommonAction extends RestAction {
 
         $this->checkPermission();
 
-        $this->getAppConfig();
+        $appConfCombined = $this->getAppConfig();
+        F("appConfCombined", $appConfCombined);
         F("appConf", $this->appsConf);
         F("loadedApp", $this->loadedApp);
 
         //自动加载路径
         foreach($this->loadedApp as $app) {
             $autoloadPath[] = sprintf("%s/apps/%s/backend", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/apps/%s/backend/Action", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/apps/%s/backend/Model", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/apps/%s/backend/Lib", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/apps/%s/backend/Behavior", ROOT_PATH, $app);
         }
         C("APP_AUTOLOAD_PATH", C("APP_AUTOLOAD_PATH").",". implode(",", $autoloadPath));
+
+        tag("action_end_init");
     }
 
     /*
@@ -101,7 +109,17 @@ class CommonAction extends RestAction {
                     if($tmpConf["navs"]) {
                         $appConf["navs"] = $navs = array_merge_recursive($navs, $tmpConf["navs"]);
                     }
-
+                    if($tmpConf["workflow"]) {
+                        foreach($tmpConf["workflow"] as $workflow) {
+                            $appConf["workflow"][$workflow] = $file;
+                        }
+                    }
+                    if($tmpConf["plugins"]) {
+                        C("tags", array_merge_recursive(
+                            (array)C("tags"),
+                            $tmpConf["plugins"]
+                        ));
+                    }
                     $this->appsConf[$file] = $tmpConf;
 
                     $this->loadedApp[] = $file;

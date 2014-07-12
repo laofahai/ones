@@ -271,16 +271,30 @@ class Workflow {
         }
         
         $currentProcess["context"] = unserialize($currentProcess["context"]);
-        
+
+
+
         $file = sprintf("@.Workflow.%s.%s", $this->currentWorkflow["workflow_file"], $node["execute_file"]);
-        import("@.Workflow.WorkflowInterface");
-        import("@.Workflow.WorkflowAbstract");
         $rs = import($file);
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
 //        echo $className;
         if(!$className or !class_exists($className)) {
-            throw_exception(L("class_not_found").": ".$className);
-            return false;
+            //检测APP目录下工作流目录
+            $appConfCombined = F("appConfCombined");
+            $appWorkflow = sprintf("%s/apps/%s/backend/workflow/%s/",
+                ROOT_PATH,
+                $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
+                $this->currentWorkflow["workflow_file"]
+            );
+
+            $appWorkflowFile = $appWorkflow.$node["execute_file"];
+            if(is_dir($appWorkflow) && is_file($appWorkflowFile)) {
+                require_cache($appWorkflowFile);
+            } else {
+                throw_exception(L("class_not_found").": ".$className);
+                return false;
+            }
+
         }
         $node["context"] = unserialize($node["context"]);
         $obj = new $className($mainrow_id, $currentProcess["context"]);

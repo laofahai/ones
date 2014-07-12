@@ -11,7 +11,7 @@
 
 //引入核心文件
 if (is_file(dirname(__FILE__).'/template.core.php')){
-	include dirname(__FILE__).'/template.core.php';
+	include dirname(__FILE__) . '/template.core.php';
 }else {
 	die('Sorry. Not load core file.');
 }

@@ -87,7 +87,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . VENDOR_PATH);
 // 加载运行时所需要的文件 并负责自动目录生成
 function load_runtime_file() {
     // 加载系统基础函数库
-    require THINK_PATH.'Common/common.php';
+    require THINK_PATH . 'Common/common.php';
     // 读取核心文件列表
     $list = array(
         CORE_PATH.'Core/Think.class.php',
@@ -99,7 +99,7 @@ function load_runtime_file() {
         if(is_file($file))  require_cache($file);
     }
     // 加载系统类库别名定义
-    alias_import(include THINK_PATH.'Conf/alias.php');
+    alias_import(include THINK_PATH . 'Conf/alias.php');
 
     // 检查项目目录结构 如果不存在则自动创建
     if(!is_dir(LIB_PATH)) {
@@ -154,7 +154,7 @@ function build_runtime_cache($append='') {
     // 系统行为扩展文件统一编译
     $content .= build_tags_cache();
     
-    $alias      = include THINK_PATH.'Conf/alias.php';
+    $alias      = include THINK_PATH . 'Conf/alias.php';
     $content   .= 'alias_import('.var_export($alias,true).');';
     // 编译框架默认语言包和配置参数
     $content   .= $append."\nL(".var_export(L(),true).");C(".var_export(C(),true).');G(\'loadTime\');Think::Start();';

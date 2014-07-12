@@ -31,6 +31,6 @@ if(defined('ENGINE_NAME')) {
 	    require RUNTIME_FILE;
 	}else{
 	    // 加载运行时文件
-	    require THINK_PATH.'Common/runtime.php';
+	    require THINK_PATH . 'Common/runtime.php';
 	}	
 }

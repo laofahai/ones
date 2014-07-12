@@ -812,7 +812,7 @@
                     }
                     //查看数据模型
                     //工作流
-                    if(model.workflowAlias) {
+                    if(model.workflowAlias && isAppLoaded("workflow")) {
                         $scope.workflowAble = true;
                         $scope.workflowAlias = model.workflowAlias;
                         var workflowNodeRes = $injector.get("WorkflowNodeRes");

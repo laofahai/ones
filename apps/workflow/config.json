@@ -1,6 +1,9 @@
 {
     "alias": "workflow",
     "requirements": ["department"],
+    "plugins": {
+        "action_end_init": ["ONESWorkflowInit"]
+    },
     "navs": {
         "settings": {
             "childs" : {
