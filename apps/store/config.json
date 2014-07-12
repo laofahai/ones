@@ -1,0 +1,20 @@
+{
+    "alias": "store",
+    "requirements": ["department", "goods", "dataModel", "workflow"],
+    "navs": {
+        "stock": {
+            "childs": {
+                "stock_list": "store/list/stockProductList",
+                "stockin_paper": "store/list/stockin",
+                "stockout_paper": "store/list/stockout"
+            }
+        },
+        "settings": {
+            "childs": {
+                "base_data_set": {
+                    "stock_manage": "store/list/stock"
+                }
+            }
+        }
+    }
+}

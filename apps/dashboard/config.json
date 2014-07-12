@@ -1,0 +1,14 @@
+{
+    "alias": "dashboard",
+    "requirements": [],
+    "modules": ["myDesktop", "userDesktop"],
+    "navs": {
+        "settings": {
+            "childs": {
+                "base_data_set": {
+                    "user_desktop" : "dashboard/list/userDesktop"
+                }
+            }
+        }
+    }
+}

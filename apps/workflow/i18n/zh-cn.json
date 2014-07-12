@@ -1,0 +1,27 @@
+{
+    "urlMap": {
+        "workflow": {
+            "modules": {
+                "Workflow": {
+                    "name": "工作流管理",
+                    "actions": {
+                        "list": "工作流列表",
+                        "viewChild": "工作流节点"
+                    }
+                },
+                "WorkflowNode": {
+                    "name": "工作流节点",
+                    "actions": {
+                        "list": "工作流节点列表",
+                        "edit": "修改工作流节点",
+                        "add" : "新增工作流节点"
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "workflow": "工作流",
+        "workflow_file": "工作流逻辑目录"
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "alias": "dataModel",
+    "requirements": "",
+    "modules": ["dataModel", "dataModelData", "dataModelFields"],
+    "navs": {
+        "settings" : {
+            "childs": {
+                "base_data_set": {
+                    "data_model" : "dataModel/list/dataModel"
+                }
+            }
+        }
+    }
+}

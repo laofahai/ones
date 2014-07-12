@@ -1,0 +1,17 @@
+{
+    "urlMap": {
+        "shipment": {
+            "name": "进销存",
+            "modules": {
+                "Shipment": {
+                    "name": "发货单",
+                    "actions": {
+                        "add": "",
+                        "list": "",
+                        "edit": ""
+                    }
+                }
+            }
+        }
+    }
+}

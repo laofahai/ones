@@ -1,0 +1,14 @@
+{
+    "alias": "sale",
+    "requirements": ["goods", "store", "store", "workflow", "crm", "department"],
+    "navs": {
+        "sale" : {
+            "icon": "pencil",
+            "childs" : {
+                "add_new_orders": "sale/addBill/orders",
+                "orders": "sale/list/orders",
+                "returns": "sale/list/returns"
+            }
+        }
+    }
+}

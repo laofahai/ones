@@ -1,0 +1,37 @@
+{
+    "urlMap": {
+        "finance": {
+            "name": "财务模块",
+                "modules": {
+                "FinanceRecord": {
+                    "name": "财务收支记录",
+                        "actions": {
+                        "list": "",
+                            "add": ""
+                    }
+                },
+                "FinanceAccount": {
+                    "name": "财务账户",
+                        "actions": {
+                        "add": "",
+                            "list": ""
+                    }
+                },
+                "FinancePayPlan": {
+                    "name": "财务支出计划",
+                        "actions": {
+                        "add": "",
+                            "list": ""
+                    }
+                },
+                "FinanceReceivePlan": {
+                    "name": "财务收入计划",
+                        "actions": {
+                        "add": "",
+                            "list": ""
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "alias": "purchase",
+    "requirements": ["goods", "store", "store", "workflow", "crm", "department"],
+    "navs": {
+        "purchase": {
+            "childs" : {
+                "add_new_purchase" : "purchase/addBill/purchase",
+                "purchase_list": "purchase/list/purchase"
+            },
+            "icon" : "shopping-cart"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "alias": "workflow",
+    "requirements": ["department"],
+    "navs": {
+        "settings": {
+            "childs" : {
+                "workflow": "workflow/list/workflow"
+            }
+        }
+    }
+}

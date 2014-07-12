@@ -1,0 +1,48 @@
+{
+    "urlMap": {
+        "department": {
+            "name": "用户账户模块",
+            "modules": {
+                "User": {
+                    "name": "用户管理",
+                    "actions": {
+                        "list": "用户列表",
+                        "add": "新增用户",
+                        "edit": "修改用户信息"
+                    }
+                },
+                "AuthRule": {
+                    "name": "权限节点",
+                    "actions": {
+                        "list": "权限节点列表",
+                        "add": "新增权限节点",
+                        "edit": "修改权限节点信息"
+                    }
+                },
+                "AuthGroup": {
+                    "name": "用户组",
+                    "actions": {
+                        "list": "用户组列表",
+                        "add"  : "新增用户组",
+                        "edit" : "修改用户组",
+                        "viewChild": "用户组赋权"
+                    }
+                },
+                "Department": {
+                    "name": "部门",
+                    "actions": {
+                        "list": "部门列表",
+                        "addChild"  : "新增部门",
+                        "edit" : "修改部门"
+                    }
+                },
+                "Profile": {
+                    "name": "个人资料",
+                    "actions": {
+                        "list": "查看我的资料"
+                    }
+                }
+            }
+        }
+    }
+}

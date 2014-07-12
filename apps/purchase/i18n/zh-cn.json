@@ -1,0 +1,19 @@
+{
+    "urlMap": {
+        "purchase": {
+            "modules": {
+                "Purchase": {
+                    "name": "采购",
+                    "actions": {
+                        "list": "采购单列表",
+                        "edit": "修改采购单",
+                        "add" : "新增采购单"
+                    }
+                },
+                "Purchase_return": {
+                    "name": "采购退货"
+                }
+            }
+        }
+    }
+}

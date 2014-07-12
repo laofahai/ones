@@ -1,0 +1,14 @@
+{
+    "alias": "goods",
+    "requirements": [],
+    "navs" : {
+        "settings" : {
+            "childs" : {
+                "base_data_set" : {
+                    "goods_setting": "goods/list/goods",
+                    "goods_category": "goods/list/goodsCategory"
+                }
+            }
+        }
+    }
+}

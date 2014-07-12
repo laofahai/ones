@@ -1,0 +1,31 @@
+{
+    "urlMap": {
+        "dataModel": {
+            "modules": {
+                "DataModel": {
+                    "name": "数据模型",
+                    "actions": {
+                        "list": "数据模型管理",
+                        "add": "新建数据模型",
+                        "edit": "修改数据模型基础信息",
+                        "viewSub": "查看数据模型字段"
+                    }
+                },
+                "DataModelData": {
+                    "name": "模型数据",
+                    "actions": {
+                        "list": "模型数据管理",
+                        "add": "新增模型数据",
+                        "edit": "修改模型数据"
+                    }
+                },
+                "DataModelFields": {
+                    "name": "模型数据字段",
+                    "actions": {
+                        "list": "", "add": "", "edit": ""
+                    }
+                }
+            }
+        }
+    }
+}

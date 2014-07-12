@@ -1,0 +1,14 @@
+{
+    "alias": "crm",
+    "requirements": ["department"],
+    "modules": ["relationshipCompany", "relationshipCompanyGroup"],
+    "navs": {
+        "rel_company" : {
+            "childs" : {
+                "relCompanyRecord" : "crm/list/relationshipCompany",
+                "relCompanyGroup" : "crm/list/relationshipCompanyGroup"
+            },
+            "icon" : "link"
+        }
+    }
+}

@@ -1,9 +1,11 @@
 node_modules
 .tmp
 .sass-cache
+.idea
+.settings
 app/bower_components
 nbproject
 /demo/
 /dist/
-/erp_server/Runtime/
-/erp_server/Data/Avatars/*.jpg
+/server/Runtime/
+/server/Data/Avatars/*.jpg

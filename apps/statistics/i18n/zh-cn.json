@@ -1,0 +1,21 @@
+{
+    "urlMap": {
+        "statistics": {
+            "name": "统计分析",
+            "modules": {
+                "ProductView": {
+                    "name": "产品进销存表",
+                    "actions": {
+                        "list": ""
+                    }
+                },
+                "Sale": {
+                    "name": "销售统计",
+                    "actions": {
+                        "list": ""
+                    }
+                }
+            }
+        }
+    }
+}

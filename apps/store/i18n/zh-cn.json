@@ -1,0 +1,60 @@
+{
+    "urlMap": {
+        "store": {
+            "modules": {
+                "Stock" : {
+                    "name": "仓库管理",
+                    "actions": {
+                        "list": "仓库列表",
+                        "add": "新建仓库",
+                        "edit": "修改仓库信息"
+                    }
+                },
+                "StockWarning": {
+                    "name": "库存警告",
+                    "actions": {}
+                },
+                "Stockin": {
+                    "name": "入库单",
+                    "actions": {
+                        "list": "入库单列表",
+                        "add": "新建入库单",
+                        "edit": "入库单信息"
+                    }
+                },
+                "StockProductList": {
+                    "name": "库存管理",
+                    "actions": {
+                        "list": "库存物料(成品)列表",
+                        "export": "导出库存清单",
+                        "edit": "修改库存产品信息"
+                    }
+                },
+                "Stockout": {
+                    "name": "出库单",
+                    "actions": {
+                        "list": "出库单列表"
+                    }
+                }
+            }
+        },
+        "doworkflow_file": {
+            "name": "工作流执行",
+            "modules": {
+                "Stockout": {
+                    "name": "出库",
+                    "actions": {
+                        "confirm": "确认出库",
+                        "makeShipment": "生成发货单"
+                    }
+                },
+                "Stockin": {
+                    "name": "入库",
+                    "actions": {
+                        "confirm": "确认入库"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "urlMap": {
+        "services": {
+            "modules": {
+                "DataBackup": {
+                    "actions": {
+                        "list": "数据备份"
+                    }
+                },
+                "SystemUpdate": {
+                    "name": "升级",
+                    "actions": {
+                        "list": ["系统升级", "升级前请备份您的数据库"]
+                    }
+                }
+            }
+        }
+    }
+}

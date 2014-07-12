@@ -1,0 +1,40 @@
+{
+    "urlMap": {
+        "produce": {
+            "name": "生产管理",
+            "modules": {
+                "ProducePlan": {
+                    "name": "生产计划",
+                    "actions": {
+                        "list": "",
+                        "add": ["新增生产计划","请录入产出成品"],
+                        "edit": ""
+                    }
+                },
+                "ProducePlanDetail": {
+                    "name": "生产计划详情",
+                    "actions": {
+                        "list": ""
+                    }
+                },
+                "Craft": {
+                    "name": "工艺管理",
+                    "actions": {
+                        "add": "",
+                        "list": "",
+                        "edit": ""
+                    }
+                },
+                "ProductTpl": {
+                    "name": "BOM物料清单",
+                    "actions": {
+                        "list": "",
+                        "add"  : "",
+                        "edit" : "",
+                        "viewSub": "BOM单详情"
+                    }
+                }
+            }
+        }
+    }
+}

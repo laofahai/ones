@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ONES - Present by ONES Team.</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="common/statics/vendor.css" />
+        <link rel="stylesheet" href="common/statics/ace.css" />
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="common/statics/main.css">
+        <!-- endbuild -->
+    </head>
+    <body ng-app="ones" ng-controller="MainCtl">
+        <div class="navbar navbar-default" id="navbar">
+            <div class="navbar-container" id="navbar-container">
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand"></a><!-- /.brand -->
+                </div><!-- /.navbar-header -->
+
+                <div class="navbar-header pull-right navbar-user" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" class="dropdown-toggle">
+                                <img class="nav-user-photo" ng-src="{{BSURoot}}/Data/Avatars/avatar.php?email={{$parent.userInfo.email}}&s=50" />
+                                <span class="user-info">
+                                    <small>Welcome,</small>
+                                    <em ng-bind="userInfo.truename"></em>
+                                </span>
+
+                                <i class="icon-caret-down"></i>
+                            </a>
+
+                            <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="#/department/Profile">
+                                        <i class="icon-user"></i>
+                                        <span ng-bind="i18n.lang.myprofile"></span>
+                                    </a>
+                                </li>
+
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#/dashboard/list/myDesktop">
+                                        <i class="icon-desktop"></i>
+                                        <span ng-bind="i18n.lang.my_desktop"></span>
+                                    </a>
+                                </li>
+
+                                <li class="divider"></li>
+
+                                <li>
+                                    <a href="#/department/Logout">
+                                        <i class="icon-off"></i>
+                                        <span ng-bind="i18n.lang.logout"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul><!-- /.ace-nav -->
+                </div><!-- /.navbar-header -->
+            </div><!-- /.container -->
+        </div>
+
+
+        <div class="main-container" id="main-container">
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+                <div class="sidebar" id="sidebar">
+                    <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                            <a class="btn btn-success" href="#/HOME/list/apps">
+                                <i class="icon icon-shield"></i>
+                            </a>
+
+                            <button class="btn btn-info">
+                                <i class="icon-pencil"></i>
+                            </button>
+
+                            <button class="btn btn-warning">
+                                <i class="icon-group"></i>
+                            </button>
+
+                            <button class="btn btn-danger">
+                                <i class="icon-cogs"></i>
+                            </button>
+                        </div>
+
+                        <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                            <span class="btn btn-success"></span>
+
+                            <span class="btn btn-info"></span>
+
+                            <span class="btn btn-warning"></span>
+
+                            <span class="btn btn-danger"></span>
+                        </div>
+                    </div><!-- #sidebar-shortcuts -->
+
+                    <ul id="nav-list" class="nav nav-list" ng-controller="CommonSidebarCtl">
+                        <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
+                            <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);goPage(nav.url)">
+                                <i class="icon-{{nav.icon}}"></i>
+                                <span class="menu-text" ng-bind="i18n.lang.navs[nav.label]"></span>
+                                <b class="arrow icon-angle-down" ng-show="{{nav.childs.length}}"></b>
+                            </a>
+                            <ul class="submenu">
+                                <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
+                                    <a ng-click="checkSubActiveNav(nc.id, nav.id);goPage(nc.url)">
+                                        <i class="icon-double-angle-right"></i>
+                                        <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]"></span>
+                                    </a>
+                                    <ul class="submenu">
+                                        <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
+                                            <a ng-click="checkThirdActiveNav(nct.id, nc.id);goPage(nct.url)">
+                                                <i class="icon-double-angle-right"></i>
+                                                <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="sidebar-collapse" id="sidebar-collapse">
+                        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <div class="breadcrumbs" id="breadcrumbs">
+                        
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="icon-home home-icon"></i>
+                                <a href="#/HOME/Index/dashboard">控制面板</a>
+                            </li>
+                            <li ng-bind="currentPage.group"></li>
+                            <li class="active" ng-bind="currentPage.module"></li>
+                        </ul><!-- .breadcrumb -->
+
+                        <div class="nav-search" id="nav-search">
+                            <form class="form-search">
+                                <span class="input-icon">
+                                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                                    <i class="icon-search nav-search-icon"></i>
+                                </span>
+                            </form>
+                        </div><!-- #nav-search -->
+                    </div>
+
+                    <div class="page-content">
+                        <div class="page-header">
+                            <h1>
+                                {{currentPage.action}}
+                                <small>
+                                    <i class="icon-double-angle-right"></i>
+                                    {{currentPage.actionDesc}}
+                                </small>
+                            </h1>
+                        </div><!-- /.page-header -->
+                        <div id="alerts-container"></div>
+                        <div class="col-xs-12" ng-view></div>
+                        <div class="clearfix"></div>
+                        <hr class="hr-10 hr-double" />
+                        <div class="row footer-copy">
+                            <p class="text-center">
+                                Present by ONES Team. &copy; 2014
+                            </p>
+                        </div>
+                        
+                        <!--//demo-->
+                    </div><!-- /.page-content -->
+                </div><!-- /.main-content -->
+
+                <div class="ace-settings-container" id="ace-settings-container">
+                    <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                        <i class="icon-cog bigger-150"></i>
+                    </div>
+
+                    <div class="ace-settings-box" id="ace-settings-box">
+                        <div>
+                            <div class="pull-left">
+                                <select id="skin-colorpicker" class="hide">
+                                    <option data-skin="default" value="#438EB9">#438EB9</option>
+                                    <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                                    <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                                    <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                                </select>
+                            </div>
+                            <span>&nbsp; Choose Skin</span>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+                            <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+                            <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+                            <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+                            <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+                            <label class="lbl" for="ace-settings-add-container">
+                                Inside
+                                <b>.container</b>
+                            </label>
+                        </div>
+                    </div>
+                </div><!-- /#ace-settings-container -->
+            </div><!-- /.main-container-inner -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+
+        <!-- build:js({.tmp,app}) scripts/app.js -->
+        <script src="common/runtime.php"></script>
+        <!-- endbuild -->
+    </body>
+</html>

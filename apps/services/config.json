@@ -1,0 +1,14 @@
+{
+    "alias": "services",
+    "requirements": [],
+    "navs": {
+        "settings": {
+            "childs" : {
+                "system_operation": {
+                    "data_backup" : "services/list/dataBackup",
+                    "system_update": "services/list/systemUpdate"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "urlMap": {
+        "dashboard": {
+            "modules": {
+                "Index": {
+                    "name": "",
+                    "actions": {
+                        "dashboard": ["控制面板"]
+                    }
+                },
+                "UserDesktop": {
+                    "name" : "用户桌面项",
+                    "actions": {
+                        "list": "",
+                        "add" : ""
+                    }
+                },
+                "MyDesktop": {
+                    "name": "我的桌面",
+                    "actions": {
+                        "list": ["管理我的桌面", "无权限项选中会报错并且不可用"]
+                    }
+                }
+            }
+        }
+    }
+}
