@@ -14,7 +14,7 @@
 
 ## 开发环境部署
 * 通过GIT git clone https://git.oschina.net/xiaolan/ones.git 或者下载最新的代码
-* 新建数据库，并且导入/erp_server/ones.sql
+* 新建数据库，并且导入/server/ones.sql
 * 修改/server/Conf/config.php中的数据库信息
 * 访问/index.html
 
