@@ -11,19 +11,15 @@
  *
  * @author nemo
  */
-class SettingsAction extends CommonAction {
+class ClearCacheAction extends CommonAction {
     
     //清除缓存
-    public function clearCache() {
+    public function insert() {
         foreach($_POST["types"] as $k=> $p) {
             if($p) {
                 clearCache($k);
             }
         }
     }
-    
 
-
-
-    
 }

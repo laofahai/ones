@@ -1,7 +1,7 @@
 <?php
 
 class IndexAction extends CommonAction {
-    
+
     public function index(){
         unset($_SESSION["user"]["password"]);
         $data = array(
@@ -11,7 +11,6 @@ class IndexAction extends CommonAction {
         
         $this->response($data);
     }
-
 
     /**
      * 根据AuthRule生成左侧导航，不同用户生成不同缓存

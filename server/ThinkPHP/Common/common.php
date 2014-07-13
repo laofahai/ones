@@ -453,7 +453,14 @@ function M($name='', $tablePrefix='',$connection='') {
  */
 function A($name,$layer='',$common=false) {
     static $_action = array();
-    $layer      =   $layer?$layer:C('DEFAULT_C_LAYER');
+    $layer      =   $layer ? $layer : C('DEFAULT_C_LAYER');
+//    $name = implode("/", array_walk(explode("/", $name), "ucfirst"));
+    $name = explode("/", $name);
+    foreach($name as $k=>$v) {
+        $name[$k] = ucfirst($v);
+    }
+    $name = implode("/", $name);
+//    echo $name;exit;
     if(strpos($name,'://')) {// 指定项目
         list($app)  =   explode('://',$name);
         $name   =  str_replace('://','/'.$layer.'/',$name);
@@ -475,7 +482,7 @@ function A($name,$layer='',$common=false) {
         import($name.$layer);
     }
     $class      =   basename($name.$layer);
-    if(class_exists($class,false)) {
+    if(class_exists($class, false)) {
         $action             =   new $class();
         $_action[$name]     =   $action;
         return $action;

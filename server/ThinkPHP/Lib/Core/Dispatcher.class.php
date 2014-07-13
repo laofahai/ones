@@ -192,6 +192,7 @@ class Dispatcher {
         define('__ACTION__',__URL__.$depr.(defined('ACTION_ALIAS')?ACTION_ALIAS:ACTION_NAME));
         //保证$_REQUEST正常取值
         $_REQUEST = array_merge($_POST,$_GET);
+
     }
 
     /**
@@ -230,7 +231,7 @@ class Dispatcher {
             // 智能识别方式 index.php/user_type/index/ 识别到 UserTypeAction 模块
             $module = ucfirst(parse_name($module,1));
         }
-        return strip_tags($module);
+        return ucfirst(strip_tags($module));
     }
 
     /**
@@ -257,7 +258,7 @@ class Dispatcher {
                 }
             }
         }
-        return strip_tags(C('URL_CASE_INSENSITIVE')?strtolower($action):$action);
+        return strip_tags(C('URL_CASE_INSENSITIVE') ? strtolower($action) : $action);
     }
 
     /**

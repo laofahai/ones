@@ -63,6 +63,7 @@ foreach($needMake as $v) {
     $urlRoutes = array_merge($urlRoutes, routeMaker($v[0], $v[1], $act));
 }
 
+
 //自动规则
 $groupMap = array(
     "jxc" => "JXC",

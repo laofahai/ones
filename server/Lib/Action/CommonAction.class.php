@@ -60,6 +60,7 @@ class CommonAction extends RestAction {
         $this->checkPermission();
 
         $appConfCombined = $this->getAppConfig();
+
         F("appConfCombined", $appConfCombined);
         F("appConf", $this->appsConf);
         F("loadedApp", $this->loadedApp);

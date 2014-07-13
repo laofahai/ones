@@ -166,11 +166,7 @@ class FrontEndRuntime {
                                 $this->combineJS($depPath, true);
                             }
                         }
-                        //前端路由
-                        if($tmpConfig["routes"]) {
-
-                        }
-                        if($tmpConfig["alias"]) {
+                        if($tmpConfig["alias"] && is_file($dir."/main.js")) {
                             $this->loadedApps[$tmpConfig["alias"]] = "ones.".$tmpConfig["alias"];
                         }
                     } else {
