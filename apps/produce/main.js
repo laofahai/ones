@@ -18,6 +18,10 @@
                     templateUrl: appView('producePlan/edit.html', 'produce'),
                     controller: 'ProducePlanEditCtl'
                 })
+                .when('/produce/viewChild/productTpl/pid/:pid', {
+                    templateUrl: appView('productTplEdit.html', 'produce'),
+                    controller: 'ProductTplDetailCtl'
+                })
                 .when('/doWorkflow/Produce/makeBoms/:nodeId/:id', {
                     templateUrl: "common/viewsproduce/producePlan/makeBoms.html",
                     controller: "WorkflowMakeProduceBomsCtl"
@@ -31,6 +35,12 @@
                     controller : "WorkflowProduceMakeStockinCtl"
                 })
             ;
+        }])
+        .factory("ProductTplRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "produce/productTpl/:id.json", null, {'update': {method: 'PUT'}});
+        }])
+        .factory("ProductTplDetailRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "produce/productTplDetail/:id.json", null, {'update': {method: 'PUT'}});
         }])
         //生产模块
         .factory("CraftRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -558,6 +568,18 @@
 
                 comView.displayBill($scope, model, res, {
                     id: $routeParams.id
+                });
+            }])
+
+        .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",
+            function($scope, res, model, ComView, $routeParams){
+                $scope.formMetaData = {};
+                $scope.selectAble = false;
+                $routeParams.id = $routeParams.pid;
+                ComView.displayBill($scope, model, res, {
+                    id: $routeParams.pid,
+                    module: "/JXC/ProductTplDetail",
+                    editExtraParams: "/pid/"+$routeParams.pid
                 });
             }])
     ;

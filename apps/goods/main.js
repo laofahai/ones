@@ -3,10 +3,10 @@
 
     angular.module("ones.goods", [])
         .factory("GoodsRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/goods/:id.json", null, {'update': {method: 'PUT'}});
+            return $resource(cnf.BSU + "goods/goods/:id.json", null, {'update': {method: 'PUT'}});
         }])
         .factory("GoodsCategoryRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/goodsCategory/:id.json", null, {'update': {method: 'PUT'}});
+            return $resource(cnf.BSU + "goods/goodsCategory/:id.json", null, {'update': {method: 'PUT'}});
         }])
         .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal",
             function($rootScope, GoodsCategoryRes, $q, $location, $modal) {

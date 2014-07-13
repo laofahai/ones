@@ -1,0 +1,23 @@
+<pageactions></pageactions>
+<div class="billContainer">
+    <form name="ordersScript" ng-keydown="doKeydown($event);" novalidate>
+        <div class="billHeader">
+
+        </div>
+        <div class="billBody">
+            <bill config="config"></bill>
+        </div>
+        <div class="billFooter clearfix">
+            <div class="row form-group">
+                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.memo"></label>
+                <div class="col-sm-9">
+                    <input type="text" ng-model="formMetaData.memo" class="width-100" />
+                </div>
+                <div class="col-sm-2 text-right">
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
+                    <button type="button" class="btn btn-sm" onclick="history.go(-1);">{{i18n.lang.actions.return}}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

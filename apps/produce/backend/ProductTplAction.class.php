@@ -26,7 +26,7 @@ class ProductTplAction extends CommonAction {
         
         $dataModel = D("DataModelDataView");
         $data = $dataModel->assignModelData($data, false);
-        
+
         
         $this->response($data);
     }
