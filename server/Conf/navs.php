@@ -22,7 +22,6 @@ return array(
             "field_set" => "HOME/list/config",
             "base_data_set" => array(
                 "types_manage"  => "HOME/list/types",
-                "user_desktop"  => "HOME/list/userDesktop"
             ),
             "system_operation" => array(
                 "clear_cache" => "HOME/Settings/clearCache",

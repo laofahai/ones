@@ -4,10 +4,10 @@
             $routeProvider
                 .when('/HOME/goTo/url/:url', {
                     controller: "HOMERedirectCtl",
-                    templateUrl: "common/views/blank.html"
+                    templateUrl: "common/base/views/blank.html"
                 })
                 .when('/HOME/Settings/clearCache', {
-                    templateUrl: "common/views/home/clearCache.html",
+                    templateUrl: "common/base/views/home/clearCache.html",
                     controller: "clearCacheCtl"
                 })
 

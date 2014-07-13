@@ -118,7 +118,7 @@
                             if(!selectedItems.length) {
                                 return;
                             }
-                            location.url("/HOME/DataModelData/catid/"+selectedItems[0].id);
+                            location.url("/dataModel/DataModelData/catid/"+selectedItems[0].id);
                         }
                     }
                 ]

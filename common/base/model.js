@@ -28,10 +28,10 @@
                     listorder: {
                         inputType: "number",
                         value: 99
-                    },
-                    status: {
-                        inputType: "checkbox"
                     }
+//                    status: {
+//                        inputType: "checkbox"
+//                    }
                 };
             };
             return obj;

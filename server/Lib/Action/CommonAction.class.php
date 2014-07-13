@@ -400,14 +400,14 @@ class CommonAction extends RestAction {
             $map["id"] = $id;
         } else {
             foreach($_GET as $k=>$g) {
-                if(in_array($k, array("id", "s"))) {
+                if(in_array($k, array("id", "s", "_URL_"))) {
                     continue;
                 }
                 $map[$k] = $g;
             }
         }
         $this->_filter($map);
-        
+
         $item = $model->where($map)->find();
 //        echo $model->getLastSql();exit;
         if($return) {

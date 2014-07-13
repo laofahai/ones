@@ -402,10 +402,10 @@
                                 if(data.error) {
                                     service.alert(data.msg);
                                 } else {
-                                    if(conf.DEBUG) {
-                                        service.alert("success", "success");
-                                        return;
-                                    }
+//                                    if(conf.DEBUG) {
+//                                        service.alert("success", "success");
+//                                        return;
+//                                    }
                                     $location.url(opts.returnPage);
                                 }
                             });
@@ -728,10 +728,10 @@
                             resource.save(getParams, data);
                         }
 
-                        if(conf.DEBUG) {
-                            service.alert("success", "success");
-                            return;
-                        }
+//                        if(conf.DEBUG) {
+//                            service.alert("success", "success");
+//                            return;
+//                        }
 
                         $location.url(opts.returnPage);
                     };

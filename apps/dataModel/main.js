@@ -122,7 +122,7 @@
                         var params = {
                             modelId:$routeParams.modelId
                         };
-                        console.log($routeParams);
+//                        console.log($routeParams);
                         DataModelFieldsRes.query(params, function(data){
                             struct.field_id.dataSource = data;
                             defer.resolve(struct);
@@ -166,8 +166,11 @@
                     id: 0,
                     cat_id: $routeParams.catid
                 }).$promise.then(function(data){
-                        $location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+$routeParams.catid);
-                    });
+                    if(!data.id) {
+                        return;
+                    }
+                    $location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+$routeParams.catid);
+                });
             }])
         .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "ComView", "$routeParams",
             function($scope, DataModelDataRes, DataModelDataModel, ComView, $routeParams) {
