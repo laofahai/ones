@@ -57,42 +57,23 @@
 
         .service("AppsModel", ["$rootScope", function($rootScope){
             return {
+                editAble: false,
+                deleteAble: false,
+                viewDetailAble: true,
                 getFieldsStruct: function() {
                     return {
-                        name: {
-                            readonly: true,
-                            required: false
-                        },
+                        name: {},
                         alias: {
-                            readonly: true,
-                            required: false
+                            listable: false
                         },
                         version: {
-                            readonly: true,
-                            required: false,
-                            displayName: $rootScope.i18n.lang.appVersion
+                            listable: false
                         },
-                        author: {
-                            readonly: true,
-                            required: false
-                        },
-                        link: {
-                            readonly: true,
-                            required: false
-                        },
-                        description: {
-                            readonly: true,
-                            required: false,
-                            inputType: "textarea"
-                        },
+                        author: {},
+                        link: {},
+                        description: {},
                         status: {
-                            cellFilter: "lang",
-                            field: "status_text",
-                            inputType: "select",
-                            dataSource: [
-                                {id: "0", name: "disabled"},
-                                {id: "1", name: "enabled"}
-                            ]
+                            cellFilter: "lang"
                         }
                     };
                 }

@@ -33,7 +33,6 @@ class CommonAction extends RestAction {
             $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
         }
         
-        import("@.Workflow.Workflow");
         import("@.ORG.Auth");
 //        session(array());
         if ($_SERVER["HTTP_SESSIONHASH"]) {
@@ -367,6 +366,10 @@ class CommonAction extends RestAction {
 
     public function beforeLimit() {
         //分页
+        /*
+         * _pn => page number
+         * _ps => page size
+         * **/
         if($_GET["_pn"] && $_GET["_ps"]) {
             $ps = abs(intval($_GET["_ps"]));
             $limit = sprintf("%d,%d",

@@ -21,6 +21,14 @@
                 templateUrl: 'common/base/views/grid.html',
                 controller : 'ComViewGridCtl'
             })
+            $route.when('/:group/listAll/:module', {
+                templateUrl: 'common/base/views/grid.html',
+                controller : 'ComViewGridCtl'
+            })
+            $route.when('/:group/listAll/:module/:extra*', {
+                templateUrl: 'common/base/views/grid.html',
+                controller : 'ComViewGridCtl'
+            })
             //新增
             .when('/:group/viewChild/:module/pid/:pid', {
     //            templateUrl: 'views/common/grid.html',
@@ -71,6 +79,7 @@
             actionClasses : {
                 "add" : "primary",
                 "list": "default",
+                "listAll": "default",
                 "export": "success"
             }
         })
@@ -109,7 +118,6 @@
         .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal", "ones.config",
             function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal, conf){
                 var module,group,res,model,actions,pageActions=[];
-
                 $scope.selectAble = true;
 
                 group = $routeParams.group;
@@ -124,10 +132,17 @@
                 }
 
                 model = $injector.get(module.ucfirst()+"Model");
-                var opts = {};
+                var opts = {
+                    queryExtraParams: {}
+                };
                 if($routeParams.extra) {
                     opts.queryExtraParams = parseParams($routeParams.extra);
                     var extra = $routeParams.extra;
+                }
+
+                //加入查询全部条件
+                if($location.url().indexOf("/listAll/") > 0) {
+                    opts.queryExtraParams.queryAll = true;
                 }
 
                 //Grid 可跳转按钮
@@ -810,6 +825,21 @@
                             });
                         }
                     }
+                    //查看详情
+                    if(model.viewDetailAble) {
+                        $scope.selectedActions.push({
+                            label: $rootScope.i18n.lang.actions.viewDetail,
+                            class: "primary",
+                            multi: false,
+                            action: function(){
+                                $location.url(sprintf('/%(group)s/viewDetail/%(module)s/id/%(id)d', {
+                                    group : group,
+                                    module: module,
+                                    id: Number($scope.gridSelected[0].id)
+                                })+extraParams);
+                            }
+                        });
+                    }
                     //查看数据模型
                     //工作流
                     if(model.workflowAlias && isAppLoaded("workflow")) {
@@ -958,7 +988,7 @@
                     //可跳转按钮
     //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
                     extraParams = extraParams ? "/"+extraParams : "";
-                    var available = ["add", "list", "export", "print"];
+                    var available = ["add", "list", "listAll", "export", "print"];
                     var actEnabled;
                     $scope.pageActions = [];
                     angular.forEach(actions, function(act, k){

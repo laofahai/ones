@@ -123,7 +123,7 @@
                      * 两种URL模式： 普通模式 group/module/action
                      *             URL友好模式 group/action(list|add|edit)/module
                      * */
-                    var actionList = ['list', 'export', 'add', 'edit', 'addChild', 'viewChild', 'print'], fullPath, group, module, action;
+                    var actionList = ['list', 'listAll', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print'], fullPath, group, module, action;
                     fullPath = $location.path().split("/").slice(1, 4);
                     if (!fullPath[1]) {
                         return;

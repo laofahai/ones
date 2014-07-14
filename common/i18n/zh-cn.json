@@ -32,9 +32,11 @@
                     }
                 },
                 "Apps": {
-                    "name": "已安装应用",
+                    "name": "应用中心",
                     "actions": {
-                        "list": ""
+                        "list": "已安装应用",
+                        "listAll": "全部应用",
+                        "viewDetail": "应用详情"
                     }
                 }
             }
@@ -202,10 +204,12 @@
             "cancel": "取消",
             "addChild": "增加子项",
             "viewChild": "查看子项",
+            "viewDetail": "查看详情",
             "export": "导出",
             "edit": "编辑",
             "delete": "删除",
             "list": "列表",
+            "listAll": "全部",
             "view": "查看",
             "print": "打印",
             "filters": "过滤器",
@@ -409,6 +413,9 @@
         "appVersion": "应用版本",
         "author": "作者",
         "description": "描述",
-        "link": "链接"
+        "link": "链接",
+        "appStatus": " ",
+        "appStatusinstalled": "已安装",
+        "appStatusinstalledhasUpdate": "可升级"
     }
 }
