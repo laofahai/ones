@@ -156,6 +156,7 @@
             "produceInProcess": "在产",
             "editMyProfile" : "修改我的资料",
             "confirm_finance_receive": "财务确认收款",
+            "appDetail": "应用详情",
             "statistics": {
                 "sale": "销售统计"
             }
@@ -219,7 +220,12 @@
             "viewDataModel": "查看数据模型",
             "clearCache": "清除缓存",
             "viewModelData": "查看模型数据",
-            "viewWorkflowProcess": "查看工作流进程"
+            "viewWorkflowProcess": "查看工作流进程",
+            "install": "安装",
+            "uninstall": "卸载",
+            "active": "激活",
+            "inactive": "禁用",
+            "upgrade": "更新"
         },
         "types" : {
             "purchase": "采购类型",
@@ -237,7 +243,7 @@
             "back": "后退",
             "forward": "前进"
         },
-        
+
         "confirm_delete": "确定要删除这 %d 项吗？",
         "move_to_trash": "移到回收站",
         "selected_action" : "选中 %s 项",
@@ -366,13 +372,13 @@
         "my_desktop": "我的桌面",
         "isEnable": "是否可用",
         "width": "宽度",
-        
+
         "ProducePlan": "生产计划",
         "Orders": "销售订单",
         "Purchase": "采购",
         "Stockout": "出库单",
         "Stockin" : "入库单",
-        
+
         "shipment_type" : "发货类型",
         "freight_type" : "运费类型",
         "shipment_to_company": "收件公司",
@@ -386,7 +392,7 @@
         "freight_type": "运费类型",
         "freight": "运费",
         "weight": "重量",
-        
+
         "address": "地址",
 
         "stockin": "入库",
@@ -416,6 +422,12 @@
         "link": "链接",
         "appStatus": " ",
         "appStatusinstalled": "已安装",
-        "appStatusinstalledhasUpdate": "可升级"
+        "appStatusinstalledhasUpdate": "可升级",
+        "appPoweredBy": "应用提供者",
+        "appDesc": "应用介绍",
+        "appUpdateHistory": "更新日志",
+        "appCurrentVersion": "当前版本",
+        "appLatestVersion" : "最新版本"
+
     }
 }

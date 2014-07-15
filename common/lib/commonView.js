@@ -654,7 +654,9 @@
                         if(!item) {
                             return;
                         }
-                        if(model.editAble !== false) {
+                        if(model.viewDetailAble === true) {
+                            $scope.doViewSelected($scope.gridSelected[0]);
+                        } else if(model.editAble !== false) {
                             $scope.doEditSelected($scope.gridSelected[0]);
                         } else if(model.subAble && model.viewSubAble) {
 
@@ -765,22 +767,6 @@
                     }
 
                     //编辑
-                    $scope.doEditSelected = function(item){
-                        if(!item.id) {
-                            return;
-                        }
-                        var action = "edit";
-                        //如果是单据形式的
-                        if(model.isBill) {
-                            action = "editBill";
-                        }
-                        $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)s', {
-                            group : group,
-                            action: action,
-                            module: module,
-                            id: item.id
-                        })+extraParams);
-                    };
                     if(model.editAble === undefined || model.editAble) {
                         $scope.selectedActions.push({
                             label: $rootScope.i18n.lang.actions.edit,
@@ -790,6 +776,23 @@
                             class: "default",
                             multi: false
                         });
+                        //编辑
+                        $scope.doEditSelected = function(item){
+                            if(!item.id) {
+                                return;
+                            }
+                            var action = "edit";
+                            //如果是单据形式的
+                            if(model.isBill) {
+                                action = "editBill";
+                            }
+                            $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)s', {
+                                group : group,
+                                action: action,
+                                module: module,
+                                id: item.id
+                            })+extraParams);
+                        };
                     }
 
                     //增加/查看 子项
@@ -839,6 +842,17 @@
                                 })+extraParams);
                             }
                         });
+
+                        $scope.doViewSelected = function(item){
+                            if(!item.id) {
+                                return;
+                            }
+                            $location.url(sprintf('/%(group)s/viewDetail/%(module)s/id/%(id)s', {
+                                group : group,
+                                module: module,
+                                id: item.id
+                            })+extraParams);
+                        };
                     }
                     //查看数据模型
                     //工作流
@@ -1030,7 +1044,10 @@
                     }
                 };
                 service.makeDefaultPageAction = function($scope, module, actions, model){
-                    actions = (actions && actions.length) || ["add", "list"];
+
+                    if(!actions || actions.length <=0) {
+                        actions = ["add", "list"];
+                    }
 
                     var cssClass = ["default", "primary", "success"];
                     $scope.pageActions = [];
@@ -1053,7 +1070,6 @@
                     }
 
                 };
-
 
                 return service;
             }]);

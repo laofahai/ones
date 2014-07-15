@@ -21,6 +21,8 @@ class CommonAction extends RestAction {
 
     protected $loadedApp;
 
+    protected $queryMeta = array();
+
     public function __construct() {
         
         parent::__construct();
@@ -283,6 +285,12 @@ class CommonAction extends RestAction {
         }
 
         $list = $model->select();
+
+        $this->queryMeta = array(
+            "map" => $map,
+            "limit" => $limit,
+            "order" => $order
+        );
 
         if($return) {
             return $list;

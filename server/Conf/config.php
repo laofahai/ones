@@ -1,5 +1,6 @@
 <?php
-return array(
+
+$baseConfig = array(
     
     /* 数据库配置 */
     'DB_TYPE'            =>    'mysql',        // 数据库类型
@@ -11,36 +12,17 @@ return array(
     'DB_PREFIX'          =>    'x_',            // 数据库表前缀
     'DB_CHARSET'         =>    'utf8',            // 数据库编码
     'SECURE_CODE'        =>    'the_x',    // 数据加密密钥
-    
-    'SESSION_TYPE' => 'DB', 
-    'SESSION_TABLE' => 'x_session', 
-    'SESSION_EXPIRE' => 3600,
-    
+
     'DEFAULT_FILTER'     => "",
     
     'LOG_RECORD' => true, // 开启日志记录
     'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,WARN,DEBUG,SQL', // 只记录EMERG ALERT CRIT ERR 错误
     
-    'APP_GROUP_LIST' => 'HOME,Passport,CRM,SCM,JXC,OA,Finance,Statistics,Produce,OA,Accounting', //项目分组设定
-    'ENABLED_MODULE' => 'Finance,CRM,Statistics',
+    'APP_GROUP_LIST' => 'HOME,Passport,JXC', //项目分组设定
     'DEFAULT_GROUP'  => 'HOME', //默认分组
     'URL_MODEL' => 0,
     'URL_ROUTE_RULES' => require "route.php",
-    
-    'TMPL_EXCEPTION_FILE'=>'./App/Tpl/error.html',
-    
-    /**
-     * 单据编号前缀
-     */
-    "BILL_PREFIX" => array(
-        "Stockin" => "RK"
-    ),
-    "FactoryCodeFormat" => array(
-        "factory_code", "standard", "version"
-    ),
-    "FactoryCodeSplit"  => "-",
-    
-    
+
     /**
      * AUTH 权限控制
      */
@@ -64,30 +46,17 @@ return array(
          */
         'AUTH_DONT_NEED' => array(
             "HOME.Types.read",
-            "HOME.WorkflowNode.read",
-            "HOME.WorkflowProcess.read",
-            "HOME.UserDesktop.read",
-            "HOME.MyDesktop.add",
-            "HOME.Index.read"
+            "HOME.Index.read",
+            "Workflow.WorkflowNode.read",
+            "Workflow.WorkflowProcess.read",
+            "Dashboard.UserDesktop.read",
+            "Dashboard.MyDesktop.add",
         )
     ),
-    
-    'LANG_SWITCH_ON' => true,   // 开启语言包功能
-//    'LANG_AUTO_DETECT' => true, // 自动侦测语言 开启多语言功能后有效
-    'LANG_LIST'        => 'zh-cn,en-us', // 允许切换的语言列表 用逗号分隔
-    'VAR_LANGUAGE'     => '0', // 默认语言切换变量
-    
-    
-    /**
-     * mail
-     */
-    'MAIL_FORM' => 'ONES Team Robots',
-    'MAIL_ADDRESS'=>'ones_robot@163.com', // 邮箱地址
-    'MAIL_SMTP'=>'smtp.163.com', // 邮箱SMTP服务器
-    'MAIL_LOGINNAME'=>'ones_robot@163.com', // 邮箱登录帐号
-    'MAIL_PASSWORD'=>'thisisones', // 邮箱密码
-    'MAIL_CHARSET'=>'UTF-8',//编码
-    'MAIL_AUTH'=>true,//邮箱认证
-    'MAIL_HTML'=>true,//true HTML格式 false TXT格式
-    
+
 );
+
+require ENTRY_PATH."/Lib/ORG/spyc.php";
+$yamlConfig = Spyc::YAMLLoad(ROOT_PATH."/common/config.yaml.php");
+
+return array_merge_recursive($baseConfig, $yamlConfig["backend"]);

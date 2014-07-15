@@ -396,3 +396,10 @@ commonform {
 .ace-file-input input[type=file] {
     display:none;
 }
+
+/*
+    App Center
+**/
+.appDetailHeader {
+    border-bottom:1px solid #ddd;
+}

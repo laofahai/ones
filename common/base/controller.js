@@ -10,7 +10,10 @@
                     templateUrl: "common/base/views/home/clearCache.html",
                     controller: "clearCacheCtl"
                 })
-
+                .when('/HOME/viewDetail/apps/id/:id', {
+                    templateUrl: "common/base/views/home/appDetail.html",
+                    controller: "AppViewDetailCtl"
+                })
             ;
         }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
@@ -49,8 +52,20 @@
                     $location.url("/"+url);
                 };
             });
-
-
         }])
+
+        //app详情
+        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams",
+            function($scope, $rootScope, ComView, res, $routeParams){
+                $scope.selectAble = false;
+                ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listAll']);
+
+                res.get({
+                    id: $routeParams.id
+                }).$promise.then(function(data){
+                    $scope.appInfo = data;
+                });
+
+            }])
     ;
 })();

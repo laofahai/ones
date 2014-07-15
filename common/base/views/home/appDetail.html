@@ -1,0 +1,67 @@
+<pageactions></pageactions>
+<div class="widget-box">
+    <div class="widget-header widget-header-flat">
+        <h5><span ng-bind="appInfo.name"></span> - <small ng-bind="appInfo.alias"></small></h5>
+
+        <div class="widget-toolbar">
+            <small ng-bind="i18n.lang.appPoweredBy"></small> :
+            <a ng-href="{{appInfo.link}}" target="_blank" ng-bind="appInfo.author"></a>
+        </div>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-sm-7">
+                        <h5 class="bolder" ng-bind="i18n.lang.appDesc"></h5>
+                        <p class="grey" ng-bind="appInfo.description"></p>
+                        <h5 class="bolder" ng-bind="i18n.lang.appUpdateHistory"></h5>
+                        <p class="grey">
+                            <ul ng-repeat="ver in appInfo.versions">
+                                <li>
+                                    <i class="icon icon-arrow-up green"></i>
+                                    <strong class="green bolder">v{{ver.version}} </strong>
+                                    <span class="smaller grey">  - [{{ver.dateline|dateFormat:'Y-m-d'}}] </span>
+                                    <p>{{ver.updates}}</p>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        <br />
+                        <p ng-show="appInfo.installed"><icon class="icon icon-leaf green"></icon> <span ng-bind="i18n.lang.appStatusinstalled"></span></p>
+                        <p ng-show="appInfo.hasUpdate"><icon class="icon icon-arrow-up green"></icon> <span ng-bind="i18n.lang.appStatusinstalledhasUpdate"></span></p>
+                        <p>
+                            <span ng-bind="i18n.lang.appLatestVersion"></span>:
+                            <span class="green"> v<stong ng-bind="appInfo.latest_version"></stong></span>
+                        </p>
+                        <p ng-show="appInfo.currentVersion">
+                            <span ng-bind="i18n.lang.appCurrentVersion"></span>:
+                            <span class="green"> v<stong ng-bind="appInfo.currentVersion"></stong></span>
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12" ng-show="consoleMessages">
+                        <div class="alert alert-info">
+                            <dl>
+                                <dt>正在更新，请稍后</dt>
+                                <dd>&nbsp;</dd>
+                                <dd class="smaller">已下载v0.2 更新文件...</dd>
+                                <dd class="smaller">正在解压...</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix form-actions center">
+            <button ng-show="!appInfo.installed" class="btn btn-sm btn-primary" ng-bind="i18n.lang.actions.install"></button>
+            <button ng-show="appInfo.hasUpdate" class="btn btn-sm btn-success" ng-bind="i18n.lang.actions.upgrade"></button>
+            <button ng-show="appInfo.status" class="btn btn-sm btn-info" ng-bind="i18n.lang.actions.inactive"></button>
+            <button ng-show="!appInfo.status" class="btn btn-sm btn-success" ng-bind="i18n.lang.actions.active"></button>
+            <button ng-show="appInfo.installed" class="btn btn-sm btn-danger" ng-bind="i18n.lang.actions.uninstall"></button>
+        </div>
+    </div>
+</div>
