@@ -10,6 +10,8 @@ abstract class CommonBuildAction {
 
     protected $appConfig;
 
+    protected $error;
+
     public function __construct($appConfig) {
         $this->appConfig = $appConfig;
     }
@@ -25,6 +27,18 @@ abstract class CommonBuildAction {
      * 子类需实现此方法
      * **/
     abstract public function appUninstall();
+
+    /*
+     * 卸载结束后的回调方法
+     * @param $result boolean
+     * **/
+    public function afterAppUninstall($result) {
+        if($result && !$this->error) {
+            D("Apps")->where(array(
+                "alias" => $this->appConfig["alias"]
+            ))->delete();
+        }
+    }
 
     /*
      * 默认APP更新方法
@@ -55,6 +69,15 @@ abstract class CommonBuildAction {
         ))->save(array(
             "status" => 0
         ));
+    }
+
+
+    final protected function error($msg) {
+        $this->error = $msg;
+    }
+
+    final public function getError() {
+        return $this->error;
     }
 
 }

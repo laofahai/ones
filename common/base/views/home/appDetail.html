@@ -57,11 +57,11 @@
             </div>
         </div>
         <div class="clearfix form-actions center">
-            <button ng-show="!appInfo.installed" class="btn btn-sm btn-primary" ng-bind="i18n.lang.actions.install"></button>
-            <button ng-show="appInfo.hasUpdate" class="btn btn-sm btn-success" ng-bind="i18n.lang.actions.upgrade"></button>
-            <button ng-show="appInfo.status" class="btn btn-sm btn-info" ng-bind="i18n.lang.actions.inactive"></button>
-            <button ng-show="!appInfo.status" class="btn btn-sm btn-success" ng-bind="i18n.lang.actions.active"></button>
-            <button ng-show="appInfo.installed" class="btn btn-sm btn-danger" ng-bind="i18n.lang.actions.uninstall"></button>
+            <button ng-click="doAppInstall()" ng-show="!appInfo.installed" class="btn btn-sm btn-primary" ng-bind="i18n.lang.actions.install"></button>
+            <button ng-click="doAppUpgrade()" ng-show="appInfo.hasUpdate" class="btn btn-sm btn-success" ng-bind="i18n.lang.actions.upgrade"></button>
+            <button ng-click="doAppInactive()" ng-show="appInfo.status" class="btn btn-sm btn-info" ng-bind="i18n.lang.actions.inactive"></button>
+            <button ng-click="doAppActive()" ng-show="!appInfo.status" class="btn btn-sm btn-success" ng-bind="i18n.lang.actions.active"></button>
+            <button ng-click="doAppUninstall()" ng-show="appInfo.installed" class="btn btn-sm btn-danger" ng-bind="i18n.lang.actions.uninstall"></button>
         </div>
     </div>
 </div>

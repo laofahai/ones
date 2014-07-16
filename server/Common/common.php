@@ -110,7 +110,7 @@ function delDirAndFile($dirName) {
                 if (is_dir($dirName."/".$item)) {
                     delDirAndFile($dirName."/".$item);
                 } else {
-                    unlink($dirName."/".$item) or die("Can't delete". $dirName."/".$item);
+                    unlink($dirName."/".$item) or die("Can't delete: ". $dirName."/".$item);
                 }
             }
         }

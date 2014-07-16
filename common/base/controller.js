@@ -66,6 +66,14 @@
                     $scope.appInfo = data;
                 });
 
+                $scope.doAppUninstall = function() {
+                    res.delete({
+                        id: $scope.appInfo.alias
+                    }).$promise.then(function(){
+                        console.log(arguments);
+                    });
+                }
+
             }])
     ;
 })();

@@ -139,4 +139,26 @@ class AppsAction extends CommonAction {
 
     }
 
+    /*
+     * 卸载
+     * **/
+    public function delete() {
+        $alias = $_GET["id"];
+
+        $appsConf = F("appConf");
+
+        $buildClassName = sprintf("%sBuild", ucfirst($alias));
+
+        import("@.ORG.CommonBuildAction");
+        require sprintf("%s/apps/%s/backend/%s.class.php", ROOT_PATH, $alias, $buildClassName);
+
+        $buildClass = new $buildClassName();
+
+        $rs = $buildClass->appUninstall();
+        var_dump($rs);
+        var_dump($buildClass->getError());
+
+        $buildClass->afterAppUninstall();
+    }
+
 }
