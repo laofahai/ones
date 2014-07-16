@@ -6,7 +6,7 @@
                 "Index": {
                     "name": "",
                     "actions": {
-                        "dashboard": ["控制面板"]
+                        "dashboard": "控制面板"
                     }
                 },
                 "Config": {
