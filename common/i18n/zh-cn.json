@@ -193,7 +193,9 @@
                 "install_failed": "安装失败",
                 "uninstalling": "正在卸载...请稍后",
                 "uninstall_success": "卸载成功",
-                "uninstall_failed": "卸载失败"
+                "uninstall_failed": "卸载失败",
+
+                "requirements": "依赖关系不能满足，请先安装依赖应用"
             }
         },
         "errors": {
@@ -437,7 +439,8 @@
         "appDesc": "应用介绍",
         "appUpdateHistory": "更新日志",
         "appCurrentVersion": "当前版本",
-        "appLatestVersion" : "最新版本"
+        "appLatestVersion" : "最新版本",
+        "requirementsApp": "依赖应用"
 
     }
 }

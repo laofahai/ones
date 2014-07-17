@@ -68,6 +68,8 @@
                     $scope.appInfo = data;
                 });
 
+                $scope.consoleClass = "info";
+
 
                 //卸载
                 $scope.doAppUninstall = function() {
@@ -103,6 +105,18 @@
                         alias: $scope.appInfo.alias
                     };
                     res.save(params, function(data){
+
+                        if(data.type == "requirements") {
+                            $scope.consoleClass = "danger";
+                            $scope.consoleMessages.push(
+                                $rootScope.i18n.lang.requirementsApp + ": " + data.requirements
+                            );
+                            $scope.consoleMessages.push(
+                                $rootScope.i18n.lang.messages.apps.requirements
+                            );
+                            return;
+                        }
+
                         if(data.error) {
                             $scope.consoleMessages.push(
                                 $rootScope.i18n.lang.messages.apps.install_failed + ": " + data.msg

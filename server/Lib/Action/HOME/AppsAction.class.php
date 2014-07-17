@@ -75,6 +75,14 @@ class AppsAction extends CommonAction {
 
             $tmp = parent::index(true);
 
+            if(!$tmp) {
+                $this->response(array(
+                    array("count"=>0),
+                    array()
+                ));
+                return;
+            }
+
             foreach($tmp as $app) {
                 $installedApps[$app["alias"]] = $app;
                 $installedAppAlias[] = $app["alias"];
@@ -183,6 +191,7 @@ class AppsAction extends CommonAction {
      *  3. 解压
      *  4. 复制到/apps/目录
      *  5. 解析config.json
+     *  5. 安装依赖
      *  5. 执行/apps/alias/backend/AliasBuild 中得 appInstall方法
      *  6. 执行AppBuild:: afterAppInstall() 方法
      *  7. 删除zip包 删除临时目录
@@ -226,6 +235,7 @@ class AppsAction extends CommonAction {
         $appDir = ROOT_PATH."/apps/".$alias;
 
         if(!is_dir($appDir)) {
+            $this->installClean();
             $this->error("failed while copy");
             return;
         }
@@ -233,12 +243,29 @@ class AppsAction extends CommonAction {
         $appConf = json_decode(file_get_contents($appDir."/config.json"), true);
 
         if(!$appConf) {
+            $this->installClean();
             $this->error("failed while parse config");
+            return;
+        }
+
+        $loadedApp = F("loadedApp");
+        foreach($appConf["requirements"] as $req) {
+            if(!in_array($req, $loadedApp)) {
+                $requirements[] = $req;
+            }
+        }
+        if($requirements) {
+            $this->installClean();
+            $this->response(array(
+                "type" => "requirements",
+                "requirements" => implode(",", $requirements)
+            ));
             return;
         }
 
         $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, ucfirst($alias));
         if(!is_file($buildFile)) {
+            $this->installClean();
             $this->error("failed while load build file");
             return;
         }
@@ -249,14 +276,14 @@ class AppsAction extends CommonAction {
         $buildClass = new $buildClassName($appConf);
 
         if(!$buildClass->appInstall($alias)) {
+            $this->installClean();
             $this->error("failed while install");
             return;
         }
 
         $buildClass->afterAppInstall();
 
-        unlink($localPath);
-        force_rmdir($tmpFolder);
+        $this->installClean();
 
         $_GET["alias"] = $alias;
         $this->read();
@@ -276,6 +303,11 @@ class AppsAction extends CommonAction {
         $_GET["alias"] = $_POST["alias"];
 
         $this->read();
+    }
+
+    private function installClean() {
+        unlink($localPath);
+        force_rmdir($tmpFolder);
     }
 
 }

@@ -16,6 +16,8 @@
                     <div class="col-sm-7">
                         <h5 class="bolder" ng-bind="i18n.lang.appDesc"></h5>
                         <p class="grey" ng-bind="appInfo.description"></p>
+                        <h5 class="bolder" ng-bind="i18n.lang.requirementsApp"></h5>
+                        <p class="grey" ng-bind="appInfo.versions[appInfo.currentVersion].requirements"></p>
                         <h5 class="bolder" ng-bind="i18n.lang.appUpdateHistory"></h5>
                         <p class="grey">
                             <ul ng-repeat="ver in appInfo.versions">
@@ -44,7 +46,7 @@
                     </div>
 
                     <div class="col-sm-12" ng-show="consoleMessages.length > 0">
-                        <div class="alert alert-info">
+                        <div class="alert alert-{{consoleClass}}">
                             <dl>
                                 <dd ng-repeat="cm in consoleMessages" ng-bind="cm"></dd>
                             </dl>
