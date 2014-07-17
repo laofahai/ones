@@ -10,3 +10,4 @@ nbproject
 /dist/
 /server/Runtime/
 /server/Data/Avatars/*.jpg
+/server/Data/apps/*
