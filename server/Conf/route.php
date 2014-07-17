@@ -100,8 +100,10 @@ if($ext == "json") {
 
     $_GET["g"] = $group;
     $_GET["m"] = $module ? $module : "index";
+    $_GET["id"] = $id;
     define("CURRENT_APP", strtolower($group));
 }
 
 unset($null, $tmp, $groupMap, $k, $action, $hasRule, $ext);
+
 return $urlRoutes;

@@ -10,30 +10,91 @@ abstract class CommonBuildAction {
 
     protected $appConfig;
 
+    protected $appPath;
+
     protected $error;
 
     public function __construct($appConfig) {
         $this->appConfig = $appConfig;
+        $this->appPath = ROOT_PATH."/apps/".$this->appConfig["alias"];
+        if(!$appConfig["alias"]) {
+            exit("1");
+        }
     }
 
     /*
      * APP安装
-     * 子类需实现此方法
+     * 子类可覆盖
      * **/
-    abstract public function appInstall();
+    public function appInstall($alias) {
+        $installSql = sprintf("%s/apps/%s/data/sqls/install.sql", ROOT_PATH, $alias);
+        if(is_file($installSql)) {
+            $sql = file_get_contents($installSql);
+            $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
+            file_put_contents($installSql, $sql);
+
+            importSQL($installSql);
+        }
+
+        return true;
+    }
 
     /*
      * APP卸载
-     * 子类需实现此方法
+     * 子类可覆盖
      * **/
-    abstract public function appUninstall();
+    public function appUninstall() {
+
+        /*
+         * 更新数据库
+         * **/
+        $uninstallSql = sprintf("%s/apps/%s/data/sqls/uninstall.sql", ROOT_PATH, $this->appConfig["alias"]);
+        if(is_file($uninstallSql)) {
+            $sql = file_get_contents($uninstallSql);
+            $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
+            file_put_contents($uninstallSql, $sql);
+            importSQL($uninstallSql);
+        }
+
+        /*
+         * 删除APP目录
+         * **/
+        force_rmdir($this->appPath);
+//        rmdir($this->appPath);
+
+        if(is_dir($this->appPath)) {
+//            $this->error("uninstall failed when remove the app dir");
+        }
+
+        return true;
+
+        /*
+         * 其他扩展文件
+         * @todo
+         * **/
+    }
+
+    /*
+     * 安装结束后的回调方法
+     * @param $result boolean
+     * **/
+    public function afterAppInstall() {
+        if(!$this->error) {
+            D("Apps")->add(array(
+                "alias" => $this->appConfig["alias"],
+                "version" => $this->appConfig["version"],
+                "dateline" => CTS,
+                "status"   => 0
+            ));
+        }
+    }
 
     /*
      * 卸载结束后的回调方法
      * @param $result boolean
      * **/
-    public function afterAppUninstall($result) {
-        if($result && !$this->error) {
+    public function afterAppUninstall() {
+        if(!$this->error) {
             D("Apps")->where(array(
                 "alias" => $this->appConfig["alias"]
             ))->delete();
@@ -79,5 +140,6 @@ abstract class CommonBuildAction {
     final public function getError() {
         return $this->error;
     }
+
 
 }

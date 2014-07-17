@@ -184,7 +184,17 @@
             "no_file": "没有选择文件",
             "drag_or_chose_file": "拖拽文件到这里或者点击选择文件",
             "has_processed": "当前操作已进行过",
-            "unfoundApp": "未能找到应用：%s，请在应用中心中搜索安装。"
+            "unfoundApp": "未能找到应用：%s，请在应用中心中搜索安装。",
+            "apps": {
+                "operateSuccess": "操作成功",
+                "afterOperate": "如需查看更改，可能需要清除缓存并且刷新页面",
+                "installing": "正在安装...请稍后",
+                "install_success": "安装成功",
+                "install_failed": "安装失败",
+                "uninstalling": "正在卸载...请稍后",
+                "uninstall_success": "卸载成功",
+                "uninstall_failed": "卸载失败"
+            }
         },
         "errors": {
             "required": "必填",

@@ -1,6 +1,11 @@
 <?php
 
 $baseConfig = array(
+
+    /*
+     * API KEY
+     * **/
+    'SERVICE_API_KEY' => md5("ones"),
     
     /* 数据库配置 */
     'DB_TYPE'            =>    'mysql',        // 数据库类型
@@ -12,6 +17,7 @@ $baseConfig = array(
     'DB_PREFIX'          =>    'x_',            // 数据库表前缀
     'DB_CHARSET'         =>    'utf8',            // 数据库编码
     'SECURE_CODE'        =>    'the_x',    // 数据加密密钥
+    'MYSQL_BIN'          => '', //执行mysql bin目录，或者软链接至/usr/bin目录。目前需用到mysql, mysqldump命令
 
     'DEFAULT_FILTER'     => "",
     

@@ -99,6 +99,7 @@ class httplib{
      * @param string $referer	: 来路地址，用于伪造来路
      */
     public function request($url,$postdata = '',$referer=''){
+        $postdata["SOURCE"] = $_SERVER["HTTP_REFERER"];
         $ch = $this->_http_request($url,$postdata,$referer);
         if ($postdata == ''){
             $this->request_method = 'GET';

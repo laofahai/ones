@@ -55,10 +55,12 @@
         }])
 
         //app详情
-        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams",
-            function($scope, $rootScope, ComView, res, $routeParams){
+        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams", "$location", "$timeout",
+            function($scope, $rootScope, ComView, res, $routeParams, $location, $timeout){
                 $scope.selectAble = false;
                 ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listAll']);
+
+                $scope.consoleMessages = [];
 
                 res.get({
                     id: $routeParams.id
@@ -66,12 +68,91 @@
                     $scope.appInfo = data;
                 });
 
+
+                //卸载
                 $scope.doAppUninstall = function() {
+                    $scope.consoleMessages = [];
+                    $scope.consoleMessages.push(
+                        $rootScope.i18n.lang.messages.apps.uninstalling
+                    );
                     res.delete({
                         id: $scope.appInfo.alias
-                    }).$promise.then(function(){
-                        console.log(arguments);
+                    }).$promise.then(function(data){
+                        if(data.error) {
+                            $scope.consoleMessages.push(
+                                $rootScope.i18n.lang.messages.apps.uninstall_failed + ": " + data.msg
+                            );
+                        }
+                        $scope.consoleMessages.push(
+                            $rootScope.i18n.lang.messages.apps.uninstall_success
+                        );
+                        $scope.consoleMessages.push(
+                            $rootScope.i18n.lang.messages.apps.afterOperate
+                        );
+                        $scope.appInfo = data;
                     });
+                };
+
+                //安装
+                $scope.doAppInstall = function() {
+                    $scope.consoleMessages = [];
+                    $scope.consoleMessages.push(
+                        $rootScope.i18n.lang.messages.apps.installing
+                    );
+                    var params = {
+                        alias: $scope.appInfo.alias
+                    };
+                    res.save(params, function(data){
+                        if(data.error) {
+                            $scope.consoleMessages.push(
+                                $rootScope.i18n.lang.messages.apps.install_failed + ": " + data.msg
+                            );
+                        } else {
+                            $scope.consoleMessages.push(
+                                $rootScope.i18n.lang.messages.apps.install_success
+                            );
+                            $scope.consoleMessages.push(
+                                $rootScope.i18n.lang.messages.apps.afterOperate
+                            );
+                            $scope.appInfo = data;
+                        }
+                    });
+                };
+
+                var changeStatus = function(status) {
+                    $scope.consoleMessages = [];
+                    var params = {
+                        alias: $scope.appInfo.alias,
+                        status: status
+                    };
+                    res.update({id: $scope.appInfo.id}, params, function(data){
+                        if(!data.error) {
+                            $timeout(function(){
+                                $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.operateSuccess);
+                                $scope.appInfo = data;
+                                $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.afterOperate);
+                            }, 100);
+
+                        }
+                    });
+                };
+
+                //禁用
+                $scope.doAppInactive = function() {
+                    $scope.consoleMessages = [];
+                    changeStatus(0);
+                };
+
+
+
+                //启用
+                $scope.doAppActive = function() {
+                    $scope.consoleMessages = [];
+                    changeStatus(1);
+                };
+
+                //升级
+                $scope.doAppUpgrade = function() {
                 }
 
             }])

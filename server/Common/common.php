@@ -118,6 +118,33 @@ function delDirAndFile($dirName) {
         @ rmdir($dirName);
     }
 }
+/*
+ * 强制删除目录
+ * **/
+function force_rmdir($path) {
+    if (!file_exists($path)) return false;
+
+    if (is_file($path) || is_link($path)) {
+        return unlink($path);
+    }
+
+    if (is_dir($path)) {
+        $path = rtrim($path, DS) . DS;
+
+        $result = true;
+
+        $dir = new DirectoryIterator($path);
+
+        foreach ($dir as $file) {
+            if (!$file->isDot()) {
+                $result &= force_rmdir($path . $file->getFilename());
+            }
+        }
+
+        $result &= rmdir($path);
+        return $result;
+    }
+}
 
 /*
  * 生成日期序列
@@ -323,8 +350,9 @@ function sendMail($subject, $to, $toName, $content, $attach=array()) {
  */
 function DBBackup($options=array()) {
     set_time_limit(60);
-    $savename = $savename ? $savename : sprintf("%s/Data/Backup/DB_Backup_%s.sql", ENTRY_PATH, date("YmdHis", CTS));
-    $command = sprintf("mysqldump %s -u %s -p%s > %s", 
+    $savename = $options["savename"] ? $options["savename"] : sprintf("%s/Data/Backup/DB_Backup_%s.sql", ENTRY_PATH, date("YmdHis", CTS));
+    $command = sprintf("%smysqldump %s -u %s -p%s > %s",
+                    C("MYSQL_BIN"),
                     C("DB_NAME"),
                     C("DB_USER"),
                     C("DB_PWD"),
@@ -390,6 +418,25 @@ function recursionCopy($src,$dst) {  // 原目录，复制到的目录
         }
     }
     closedir($dir);
+}
+
+/*
+ * 导入SQL
+ * 需mysql命令行支持
+ * **/
+function importSQL($sqlPath) {
+    $command = sprintf("%smysql -h%s -u%s -p%s --default-character-set=utf8 %s < %s",
+        C("MYSQL_BIN"),
+        C("DB_HOST"),
+        C("DB_USER"),
+        C("DB_PWD"),
+        C("DB_NAME"),
+        $sqlPath
+    );
+
+    passthru($command, $result);
+
+    return $result;
 }
 
 /**

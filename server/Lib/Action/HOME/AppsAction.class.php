@@ -13,6 +13,7 @@ class AppsAction extends CommonAction {
     private $serviceUri;
 
     public function __construct() {
+        parent::__construct();
         $this->serviceUri = DBC("remote.service.uri");
     }
 
@@ -26,7 +27,8 @@ class AppsAction extends CommonAction {
             //获取所有APP列表
             $http->request($this->serviceUri."App/getList", array(
                 "_pn" => $_GET["_pn"],
-                "_ps" => $_GET["_ps"]
+                "_ps" => $_GET["_ps"],
+                "api_key" => C("SERVICE_API_KEY")
             ));
 
             $tmp = $http->get_data();
@@ -79,7 +81,9 @@ class AppsAction extends CommonAction {
             }
 
             $http->request($this->serviceUri."App/getList", array(
-                "alias" => implode(",", $installedAppAlias)
+                "alias" => implode(",", $installedAppAlias),
+                "api_key" => C("SERVICE_API_KEY")
+
             ));
 
             $tmp = $http->get_data();
@@ -114,11 +118,19 @@ class AppsAction extends CommonAction {
         import("@.ORG.httplib");
         $http = new httplib();
 
-        $id = abs(intval($_GET["id"]));
+        $params = array(
+            "api_key" => C('SERVICE_API_KEY')
+        );
 
-        $http->request($this->serviceUri."App/getInfo", array(
-            "id" => $id
-        ));
+
+        if($_GET["id"]) {
+            $params["id"] = abs(intval($_GET["id"]));
+        }
+        if($_GET["alias"]) {
+            $params["alias"] = $_GET["alias"];
+        }
+
+        $http->request($this->serviceUri."App/getInfo", $params);
 
         $tmp = $http->get_data();
 //        echo $tmp;
@@ -152,13 +164,118 @@ class AppsAction extends CommonAction {
         import("@.ORG.CommonBuildAction");
         require sprintf("%s/apps/%s/backend/%s.class.php", ROOT_PATH, $alias, $buildClassName);
 
-        $buildClass = new $buildClassName();
+        $buildClass = new $buildClassName($appsConf[$alias]);
 
-        $rs = $buildClass->appUninstall();
-        var_dump($rs);
-        var_dump($buildClass->getError());
+        $buildClass->appUninstall();
 
         $buildClass->afterAppUninstall();
+
+        unset($_GET["id"]);
+        $_GET["alias"] = $alias;
+        $this->read();
+    }
+
+    /*
+     * 安装
+     * 步骤：
+     *  1. 根据APP alias 获取远程下载地址
+     *  2. 下载ZIP文件
+     *  3. 解压
+     *  4. 复制到/apps/目录
+     *  5. 解析config.json
+     *  5. 执行/apps/alias/backend/AliasBuild 中得 appInstall方法
+     *  6. 执行AppBuild:: afterAppInstall() 方法
+     *  7. 删除zip包 删除临时目录
+     * **/
+    public function insert() {
+        $alias = $_REQUEST["alias"];
+
+        $remoteUri = sprintf("%sApp/getDownload/alias/%s/api_key/%s",
+            $this->serviceUri,
+            $alias,
+            C("SERVICE_API_KEY")
+        );
+
+        $localName = md5(CTS).".zip";
+        $localPath = ENTRY_PATH."/Data/apps/".$localName;
+
+//        echo $localPath;exit;
+
+        import("ORG.Net.Http");
+        Http::curlDownload($remoteUri, $localPath);
+
+        //下载不成功
+        if(!is_file($localPath) or filesize($localPath) <= 0) {
+            $this->error("failed while download");
+            return;
+        }
+
+        $zip = new ZipArchive();
+        $tmpFolder = ENTRY_PATH."/Data/apps/installTmp";
+        $rs = $zip->open($localPath);
+        if($rs === true) {
+            if(!is_dir($tmpFolder)) {
+                mkdir($tmpFolder, 0777);
+            }
+            $zip->extractTo($tmpFolder);
+        }
+        $zip->close();
+
+        recursionCopy($tmpFolder, ROOT_PATH."/apps");
+
+        $appDir = ROOT_PATH."/apps/".$alias;
+
+        if(!is_dir($appDir)) {
+            $this->error("failed while copy");
+            return;
+        }
+
+        $appConf = json_decode(file_get_contents($appDir."/config.json"), true);
+
+        if(!$appConf) {
+            $this->error("failed while parse config");
+            return;
+        }
+
+        $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, ucfirst($alias));
+        if(!is_file($buildFile)) {
+            $this->error("failed while load build file");
+            return;
+        }
+
+        import("@.ORG.CommonBuildAction");
+        require_cache($buildFile);
+        $buildClassName = ucfirst($alias)."Build";
+        $buildClass = new $buildClassName($appConf);
+
+        if(!$buildClass->appInstall($alias)) {
+            $this->error("failed while install");
+            return;
+        }
+
+        $buildClass->afterAppInstall();
+
+        unlink($localPath);
+        force_rmdir($tmpFolder);
+
+        $_GET["alias"] = $alias;
+        $this->read();
+
+    }
+
+    /*
+     * 更新状态
+     * **/
+    public function update() {
+        $model = D("Apps");
+        $model->where(array(
+            "alias" => $_POST["alias"]
+        ))->save(array("status"=>$_POST["status"] ? 1 : 0));
+
+        unset($_GET["id"]);
+        $_GET["alias"] = $_POST["alias"];
+
+        $this->read();
     }
 
 }

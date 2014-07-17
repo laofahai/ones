@@ -28,7 +28,7 @@ class CommonAction extends RestAction {
         parent::__construct();
 
         if(!APP_DEBUG && !IS_AJAX) {
-//            $this->error("Direct Visit");exit;
+            $this->error("Direct Visit");exit;
         }
 
         if(!$_POST) {

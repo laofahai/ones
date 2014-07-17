@@ -29,8 +29,14 @@
                 }
 
                 $http.defaults.headers.common["sessionHash"] = loginHash;
+//                $http.defaults.headers.post = {
+//                    'Content-Type': 'application/x-www-form-urlencoded'
+//                };
                 $http.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
                 $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+//                $http.defaults.transformRequest = function (data) {
+//                    return angular.isObject(data) && String(data) !== '[object File]' ? jQuery.param(data) : data;
+//                };
 
                 try {
                     var configRes = $injector.get("ConfigRes");
