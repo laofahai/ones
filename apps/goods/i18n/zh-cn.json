@@ -20,5 +20,11 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "goods_setting": "物料(成品)管理",
+            "goods_category": "物料(成品)分类管理"
+        }
     }
 }

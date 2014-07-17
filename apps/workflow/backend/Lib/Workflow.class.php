@@ -287,7 +287,8 @@ class Workflow {
                 $this->currentWorkflow["workflow_file"]
             );
 
-            $appWorkflowFile = $appWorkflow.$node["execute_file"];
+            $appWorkflowFile = $appWorkflow.$node["execute_file"].".class.php";
+//            echo $appWorkflowFile;exit;
             if(is_dir($appWorkflow) && is_file($appWorkflowFile)) {
                 require_cache($appWorkflowFile);
             } else {

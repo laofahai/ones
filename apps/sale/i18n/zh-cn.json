@@ -21,5 +21,16 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "sale": "销售",
+            "add_new_orders": "新增销售订单",
+            "orders": "订单",
+            "returns": "退货单"
+        },
+        "modules": {
+            "Orders": "订单"
+        }
     }
 }

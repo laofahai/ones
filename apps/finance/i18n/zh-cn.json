@@ -32,6 +32,28 @@
                     }
                 }
             }
+        },
+        "doworkflow": {
+            "modules": {
+                "FinanceReceivePlan": {
+                    "name": "财务收款计划",
+                    "actions": {
+                        "confirm": "确认收款"
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "finance": "财务管理",
+            "finance_account": "财务账户管理",
+            "finance_record" : "收支记录",
+            "finance_receive_plan": "财务收入计划",
+            "finance_pay_plan": "财务付款计划"
+        },
+        "widgetTitles": {
+            "confirm_finance_receive": "财务确认收款"
         }
     }
 }

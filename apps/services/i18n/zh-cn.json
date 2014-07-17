@@ -15,5 +15,12 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "data_backup": "数据备份",
+            "clear_data": "清除数据",
+            "system_update": "系统升级"
+        }
     }
 }

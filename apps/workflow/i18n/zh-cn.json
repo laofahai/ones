@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "workflow": {
+            "name": "工作流",
             "modules": {
                 "Workflow": {
                     "name": "工作流管理",
@@ -18,9 +19,18 @@
                     }
                 }
             }
+        },
+        "doWorkflow": {
+            "name": "工作流执行"
         }
     },
     "lang": {
+        "navs": {
+            "workflow": "工作流程"
+        },
+        "messages": {
+            "has_processed": "当前操作已进行过"
+        },
         "workflow": "工作流",
         "workflow_file": "工作流逻辑目录"
     }

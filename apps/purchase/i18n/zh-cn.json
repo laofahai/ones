@@ -15,5 +15,13 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "purchase": "采购",
+            "add_new_purchase": "新建采购单",
+            "purchase_list": "采购单列表",
+            "purchase_return": "采购退货"
+        }
     }
 }

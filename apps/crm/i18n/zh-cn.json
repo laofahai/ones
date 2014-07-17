@@ -21,5 +21,12 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "rel_company": "往来单位管理",
+            "relCompanyGroup": "分组",
+            "relCompanyRecord": "基础档案"
+        }
     }
 }

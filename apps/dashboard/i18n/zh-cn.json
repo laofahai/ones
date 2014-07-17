@@ -23,5 +23,13 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "user_desktop": "用户桌面项"
+        },
+        "widgetTitles": {
+            "editMyProfile" : "修改我的资料"
+        }
     }
 }

@@ -35,6 +35,41 @@
                     }
                 }
             }
+        },
+        "doworkflow": {
+            "modules": {
+                "Produce": {
+                    "name": "生产管理",
+                    "actions": {
+                        "makeBoms": "生成物料清单",
+                        "doCraft" : "执行生产工艺",
+                        "makeStockin": "生成入库单"
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "goods_tpl" : "BOM物料清单",
+            "craft_manage": "工艺管理",
+            "produce": "生产管理",
+            "produce_plan": "生产计划",
+            "produce_plan_detail": "生产计划详情",
+            "outside_bill": "外协单",
+            "produce_and_install": "生产组装单"
+        },
+        "widgetTitles": {
+            "produceInProcess": "在产",
+            "_product_craft": "产品 %s 工序管理"
+        },
+        "messages": {
+            "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行",
+            "all_craft_ended": "所有生产工序已执行完成"
+        },
+        "actions": {
+            "viewCraft": "查看生产工艺",
+            "doCraft" : "执行生产工艺"
         }
     }
 }

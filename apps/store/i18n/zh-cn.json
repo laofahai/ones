@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "store": {
+            "name": "仓储管理",
             "modules": {
                 "Stock" : {
                     "name": "仓库管理",
@@ -39,7 +40,6 @@
             }
         },
         "doWorkflow": {
-            "name": "工作流执行",
             "modules": {
                 "Stockout": {
                     "name": "出库",
@@ -55,6 +55,27 @@
                     }
                 }
             }
+        }
+    },
+    "lang": {
+        "navs": {
+            "stock": "库存管理",
+            "stock_manage": "仓库管理",
+            "stock_list": "库存列表",
+            "stockin_paper": "入库单",
+            "stockout_paper": "出库单",
+            "shipment_paper": "发货单",
+            "stock_transfer": "库存调拨"
+        },
+        "modules": {
+            "Stockin": "入库单",
+            "Stockout": "出库单"
+        },
+        "widgetTitles": {
+            "latestStockin": "最近入库",
+            "latestStockout": "最近出库",
+            "needStockout": "待处理出库单",
+            "needStockin" : "待处理入库单"
         }
     }
 }

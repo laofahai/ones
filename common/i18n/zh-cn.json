@@ -43,21 +43,7 @@
         },
 
         "doworkflow": {
-            "name": "工作流执行",
             "modules": {
-                "Stockout": {
-                    "name": "出库",
-                    "actions": {
-                        "confirm": "确认出库",
-                        "makeShipment": "生成发货单"
-                    }
-                },
-                "Stockin": {
-                    "name": "入库",
-                    "actions": {
-                        "confirm": "确认入库"
-                    }
-                },
                 "Produce": {
                     "name": "生产管理",
                     "actions": {
@@ -78,68 +64,17 @@
     "lang": {
         "navs": {
             "dashboard": "控制面板",
-            "stock": "库存管理",
-            "stock_list": "库存列表",
-            "stockin_paper": "入库单",
-            "stockout_paper": "出库单",
-            "shipment_paper": "发货单",
-            "stock_transfer": "库存调拨",
-            "purchase": "采购",
-            "add_new_purchase": "新建采购单",
-            "purchase_list": "采购单列表",
-            "purchase_return": "采购退货",
-            "sale": "销售",
-            "add_new_orders": "新增销售订单",
-            "orders": "订单",
-            "returns": "退货单",
-            "rel_company": "往来单位管理",
-            "relCompanyGroup": "分组",
-            "relCompanyRecord": "基础档案",
             "list": "列表",
             "add_new": "新增",
-            "finance": "财务管理",
-            "finance_account": "财务账户管理",
-            "finance_record" : "收支记录",
-            "finance_receive_plan": "财务收入计划",
-            "finance_pay_plan": "财务付款计划",
-            "statistics": "统计分析",
-            "sale_statistics": "销售统计",
-            "stock_warning": "库存警告",
-            "statistics_overview": "统计总览",
-            "statistics_product_overview": "产品进销存表",
             "settings": "设置",
             "field_set": "字段设置",
             "base_data_set": "基础数据管理",
-            "goods_setting": "物料(成品)管理",
-            "goods_tpl" : "BOM物料清单",
-            "goods_category": "物料(成品)分类管理",
-            "craft_manage": "工艺管理",
-            "stock_manage": "仓库管理",
-            "data_model": "数据模型管理",
             "types_manage": "类型管理",
-            "organization_set": "组织机构管理",
-            "user_setting" : "用户管理",
-            "auth_rule_node": "权限节点",
-            "user_group": "用户组管理",
-            "department": "部门管理",
-            "workflow": "工作流程",
             "system_operation": "系统操作",
-            "clear_cache": "清除缓存",
-            "data_backup": "数据备份",
-            "clear_data": "清除数据",
-            "produce": "生产管理",
-            "produce_plan": "生产计划",
-            "produce_plan_detail": "生产计划详情",
-            "outside_bill": "外协单",
-            "produce_and_install": "生产组装单",
-            "user_desktop": "用户桌面项",
-            "system_update": "系统升级"
+            "clear_cache": "清除缓存"
+
         },
-        "modules": {
-            "Orders": "订单",
-            "Stockin": "入库单",
-            "Stockout": "出库单"
-        },
+
         "inputType": {
             "text": "单行文本",
             "number": "数字",
@@ -147,19 +82,8 @@
         },
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单",
-            "latestStockin": "最近入库",
-            "latestStockout": "最近出库",
-            "needStockout": "待处理出库单",
-            "needStockin" : "待处理入库单",
-            "_product_craft": "产品 %s 工序管理",
             "operate_options": "操作选项",
-            "produceInProcess": "在产",
-            "editMyProfile" : "修改我的资料",
-            "confirm_finance_receive": "财务确认收款",
-            "appDetail": "应用详情",
-            "statistics": {
-                "sale": "销售统计"
-            }
+            "appDetail": "应用详情"
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",
@@ -174,16 +98,13 @@
             "chosen_no_result_text" : "'没有找到相关结果'",
             "USER_NOT_EXISTS": "登录信息有误，请确认",
             "PASSWORD_NOT_VERIFIED": "登录信息有误，请确认",
-            "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行",
             "please_enter_your_login_info": "请输入您的登录信息",
             "remember_me": "记住我",
             "i_fogot_password": "我忘记了密码",
             "leaveEmptyIfNotEdit": "不修改请留空",
-            "all_craft_ended": "所有生产工序已执行完成",
             "systemUpdateNoNewVersion": "当前已是最新版本",
             "no_file": "没有选择文件",
             "drag_or_chose_file": "拖拽文件到这里或者点击选择文件",
-            "has_processed": "当前操作已进行过",
             "unfoundApp": "未能找到应用：%s，请在应用中心中搜索安装。",
             "apps": {
                 "operateSuccess": "操作成功",
@@ -226,12 +147,8 @@
             "view": "查看",
             "print": "打印",
             "filters": "过滤器",
-            "viewCraft": "查看生产工艺",
-            "doCraft" : "执行生产工艺",
             "viewSub": "查看子项",
-            "viewDataModel": "查看数据模型",
             "clearCache": "清除缓存",
-            "viewModelData": "查看模型数据",
             "viewWorkflowProcess": "查看工作流进程",
             "install": "安装",
             "uninstall": "卸载",
@@ -391,19 +308,6 @@
         "Stockout": "出库单",
         "Stockin" : "入库单",
 
-        "shipment_type" : "发货类型",
-        "freight_type" : "运费类型",
-        "shipment_to_company": "收件公司",
-        "shipment_to_name": "收件人",
-        "shipment_to_phone": "收件人电话",
-        "shipment_to_address": "收件人地址",
-        "shipment_from_company": "发件公司",
-        "shipment_from_name": "发件人",
-        "shipment_from_phone": "发件人电话",
-        "shipment_from_address": "发件人地址",
-        "freight_type": "运费类型",
-        "freight": "运费",
-        "weight": "重量",
 
         "address": "地址",
 
@@ -412,19 +316,10 @@
         "sale": "销售",
         "purchase": "采购",
         "produce": "生产",
+
         "start": "开始",
         "end": "结束",
 
-        "sale_num": "销售数量",
-        "sale_amount": "销售金额",
-        "purchase_num": "采购数量",
-        "purchase_amount": "采购金额",
-        "rmbkyuan": "人民币（千元）",
-
-        "show_by_day": "按天查看",
-        "show_by_month": "按月查看",
-        "show_by_year" : "按年查看",
-        "showType": "查看方式",
 
         "image": "图片",
 

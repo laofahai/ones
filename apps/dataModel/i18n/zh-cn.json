@@ -27,5 +27,14 @@
                 }
             }
         }
+    },
+    "lang": {
+        "navs": {
+            "data_model": "数据模型管理"
+        },
+        "actions": {
+            "viewDataModel": "查看数据模型",
+            "viewModelData": "查看模型数据"
+        }
     }
 }
