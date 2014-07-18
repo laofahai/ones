@@ -105,7 +105,7 @@ class AppsAction extends CommonAction {
                 $installedApps[$appMeta["alias"]]["description"] = $appMeta["description"];
                 $installedApps[$appMeta["alias"]]["status"] = "appStatusinstalled";
 
-                if($appMeta["latest_version"] > $installedAppAlias[$appMeta["alias"]]["version"]) {
+                if($appMeta["latest_version"] > $installedApps[$appMeta["alias"]]["version"]) {
                     $installedApps[$appMeta["alias"]]["status"] .= "hasUpdate";
                 }
             }

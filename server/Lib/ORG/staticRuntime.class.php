@@ -139,46 +139,15 @@ class FrontEndRuntime {
             return;
         }
         if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                if(!in_array($file, $this->loadedApps)) {
+            while (($app = readdir($dh)) !== false) {
+
+                if(!in_array($app, $this->loadedApps)) {
                     continue;
                 }
-                if((!is_dir($dir.'/'.$file) && !in_array($file, $this->whiteList)) or in_array($file, $this->blackList)) {
-                    continue;
-                }
-                $tmpPath = $dir."/".$file;
-                $tmpConfigPath = $dir."/config.json";
-                if((is_dir($tmpPath))) {
-                    $this->combineJS($tmpPath);
-                } else {
-                    //配置文件
-                    if(is_file($tmpConfigPath) && !in_array($tmpConfigPath, $this->included)) {
-                        $this->included[md5($tmpConfigPath)] = $tmpConfigPath;
-                        $tmpConfig = json_decode(file_get_contents($dir."/config.json"), true);
-                        //优先加载依赖文件
-                        if($tmpConfig["requirements"]) {
-                            foreach($tmpConfig["requirements"] as $dep) {
-                                if(array_key_exists($dep, $this->loadedApps)) {
-                                    continue;
-                                }
-                                $depPath = dirname($dir)."/".$dep;
-                                $this->combineJS($depPath, true);
-                            }
-                        }
-                        if($tmpConfig["alias"] && is_file($dir."/main.js")) {
-//                            $this->loadedApps[$tmpConfig["alias"]] = "ones.".$tmpConfig["alias"];
-                        }
-                    } else {
-                        if(!in_array($tmpPath, $this->included)) {
-                            if(end(explode(".", $tmpPath)) === "js") {
-                                $this->response(file_get_contents($tmpPath));
-                            }
 
-                            $this->included[md5($tmpPath)] = $tmpPath;
+                $appPath = $dir."/".$app;
+                $this->loadAppJS($appPath);
 
-                        }
-                    }
-                }
             }
             closedir($dh);
         }
@@ -200,6 +169,46 @@ class FrontEndRuntime {
 
     public function debug() {
         print_r($this->included);
+    }
+
+    private function loadAppJS($appPath) {
+        $appDH = opendir($appPath);
+        while(($appFile = readdir($appDH)) !== false) {
+            if(in_array($appFile, $this->blackList)) {
+                continue;
+            }
+            $tmpPath = $appPath."/".$appFile;
+            $tmpConfigPath = $appPath."/config.json";
+
+            if(!is_dir($tmpPath)) {
+                //配置文件
+                if(is_file($tmpConfigPath) && !in_array($tmpConfigPath, $this->included)) {
+                    $this->included[md5($tmpConfigPath)] = $tmpConfigPath;
+                    $tmpConfig = json_decode(file_get_contents($appPath."/config.json"), true);
+                    //优先加载依赖文件
+                    if($tmpConfig["requirements"]) {
+                        foreach($tmpConfig["requirements"] as $dep) {
+                            if(array_key_exists($dep, $this->loadedApps)) {
+                                continue;
+                            }
+                            $depPath = dirname($appPath)."/".$dep;
+                            $this->loadAppJS($depPath);
+                        }
+                    }
+                    if($tmpConfig["alias"] && is_file($appPath."/main.js")) {
+//                            $this->loadedApps[$tmpConfig["alias"]] = "ones.".$tmpConfig["alias"];
+                    }
+                }
+                if(!in_array($tmpPath, $this->included)) {
+                    if(end(explode(".", $tmpPath)) === "js") {
+                        $this->response(file_get_contents($tmpPath));
+                    }
+                    $this->included[md5($tmpPath)] = $tmpPath;
+                }
+            }
+        }
+
+        closedir($appDH);
     }
 
 }
