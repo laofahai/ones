@@ -490,6 +490,9 @@ function A($name,$layer='',$common=false) {
         $appAction = sprintf("%s/apps/%s/backend/%sAction.class.php", ROOT_PATH, lcfirst($_GET["_URL_"][0]), ucfirst($_GET["_URL_"][1]));
         require_cache($appAction);
         $class = ucfirst($_GET["_URL_"][1]."Action");
+        if($class == "Action") {
+            return false;
+        }
         if(class_exists($class,false)) {
             $action = new $class();
             $_action[$name] = $action;

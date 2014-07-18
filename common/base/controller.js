@@ -166,12 +166,20 @@
 
                 //升级
                 $scope.doAppUpgrade = function() {
+                    $scope.consoleMessages = [];
+                    $scope.consoleMessages.push(
+                        $rootScope.i18n.lang.messages.apps.upgrading
+                    );
                     res.update({
                         id: $scope.appInfo.id,
                         alias: $scope.appInfo.alias,
                         upgrade: true
                     }, {}, function(data){
-                        console.log(data);
+                        $scope.consoleMessages.push(
+                            $rootScope.i18n.lang.messages.apps.upgradeSuccess
+                        );
+                        $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.afterOperate);
+                        $scope.appInfo = data;
                     });
                 }
 

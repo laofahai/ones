@@ -58,8 +58,9 @@ class FrontEndRuntime {
 
     public $unfoundApp = array();
 
-    public function __construct() {
-        $this->baseDir = dirname(__FILE__);
+    public function __construct($loadedApps) {
+        $this->baseDir = ROOT_PATH."/common";
+        $this->loadedApps = $loadedApps;
     }
 
     private function response($data) {
@@ -72,9 +73,12 @@ class FrontEndRuntime {
             "'[ones.requirements.placeholder]'",
             "'[ones.loadedApps.placeholder]'"
         );
+        foreach($this->loadedApps as $app) {
+            $loadedApps[] = "ones.".$app;
+        }
         $replace = array(
-            sprintf("'%s'", implode("','", $this->loadedApps)),
-            sprintf("'%s'", implode("','", $this->loadedApps)),
+            sprintf("'%s'", implode("','", $loadedApps)),
+            sprintf("'%s'", implode("','", $loadedApps)),
         );
         foreach($this->preloadingList as $pre) {
             $tmp = $this->baseDir."/".$pre;
@@ -106,33 +110,25 @@ class FrontEndRuntime {
      * 合并并返回APP i18n
      * **/
     public function combineI18n($dir=false, $langData = array(), $lang) {
-        $dir = $dir ? $dir : dirname($this->baseDir)."/apps";
-        if(!is_dir($dir)) {
-            return;
-        }
-        if ($dh = opendir($dir)) {
-            while (($file = readdir($dh)) !== false) {
-                $tmpPath = $dir."/".$file;
-                if(!is_dir($tmpPath) or !is_dir($tmpPath."/i18n")) {
-                    continue;
-                }
-                $langFile = $tmpPath."/i18n/".$lang.".json";
-                if(!is_file($langFile)) {
-                    continue;
-                }
-                $tmpLang = json_decode(file_get_contents($langFile), true);
-                if(is_array($tmpLang) && $tmpLang) {
-                    $langData = array_merge_recursive($langData, $tmpLang);
-                }
+
+        foreach($this->loadedApps as $app) {
+            $langFile = sprintf("%s/apps/%s/i18n/%s.json", ROOT_PATH, $app, $lang);
+            if(!is_file($langFile)) {
+                continue;
             }
-            closedir($dh);
+
+            $tmpLang = json_decode(file_get_contents($langFile), true);
+            if(is_array($tmpLang) && $tmpLang) {
+                $langData = array_merge_recursive($langData, $tmpLang);
+            }
+
         }
 
         return $langData;
     }
 
     public function combineJS($dir=false, $require=false) {
-        $dir = $dir ? $dir : dirname($this->baseDir)."/apps";
+        $dir = $dir ? $dir : ROOT_PATH."/apps";
 
         if($require && !is_dir($dir)) {
             $this->unfoundApp[] = end(explode("/", $dir));
@@ -144,6 +140,9 @@ class FrontEndRuntime {
         }
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
+                if(!in_array($file, $this->loadedApps)) {
+                    continue;
+                }
                 if((!is_dir($dir.'/'.$file) && !in_array($file, $this->whiteList)) or in_array($file, $this->blackList)) {
                     continue;
                 }
@@ -167,7 +166,7 @@ class FrontEndRuntime {
                             }
                         }
                         if($tmpConfig["alias"] && is_file($dir."/main.js")) {
-                            $this->loadedApps[$tmpConfig["alias"]] = "ones.".$tmpConfig["alias"];
+//                            $this->loadedApps[$tmpConfig["alias"]] = "ones.".$tmpConfig["alias"];
                         }
                     } else {
                         if(!in_array($tmpPath, $this->included)) {
@@ -204,30 +203,4 @@ class FrontEndRuntime {
     }
 
 }
-
-$runtime = new FrontEndRuntime();
-
-switch($_GET["action"]) {
-    case "getI18n":
-        header("Content-Type:application/json;charset=utf-8");
-        $data = $runtime->preloadI18n($_GET["lang"]);
-        $data = $runtime->combineI18n(false, $data, $_GET["lang"]);
-        echo json_encode($data);
-        break;
-    default:
-        header("Content-Type:application/javascript;charset=utf-8");
-        ob_start();
-        $runtime->combineJS();
-        $content = ob_get_contents();
-        ob_end_clean();
-        $runtime->preloadJS();
-        echo $content;
-        $runtime->afterLoadJS();
-        if($runtime->unfoundApp) {
-            echo sprintf("ones.unfoundApp=['%s'];", implode("','", $runtime->unfoundApp));
-        }
-
-        break;
-}
-
 

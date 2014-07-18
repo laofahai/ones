@@ -89,6 +89,16 @@ class CommonAction extends RestAction {
         }
 
         /*
+         * 禁用的APP
+         * **/
+        $model = D("Apps");
+        $tmp = $model->where("status!=1")->select();
+        $disabledApps = array();
+        foreach($tmp as $t) {
+            $disabledApps[] = $t["alias"];
+        }
+
+        /*
          * 应用的配置路径
          * **/
         $appDirs = ROOT_PATH."/apps";
@@ -100,6 +110,9 @@ class CommonAction extends RestAction {
         $appConf = array();
         if($dirHandle) {
             while(($file = readdir($dirHandle)) !== false) {
+                if(in_array($file, $disabledApps)) {
+                    continue;
+                }
                 $appDir = $appDirs.DS.$file.DS;
 //                echo $appDir."\n";
                 if(!is_dir($appDir) or !is_file($appDir."config.json") or in_array($file, $blacklist)) {

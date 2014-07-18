@@ -60,7 +60,7 @@
                  * */
                 $rootScope.i18n = angular.fromJson(localStorage.getItem(BaseConf.Prefix + "i18n"));
                 if (BaseConf.DEBUG || !$rootScope.i18n) {
-                    $http.get("common/runtime.php?action=getI18n&lang=zh-cn").success(function(data) {
+                    $http.get(BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
                         $rootScope.i18n = data;
                         localStorage.setItem(BaseConf.Prefix + "i18n", angular.toJson(data));
                     });
