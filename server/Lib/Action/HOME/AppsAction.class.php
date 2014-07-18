@@ -169,7 +169,13 @@ class AppsAction extends CommonAction {
         $buildClassName = sprintf("%sBuild", ucfirst($alias));
 
         import("@.ORG.CommonBuildAction");
-        require sprintf("%s/apps/%s/backend/%s.class.php", ROOT_PATH, $alias, $buildClassName);
+        $buildFile = sprintf("%s/apps/%s/backend/%s.class.php", ROOT_PATH, $alias, $buildClassName);
+
+        if(!is_file($buildFile)) {
+            $buildClassName = "CommonBuildAction";
+        } else {
+            include $buildFile;
+        }
 
         $buildClass = new $buildClassName($appsConf[$alias]);
 
@@ -373,15 +379,16 @@ class AppsAction extends CommonAction {
     private function appBuild($appConf, $action="install") {
         $alias = $appConf["alias"];
         $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, ucfirst($alias));
-        if(!is_file($buildFile)) {
-            $this->installClean();
-            $this->error("install failed while load build file");
-            return;
-        }
+
+        $buildClassName = ucfirst($alias)."Build";
 
         import("@.ORG.CommonBuildAction");
-        require_cache($buildFile);
-        $buildClassName = ucfirst($alias)."Build";
+        if(!is_file($buildFile)) {
+            $buildClassName = "CommonBuildAction";
+        } else {
+            include $buildFile;
+        }
+
         $buildClass = new $buildClassName($appConf);
 
         $method = "app".ucfirst($action);
