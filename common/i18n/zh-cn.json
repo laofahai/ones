@@ -201,7 +201,6 @@
         "amount": "金额",
         "plan_id": "计划编号",
         "field": "字段",
-        "stock": "仓库",
         "status": "状态",
         "alias" : "别名",
         "phone" : "电话",
@@ -223,7 +222,6 @@
         "buyer"  : "采购员",
         "supplier": "供应商",
         "customer": "客户",
-        "outStockTime": "出库时间",
         "total_price_real": "实收金额",
         "total_amount_real": "实收金额",
         "dateline": "时间",
@@ -248,8 +246,6 @@
         "password": "密码",
         "unit_price": "单价",
         "department": "部门",
-        "stock_manager": "库管员",
-        "stockManager": "库管员",
         "create_time": "创建时间",
         "create_dateline": "创建时间",
         "receive_dateline": "收到时间",
@@ -273,9 +269,6 @@
         "category_id": "分类ID",
         "category": "分类",
         "plan_end_time": "计划结束时间",
-        "storeNum": "库存数量",
-        "store_min": "库存下限",
-        "store_max": "库存上限",
         "listorder": "排序",
         "checkAll_uncheck": "全选/取消",
         "authRuleNode": "权限节点",
@@ -296,33 +289,21 @@
         "account": "账户",
         "financer": "财务员",
         "balance": "余额",
-        "current_craft": "当前工艺",
-        "next_craft": "下一工艺",
         "my_desktop": "我的桌面",
         "isEnable": "是否可用",
         "width": "宽度",
-
         "ProducePlan": "生产计划",
         "Orders": "销售订单",
         "Purchase": "采购",
         "Stockout": "出库单",
         "Stockin" : "入库单",
-
-
         "address": "地址",
-
-        "stockin": "入库",
-        "stockout": "出库",
         "sale": "销售",
         "purchase": "采购",
         "produce": "生产",
-
         "start": "开始",
         "end": "结束",
-
-
         "image": "图片",
-
         "appVersion": "应用版本",
         "author": "作者",
         "description": "描述",
@@ -336,6 +317,5 @@
         "appCurrentVersion": "当前版本",
         "appLatestVersion" : "最新版本",
         "requirementsApp": "依赖应用"
-
     }
 }

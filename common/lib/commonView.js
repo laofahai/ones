@@ -547,7 +547,7 @@
                             data = remoteData;
                             $scope.totalServerItems = remoteData.length;
                         }
-    //                    var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+
                         $scope.itemsList = data;
                         if (!$scope.$$phase) {
                             $scope.$apply();
@@ -583,56 +583,18 @@
                                 _si: sb.join("|"),
                                 _ic: 1
                             };
-
                             p = $.extend(opts.queryExtraParams, p, extraParams||{});
-                            if (searchText) {
-                                var ft = searchText.toLowerCase();
-
-                                resource.query(p, function(remoteData) {
-                                    setPagingData(remoteData, page, pageSize);
-                                });
-                            } else {
-                                resource.query(p, function(remoteData) {
-                                    setPagingData(remoteData, page, pageSize);
-                                });
-                            }
-                        }, 100);
+                            resource.query(p).$promise.then(function(remoteData){
+                                setPagingData(remoteData, page, pageSize);
+                            });
+                        });
                     };
-
-    //                if (!('pagingOptions' in opts)) {
-    //                    $scope.pagingOptions = opts.pagingOptions = pagingOptions;
-    //                }
-    //                if (!('filterOptions' in opts)) {
-    //                    $scope.filterOptions = opts.filterOptions = filterOptions;
-    //                }
-
-                    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
                     var refresh = function(){
                         $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
                     };
 
-                    /**
-                     * 监视器
-                     * */
-                    $scope.$watch('pagingOptions', function(newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            refresh ();
-                        }
-                    }, true);
-                    $scope.$watch('filterOptions', function(newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            refresh ();
-                        }
-                    }, true);
-                    $scope.$watch('sortInfo', function (newVal, oldVal) {
-                        if (newVal !== oldVal) {
-                            refresh ();
-                        }
-                    }, true);
-                    $scope.sortData = function(){
-                        refresh ();
-                    };
+                    refresh();
 
                     $scope.$on('gridData.changed', function() {
                         service.redirectTo($location.url());
@@ -661,6 +623,30 @@
                     opts.dblClickFn = $scope.gridDblClick;
 
                     $scope.gridOptions = opts;
+
+                    $timeout(function(){
+                        /**
+                         * 监视器
+                         * */
+                        $scope.$watch('pagingOptions', function(newVal, oldVal) {
+                            if (newVal !== oldVal) {
+                                refresh ();
+                            }
+                        }, true);
+                        $scope.$watch('filterOptions', function(newVal, oldVal) {
+                            if (newVal !== oldVal) {
+                                refresh ();
+                            }
+                        }, true);
+                        $scope.$watch('sortInfo', function (newVal, oldVal) {
+                            if (newVal !== oldVal) {
+                                refresh ();
+                            }
+                        }, true);
+                        $scope.sortData = function(){
+                            refresh ();
+                        };
+                    }, 300);
                 };
 
                 service.displayBill = function($scope, fieldsDefine, resource, opts) {

@@ -76,6 +76,15 @@
             "latestStockout": "最近出库",
             "needStockout": "待处理出库单",
             "needStockin" : "待处理入库单"
-        }
+        },
+        "stock": "仓库",
+        "outStockTime": "出库时间",
+        "stock_manager": "库管员",
+        "stockManager": "库管员",
+        "storeNum": "库存数量",
+        "store_min": "库存下限",
+        "store_max": "库存上限",
+        "stockin": "入库",
+        "stockout": "出库"
     }
 }

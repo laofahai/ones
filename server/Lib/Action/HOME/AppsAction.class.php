@@ -18,7 +18,6 @@ class AppsAction extends CommonAction {
     }
 
     public function index() {
-
         import("@.ORG.httplib");
         $http = new httplib();
 
@@ -28,6 +27,7 @@ class AppsAction extends CommonAction {
             $http->request($this->serviceUri."App/getList", array(
                 "_pn" => $_GET["_pn"],
                 "_ps" => $_GET["_ps"],
+                "_kw" => $_GET["_kw"],
                 "api_key" => C("SERVICE_API_KEY")
             ));
 
@@ -116,7 +116,7 @@ class AppsAction extends CommonAction {
                 array("count"=>$count),
                 reIndex($installedApps)
             ));
-
+            return;
         }
 
     }
@@ -215,7 +215,7 @@ class AppsAction extends CommonAction {
 
         //下载不成功
         if(!is_file($localPath) or filesize($localPath) <= 0) {
-            $this->error("failed while download");
+            $this->error("install failed while download");
             return;
         }
 
@@ -235,16 +235,16 @@ class AppsAction extends CommonAction {
         $appDir = ROOT_PATH."/apps/".$alias;
 
         if(!is_dir($appDir)) {
-            $this->installClean();
-            $this->error("failed while copy");
+            $this->installClean($localPath, $tmpFolder);
+            $this->error("install failed while copy");
             return;
         }
 
         $appConf = json_decode(file_get_contents($appDir."/config.json"), true);
 
         if(!$appConf) {
-            $this->installClean();
-            $this->error("failed while parse config");
+            $this->installClean($localPath, $tmpFolder);
+            $this->error("install failed while parse config");
             return;
         }
 
@@ -255,7 +255,7 @@ class AppsAction extends CommonAction {
             }
         }
         if($requirements) {
-            $this->installClean();
+            $this->installClean($localPath, $tmpFolder);
             $this->response(array(
                 "type" => "requirements",
                 "requirements" => implode(",", $requirements)
@@ -265,8 +265,8 @@ class AppsAction extends CommonAction {
 
         $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, ucfirst($alias));
         if(!is_file($buildFile)) {
-            $this->installClean();
-            $this->error("failed while load build file");
+            $this->installClean($localPath, $tmpFolder);
+            $this->error("install failed while load build file");
             return;
         }
 
@@ -276,14 +276,17 @@ class AppsAction extends CommonAction {
         $buildClass = new $buildClassName($appConf);
 
         if(!$buildClass->appInstall($alias)) {
-            $this->installClean();
-            $this->error("failed while install");
+            $this->installClean($localPath, $tmpFolder);
+            $this->error("install failed while install");
             return;
         }
 
         $buildClass->afterAppInstall();
 
-        $this->installClean();
+        $this->installClean($localPath, $tmpFolder);
+
+        //删除安装SQL文件
+        force_rmdir($appDir."/data/sqls");
 
         $_GET["alias"] = $alias;
         $this->read();
@@ -305,7 +308,12 @@ class AppsAction extends CommonAction {
         $this->read();
     }
 
-    private function installClean() {
+    /*
+     * 清除安装临时文件
+     * @param $localPath 下载zip文件
+     * @param $tmpFolder 解压临时目录
+     * **/
+    private function installClean($localPath, $tmpFolder) {
         unlink($localPath);
         force_rmdir($tmpFolder);
     }

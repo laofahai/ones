@@ -46,7 +46,7 @@ class Model {
     // 最近错误信息
     protected $error            =   '';
     // 字段信息
-    protected $fields           =   array();
+    public $fields           =   array();
     // 数据信息
     protected $data             =   array();
     // 查询表达式参数

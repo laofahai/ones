@@ -1,8 +1,5 @@
 # <?php exit; ?>
 
-- frontend:
-
-
 - backend:
   # 如跨域访问不可修改
   SESSION_TYPE:   DB

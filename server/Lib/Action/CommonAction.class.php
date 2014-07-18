@@ -241,6 +241,7 @@ class CommonAction extends RestAction {
      * 通用REST列表返回 
      **/
     public function index($return=false) {
+
         if(method_exists($this, "_before_index")){
             $this->_before_index();
         }
@@ -296,6 +297,7 @@ class CommonAction extends RestAction {
             return $list;
         }
 
+
 //        print_r($list);exit;
 
         //包含总数
@@ -343,7 +345,7 @@ class CommonAction extends RestAction {
                 $where["_logic"] = "OR";
                 $map["_complex"] = $where;
             } else {
-                $map = array_merge($map, $where);
+                $map = array_merge_recursive($map, $where);
             }
         }
 //        print_r($map);exit;

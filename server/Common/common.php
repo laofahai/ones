@@ -425,6 +425,11 @@ function recursionCopy($src,$dst) {  // 原目录，复制到的目录
  * 需mysql命令行支持
  * **/
 function importSQL($sqlPath) {
+
+    $sql = file_get_contents($sqlPath);
+    $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
+    file_put_contents($sqlPath, $sql);
+
     $command = sprintf("%smysql -h%s -u%s -p%s --default-character-set=utf8 %s < %s",
         C("MYSQL_BIN"),
         C("DB_HOST"),

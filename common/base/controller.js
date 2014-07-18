@@ -158,7 +158,6 @@
                 };
 
 
-
                 //启用
                 $scope.doAppActive = function() {
                     $scope.consoleMessages = [];

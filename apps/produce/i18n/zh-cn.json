@@ -70,6 +70,8 @@
         "actions": {
             "viewCraft": "查看生产工艺",
             "doCraft" : "执行生产工艺"
-        }
+        },
+        "current_craft": "当前工艺",
+        "next_craft": "下一工艺"
     }
 }

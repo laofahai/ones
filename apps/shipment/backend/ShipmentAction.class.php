@@ -12,5 +12,7 @@
  * @author nemo
  */
 class ShipmentAction extends CommonAction {
+
     protected $indexModel = "ShipmentView";
+
 }

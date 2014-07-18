@@ -29,10 +29,6 @@ abstract class CommonBuildAction {
     public function appInstall($alias) {
         $installSql = sprintf("%s/apps/%s/data/sqls/install.sql", ROOT_PATH, $alias);
         if(is_file($installSql)) {
-            $sql = file_get_contents($installSql);
-            $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
-            file_put_contents($installSql, $sql);
-
             importSQL($installSql);
         }
 
@@ -50,9 +46,6 @@ abstract class CommonBuildAction {
          * **/
         $uninstallSql = sprintf("%s/apps/%s/data/sqls/uninstall.sql", ROOT_PATH, $this->appConfig["alias"]);
         if(is_file($uninstallSql)) {
-            $sql = file_get_contents($uninstallSql);
-            $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
-            file_put_contents($uninstallSql, $sql);
             importSQL($uninstallSql);
         }
 
@@ -72,6 +65,16 @@ abstract class CommonBuildAction {
          * 其他扩展文件
          * @todo
          * **/
+    }
+
+    /*
+     * 默认APP更新方法
+     * **/
+    public function appUpgrade() {
+        $upgradeSql = sprintf("%s/apps/%s/data/sqls/install.sql", ROOT_PATH, $this->appConfig["alias"]);
+        if(is_file($upgradeSql)) {
+            importSQL($upgradeSql);
+        }
     }
 
     /*
@@ -100,11 +103,6 @@ abstract class CommonBuildAction {
             ))->delete();
         }
     }
-
-    /*
-     * 默认APP更新方法
-     * **/
-    public function upgrade() {}
 
     /*
      * 默认APP启用方法
