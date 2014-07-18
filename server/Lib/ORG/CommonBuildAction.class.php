@@ -71,9 +71,21 @@ abstract class CommonBuildAction {
      * 默认APP更新方法
      * **/
     public function appUpgrade() {
-        $upgradeSql = sprintf("%s/apps/%s/data/sqls/install.sql", ROOT_PATH, $this->appConfig["alias"]);
+        $upgradeSql = sprintf("%s/apps/%s/data/sqls/upgrade.sql", ROOT_PATH, $this->appConfig["alias"]);
         if(is_file($upgradeSql)) {
             importSQL($upgradeSql);
+        }
+
+        return true;
+    }
+
+    public function afterAppUpgrade() {
+        if(!$this->error) {
+            D("Apps")->where(array(
+                "alias" => $this->appConfig["alias"]
+            ))->save(array(
+                "version" => $this->appConfig["version"]
+            ));
         }
     }
 

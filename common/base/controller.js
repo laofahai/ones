@@ -166,6 +166,13 @@
 
                 //升级
                 $scope.doAppUpgrade = function() {
+                    res.update({
+                        id: $scope.appInfo.id,
+                        alias: $scope.appInfo.alias,
+                        upgrade: true
+                    }, {}, function(data){
+                        console.log(data);
+                    });
                 }
 
             }])

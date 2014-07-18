@@ -122,7 +122,6 @@ class AppsAction extends CommonAction {
     }
 
     public function read() {
-
         import("@.ORG.httplib");
         $http = new httplib();
 
@@ -205,10 +204,113 @@ class AppsAction extends CommonAction {
             C("SERVICE_API_KEY")
         );
 
+        $target = ROOT_PATH."/apps";
+        list($localPath, $tmpFolder) = $this->downloadAndZipAndCopy($remoteUri, $target);
+
+        $appDir = $target."/".$alias;
+
+        if(!is_dir($appDir)) {
+            $this->installClean($localPath, $tmpFolder);
+            $this->error("install failed while copy");
+            return;
+        }
+
+        $appConf = $this->beforeBuild($appDir);
+
+        $this->appBuild($appConf);
+
+        $this->installClean();
+
+        //删除安装SQL文件
+        force_rmdir($appDir."/data/sqls");
+
+        $_GET["alias"] = $alias;
+        $this->read();
+
+    }
+
+    /*
+     * 更新应用状态（禁用/启用）
+     * **/
+    public function updateStatus() {
+        $model = D("Apps");
+        $model->where(array(
+            "alias" => $_POST["alias"]
+        ))->save(array("status"=>$_POST["status"] ? 1 : 0));
+
+        unset($_GET["id"]);
+        $_GET["alias"] = $_POST["alias"];
+
+        $this->read();
+    }
+
+    /*
+     * APP升级
+     * **/
+    public function update() {
+        if(!$_GET["upgrade"]) {
+            $this->updateStatus();
+        }
+
+        $alias = $_REQUEST["alias"];
+
+        $appInfo = D("Apps")->where(array(
+            "alias"=> $alias
+        ))->find();
+
+        $remoteUri = sprintf("%sApp/getUpgrade/alias/%s/api_key/%s/oldVersion/".$appInfo["version"],
+            $this->serviceUri,
+            $alias,
+            C("SERVICE_API_KEY")
+        );
+
+        $target = ROOT_PATH."/apps/";
+
+        $downloadResult = $this->downloadAndZipAndCopy($remoteUri, $target);
+        if(!$downloadResult) {
+            return;
+        }
+
+        $appDir = $target.$alias;
+
+        if(!is_dir($appDir)) {
+            $this->installClean();
+            $this->error("install failed while copy");
+            return;
+        }
+
+        $appConf = $this->beforeBuild($appDir);
+
+        $this->appBuild($appConf, "upgrade");
+
+        $this->installClean();
+
+        //删除安装SQL文件
+        force_rmdir($appDir."/data/sqls");
+
+        $_GET["alias"] = $alias;
+        $this->read();
+
+    }
+
+    /*
+     * 清除安装临时文件
+     * @param $localPath 下载zip文件
+     * @param $tmpFolder 解压临时目录
+     * **/
+    private function installClean() {
+        $path = ENTRY_PATH."/Data/apps";
+        delDirAndFile($path);
+        mkdir($path, 0777);
+    }
+
+
+    /*
+     * 下载并解压文件，然后复制到某目录
+     * **/
+    private function downloadAndZipAndCopy($remoteUri, $target) {
         $localName = md5(CTS).".zip";
         $localPath = ENTRY_PATH."/Data/apps/".$localName;
-
-//        echo $localPath;exit;
 
         import("ORG.Net.Http");
         Http::curlDownload($remoteUri, $localPath);
@@ -216,7 +318,7 @@ class AppsAction extends CommonAction {
         //下载不成功
         if(!is_file($localPath) or filesize($localPath) <= 0) {
             $this->error("install failed while download");
-            return;
+            return false;
         }
 
         $zip = new ZipArchive();
@@ -230,20 +332,19 @@ class AppsAction extends CommonAction {
         }
         $zip->close();
 
-        recursionCopy($tmpFolder, ROOT_PATH."/apps");
+        recursionCopy($tmpFolder, $target);
 
-        $appDir = ROOT_PATH."/apps/".$alias;
+        return array($localPath, $tmpFolder);
+    }
 
-        if(!is_dir($appDir)) {
-            $this->installClean($localPath, $tmpFolder);
-            $this->error("install failed while copy");
-            return;
-        }
-
+    /*
+     * 应用构建前执行动作
+     * **/
+    private function beforeBuild($appDir) {
         $appConf = json_decode(file_get_contents($appDir."/config.json"), true);
 
         if(!$appConf) {
-            $this->installClean($localPath, $tmpFolder);
+            $this->installClean();
             $this->error("install failed while parse config");
             return;
         }
@@ -255,17 +356,25 @@ class AppsAction extends CommonAction {
             }
         }
         if($requirements) {
-            $this->installClean($localPath, $tmpFolder);
+            $this->installClean();
             $this->response(array(
                 "type" => "requirements",
                 "requirements" => implode(",", $requirements)
             ));
-            return;
+            return false;
         }
 
+        return $appConf;
+    }
+
+    /*
+     * 应用构建动作
+     * **/
+    private function appBuild($appConf, $action="install") {
+        $alias = $appConf["alias"];
         $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, ucfirst($alias));
         if(!is_file($buildFile)) {
-            $this->installClean($localPath, $tmpFolder);
+            $this->installClean();
             $this->error("install failed while load build file");
             return;
         }
@@ -275,47 +384,17 @@ class AppsAction extends CommonAction {
         $buildClassName = ucfirst($alias)."Build";
         $buildClass = new $buildClassName($appConf);
 
-        if(!$buildClass->appInstall($alias)) {
-            $this->installClean($localPath, $tmpFolder);
+        $method = "app".ucfirst($action);
+        if(!$buildClass->$method($alias)) {
+            $this->installClean();
             $this->error("install failed while install");
             return;
         }
 
-        $buildClass->afterAppInstall();
+        $afterMethod = "afterApp".ucfirst($action);
+        $buildClass->$afterMethod();
 
-        $this->installClean($localPath, $tmpFolder);
-
-        //删除安装SQL文件
-        force_rmdir($appDir."/data/sqls");
-
-        $_GET["alias"] = $alias;
-        $this->read();
-
-    }
-
-    /*
-     * 更新状态
-     * **/
-    public function update() {
-        $model = D("Apps");
-        $model->where(array(
-            "alias" => $_POST["alias"]
-        ))->save(array("status"=>$_POST["status"] ? 1 : 0));
-
-        unset($_GET["id"]);
-        $_GET["alias"] = $_POST["alias"];
-
-        $this->read();
-    }
-
-    /*
-     * 清除安装临时文件
-     * @param $localPath 下载zip文件
-     * @param $tmpFolder 解压临时目录
-     * **/
-    private function installClean($localPath, $tmpFolder) {
-        unlink($localPath);
-        force_rmdir($tmpFolder);
+        return $buildClass;
     }
 
 }
