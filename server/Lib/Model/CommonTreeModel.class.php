@@ -85,14 +85,28 @@ class CommonTreeModel extends CommonModel {
      * 删除子节点
      */
     public function deleteNode($id) {
-        //DELETE FROM category WHERE lft BETWEEN @myLeft AND @myRight;
-        $this->where("id=".$id)->save(array(
-            "deleted" => 1
-        ));return true;
+
         $node = $this->find($id);
         if(!$node) {
             return false;
         }
+
+        $this->where(array(
+            "lft" => array("EGT", $node['lft']),
+            "rgt" => array("ELT", $node['rgt'])
+        ))->save(array(
+            "deleted" => 1
+        ));
+
+        return true;
+
+        //DELETE FROM category WHERE lft BETWEEN @myLeft AND @myRight;
+//        $this->where("id=".$id)->save(array(
+//            "deleted" => 1
+//        ));
+//        echo $this->getLastSql();exit;
+//        return true;
+
         //UPDATE `x_department` SET `lft`=lft-2 WHERE ( `lft` > '4' )
         //UPDATE `x_department` SET `rgt`=rgt-2 WHERE ( `rgt` > '4' )
         //DELETE FROM `x_department` WHERE ( `lft` >= '3' ) AND ( `rgt` <= '4' ){"error":0,"msg":"operate_success"}
