@@ -1,5 +1,17 @@
 (function(){
     /**
+     * ONES前端插件实现
+     * 使用：在模块的angular.module之前定义
+     *
+     *  ones.pluginExecutor.registerHook("whenSthHappen", "doSomeOtherThing");
+     *  ones.plugins.doSomeOtherThing = function(){}
+     *
+     * 在angular.module合适位置定义调用hook
+     *  ones.pluginExecutor.callPlugin("whenSthHappen", param1, param2, param3);
+     * */
+
+
+    /**
      *  "whenDoSth" : [
      *      'doPlugin',
      *      'doOtherThink',
@@ -34,8 +46,6 @@
         },
         /**
          * main.js 中开头定义： 需定义在angular.module()之前
-         *  ones.pluginExecutor.registerHook("whenSthHappen", "doSomeOtherThing");
-         *  ones.plugins.doSomeOtherThing = function(){}
          * */
         register: function(hookName, callback) {
             if(!ones.pluginHooks[hookName]) {
