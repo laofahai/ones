@@ -2,6 +2,7 @@
     "primary": "true",
     "alias": "department",
     "requirements": [],
+    "version": "0.1",
     "navs": {
         "settings" : {
             "childs" : {

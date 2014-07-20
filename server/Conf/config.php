@@ -45,7 +45,8 @@ $baseConfig = array(
         'AUTH_DONT_NEED_LOGIN' => array(
             "Passport.Login.add",
             "Passport.Login.read",
-            "HOME.MyDesktop.read"
+            "HOME.MyDesktop.read",
+            "HOME.FrontendRuntime.read"
         ),
         /**
          * 无需认证模块

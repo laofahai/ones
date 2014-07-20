@@ -1,5 +1,6 @@
 {
     "alias": "statistics",
+    "version": "0.1",
     "requirements": ["sale", "purchase", "store", "produce", "goods", "dataModel"],
     "navs": {
         "statistics": {

@@ -179,9 +179,11 @@ class CommonAction extends RestAction {
     protected function loginRequired() {
 //        var_dump($_SESSION);
 //        var_dump($this->isLogin());exit;
+        $current = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         if (!$this->isLogin() and 
-                !in_array(sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName()), 
+                !in_array($current,
                         C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"))) {
+            echo $current;
             $this->httpError(401);
         }
     }

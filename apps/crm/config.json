@@ -1,6 +1,7 @@
 {
     "alias": "crm",
     "requirements": ["department"],
+    "version": "0.1",
     "modules": ["relationshipCompany", "relationshipCompanyGroup"],
     "navs": {
         "rel_company" : {

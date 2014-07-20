@@ -1,6 +1,6 @@
 {
     "alias": "shipment",
-    "version": "0.2",
+    "version": "0.1",
     "requirements": ["crm"],
     "navs": {
         "stock": {

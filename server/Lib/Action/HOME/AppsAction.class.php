@@ -228,7 +228,7 @@ class AppsAction extends CommonAction {
         $this->installClean();
 
         //删除安装SQL文件
-        force_rmdir($appDir."/data/sqls");
+        unlink($appDir."/data/sqls/install.sql");
 
         $_GET["alias"] = $alias;
         $this->read();
@@ -291,8 +291,8 @@ class AppsAction extends CommonAction {
 
         $this->installClean();
 
-        //删除安装SQL文件
-        force_rmdir($appDir."/data/sqls");
+        //删除更新SQL文件
+        unlink($appDir."/data/sqls/upgrade.sql");
 
         $_GET["alias"] = $alias;
         $this->read();

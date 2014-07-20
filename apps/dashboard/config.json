@@ -1,6 +1,7 @@
 {
     "alias": "dashboard",
     "requirements": [],
+    "version": "0.1",
     "modules": ["myDesktop", "userDesktop"],
     "navs": {
         "settings": {
