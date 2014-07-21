@@ -62,10 +62,7 @@
             .when('/:group/print/:module/id/:id', {
                 controller : 'ComViewPrintCtl',
                 templateUrl: function(params){
-                    return sprintf("views/%(group)s/%(module)s/printDetail.html", {
-                        group: params.group.toLowerCase(),
-                        module: params.module
-                    });
+                    return appView(sprintf("%s/printDetail.html", params.module), params.group.toLowerCase());
                 }
             })
             .otherwise({
