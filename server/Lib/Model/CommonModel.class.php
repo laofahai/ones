@@ -54,8 +54,14 @@ class CommonModel extends AdvModel{
     
     public function where($where, $parse = null) {
         if($this->fields["_type"]["deleted"] and !$this->excludeDeletedMap) {
-            $where["deleted"] = 0;
+            if(!is_array($where)) {
+                $tmp = explode("=", $where);
+                $where = array();
+                $where[$tmp[0]] = $tmp[1];
+            }
+            $where["deleted"] = "0";
         }
+
         return parent::where($where, $parse);
     }
     

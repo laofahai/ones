@@ -52,6 +52,11 @@ class CommonViewModel extends ViewModel{
         foreach($tmp as $k=>$v) {
             $tmpModel = D($k);
             if($tmpModel->fields["_type"]["deleted"]) {
+                if(!is_array($where)) {
+                    $tmp = explode("=", $where);
+                    $where = array();
+                    $where[$tmp[0]] = $tmp[1];
+                }
                 $where[$k.".deleted"] = 0;
             }
             break;
