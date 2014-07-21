@@ -168,13 +168,13 @@
                 }
             };
         }])
-        .service("ProducePlanDetailEditModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope, GoodsRes, DataModelDataRes){
+        .service("ProducePlanDetailEditModel", ["$rootScope", "GoodsRes", "pluginExecutor", function($rootScope, GoodsRes, plugin){
             return {
                 isBill: true,
                 selectAble: false,
                 getFieldsStruct: function() {
                     var i18n = $rootScope.i18n.lang;
-                    return {
+                    var s = {
                         goods_id: {
                             displayName: i18n.product,
                             labelField: true,
@@ -187,36 +187,6 @@
                                 tr.find("[data-bind-model='craft'] label").trigger("click");
                             },
                             listable: false
-                        },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            },
-                            listable: false
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            listable: false,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
                         },
                         craft: {
                             editAbleRequire: "goods_id",
@@ -233,15 +203,24 @@
                             listable: false
                         }
                     };
+
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: s,
+                        type: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
+
+                    return rs.defer.promise;
                 }
             };
         }])
-        .service("ProduceBomsModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope,GoodsRes,DataModelDataRes){
+        .service("ProduceBomsModel", ["$rootScope", "GoodsRes", "pluginExecutor", function($rootScope,GoodsRes,plugin){
             return {
                 isBill: true,
                 workflowAlias: "produce",
                 getFieldsStruct: function(){
-                    return {
+                    var s = {
                         plan_id: {
                             editAble: false
                         },
@@ -255,40 +234,19 @@
                             listAble: false,
                             width: 300
                         },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
-                        },
                         num: {
                             inputType: "number"
                         }
                     };
+
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: s,
+                        type: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
+
+                    return rs.defer.promise;
                 }
             };
         }])
@@ -410,14 +368,14 @@
                         };
 
 
-                        plugin.callPlugin("bindDataModelInput", {
+                        var rs = plugin.callPlugin("binDataModelToStructure", {
                             structure: structure,
                             type: "product",
                             require: ["goods_id"],
                             queryExtra: ["goods_id"]
                         });
 
-                        return ones.pluginScope.defer.promise;
+                        return rs.defer.promise;
                     }
                 };
             }])
@@ -447,12 +405,12 @@
                     }
                 };
             }])
-        .service('ProductTplDetailModel', ["$rootScope", "StockRes", "GoodsRes","DataModelDataRes",
-            function($rootScope,StockRes,GoodsRes,DataModelDataRes){
+        .service('ProductTplDetailModel', ["$rootScope", "StockRes", "GoodsRes", "pluginExecutor",
+            function($rootScope,StockRes,GoodsRes, plugin){
                 return {
                     getFieldsStruct: function() {
                         var i18n = $rootScope.i18n.lang;
-                        return {
+                        var s = {
                             goods_id: {
                                 displayName: i18n.goods,
                                 labelField: true,
@@ -463,42 +421,22 @@
                                 listAble: false,
                                 width: 300
                             },
-                            standard: {
-                                nameField: "data",
-                                valueField: "id",
-                                labelField: true,
-                                inputType: "select3",
-                                editAbleRequire: "goods_id",
-                                dataSource: DataModelDataRes,
-                                queryWithExistsData: ["goods_id"],
-                                autoQuery: true,
-                                autoReset: true,
-                                autoHide: true,
-                                queryParams: {
-                                    fieldAlias: "standard"
-                                }
-                            },
-                            version: {
-                                nameField: "data",
-                                valueField: "id",
-                                labelField: true,
-                                inputType: "select3",
-                                editAbleRequire: "goods_id",
-                                dataSource: DataModelDataRes,
-                                queryWithExistsData: ["goods_id"],
-                                autoQuery: true,
-                                autoReset: true,
-                                autoHide: true,
-                                queryParams: {
-                                    fieldAlias: "version"
-                                }
-                            },
+
                             num: {
                                 inputType: "number",
                                 totalAble: true
                             },
                             memo: {}
                         };
+
+                        var rs = plugin.callPlugin("binDataModelToStructure", {
+                            structure: s,
+                            type: "product",
+                            require: ["goods_id"],
+                            queryExtra: ["goods_id"]
+                        });
+
+                        return rs.defer.promise;
                     }
                 };
             }])

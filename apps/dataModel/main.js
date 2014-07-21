@@ -5,7 +5,7 @@
      * 接受参数： structure 标识模型数据结构
      *          type 标识数据模型的类型
      * */
-     ones.plugins.bindDataModelInput = function(injector, defer,  params){
+     ones.plugins.binDataModelToStructure = function(injector, defer,  params){
          var res = injector.get("DataModelFieldsRes");
 
          res.query({
@@ -30,36 +30,9 @@
 
          ones.pluginScope.defer = defer;
 
-    //        standard = {
-    //            field: "standard_label",
-    //                nameField: "data",
-    //                valueField: "id",
-    //                inputType: "select3",
-    //                editAbleRequire: "goods_id",
-    //                dataSource: DataModelDataRes,
-    //                queryWithExistsData: ["goods_id"],
-    //                autoQuery: true,
-    //                queryParams: {
-    //                fieldAlias: "standard"
-    //            }
-    //        }
-    //        version = {
-    //            field: "version_label",
-    //                nameField: "data",
-    //                valueField: "id",
-    //                inputType: "select3",
-    //                editAbleRequire: "goods_id",
-    //                dataSource: DataModelDataRes,
-    //                queryWithExistsData: ["goods_id"],
-    //                autoQuery: true,
-    //                queryParams: {
-    //                fieldAlias: "version"
-    //            }
-    //        }
-
     };
 
-    ones.pluginRegister("bindDataModelInput", "bindDataModelInput")
+    ones.pluginRegister("binDataModelToStructure", "binDataModelToStructure")
 
     angular.module("ones.dataModel", [])
         .config(["$routeProvider", function($routeProvider){

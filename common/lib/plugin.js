@@ -89,6 +89,10 @@
                         ones.plugins[p[i]].apply(null, args);
                     }
 
+                    var variables = ones.pluginScope;
+                    ones.clearPluginScope();
+                    return variables;
+
                 }
             };
         }])

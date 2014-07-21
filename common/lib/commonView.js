@@ -683,8 +683,16 @@
                         fieldsDefine = model.getFieldsStruct(true);
                         opts.relateMoney = model.relateMoney || false;
 
+                        if("then" in fieldsDefine && typeof(fieldsDefine.then) == "function") {
+                            fieldsDefine.then(function(data){
+                                fieldsDefine = data;
+                                $scope.$broadcast("commonBill.structureReady");
+                            });
+                        } else {
+                            $scope.$broadcast("commonBill.structureReady");
+                        }
+
                         //工作流按钮
-    //                    console.log($routeParams);
                         if(model.workflowAlias && $routeParams.id) {
                             $injector.get("WorkflowNodeRes").query({
                                 workflow_alias: model.workflowAlias,
@@ -696,31 +704,40 @@
                         }
                     }
 
-                    /**
-                    * 字段名称
-                    * */
-                   for (var f in fieldsDefine) {
-                       if(!fieldsDefine[f].field) {
-                           fieldsDefine[f].field = f;
-                       }
-                       if(!fieldsDefine[f].displayName) {
-                           fieldsDefine[f].displayName = $rootScope.i18n.lang[f];
-                       }
-                   }
+                    $scope.$on("commonBill.structureReady", function(){
+                        /**
+                         * 字段名称
+                         * */
+                        for (var f in fieldsDefine) {
+                            if(!fieldsDefine[f].field) {
+                                fieldsDefine[f].field = f;
+                            }
+                            if(!fieldsDefine[f].displayName) {
+                                fieldsDefine[f].displayName = $rootScope.i18n.lang[f];
+                            }
+                        }
 
-                    opts = $.extend(defaultOpt, opts);
+                        opts = $.extend(defaultOpt, opts);
 
-                    opts.fieldsDefine = fieldsDefine;
+                        opts.fieldsDefine = fieldsDefine;
 
-                    if($routeParams.id) {
-                        opts.isEdit = true;
-                        var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
-                        resource.get(queryExtraParams).$promise.then(function(data){
-                            $scope.$broadcast("bill.dataLoaded", data);
-                        });
-                    }
+                        if($routeParams.id) {
+                            opts.isEdit = true;
+                            var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
+                            resource.get(queryExtraParams).$promise.then(function(data){
+                                $scope.$broadcast("bill.dataLoaded", data);
+                            });
+                        }
 
-                    $scope.config = opts;
+                        $scope.config = opts;
+
+                        $scope.$broadcast("commonBill.ready");
+                    });
+
+
+
+
+
 
     //                //监控数据变化，是否保存
     //                $scope.watch(function(){

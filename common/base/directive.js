@@ -156,16 +156,18 @@
                 compile: function(element, attrs, transclude) {
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
-                            if ($scope.config.isEdit) {
-                                $scope.$on("bill.dataLoaded", function(evt, data) {
-                                    $scope.$parent.formMetaData = data;
+                            $scope.$on("commonBill.ready", function(){
+                                if ($scope.$parent.config.isEdit) {
+                                    $scope.$on("bill.dataLoaded", function(evt, data) {
+                                        $scope.$parent.formMetaData = data;
+                                        var b = new FormMaker.makeBill($scope);
+                                        iElement.append($compile(b.makeHTML())($scope.$parent));
+                                    });
+                                } else {
                                     var b = new FormMaker.makeBill($scope);
                                     iElement.append($compile(b.makeHTML())($scope.$parent));
-                                });
-                            } else {
-                                var b = new FormMaker.makeBill($scope);
-                                iElement.append($compile(b.makeHTML())($scope.$parent));
-                            }
+                                }
+                            });
                         }
                     };
                 }
