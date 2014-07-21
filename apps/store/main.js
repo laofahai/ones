@@ -23,7 +23,7 @@
                 })
                 //库存警告
                 .when('/store/list/StockWarning', {
-                    templateUrl: 'common/views/common/grid.html',
+                    templateUrl: 'common/base/views/grid.html',
                     controller: 'StockWarningCtl'
                 })
                 //工作流

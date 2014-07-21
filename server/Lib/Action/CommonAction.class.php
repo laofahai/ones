@@ -51,14 +51,8 @@ class CommonAction extends RestAction {
             session_id($_SERVER["HTTP_SESSIONHASH"]);
             session_start();
         }
-//        if(IS_POST) {
-//            print_r(I());exit;
-//        }
-        
         $this->user = $_SESSION["user"];
         $_REQUEST = array_merge((array)$_COOKIE, (array)$_GET, (array)$_POST);
-
-        $this->checkPermission();
 
         $appConfCombined = $this->getAppConfig();
 
@@ -75,6 +69,8 @@ class CommonAction extends RestAction {
             $autoloadPath[] = sprintf("%s/apps/%s/backend/Behavior", ROOT_PATH, $app);
         }
         C("APP_AUTOLOAD_PATH", C("APP_AUTOLOAD_PATH").",". implode(",", $autoloadPath));
+
+        $this->checkPermission();
 
         tag("action_end_init");
     }
@@ -180,6 +176,7 @@ class CommonAction extends RestAction {
 //        var_dump($_SESSION);
 //        var_dump($this->isLogin());exit;
         $current = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
+        $current = strtolower($current);
         if (!$this->isLogin() and 
                 !in_array($current,
                         C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"))) {
@@ -195,10 +192,8 @@ class CommonAction extends RestAction {
 
         $this->loginRequired();
 
-        return true;
-        
         //工作流模式，通过工作流权限判断
-        //重大安全漏洞
+        //安全漏洞
         if($_REQUEST["workflow"]) {
             return true;
         }
@@ -211,7 +206,8 @@ class CommonAction extends RestAction {
             return true;
         }
 //        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
-        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, ucfirst(MODULE_NAME), $this->parseActionName());
+        $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
+        $rule = strtolower($rule);
         if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
             $rs = true;
         } else {

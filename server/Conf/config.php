@@ -43,21 +43,22 @@ $baseConfig = array(
          * 无需登录模块
          */
         'AUTH_DONT_NEED_LOGIN' => array(
-            "Passport.Login.add",
-            "Passport.Login.read",
-            "HOME.MyDesktop.read",
-            "HOME.FrontendRuntime.read"
+            "passport.login.add",
+            "passport.login.read",
+            "home.mydesktop.read",
+            "home.frontendruntime.read"
         ),
         /**
          * 无需认证模块
          */
         'AUTH_DONT_NEED' => array(
-            "HOME.Types.read",
-            "HOME.Index.read",
-            "Workflow.WorkflowNode.read",
-            "Workflow.WorkflowProcess.read",
-            "Dashboard.UserDesktop.read",
-            "Dashboard.MyDesktop.add",
+            "home.types.read",
+            "home.index.read",
+            "workflow.workflownode.read",
+            "workflow.workflowprocess.read",
+            "dashboard.userdesktop.read",
+            "dashboard.mydesktop.add",
+            "dashboard.mydesktop.read"
         )
     ),
 

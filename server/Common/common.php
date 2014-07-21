@@ -482,3 +482,20 @@ function getTypeIdByAlias($type, $alias) {
         }
     }
 }
+
+/*
+ * PHP5.3以下版本并无内置lcfirst函数
+ * **/
+if(false === function_exists('lcfirst'))
+{
+    /**
+     * Make a string's first character lowercase
+     *
+     * @param string $str
+     * @return string the resulting string.
+     */
+    function lcfirst( $str ) {
+        $str[0] = strtolower($str[0]);
+        return (string)$str;
+    }
+}

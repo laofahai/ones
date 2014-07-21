@@ -2,7 +2,7 @@
     angular.module("ones.workflow", [])
     .config(["$routeProvider", function($route){
         $route.when('/workflow/viewChild/workflow/pid/:pid', {
-            templateUrl: "common/views/common/grid.html",
+            templateUrl: "common/base/views/grid.html",
             controller: "WorkflowNodeCtl"
         });
     }])
@@ -143,9 +143,9 @@
             function($scope, WorkflowNodeRes, WorkflowNodeModel, ComView, $routeParams){
                 $routeParams.group = "HOME";
                 $routeParams.module = "workflowNode";
-                var actions = $scope.$parent.i18n.urlMap.HOME.modules.WorkflowNode.actions;
+                var actions = $scope.$parent.i18n.urlMap.workflow.modules.WorkflowNode.actions;
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
-                ComView.makeGridSelectedActions($scope, WorkflowNodeModel, WorkflowNodeRes, "HOME", "WorkflowNode");
+                ComView.makeGridSelectedActions($scope, WorkflowNodeModel, WorkflowNodeRes, "workflow", "WorkflowNode");
                 ComView.displayGrid($scope,WorkflowNodeModel,WorkflowNodeRes, {
                     queryExtraParams: {
                         workflow_id: $routeParams.pid

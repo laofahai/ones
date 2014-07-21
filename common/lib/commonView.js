@@ -302,7 +302,7 @@
                                 config: $scope.config,
                                 defaultData: $scope.defaultData
                             },
-                            contentTemplate: "views/common/filters.html"
+                            contentTemplate: "common/base/views/filters.html"
                         });
                         modal.$promise.then(function(){
                             $timeout(function(){

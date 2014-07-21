@@ -148,9 +148,8 @@ class Auth{
         $grs = $groupRule->where(array(
             "group_id" => array("IN", implode(",", $ids))
         ))->select();
-//        echo $groupRule->getLastSql();exit;
-        $grs = $groupRule->getIndexArray($grs, "name", "rule_id");
 
+        $grs = $groupRule->getIndexArray($grs, "name", "rule_id");
         $_authList[$uid] = $grs;
         
         if($this->_config['AUTH_TYPE']==2){
