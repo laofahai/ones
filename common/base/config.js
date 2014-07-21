@@ -49,7 +49,7 @@
                         angular.forEach(data, function(item) {
                             BaseConf[item.alias] = item.value;
                         });
-                        localStorage.setItem("ones.config", angular.toJson(BaseConf));
+                        //localStorage.setItem("ones.config", angular.toJson(BaseConf));
                     });
                 } catch (err) {
 
