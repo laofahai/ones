@@ -361,7 +361,7 @@
                     if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
                         var field = model.getFieldsStruct();
-                        if(remote || typeof(field.then) === "function") { //需要获取异步数据
+                        if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
                             field.then(function(data){
                                 fieldsDefine = data;
                                 doDefine(data);
@@ -369,7 +369,6 @@
                                 service.alert(msg);
                             });
                         } else {
-                            fieldsDefine = model.getFieldsStruct();
                             doDefine(field);
                         }
 
@@ -434,38 +433,65 @@
     //                console.log(typeof(fieldsDefine));
     //                console.log("getFieldsStruct" in fieldsDefine);
     //                console.log(typeof(fieldsDefine.getFieldsStruct) == "function");
+
                     if(typeof(fieldsDefine) === "object"
                             && "getFieldsStruct" in fieldsDefine
                             && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
                         fieldsDefine = model.getFieldsStruct(true);
 
-                    }
-
-                    /**
-                     * 字段名称
-                     * */
-                    for (var f in fieldsDefine) {
-                        if(!fieldsDefine[f].field) {
-                            fieldsDefine[f].field = f;
-                        }
-                        if(!fieldsDefine[f].displayName) {
-                            fieldsDefine[f].displayName = $rootScope.i18n.lang[f];
-                        }
-                        columnDefs.push(fieldsDefine[f]);
-                    }
-
-
-                    /**
-                     * 过滤不显示字段
-                     * */
-                    var tmp = columnDefs;
-                    columnDefs = [];
-                    for(var $i=0;$i<tmp.length;$i++) {
-                        if(tmp[$i].listable !== false) {
-                            columnDefs.push(tmp[$i]);
+                        if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
+                            fieldsDefine.then(function(data){
+                                fieldsDefine = data;
+                                $scope.$broadcast("commonGrid.structureReady");
+                            }, function(msg){
+                                service.alert(msg);
+                            });
+                        } else {
+                            $scope.$broadcast("commonGrid.structureReady");
                         }
                     }
+
+                    $scope.$on("commonGrid.structureReady", function() {
+
+                        /**
+                         * 字段名称
+                         * */
+                        for (var f in fieldsDefine) {
+                            if(!fieldsDefine[f].field) {
+                                fieldsDefine[f].field = f;
+                            }
+                            if(!fieldsDefine[f].displayName) {
+                                fieldsDefine[f].displayName = $rootScope.i18n.lang[f];
+                            }
+                            columnDefs.push(fieldsDefine[f]);
+                        }
+
+
+                        /**
+                         * 过滤不显示字段
+                         * */
+                        var tmp = columnDefs;
+                        columnDefs = [];
+                        for(var $i=0;$i<tmp.length;$i++) {
+                            if(tmp[$i].listable !== false) {
+                                columnDefs.push(tmp[$i]);
+                            }
+                        }
+
+                        opts.columnDefs = columnDefs;
+
+                        $scope.$broadcast("commonGrid.ready");
+
+                    });
+
+                    $scope.$on('gridData.changed', function() {
+                        service.redirectTo($location.url());
+                        return;
+                        //                        $scope.gridSelected = [];
+                        $scope.gridOptions.selectedItems = [];
+                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+                    });
 
                     /**
                      * 自定义过滤器
@@ -500,7 +526,7 @@
                         showFilter: true,
                         showColumnMenu: true,
                         showSelectionCheckbox: true,
-    //                        selectWithCheckboxOnly: true,
+                        //                        selectWithCheckboxOnly: true,
                         rowHeight: 40,
                         multiSelect: true,
                         headerRowHeight: 40,
@@ -509,13 +535,13 @@
                         pagingOptions: $scope.pagingOptions,
                         filterOptions: $scope.filterOptions,
                         keepLastSelected: true,
-    //                    showGroupPanel: true,
+                        //                    showGroupPanel: true,
                         sortInfo: $scope.sortInfo,
                         totalServerItems: "totalServerItems",
                         useExternalSorting: true,
-    //                        selectedItems: "gridSelected",
-            //            enablePinning: true,
-    //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
+                        //                        selectedItems: "gridSelected",
+                        //            enablePinning: true,
+                        //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
                         i18n: "zh-cn",
                         plugins: [ngGridDoubleClick],
                         //extra
@@ -533,7 +559,7 @@
                     $scope.doExport = function(){};
 
 
-                    opts.columnDefs = columnDefs;
+
 
                     var setPagingData = function(remoteData, page, pageSize) {
                         var data = [];
@@ -593,13 +619,7 @@
 
                     refresh();
 
-                    $scope.$on('gridData.changed', function() {
-                        service.redirectTo($location.url());
-                        return;
-    //                        $scope.gridSelected = [];
-                        $scope.gridOptions.selectedItems = [];
-                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-                    });
+
 
                     /**
                      * 双击事件，支持：viewDetail, viewSub, edit （优先级排序）
@@ -619,7 +639,7 @@
                     };
                     opts.dblClickFn = $scope.gridDblClick;
 
-                    $scope.gridOptions = opts;
+
 
                     $timeout(function(){
                         /**
@@ -644,7 +664,11 @@
                             refresh ();
                         };
                     }, 300);
+
+                    $scope.gridOptions = opts;
+
                 };
+
 
                 service.displayBill = function($scope, fieldsDefine, resource, opts) {
 

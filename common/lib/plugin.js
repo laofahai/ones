@@ -1,4 +1,5 @@
 (function(){
+
     /**
      * ONES前端插件实现
      * 使用：在模块的angular.module之前定义
@@ -28,33 +29,69 @@
      * */
     ones.plugins = {};
 
+    /**
+     * ONES插件作用域
+     * */
+    ones.pluginScope = {};
+    ones.clearPluginScope = function(){
+        ones.pluginScope = {};
+    }
+
+    /**
+     * 插件仅执行一次
+     * */
     //pluginExecutor执行对象
-    ones.pluginExecutor = {
-        /**
-         * 调用插件，需插件已加载
-         * */
-        callPlugin: function(hookName) {
+    ones.pluginRegister = function(hookName, callback) {
+        if(!ones.pluginHooks[hookName]) {
+            ones.pluginHooks[hookName] = [];
+        }
 
-            var args = Array.prototype.slice.call(arguments,1);
-            if(!ones.pluginHooks[hookName].length) {
-                return;
-            }
-            var p = ones.pluginHooks[hookName];
-            for(var i=0; i< p.length; i++) {
-                ones.plugins[p[i]].apply(null, args);
-            }
-        },
-        /**
-         * main.js 中开头定义： 需定义在angular.module()之前
-         * */
-        register: function(hookName, callback) {
-            if(!ones.pluginHooks[hookName]) {
-                ones.pluginHooks[hookName] = [];
-            }
-
-            if(callback) {
-                ones.pluginHooks[hookName].push(callback);
-            }
+        if(callback) {
+            ones.pluginHooks[hookName].push(callback);
         }
     };
+
+
+    ones.pluginHooks = {};
+
+    ones.pluginRegister = function(hookName, callback) {
+        if(!ones.pluginHooks[hookName]) {
+            ones.pluginHooks[hookName] = [];
+        }
+
+        if(callback) {
+            ones.pluginHooks[hookName].push(callback);
+        }
+    }
+
+    angular.module("ones.pluginsModule", [])
+        .service("pluginExecutor", ["$injector", "$q", function($injector, $q){
+            return {
+                /**
+                 * 调用插件，需插件已加载
+                 * */
+                callPlugin: function(hookName) {
+
+                    var args = Array.prototype.slice.call(arguments, 1);
+
+                    var p = ones.pluginHooks[hookName];
+
+                    if(!p) {
+                        throw("unregisted hook: "+ hookName);
+                        return false;
+                    }
+
+                    var defer = $q.defer();
+                    args.unshift(defer);
+                    args.unshift($injector);
+
+                    for(var i=0; i< p.length; i++) {
+                        ones.plugins[p[i]].apply(null, args);
+                    }
+
+                }
+            };
+        }])
+    ;
+
 })();

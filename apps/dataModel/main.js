@@ -1,4 +1,66 @@
 (function(){
+
+    /**
+     * 绑定数据模型
+     * 接受参数： structure 标识模型数据结构
+     *          type 标识数据模型的类型
+     * */
+     ones.plugins.bindDataModelInput = function(injector, defer,  params){
+         var res = injector.get("DataModelFieldsRes");
+
+         res.query({
+             modelType: params.type
+         }, function(data){
+             angular.forEach(data, function(item){
+                 params.structure[item.field_name] = {
+                     field: item.field_name+"_label",
+                     inputType: "select3",
+                     editAbleRequire: params.require || [],
+                     dataSource: injector.get("DataModelDataRes"),
+                     queryWithExistsData: params.queryExtra || [],
+                     autoQuery: params.autoQuery || true,
+                     queryParams: {
+                         fieldAlias: item.field_name
+                     }
+                 };
+             });
+
+             defer.resolve(params.structure);
+         });
+
+         ones.pluginScope.defer = defer;
+
+    //        standard = {
+    //            field: "standard_label",
+    //                nameField: "data",
+    //                valueField: "id",
+    //                inputType: "select3",
+    //                editAbleRequire: "goods_id",
+    //                dataSource: DataModelDataRes,
+    //                queryWithExistsData: ["goods_id"],
+    //                autoQuery: true,
+    //                queryParams: {
+    //                fieldAlias: "standard"
+    //            }
+    //        }
+    //        version = {
+    //            field: "version_label",
+    //                nameField: "data",
+    //                valueField: "id",
+    //                inputType: "select3",
+    //                editAbleRequire: "goods_id",
+    //                dataSource: DataModelDataRes,
+    //                queryWithExistsData: ["goods_id"],
+    //                autoQuery: true,
+    //                queryParams: {
+    //                fieldAlias: "version"
+    //            }
+    //        }
+
+    };
+
+    ones.pluginRegister("bindDataModelInput", "bindDataModelInput")
+
     angular.module("ones.dataModel", [])
         .config(["$routeProvider", function($routeProvider){
             $routeProvider.when('/dataModel/viewChild/dataModel/pid/:pid', {
@@ -122,7 +184,7 @@
                         var params = {
                             modelId:$routeParams.modelId
                         };
-//                        console.log($routeParams);
+    //                        console.log($routeParams);
                         DataModelFieldsRes.query(params, function(data){
                             struct.field_id.dataSource = data;
                             defer.resolve(struct);

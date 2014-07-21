@@ -383,61 +383,44 @@
             };
         }])
 
-        .service("ProductTplModel", ["$rootScope", "GoodsRes", "DataModelDataRes", function($rootScope, GoodsRes,DataModelDataRes){
-            return {
-                subAble: true,
-                addSubAble: false,
-                viewSubAble : true,
-                getFieldsStruct: function(structOnly) {
-                    var struct = {
-                        id: {primary:true},
-                        factory_code_all: {
-                            hideInForm:true
-                        },
-                        goods_name: {
-                            hideInForm: true
-                        },
-                        goods_id: {
-                            displayName: $rootScope.i18n.lang.goods,
-                            listable: false,
-                            inputType: "select3",
-                            dataSource: GoodsRes
-                        },
-                        measure: {
-                            hideInForm: true,
-                        },
-                        standard: {
-                            field: "standard_label",
-                            nameField: "data",
-                            valueField: "id",
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            queryParams: {
-                                fieldAlias: "standard"
+        .service("ProductTplModel", ["$rootScope", "GoodsRes", "DataModelDataRes", "pluginExecutor",
+            function($rootScope, GoodsRes,DataModelDataRes, plugin){
+                return {
+                    subAble: true,
+                    addSubAble: false,
+                    viewSubAble : true,
+                    getFieldsStruct: function(structOnly) {
+                        var structure = {
+                            id: {primary:true},
+                            factory_code_all: {
+                                hideInForm:true
+                            },
+                            goods_name: {
+                                hideInForm: true
+                            },
+                            goods_id: {
+                                displayName: $rootScope.i18n.lang.goods,
+                                listable: false,
+                                inputType: "select3",
+                                dataSource: GoodsRes
+                            },
+                            measure: {
+                                hideInForm: true
                             }
-                        },
-                        version: {
-                            field: "version_label",
-                            nameField: "data",
-                            valueField: "id",
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
-                        }
-                    };
+                        };
 
-                    return struct;
-                }
-            };
-        }])
+
+                        plugin.callPlugin("bindDataModelInput", {
+                            structure: structure,
+                            type: "product",
+                            require: ["goods_id"],
+                            queryExtra: ["goods_id"]
+                        });
+
+                        return ones.pluginScope.defer.promise;
+                    }
+                };
+            }])
         .service('ProductTplEditModel', ["$rootScope", "StockRes", "GoodsRes",
             function($rootScope, StockRes, GoodsRes){
                 return {

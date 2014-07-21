@@ -29,6 +29,23 @@
                 }
             };
         }])
+        .directive("commongrid", ["$compile", function($compile) {
+            return {
+                restrict: "E",
+                replace: true,
+                transclusion: true,
+                compile: function(element, attrs, transclude) {
+                    return {
+                        pre: function($scope, iElement, iAttrs, controller) {
+                            $scope.$on("commonGrid.ready", function() {
+                                var html = '<div class="gridStyle" ng-grid="gridOptions"></div>';
+                                iElement.append($compile(html)($scope));
+                            });
+                        }
+                    };
+                }
+            };
+        }])
         .directive("aceupload", ["$rootScope", function($rootScope){
             return {
                 restrict: "E",

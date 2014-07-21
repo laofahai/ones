@@ -13,6 +13,8 @@
             'ui.select',
             'angularFileUpload',
 
+            "ones.pluginsModule",
+
             '[ones.requirements.placeholder]',
 
             'ones.common',

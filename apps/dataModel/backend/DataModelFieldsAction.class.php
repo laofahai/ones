@@ -29,6 +29,21 @@ class DataModelFieldsAction extends CommonAction {
     protected function pretreatment() {
         $_POST["model_id"] = $_POST["pid"];
     }
+
+
+    public function index() {
+        if(!$_GET["modelType"]) {
+            return parent::index();
+        }
+
+        $dataModel = D("DataModel")->getByType($_GET["modelType"]);
+        if(!$dataModel) {
+            return;
+        }
+
+        $data = D("DataModelFields")->where("model_id=".$dataModel["id"])->select();
+        $this->response($data);
+    }
     
     
 }
