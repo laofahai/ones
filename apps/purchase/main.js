@@ -80,36 +80,6 @@
                             listAble: false,
                             width: 300
                         },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
-                        },
                         num: {
                             inputType: "number",
                             totalAble: true,
@@ -129,8 +99,14 @@
 
                     };
 
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: fields,
+                        type: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
 
-                    return fields;
+                    return rs.defer.promise;
                 }
             };
         }])

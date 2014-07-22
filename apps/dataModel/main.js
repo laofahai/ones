@@ -7,12 +7,22 @@
      * */
      ones.plugins.binDataModelToStructure = function(injector, defer,  params){
          var res = injector.get("DataModelFieldsRes");
+         var modelFieldsPosition = params.after || "goods_id";
+         var result = {};
+
+         for(name in params.structure) {
+             result[name] = params.structure[name];
+             delete(params.structure[name]);
+             if(name == modelFieldsPosition) {
+                 break;
+             }
+         }
 
          res.query({
              modelType: params.type
          }, function(data){
              angular.forEach(data, function(item){
-                 params.structure[item.field_name] = {
+                 result[item.field_name] = {
                      field: item.field_name+"_label",
                      inputType: "select3",
                      editAbleRequire: params.require || [],
@@ -25,7 +35,8 @@
                  };
              });
 
-             defer.resolve(params.structure);
+             result = $.extend(result, params.structure);
+             defer.resolve(result);
          });
 
          ones.pluginScope.defer = defer;

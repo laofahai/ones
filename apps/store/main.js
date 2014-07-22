@@ -109,7 +109,7 @@
 
             return obj;
         }])
-        .service("StockProductListModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
+        .service("StockProductListModel", ["$rootScope", function($rootScope) {
             var obj = {
                 deleteAble: false,
                 exportAble: true
@@ -259,8 +259,8 @@
 
             return obj;
         }])
-        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes",
-            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
+            function($rootScope, GoodsRes, StockRes, plugin) {
                 var obj = {
                     printAble: true
                 };
@@ -280,36 +280,6 @@
                             nameField: "combineLabel",
                             listAble: false,
                             width: 300
-                        },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
@@ -333,8 +303,14 @@
 
                     };
 
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: fields,
+                        type: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
 
-                    return fields;
+                    return rs.defer.promise;
                 };
 
 
@@ -394,8 +370,8 @@
                 }
             };
         }])
-        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes",
-            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
+            function($rootScope, GoodsRes, StockRes, plugin) {
                 var obj = {
                     isBill: true,
                     printAble: true
@@ -420,35 +396,6 @@
                             listAble: false,
                             width: 300
                         },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
-                        },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
                             inputType: "select3",
@@ -471,8 +418,14 @@
 
                     };
 
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: fields,
+                        type: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
 
-                    return fields;
+                    return rs.defer.promise;
                 };
 
 
