@@ -145,7 +145,7 @@
                 }
             };
         }])
-        .directive("bill", ["$compile", "FormMaker", function($compile, FormMaker) {
+        .directive("bill", ["$compile", "FormMaker", "$timeout", function($compile, FormMaker, $timeout) {
             return {
                 restrict: "E",
                 replace: true,
@@ -157,16 +157,18 @@
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
                             $scope.$on("commonBill.ready", function(){
-                                if ($scope.$parent.config.isEdit) {
-                                    $scope.$on("bill.dataLoaded", function(evt, data) {
-                                        $scope.$parent.formMetaData = data;
+                                $timeout(function(){
+                                    if ($scope.$parent.config.isEdit) {
+                                        $scope.$on("bill.dataLoaded", function(evt, data) {
+                                            $scope.$parent.formMetaData = data;
+                                            var b = new FormMaker.makeBill($scope);
+                                            iElement.append($compile(b.makeHTML())($scope.$parent));
+                                        });
+                                    } else {
                                         var b = new FormMaker.makeBill($scope);
                                         iElement.append($compile(b.makeHTML())($scope.$parent));
-                                    });
-                                } else {
-                                    var b = new FormMaker.makeBill($scope);
-                                    iElement.append($compile(b.makeHTML())($scope.$parent));
-                                }
+                                    }
+                                });
                             });
                         }
                     };

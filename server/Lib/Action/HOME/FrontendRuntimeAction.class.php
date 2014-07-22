@@ -22,6 +22,11 @@ class FrontendRuntimeAction extends CommonAction {
                 $data = $runtime->combineI18n(false, $data, $_GET["lang"]);
                 echo json_encode($data);
                 break;
+            case "getCss":
+                header("Content-Type:text/css;charset=utf-8");
+                $data = $runtime->combineCSS();
+                break;
+                echo $data;
             default:
                 header("Content-Type:application/javascript;charset=utf-8");
                 ob_start();

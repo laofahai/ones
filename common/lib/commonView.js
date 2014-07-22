@@ -422,7 +422,6 @@
                 };
 
                 service.displayGrid = function($scope, fieldsDefine, resource, opts){
-
                     $scope.totalServerItems = 0;
                     $scope.gridSelected = [];
 
@@ -439,7 +438,6 @@
                             && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
                         fieldsDefine = model.getFieldsStruct(true);
-
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
                             fieldsDefine.then(function(data){
                                 fieldsDefine = data;
@@ -448,12 +446,17 @@
                                 service.alert(msg);
                             });
                         } else {
-                            $scope.$broadcast("commonGrid.structureReady");
+                            $timeout(function(){
+                                $scope.$broadcast("commonGrid.structureReady");
+                            });
                         }
+                    } else {
+                        $timeout(function(){
+                            $scope.$broadcast("commonGrid.structureReady");
+                        });
                     }
 
                     $scope.$on("commonGrid.structureReady", function() {
-
                         /**
                          * 字段名称
                          * */
@@ -686,10 +689,15 @@
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) == "function") {
                             fieldsDefine.then(function(data){
                                 fieldsDefine = data;
-                                $scope.$broadcast("commonBill.structureReady");
+                                $timeout(function(){
+                                    $scope.$broadcast("commonBill.structureReady");
+                                });
+
                             });
                         } else {
-                            $scope.$broadcast("commonBill.structureReady");
+                            $timeout(function(){
+                                $scope.$broadcast("commonBill.structureReady");
+                            });
                         }
 
                         //工作流按钮

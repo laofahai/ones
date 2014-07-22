@@ -146,7 +146,7 @@ class FrontEndRuntime {
                 }
 
                 $appPath = $dir."/".$app;
-                $this->loadAppJS($appPath);
+                $this->loadAppStatic($appPath);
 
             }
             closedir($dh);
@@ -171,7 +171,7 @@ class FrontEndRuntime {
         print_r($this->included);
     }
 
-    private function loadAppJS($appPath) {
+    private function loadAppStatic($appPath, $ext="js") {
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
             if(in_array($appFile, $this->blackList)) {
@@ -192,7 +192,7 @@ class FrontEndRuntime {
                                 continue;
                             }
                             $depPath = dirname($appPath)."/".$dep;
-                            $this->loadAppJS($depPath);
+                            $this->loadAppStatic($depPath, $ext);
                         }
                     }
                     if($tmpConfig["alias"] && is_file($appPath."/main.js")) {
@@ -200,7 +200,7 @@ class FrontEndRuntime {
                     }
                 }
                 if(!in_array($tmpPath, $this->included)) {
-                    if(end(explode(".", $tmpPath)) === "js") {
+                    if(end(explode(".", $tmpPath)) === $ext) {
                         $this->response(file_get_contents($tmpPath));
                     }
                     $this->included[md5($tmpPath)] = $tmpPath;
@@ -209,6 +209,31 @@ class FrontEndRuntime {
         }
 
         closedir($appDH);
+    }
+
+    public function combineCSS($dir=null) {
+        $dir = $dir ? $dir : ROOT_PATH."/apps";
+        if ($dh = opendir($dir)) {
+            while (($app = readdir($dh)) !== false) {
+
+                if(!in_array($app, $this->loadedApps)) {
+                    continue;
+                }
+
+                $cssPath = $dir."/".$app."/"."style.css";
+                if(is_file($cssPath)) {
+                    echo $this->doTrimCss(file_get_contents($cssPath));
+                }
+
+            }
+            closedir($dh);
+        }
+    }
+
+    private function doTrimCss($content) {
+        return str_replace(array(
+            "\n"
+        ), "", $content);
     }
 
 }

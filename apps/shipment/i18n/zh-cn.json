@@ -12,6 +12,15 @@
                     }
                 }
             }
+        },
+        "doWorkflow": {
+            "modules": {
+                "shipment": {
+                    "actions": {
+                        "makeShipment": "生成发货单"
+                    }
+                }
+            }
         }
     },
     "lang": {
