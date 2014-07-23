@@ -164,6 +164,10 @@ class CommonAction extends RestAction {
                 $action = "read";
                 break;
         }
+
+        if($this->singleAction) {
+            $action = "read";
+        }
         
 //        $action = ACTION_NAME == "insert" ? "add" : $action;
 //        $action = ACTION_NAME == "update" ? "edit" : $action;

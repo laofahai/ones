@@ -405,3 +405,4 @@ class AppsAction extends CommonAction {
     }
 
 }
+

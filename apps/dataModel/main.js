@@ -1,12 +1,13 @@
 (function(){
 
     /**
-     * 绑定数据模型
+     * 绑定数据模型至模型数据结构插件
      * 接受参数： structure 标识模型数据结构
      *          type 标识数据模型的类型
      * */
      ones.plugins.binDataModelToStructure = function(injector, defer,  params){
          var res = injector.get("DataModelFieldsRes");
+         //模型字段位置
          var modelFieldsPosition = params.after || "goods_id";
          var result = {};
 
@@ -18,6 +19,7 @@
              }
          }
 
+         //查询模型字段
          res.query({
              modelType: params.type
          }, function(data){

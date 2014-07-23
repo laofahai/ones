@@ -298,8 +298,8 @@
                             res.get({
                                 id: selectedItems[0].id
                             }).$promise.then(function(data){
-                                    ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
-                                });
+                                ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
+                            });
                         }
                     }
                 ],

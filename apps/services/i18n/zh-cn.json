@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "services": {
+            "name": "ONES服务",
             "modules": {
                 "DataBackup": {
                     "actions": {

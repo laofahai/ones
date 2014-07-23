@@ -12,6 +12,8 @@
  * @author nemo
  */
 class ClearCacheAction extends CommonAction {
+
+    protected $singleAction = true;
     
     //清除缓存
     public function insert() {

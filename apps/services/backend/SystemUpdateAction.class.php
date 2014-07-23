@@ -7,6 +7,8 @@
  */
 class SystemUpdateAction extends CommonAction {
 
+    protected $singleAction = true;
+
     protected $server;
 
     protected $local;

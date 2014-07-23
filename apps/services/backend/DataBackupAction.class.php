@@ -8,6 +8,8 @@
 
 class DataBackupAction extends CommonAction {
 
+    protected $singleAction = true;
+
     //数据备份
     public function insert() {
         $options = array();
