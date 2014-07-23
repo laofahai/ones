@@ -4,7 +4,7 @@
 
 ## 关于ONES 
 
-是ONES 不是ONS，项目前端基于AngularJS+Bootstrap, 后端使用PHP+MySQL，使用ThinkPHP框架。目标是打造可解决实际问题优秀的B/S开源ERP系统。目前仍在开发过程中。
+ONES not ONS，项目前端基于AngularJS+Bootstrap, 后端使用PHP+MySQL，使用ThinkPHP框架。目标是打造可解决实际问题优秀的B/S开源ERP系统。目前仍在开发过程中。
 
 ## 特色
 * 致力于解决实际问题
