@@ -24,12 +24,17 @@ class DataModelFieldsAction extends CommonAction {
             $map["model_id"] = abs(intval($_GET["modelId"]));
         }
     }
+
+    protected function _order(&$order) {
+        $order = "listorder DESC";
+    }
     
     
     protected function pretreatment() {
-        $_POST["model_id"] = $_POST["pid"];
+        if(!$_POST["model_id"]) {
+            $_POST["model_id"] = $_REQUEST["pid"];
+        }
     }
-
 
     public function index() {
         if(!$_GET["modelType"]) {
@@ -41,7 +46,7 @@ class DataModelFieldsAction extends CommonAction {
             return;
         }
 
-        $data = D("DataModelFields")->where("model_id=".$dataModel["id"])->select();
+        $data = D("DataModelFields")->where("model_id=".$dataModel["id"])->order("listorder DESC")->select();
         $this->response($data);
     }
     

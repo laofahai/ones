@@ -42,7 +42,7 @@
                         'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />',
-                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s" ng-bind="i18n.lang.undefined"></a>',
+                'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>',
                 'fields/file': '<aceupload config="%(config)s"></aceupload>'
 //                'fields/file': '<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" \
 //                    ng-show="dropSupported">drop files here</div> \
@@ -189,7 +189,7 @@
                 
                 var goods_id = queryParams["goods_id"].split("_");
                 goods_id = goods_id[1];
-                
+                $scope.$parent.formData[context.trid].craft = $scope.$parent.i18n.lang.undefined;
                 var crafts = [];
                 res.query({
                     goods_id: goods_id,
@@ -198,7 +198,9 @@
                     angular.forEach(data, function(item){
                         crafts.push(item.name);
                     });
-                    $scope.$parent.formData[context.trid].craft = crafts.join(">");
+                    if(crafts.length) {
+                        $scope.$parent.formData[context.trid].craft = crafts.join(">");
+                    }
                 });
                 
                 var action = sprintf('doSetProductCraft(%d, \'%s\', this)',parseInt(goods_id), "");

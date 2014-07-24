@@ -16,16 +16,19 @@ class GoodsCraftAction extends CommonAction {
     public function index() {
 
         $goods_id = abs(intval($_GET["goods_id"]));
-        
+
         $craftModel = D("Craft");
         $crafts = $craftModel->order("listorder ASC")->select();
-        
+
         $model = D("GoodsCraftView");
         $tmp = $model->where("goods_id=".$goods_id)->order("listorder ASC")->select();
-        
+//        var_dump($tmp);
+//        $model->getLastSql();exit;
+        $goodsCrafts = array();
         foreach($tmp as $k=>$v) {
             $goodsCrafts[$v["craft_id"]] = $v;
         }
+
         
         //包含所有
         if(!$_GET["only_defined"]) {
@@ -38,7 +41,7 @@ class GoodsCraftAction extends CommonAction {
                 }
             }
         }
-        
+
         $goodsCrafts = reIndex($goodsCrafts);
         
         $this->response($goodsCrafts);

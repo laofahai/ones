@@ -39,6 +39,8 @@
              });
 
              result = $.extend(result, params.structure);
+
+
              defer.resolve(result);
          });
 
@@ -46,7 +48,7 @@
 
     };
 
-    ones.pluginRegister("binDataModelToStructure", "binDataModelToStructure")
+    ones.pluginRegister("binDataModelToStructure", "binDataModelToStructure");
 
     angular.module("ones.dataModel", [])
         .config(["$routeProvider", function($routeProvider){
@@ -102,7 +104,7 @@
                         displayName: i18n.displayName
                     },
                     field_name: {
-                        displayName: i18n.name
+                        displayName: i18n.alias
                     },
                     type: {
                         inputType: "select",
@@ -120,6 +122,9 @@
                                 name: i18n.inputType.select
                             }
                         ]
+                    },
+                    listorder: {
+                        value: 99
                     }
                 };
             };
@@ -183,11 +188,11 @@
             }])
         .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $routeParams) {
-                $routeParams.group = "HOME";
+                $routeParams.group = "dataModule";
                 $routeParams.module = "DataModelFields";
                 var actions = $scope.$parent.i18n.urlMap.dataModel.modules.DataModelFields.actions;
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
-                ComView.makeGridSelectedActions($scope, model, res, "HOME", "DataModelFields", "/pid/"+$routeParams.pid);
+                ComView.makeGridSelectedActions($scope, model, res, "dataModel", "DataModelFields", "/pid/"+$routeParams.pid);
                 ComView.displayGrid($scope,model,res, {
                     queryExtraParams: {
                         modelId: $routeParams.pid

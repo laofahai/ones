@@ -299,6 +299,10 @@ class CommonAction extends RestAction {
             $model = $model->limit($limit);
         }
 
+        if($order) {
+            $model = $model->order($order);
+        }
+
         $list = $model->select();
 
         $this->queryMeta = array(

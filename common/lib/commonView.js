@@ -414,6 +414,61 @@
                     fieldsDefine = fieldsDefine ? fieldsDefine : [];
                     var columnDefs = [];
 
+                    /**
+                     * 分页/Grid 过滤器默认项
+                     * */
+                    $scope.pagingOptions = {
+                        pageSizes: [15, 30, 50],
+                        pageSize: 15,
+                        currentPage: 1
+                    };
+                    $scope.filterOptions = {
+                        filterText: "",
+                        useExternalFilter: false
+                    };
+                    $scope.sortInfo = {
+                        fields: ["id"],
+                        directions: ["DESC"]
+                    };
+
+
+                    //默认选项
+                    var defaults = {
+                        data: 'itemsList',
+                        enablePaging: true,
+                        showFooter: true,
+                        showFilter: true,
+                        showColumnMenu: true,
+                        showSelectionCheckbox: true,
+                        //                        selectWithCheckboxOnly: true,
+                        rowHeight: 40,
+                        multiSelect: true,
+                        headerRowHeight: 40,
+                        enableColumnResize: true,
+                        selectedItems: $scope.gridSelected,
+                        pagingOptions: $scope.pagingOptions,
+                        filterOptions: $scope.filterOptions,
+                        keepLastSelected: true,
+                        //                    showGroupPanel: true,
+                        sortInfo: $scope.sortInfo,
+                        totalServerItems: "totalServerItems",
+                        useExternalSorting: true,
+                        //                        selectedItems: "gridSelected",
+                        //            enablePinning: true,
+                        //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
+                        i18n: "zh-cn",
+                        plugins: [ngGridDoubleClick],
+                        //extra
+                        module: $location.$$url.split("/").splice(0, 3).join("/"),
+                        subModule: "",
+                        queryExtraParams: {}, //get 参数
+                        editExtraParams: "" //edit 时附加参数
+                    };
+
+                    opts = $.extend(defaults, options);
+                    opts.subModule = opts.subModule ? "/" + opts.subModule : "";
+
+
     //                console.log(typeof(fieldsDefine));
     //                console.log("getFieldsStruct" in fieldsDefine);
     //                console.log(typeof(fieldsDefine.getFieldsStruct) == "function");
@@ -498,65 +553,13 @@
                     }
 
 
-                    /**
-                     * 分页/Grid 过滤器默认项
-                     * */
-                    $scope.pagingOptions = {
-                        pageSizes: [15, 30, 50],
-                        pageSize: 15,
-                        currentPage: 1
-                    };
-                    $scope.filterOptions = {
-                        filterText: "",
-                        useExternalFilter: false
-                    };
-                    $scope.sortInfo = {
-                        fields: ["id"],
-                        directions: ["DESC"]
-                    };
 
-                    //默认选项
-                    var defaults = {
-                        data: 'itemsList',
-                        enablePaging: true,
-                        showFooter: true,
-                        showFilter: true,
-                        showColumnMenu: true,
-                        showSelectionCheckbox: true,
-                        //                        selectWithCheckboxOnly: true,
-                        rowHeight: 40,
-                        multiSelect: true,
-                        headerRowHeight: 40,
-                        enableColumnResize: true,
-                        selectedItems: $scope.gridSelected,
-                        pagingOptions: $scope.pagingOptions,
-                        filterOptions: $scope.filterOptions,
-                        keepLastSelected: true,
-                        //                    showGroupPanel: true,
-                        sortInfo: $scope.sortInfo,
-                        totalServerItems: "totalServerItems",
-                        useExternalSorting: true,
-                        //                        selectedItems: "gridSelected",
-                        //            enablePinning: true,
-                        //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
-                        i18n: "zh-cn",
-                        plugins: [ngGridDoubleClick],
-                        //extra
-                        module: $location.$$url.split("/").splice(0, 3).join("/"),
-                        subModule: "",
-                        queryExtraParams: {}, //get 参数
-                        editExtraParams: "" //edit 时附加参数
-                    };
 
-                    var opts = $.extend(defaults, options);
-                    opts.subModule = opts.subModule ? "/" + opts.subModule : "";
+
 
 
                     //导出excel
                     $scope.doExport = function(){};
-
-
-
 
                     var setPagingData = function(remoteData, page, pageSize) {
                         var data = [];

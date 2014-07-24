@@ -346,10 +346,12 @@ class Workflow {
                 $node = $this->nodeModel->find($tmp["node_id"]);
                 if($node["listorder"] >= $next->currentNode["listorder"]) {
                     $map["id"] = array("LT", $tmp["id"]);
-                    $prevProcess = $this->processModel->where($aMap)->order("id DESC")->find();
+                    $prevProcess = $this->processModel->where($map)->order("id DESC")->find();
                     $prevNode = $this->nodeModel->find($prevProcess["node_id"]);
+//                    print_r($prevNode);
+//                    print_r($next->currentNode);
                     if($prevNode and $prevNode["listorder"] > $next->currentNode["listorder"]) {
-                        $hastProcessed = false;
+                        $hasProcessed = false;
                     } else {
                         $hasProcessed = true;
                     }

@@ -27,7 +27,7 @@
                     controller: "WorkflowMakeProduceBomsCtl"
                 })
                 .when('/doWorkflow/Produce/doCraft/:nodeId/:id', {
-                    templateUrl: appView("producePlan/doCraft.html", "produce"),
+                    templateUrl: appView("doCraft.html", "produce"),
                     controller : "WorkflowDoCraftCtl"
                 })
                 .when('/doWorkflow/Produce/makeStockin/:nodeId/:id', {
@@ -71,7 +71,7 @@
             return $resource(cnf.BSU+"produce/doCraft/:id.json", null, {'update': {method: 'PUT'}});
         }])
 
-        .run(["$rootScope", function($rootScope){
+        .run(["$rootScope", "$injector", function($rootScope, $injector){
             /**
              * 通用产品工艺设置
              * */
@@ -104,7 +104,7 @@
                 deleteAble: false,
                 extraSelectActions: [
                     {
-                        label: $rootScope.i18n.lang.actions.doCraft,
+                        label: toLang("doCraft", "actions", $rootScope),
                         action: function($event, selectedItems){
                             var scope = this.scope;
                             var injector = this.injector;
@@ -526,7 +526,7 @@
                 $routeParams.id = $routeParams.pid;
                 ComView.displayBill($scope, model, res, {
                     id: $routeParams.pid,
-                    module: "/JXC/ProductTplDetail",
+                    module: "/produce/productTplDetail",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });
             }])
@@ -552,7 +552,7 @@
                         donext: true,
                         data: $scope.formMetaData
                     }).$promise.then(function(data){
-                            $location.url("/Produce/list/producePlan");
+                            $location.url("/produce/list/producePlan");
                         });
                 };
             }])

@@ -80,10 +80,11 @@ var isAppLoaded = function(app) {
 
 /**
  * 根据KEY返回语言包字段，优先使用当前APP的语言包
+ * 第三个
  * */
 var toLang = function(key, section, $rootScope) {
     section = section ? "lang."+section : "lang";
-    var appAlias = angular.isString($rootScope) ? $rootScope : $rootScope.currentPage.app;
+    var appAlias = $rootScope.currentPage.app;
     var langStr = "";
     var appSection = "app_"+appAlias;
     var lang;
