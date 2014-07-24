@@ -25,8 +25,9 @@
          }, function(data){
              angular.forEach(data, function(item){
                  result[item.field_name] = {
-                     field: item.field_name+"_label",
+//                     field: item.field_name+"_label",
                      inputType: "select3",
+                     nameField: "data",
                      editAbleRequire: params.require || [],
                      dataSource: injector.get("DataModelDataRes"),
                      queryWithExistsData: params.queryExtra || [],

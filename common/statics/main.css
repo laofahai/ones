@@ -1,3 +1,6 @@
+html {
+    min-height:101%;
+}
 a{
     cursor:pointer;
 }

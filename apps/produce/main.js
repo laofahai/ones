@@ -23,15 +23,15 @@
                     controller: 'ProductTplDetailCtl'
                 })
                 .when('/doWorkflow/Produce/makeBoms/:nodeId/:id', {
-                    templateUrl: "common/viewsproduce/producePlan/makeBoms.html",
+                    templateUrl: appView("producePlan/makeBoms.html", "produce"),
                     controller: "WorkflowMakeProduceBomsCtl"
                 })
                 .when('/doWorkflow/Produce/doCraft/:nodeId/:id', {
-                    templateUrl: "common/viewsproduce/producePlan/doCraft.html",
+                    templateUrl: appView("producePlan/doCraft.html", "produce"),
                     controller : "WorkflowDoCraftCtl"
                 })
                 .when('/doWorkflow/Produce/makeStockin/:nodeId/:id', {
-                    templateUrl: "common/viewsproduce/producePlan/makeStockin.html",
+                    templateUrl: appView("producePlan/makeStockin.html", "produce"),
                     controller : "WorkflowProduceMakeStockinCtl"
                 })
             ;
@@ -69,6 +69,33 @@
         }])
         .factory("DoCraftRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"produce/doCraft/:id.json", null, {'update': {method: 'PUT'}});
+        }])
+
+        .run(["$rootScope", function($rootScope){
+            /**
+             * 通用产品工艺设置
+             * */
+            $rootScope.doSetProductCraft = function(id, name, scope) {
+                var res = $injector.get("GoodsCraftRes");
+                var modal = $injector.get("$modal");
+                res.query({goods_id: id}).$promise.then(function(data){
+                    $rootScope.craftsList = data;
+                });
+
+                var theModal = modal({
+                    scope: scope,
+                    title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, name),
+                    contentTemplate: appView('productCraft.html', 'produce'),
+                    show: false
+                });
+                theModal.$promise.then(theModal.show);
+
+                scope.doSaveCraft = function(){
+                    res.update({id: id}, scope.craftsList, function(data){
+                        theModal.hide();
+                    });
+                };
+            };
         }])
 
         .service("DoCraftModel", ["$rootScope", "$injector", function($rootScope, $injector) {
@@ -502,6 +529,75 @@
                     module: "/JXC/ProductTplDetail",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });
+            }])
+
+        //生成生产计划物料清单
+        .controller("WorkflowMakeProduceBomsCtl", ["$scope", "ComView", "ProduceBomsRes", "ProduceBomsModel", "$routeParams", "$location",
+            function($scope, ComView, res, model, $routeParams, $location){
+                $scope.selectAble=false;
+
+                ComView.makeGridSelectedActions($scope, model, res, "Produce", "ProducePlan");
+
+                ComView.displayBill($scope, model, res, {
+                    id: $routeParams.id,
+                    queryExtraParams: {workflowing: true}
+                });
+
+                $scope.doSubmit = function() {
+                    $scope.formMetaData.rows = $scope.formData;
+                    res.doPostWorkflow({
+                        workflow: true,
+                        node_id: $routeParams.nodeId,
+                        id: $routeParams.id,
+                        donext: true,
+                        data: $scope.formMetaData
+                    }).$promise.then(function(data){
+                            $location.url("/Produce/list/producePlan");
+                        });
+                };
+            }])
+        /**
+         * 执行生产工序
+         * 提供当前生产计划成品列表，供操作员选择执行某个成品的某个工序，工序按照预定义顺序执行
+         * */
+        .controller("WorkflowDoCraftCtl", ["$scope", "ComView", "DoCraftRes", "DoCraftModel", "$routeParams",
+            function($scope, ComView, res, model, $routeParams){
+
+                /**
+                 * 扩展选择操作选项
+                 * */
+                ComView.makeGridSelectedActions($scope, model, res, "Produce", "doCraft");
+
+                ComView.displayGrid($scope, model, res, {
+                    queryExtraParams: {
+                        plan_id: $routeParams.id,
+                        workflow: true
+                    }
+                });
+            }])
+        /**
+         * 生成入库单
+         * */
+        .controller("WorkflowProduceMakeStockinCtl", ["$scope", "ProducePlanRes", "ProducePlanDetailEditModel", "ComView", "$routeParams", "$location",
+            function($scope, res, model, ComView, $routeParams, $location){
+                $scope.selectAble = false;
+                ComView.displayBill($scope, model, res, {
+                    plan_id: $routeParams.id,
+                    queryExtraParams: {workflowing: true}
+                });
+
+                $scope.doSubmit = function(){
+                    $scope.formMetaData.rows = $scope.formData;
+                    res.doPostWorkflow({
+                        workflow: true,
+                        node_id: $routeParams.nodeId,
+                        id: $routeParams.id,
+                        donext: true,
+                        data: $scope.formMetaData
+                    }).$promise.then(function(data){
+                            $location.url("/Produce/list/producePlan");
+                        });
+                };
             }])
     ;
 })();

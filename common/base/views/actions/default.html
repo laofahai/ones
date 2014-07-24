@@ -26,7 +26,7 @@
         </div>
         <!--//选中项操作-->
         <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
-            <button data-toggle="dropdown" class="btn btn-primary btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length}">
+            <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
                 {{i18n.lang.selected_action|sprintf:gridSelected.length}}
                 <i class="icon-caret-down icon-on-right"></i>
             </button>
@@ -43,5 +43,5 @@
             </a>
         </div>
     </div>
-    
+
 </section>

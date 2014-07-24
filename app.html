@@ -140,8 +140,8 @@
                                 <i class="icon-home home-icon"></i>
                                 <a href="#/HOME/Index/dashboard">控制面板</a>
                             </li>
-                            <li ng-bind="currentPage.group"></li>
-                            <li class="active" ng-bind="currentPage.module"></li>
+                            <li ng-bind="currentPage.lang.app"></li>
+                            <li class="active" ng-bind="currentPage.lang.module"></li>
                         </ul><!-- .breadcrumb -->
 
                         <div class="nav-search" id="nav-search">
@@ -157,10 +157,10 @@
                     <div class="page-content">
                         <div class="page-header">
                             <h1>
-                                {{currentPage.action}}
+                                {{currentPage.lang.action}}
                                 <small>
                                     <i class="icon-double-angle-right"></i>
-                                    {{currentPage.actionDesc}}
+                                    {{currentPage.lang.actionDesc}}
                                 </small>
                             </h1>
                         </div><!-- /.page-header -->

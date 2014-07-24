@@ -838,7 +838,6 @@
             },
             setNumberData: function(element, data, isBlur) {
                 if($(element).attr("totalAble")) {
-                    console.log(123);
                     var total = 0;
                     var context = getInputContext(element);
                     angular.forEach(this.scope.$parent[this.opts.dataName], function(item){

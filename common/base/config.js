@@ -12,8 +12,6 @@
     angular.module("ones.configModule", [])
         .factory("ones.config", ["$location", function($location) {
 
-            BaseConf.currentApp = $location.url().split("/")[1];
-
             ones.loadedApps = BaseConf.LoadedApps;
             try{
                 var localValue = angular.fromJson(localStorage.getItem("ones.config"));

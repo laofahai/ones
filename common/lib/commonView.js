@@ -189,42 +189,8 @@
                  * @param section 默认取用的section，如：lang 会取得 i18n.lang.langKey
                  * */
                 service.toLang = function(lang, section) {
-                    section = section || "lang";
-                    var langStr = "";
-                    var appSection = "app_"+conf.currentApp;
-                    if($rootScope.i18n[section][appSection]) {
-                        langStr = sprintf("i18n.%s.%s.%s", section, appSection, lang);
-                    } else {
-                        langStr = sprintf("i18n.%s.%s", section, lang);
-                    }
-                    return $rootScope.$eval(langStr);
+                    return toLang(lang, section, $rootScope);
                 }
-
-
-                /**
-                 * 通用产品工艺设置
-                 * */
-                $rootScope.doSetProductCraft = function(id, name, scope) {
-                    var res = $injector.get("GoodsCraftRes");
-                    var modal = $injector.get("$modal");
-                    res.query({goods_id: id}).$promise.then(function(data){
-                        $rootScope.craftsList = data;
-                    });
-
-                    var theModal = modal({
-                        scope: scope,
-                        title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, name),
-                        contentTemplate: 'views/produce/productCraft.html',
-                        show: false
-                    });
-                    theModal.$promise.then(theModal.show);
-
-                    scope.doSaveCraft = function(){
-                        res.update({id: id}, scope.craftsList, function(data){
-                            theModal.hide();
-                        });
-                    };
-                };
 
                 /**
                  * 通用alert
@@ -275,12 +241,12 @@
                         switch(type) {
                             case "between":
                                 FieldsDefine["_filter_start_"+item.field] = {
-                                    displayName: $rootScope.i18n.lang[item.field] + $rootScope.i18n.lang.start,
+                                    displayName: service.toLang(item.field) + service.toLang("start"),
                                     inputType: item.inputType || "number",
                                     value: item.defaultData[0] || 0
                                 };
                                 FieldsDefine["_filter_end_"+item.field] = {
-                                    displayName: $rootScope.i18n.lang[item.field] + $rootScope.i18n.lang.end,
+                                    displayName: service.toLang(item.field) + service.toLang("end"),
                                     inputType: item.inputType || "number",
                                     value: item.defaultData[1] || 0
                                 };
@@ -313,7 +279,7 @@
                         }
                         $scope.modal = modal = $modal({
                             scope: $scope,
-                            title: $rootScope.i18n.lang.actions.filters,
+                            title: service.toLang("filters", "actions"),
                             content: {
                                 config: $scope.config,
                                 defaultData: $scope.defaultData
@@ -484,7 +450,7 @@
                                 fieldsDefine[f].field = f;
                             }
                             if(!fieldsDefine[f].displayName) {
-                                fieldsDefine[f].displayName = $rootScope.i18n.lang[f];
+                                fieldsDefine[f].displayName = service.toLang(f);
                             }
                             columnDefs.push(fieldsDefine[f]);
                         }
@@ -504,12 +470,11 @@
                         /**
                          * 加入动作列
                          * */
-                        if(false !== $scope.selecteAble) {
-                            columnDefs.push({
-                                displayName: $rootScope.i18n.lang.operation
-                            });
-                            console.log(columnDefs);
-                        }
+//                        if(false !== $scope.selecteAble) {
+//                            columnDefs.push({
+//                                displayName: $rootScope.i18n.lang.operation
+//                            });
+//                        }
 
                         opts.columnDefs = columnDefs;
 
@@ -750,7 +715,7 @@
                                 fieldsDefine[f].field = f;
                             }
                             if(!fieldsDefine[f].displayName) {
-                                fieldsDefine[f].displayName = $rootScope.i18n.lang[f];
+                                fieldsDefine[f].displayName = service.toLang(f);
                             }
                         }
 
@@ -826,7 +791,7 @@
                     //编辑
                     if(model.editAble === undefined || model.editAble) {
                         $scope.selectedActions.push({
-                            label: $rootScope.i18n.lang.actions.edit,
+                            label: service.toLang('edit', "actions"),
                             action: function(){
                                 return $scope.doEditSelected($scope.gridSelected[0]);
                             },
@@ -856,7 +821,7 @@
                     if(model.subAble) {
                         if(false !== model.addSubAble) {
                             $scope.selectedActions.push({
-                                label: $rootScope.i18n.lang.actions.addChild,
+                                label: service.toLang('addChild', "actions"),
                                 class: "primary",
                                 multi: false,
                                 action: function(){
@@ -872,7 +837,7 @@
                         //查看子项
                         if(false !== model.viewSubAble) {
                             $scope.selectedActions.push({
-                                label: $rootScope.i18n.lang.actions.viewChild,
+                                label: service.toLang('viewChild', "actions"),
                                 class: "primary",
                                 multi: false,
                                 action: function(){
@@ -888,7 +853,7 @@
                     //查看详情
                     if(model.viewDetailAble) {
                         $scope.selectedActions.push({
-                            label: $rootScope.i18n.lang.actions.viewDetail,
+                            label: service.toLang('viewDetail', "actions"),
                             class: "primary",
                             multi: false,
                             action: function(){
@@ -1007,13 +972,13 @@
                     //删除
                     if(model.deleteAble === undefined || model.deleteAble) {
                         $scope.selectedActions.push({
-                            label: $rootScope.i18n.lang.actions.delete,
+                            label: service.toLang('delete', "actions"),
                             action: function(){
                                 var ids = [];
                                 angular.forEach($scope.gridSelected, function(item){
                                     ids.push(item.id);
                                 });
-                                if (!confirm(sprintf($rootScope.i18n.lang.confirm_delete, $scope.gridSelected.length))) {
+                                if (!confirm(sprintf(service.toLang('confirm_delete'), $scope.gridSelected.length))) {
                                     return false;
                                 }
                                 res.delete({id: ids.join()}, function(data) {
@@ -1029,7 +994,7 @@
                     }
                     if(model.printAble) {
                         $scope.selectedActions.push({
-                            label: $rootScope.i18n.lang.actions.print,
+                            label: service.toLang('print', "actions"),
                             multi: true,
                             action: function(){
                                 var ids = [];
@@ -1066,6 +1031,9 @@
                         if(available.indexOf(k) < 0) {
                             return;
                         }
+                        if(k == $rootScope.currentPage.action) {
+                            return;
+                        }
                         var action = k;
                         if(isBill && k === "add") {
                             action = "addBill";
@@ -1076,7 +1044,7 @@
                         }
 
                         $scope.pageActions.push({
-                            label: $rootScope.i18n.lang.actions[k],
+                            label: service.toLang(k, "actions"),
                             class: ComViewConfig.actionClasses[k],
                             href : sprintf("/%(group)s/%(action)s/%(module)s", {
                                 group: $routeParams.group,

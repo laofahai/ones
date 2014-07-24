@@ -78,6 +78,34 @@ var isAppLoaded = function(app) {
     return ones.loadedApps.indexOf("ones."+app) >= 0;
 };
 
+/**
+ * 根据KEY返回语言包字段，优先使用当前APP的语言包
+ * */
+var toLang = function(key, section, $rootScope) {
+    section = section ? "lang."+section : "lang";
+    var appAlias = angular.isString($rootScope) ? $rootScope : $rootScope.currentPage.app;
+    var langStr = "";
+    var appSection = "app_"+appAlias;
+    var lang;
+
+    langStr = sprintf("i18n.%s.%s.%s", section, appSection, key);
+
+    lang = $rootScope.$eval(langStr);
+    if(lang === undefined) {
+
+        langStr = sprintf("i18n.%s.%s", section, key);
+        lang = $rootScope.$eval(langStr);
+    }
+
+    //通过递归合并的数组元素会追加成为新数组，返回最后一个元素
+    if(angular.isArray(lang)) {
+        return lang.pop();
+    } else {
+//        console.log(langStr);
+        return lang === undefined ? key : lang;
+    }
+}
+
 
 
 Array.prototype.in_array = function(e)

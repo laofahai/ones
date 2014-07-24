@@ -83,6 +83,7 @@ class CommonTreeModel extends CommonModel {
     
     /**
      * 删除子节点
+     * @todo 删除多条时 只会删除第一条数据
      */
     public function deleteNode($id) {
 

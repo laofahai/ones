@@ -82,7 +82,7 @@
                 }
 
                 $scope.$watch(function() {
-                    return $location.$$url;
+                    return $location.path();
                 }, function() {
                     $scope.currentURI = encodeURI(encodeURIComponent($location.$$url));
                 });
@@ -111,8 +111,6 @@
                 $scope.removeDefaultKey = function() {
 
                 };
-
-
                 /**
                  * 监控路由变化
                  * */
@@ -121,15 +119,16 @@
                 }, function() {
                     /**
                      * 设置当前页面信息
-                     * 两种URL模式： 普通模式 group/module/action
-                     *             URL友好模式 group/action(list|add|edit)/module
+                     * 两种URL模式： 普通模式 app/module/action
+                     *             URL友好模式 app/action(list|add|edit)/module
                      * */
-                    var actionList = ['list', 'listAll', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print'], fullPath, group, module, action;
+                    var actionList = ['list', 'listAll', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print'];
+                    var fullPath, app, module, action;
                     fullPath = $location.path().split("/").slice(1, 4);
                     if (!fullPath[1]) {
                         return;
                     }
-                    group = fullPath[0];
+                    app = fullPath[0];
                     fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
                     //友好模式
                     if (actionList.indexOf(fullPath[1]) >= 0) {
@@ -140,29 +139,43 @@
                         action = fullPath[2];
                     }
 
-                    group = group ? group : "HOME";
+                    app = app ? app : "HOME";
                     module = module ? module : "Index";
                     action = action && isNaN(parseInt(action)) ? action : "list";
 //                        console.log(module);
-                    $scope.currentPage = {};
+                    $scope.currentPage = {
+                        lang: {}
+                    };
                     var urlmap = $rootScope.i18n.urlMap;
-                    if (urlmap[group]) {
-                        $scope.currentPage.group = urlmap[group].name;
-                        if (urlmap[group].modules[module]) {
-                            $scope.currentPage.module = urlmap[group].modules[module].name;
-                            if (urlmap[group].modules[module].actions[action]) {
-                                $scope.currentPage.action = urlmap[group].modules[module].actions[action] instanceof Array
-                                    ? urlmap[group].modules[module].actions[action][0]
-                                    : urlmap[group].modules[module].actions[action];
-                                $scope.currentPage.actionDesc = urlmap[group].modules[module].actions[action] instanceof Array
-                                    ? urlmap[group].modules[module].actions[action][1] : "";
+
+                    if (urlmap[app]) {
+                        $scope.currentPage.lang.app = urlmap[app].name;
+                        if (urlmap[app].modules[module]) {
+                            $scope.currentPage.lang.module = urlmap[app].modules[module].name;
+                            if (urlmap[app].modules[module].actions[action]) {
+                                $scope.currentPage.lang.action = urlmap[app].modules[module].actions[action] instanceof Array
+                                    ? urlmap[app].modules[module].actions[action][0]
+                                    : urlmap[app].modules[module].actions[action];
+                                $scope.currentPage.lang.actionDesc = urlmap[app].modules[module].actions[action] instanceof Array
+                                    ? urlmap[app].modules[module].actions[action][1] : "";
                             }
-                            if (!$scope.currentPage.action) {
-                                $scope.currentPage.action = urlmap[group].modules[module].name;
-                                $scope.currentPage.actionDesc = $rootScope.i18n.lang.actions[action];
+                            if (!$scope.currentPage.lang.action) {
+                                $scope.currentPage.lang.action = urlmap[app].modules[module].name;
+                                $scope.currentPage.lang.actionDesc = $rootScope.i18n.lang.actions[action];
                             }
                         }
                     }
+
+                    /**
+                     * 设定当前APP信息
+                     * current location info
+                     * */
+                    $scope.currentPage.app = app;
+                    $scope.currentPage.action = action;
+                    $scope.currentPage.module = module;
+
+                    $rootScope.currentPage = $scope.currentPage;
+
                 });
 
 

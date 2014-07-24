@@ -27,7 +27,7 @@
                             var theModal = $modal({
                                 scope: scope,
                                 title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, item.name),
-                                contentTemplate: 'common/views/produce/productCraft.html',
+                                contentTemplate: appView('productCraft.html', 'produce'),
                                 show: false
                             });
                             theModal.$promise.then(theModal.show);

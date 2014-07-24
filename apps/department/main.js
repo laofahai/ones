@@ -7,15 +7,15 @@
                     controller: 'AuthGroupAssignPermissionCtl'
                 })
                 .when("/department/Department/add/pid/:pid", {
-                    templateUrl: 'common/views/common/edit.html',
+                    templateUrl: 'common/base/views/edit.html',
                     controller: 'DepartmentEditCtl'
                 })
                 .when("/department/Department/edit/id/:id", {
-                    templateUrl: 'common/views/common/edit.html',
+                    templateUrl: 'common/base/views/edit.html',
                     controller: 'DepartmentEditCtl'
                 })
                 .when("/department/Logout", {
-                    templateUrl: 'common/views/common/blank.html',
+                    templateUrl: 'common/base/views/blank.html',
                     controller: 'LogoutCtl'
                 })
                 //个人资料
