@@ -31,6 +31,10 @@
         },
         "modules": {
             "Orders": "订单"
+        },
+        "app_sale": {
+            "bill_id": "test123"
         }
+
     }
 }

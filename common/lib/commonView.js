@@ -182,6 +182,25 @@
         .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout",
             function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout){
                 var service = {};
+
+                /**
+                 * 返回I18N
+                 * @param lang 语言包项键值，支持多级 如：actions.submit
+                 * @param section 默认取用的section，如：lang 会取得 i18n.lang.langKey
+                 * */
+                service.toLang = function(lang, section) {
+                    section = section || "lang";
+                    var langStr = "";
+                    var appSection = "app_"+conf.currentApp;
+                    if($rootScope.i18n[section][appSection]) {
+                        langStr = sprintf("i18n.%s.%s.%s", section, appSection, lang);
+                    } else {
+                        langStr = sprintf("i18n.%s.%s", section, lang);
+                    }
+                    return $rootScope.$eval(langStr);
+                }
+
+
                 /**
                  * 通用产品工艺设置
                  * */
@@ -480,6 +499,16 @@
                             if(tmp[$i].listable !== false) {
                                 columnDefs.push(tmp[$i]);
                             }
+                        }
+
+                        /**
+                         * 加入动作列
+                         * */
+                        if(false !== $scope.selecteAble) {
+                            columnDefs.push({
+                                displayName: $rootScope.i18n.lang.operation
+                            });
+                            console.log(columnDefs);
                         }
 
                         opts.columnDefs = columnDefs;
