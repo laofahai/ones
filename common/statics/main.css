@@ -125,6 +125,9 @@ commonform {
     margin:0;
 }
 
+.billBody table {
+    table-layout:fixed ;
+}
 .billBody table thead th {
     text-align:center;
 }
@@ -138,10 +141,14 @@ commonform {
     position:relative;
     padding:0 5px !important;height:36px;line-height:38px !important;
     font-size:14px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 .billBody table td label {
-    width:100%;height:34px;line-height:34px;
+    max-width:100%;height:34px;line-height:34px;
     display:block;
+    display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .billBody table td .editAble, .billBody table td .ui-select-search, .billBody table td select {
     position:absolute;
@@ -154,6 +161,7 @@ commonform {
     border-radius: 0;
     height:35px;
     color:#000;
+
 }
 .billBody input.editAble:focus {
     box-shadow:0 0px 2px 1px #12a4ed !important;

@@ -402,7 +402,7 @@
                                         '<i class="icon icon-plus" ng-click="billAddRow($event.target)"></i> '+
                                         '<i class="icon icon-trash" ng-click="billRemoveRow($event.target)"></i> '+
                                     '</label></td>',
-                'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" %(event)s>%(label)s</label></td>',
+                'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" title="{{%(bind)s}}" %(event)s>%(label)s</label></td>',
                 'bills/fields/typeaheadList.html': '<ul class="typeAheadList editAble" />'+
                         '<li ng-repeat="%(v)s in %(data)s" type="typeahead" data-typeahead-value="%(v)s.%(valueField)s" '+
                         'ng-click="billTypeaheadClick($event)">{{%(v)s.%(labelField)s}}</li></ul>'
@@ -473,7 +473,7 @@
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble !== false) {
                         if(item.totalAble) {
-                            html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s">0</td>', 
+                            html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s" title="{{%(dataBind)s}}">0</td>',
                                 {
                                     field: field,
                                     dataBind: item.cellFilter ? "formMetaData.total_"+field + "|"+item.cellFilter : "formMetaData.total_"+field
