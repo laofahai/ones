@@ -303,11 +303,13 @@
 
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
     //                console.log(arguments);
+                    $scope.config = {};
                     var defaultOpts = {
                         name: "form", //表单名称
                         id: null, //如为编辑，需传递此参数
                         dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
                         dataObject: null, //数据绑定到$scope的名字
+                        columns: null,
                         returnPage: sprintf("/%(group)s/list/%(module)s", {
                             group: $routeParams.group,
                             module: $routeParams.module
@@ -317,10 +319,8 @@
                     opts.dataObject = opts.name + "Data";
 
                     var doDefine = function(fd) {
-                        $scope.config = {
-                            fieldsDefine: fd,
-                            name: opts.name
-                        };
+                        $scope.config.fieldsDefine = fd;
+                        $scope.config.name = opts.name;
                         //编辑
                         if (opts.id || opts.isEdit) {
                             //
@@ -345,6 +345,7 @@
                      * */
                     if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
+                        $scope.config.columns = model.columns || null;
                         var field = model.getFieldsStruct();
                         if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
                             field.then(function(data){

@@ -76,6 +76,7 @@ commonform {
 }
 .form-actions {
     margin-bottom:0;
+    clear:both;
 }
 .actionsBtn {
     margin-bottom:15px;

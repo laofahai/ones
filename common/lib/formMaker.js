@@ -897,8 +897,7 @@
                 includeFoot: true,
                 templates: {
                     "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" ng-keydown="doKeydown($event)" novalidate>%(html)s</form>',
-                    "commonForm/footer.html": '<div class="clearfix form-actions">' +
-                            '<div class="col-md-offset-2 col-md-9">' +
+                    "commonForm/footer.html": '<div class="clearfix form-actions center">' +
                                 '<button id="submitbtn" class="btn btn-primary" ng-click="%(action)s();" type="button">' +
                                     '<i class="icon-ok bigger-110"></i>' +
                                     '{{%(langsubmit)s}}' +
@@ -913,12 +912,11 @@
                                     '<i class="icon-undo bigger-110"></i>' +
                                     '{{%(langreturn)s}}' +
                                 '</button>' +
-                            '</div>' +
                             '</div>',
-                    "commonForm/box.html": '<div class="form-group" ng-class="{\'has-error\': %(formname)s.%(fieldname)s.$dirty&&%(formname)s.%(fieldname)s.$invalid}">' +
+                    "commonForm/box.html": '<div class="form-group col-sm-%(colWidth)s" ng-class="{\'has-error\': %(formname)s.%(fieldname)s.$dirty&&%(formname)s.%(fieldname)s.$invalid}">' +
                             '<label class="col-sm-3 control-label no-padding-right">%(label)s</label>' +
-                            '<div class="col-xs-12 col-sm-4">%(inputHTML)s</div>' +
-                            '<div class="help-block col-xs-12 col-sm-reset" ng-hide="%(formname)s.%(fieldname)s.$valid" ng-bind="%(formname)s.%(fieldname)s.$error|toError"></div>' +
+                            '<div class="col-sm-%(inputBoxWidth)s">%(inputHTML)s</div>' +
+                            '<div class="help-block col-sm-reset" ng-hide="%(formname)s.%(fieldname)s.$valid" ng-bind="%(formname)s.%(fieldname)s.$error|toError"></div>' +
                             '</div>',
                     "commonForm/hide.html": '%(inputHTML)s',
                     "text": '<input type="text" %s />',
@@ -929,7 +927,6 @@
             };
 
             this.opts = $.extend(true, defaultOpts, config);
-            
 
             this.opts.dataName = this.opts.dataName ? this.opts.dataName : this.opts.name+"Data";
 
@@ -982,6 +979,8 @@
                         fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                         if (false !== fieldHTML) {
                             finalHTML.push(sprintf(boxHTML, {
+                                colWidth: self.opts.columns ? 12/self.opts.columns : null,
+                                inputBoxWidth: self.opts.columns>1 ? 6 : 4,
                                 formname: self.opts.name,
                                 fieldname: struct.name ? struct.name : field,
                                 label: struct.displayName,

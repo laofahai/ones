@@ -1,11 +1,11 @@
 (function(){
     angular.module("ones.crm", ["ones.department"])
         .config(["$routeProvider", function($routeProvider){
-//            $routeProvider.when("/CRM/addBill/relationshipCompany", {
-//                templateUrl: appView("crm/common/viewsedit.html"),
-//                controller: "CRMRelCompanyEditCtl"
-//            })
-//            ;
+            $routeProvider.when("/crm/addBill/relationshipCompany", {
+                templateUrl: appView("edit.html", "crm"),
+                controller: "CRMRelCompanyEditCtl"
+            })
+            ;
         }])
         .factory("RelationshipCompanyGroupRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relationshipCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});
@@ -76,6 +76,10 @@
                     };
                 }
             };
+        }])
+
+        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", function($scope, ComView){
+
         }])
     ;
 })();

@@ -11,6 +11,7 @@
         .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal",
             function($rootScope, GoodsCategoryRes, $q, $location, $modal) {
                 var obj = {};
+                obj.columns = 2;
                 obj.extraSelectActions = [
                     {
                         label: $rootScope.i18n.lang.actions.viewCraft,
