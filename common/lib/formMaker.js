@@ -920,7 +920,10 @@
                     "commonForm/box.html": '<div class="form-group col-sm-%(colWidth)s" ng-class="{\'has-error\': %(formname)s.%(fieldname)s.$dirty&&%(formname)s.%(fieldname)s.$invalid}">' +
                             '<label class="col-sm-3 control-label no-padding-right">%(label)s</label>' +
                             '<div class="col-sm-%(inputBoxWidth)s">%(inputHTML)s</div>' +
-                            '<div class="help-block col-sm-reset" ng-hide="%(formname)s.%(fieldname)s.$valid" ng-bind="%(formname)s.%(fieldname)s.$error|toError"></div>' +
+                            '<div class="help-block col-sm-reset">' +
+                                '<span ng-bind="%(formname)s.%(fieldname)s.$error|toError" ng-hide="%(formname)s.%(fieldname)s.$valid"></span>' +
+                                '<span> %(helpText)s</span>' +
+                            '</div>' +
                             '</div>',
                     "commonForm/hide.html": '%(inputHTML)s',
                     "text": '<input type="text" %s />',
@@ -987,7 +990,13 @@
                             if(struct.colspan) {
                                 colWidth = colWidth * struct.colspan;
                             }
+                            var helpText = "";
+                            if(struct.helpText) {
+                                helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
+                                console.log(helpText);
+                            }
                             finalHTML.push(sprintf(boxHTML, {
+                                helpText: helpText,
                                 colWidth: colWidth,
                                 inputBoxWidth: self.opts.columns>1 ? 6 : 4,
                                 formname: self.opts.name,

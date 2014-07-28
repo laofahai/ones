@@ -366,7 +366,6 @@
 
                     $scope.doFormValidate = function(name){
                         name = name || opts.name;
-                        console.log($scope);
                         if (false === $scope[name].$valid) {
                             if($scope[name].$error) {
                                 service.alert($scope.i18n.lang.messages.fillTheForm, "danger");

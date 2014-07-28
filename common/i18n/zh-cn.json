@@ -72,14 +72,8 @@
             "types_manage": "类型管理",
             "system_operation": "系统操作",
             "clear_cache": "清除缓存"
-
         },
-
-        "inputType": {
-            "text": "单行文本",
-            "number": "数字",
-            "select": "下拉选择框"
-        },
+        "helpTexts": {},
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单",
             "operate_options": "操作选项",

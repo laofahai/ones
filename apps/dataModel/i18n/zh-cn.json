@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "dataModel": {
+            "name": "数据模型",
             "modules": {
                 "DataModel": {
                     "name": "数据模型",
@@ -35,6 +36,18 @@
         "actions": {
             "viewDataModel": "查看数据模型",
             "viewModelData": "查看模型数据"
-        }
+        },
+        "inputTypes": {
+            "text": "单行文本",
+            "number": "数字",
+            "select": "下拉选择框",
+            "select3": "select3选择器",
+            "email": "邮箱地址",
+            "textarea": "多行文本(textarea)"
+        },
+        "helpTexts": {
+            "field_alias": "字段的别名，必须为英文"
+        },
+        "input_type": "输入方式"
     }
 }

@@ -25,8 +25,7 @@
          }, function(data){
              angular.forEach(data, function(item){
                  result[item.field_name] = {
-//                     field: item.field_name+"_label",
-                     inputType: "select3",
+                     inputType: item.input_type,
                      nameField: "data",
                      editAbleRequire: params.require || [],
                      dataSource: injector.get("DataModelDataRes"),
@@ -98,7 +97,7 @@
             };
             obj.getFieldsStruct = function(){
                 var i18n = $rootScope.i18n.lang;
-                return {
+                var structure = {
                     id: {
                         primary: true,
                         displayName: "ID"
@@ -107,29 +106,26 @@
                         displayName: i18n.displayName
                     },
                     field_name: {
-                        displayName: i18n.alias
+                        displayName: i18n.alias,
+                        helpText: "field_alias"
                     },
-                    type: {
+                    input_type: {
                         inputType: "select",
-                        dataSource: [
-                            {
-                                id: "text",
-                                name: i18n.inputType.text
-                            },
-                            {
-                                id: "number",
-                                name: i18n.inputType.number
-                            },
-                            {
-                                id: "select",
-                                name: i18n.inputType.select
-                            }
-                        ]
+                        dataSource: []
                     },
                     listorder: {
                         value: 99
                     }
                 };
+
+                angular.forEach(i18n.inputTypes, function(type, k){
+                    structure.input_type.dataSource.push({
+                        id: k,
+                        name: toLang(k, "inputTypes", $rootScope)
+                    });
+                });
+
+                return structure;
             };
             return obj;
         }])
