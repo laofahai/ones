@@ -74,6 +74,9 @@ commonform {
     padding-top:30px;
     display:block;
 }
+.form-horizontal .form-group {
+    min-height:40px;
+}
 .form-actions {
     margin-bottom:0;
     clear:both;
