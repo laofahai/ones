@@ -131,7 +131,7 @@
 
                     var rs = plugin.callPlugin("binDataModelToStructure", {
                         structure: fields,
-                        type: "product",
+                        alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });

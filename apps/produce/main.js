@@ -233,7 +233,7 @@
 
                     var rs = plugin.callPlugin("binDataModelToStructure", {
                         structure: s,
-                        type: "product",
+                        alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
@@ -268,7 +268,7 @@
 
                     var rs = plugin.callPlugin("binDataModelToStructure", {
                         structure: s,
-                        type: "product",
+                        alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
@@ -397,7 +397,7 @@
 
                         var rs = plugin.callPlugin("binDataModelToStructure", {
                             structure: structure,
-                            type: "product",
+                            alias: "product",
                             require: ["goods_id"],
                             queryExtra: ["goods_id"]
                         });
@@ -458,7 +458,7 @@
 
                         var rs = plugin.callPlugin("binDataModelToStructure", {
                             structure: s,
-                            type: "product",
+                            alias: "product",
                             require: ["goods_id"],
                             queryExtra: ["goods_id"]
                         });

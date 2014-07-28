@@ -21,7 +21,7 @@
 
          //查询模型字段
          res.query({
-             modelType: params.type
+             modelAlias: params.alias
          }, function(data){
              angular.forEach(data, function(item){
                  result[item.field_name] = {
@@ -83,8 +83,11 @@
                         primary: true,
                         displayName: "ID"
                     },
+                    alias: {},
                     name: {},
-                    type: {}
+                    type: {
+                        value: "product"
+                    }
                 };
             };
             return obj;

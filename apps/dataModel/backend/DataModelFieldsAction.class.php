@@ -37,11 +37,11 @@ class DataModelFieldsAction extends CommonAction {
     }
 
     public function index() {
-        if(!$_GET["modelType"]) {
+        if(!$_GET["modelAlias"]) {
             return parent::index();
         }
 
-        $dataModel = D("DataModel")->getByType($_GET["modelType"]);
+        $dataModel = D("DataModel")->getByAlias($_GET["modelAlias"]);
         if(!$dataModel) {
             return;
         }
