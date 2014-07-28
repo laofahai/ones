@@ -474,9 +474,11 @@
             },
             makeFoot: function(fieldsDefine){
                 var html = ['<td colspan="2" align="center">'+this.scope.$parent.i18n.lang.total+'</td>'];
+                var hasTotalAble = false;
                 angular.forEach(fieldsDefine, function(item, field){
                     if(item.billAble !== false) {
                         if(item.totalAble) {
+                            hasTotalAble = true;
                             html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s" title="{{%(dataBind)s}}">0</td>',
                                 {
                                     field: field,
@@ -487,7 +489,11 @@
                         }
                     }
                 });
-                return sprintf("<tr>%s</tr>", html.join(""));
+                if(hasTotalAble) {
+                    return sprintf("<tr>%s</tr>", html.join(""));
+                } else {
+                    return "";
+                }
             },
             makeRow: function(fieldsDefine,i, defaultData){
                 var self = this;

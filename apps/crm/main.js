@@ -82,7 +82,9 @@
                         contact: {},
                         mobile: {},
                         tel: {},
-                        email: {},
+                        email: {
+                            inputType: "email"
+                        },
                         qq: {},
                         is_primary: {
                             inputType: "select",
