@@ -158,7 +158,7 @@
 
                 res = $injector.get(module.ucfirst()+"Res");
                 model = $injector.get(module.ucfirst()+"Model");
-    //            console.log(res);
+    //            console.log($scope);console.log(res);
                 //可跳转按钮
                 actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
                 ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra, model);
@@ -308,7 +308,7 @@
                         name: "form", //表单名称
                         id: null, //如为编辑，需传递此参数
                         dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
-                        dataObject: null, //数据绑定到$scope的名字
+                        dataName: "formData", //数据绑定到$scope的名字
                         columns: null,
                         returnPage: sprintf("/%(group)s/list/%(module)s", {
                             group: $routeParams.group,
@@ -316,11 +316,12 @@
                         }) //表单提交之后的返回页面地址
                     };
                     opts = $.extend(defaultOpts, opts);
-                    opts.dataObject = opts.name + "Data";
+//                    opts.dataName = opts.name + "Data";
+                    $scope.config.name = opts.name;
+                    $scope.config.dataName = opts.dataName;
 
                     var doDefine = function(fd) {
                         $scope.config.fieldsDefine = fd;
-                        $scope.config.name = opts.name;
                         //编辑
                         if (opts.id || opts.isEdit) {
                             //
@@ -329,7 +330,7 @@
                                 tmpParams.id = opts.id;
                             }
                             resource.get(tmpParams).$promise.then(function(defaultData) {
-                                $scope[opts.dataObject] = dataFormat($scope.config.fieldsDefine, defaultData);
+                                $scope[opts.dataName] = dataFormat($scope.config.fieldsDefine, defaultData);
                             });
                         }
                         //延时编译
@@ -346,6 +347,7 @@
                     if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
                         $scope.config.columns = model.columns || null;
+                        $scope.config.formActions = undefined === model.formActions ? true : false;
                         var field = model.getFieldsStruct();
                         if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
                             field.then(function(data){
@@ -362,16 +364,26 @@
                         doDefine(fieldsDefine);
                     }
 
-                    //提交表单
-                    $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
-    //                    console.log("submit");
-                        if (!$scope[opts.name].$valid) {
-                            if($scope[opts.name].$error) {
+                    $scope.doFormValidate = function(name){
+                        name = name || opts.name;
+                        console.log($scope);
+                        if (false === $scope[name].$valid) {
+                            if($scope[name].$error) {
                                 service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                             } else {
                                 service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                             }
                             return false;
+                        }
+                        return true;
+                    }
+
+                    //提交表单
+                    $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
+    //                    console.log("submit");
+
+                        if(!$scope.doFormValidate()) {
+                            return;
                         }
                         //编辑
                         var getParams = {};
@@ -384,7 +396,7 @@
                         }
                         if (opts.id) {
                             getParams.id = opts.id;
-                            resource.update(getParams, $scope[opts.dataObject], function(data){
+                            resource.update(getParams, $scope[opts.dataName], function(data){
                                 if(data.error) {
                                     service.alert(data.msg);
                                 } else {
@@ -394,7 +406,7 @@
                         //新增
                         } else {
 
-                            var params = $.extend(getParams, $scope[opts.dataObject]);
+                            var params = $.extend(getParams, $scope[opts.dataName]);
                             resource.save(params, function(data){
                                 if(data.error) {
                                     service.alert(data.msg);
@@ -742,9 +754,6 @@
 
 
 
-
-
-
     //                //监控数据变化，是否保存
     //                $scope.watch(function(){
     //                    return $scope[opts.dataName];
@@ -759,11 +768,14 @@
                             tmp[1] = "list";
                             opts.returnPage = "/"+tmp.join("/");
                         }
+                        console.log($scope.formMetaData);
                         var data = $.extend($scope.formMetaData, {rows: $scope[opts.dataName]});
+                        console.log($scope.formMetaData);
                         var getParams = {};
                         for (var k in $routeParams) {
                             getParams[k] = $routeParams[k];
                         }
+
                         if (opts.id) {
                             getParams.id = opts.id;
                             resource.update(getParams, data);

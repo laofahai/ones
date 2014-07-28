@@ -141,7 +141,6 @@ commonform {
     position:relative;
     padding:0 5px !important;height:36px;line-height:38px !important;
     font-size:14px;
-    overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
 }
@@ -187,7 +186,7 @@ commonform {
     background:#fff;
 }
 .billBody .chosen-container .chosen-single {
-    height:36px;line-height:36px;
+    height:35px;line-height:35px;
     background:0;
     border:0;
     box-shadow:none !important;
@@ -222,6 +221,16 @@ commonform {
 }
 .typeAheadList li:hover,.typeAheadList li.active {
     background:#f2f2f2;
+}
+.tdEditAble {
+    position:relative;
+}
+.tdEditAble .chosen-container {
+    border:0;
+    height:34px;
+}
+.tdEditAble .chosen-container a {
+    border:0 !important;
 }
 .tdEditAble .dropdown-menu {
     width:100%;

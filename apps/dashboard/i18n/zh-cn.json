@@ -1,11 +1,12 @@
 {
     "urlMap": {
         "dashboard": {
+            "name": "控制面板",
             "modules": {
                 "Index": {
                     "name": "",
                     "actions": {
-                        "dashboard": ["控制面板"]
+                        "dashboard": "控制面板"
                     }
                 },
                 "UserDesktop": {

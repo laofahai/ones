@@ -23,32 +23,70 @@ class RelationshipCompanyAction extends CommonAction {
         
         $map["deleted"] = 0;
     }
-    
-    /**
-     * 过渡性
-     */
-    public function insert() {
-//        print_r($_POST);exit;
-        $model = D("RelationshipCompany");
-        $data = array(
-            "name"=> $_POST["name"],
-            "pinyin"=> Pinyin($_POST["name"]),
-            "address"=> $_POST["address"],
-            "discount"=>abs(intval($_POST["discount"])),
-            "user_id" => getCurrentUid(),
-            "group_id"=> $_POST["group_id"],
-            "dateline"=> CTS,
-            "status"  => "0"
+
+    /*
+     *
+     * **/
+    protected function pretreatment() {
+        $tmp["baseInfo"] = array(
+            "name" => $_POST["name"],
+            "pinyin" => Pinyin($_POST["name"]),
+            "group_id" => $_POST["group_id"],
+            "discount" => $_POST["discount"],
+            "address"  => $_POST["address"],
+            "memo"     => $_POST["memo"]
         );
-        $id = $model->add($data);
-        
-        D("RelationshipCompanyLinkman")->add(array(
-            "relationship_company_id" => $id,
-            "contact" => $_POST["linkMan"],
-            "mobile" => $_POST["mobile"],
-            "dateline" => CTS,
-            "is_primary"=> 1
-        ));
+
+        if(!$_GET["id"]) {
+            $tmp["baseInfo"]["user_id"] = getCurrentUid();
+            $tmp["baseInfo"]["dateline"] = CTS;
+        }
+
+        $tmp["rows"] = array();
+
+        foreach($_POST["rows"] as $k=> $row) {
+            if(count($row)) {
+                $tmp["rows"][] = $row;
+            } else {
+                unset($_POST["rows"][$k]);
+            }
+
+        }
+
+        $_POST = $tmp;
+    }
+    
+    public function insert() {
+        $this->pretreatment();
+
+        $model = D("RelationshipCompany");
+        $rs = $model->newCompany($_POST["baseInfo"], $_POST["rows"]);
+        if(!$rs) {
+            $this->response($model->getError());
+        }
+    }
+
+    public function update() {
+        $this->pretreatment();
+
+        $model = D("RelationshipCompany");
+        $rs = $model->editCompany($_POST["baseInfo"], $_POST["rows"], $_GET["id"]);
+        if(!$rs) {
+            $this->response($model->getError());
+        }
+    }
+
+    public function read() {
+        $data = parent::read(true);
+        if(!$_GET["includeRows"]) {
+            $this->response($data);
+            return;
+        }
+
+        $model = D("RelationshipCompanyLinkman");
+        $tmp["rows"] = $model->where("relationship_company_id=".$_GET["id"])->select();
+
+        $this->response($tmp);
     }
     
 //    public function index() {

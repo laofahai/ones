@@ -388,11 +388,13 @@
                 relateMoney: false
             };
 
-            this.opts = $.extend(defaultOpts, $scope.config);
-
             this.scope = $scope;
             this.compile = $compile;
-            this.scope.$parent[this.opts.dataName] = [];
+
+            this.opts = $.extend(defaultOpts, $scope.config);
+
+            this.scope.$parent[this.opts.dataName] = this.scope.$parent[this.opts.dataName] || [];
+            this.scope.$parent.formMetaData = this.scope.$parent.formMetaData || {};
 
             this.opts.templates = this.templates = {
                 'bills/box.html' : '<table class="table table-bordered" id="billTable">'+
@@ -444,7 +446,9 @@
                 
                 //编辑模式下
                 var defaultData = self.scope.$parent.formMetaData.rows || [];
-                this.scope.$parent.formMetaData.rows = defaultData = dataFormat(fieldsDefine, defaultData);
+                if(defaultData) {
+                    this.scope.$parent.formMetaData.rows = defaultData = dataFormat(fieldsDefine, defaultData);
+                }
                 var defaultDataLength = defaultData.length || self.opts.minRows;
                 for(var i=0;i<defaultDataLength;i++) {
                     html.push(this.makeRow(fieldsDefine, i, defaultData));
@@ -923,6 +927,7 @@
                     "number": '<input type="number" %s />',
                     "select": '<select %(attr)s ng-options="%(value)s as %(name)s for %(key)s in %(data)s"></select>'
                 },
+                name: "form",
                 dataName: "formData"
             };
 
@@ -978,8 +983,12 @@
                     if(!struct.hideInForm && !struct.primary) {
                         fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                         if (false !== fieldHTML) {
+                            var colWidth = self.opts.columns ? 12/self.opts.columns : null;
+                            if(struct.colspan) {
+                                colWidth = colWidth * struct.colspan;
+                            }
                             finalHTML.push(sprintf(boxHTML, {
-                                colWidth: self.opts.columns ? 12/self.opts.columns : null,
+                                colWidth: colWidth,
                                 inputBoxWidth: self.opts.columns>1 ? 6 : 4,
                                 formname: self.opts.name,
                                 fieldname: struct.name ? struct.name : field,
@@ -1000,6 +1009,9 @@
                 });
             },
             makeActions: function(){
+                if(this.opts.formActions === false) {
+                    return '<div class="clearfix"></div>';
+                }
                 return sprintf(this.opts.templates["commonForm/footer.html"], {
                     action: this.opts.submitAction,
                     langsubmit: "i18n.lang.actions.submit",

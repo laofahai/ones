@@ -37,25 +37,73 @@ class RelationshipCompanyModel extends CommonRelationModel {
         "private", "public"
     );
     
-    public function select($options=array()) {
-        $data = parent::select($options);
-//        echo $this->getLastSql();exit;
-        
-//        print_r($data);exit;
-        
-//        foreach($data as $k=>$v) {
-//            $data[$k]["status_lang"] = $this->status_lang[$v["status"]];
-//        }
-        return $data;
-    }
+//    public function select($options=array()) {
+//        $data = parent::select($options);
+////        echo $this->getLastSql();exit;
+//
+////        print_r($data);exit;
+//
+////        foreach($data as $k=>$v) {
+////            $data[$k]["status_lang"] = $this->status_lang[$v["status"]];
+////        }
+//        return $data;
+//    }
     
-    public function find($options = array()) {
-        $data = parent::find($options);
-        if(!$data) {
-            return $data;
+//    public function find($options = array()) {
+//        $data = parent::find($options);
+//        if(!$data) {
+//            return $data;
+//        }
+//        $data["status_lang"] = $this->status_lang[$data["status"]];
+//        return $data;
+//    }
+
+
+    public function newCompany($baseInfo, $contacts) {
+        $this->startTrans();
+        $id = $this->add($baseInfo);
+        if(!$id) {
+            $this->error = "insert failed";
+            $this->rollback();
+            return false;
         }
-        $data["status_lang"] = $this->status_lang[$data["status"]];
-        return $data;
+
+        $model = D("RelationshipCompanyLinkman");
+        foreach($contacts as $row) {
+            $row["relationship_company_id"] = $id;
+            if(false === $model->add($row)) {
+                $this->error = "insert contact failed";
+                $this->rollback();
+                return false;
+            }
+        }
+
+        $this->commit();
+
+        return $id;
+
+    }
+
+    public function editCompany($baseInfo, $contacts, $id) {
+        $this->startTrans();
+        if(false === $this->where("id=".$id)->save($baseInfo)) {
+            $this->error = "edit company failed";
+            $this->rollback();
+            return false;
+        }
+
+        $model = D("RelationshipCompanyLinkman");
+        foreach($contacts as $row) {
+            if(false === $model->where("relationship_company_id=".$id)->save($row)) {
+                $this->error = "edit contact failed";
+                $this->rollback();
+                return false;
+            }
+        }
+
+        $this->commit();
+
+        return true;
     }
     
 }

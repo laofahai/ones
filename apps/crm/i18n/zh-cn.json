@@ -27,6 +27,12 @@
             "rel_company": "往来单位管理",
             "relCompanyGroup": "分组",
             "relCompanyRecord": "基础档案"
-        }
+        },
+        "widgetTitles": {
+            "relCompanyBaseInfo": "往来单位基本信息"
+        },
+        "contact": "联系人",
+        "tel": "电话",
+        "is_primary": "是否首要联系人"
     }
 }
