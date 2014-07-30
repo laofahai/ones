@@ -4,7 +4,13 @@ class IndexAction extends CommonAction {
 
     public function index(){
         unset($_SESSION["user"]["password"]);
+
+        $auth = new Auth();
+        $rules = $auth->getAuthList(getCurrentUid());
+//        print_r($rules);exit;
+
         $data = array(
+            "authed" => reIndex($rules),
             "navs" => $this->makeNav(),
             "user" => $_SESSION["user"]
         );

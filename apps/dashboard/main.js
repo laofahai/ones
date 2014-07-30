@@ -66,34 +66,62 @@
                     "info", "purple", "pink", "grey", "light", "yellow"
                 ];
 
-                ones.pluginScope.dashboardAppBtns = [];
-                var rs = plugin.callPlugin("hook.dashboard.appBtn");
+                $scope.$on("initDataLoaded", function(evt, data){
+                    ones.pluginScope.dashboardAppBtns = [];
+                    var rs = plugin.callPlugin("hook.dashboard.appBtn");
 
-                $scope.appBtns = [];
-                angular.forEach(rs.dashboardAppBtns, function(app){
-                    //底色
-                    if(!app.btnClass){
-                        var tmp = md5.createHash(app.name).slice(2,3);
-                        var tmpIndex = chars.indexOf(tmp);
-                        if(tmpIndex >= 0) {
-                            if(tmpIndex > 11) {
-                                tmpIndex -= 11;
-                            }
-                            if(tmpIndex > 21) {
-                                tmpIndex -= 21;
-                            }
+                    $scope.appBtns = [];
+
+                    angular.forEach(rs.dashboardAppBtns, function(app){
+                        //权限检测
+                        var authNode;
+                        if(app.authNode) {
+                            authNode = app.authNode;
                         } else {
-                            tmpIndex = tmp;
+                            var tmp = app.link.split("/");
+                            var action = "read";
+                            switch(tmp[2]) {
+                                case "add":
+                                case "addBill":
+                                    action = "add";
+                                    break;
+                                case "edit":
+                                case "editBill":
+                                    action = "edit";
+                                    break;
+                            }
+                            authNode = [tmp[0],tmp[2],action].join(".").toLowerCase();
                         }
-                        app.btnClass = btnClasses[tmpIndex];
-                    }
-                    //图标
-                    if(!app.icon){
-                        app.icon = "folder-close-alt";
-                    }
 
-                    $scope.appBtns.push(app);
+                        if($scope.$parent.authedNodes.indexOf(authNode) < 0) {
+                            return;
+                        }
+
+                        //底色
+                        if(!app.btnClass){
+                            var tmp = md5.createHash(app.name).slice(2,3);
+                            var tmpIndex = chars.indexOf(tmp);
+                            if(tmpIndex >= 0) {
+                                if(tmpIndex > 11) {
+                                    tmpIndex -= 11;
+                                }
+                                if(tmpIndex > 21) {
+                                    tmpIndex -= 21;
+                                }
+                            } else {
+                                tmpIndex = tmp;
+                            }
+                            app.btnClass = btnClasses[tmpIndex];
+                        }
+                        //图标
+                        if(!app.icon){
+                            app.icon = "folder-close-alt";
+                        }
+
+                        $scope.appBtns.push(app);
+                    });
                 });
+
 
                 $scope.dashboardItems = [];
                 MyDesktopRes.query({

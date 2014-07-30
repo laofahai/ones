@@ -128,7 +128,7 @@ class Auth{
     }
 
     //获得权限列表
-    protected function getAuthList($uid) {
+    public function getAuthList($uid) {
         static $_authList = array();
         if (isset($_authList[$uid])) {
             return $_authList[$uid];

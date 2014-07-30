@@ -187,12 +187,12 @@
                  * }
                  * */
                 $http.get(conf.BSU + "home/index.json").success(function(data) {
-                    $scope.uesrInfo = data.user;
                     $scope.$broadcast("initDataLoaded", data);
                 });
 
                 $scope.$on("initDataLoaded", function(event, data) {
                     $scope.userInfo = data.user;
+                    $scope.authedNodes = data.authed;
                 });
 
             }])
