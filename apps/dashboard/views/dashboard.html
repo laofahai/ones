@@ -1,9 +1,14 @@
 <div class="row">
     <div class="col-xs-12">
-        <!-- PAGE CONTENT BEGINS -->
         <div class="row">
-            <div ng-repeat="item in items" ng-include="item.template" class="col-sm-{{item.width}}"></div>
+            <a href="#" ng-href="#/{{app.link}}" class="btn btn-app btn-sm no-radius btn-{{app.btnClass}}" ng-repeat="app in appBtns">
+                <i class="icon-{{app.icon}} bigger-230"></i>
+                <small class="smaller" ng-bind="app.name"></small>
+                <span class="badge badge-pink" ng-show="app.num">+3</span>
+            </a>
         </div>
-        <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
 </div><!-- /.row -->
+<div class="row">
+    <div ng-repeat="item in dashboardItems" ng-include="item.template" class="col-sm-{{item.width}}"></div>
+</div>

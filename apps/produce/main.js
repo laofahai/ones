@@ -595,7 +595,7 @@
                         donext: true,
                         data: $scope.formMetaData
                     }).$promise.then(function(data){
-                            $location.url("/Produce/list/producePlan");
+                            $location.url("/produce/list/producePlan");
                         });
                 };
             }])

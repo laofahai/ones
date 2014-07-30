@@ -29,9 +29,9 @@ class StockinModel extends CommonModel {
         }
         $this->startTrans();
         
-        if(!$billData["bill_id"]){
+//        if(!$billData["bill_id"]){
             $billData["bill_id"] = makeBillCode("RK");
-        }
+//        }
         $billId = $this->add($billData);
         if(!$billId) {
             $this->rollback();

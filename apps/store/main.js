@@ -1,4 +1,19 @@
 (function(){
+
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
+        var ComView = injector.get("ComView");
+        ones.pluginScope.dashboardAppBtns.push({
+            name: ComView.toLang("stockin"),
+            icon: "signin",
+            link: "store/list/stockin"
+        });
+        ones.pluginScope.dashboardAppBtns.push({
+            name: ComView.toLang("stockout"),
+            icon: "signout",
+            link: "store/list/stockout"
+        });
+    });
+
     angular.module("ones.store", ["ones.goods", "ones.dataModel"])
         .config(["$routeProvider", function($route){
             $route

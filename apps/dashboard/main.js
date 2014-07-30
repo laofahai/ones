@@ -58,19 +58,55 @@
             };
         }])
 
-        .controller("HOMEDashboardCtl", ["$scope", "MyDesktopRes", function($scope, MyDesktopRes){
-            $scope.items = [];
-            MyDesktopRes.query({
-                onlyUsed: true
-            }, function(data){
-                angular.forEach(data, function(block){
-                    if(block.template.indexOf("/") < 0) {
-                        block.template = appView("blocks/"+block.template, "dashboard");
+        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor",
+            function($scope, $rootScope, MyDesktopRes, conf, plugin){
+                var chars = 'abcdefghijklmnopqrstuvwxyz';
+                var btnClasses = [
+                    "default", "success", "inverse", "danger", "warning", "primary",
+                    "info", "purple", "pink", "grey", "light", "yellow"
+                ];
+
+                ones.pluginScope.dashboardAppBtns = [];
+                var rs = plugin.callPlugin("hook.dashboard.appBtn");
+
+                $scope.appBtns = [];
+                angular.forEach(rs.dashboardAppBtns, function(app){
+                    //底色
+                    if(!app.btnClass){
+                        var tmp = md5.createHash(app.name).slice(2,3);
+                        var tmpIndex = chars.indexOf(tmp);
+                        if(tmpIndex >= 0) {
+                            if(tmpIndex > 11) {
+                                tmpIndex -= 11;
+                            }
+                            if(tmpIndex > 21) {
+                                tmpIndex -= 21;
+                            }
+                        } else {
+                            tmpIndex = tmp;
+                        }
+                        app.btnClass = btnClasses[tmpIndex];
                     }
+                    //图标
+                    if(!app.icon){
+                        app.icon = "folder-close-alt";
+                    }
+
+                    $scope.appBtns.push(app);
                 });
-                $scope.items = data;
-            });
-        }])
+
+                $scope.dashboardItems = [];
+                MyDesktopRes.query({
+                    onlyUsed: true
+                }, function(data){
+                    angular.forEach(data, function(block){
+                        if(block.template.indexOf("/") < 0) {
+                            block.template = appView("blocks/"+block.template, "dashboard");
+                        }
+                    });
+                    $scope.dashboardItems = data;
+                });
+            }])
 
         .controller("DashboardProduceInProcess", ["$scope", "ProducePlanDetailRes", function($scope, res){
             res.query({

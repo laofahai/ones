@@ -398,6 +398,16 @@ function makeBillCode($prefix=""){
     return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
 }
 
+function finalTrim($str) {
+//    var_dump(strip_whitespace($str));exit;
+    $str = str_replace(
+        array("    ", "\n", " :", ": ", " ,",", "),
+        array("", "", ":", ":", ",", ","),
+        $str
+    );
+    return $str;
+}
+
 /*
  * 目录复制
  * **/

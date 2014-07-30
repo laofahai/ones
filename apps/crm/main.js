@@ -1,4 +1,14 @@
 (function(){
+
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
+        var ComView = injector.get("ComView");
+        ones.pluginScope.dashboardAppBtns.push({
+            name: ComView.toLang("appName", "crm"),
+            icon: "group",
+            link: "crm/list/relationshipCompany"
+        });
+    });
+
     angular.module("ones.crm", ["ones.department"])
         .config(["$routeProvider", function($routeProvider){
             $routeProvider.when("/crm/addBill/relationshipCompany", {

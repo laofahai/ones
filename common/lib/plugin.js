@@ -42,27 +42,23 @@
      * */
     //pluginExecutor执行对象
     ones.pluginRegister = function(hookName, callback) {
+
         if(!ones.pluginHooks[hookName]) {
             ones.pluginHooks[hookName] = [];
         }
 
-        if(callback) {
-            ones.pluginHooks[hookName].push(callback);
+        var funcName = callback;
+
+        if(typeof(callback) === "function") {
+            funcName = "f" + md5.createHash(String(Math.random()));
+            ones.plugins[funcName] = callback;
         }
+
+        ones.pluginHooks[hookName].push(funcName);
     };
 
 
     ones.pluginHooks = {};
-
-    ones.pluginRegister = function(hookName, callback) {
-        if(!ones.pluginHooks[hookName]) {
-            ones.pluginHooks[hookName] = [];
-        }
-
-        if(callback) {
-            ones.pluginHooks[hookName].push(callback);
-        }
-    }
 
     angular.module("ones.pluginsModule", [])
         .service("pluginExecutor", ["$injector", "$q", function($injector, $q){

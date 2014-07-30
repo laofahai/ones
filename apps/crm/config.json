@@ -3,6 +3,8 @@
     "requirements": ["department"],
     "version": "0.1",
     "modules": ["relationshipCompany", "relationshipCompanyGroup"],
+    "btnClass": "success",
+    "icon": "group",
     "navs": {
         "rel_company" : {
             "childs" : {

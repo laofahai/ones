@@ -146,11 +146,13 @@ class FrontEndRuntime {
                 }
 
                 $appPath = $dir."/".$app;
-                $this->loadAppStatic($appPath);
+                $this->loadAppStatic($appPath, $app);
 
             }
             closedir($dh);
         }
+
+        $this->combineAppConfig();
 
         return $this->loadedApps;
     }
@@ -171,7 +173,7 @@ class FrontEndRuntime {
         print_r($this->included);
     }
 
-    private function loadAppStatic($appPath, $ext="js") {
+    private function loadAppStatic($appPath, $app) {
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
             if(in_array($appFile, $this->blackList)) {
@@ -184,7 +186,9 @@ class FrontEndRuntime {
                 //配置文件
                 if(is_file($tmpConfigPath) && !in_array($tmpConfigPath, $this->included)) {
                     $this->included[md5($tmpConfigPath)] = $tmpConfigPath;
-                    $tmpConfig = json_decode(file_get_contents($appPath."/config.json"), true);
+                    $tmp = finalTrim(file_get_contents($appPath."/config.json"));
+                    $tmpConfig = json_decode($tmp, true);
+                    $this->appConfigJson[$app] = $tmpConfig;
                     //优先加载依赖文件
                     if($tmpConfig["requirements"]) {
                         foreach($tmpConfig["requirements"] as $dep) {
@@ -192,7 +196,7 @@ class FrontEndRuntime {
                                 continue;
                             }
                             $depPath = dirname($appPath)."/".$dep;
-                            $this->loadAppStatic($depPath, $ext);
+                            $this->loadAppStatic($depPath, $dep);
                         }
                     }
                     if($tmpConfig["alias"] && is_file($appPath."/main.js")) {
@@ -200,7 +204,7 @@ class FrontEndRuntime {
                     }
                 }
                 if(!in_array($tmpPath, $this->included)) {
-                    if(end(explode(".", $tmpPath)) === $ext) {
+                    if(end(explode(".", $tmpPath)) === "js") {
                         $this->response(file_get_contents($tmpPath));
                     }
                     $this->included[md5($tmpPath)] = $tmpPath;
@@ -209,6 +213,10 @@ class FrontEndRuntime {
         }
 
         closedir($appDH);
+    }
+
+    private function combineAppConfig() {
+        echo sprintf("ones.LoadedAppsConfig=angular.fromJson('%s');", json_encode($this->appConfigJson));
     }
 
     public function combineCSS($dir=null) {
