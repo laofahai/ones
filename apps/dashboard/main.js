@@ -58,15 +58,15 @@
             };
         }])
 
-        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor",
-            function($scope, $rootScope, MyDesktopRes, conf, plugin){
+        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout",
+            function($scope, $rootScope, MyDesktopRes, conf, plugin, $timeout){
                 var chars = 'abcdefghijklmnopqrstuvwxyz';
                 var btnClasses = [
                     "default", "success", "inverse", "danger", "warning", "primary",
                     "info", "purple", "pink", "grey", "light", "yellow"
                 ];
 
-                $scope.$on("initDataLoaded", function(evt, data){
+                $timeout(function(evt, data){
                     ones.pluginScope.dashboardAppBtns = [];
                     var rs = plugin.callPlugin("hook.dashboard.appBtn");
 
@@ -120,7 +120,7 @@
 
                         $scope.appBtns.push(app);
                     });
-                });
+                }, 300);
 
 
                 $scope.dashboardItems = [];
