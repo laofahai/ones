@@ -28,9 +28,19 @@ class SystemUpdateAction extends CommonAction {
             $this->response($data);return;
         }
 
+    }
+
+    public function insert() {
         //下载升级包
         if($_POST["doDownload"] && $_POST["version"]) {
             $version = $this->getVersion($_POST["version"]);
+
+            //检测是不是相邻版本
+            if(!$this->isAdjoiningVersion(DBC("system.version"), $version["version"])) {
+                $this->error("you only can upgrade current version to the adjoining version.");
+                return;
+            }
+
 
             import("ORG.Net.Http");
             $remoteUri = str_replace("/index.php?s=/Update", "", $this->server)."Data/updates/".$version["file"];
@@ -57,7 +67,6 @@ class SystemUpdateAction extends CommonAction {
 //            echo $localPath;
             $rs = $zip->open($this->local.$version["file"]);
             if($rs === true) {
-//                echo 123;
                 if(!is_dir($tmpFolder)) {
                     $rs = mkdir($tmpFolder, 0777);
                 }
@@ -69,9 +78,7 @@ class SystemUpdateAction extends CommonAction {
             //更新数据库
             $sqlFile = $tmpFolder."/upgrade.sql";
             if(file_exists_case($sqlFile)) {
-                if(false === $this->executeSql($sqlFile)) {
-                    $this->error("upgrade_failed");
-                }
+                importSQL($sqlFile);
                 unlink($sqlFile);
             }
 //            echo $tmpFolder;
@@ -82,10 +89,11 @@ class SystemUpdateAction extends CommonAction {
             //删除更新文件
             delDirAndFile($tmpFolder);
         }
-
-
     }
 
+    /*
+     * 获取某版本信息
+     * **/
     private function getVersion($id) {
         $url = sprintf("%sgetVersion/id/%d", $this->server, $id);
         $version = file_get_contents($url);
@@ -96,6 +104,9 @@ class SystemUpdateAction extends CommonAction {
         return json_decode($version, true);
     }
 
+    /*
+     * 获取可更新版本
+     * **/
     private function getUpdateVersions() {
         $url = $this->server."getUpdates/version/".$this->currentVersion;
         $versions = file_get_contents($url);
@@ -113,15 +124,14 @@ class SystemUpdateAction extends CommonAction {
         return $data;
     }
 
-    private function executeSql($sqlFile) {
-        $sqls = file_get_contents($sqlFile);
-        $sqls = str_replace("[PREFIX]", C("DB_PREFIX"), $sqls);
-        $sqls = explode("\n", $sqls);
-        $model = new Model;
-        foreach($sqls as $sql) {
-            if(false === $model->execute($sql)) {
-                return false;
-            }
+    private function isAdjoiningVersion($current, $upgradeTo){
+        $url = sprintf("%sisAdjoiningVersion/current/%s/upgrade/%s", $this->server, $current, $upgradeTo);
+        $result = file_get_contents($url);
+        if(!$result or empty($result)) {
+            return true;
+        } else {
+            Log::write("try to install a version that doesn't match:".$upgradeTo);
+            return false;
         }
     }
 

@@ -258,6 +258,7 @@ class AppsAction extends CommonAction {
     public function update() {
         if(!$_GET["upgrade"]) {
             $this->updateStatus();
+            return;
         }
 
         $alias = $_REQUEST["alias"];
@@ -328,7 +329,7 @@ class AppsAction extends CommonAction {
         if(!is_file($localPath) or filesize($localPath) <= 0) {
             Log::write("Install app failed while download: ". $remoteUri);
             $this->error("install failed while download");
-            return false;
+            exit;
         }
 
         $zip = new ZipArchive();
