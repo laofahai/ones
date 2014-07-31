@@ -100,8 +100,10 @@ class Log {
         $now = date(self::$format);
         $type = $type?$type:C('LOG_TYPE');
         if(self::FILE == $type) { // 文件方式记录日志
+            $path = C('LOG_PATH') == "/" ? ENTRY_PATH."/Data/logs/" : C('LOG_PATH');
             if(empty($destination))
-                $destination = C('LOG_PATH').date('y_m_d').'.log';
+                $destination = $path.date('y_m_d').'.log';
+//            echo $destination;exit;
             //检测日志文件大小，超过配置大小则备份日志文件重新生成
             if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination) )
                   rename($destination,dirname($destination).'/'.time().'-'.basename($destination));

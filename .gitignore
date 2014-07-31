@@ -11,6 +11,7 @@ nbproject
 /server/Runtime/
 /server/Data/Avatars/*.jpg
 /server/Data/apps/*
+/server/Data/logs/*
 /utils/.settings
 /utils/.project
 /utils/.pydevproject

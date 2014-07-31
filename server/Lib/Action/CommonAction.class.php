@@ -193,7 +193,6 @@ class CommonAction extends RestAction {
      */
     protected function checkPermission($path="", $return=false){
 
-
         $this->loginRequired();
 
         //工作流模式，通过工作流权限判断
@@ -221,6 +220,7 @@ class CommonAction extends RestAction {
             return $rs ? true : false;
         } else {
             if(!$rs) {
+                Log::write(sprintf("%s try to do: %s, but permission denied.", $this->user["username"], $rule));
                 $this->error("Permission Denied:".$rule);
                 exit;
             }
@@ -561,6 +561,7 @@ class CommonAction extends RestAction {
         } 
         
         if(false === $rs) {
+            Log::write("Delete row failed:".$name.",".$id);
             $this->error("delete_failed");
         }
 //        
@@ -615,13 +616,15 @@ class CommonAction extends RestAction {
 //        $this->error(123);exit;
 //        var_dump($_REQUEST);exit;
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
-            $this->error("not_allowed1");exit;
+            Log::write("workflow error: something is wrong : {$this->workflowAlias},{$mainRowid},{$nodeId}");
+            $this->error("not_allowed1");return;
         }
         
         $workflow = new Workflow($this->workflowAlias);
         $rs = $workflow->doNext($mainRowid, $nodeId, false, false);
         if(false === $rs) {
-            $this->error("not_allowed");exit;
+            Log::write("workflow error when execute node: ".$nodeId.",". $mainRowid);
+            $this->error("not_allowed");return;
         }
 
         // 结束信息返回true、或者没有任何返回值时跳转
@@ -659,9 +662,9 @@ class CommonAction extends RestAction {
         
         import("@.ORG.excel.XMLExcel");
         $xls=new XMLExcel;
-	$xls->setDefaultWidth(80);
+	    $xls->setDefaultWidth(80);
         $xls->setDefaultHeight(20);
-	$xls->setDefaultAlign("center");
+	    $xls->setDefaultAlign("center");
         $head = array();
         foreach($this->exportFields as $k=>$v) {
 //            array_push($row, sprintf('<b>%s</b>', $v));
@@ -687,7 +690,7 @@ class CommonAction extends RestAction {
         $xls->export($filename);
 //        $xls->addPageRow;
         
-        exit;
+        return;
         
         header("Content-type:application/vnd.ms-excel");
         header("Content-Disposition:attachment;filename={$filename}");
@@ -718,13 +721,5 @@ class CommonAction extends RestAction {
         echo implode("\r\n", $excel);
     }
 
-    
-    private function testResponse() {
-        $this->response(array(
-            "error" => 1,
-            "id" => 1,
-            "msg"=> "错误"
-        ));
-    }
 }
 

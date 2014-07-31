@@ -34,8 +34,9 @@ class AppsAction extends CommonAction {
             $tmp = $http->get_data();
             $response = json_decode($tmp, true);
             if(!$response["count"]) {
+                Log::write("get apps list failed");
                 $this->error("get apps list failed");
-                exit;
+                return;
             }
             $allApps = $response["apps"];
 
@@ -217,6 +218,7 @@ class AppsAction extends CommonAction {
 
         if(!is_dir($appDir)) {
             $this->installClean($localPath, $tmpFolder);
+            Log::write("Install app failed while copy: ". $alias);
             $this->error("install failed while copy");
             return;
         }
@@ -281,6 +283,7 @@ class AppsAction extends CommonAction {
 
         if(!is_dir($appDir)) {
             $this->installClean();
+            Log::write("Install app failed while copy: ". $alias);
             $this->error("install failed while copy");
             return;
         }
@@ -323,6 +326,7 @@ class AppsAction extends CommonAction {
 
         //下载不成功
         if(!is_file($localPath) or filesize($localPath) <= 0) {
+            Log::write("Install app failed while download: ". $remoteUri);
             $this->error("install failed while download");
             return false;
         }
@@ -351,6 +355,7 @@ class AppsAction extends CommonAction {
 
         if(!$appConf) {
             $this->installClean();
+            Log::write("Install app failed parse config: ". $appConf);
             $this->error("install failed while parse config");
             return;
         }

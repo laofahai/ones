@@ -20,7 +20,8 @@ $baseConfig = array(
     'MYSQL_BIN'          => '', //执行mysql bin目录，或者软链接至/usr/bin目录。目前需用到mysql, mysqldump命令
 
     'DEFAULT_FILTER'     => "",
-    
+
+    'LOG_PATH' => ENTRY_PATH."/Data/logs/",
     'LOG_RECORD' => true, // 开启日志记录
     'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,WARN,DEBUG,SQL', // 只记录EMERG ALERT CRIT ERR 错误
     
