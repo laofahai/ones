@@ -252,7 +252,7 @@
                                 };
                                 break;
                             case "select":
-                                FieldsDefine["_filter_"+item.field] = item;
+                                FieldsDefine["_filter_"+item.field] = item.replace(/"/ig, "");
                                 break;
 
                         }

@@ -1,5 +1,6 @@
 (function(){
 
+    //桌面图标
     ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer, $scope) {
         var ComView = injector.get("ComView");
         var stockInRes = injector.get("StockinRes");
@@ -20,7 +21,7 @@
             sort: 4
         });
 
-
+        //未处理入库单
         stockInRes.query({
             unhandled: true,
             onlyCount: true
@@ -34,6 +35,7 @@
 
         var stockOutRes = injector.get("StockoutRes");
 
+        //未处理出库单
         stockOutRes.query({
             unhandled: true,
             onlyCount: true
@@ -274,10 +276,19 @@
                 return service;
             }])
         .service("StockinModel", ["$rootScope", function($rootScope){
+            var timestamp = Date.parse(new Date());
+            var startTime = timestamp-3600*24*30*1000;
             var obj = {
                 isBill: true,
                 printAble: true,
-                workflowAlias: "stockin"
+                workflowAlias: "stockin",
+                filters: {
+                    between: {
+                        field: "dateline",
+                        defaultData: [startTime, timestamp],
+                        inputType: "datepicker"
+                    }
+                }
             };
             obj.getFieldsStruct= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -392,10 +403,19 @@
             };
         }])
         .service('StockoutModel', ["$rootScope", function($rootScope){
+            var timestamp = Date.parse(new Date());
+            var startTime = timestamp-3600*24*30*1000;
             return {
                 isBill: true,
                 printAble: true,
                 workflowAlias: "stockout",
+                filters: {
+                    between: {
+                        field: "dateline",
+                        defaultData: [startTime, timestamp],
+                        inputType: "datepicker"
+                    }
+                },
                 getFieldsStruct: function(){
                     return {
                         bill_id : {},
