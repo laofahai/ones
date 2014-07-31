@@ -58,8 +58,6 @@
     };
 
 
-    ones.pluginHooks = {};
-
     angular.module("ones.pluginsModule", [])
         .service("pluginExecutor", ["$injector", "$q", function($injector, $q){
             return {
@@ -86,7 +84,15 @@
                     }
 
                     var variables = ones.pluginScope;
-                    ones.clearPluginScope();
+
+//                    if(ones.pluginScope.defer) {
+//                        ones.pluginScope.defer.promise.then(function(){
+////                            ones.clearPluginScope();
+//                        });
+//                    } else {
+////                        ones.clearPluginScope();
+//                    }
+
                     return variables;
 
                 }

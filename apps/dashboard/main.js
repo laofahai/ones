@@ -66,13 +66,23 @@
                     "info", "purple", "pink", "grey", "light", "yellow"
                 ];
 
+                ones.pluginScope.dashboardAppBtns = [];
+                ones.pluginScope.dashboardSetBtnTip = function(btnName, tip){
+                    $timeout(function(){
+                        for(var i=0;i<$scope.appBtns.length;i++) {
+                            if($scope.appBtns[i].name == btnName) {
+                                $scope.appBtns[i].tip = tip;
+                                break;
+                            }
+                        }
+                    }, 1000);
+                };
+                $scope.appBtns = [];
                 $timeout(function(evt, data){
-                    ones.pluginScope.dashboardAppBtns = [];
-                    var rs = plugin.callPlugin("hook.dashboard.appBtn");
-
-                    $scope.appBtns = [];
-
-                    angular.forEach(rs.dashboardAppBtns, function(app){
+                    var rs = plugin.callPlugin("hook.dashboard.appBtn", $scope);
+                    var dashboardAppBtns = ones.pluginScope.dashboardAppBtns;
+                    dashboardAppBtns.sort(arraySortBy("sort"));
+                    angular.forEach(dashboardAppBtns, function(app){
                         //权限检测
                         var authNode;
                         if(app.authNode) {
@@ -99,7 +109,7 @@
 
                         //底色
                         if(!app.btnClass){
-                            var tmp = md5.createHash(app.name).slice(2,3);
+                            var tmp = md5.createHash(app.label).slice(2,3);
                             var tmpIndex = chars.indexOf(tmp);
                             if(tmpIndex >= 0) {
                                 if(tmpIndex > 11) {

@@ -280,47 +280,51 @@ class CommonAction extends RestAction {
         $this->_filter($map);
         $this->_order($order);
 
-        if($this->relation && method_exists($model, "relation")) {
-            $model = $model->relation(true);
+        $total = false;
+        if($_GET["onlyCount"]) {
+            $total = $model->where($map)->count();
+            $this->response(array(array("count"=>$total)));return;
+        } else {
+
+            if($this->relation && method_exists($model, "relation")) {
+                $model = $model->relation(true);
+            }
+
+
+            $model = $model->where($map)->order($order);
+
+            //AutoComplete字段默认只取10条
+            if(isset($_GET["typeahead"])) {
+                $limit = 10;
+            }
+            if(isset($_GET["limit"])) {
+                $limit = abs(intval($_GET["limit"]));
+            }
+
+            if($limit) {
+                $model = $model->limit($limit);
+            }
+
+            if($order) {
+                $model = $model->order($order);
+            }
+
+            $list = $model->select();
+
+            $this->queryMeta = array(
+                "map" => $map,
+                "limit" => $limit,
+                "order" => $order
+            );
+            if($return) {
+                return $list;
+            }
         }
-
-
-        $model = $model->where($map)->order($order);
-
-        //AutoComplete字段默认只取10条
-        if(isset($_GET["typeahead"])) {
-            $limit = 10;
-        }
-        if(isset($_GET["limit"])) {
-            $limit = abs(intval($_GET["limit"]));
-        }
-
-        if($limit) {
-            $model = $model->limit($limit);
-        }
-
-        if($order) {
-            $model = $model->order($order);
-        }
-
-        $list = $model->select();
-
-        $this->queryMeta = array(
-            "map" => $map,
-            "limit" => $limit,
-            "order" => $order
-        );
-
-        if($return) {
-            return $list;
-        }
-
 
 //        print_r($list);exit;
-
         //包含总数
         if($_GET["_ic"]) {
-            $total = $model->where($map)->count();
+            $total = false === $total ? $total : $model->where($map)->count();
 //            echo $model->getLastSql();exit;
             $return = array(
                 array("count" => $total),

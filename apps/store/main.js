@@ -1,17 +1,51 @@
 (function(){
 
-    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer, $scope) {
         var ComView = injector.get("ComView");
+        var stockInRes = injector.get("StockinRes");
+
         ones.pluginScope.dashboardAppBtns.push({
-            name: ComView.toLang("stockin"),
-            icon: "signin",
-            link: "store/list/stockin"
-        });
-        ones.pluginScope.dashboardAppBtns.push({
-            name: ComView.toLang("stockout"),
+            label: ComView.toLang("stockout"),
+            name: "stockoutList",
             icon: "signout",
-            link: "store/list/stockout"
+            link: "store/list/stockout",
+            sort: 6
         });
+
+        ones.pluginScope.dashboardAppBtns.push({
+            label: ComView.toLang("stockin"),
+            name: "stockinList",
+            icon: "signin",
+            link: "store/list/stockin",
+            sort: 4
+        });
+
+
+        stockInRes.query({
+            unhandled: true,
+            onlyCount: true
+        }).$promise.then(function(data){
+            var count = parseInt(data[0].count);
+            if(count <= 0) {
+                return;
+            }
+            ones.pluginScope.dashboardSetBtnTip("stockinList", count);
+        });
+
+        var stockOutRes = injector.get("StockoutRes");
+
+        stockOutRes.query({
+            unhandled: true,
+            onlyCount: true
+        }).$promise.then(function(data){
+            var count = parseInt(data[0].count);
+            if(count <= 0) {
+                return;
+            }
+            ones.pluginScope.dashboardSetBtnTip("stockoutList", count);
+        });
+
+        ones.pluginScope.defer = defer;
     });
 
     angular.module("ones.store", ["ones.goods", "ones.dataModel"])

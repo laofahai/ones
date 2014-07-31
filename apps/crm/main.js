@@ -3,10 +3,13 @@
     ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
         var ComView = injector.get("ComView");
         ones.pluginScope.dashboardAppBtns.push({
-            name: ComView.toLang("appName", "crm"),
+            label: ComView.toLang("appName", "crm"),
+            name: "crmList",
             icon: "group",
             link: "crm/list/relationshipCompany"
         });
+
+        ones.pluginScope.defer = defer;
     });
 
     angular.module("ones.crm", ["ones.department"])

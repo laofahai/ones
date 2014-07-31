@@ -132,6 +132,29 @@ Array.prototype.remove = function(val) {
     }
 };
 
+/**
+ * 按照某字段排序数组
+ * array.sort(arraySortBy(id));
+ * */
+var arraySortBy = function(name,minor)
+{
+    return function(o, p)
+    {
+        var a, b;
+        if (typeof o === "object" && typeof p === "object" && o && p)
+        {
+            a = o[name] || 99;
+            b = p[name] || 99;
+            if (a === b) {return typeof minor==='function' ?minor(o,p):0;}
+            if (typeof a === typeof b) { return a < b ? -1 : 1;}
+            return typeof a < typeof b ? -1 : 1;
+        }
+        else {
+            throw ("error when sorting array.");
+        }
+    }
+}
+
 String.prototype.ucfirst = function() {
 
     // Split the string into words if string contains multiple words.
