@@ -374,7 +374,11 @@ function DBBackup($options=array()) {
     if(in_array("sendmail", $options)) {
         sleep(2);
         $file = in_array("zip", $options) ? $zipname : $savename;
-        $rs = sendMail("ONES DBBackup", DBC("backup.sendto.email"), "ONES Customer", "ONES Data Backup", array($file));
+        $content = <<<EOF
+        From: {$_SERVER["HTTP_HOST"]} - {$_SERVER["HTTP_REFERER"]}
+EOF;
+
+        $rs = sendMail("ONES DBBackup", DBC("backup.sendto.email"), "ONES Customer", $content, array($file));
         if(true !== $rs) {
             return $rs;
         }

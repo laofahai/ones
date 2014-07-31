@@ -23,6 +23,12 @@
                         "clearCache": "清除缓存"
                     }
                 },
+                "clearCache": {
+                    "name": "清除缓存",
+                    "actions": {
+                        "list": "清除缓存"
+                    }
+                },
                 "Types": {
                     "name": "类型管理",
                     "actions" : {

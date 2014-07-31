@@ -6,7 +6,7 @@
                     controller: "HOMERedirectCtl",
                     templateUrl: "common/base/views/blank.html"
                 })
-                .when('/HOME/Settings/clearCache', {
+                .when('/home/list/clearCache', {
                     templateUrl: "common/base/views/home/clearCache.html",
                     controller: "clearCacheCtl"
                 })
