@@ -25,6 +25,14 @@
         "navs": {
             "goods_setting": "物料(成品)管理",
             "goods_category": "物料(成品)分类管理"
-        }
+        },
+        "goods": "物料(成品)",
+        "factory_code": "基础原厂编码",
+        "factoryCodeAll": "原厂编码",
+        "factory_code_all": "原厂编码",
+        "goods_name": "产品",
+        "measure": "计量单位",
+        "price": "销售价格",
+        "cost": "成本价格"
     }
 }

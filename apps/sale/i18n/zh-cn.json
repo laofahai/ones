@@ -34,7 +34,9 @@
         },
         "app_sale": {
             "bill_id": "test123"
-        }
+        },
+        "Orders": "销售订单",
+        "sale": "销售"
 
     }
 }

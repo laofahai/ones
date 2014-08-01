@@ -71,6 +71,9 @@
             "doCraft" : "执行生产工艺"
         },
         "current_craft": "当前工艺",
-        "next_craft": "下一工艺"
+        "next_craft": "下一工艺",
+        "craft": "工艺",
+        "ProducePlan": "生产计划",
+        "produce": "生产"
     }
 }

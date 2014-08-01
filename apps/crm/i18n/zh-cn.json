@@ -36,6 +36,9 @@
         },
         "contact": "联系人",
         "tel": "电话",
-        "is_primary": "是否首要联系人"
+        "is_primary": "是否首要联系人",
+        "linkMan": "联系人",
+        "supplier": "供应商",
+        "customer": "客户"
     }
 }

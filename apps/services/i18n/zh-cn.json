@@ -22,6 +22,9 @@
             "data_backup": "数据备份",
             "clear_data": "清除数据",
             "system_update": "系统升级"
-        }
+        },
+        "send_to_mailbox": "发送至邮箱",
+        "packit": "压缩",
+        "autodelete": "自动删除"
     }
 }
