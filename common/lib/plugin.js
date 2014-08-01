@@ -71,7 +71,7 @@
                     var p = ones.pluginHooks[hookName];
 
                     if(!p) {
-                        throw("unregisted hook: "+ hookName);
+//                        throw("unregisted hook: "+ hookName);
                         return false;
                     }
 

@@ -1,5 +1,5 @@
 (function(){
-    angular.module("ones.finance", ["ones.crm", "ones.department", "ones.workflow"])
+    angular.module("ones.finance", [])
         .config(["$routeProvider", function($route){
             $route.when('/doWorkflow/FinanceReceivePlan/confirm/:nodeId/:id', {
                 templateUrl: appView("confirmReceive.html", "finance"),

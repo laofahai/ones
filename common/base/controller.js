@@ -72,6 +72,7 @@
 
 
                 //卸载
+                //@todo 卸载确认
                 $scope.doAppUninstall = function() {
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(

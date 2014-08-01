@@ -70,7 +70,6 @@
                             listable: false
                         },
                         author: {},
-                        link: {},
                         description: {},
                         status: {
                             cellFilter: "lang"

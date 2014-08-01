@@ -1,12 +1,5 @@
 (function(){
-    angular.module("ones.purchase",[
-        "ones.crm",
-            "ones.department",
-            "ones.workflow",
-            "ones.goods",
-            "ones.dataModel",
-            "ones.store"
-    ])
+    angular.module("ones.purchase",[])
     .config(["$routeProvider", function($route){
         $route //采购
             .when('/purchase/addBill/purchase', {

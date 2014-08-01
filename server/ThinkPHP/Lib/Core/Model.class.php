@@ -98,6 +98,16 @@ class Model {
         $this->db(0,empty($this->connection)?$connection:$this->connection);
     }
 
+    public function getIndexArray($data, $value="name", $key="id") {
+        if(!$data) {
+            return array();
+        }
+        foreach($data as $k=>$v) {
+            $return[$v[$key]] = $v[$value];
+        }
+        return $return;
+    }
+
     /**
      * 自动检测数据表信息
      * @access protected

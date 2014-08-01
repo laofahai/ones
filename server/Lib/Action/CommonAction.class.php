@@ -88,10 +88,15 @@ class CommonAction extends RestAction {
          * 禁用的APP
          * **/
         $model = D("Apps");
-        $tmp = $model->where("status!=1")->select();
+        $tmp = $model->select();
         $disabledApps = array();
         foreach($tmp as $t) {
-            $disabledApps[] = $t["alias"];
+            if($t["status"] != 1) {
+                $disabledApps[] = $t["alias"];
+            } else {
+                $enabledApps[] = $t["alias"];
+            }
+
         }
 
         /*
@@ -106,7 +111,7 @@ class CommonAction extends RestAction {
         $appConf = array();
         if($dirHandle) {
             while(($file = readdir($dirHandle)) !== false) {
-                if(in_array($file, $disabledApps)) {
+                if(in_array($file, $disabledApps) or !in_array($file, $enabledApps)) {
                     continue;
                 }
                 $appDir = $appDirs.DS.$file.DS;

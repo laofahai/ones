@@ -123,15 +123,14 @@ class FrontEndRuntime {
             }
 
         }
-
         return $langData;
     }
 
     public function combineJS($dir=false, $require=false) {
         $dir = $dir ? $dir : ROOT_PATH."/apps";
-
         if($require && !is_dir($dir)) {
-            $this->unfoundApp[] = end(explode("/", $dir));
+            $tmp = end(explode("/", $dir));
+            $this->unfoundApp[$tmp] = $tmp;
             return;
         }
 
@@ -151,7 +150,6 @@ class FrontEndRuntime {
             }
             closedir($dh);
         }
-
         $this->combineAppConfig();
 
         return $this->loadedApps;
@@ -192,7 +190,8 @@ class FrontEndRuntime {
                     //优先加载依赖文件
                     if($tmpConfig["requirements"]) {
                         foreach($tmpConfig["requirements"] as $dep) {
-                            if(array_key_exists($dep, $this->loadedApps)) {
+                            if(!in_array($dep, $this->loadedApps)) {
+                                $this->unfoundApp[$dep] = $dep;
                                 continue;
                             }
                             $depPath = dirname($appPath)."/".$dep;

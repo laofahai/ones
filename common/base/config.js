@@ -64,6 +64,9 @@
             if (BaseConf.DEBUG || !$rootScope.i18n) {
                 $http.get(BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
                     $rootScope.i18n = data;
+                    if(!$rootScope.i18n) {
+                        throw("can't load i18n package.");
+                    }
                     localStorage.setItem(BaseConf.Prefix + "i18n", angular.toJson(data));
                 });
             }

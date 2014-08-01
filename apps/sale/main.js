@@ -1,12 +1,5 @@
 (function(){
-    angular.module("ones.sale", [
-            "ones.crm",
-            "ones.department",
-            "ones.workflow",
-            "ones.goods",
-            "ones.dataModel",
-            "ones.store"
-        ])
+    angular.module("ones.sale", [])
         .config(["$routeProvider", function($route){
             $route
                 //订单

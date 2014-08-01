@@ -6,7 +6,7 @@
  * Time: 21:39
  */
 
-abstract class CommonBuildAction {
+class CommonBuildAction {
 
     protected $appConfig;
 

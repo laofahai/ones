@@ -410,8 +410,6 @@
                         'ng-click="billTypeaheadClick($event)">{{%(v)s.%(labelField)s}}</li></ul>'
             };
 
-            this.opts.storeAPI = $injector.get("StockProductListRes");
-
             this.fm = new service.makeField($scope, {
                 multi: true, //指定为表单绑定多条数据
                 dataName: this.opts.dataName
@@ -746,7 +744,7 @@
                         } else {
                             queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
                         }
-                        self.opts.storeAPI.get(queryParams).$promise.then(function(data){
+                        $injector.get("StockProductListRes").get(queryParams).$promise.then(function(data){
                             self.parentScope[self.opts.dataName][context.trid].store_num=data.num || 0;
                             //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
                             //                self.parentScope[self.opts.dataName][context.trid].store_num=data.num;

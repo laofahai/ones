@@ -1,4 +1,5 @@
 (function(){
+
     'use strict';
     angular.module('ones', [
             'ngCookies',
@@ -66,7 +67,7 @@
                 //有需要的APP未能加载
                 if(ones.unfoundApp) {
                     ComView.alert(
-                        sprintf($rootScope.i18n.lang.messages.unfoundApp, window.unfoundApp.join()),
+                        sprintf($rootScope.i18n.lang.messages.unfoundApp, ones.unfoundApp.join()),
                         "danger",
                         "!",
                         false);
@@ -147,7 +148,6 @@
                         lang: {}
                     };
                     var urlmap = $rootScope.i18n.urlMap;
-
                     if (urlmap[app]) {
                         $scope.currentPage.lang.app = urlmap[app].name;
                         if (urlmap[app].modules[module]) {
