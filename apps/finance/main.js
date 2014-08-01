@@ -1,5 +1,12 @@
 (function(){
     angular.module("ones.finance", ["ones.crm", "ones.department", "ones.workflow"])
+        .config(["$routeProvider", function($route){
+            $route.when('/doWorkflow/FinanceReceivePlan/confirm/:nodeId/:id', {
+                templateUrl: appView("confirmReceive.html", "finance"),
+                controller: "WorkflowFinanceReceiveConfirmCtl"
+            })
+            ;
+        }])
         //财务模块
         .factory("FinanceAccountRes", ["$resource", "ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"finance/financeAccount/:id.json", null, {'update': {method: 'PUT'}});
@@ -194,6 +201,30 @@
                 }
             };
         }])
+
+        /**
+         * 确认收款
+         * */
+        .controller("WorkflowFinanceReceiveConfirmCtl", ["$scope", "ComView", "ConfirmReceiveModel", "FinanceReceivePlanRes", "$routeParams", "$location",
+            function($scope, ComView, model, res, $routeParams, $location){
+                $scope.selectAble = false;
+                ComView.displayForm($scope, model, res, {
+                    id: $routeParams.id
+                });
+
+                $scope.doSubmit = function(){
+                    var params = $.extend({
+                        workflow: true,
+                        node_id: $routeParams.nodeId,
+                        id: $routeParams.id,
+                        donext: true
+                    }, $scope.formData);
+                    res.doPostWorkflow(params).$promise.then(function(data){
+                        $location.url('/finance/list/financeReceivePlan');
+                    });
+                };
+            }])
+
 
     ;
 })();

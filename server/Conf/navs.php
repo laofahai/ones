@@ -19,9 +19,9 @@ return array(
     ),
     "settings" => array(
         "childs" => array(
-            "field_set" => "home/list/config",
+            "field_set" => "HOME/list/config",
             "base_data_set" => array(
-                "types_manage"  => "home/list/types",
+                "types_manage"  => "HOME/list/types",
             ),
             "system_operation" => array(
                 "clear_cache" => "HOME/list/clearCache",

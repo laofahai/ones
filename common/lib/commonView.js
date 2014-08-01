@@ -252,7 +252,7 @@
                                 };
                                 break;
                             case "select":
-                                FieldsDefine["_filter_"+item.field] = item.replace(/"/ig, "");
+                                FieldsDefine["_filter_"+item.field] = item;
                                 break;
 
                         }
@@ -564,9 +564,9 @@
                         service.makeFilters($scope, model.filters);
                     }
 
-
-
-
+                    /**
+                     * 快捷键
+                     * */
 
 
 

@@ -23,7 +23,7 @@
                         "clearCache": "清除缓存"
                     }
                 },
-                "clearCache": {
+                "ClearCache": {
                     "name": "清除缓存",
                     "actions": {
                         "list": "清除缓存"
@@ -43,25 +43,6 @@
                         "list": "已安装应用",
                         "listAll": "全部应用",
                         "viewDetail": "应用详情"
-                    }
-                }
-            }
-        },
-
-        "doworkflow": {
-            "modules": {
-                "Produce": {
-                    "name": "生产管理",
-                    "actions": {
-                        "makeBoms": "生成物料清单",
-                        "doCraft" : "执行生产工艺",
-                        "makeStockin": "生成入库单"
-                    }
-                },
-                "FinanceReceivePlan": {
-                    "name": "财务收款计划",
-                    "actions": {
-                        "confirm": "确认收款"
                     }
                 }
             }

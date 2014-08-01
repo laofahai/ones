@@ -33,7 +33,7 @@
                 }
             }
         },
-        "doworkflow": {
+        "doWorkflow": {
             "modules": {
                 "FinanceReceivePlan": {
                     "name": "财务收款计划",

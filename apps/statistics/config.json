@@ -8,7 +8,6 @@
             "childs" : {
                 "sale_statistics": "statistics/list/sale",
                 "stock_warning": "store/list/stockWarning",
-                "statistics_overview": "statistics/list/overview",
                 "statistics_product_overview": "statistics/list/productView"
             }
         }
