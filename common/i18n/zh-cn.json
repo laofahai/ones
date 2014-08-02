@@ -58,7 +58,8 @@
             "base_data_set": "基础数据管理",
             "types_manage": "类型管理",
             "system_operation": "系统操作",
-            "clear_cache": "清除缓存"
+            "clear_cache": "清除缓存",
+            "app_center": "应用中心"
         },
         "helpTexts": {},
         "widgetTitles": {

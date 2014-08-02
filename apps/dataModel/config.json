@@ -1,6 +1,6 @@
 {
     "alias": "dataModel",
-    "requirements": "",
+    "requirements": [],
     "modules": ["dataModel", "dataModelData", "dataModelFields"],
     "version": "0.1",
     "navs": {

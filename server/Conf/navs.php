@@ -19,6 +19,7 @@ return array(
     ),
     "settings" => array(
         "childs" => array(
+            "app_center" => "HOME/list/apps",
             "field_set" => "HOME/list/config",
             "base_data_set" => array(
                 "types_manage"  => "HOME/list/types",
@@ -26,7 +27,6 @@ return array(
             "system_operation" => array(
                 "clear_cache" => "HOME/list/clearCache",
             )
-            
         ),
         "icon" => "cog"
     ),

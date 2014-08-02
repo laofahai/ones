@@ -1,7 +1,7 @@
 {
     "alias": "sale",
     "version": "0.1",
-    "requirements": ["goods", "store", "store", "workflow", "crm", "department"],
+    "requirements": ["goods", "store", "workflow", "crm", "department"],
     "workflow": ["Orders", "Returns"],
     "navs": {
         "sale" : {
