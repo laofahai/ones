@@ -18,7 +18,7 @@
                         <p class="grey" ng-bind="appInfo.description"></p>
                         <h5 class="bolder" ng-bind="i18n.lang.requirementsApp"></h5>
                         <p>
-                            <span class="label label-primary arrowed arrowed-right"
+                            <span class="label label-info arrowed arrowed-in-right"
                                   ng-repeat="req in appInfo.versions[appInfo.currentVersion].requirements"
                                   ng-bind="i18n.lang[req].appName || req">
                             </span>

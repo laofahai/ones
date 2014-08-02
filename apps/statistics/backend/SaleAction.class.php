@@ -165,7 +165,7 @@ class SaleAction extends CommonAction {
             }
         }
         foreach($tmp as $k=>$v) {
-            $tmp[$k]["value"] = $v["value"]/1000;
+            $tmp[$k]["value"] = $v["value"];
         }
         return reIndex($tmp);
     }
