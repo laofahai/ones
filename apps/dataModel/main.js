@@ -30,7 +30,7 @@
                      editAbleRequire: params.require || [],
                      dataSource: injector.get("DataModelDataRes"),
                      queryWithExistsData: params.queryExtra || [],
-                     autoQuery: params.autoQuery || true,
+                     autoQuery: !params.autoQuery || true,
                      queryParams: {
                          fieldAlias: item.field_name
                      }
@@ -187,7 +187,7 @@
             }])
         .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $routeParams) {
-                $routeParams.group = "dataModule";
+                $routeParams.group = "dataModel";
                 $routeParams.module = "DataModelFields";
                 var actions = $scope.$parent.i18n.urlMap.dataModel.modules.DataModelFields.actions;
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);

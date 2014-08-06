@@ -165,7 +165,11 @@
                 model = $injector.get(module.ucfirst()+"Model");
     //            console.log($scope);console.log(res);
                 //可跳转按钮
-                actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+                try {
+                    actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+                } catch(e) {
+                    throw("unable get i18n package section:" + group + "." + module + "." + actions);
+                }
                 ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra, model);
 
                 if($routeParams.extra) {
