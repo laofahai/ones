@@ -24,10 +24,10 @@
             'ones.configModule',
             'ones.commonView' //需要先加载模块，让模块路由优先匹配
         ])
-    /**
-     * $http interceptor.
-     * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
-     */
+        /**
+         * $http interceptor.
+         * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
+         */
         .config(["$httpProvider", function($httpProvider) {
             var interceptor = ['$rootScope', '$q', function(scope, $q) {
                 function success(response) {
@@ -56,11 +56,14 @@
                     return promise.then(success, error);
                 };
             }];
+//            $httpProvider.interceptors.push(['$rootScope', function(){
+//                console.log(123);
+//            }]);
             $httpProvider.responseInterceptors.push(interceptor);
         }])
-    /**
-     * Root Ctrl
-     * */
+        /**
+         * Root Ctrl
+         * */
         .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView",
             function($scope, $rootScope, $location, $http, conf, ComView) {
 

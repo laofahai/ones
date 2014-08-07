@@ -12,5 +12,5 @@
  * @author nemo
  */
 class RelationshipCompanyGroupAction extends CommonAction {
-    //put your code here
+
 }

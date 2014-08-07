@@ -475,7 +475,7 @@ class CommonAction extends RestAction {
         
         $name = $this->insertModel ? $this->insertModel : $this->getActionName();
         $model = D($name);
-        
+
         /**
          * 对提交数据进行预处理
          */
@@ -487,8 +487,6 @@ class CommonAction extends RestAction {
             $model = $model->relation(true);
         }
         $result = $model->add();
-//        echo $model->getLastSql();exit;
-
 
         if ($result !== false) { //保存成功
             if($return) {

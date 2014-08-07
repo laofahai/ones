@@ -33,7 +33,6 @@
 
         .service("RelationshipCompanyGroupModel", ["$rootScope", function($rootScope){
             return {
-                isBill: true,
                 getFieldsStruct: function(){
                     return {
                         id: {

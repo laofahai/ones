@@ -214,11 +214,13 @@ class AppsAction extends CommonAction {
         $target = ROOT_PATH."/apps";
         list($localPath, $tmpFolder) = $this->downloadAndZipAndCopy($remoteUri, $target);
 
+//        sleep(2);exit;
+
         $appDir = $target."/".$alias;
 
         if(!is_dir($appDir)) {
-            $this->installClean($localPath, $tmpFolder);
-            Log::write("Install app failed while copy: ". $alias);
+//            $this->installClean($localPath, $tmpFolder);
+            Log::write("Install app failed while copy: {$tmpFolder} to {$appDir}");
             $this->error("install failed while copy");
             return;
         }
@@ -319,15 +321,33 @@ class AppsAction extends CommonAction {
      * 下载并解压文件，然后复制到某目录
      * **/
     private function downloadAndZipAndCopy($remoteUri, $target) {
+
         $localName = md5(CTS).".zip";
         $localPath = ENTRY_PATH."/Data/apps/".$localName;
-
         import("ORG.Net.Http");
+//        echo $remoteUri;exit;
         Http::curlDownload($remoteUri, $localPath);
 
-        //下载不成功
-        if(!is_file($localPath) or filesize($localPath) <= 0) {
-            Log::write("Install app failed while download: ". $remoteUri);
+        $maxTry = 10;
+        $sleep = 0.5;
+        $try = 0;
+        $downloaded = false;
+
+        do {
+            $try ++;
+            sleep($sleep);
+            clearstatcache();
+//            echo filesize($localPath);
+            //下载成功
+            if(is_file($localPath) and filesize($localPath) > 0) {
+                $downloaded = true;
+                break;
+            }
+
+        } while($try <= $maxTry);
+
+        if(!$downloaded) {
+            Log::write("Install app failed while download: ". $remoteUri . " to: ".$localPath);
             $this->error("install failed while download");
             exit;
         }
