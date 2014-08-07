@@ -56,9 +56,26 @@
                     return promise.then(success, error);
                 };
             }];
-//            $httpProvider.interceptors.push(['$rootScope', function(){
-//                console.log(123);
-//            }]);
+
+            var reqInterceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', function ($q, $cacheFactory, $timeout, $rootScope) {
+                return {
+                    'request': function(config) {
+                        $rootScope.dataQuering = true;
+                        return config;
+                    },
+
+                    'response': function(response) {
+                        $rootScope.dataQuering = false;
+                        return response;
+                    },
+
+                    'responseError': function(rejection) {
+                        $rootScope.dataQuering = false;
+                        return $q.reject(rejection);
+                    }
+                };
+            }];
+            $httpProvider.interceptors.push(reqInterceptor);
             $httpProvider.responseInterceptors.push(interceptor);
         }])
         /**
