@@ -23,6 +23,9 @@
             "clear_data": "清除数据",
             "system_update": "系统升级"
         },
+        "widgetTitles": {
+            "updateLog": "更新日志"
+        },
         "send_to_mailbox": "发送至邮箱",
         "packit": "压缩",
         "autodelete": "自动删除"

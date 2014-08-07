@@ -17,17 +17,17 @@
         }])
 
         //系统升级
-        .controller("systemUpdateCtl", ["$scope", "$http", "ones.config", "ComView", "$rootScope",
-            function($scope, $http, conf, ComView, $rootScope){
+        .controller("systemUpdateCtl", ["$scope", "$http", "ones.config", "ComView", "$rootScope", "$modal",
+            function($scope, $http, conf, ComView, $rootScope, $modal){
                 var uri = conf.BSU+"services/systemUpdate.json";
-                var pageDesc = $scope.currentPage.actionDesc;
+                var pageDesc = $scope.$parent.currentPage.lang.actionDesc;
                 var getUpdates = function() {
                     $http.get(uri).success(function(data){
                         if(!data.updates) {
                             $scope.noNewVersion = true;
                         }
-                        $scope.currentPage.actionDesc = sprintf("%s: %s. %s",
-                            $rootScope.i18n.lang.currentVersion,
+                        $scope.$parent.currentPage.lang.actionDesc = sprintf("%s: %s, %s",
+                            ComView.toLang("currentVersion"),
                             data.current_version,
                             pageDesc
                         );
@@ -36,6 +36,15 @@
                 }
 
                 getUpdates();
+
+                $scope.showUpdateLog = function(content) {
+                    $scope.modal = $modal({
+                        scope: $scope,
+                        title: ComView.toLang("updateLog", "widgetTitles"),
+                        content: content,
+                        html: true
+                    });
+                };
 
                 //下载更新文件
                 $scope.doDownload = function(id) {

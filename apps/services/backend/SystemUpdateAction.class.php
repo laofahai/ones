@@ -27,7 +27,6 @@ class SystemUpdateAction extends CommonAction {
             $data = $this->getUpdateVersions();
             $this->response($data);return;
         }
-
     }
 
     public function insert() {
@@ -44,9 +43,6 @@ class SystemUpdateAction extends CommonAction {
 
             import("ORG.Net.Http");
             $remoteUri = str_replace("/index.php?s=/Update", "", $this->server)."Data/updates/".$version["file"];
-//            echo $remoteUri;
-//            echo $this->local.$version["file"];
-//            exit;
 
             $localPath = $this->local.$version["file"];
             Http::curlDownload($remoteUri, $localPath);
@@ -63,8 +59,7 @@ class SystemUpdateAction extends CommonAction {
             $version = $this->getVersion($_POST["version"]);
             $zip = new ZipArchive();
             $tmpFolder = $this->local."update_".$_POST["version"];
-//            echo $tmpFolder;exit;
-//            echo $localPath;
+
             $rs = $zip->open($this->local.$version["file"]);
             if($rs === true) {
                 if(!is_dir($tmpFolder)) {
@@ -105,7 +100,7 @@ class SystemUpdateAction extends CommonAction {
     }
 
     /*
-     * 获取可更新版本
+     * 获取可更新版本列表
      * **/
     private function getUpdateVersions() {
         $url = $this->server."getUpdates/version/".$this->currentVersion;
@@ -124,6 +119,9 @@ class SystemUpdateAction extends CommonAction {
         return $data;
     }
 
+    /*
+     * 判断是否相邻版本
+     * **/
     private function isAdjoiningVersion($current, $upgradeTo){
         $url = sprintf("%sisAdjoiningVersion/current/%s/upgrade/%s", $this->server, $current, $upgradeTo);
         $result = file_get_contents($url);

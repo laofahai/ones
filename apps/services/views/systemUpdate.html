@@ -7,7 +7,7 @@
                 <tr>
                     <th ng-bind="i18n.lang.updateVersion"></th>
                     <th ng-bind="i18n.lang.dateline"></th>
-                    <th ng-bind="i18n.lang.memo"></th>
+                    <!--<th ng-bind="i18n.lang.memo"></th>-->
                     <th ng-bind="i18n.lang.operation"></th>
                 </tr>
                 </thead>
@@ -15,12 +15,12 @@
                 <tr ng-repeat="u in updates.updates">
                     <td ng-bind="u.version"></td>
                     <td ng-bind="u.dateline|dateFormat"></td>
-                    <td ng-bind="u.memo"></td>
+                    <!--<td ng-bind="u.memo"></td>-->
                     <td>
                         <a ng-click="doDownload(u.id)" ng-bind="i18n.lang.download" ng-show="!u.downloaded"></a>
                         <span ng-bind="i18n.lang.downloaded" ng-show="u.downloaded"></span>
                         <a ng-click="doUpdate(u.id)" ng-bind="i18n.lang.update" ng-show="u.downloaded"></a>
-                        <a ng-click="showUpdateLog(u.id)" ng-bind="i18n.lang.updateLog"></a>
+                        <a ng-click="showUpdateLog(u.memo)" ng-bind="i18n.lang.updateLog"></a>
                     </td>
                 </tr>
                 <tr ng-show="noNewVersion">

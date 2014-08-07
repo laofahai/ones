@@ -78,9 +78,25 @@ var isAppLoaded = function(app) {
     return ones.loadedApps.indexOf("ones."+app) >= 0;
 };
 
+function HTMLEncode(html)
+{
+    var temp = document.createElement ("div");
+    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+    var output = temp.innerHTML;
+    temp = null;
+    return output;
+}
+function HTMLDecode(text)
+{
+    var temp = document.createElement("div");
+    temp.innerHTML = text;
+    var output = temp.innerText || temp.textContent;
+    temp = null;
+    return output;
+}
+
 /**
  * 根据KEY返回语言包字段，优先使用当前APP的语言包
- * 第三个
  * */
 var toLang = function(key, section, $rootScope) {
     section = section ? "lang."+section : "lang";
