@@ -411,9 +411,7 @@ function D($name='',$layer='') {
     if(class_exists($class)) {
         $model      =   new $class(basename($name));
     }else {
-
         Think::autoload($class);
-
         if(class_exists($class)) {
             $model = new $class(basename($name));
         } else {

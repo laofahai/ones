@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(15) NOT NULL,
+  `alias` varchar(50) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `listable` smallint(1) NOT NULL DEFAULT '1',
+  `deleted` smallint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`),
+  KEY `deleted` (`deleted`),
+  KEY `ailas` (`alias`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `source_id` int(11) NOT NULL,
+  `model_id` int(11) NOT NULL,
+  `field_id` int(11) NOT NULL,
+  `data` varchar(50) NOT NULL,
+  `pinyin` varchar(50) NOT NULL,
+  `deleted` smallint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `source_id` (`source_id`,`field_id`),
+  KEY `model_id` (`model_id`),
+  KEY `deleted` (`deleted`),
+  KEY `pinyi` (`pinyin`),
+  KEY `data` (`data`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `model_id` int(11) NOT NULL,
+  `display_name` varchar(30) NOT NULL,
+  `field_name` varchar(30) NOT NULL,
+  `input_type` varchar(20) NOT NULL,
+  `extra_data` text NOT NULL,
+  `listorder` smallint(2) NOT NULL DEFAULT '99',
+  `deleted` smallint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `model_id` (`model_id`),
+  KEY `type` (`input_type`),
+  KEY `listorder` (`listorder`),
+  KEY `deleted` (`deleted`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

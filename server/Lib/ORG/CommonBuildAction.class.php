@@ -18,7 +18,7 @@ class CommonBuildAction {
         $this->appConfig = $appConfig;
         $this->appPath = ROOT_PATH."/apps/".$this->appConfig["alias"];
         if(!$appConfig["alias"]) {
-            exit("1");
+            $this->error("");
         }
     }
 
@@ -56,7 +56,7 @@ class CommonBuildAction {
 //        rmdir($this->appPath);
 
         if(is_dir($this->appPath)) {
-//            $this->error("uninstall failed when remove the app dir");
+            $this->error("uninstall failed when remove the app dir");
         }
 
         return true;

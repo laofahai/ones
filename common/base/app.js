@@ -114,17 +114,12 @@
                 });
 
                 $scope.$on("event:permissionDenied", function(evt, msg) {
-                    msg = $rootScope.i18n.lang.messages[msg] || $rootScope.i18n.lang.messages.permissionDenied;
+                    msg = ComView.toLang(msg || "permissionDenied", "messages");
                     ComView.alert(msg, "danger");
                 });
 
                 $scope.$on("event:serverError", function(evt, msg) {
-                    if($rootScope.i18n.lang.messages[msg]) {
-                        msg = $rootScope.i18n.lang.messages[msg];
-                    } else if(!conf.DEBUG) {
-                        msg = $rootScope.i18n.lang.messages.serverError;;
-                    }
-//                msg = $rootScope.i18n.lang.messages[msg] || $rootScope.i18n.lang.messages.serverError;
+                    msg = ComView.toLang(msg || "serverError", "messages");
                     ComView.alert(msg, "danger");
                 });
 
@@ -181,7 +176,7 @@
                             }
                             if (!$scope.currentPage.lang.action) {
                                 $scope.currentPage.lang.action = urlmap[app].modules[module].name;
-                                $scope.currentPage.lang.actionDesc = $rootScope.i18n.lang.actions[action];
+                                $scope.currentPage.lang.actionDesc = ComView.toLang(action, "actions");
                             }
                         }
                     }

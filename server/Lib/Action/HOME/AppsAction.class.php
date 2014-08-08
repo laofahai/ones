@@ -420,7 +420,7 @@ class AppsAction extends CommonAction {
         $method = "app".ucfirst($action);
         if(!$buildClass->$method($alias)) {
             $this->installClean();
-            $this->error("install failed while install");
+            $this->error("install failed while install:". $buildClass->getError());
             return;
         }
 

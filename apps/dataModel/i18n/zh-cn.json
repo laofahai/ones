@@ -49,6 +49,7 @@
             "field_alias": "字段的别名，必须为英文"
         },
         "input_type": "输入方式",
-        "bindDataModel": "绑定数据模型"
+        "bindDataModel": "绑定数据模型",
+        "model_name": "模型名称"
     }
 }
