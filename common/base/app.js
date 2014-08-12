@@ -133,6 +133,11 @@
                 $scope.$watch(function() {
                     return $location.path();
                 }, function() {
+                    doWhenLocationChanged();
+
+                });
+
+                function doWhenLocationChanged() {
                     /**
                      * 设置当前页面信息
                      * 两种URL模式： 普通模式 app/module/action
@@ -176,7 +181,7 @@
                             }
                             if (!$scope.currentPage.lang.action) {
                                 $scope.currentPage.lang.action = urlmap[app].modules[module].name;
-                                $scope.currentPage.lang.actionDesc = ComView.toLang(action, "actions");
+                                $scope.currentPage.lang.actionDesc = $rootScope.i18n.lang.actions[action];
                             }
                         }
                     }
@@ -188,10 +193,10 @@
                     $scope.currentPage.app = app;
                     $scope.currentPage.action = action;
                     $scope.currentPage.module = module;
-
                     $rootScope.currentPage = $scope.currentPage;
+                }
 
-                });
+                doWhenLocationChanged();
 
 
                 /**

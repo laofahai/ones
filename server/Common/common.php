@@ -274,7 +274,7 @@ function isAppLoaded($appName) {
  * 生成原厂编码
  */
 function makeFactoryCode($data, $factoryCode=null) {
-    $format = C("FactoryCodeFormat");
+    $format = DBC("goods.unique.template");
     if($factoryCode) {
         $data["factory_code"] = $factoryCode;
     }
@@ -285,7 +285,7 @@ function makeFactoryCode($data, $factoryCode=null) {
         $result[] = $data[$v];
     }
     
-    return implode(C("FactoryCodeSplit"), $result);
+    return implode(DBC("goods.unique.separator"), $result);
     
 }
 
@@ -308,19 +308,19 @@ function sendMail($subject, $to, $toName, $content, $attach=array()) {
     import("@.ORG.phpmailer.Mail");
     $mail = new PHPMailer(); //实例化 
     $mail->IsSMTP(); // 启用SMTP 
-    $mail->Host = C("MAIL_SMTP"); //SMTP服务器 以163邮箱为例子 
+    $mail->Host = DBC("mail.smtp"); //SMTP服务器 以163邮箱为例子
     $mail->Port = C("MAIL_SMTP_PORT") ? C("MAIL_SMTP_PORT") : 25;  //邮件发送端口 
     $mail->SMTPAuth   = true;  //启用SMTP认证 
 
     $mail->CharSet  = C("MAIL_CHARSET"); //字符集 
     $mail->Encoding = C("MAIL_ENCODE") ? C("MAIL_ENCODE") : "base64"; //编码方式 
 
-    $mail->Username = C("MAIL_LOGINNAME");  //你的邮箱 
-    $mail->Password = C("MAIL_PASSWORD");  //你的密码 
+    $mail->Username = DBC("mail.login");  //你的邮箱
+    $mail->Password = DBC("mail.password");  //你的密码
     $mail->Subject = $subject; //邮件标题 
 
-    $mail->From = C("MAIL_ADDRESS");  //发件人地址（也就是你的邮箱） 
-    $mail->FromName = C("MAIL_FORM");  //发件人姓名 
+    $mail->From = DBC("mail.address");  //发件人地址（也就是你的邮箱）
+    $mail->FromName = DBC("mail.from");  //发件人姓名
 
     $mail->AddAddress($to, $toName);//添加收件人（地址，昵称） 
     

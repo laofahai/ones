@@ -142,6 +142,13 @@ class CommonBuildAction {
         ));
     }
 
+    /*
+     * 插入工作流节点
+     * **/
+    final protected function appInsertWorkflow() {
+
+    }
+
 
     final protected function error($msg) {
         $this->error = $msg;

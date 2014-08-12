@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2014-08-08 11:19:32
+-- Generation Time: 2014-08-12 10:30:15
 -- 服务器版本： 5.1.73
 -- PHP Version: 5.4.24
 
@@ -318,7 +318,7 @@ CREATE TABLE IF NOT EXISTS `x_apps` (
   UNIQUE KEY `alias_2` (`alias`),
   KEY `alias` (`alias`,`dateline`,`status`),
   KEY `version` (`version`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- 转存表中的数据 `x_apps`
@@ -326,10 +326,10 @@ CREATE TABLE IF NOT EXISTS `x_apps` (
 
 INSERT INTO `x_apps` (`id`, `alias`, `version`, `dateline`, `status`) VALUES
   (6, 'department', '0.1', 1406906639, 1),
-  (4, 'shipment', '0.4', 1406906639, 0),
+  (24, 'shipment', '0.4', 1407805303, 0),
   (7, 'dashboard', '0.1', 1406906639, 1),
   (8, 'dataModel', '0.1', 1406906639, 1),
-  (9, 'finance', '0.1', 1406906639, 1),
+  (22, 'finance', '0.1', 1407804306, 1),
   (21, 'crm', '0.1', 1407419527, 1),
   (11, 'workflow', '0.1', 1406906639, 1),
   (12, 'goods', '0.1', 1406906639, 1),
@@ -778,7 +778,7 @@ INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) 
 CREATE TABLE IF NOT EXISTS `x_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_alias` varchar(50) DEFAULT NULL,
-  `alias` varchar(20) NOT NULL,
+  `alias` varchar(100) NOT NULL,
   `name` varchar(30) NOT NULL,
   `value` varchar(50) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -790,7 +790,7 @@ CREATE TABLE IF NOT EXISTS `x_config` (
   KEY `alias` (`alias`),
   KEY `deleted` (`deleted`),
   KEY `app_id` (`app_alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
 -- 转存表中的数据 `x_config`
@@ -806,7 +806,14 @@ INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `descriptio
   (11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0),
   (12, NULL, 'remote.service.uri', '远程服务地址', 'http://service.ng-erp.com/index.php?s=/', '包括程序更新、帮助信息等', 0),
   (15, NULL, 'system.version', '当前系统版本', '0.1', '请勿手动修改', 0),
-  (38, NULL, 'test', 'test', 'test', '123', 1);
+  (38, NULL, 'test', 'test', 'test', '123', 1),
+  (39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code,standard,version', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0),
+  (40, NULL, 'goods.unique.separator', '商品唯一字段分隔符', '-', '开始使用之后请勿修改', 0),
+  (41, NULL, 'mail.address', '服务邮箱地址', 'ones_robot@163.com', '', 0),
+  (42, NULL, 'mail.smtp', '邮箱SMTP服务器', 'smtp.163.com', '', 0),
+  (43, NULL, 'mail.login', '邮箱登录账号', 'ones_robot@163.com', '', 0),
+  (44, NULL, 'mail.password', '邮箱密码', 'thisisones', '', 0),
+  (45, NULL, 'mail.fromname', '发件人名称', 'ONES Robots', '', 0);
 
 -- --------------------------------------------------------
 
@@ -1413,14 +1420,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_account` (
   `balance` float(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`),
   KEY `listorder` (`listorder`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- 转存表中的数据 `x_finance_account`
---
-
-INSERT INTO `x_finance_account` (`id`, `name`, `listorder`, `balance`) VALUES
-  (1, '现金账户', 99, 1130.00);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1480,17 +1480,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_receive_plan` (
   KEY `account_id` (`account_id`),
   KEY `financer_id` (`financer_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- 转存表中的数据 `x_finance_receive_plan`
---
-
-INSERT INTO `x_finance_receive_plan` (`id`, `subject`, `type_id`, `user_id`, `financer_id`, `account_id`, `customer_id`, `source_model`, `source_id`, `amount`, `create_dateline`, `pay_dateline`, `memo`, `status`) VALUES
-  (1, '', 12, 1, 0, 0, 2, 'Orders', 12, 1800.00, '1404056929', '', '', 0),
-  (2, '', 12, 1, 0, 0, 2, 'Orders', 13, 1080.00, '1404057045', '', '', 0),
-  (3, '', 12, 1, 0, 0, 2, 'Orders', 14, 1800.00, '1404194194', '', '', 0),
-  (4, '', 12, 1, 1, 1, 2, 'Orders', 20, 1080.00, '1404194587', '1406860323', '', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1516,14 +1506,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_record` (
   KEY `user_id` (`user_id`),
   KEY `financer_id` (`financer_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- 转存表中的数据 `x_finance_record`
---
-
-INSERT INTO `x_finance_record` (`id`, `type_id`, `account_id`, `user_id`, `financer_id`, `amount`, `type`, `status`, `dateline`, `memo`) VALUES
-  (1, 12, 1, 1, 1, 1080.00, 1, 1, '1406860323', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -5887,7 +5870,7 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 --
 
 INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
-  ('6j47sl7r2gecli28vffit3kt53', 1407471216, 0x757365727c613a31333a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223230223b733a323a227171223b733a393a22333335343534323530223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a373a7b733a323a226964223b733a323a223230223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e680bbe7bb8fe58a9e223b733a333a226c6674223b733a313a2232223b733a333a22726774223b733a313a2235223b733a393a226c6973746f72646572223b733a323a223939223b733a343a2270617468223b733a32313a22e69f90e585ace58fb8203e20e680bbe7bb8fe58a9e223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d733a31323a2267726f75705f6c6162656c73223b613a333a7b693a303b733a31353a22e8b685e7baa7e7aea1e79086e59198223b693a313b733a363a22e5ba93e7aea1223b693a323b733a363a22e98787e8b4ad223b7d7d);
+  ('ccsvn7fjbg9bn1b3bbvpf67562', 1407814192, 0x757365727c613a31333a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223230223b733a323a227171223b733a393a22333335343534323530223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a373a7b733a323a226964223b733a323a223230223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e680bbe7bb8fe58a9e223b733a333a226c6674223b733a313a2232223b733a333a22726774223b733a313a2235223b733a393a226c6973746f72646572223b733a323a223939223b733a343a2270617468223b733a32313a22e69f90e585ace58fb8203e20e680bbe7bb8fe58a9e223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d733a31323a2267726f75705f6c6162656c73223b613a333a7b693a303b733a31353a22e8b685e7baa7e7aea1e79086e59198223b693a313b733a363a22e5ba93e7aea1223b693a323b733a363a22e98787e8b4ad223b7d7d);
 
 -- --------------------------------------------------------
 
