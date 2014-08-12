@@ -48,6 +48,7 @@ class StockoutModel extends CommonModel {
         $stockoutId = $this->add($data);
 //        echo $this->getLastSql();exit;             
         if(!$stockoutId) {
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -60,6 +61,7 @@ class StockoutModel extends CommonModel {
 
         if(!$details) {
 //            echo $sourceDetail->getLastSql();exit;
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollBack();
             return false;
         }
@@ -73,6 +75,7 @@ class StockoutModel extends CommonModel {
             );
             $rs = $stockoutDetail->add($data);
             if(!$rs) {
+                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollBack();
                 break;
             }

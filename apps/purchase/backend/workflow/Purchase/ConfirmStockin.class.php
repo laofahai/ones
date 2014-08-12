@@ -38,6 +38,7 @@ class PurchaseConfirmStockin extends WorkflowAbstract {
             $stockProductListModel->commit();
             $this->updateStatus("Stockin", $theStockin["id"], 2);
         } else {
+            Log::write("SQL Error:".$stockProductListModel->getLastSql(), Log::SQL);
             $stockProductListModel->rollback();
             return false;
             $this->action->error(L("operate_failed"));

@@ -38,6 +38,7 @@ class ProduceMakeStockout extends WorkflowAbstract {
         $stockoutId = $stockoutModel->add($theStockout);
         
         if(!$stockoutId) {
+            Log::write("SQL Error:".$stockoutModel->getLastSql(), Log::SQL);
             $stockoutModel->rollback();
             $this->response(array(
                 "type"=> "message",
@@ -58,6 +59,7 @@ class ProduceMakeStockout extends WorkflowAbstract {
             );
             if(!$stockoutDetailModel->add($theDetail)) {
                 //@todo
+                Log::write("SQL Error:".$stockoutModel->getLastSql(), Log::SQL);
                 $stockoutModel->rollback();
                 $this->response(array(
                     "type"=> "message",

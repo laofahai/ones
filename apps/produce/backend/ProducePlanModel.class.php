@@ -31,6 +31,7 @@ class ProducePlanModel extends CommonModel {
         $id = $this->add($data);
         
         if(!$id) {
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -40,6 +41,7 @@ class ProducePlanModel extends CommonModel {
             $row["plan_id"] = $id;
             $rs = $detailModel->add($row);
             if(!$rs) {
+                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;
             }

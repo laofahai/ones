@@ -275,6 +275,7 @@ function isAppLoaded($appName) {
  */
 function makeFactoryCode($data, $factoryCode=null) {
     $format = DBC("goods.unique.template");
+    $format = explode(",", $format);
     if($factoryCode) {
         $data["factory_code"] = $factoryCode;
     }
@@ -284,7 +285,7 @@ function makeFactoryCode($data, $factoryCode=null) {
         }
         $result[] = $data[$v];
     }
-    
+
     return implode(DBC("goods.unique.separator"), $result);
     
 }

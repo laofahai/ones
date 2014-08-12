@@ -72,6 +72,7 @@ class CommonTreeModel extends CommonModel {
 //        echo $this->getLastSql();exit;
         
         if(!$rs) {
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }

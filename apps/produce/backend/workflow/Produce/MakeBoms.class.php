@@ -44,6 +44,7 @@ class ProduceMakeBoms extends WorkflowAbstract {
                     "goods_id" => $goodsId
                 );
                 if(!$bomModel->add($data)) {
+                    Log::write("SQL Error:".$bomModel->getLastSql(), Log::SQL);
                     $bomModel->rollback();
                 }
             }
@@ -142,6 +143,7 @@ class ProduceMakeBoms extends WorkflowAbstract {
         
         foreach($resultBoms as $bom) {
             if(!$bomModel->add($bom)) {
+                Log::write("SQL Error:".$bomModel->getLastSql(), Log::SQL);
                 $bomModel->rollback();
             }
         }

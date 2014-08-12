@@ -8,11 +8,62 @@
 
 class StoreBuild extends CommonBuildAction {
 
+    protected $workflows = array(
+        "stockin" => array(
+            "StartProcess" => array(
+                "name" => "新建入库单",
+                "type" => 1,
+                "listorder" => 0,
+                "prev_node_id" => 0,
+                "next_node_id" => "ComfirmStockin",
+                "status_text" => "新入库单"
+            ),
+            "ConfirmStockin" => array(
+                "name" => "确认入库",
+                "type" => 1,
+                "listorder" => 1,
+                "prev_node_id" => "StartProcess",
+                "next_node_id" => 0,
+                "status_text" => "已入库"
+            )
+        ),
+
+        "stockout" => array(
+            "StartProcess" => array(
+                "name" => "新建出库单",
+                "type" => 1,
+                "listorder" => 0,
+                "prev_node_id" => 0,
+                "next_node_id" => "ConfirmStockout,RejectStockout",
+                "status_text" => "新出库单"
+            ),
+            "ConfirmStockout" => array(
+                "name" => "确认出库",
+                "type" => 7,
+                "listorder" => 1,
+                "prev_node_id" => "StartProcess",
+                "next_node_id" => "MakeShipment,Complete",
+                "status_text" => "出库单已确认"
+            ),
+            "RejectStockout" => array(
+                "name" => "驳回出库",
+                "type" => 7,
+                "listorder" => 1,
+                "prev_node_id" => "startProcess",
+                "next_node_id" => 0,
+                "status_text" => "出库单已驳回"
+            ),
+            "MakeShipment"
+        )
+    );
+
     /*
      * APP安装
      * **/
     public function appInstall($alias) {
+
         parent::appInstall($alias);
+
         if(!isModuleEnabled("workflow")) {
             $this->error("this app require workflow app installed");
             return false;

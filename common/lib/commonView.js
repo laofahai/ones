@@ -795,7 +795,6 @@
 //                            service.alert("success", "success");
 //                            return;
 //                        }
-
                         $location.url(opts.returnPage);
                     };
                 };

@@ -23,6 +23,7 @@ class ProduceProcessModel extends CommonModel {
         foreach($data as $row) {
             $rs = $this->add($row);
             if(!$rs) {
+                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;
             }

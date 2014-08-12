@@ -27,6 +27,7 @@ class GoodsCraftModel extends CommonModel {
                 "listorder"=> $v["listorder"]
             ))) {
 //                echo $this->getLastSql();exit;
+                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;
             }

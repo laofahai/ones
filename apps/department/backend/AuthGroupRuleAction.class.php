@@ -82,6 +82,7 @@ class AuthGroupRuleAction extends CommonAction {
                     "rule_id"  => $rule_id,
                     "flag"     => 0
                 ))){
+                    Log::write("SQL Error:".$model->getLastSql(), Log::SQL);
                     $model->rollback();
                     $this->httpError(500);
                 }

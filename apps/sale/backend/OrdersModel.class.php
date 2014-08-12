@@ -44,6 +44,7 @@ class OrdersModel extends CommonModel {
         
         $orderId = $this->$method($data);
         if(false === $orderId) {
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -57,6 +58,7 @@ class OrdersModel extends CommonModel {
             }
             $rs = $detail->$method($row);
             if(false === $rs) {
+                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollback();
                 break;
             }

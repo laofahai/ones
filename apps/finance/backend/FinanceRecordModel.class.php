@@ -37,6 +37,7 @@ class FinanceRecordModel extends CommonModel {
         }
         
         if(!$lastId or !$rs) {
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -60,6 +61,7 @@ class FinanceRecordModel extends CommonModel {
         $method = $record["type"] == 1 ? 2 : 1;
         $rs = $this->changeBalance($record["account_id"], $record['amount'], $method);
         if(!$rs) {
+            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }

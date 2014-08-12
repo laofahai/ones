@@ -52,6 +52,7 @@ class StockoutConfirmStockout extends WorkflowAbstract {
                 continue;
             }
             if(!$v["stock"]) {
+                Log::write("SQL Error:".$stockout->getLastSql(), Log::SQL);
                 $stockout->rollback();
                 $this->error("请选择出库仓库");
             }

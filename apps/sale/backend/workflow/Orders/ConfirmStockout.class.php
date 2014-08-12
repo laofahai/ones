@@ -61,6 +61,7 @@ class OrdersConfirmStockout extends WorkflowAbstract {
         foreach($details as $k=>$v) {
             if($v["store_num"] < $v["num"]) {
                 $success = false;
+                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $stockout->rollback();
                 //@todo 库存不足
                 echo "not_full";exit;
