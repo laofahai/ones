@@ -1,4 +1,55 @@
 (function(){
+
+    //桌面图标
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer, $scope) {
+        var ComView = injector.get("ComView");
+        var stockInRes = injector.get("StockinRes");
+
+        ones.pluginScope.dashboardAppBtns.push({
+            label: ComView.toLang("stockout"),
+            name: "stockoutList",
+            icon: "signout",
+            link: "store/list/stockout",
+            sort: 6
+        });
+
+        ones.pluginScope.dashboardAppBtns.push({
+            label: ComView.toLang("stockin"),
+            name: "stockinList",
+            icon: "signin",
+            link: "store/list/stockin",
+            sort: 4
+        });
+
+        //未处理入库单
+        stockInRes.query({
+            unhandled: true,
+            onlyCount: true
+        }).$promise.then(function(data){
+                var count = parseInt(data[0].count);
+                if(count <= 0) {
+                    return;
+                }
+                ones.pluginScope.dashboardSetBtnTip("stockinList", count);
+            });
+
+        var stockOutRes = injector.get("StockoutRes");
+
+        //未处理出库单
+        stockOutRes.query({
+            unhandled: true,
+            onlyCount: true
+        }).$promise.then(function(data){
+                var count = parseInt(data[0].count);
+                if(count <= 0) {
+                    return;
+                }
+                ones.pluginScope.dashboardSetBtnTip("stockoutList", count);
+            });
+
+        ones.pluginScope.defer = defer;
+    });
+
     angular.module("ones.store", ["ones.goods", "ones.dataModel"])
         .config(["$routeProvider", function($route){
             $route
