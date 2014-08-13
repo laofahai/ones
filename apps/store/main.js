@@ -1,55 +1,4 @@
 (function(){
-
-    //桌面图标
-    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer, $scope) {
-        var ComView = injector.get("ComView");
-        var stockInRes = injector.get("StockinRes");
-
-        ones.pluginScope.dashboardAppBtns.push({
-            label: ComView.toLang("stockout"),
-            name: "stockoutList",
-            icon: "signout",
-            link: "store/list/stockout",
-            sort: 6
-        });
-
-        ones.pluginScope.dashboardAppBtns.push({
-            label: ComView.toLang("stockin"),
-            name: "stockinList",
-            icon: "signin",
-            link: "store/list/stockin",
-            sort: 4
-        });
-
-        //未处理入库单
-        stockInRes.query({
-            unhandled: true,
-            onlyCount: true
-        }).$promise.then(function(data){
-            var count = parseInt(data[0].count);
-            if(count <= 0) {
-                return;
-            }
-            ones.pluginScope.dashboardSetBtnTip("stockinList", count);
-        });
-
-        var stockOutRes = injector.get("StockoutRes");
-
-        //未处理出库单
-        stockOutRes.query({
-            unhandled: true,
-            onlyCount: true
-        }).$promise.then(function(data){
-            var count = parseInt(data[0].count);
-            if(count <= 0) {
-                return;
-            }
-            ones.pluginScope.dashboardSetBtnTip("stockoutList", count);
-        });
-
-        ones.pluginScope.defer = defer;
-    });
-
     angular.module("ones.store", ["ones.goods", "ones.dataModel"])
         .config(["$routeProvider", function($route){
             $route
@@ -160,7 +109,7 @@
 
             return obj;
         }])
-        .service("StockProductListModel", ["$rootScope", function($rootScope) {
+        .service("StockProductListModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
             var obj = {
                 deleteAble: false,
                 exportAble: true
@@ -276,19 +225,10 @@
                 return service;
             }])
         .service("StockinModel", ["$rootScope", function($rootScope){
-            var timestamp = Date.parse(new Date());
-            var startTime = timestamp-3600*24*30*1000;
             var obj = {
                 isBill: true,
                 printAble: true,
-                workflowAlias: "stockin",
-                filters: {
-                    between: {
-                        field: "dateline",
-                        defaultData: [startTime, timestamp],
-                        inputType: "datepicker"
-                    }
-                }
+                workflowAlias: "stockin"
             };
             obj.getFieldsStruct= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -319,8 +259,8 @@
 
             return obj;
         }])
-        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
-            function($rootScope, GoodsRes, StockRes, plugin) {
+        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes",
+            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
                 var obj = {
                     printAble: true
                 };
@@ -340,6 +280,36 @@
                             nameField: "combineLabel",
                             listAble: false,
                             width: 300
+                        },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
@@ -363,14 +333,8 @@
 
                     };
 
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
-                        structure: fields,
-                        alias: "product",
-                        require: ["goods_id"],
-                        queryExtra: ["goods_id"]
-                    });
 
-                    return rs.defer.promise;
+                    return fields;
                 };
 
 
@@ -403,19 +367,10 @@
             };
         }])
         .service('StockoutModel', ["$rootScope", function($rootScope){
-            var timestamp = Date.parse(new Date());
-            var startTime = timestamp-3600*24*30*1000;
             return {
                 isBill: true,
                 printAble: true,
                 workflowAlias: "stockout",
-                filters: {
-                    between: {
-                        field: "dateline",
-                        defaultData: [startTime, timestamp],
-                        inputType: "datepicker"
-                    }
-                },
                 getFieldsStruct: function(){
                     return {
                         bill_id : {},
@@ -439,8 +394,8 @@
                 }
             };
         }])
-        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
-            function($rootScope, GoodsRes, StockRes, plugin) {
+        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes",
+            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
                 var obj = {
                     isBill: true,
                     printAble: true
@@ -465,6 +420,35 @@
                             listAble: false,
                             width: 300
                         },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
+                        },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
                             inputType: "select3",
@@ -487,14 +471,8 @@
 
                     };
 
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
-                        structure: fields,
-                        alias: "product",
-                        require: ["goods_id"],
-                        queryExtra: ["goods_id"]
-                    });
 
-                    return rs.defer.promise;
+                    return fields;
                 };
 
 

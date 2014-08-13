@@ -29,10 +29,11 @@ class StockinModel extends CommonModel {
         }
         $this->startTrans();
         
+        if(!$billData["bill_id"]){
+            $billData["bill_id"] = makeBillCode("RK");
+        }
         $billId = $this->add($billData);
-
         if(!$billId) {
-            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             $this->error = "insert_error";
             return false;
@@ -42,10 +43,9 @@ class StockinModel extends CommonModel {
         $itemsModel = D("StockinDetail");
         foreach($billItems as $billItem) {
             $billItem["stockin_id"] = $billId;
+//            print_r($billItem);
             $id = $itemsModel->add($billItem);
             if(!$id) {
-                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
-                $this->error = "insert detail error";
                 $this->rollback();
                 return false;
             }
@@ -74,7 +74,6 @@ class StockinModel extends CommonModel {
         
         if(false === $this->save($bill)) {
 //            echo $this->getLastSql();
-            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -85,10 +84,11 @@ class StockinModel extends CommonModel {
                 continue;
             }
             if(false === $detailModel->save($row)) {
-                Log::write("SQL Error:".$detailModel->getLastSql(), Log::SQL);
+//                echo $detailModel->getLastSql();exit;
                 $this->rollback();
                 return false;
             }
+            echo $detailModel->getLastSql();
         }
         
         $this->commit();
@@ -104,7 +104,7 @@ class StockinModel extends CommonModel {
         $stockinModel = $this;
         
         $billData = array(
-            "bill_id" => makeBillCode("RK"),
+            "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
             "subject" => $postData["subject"],
             "dateline"=> $postData["inputTime"] ? strtotime($postData["inputTime"]) : CTS,
             "status"  => 0,

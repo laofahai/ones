@@ -290,6 +290,17 @@ function makeFactoryCode($data, $factoryCode=null) {
     
 }
 
+/*
+ * 记录数据库错误
+ * **/
+function LogSQLError($model, $rollback=false) {
+    Log::write("SQL Error:".$model->getLastSql(), Log::SQL);
+    if($rollback) {
+        $model->rollback();
+    }
+}
+
+
 /**
  * 检查数组数据是否完整
  */

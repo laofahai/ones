@@ -18,6 +18,7 @@ class AppsAction extends CommonAction {
     }
 
     public function index() {
+
         import("@.ORG.httplib");
         $http = new httplib();
 
@@ -165,8 +166,6 @@ class AppsAction extends CommonAction {
     public function delete() {
         $alias = $_GET["id"];
 
-        $appsConf = F("appConf");
-
         $buildClassName = sprintf("%sBuild", ucfirst($alias));
 
         import("@.ORG.CommonBuildAction");
@@ -178,7 +177,10 @@ class AppsAction extends CommonAction {
             include $buildFile;
         }
 
-        $buildClass = new $buildClassName($appsConf[$alias]);
+        $conf = sprintf("%s/apps/%s/config.json", ROOT_PATH, $alias);
+        $conf = json_decode(file_get_contents($conf), true);
+
+        $buildClass = new $buildClassName($conf);
 
         $buildClass->appUninstall();
 

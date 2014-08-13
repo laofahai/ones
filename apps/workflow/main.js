@@ -90,7 +90,7 @@
                             listable: false,
                             required: false
                         },
-                        'default': {
+                        is_default: {
                             listable: false,
                             inputType: "select",
                             dataSource: [

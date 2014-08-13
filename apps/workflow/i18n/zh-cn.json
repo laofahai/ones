@@ -43,6 +43,7 @@
         "executor_group": "执行组",
         "executor_department": "执行部门",
         "executor_user": "执行人",
-        "execute_file": "执行文件"
+        "execute_file": "执行文件",
+        "is_default": "是否默认"
     }
 }

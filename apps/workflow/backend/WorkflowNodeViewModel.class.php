@@ -11,7 +11,10 @@
  * 
  */
 class WorkflowNodeViewModel extends ViewModel {
-    
+    protected $viewFields = array(
+        "WorkflowNode" => array("*", "_type"=>"left"),
+        "Workflow" => array("alias"=>"workflow_alias", "_on"=> "Workflow.id=WorkflowNode.workflow_id", "_type"=>"left")
+    );
 }
 
 ?>

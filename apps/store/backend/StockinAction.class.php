@@ -16,16 +16,6 @@ class StockinAction extends CommonAction {
     protected $indexModel = "StockinView";
     
     protected $workflowAlias = "stockin";
-
-    protected function _filter(&$map) {
-        if(isset($_GET["unhandled"])) {
-            $map["status"] = array("LT", 1);
-        }
-
-        if(isset($_GET["handled"])) {
-            $map["status"] = array("EGT", 1);
-        }
-    }
     
     
     public function read() {
@@ -94,10 +84,57 @@ class StockinAction extends CommonAction {
         $stockinModel = D("Stockin");
         
         list($bill, $rows) = $stockinModel->formatData($_POST);
-//
+        
+//        $billData = array(
+//            "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
+//            "subject" => $_POST["subject"],
+//            "dateline"=> strtotime($_POST["inputTime"]),
+//            "status"  => 0,
+//            "user_id" => $this->user["id"],
+//            "stock_manager" => 0,
+//            "total_num"=> $_POST["total_num"],
+//            "memo"    => $_POST["memo"]
+//        );
+//        
+//        $data = $_POST["rows"];
+//        $billItems = array();
+//        foreach($data as $k=> $billItem) {
+//            if(!$billItem) {
+//                continue;
+//            }
+//            list($factory_code, $goodsId, $catid) = explode("_", $billItem["goods_id"]);
+//            $billItems[$k] = array(
+//                "goods_id"   => $goodsId,
+//                "num"        => $billItem["num"],
+//                "factory_code_all" => sprintf("%s-%d-%d", 
+//                        $factory_code, 
+//                        $billItem["standard"],
+//                        $billItem["version"]),
+//                "memo" => $billItem["memo"],
+//                "stock_id"   => $billItem["stock"]//$billItem["stock_id"]
+//            );
+//        }
+        
+//        print_r($billData);
+//        print_r($billItems);exit;
+//        
         $billId = $stockinModel->newBill($bill, $rows);
         
 //        var_dump($billId);
     }
-
+    
+//    public function _after_delete() {
+//        $id = $_REQUEST["id"];
+//        $model = D("StockinDetail");
+//        $model->where(array(
+//            "stockin_id" => array("IN", $id)
+//        ))->delete();
+//        $workflow = D("Workflow")->getByAlias($this->workflowAlias);
+//        $model = D("WorkflowProcess");
+//        $model->where(array(
+//            "mainrow_id" => array("IN", $id),
+//            "workflow_id"=> $workflow["id"]
+//        ))->delete();
+//    }
+    
 }

@@ -81,7 +81,7 @@ class StockoutMakeShipment extends WorkflowAbstract {
         
         $data = array(
             "type" => "redirect",
-            "location" => sprintf("/doWorkflow/shipment/makeShipment/%d/%d", $this->currentNode["id"], $this->mainrowId)
+            "location" => sprintf("/doWorkflow/Stockout/makeShipment/%d/%d", $this->currentNode["id"], $this->mainrowId)
         );
         $this->response($data);
         

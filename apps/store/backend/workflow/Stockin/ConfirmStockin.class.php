@@ -83,7 +83,6 @@ class StockinConfirmStockin extends WorkflowAbstract {
 //            $this->updateStatus("Stockin", $id, 2);
         } else {
 //            print_r($theDetails);
-            Log::write("SQL Error:".$stockProductListModel->getLastSql(), Log::SQL);
             $stockProductListModel->rollback();
             $this->error("operate_failed");
 //            $this->action->error(L("operate_failed"));
