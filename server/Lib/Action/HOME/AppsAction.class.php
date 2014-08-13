@@ -207,6 +207,11 @@ class AppsAction extends CommonAction {
     public function insert() {
         $alias = $_REQUEST["alias"];
 
+        if(!$alias) {
+            $this->error("can't get app info");
+            return false;
+        }
+
         $remoteUri = sprintf("%sApp/getDownload/alias/%s/api_key/%s",
             $this->serviceUri,
             $alias,

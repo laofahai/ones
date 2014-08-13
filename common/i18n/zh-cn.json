@@ -101,7 +101,9 @@
                 "upgrading": "正在更新版本...请稍后",
                 "upgradeSuccess": "版本更新成功",
 
-                "requirements": "依赖关系不能满足，请先安装依赖应用"
+                "requirements": "依赖关系不能满足，请先安装依赖应用",
+
+                "appUninstallTip": ""
             }
         },
         "errors": {

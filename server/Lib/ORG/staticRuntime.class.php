@@ -110,10 +110,10 @@ class FrontEndRuntime {
      * 合并并返回APP i18n
      * **/
     public function combineI18n($dir=false, $langData = array(), $lang) {
-
+        $langData = $langData ? $langData : array();
         foreach($this->loadedApps as $app) {
             $langFile = sprintf("%s/apps/%s/i18n/%s.json", ROOT_PATH, $app, $lang);
-            if(!is_file($langFile)) {
+            if($langFile && !is_file($langFile)) {
                 continue;
             }
 

@@ -55,7 +55,7 @@
         }])
 
         //app详情
-        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams", "$location", "$timeout",
+        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams", "$location", "$timeout", "$modal",
             function($scope, $rootScope, ComView, res, $routeParams, $location, $timeout){
                 $scope.selectAble = false;
                 ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listAll']);
@@ -74,6 +74,10 @@
                 //卸载
                 //@todo 卸载确认
                 $scope.doAppUninstall = function() {
+
+                    var confirmModal = $modal();
+                    return false;
+
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(
                         $rootScope.i18n.lang.messages.apps.uninstalling
