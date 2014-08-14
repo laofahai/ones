@@ -408,7 +408,8 @@
                                 if(data.error) {
                                     service.alert(data.msg);
                                 } else {
-                                    $location.url(opts.returnPage);
+                                    var lastPage = angular.fromJson(localStorage.lastPage);
+                                    $location.url(lastPage[0] || opts.returnPage);
                                 }
                             });
                         //新增
@@ -419,7 +420,8 @@
                                 if(data.error) {
                                     service.alert(data.msg);
                                 } else {
-                                    $location.url(opts.returnPage);
+                                    var lastPage = angular.fromJson(localStorage.lastPage);
+                                    $location.url(lastPage[0] || opts.returnPage);
                                 }
                             });
                         }
@@ -776,9 +778,7 @@
                             tmp[1] = "list";
                             opts.returnPage = "/"+tmp.join("/");
                         }
-                        console.log($scope.formMetaData);
                         var data = $.extend($scope.formMetaData, {rows: $scope[opts.dataName]});
-                        console.log($scope.formMetaData);
                         var getParams = {};
                         for (var k in $routeParams) {
                             getParams[k] = $routeParams[k];
@@ -795,7 +795,8 @@
 //                            service.alert("success", "success");
 //                            return;
 //                        }
-                        $location.url(opts.returnPage);
+                        var lastPage = angular.fromJson(localStorage.lastPage);
+                        $location.url(lastPage[0] || opts.returnPage);
                     };
                 };
 
@@ -960,12 +961,10 @@
                             for(var i=0;i<selectedItems.length;i++) {
 
                                 var item = selectedItems[i];
-    //                            console.log(item);
-                                if(!item["processes"]) {
+                                if(!item.processes) {
                                     result = true;
                                     break;
                                 }
-
                                 angular.forEach(item.processes.nextNodes, function(node){
                                     if(node.id === id) {
                                         result = false;

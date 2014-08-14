@@ -47,9 +47,7 @@
                         id: {primary: true},
                         name: {},
                         type: {},
-                        execute_file: {
-                            listable: false
-                        },
+                        execute_file: {},
                         listorder: {
                             value: 99
                         },

@@ -97,7 +97,6 @@ class CommonModel extends AdvModel{
          * 工作流
          */
         if($this->workflowAlias and false !== $this->includeWorkflowProcess) {
-            import("@.Workflow.Workflow");
             $workflow = new Workflow($this->workflowAlias);
             $processData = $workflow->getListProcess($ids);
             foreach($data as $k=> $v) {

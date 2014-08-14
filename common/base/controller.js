@@ -75,8 +75,8 @@
                 //@todo 卸载确认
                 $scope.doAppUninstall = function() {
 
-                    var confirmModal = $modal();
-                    return false;
+//                    var confirmModal = $modal();
+//                    return false;
 
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(

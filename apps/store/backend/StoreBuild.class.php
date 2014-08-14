@@ -84,32 +84,4 @@ class StoreBuild extends CommonBuildAction {
         )
     );
 
-    /*
-     * APP安装
-     * **/
-    public function appInstall($alias) {
-
-        parent::appInstall($alias);
-
-        if(!isModuleEnabled("workflow")) {
-            $this->requireApp("workflow");
-            return false;
-        }
-
-        if(!$this->appInsertWorkflow($this->workflows)) {
-            $this->error("install failed while insert workflow.");
-        }
-
-        return true;
-    }
-
-    /*
-     * APP卸载
-     * **/
-    public function appUninstall() {
-        parent::appUninstall();
-        $this->appDeleteWorkflow($this->workflows);
-        return true;
-    }
-
 } 
