@@ -64,7 +64,6 @@ class RelationshipCompanyModel extends CommonRelationModel {
         $id = $this->add($baseInfo);
         if(!$id) {
             $this->error = "insert failed";
-            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -74,7 +73,6 @@ class RelationshipCompanyModel extends CommonRelationModel {
             $row["relationship_company_id"] = $id;
             if(false === $model->add($row)) {
                 $this->error = "insert contact failed";
-                Log::write("SQL Error:".$model->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;
             }
@@ -90,7 +88,6 @@ class RelationshipCompanyModel extends CommonRelationModel {
         $this->startTrans();
         if(false === $this->where("id=".$id)->save($baseInfo)) {
             $this->error = "edit company failed";
-            Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
@@ -99,7 +96,6 @@ class RelationshipCompanyModel extends CommonRelationModel {
         foreach($contacts as $row) {
             if(false === $model->where("relationship_company_id=".$id)->save($row)) {
                 $this->error = "edit contact failed";
-                Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;
             }
