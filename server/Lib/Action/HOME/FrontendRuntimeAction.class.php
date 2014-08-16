@@ -10,17 +10,13 @@ class FrontendRuntimeAction extends CommonAction {
 
     public function index() {
         import("@.ORG.staticRuntime");
-
         $loadedApps = F("loadedApp");
-
         $runtime = new FrontEndRuntime($loadedApps);
 
         switch($_GET["action"]) {
             case "getI18n":
                 header("Content-Type:application/json;charset=utf-8");
-                $data = $runtime->preloadI18n($_GET["lang"]);
-                $data = $runtime->combineI18n(false, $data, $_GET["lang"]);
-                echo json_encode($data);
+                echo json_encode(combineI18n($runtime, $_GET["lang"]));
                 break;
             case "getCss":
                 header("Content-Type:text/css;charset=utf-8");

@@ -130,11 +130,16 @@
                 /**
                  * 监控路由变化
                  * */
+                var lastPage = []; //最后一页
                 $scope.$watch(function() {
                     return $location.path();
                 }, function() {
                     doWhenLocationChanged();
 
+                    lastPage[0] = lastPage[1];
+                    lastPage[1] = $location.path();
+
+                    localStorage.lastPage = angular.toJson(lastPage);
                 });
 
                 function doWhenLocationChanged() {

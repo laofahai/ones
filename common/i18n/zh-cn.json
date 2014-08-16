@@ -102,8 +102,9 @@
                 "upgradeSuccess": "版本更新成功",
 
                 "requirements": "依赖关系不能满足，请先安装依赖应用",
+                "confirmAgain": "请再次确认",
 
-                "appUninstallTip": ""
+                "appUninstallTip": "应用卸载后将不能为您提供功能，应用数据将会一并删除，如果有其他应用依赖此应用，您将会收到警告！请您再次确认您要删除此应用！如果您只是暂时不用，请选择禁用选项！"
             }
         },
         "errors": {
@@ -140,7 +141,8 @@
             "uninstall": "卸载",
             "active": "激活",
             "inactive": "禁用",
-            "upgrade": "更新"
+            "upgrade": "更新",
+            "confirm": "确认"
         },
         "types" : {
             "purchase": "采购类型",

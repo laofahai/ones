@@ -32,6 +32,17 @@ class CommonBuildAction {
             importSQL($installSql);
         }
 
+        if($this->workflows) {
+            if(!isModuleEnabled("workflow")) {
+                $this->requireApp("workflow");
+                return false;
+            }
+
+            if(!$this->appInsertWorkflow($this->workflows)) {
+                $this->error("install failed while insert workflow.");
+            }
+        }
+
         return true;
     }
 
@@ -55,9 +66,14 @@ class CommonBuildAction {
         delDirAndFile($this->appPath);
         rmdir($this->appPath);
 
+        if($this->workflows) {
+            $this->appDeleteWorkflow($this->workflows);
+        }
+
         if(is_dir($this->appPath)) {
             $this->error("uninstall failed when remove the app dir");
         }
+
         return true;
 
         /*

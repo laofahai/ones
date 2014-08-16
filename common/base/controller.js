@@ -56,7 +56,7 @@
 
         //app详情
         .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams", "$location", "$timeout", "$modal",
-            function($scope, $rootScope, ComView, res, $routeParams, $location, $timeout){
+            function($scope, $rootScope, ComView, res, $routeParams, $location, $timeout, $modal){
                 $scope.selectAble = false;
                 ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listAll']);
 
@@ -71,13 +71,17 @@
                 $scope.consoleClass = "info";
 
 
-                //卸载
+                //卸载确认
                 //@todo 卸载确认
+                var confirmModal = {};
                 $scope.doAppUninstall = function() {
-
-                    var confirmModal = $modal();
-                    return false;
-
+                    confirmModal = $modal({
+                        template: "common/base/views/home/confirmUninstallApp.html",
+                        scope: $scope
+                    });
+                };
+                //卸载
+                $scope.uninstallConfirmed = function() {
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(
                         $rootScope.i18n.lang.messages.apps.uninstalling
@@ -98,6 +102,7 @@
                         );
                         $scope.appInfo = data;
                     });
+                    confirmModal.$hide();
                 };
 
                 //安装

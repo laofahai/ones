@@ -102,11 +102,9 @@ class CommonViewModel extends ViewModel{
         /**
          * 工作流
          */
-        if($this->workflowAlias) {
-            import("@.Workflow.Workflow");
+        if($this->workflowAlias and false !== $this->includeWorkflowProcess) {
             $workflow = new Workflow($this->workflowAlias);
             $processData = $workflow->getListProcess($ids);
-//            print_r($processData);exit;
             foreach($data as $k=> $v) {
                 $data[$k]["processes"] = $processData[$v[$this->workflowMainRowField]];
             }

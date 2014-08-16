@@ -239,7 +239,7 @@ class AppsAction extends CommonAction {
         $this->installClean();
 
         //删除安装SQL文件
-        unlink($appDir."/data/sqls/install.sql");
+//        unlink($appDir."/data/sqls/install.sql");
 
         $_GET["alias"] = $alias;
         $this->read();

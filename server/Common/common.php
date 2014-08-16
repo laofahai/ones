@@ -525,3 +525,12 @@ if(false === function_exists('lcfirst'))
         return (string)$str;
     }
 }
+
+/*
+ * 返回整合的语言包
+ * **/
+function combineI18n($runtimeObj, $lang = "zh-cn") {
+    $data = $runtimeObj->preloadI18n($lang);
+    $data = $runtimeObj->combineI18n(false, $data, $lang);
+    return $data;
+}

@@ -1,5 +1,5 @@
 (function(){
-    angular.module("ones.shipment", ["ones.crm"])
+    angular.module("ones.shipment", [])
         .config(["$routeProvider", function($route){
             $route
                 .when('/doWorkflow/shipment/makeShipment/:nodeId/:id', {
