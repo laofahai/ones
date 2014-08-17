@@ -26,12 +26,12 @@
             unhandled: true,
             onlyCount: true
         }).$promise.then(function(data){
-                var count = parseInt(data[0].count);
-                if(count <= 0) {
-                    return;
-                }
-                ones.pluginScope.dashboardSetBtnTip("stockinList", count);
-            });
+            var count = parseInt(data[0].count);
+            if(count <= 0) {
+                return;
+            }
+            ones.pluginScope.dashboardSetBtnTip("stockinList", count);
+        });
 
         var stockOutRes = injector.get("StockoutRes");
 
@@ -40,12 +40,12 @@
             unhandled: true,
             onlyCount: true
         }).$promise.then(function(data){
-                var count = parseInt(data[0].count);
-                if(count <= 0) {
-                    return;
-                }
-                ones.pluginScope.dashboardSetBtnTip("stockoutList", count);
-            });
+            var count = parseInt(data[0].count);
+            if(count <= 0) {
+                return;
+            }
+            ones.pluginScope.dashboardSetBtnTip("stockoutList", count);
+        });
 
         ones.pluginScope.defer = defer;
     });
@@ -160,7 +160,7 @@
 
             return obj;
         }])
-        .service("StockProductListModel", ["$rootScope", "$q", "DataModelRes", function($rootScope, $q, DataModelRes) {
+        .service("StockProductListModel", ["$rootScope", function($rootScope) {
             var obj = {
                 deleteAble: false,
                 exportAble: true
@@ -276,10 +276,19 @@
                 return service;
             }])
         .service("StockinModel", ["$rootScope", function($rootScope){
+            var timestamp = Date.parse(new Date());
+            var startTime = timestamp-3600*24*30*1000;
             var obj = {
                 isBill: true,
                 printAble: true,
-                workflowAlias: "stockin"
+                workflowAlias: "stockin",
+                filters: {
+                    between: {
+                        field: "dateline",
+                        defaultData: [startTime, timestamp],
+                        inputType: "datepicker"
+                    }
+                }
             };
             obj.getFieldsStruct= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -310,8 +319,8 @@
 
             return obj;
         }])
-        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes",
-            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
+            function($rootScope, GoodsRes, StockRes, plugin) {
                 var obj = {
                     printAble: true
                 };
@@ -331,36 +340,6 @@
                             nameField: "combineLabel",
                             listAble: false,
                             width: 300
-                        },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
                         },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
@@ -384,8 +363,14 @@
 
                     };
 
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: fields,
+                        alias: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
 
-                    return fields;
+                    return rs.defer.promise;
                 };
 
 
@@ -418,10 +403,19 @@
             };
         }])
         .service('StockoutModel', ["$rootScope", function($rootScope){
+            var timestamp = Date.parse(new Date());
+            var startTime = timestamp-3600*24*30*1000;
             return {
                 isBill: true,
                 printAble: true,
                 workflowAlias: "stockout",
+                filters: {
+                    between: {
+                        field: "dateline",
+                        defaultData: [startTime, timestamp],
+                        inputType: "datepicker"
+                    }
+                },
                 getFieldsStruct: function(){
                     return {
                         bill_id : {},
@@ -445,8 +439,8 @@
                 }
             };
         }])
-        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","DataModelDataRes",
-            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
+        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
+            function($rootScope, GoodsRes, StockRes, plugin) {
                 var obj = {
                     isBill: true,
                     printAble: true
@@ -471,35 +465,6 @@
                             listAble: false,
                             width: 300
                         },
-                        standard: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoReset: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "standard"
-                            }
-                        },
-                        version: {
-                            nameField: "data",
-                            valueField: "id",
-                            labelField: true,
-                            inputType: "select3",
-                            editAbleRequire: "goods_id",
-                            dataSource: DataModelDataRes,
-                            queryWithExistsData: ["goods_id"],
-                            autoQuery: true,
-                            autoHide: true,
-                            queryParams: {
-                                fieldAlias: "version"
-                            }
-                        },
                         stock: {
                             editAbleRequire: ["goods_id", "standard", "version"],
                             inputType: "select3",
@@ -522,8 +487,14 @@
 
                     };
 
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                        structure: fields,
+                        alias: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"]
+                    });
 
-                    return fields;
+                    return rs.defer.promise;
                 };
 
 

@@ -36,3 +36,5 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   KEY `bind_model` (`bind_model`),
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `[PREFIX]goods_category`(id,pid,name,bind_model,pinyin,lft,rgt,listorder,deleted)VALUES(null,0,"主节点请勿删除",0,"",1,2,0,0);

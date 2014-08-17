@@ -234,6 +234,10 @@ class AppsAction extends CommonAction {
 
         $appConf = $this->beforeBuild($appDir);
 
+        if($this->error) {
+            return false;
+        }
+
         $this->appBuild($appConf);
 
         $this->installClean();
@@ -396,6 +400,7 @@ class AppsAction extends CommonAction {
         }
         if($requirements) {
             $this->installClean();
+            $this->error("install failed while check requirements");
             $this->response(array(
                 "type" => "requirements",
                 "requirements" => implode(",", $requirements)

@@ -18,7 +18,8 @@ class CommonBuildAction {
         $this->appConfig = $appConfig;
         $this->appPath = ROOT_PATH."/apps/".$this->appConfig["alias"];
         if(!$appConfig["alias"]) {
-            exit("can't get app alias");
+//            Log::write();
+            exit();
         }
     }
 

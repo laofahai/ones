@@ -5916,16 +5916,14 @@ CREATE TABLE IF NOT EXISTS `x_stock` (
   KEY `name` (`name`),
   KEY `deleted` (`deleted`),
   KEY `pinyin` (`pinyin`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `x_stock`
 --
 
 INSERT INTO `x_stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES
-  (1, '1', '总库', '', 0),
-  (6, '1', '1', '1', 1),
-  (7, '1', '1', '1', 1);
+  (1, '1', '总库', '', 0);
 
 -- --------------------------------------------------------
 
