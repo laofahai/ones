@@ -153,6 +153,8 @@ class AppsAction extends CommonAction {
             $appInfo["hasUpdate"] = $appInfo["latest_version"] > $installed["version"] ? true : false;
             $appInfo["currentVersion"] = $installed["version"];
             $appInfo["status"] = $installed["status"];
+        } else {
+            $appInfo["currentVersion"] = $appInfo["latest_version"];
         }
 
         $this->response($appInfo);

@@ -102,7 +102,7 @@
                         );
                         $scope.appInfo = data;
                     });
-                    confirmModal.$hide();
+                    confirmModal.hide();
                 };
 
                 //安装
