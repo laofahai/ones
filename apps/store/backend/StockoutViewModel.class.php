@@ -54,13 +54,19 @@ class StockoutViewModel extends CommonViewModel {
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
             $data["rows"][$k] = $v;
-            $fca[] = $row["factory_code_all"];
+            $fca[] = $v["factory_code_all"];
         }
+
+        $params = array(
+            $data["rows"], $modelIds
+        );
+        tag("assign_dataModel_data", $params);
+
+        $data["rows"] = reIndex($params[0]);
         
-        
-        
-        $dataModel = D("DataModelDataView");
-        $data["rows"] = $dataModel->assignModelData($data["rows"], $modelIds);
+//
+//        $dataModel = D("DataModelDataView");
+//        $data["rows"] = $dataModel->assignModelData($data["rows"], $modelIds);
         return $data;
     }
     

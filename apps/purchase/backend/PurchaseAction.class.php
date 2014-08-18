@@ -78,12 +78,12 @@ class PurchaseAction extends CommonAction {
 
         $formData["customer_id_label"] = $formData["customer"];
 
+        $params = array(
+            $rowData, $modelIds
+        );
+        tag("assign_dataModel_data", $params);
 
-        $dataModel = D("DataModelDataView");
-
-        $rowData = $dataModel->assignModelData($rowData, $modelIds);
-
-        $formData["rows"] = reIndex($rowData);
+        $formData["rows"] = reIndex($params[0]);
 
 
         $this->response($formData);

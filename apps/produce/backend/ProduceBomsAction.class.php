@@ -29,11 +29,17 @@ class ProduceBomsAction extends CommonAction {
             $modelIds = array_merge($modelIds, $tmp);
             $rows[$k]["modelIds"] = $tmp;
         }
-        $dataModel = D("DataModelDataView");
-        $rows = $dataModel->assignModelData($rows, $modelIds);
+
+        $params = array(
+            $rows, $modelIds
+        );
+        tag("assign_dataModel_data", $params);
+//
+//        $dataModel = D("DataModelDataView");
+//        $rows = $dataModel->assignModelData($rows, $modelIds);
 //        print_r($rows);exit;
         $data = array(
-            "rows" => $rows
+            "rows" => $params[0]
         );
         $this->response($data);
     }

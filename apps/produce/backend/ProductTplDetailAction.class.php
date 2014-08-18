@@ -95,10 +95,12 @@ class ProductTplDetailAction extends CommonAction {
         }
 //        echo $rowsModel->getLastSql();
 //        print_r($rows);
-        $dataModel = D("DataModelDataView");
-        $rows = $dataModel->assignModelData($rows, $modelIds);
+        $params = array(
+            $rows, $modelIds
+        );
+        tag("assign_dataModel_data", $params);
         
-        $data["rows"] = $rows;
+        $data["rows"] = $params[0];
 //        echo $rowsModel->getLastSql();exit;
 //        print_r($data);exit;
         $this->response($data);

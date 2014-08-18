@@ -3,6 +3,9 @@
     "requirements": [],
     "modules": ["dataModel", "dataModelData", "dataModelFields"],
     "version": "0.1",
+    "plugins": {
+        "assign_dataModel_data": ["ONESAssignDataModelData"]
+    },
     "navs": {
         "settings" : {
             "childs": {

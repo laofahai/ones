@@ -40,9 +40,12 @@ class ProductViewAction extends CommonAction{
             ->order("store_num DESC")
             ->limit($limit)->select();
 
-        $dataModel = D("DataModelDataView");
+        $params = array(
+            $tmp, false
+        );
+        tag("assign_dataModel_data", $params);
 
-        $tmp = $dataModel->assignModelData($tmp);
+        $tmp = $params[0];
 
         $storeInfo = array();
         foreach($tmp as $v) {

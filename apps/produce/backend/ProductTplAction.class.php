@@ -23,12 +23,13 @@ class ProductTplAction extends CommonAction {
     public function index() {
         
         $data = parent::index(true);
-        
-        $dataModel = D("DataModelDataView");
-        $data = $dataModel->assignModelData($data, false);
 
-        
-        $this->response($data);
+        $params = array(
+            $data, false
+        );
+        tag("assign_dataModel_data", $params);
+
+        $this->response($params[0]);
     }
     
     protected function pretreatment() {
@@ -45,10 +46,16 @@ class ProductTplAction extends CommonAction {
     public function read() {
         $data = parent::read(true);
         $data["goods_id_label"] = $data["goods_name"];
-        $model = D("DataModelDataView");
-        $data = $model->assignModelData(array($data));
+
+
+        $params = array(
+            array($data), false
+        );
+        tag("assign_dataModel_data", $params);
+
+
 //        print_r($data);exit;
-        $this->response($data[0]);
+        $this->response($params[0][0]);
     }
     
 //    public function insert() {

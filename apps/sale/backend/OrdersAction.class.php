@@ -65,15 +65,13 @@ class OrdersAction extends CommonAction {
 //        array_flip(array_flip($modelIds));
         
         $formData["customer_id_label"] = $formData["customer"];
-        
 
-        $dataModel = D("DataModelDataView");
+        $params = array(
+            $rowData, $modelIds
+        );
+        tag("assign_dataModel_data", $params);
         
-        $rowData = $dataModel->assignModelData($rowData, $modelIds);
-        
-        $formData["rows"] = reIndex($rowData);
-        
-        
+        $formData["rows"] = reIndex($params[0]);
         $this->response($formData);
         
     }

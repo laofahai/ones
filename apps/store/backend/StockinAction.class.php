@@ -54,11 +54,12 @@ class StockinAction extends CommonAction {
         }
 //        array_flip(array_flip($modelIds));
 
-        $dataModel = D("DataModelDataView");
-        
-        $rowData = $dataModel->assignModelData($rowData, $modelIds);
-        
-        $formData["rows"] = reIndex($rowData);
+        $params = array(
+            $rowData, $modelIds
+        );
+        tag("assign_dataModel_data", $params);
+
+        $formData["rows"] = reIndex($params[0]);
         
         
         $this->response($formData);

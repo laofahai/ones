@@ -28,10 +28,13 @@ class ProducePlanDetailViewModel extends CommonViewModel {
         if(!$data) {
             return $data;
         }
-        
-        $dataModel = D("DataModelDataView");
-        $data = $dataModel->assignModelData($data, false);
-        
+
+        $params = array(
+            $data, false
+        );
+        tag("assign_dataModel_data", $params);
+
+        $data = $params[0];
         $processModel = D("ProduceProcessView");
         $data = $processModel->assignProcessData($data);
         
