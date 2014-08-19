@@ -105,7 +105,7 @@ var toLang = function(key, section, $rootScope) {
     var appSection = "App"+appAlias.ucfirst();
     var lang;
 
-    langStr = sprintf("i18n.%s.%s", section, appSection, key);
+    langStr = sprintf("i18n.%s.%s.%s", section, appSection, key);
 
     lang = $rootScope.$eval(langStr);
     if(lang === undefined) {
