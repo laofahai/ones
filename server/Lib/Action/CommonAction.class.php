@@ -23,6 +23,8 @@ class CommonAction extends RestAction {
 
     protected $queryMeta = array();
 
+    protected $dataModelAlias;
+
     public function __construct() {
         
         parent::__construct();
@@ -321,6 +323,16 @@ class CommonAction extends RestAction {
                 "limit" => $limit,
                 "order" => $order
             );
+
+            if($this->dataModelAlias) {
+                $params = array(
+                    $list, $this->dataModelAlias
+                );
+
+                tag("assign_dataModel_data", $params);
+                $list = $params[0];
+            }
+
             if($return) {
                 return $list;
             }
@@ -457,6 +469,16 @@ class CommonAction extends RestAction {
         $this->_filter($map);
 
         $item = $model->where($map)->find();
+
+        if($this->dataModelAlias) {
+            $params = array(
+                array($item), $this->dataModelAlias
+            );
+
+            tag("assign_dataModel_data", $params);
+            $item = $params[0][0];
+        }
+
 //        echo $model->getLastSql();exit;
         if($return) {
             return $item;
@@ -489,6 +511,20 @@ class CommonAction extends RestAction {
         $result = $model->add();
 
         if ($result !== false) { //保存成功
+
+            /*
+             * 插入数据模型数据
+             * **/
+            if($this->dataModelAlias) {
+                $data = $_POST;
+                $data["id"] = $result;
+                $params = array(
+                    $this->dataModelAlias,
+                    $data
+                );
+                tag("insert_dataModel_data", $params);
+            }
+
             if($return) {
                 return $result;
             }

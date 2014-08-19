@@ -342,7 +342,7 @@
                             width: 300
                         },
                         stock: {
-                            editAbleRequire: ["goods_id", "standard", "version"],
+                            editAbleRequire: ["goods_id"],
                             inputType: "select3",
                             dataSource: StockRes,
                             autoQuery: true,
@@ -466,7 +466,7 @@
                             width: 300
                         },
                         stock: {
-                            editAbleRequire: ["goods_id", "standard", "version"],
+                            editAbleRequire: ["goods_id"],
                             inputType: "select3",
                             dataSource: StockRes,
                             autoQuery:true,
