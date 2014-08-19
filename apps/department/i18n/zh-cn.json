@@ -52,6 +52,9 @@
             "auth_rule_node": "权限节点",
             "user_group": "用户组管理",
             "department": "部门管理"
+        },
+        "AppDepartment": {
+            "appName": "组织机构模块"
         }
     }
 }

@@ -402,7 +402,6 @@ class AppsAction extends CommonAction {
         }
         if($requirements) {
             $this->installClean();
-            $this->error("install failed while check requirements");
             $this->response(array(
                 "type" => "requirements",
                 "requirements" => implode(",", $requirements)

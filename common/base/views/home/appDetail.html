@@ -20,7 +20,7 @@
                         <p>
                             <span class="label label-info arrowed arrowed-in-right"
                                   ng-repeat="req in appInfo.versions[appInfo.currentVersion].requirements"
-                                  ng-bind="i18n.lang[req].appName || req">
+                                  ng-bind="i18n.lang['App'+req.ucfirst()].appName || req">
                             </span>
                         </p>
                         <h5 class="bolder" ng-bind="i18n.lang.appUpdateHistory"></h5>

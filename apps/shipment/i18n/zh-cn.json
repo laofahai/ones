@@ -36,6 +36,10 @@
         "shipment_from_address": "发件人地址",
         "freight_type": "运费类型",
         "freight": "运费",
-        "weight": "重量"
+        "weight": "重量",
+
+        "AppShipment": {
+            "appName": "发货单模块"
+        }
     }
 }

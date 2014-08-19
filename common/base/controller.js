@@ -118,8 +118,12 @@
 
                         if(data.type == "requirements") {
                             $scope.consoleClass = "danger";
+                            var req = [];
+                            angular.forEach(data.requirements, function(item){
+                                req.push(ComView.toLang("appName", "App"+item.ucfirst()));
+                            });
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.requirementsApp + ": " + data.requirements
+                                $rootScope.i18n.lang.requirementsApp + ": " + req.join()
                             );
                             $scope.consoleMessages.push(
                                 $rootScope.i18n.lang.messages.apps.requirements

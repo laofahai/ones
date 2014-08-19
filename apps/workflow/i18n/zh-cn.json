@@ -44,6 +44,9 @@
         "executor_department": "执行部门",
         "executor_user": "执行人",
         "execute_file": "执行文件",
-        "is_default": "是否默认"
+        "is_default": "是否默认",
+        "AppWorkflow": {
+            "appName": "工作流模块"
+        }
     }
 }

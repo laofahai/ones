@@ -31,6 +31,9 @@
         },
         "widgetTitles": {
             "editMyProfile" : "修改我的资料"
+        },
+        "AppDashboard": {
+            "appName": "控制面板模块"
         }
     }
 }

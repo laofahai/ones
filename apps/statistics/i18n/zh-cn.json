@@ -39,6 +39,10 @@
         "sale_amount": "销售金额",
         "purchase_num": "采购数量",
         "purchase_amount": "采购金额",
-        "rmbyuan": "人民币 (元)"
+        "rmbyuan": "人民币 (元)",
+
+        "AppStatistics": {
+            "appName": "统计模块"
+        }
     }
 }

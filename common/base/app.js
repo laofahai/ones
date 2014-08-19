@@ -84,6 +84,10 @@
         .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView",
             function($scope, $rootScope, $location, $http, conf, ComView) {
 
+                setTimeout(function(){
+                    $("#initCover").fadeOut();
+                }, 2000);
+
                 //有需要的APP未能加载
                 if(ones.unfoundApp) {
                     ComView.alert(

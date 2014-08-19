@@ -55,6 +55,9 @@
         "widgetTitles": {
             "confirm_finance_receive": "财务确认收款"
         },
+        "AppFinance": {
+            "appName": "基础财务模块"
+        },
         "balance_direction": "余额方向",
         "record_type": "记录类型",
         "account": "账户",

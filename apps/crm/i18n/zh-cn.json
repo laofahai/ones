@@ -31,7 +31,7 @@
         "widgetTitles": {
             "relCompanyBaseInfo": "往来单位基本信息"
         },
-        "crm": {
+        "AppCrm": {
             "appName": "往来单位"
         },
         "contact": "联系人",

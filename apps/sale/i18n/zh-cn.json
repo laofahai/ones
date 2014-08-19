@@ -32,6 +32,9 @@
         "modules": {
             "Orders": "订单"
         },
+        "AppSale": {
+            "appName": "销售模块"
+        },
         "Orders": "销售订单",
         "sale": "销售"
 

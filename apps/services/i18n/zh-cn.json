@@ -28,6 +28,9 @@
         },
         "send_to_mailbox": "发送至邮箱",
         "packit": "压缩",
-        "autodelete": "自动删除"
+        "autodelete": "自动删除",
+        "AppServices": {
+            "appName": "ONES基础服务模块"
+        }
     }
 }

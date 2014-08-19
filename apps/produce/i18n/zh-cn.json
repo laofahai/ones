@@ -70,6 +70,9 @@
             "viewCraft": "查看生产工艺",
             "doCraft" : "执行生产工艺"
         },
+        "AppProduce": {
+            "生产计划模块": "基础财务模块"
+        },
         "current_craft": "当前工艺",
         "next_craft": "下一工艺",
         "craft": "工艺",
