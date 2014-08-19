@@ -136,10 +136,6 @@
                         if(data.error) {
                             ComView.alert(data.msg);
                         } else {
-                            if(conf.DEBUG) {
-                                ComView.alert("success", "success");
-                                return;
-                            }
                             $location.url("/shipment/list/shipment");
                         }
                     });
