@@ -50,7 +50,7 @@
         ones.pluginScope.defer = defer;
     });
 
-    angular.module("ones.store", ["ones.goods", "ones.dataModel"])
+    angular.module("ones.store", [])
         .config(["$routeProvider", function($route){
             $route
                 //入库

@@ -140,7 +140,7 @@
                                 ComView.alert("success", "success");
                                 return;
                             }
-                            $location.url("/JXC/list/shipment");
+                            $location.url("/shipment/list/shipment");
                         }
                     });
                 };
