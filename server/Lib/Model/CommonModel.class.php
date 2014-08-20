@@ -139,7 +139,7 @@ class CommonModel extends AdvModel{
     /**
      * 执行删除
      */
-    public function doDelete($ids, $pk=null, $modelName = null) {
+    public function doDelete($ids, $pk=null, $modelName = null, $forceDelete=false) {
 //        echo 123;exit;
         if(!$modelName) {
             $model = $this;
@@ -157,7 +157,7 @@ class CommonModel extends AdvModel{
 //        var_dump($model->fields["deleted"]);
 //        print_r($model->fields);
 //        var_dump(in_array("deleted", $model->fields));exit;
-        if($model->fields["_type"]["deleted"]) {
+        if($model->fields["_type"]["deleted"] && !$forceDelete) {
             $rs = $model->where($condition)->save(array("deleted"=>1));
         } else {
             if(method_exists($model, "relation")) {

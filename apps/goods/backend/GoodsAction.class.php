@@ -13,6 +13,8 @@
 class GoodsAction extends CommonAction {
     
     public $indexModel = "GoodsCatView";
+
+    protected $dataModelAlias = "goodsBaseInfo";
     
     protected function _filter(&$map) {
         $typeahead = strtoupper(trim(strip_tags($_GET["typeahead"])));

@@ -472,11 +472,15 @@ class CommonAction extends RestAction {
 
         if($this->dataModelAlias) {
             $params = array(
-                array($item), $this->dataModelAlias
+                array($item),
+                $this->dataModelAlias,
+                true,
+                false
             );
 
             tag("assign_dataModel_data", $params);
-            $item = $params[0][0];
+
+            $item = $params[0];
         }
 
 //        echo $model->getLastSql();exit;
@@ -520,7 +524,8 @@ class CommonAction extends RestAction {
                 $data["id"] = $result;
                 $params = array(
                     $this->dataModelAlias,
-                    $data
+                    $data,
+                    false
                 );
                 tag("insert_dataModel_data", $params);
             }
@@ -568,6 +573,19 @@ class CommonAction extends RestAction {
         $result = $model->save();
 
         if ($result !== false) { //保存成功
+
+            /*
+             * 修改数据模型数据
+             * **/
+            if($this->dataModelAlias) {
+                $data = $_POST;
+                $params = array(
+                    $this->dataModelAlias,
+                    $data
+                );
+                tag("insert_dataModel_data", $params);
+            }
+
             $this->response(array(
                 "error" => 0
             ));
@@ -597,11 +615,17 @@ class CommonAction extends RestAction {
 
         if($return) {
             return $rs;
-        } 
+        }
         
         if(false === $rs) {
             Log::write("Delete row failed:".$name.",".$id);
             $this->error("delete_failed");
+        } else if($this->dataModelAlias) {
+            $params = array(
+                $id,
+                $this->dataModelAlias
+            );
+            tag("delete_dataModel_data", $params);
         }
 //        
 //        return;

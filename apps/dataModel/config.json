@@ -5,7 +5,8 @@
     "version": "0.1",
     "plugins": {
         "assign_dataModel_data": ["ONESAssignDataModelData"],
-        "insert_dataModel_data": ["ONESInsertDataModelData"]
+        "insert_dataModel_data": ["ONESInsertDataModelData"],
+        "delete_dataModel_data": ["ONESDeleteDataModelData"]
     },
     "navs": {
         "settings" : {

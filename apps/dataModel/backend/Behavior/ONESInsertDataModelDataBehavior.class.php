@@ -16,7 +16,7 @@ class ONESInsertDataModelDataBehavior extends Behavior {
      * @param $data array POST的数据，根据数据模型查询字段之后从此数组中取值
      * **/
     public function run(&$params) {
-        list($bindModelAlias, $data, $insert) = $params;
+        list($bindModelAlias, $data, $pinyin) = $params;
 
         if(!$data["id"]) {
             return false;
@@ -46,13 +46,17 @@ class ONESInsertDataModelDataBehavior extends Behavior {
         }
 
         $dataModelObject = D("DataModelData");
+        $dataModelObject->where(array(
+            "source_id" => $data["id"],
+            "model_id" => $dataModel["id"],
+        ))->delete();
         foreach($modelData as $fieldName=>$fieldValue) {
             $dataModelObject->add(array(
                 "source_id" => $data["id"],
                 "model_id"  => $modelFields[$fieldName]["model_id"],
                 "field_id"  => $modelFields[$fieldName]["id"],
                 "data" => $fieldValue,
-                "pinyin" => Pinyin($fieldValue),
+                "pinyin" => $pinyin ? Pinyin($fieldValue) : "",
                 "deleted" => 0
             ));
         }
