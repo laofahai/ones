@@ -26,8 +26,8 @@
             "goods_setting": "物料(成品)管理",
             "goods_category": "物料(成品)分类管理"
         },
-        "AppGoods": {
-            "appName": "基础商品模块"
+        "AppGoods" : {
+            "appName": "商品基础信息模块"
         },
         "goods": "物料(成品)",
         "factory_code": "基础原厂编码",

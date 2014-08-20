@@ -58,12 +58,11 @@ class ReturnsAction extends CommonAction {
 
         $formData["customer_id_label"] = $formData["customer"];
 
-        $params = array(
-            $rowData, $modelIds
-        );
-        tag("assign_dataModel_data", $params);
+        $dataModel = D("DataModelDataView");
 
-        $formData["rows"] = reIndex($params[0]);
+        $rowData = $dataModel->assignModelData($rowData, $modelIds);
+
+        $formData["rows"] = reIndex($rowData);
 
 
         $this->response($formData);

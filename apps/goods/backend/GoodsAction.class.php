@@ -13,8 +13,6 @@
 class GoodsAction extends CommonAction {
     
     public $indexModel = "GoodsCatView";
-
-    protected $dataModelAlias = "goodsBaseInfo";
     
     protected function _filter(&$map) {
         $typeahead = strtoupper(trim(strip_tags($_GET["typeahead"])));
@@ -46,14 +44,8 @@ class GoodsAction extends CommonAction {
             $data[$k]["combineLabel"] = sprintf("%s", $v["name"]);
         }
 
-        $params = array(
-            $data, $this->dataModelAlias
-        );
-
-        tag("assign_dataModel_data", $params);
-
 //        echo count($data);exit;
-        $this->response($params[0]);
+        $this->response($data);
     }
     
     protected function pretreatment() {

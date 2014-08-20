@@ -15,24 +15,7 @@ class FrontEndRuntime {
 
     private $whiteList = array("main.js", "config.json");
 
-    private $preloadingList = array(
-        "vendor/bower_components.min.js",
-        "vendor/ace.min.js",
-        "vendor/angular-file-upload.min.js",
-        "vendor/highcharts.js",
-        "vendor/highchartsExporting.js",
-        "vendor/ng-highcharts.js",
-        "base/config.js",
-        "lib/function.js",
-        "lib/formMaker.js",
-        "lib/plugin.js",
-        "base/controller.js",
-        "base/filter.js",
-        "base/directive.js",
-        "base/service.js",
-        "base/model.js",
-        "base/app.js",
-    );
+    private $preLoadingList;
 
     private $afterLoadingList = array(
         "lib/commonView.js",
@@ -61,6 +44,9 @@ class FrontEndRuntime {
     public function __construct($loadedApps) {
         $this->baseDir = ROOT_PATH."/common";
         $this->loadedApps = $loadedApps;
+
+        $this->preLoadingList = C("preloadJS".(APP_DEBUG ? "DEBUG": ""));
+
     }
 
     private function response($data) {
@@ -80,7 +66,7 @@ class FrontEndRuntime {
             sprintf("'%s'", implode("','", $loadedApps)),
             sprintf("'%s'", implode("','", $loadedApps)),
         );
-        foreach($this->preloadingList as $pre) {
+        foreach($this->preLoadingList as $pre) {
             $tmp = $this->baseDir."/".$pre;
             if(is_file($tmp)){
                 $content = file_get_contents($tmp);

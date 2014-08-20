@@ -1,6 +1,6 @@
 <?php
 
-$baseConfig = array(
+$BASEConfig = array(
 
     /*
      * API KEY
@@ -66,6 +66,5 @@ $baseConfig = array(
 );
 
 require ENTRY_PATH."/Lib/ORG/spyc.php";
-$yamlConfig = Spyc::YAMLLoad(ROOT_PATH."/common/config.yaml.php");
-
-return array_merge_recursive($baseConfig, $yamlConfig["backend"]);
+$YAMLConfig = Spyc::YAMLLoad(ROOT_PATH."/common/config.yaml.php");
+return array_merge_recursive($BASEConfig, $YAMLConfig["backend"]);

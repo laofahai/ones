@@ -8,8 +8,8 @@
         .factory("GoodsCategoryRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "goods/goodsCategory/:id.json", null, {'update': {method: 'PUT'}});
         }])
-        .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal", "pluginExecutor",
-            function($rootScope, GoodsCategoryRes, $q, $location, $modal, plugin) {
+        .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal",
+            function($rootScope, GoodsCategoryRes, $q, $location, $modal) {
                 var obj = {};
                 obj.columns = 2;
                 obj.extraSelectActions = [
@@ -71,8 +71,7 @@
                             inputType: "select",
                             valueField: "id",
                             nameField : "prefix_name",
-                            listable: false,
-                            dataSource: "GoodsCategoryRes"
+                            listable: false
                         },
                         category_name: {
                             displayName: i18n.category,
@@ -87,14 +86,22 @@
                             inputType: "number",
                             value: 0
                         }
+//                    image: {
+//                        inputType: "file",
+//                        multiple: "multiple",
+//                        whitelist: "gif|png|jpg|jpeg"
+//                    }
                     };
-
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
-                        structure: struct,
-                        alias: "goodsBaseInfo"
-                    });
-                    return rs.defer.promise;
-
+                    if(structOnly) {
+                        return struct;
+                    } else {
+                        var defer = $q.defer();
+                        GoodsCategoryRes.query(function(data){
+                            struct.goods_category_id.dataSource = data;
+                            defer.resolve(struct);
+                        });
+                        return defer.promise;
+                    }
                 };
                 return obj;
             }])

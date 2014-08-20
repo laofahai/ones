@@ -140,7 +140,7 @@
                 isBill: true,
                 workflowAlias: "returns",
                 getFieldsStruct: function(){
-                    var structure = {
+                    return {
                         bill_id: {},
                         returns_type_label: {
                             displayName: $rootScope.i18n.lang.type
@@ -158,12 +158,11 @@
                             field: "processes.status_text"
                         }
                     };
-                    return structure;
                 }
             };
         }])
-        .service("ReturnsEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
-            function($rootScope, GoodsRes, plugin) {
+        .service("ReturnsEditModel", ["$rootScope", "GoodsRes", "StockRes", "DataModelDataRes",
+            function($rootScope, GoodsRes, StockRes, DataModelDataRes) {
                 var obj = {
                     relateMoney: true,
                     workflowAlias: "returns"
@@ -185,6 +184,36 @@
                             listAble: false,
                             width: 300
                         },
+                        standard: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "standard"
+                            }
+                        },
+                        version: {
+                            nameField: "data",
+                            valueField: "id",
+                            labelField: true,
+                            inputType: "select3",
+                            editAbleRequire: "goods_id",
+                            dataSource: DataModelDataRes,
+                            queryWithExistsData: ["goods_id"],
+                            autoQuery: true,
+                            autoReset: true,
+                            autoHide: true,
+                            queryParams: {
+                                fieldAlias: "version"
+                            }
+                        },
                         num: {
                             inputType: "number",
                             totalAble: true,
@@ -204,13 +233,8 @@
 
                     };
 
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
-                        structure: fields,
-                        alias: "product",
-                        require: ["goods_id"],
-                        queryExtra: ["goods_id"]
-                    });
-                    return rs.defer.promise;
+
+                    return fields;
                 };
 
 

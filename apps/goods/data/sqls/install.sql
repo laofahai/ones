@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]goods` (
+CREATE TABLE IF NOT EXISTS `x_goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_category_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods` (
   KEY `deleted` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
+CREATE TABLE IF NOT EXISTS `x_goods_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
@@ -36,5 +36,3 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   KEY `bind_model` (`bind_model`),
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-INSERT INTO `[PREFIX]goods_category`(id,pid,name,bind_model,pinyin,lft,rgt,listorder,deleted)VALUES(null,0,"主节点请勿删除",0,"",1,2,0,0);

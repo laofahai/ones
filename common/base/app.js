@@ -11,8 +11,6 @@
             'mgcrea.ngStrap',
             'localytics.directives',
             'ui.utils',
-            'ui.select',
-            'angularFileUpload',
 
             "ones.pluginsModule",
 

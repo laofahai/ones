@@ -3,7 +3,7 @@
     ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
         var ComView = injector.get("ComView");
         ones.pluginScope.dashboardAppBtns.push({
-            label: ComView.toLang("appName", "crm"),
+            label: ComView.toLang("appName", "AppCrm"),
             name: "crmList",
             icon: "group",
             link: "crm/list/relationshipCompany"
