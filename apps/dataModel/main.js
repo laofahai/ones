@@ -222,7 +222,9 @@
                     if(!data.id) {
                         return;
                     }
-                    $location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+$routeParams.catid);
+                    var lastPage = angular.fromJson(localStorage.lastPage);
+                    $location.url(lastPage[0]);
+//                    $location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+$routeParams.catid);
                 });
             }])
         .controller("DataModelDataCtl", ["$scope", "DataModelDataRes", "DataModelDataModel", "ComView", "$routeParams",

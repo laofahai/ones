@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
   KEY `status` (`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockin_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   KEY `source_model` (`source_model`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
