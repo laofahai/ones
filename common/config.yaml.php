@@ -9,7 +9,7 @@
   MAIL_CHARSET:   UTF-8   #编码
   MAIL_AUTH:      true   #邮箱认证
   MAIL_HTML:      true   #true HTML格式 false TXT格式
-  - preloadJS:
+  - preloadJSDebug:
     - "vendor/jquery/jquery-2.1.1.min.js"
     - "vendor/angular-1.2.22/angular.min.js"
     - "vendor/bootstrap.min.js"
@@ -24,6 +24,8 @@
     - "vendor/angularModules/ui-utils/ui-utils.min.js"
     - "vendor/jquery/chosen/chosen.jquery.min.js"
     - "vendor/angularModules/angular-chosen/chosen.js"
+    - "vendor/angularModules/angular-file-upload/angular-file-upload.min.js"
+    - "vendor/angularModules/angular-file-upload/directives.js"
     - "vendor/ace/ace.min.js"
     - "vendor/ace/ace-elements.min.js"
     - "vendor/ace/ace-extra.min.js"
@@ -41,7 +43,7 @@
     - "base/service.js"
     - "base/model.js"
     - "base/app.js"
-  - preloadJSDebug:
+  - preloadJS:
     - "vendor/jquery/jquery-2.1.1.min.js"
     - "vendor/angular-1.2.22/angular.min.js"
     - "vendor/bootstrap.min.js"
@@ -56,6 +58,8 @@
     - "vendor/angularModules/ui-utils/ui-utils.min.js"
     - "vendor/jquery/chosen/chosen.jquery.min.js"
     - "vendor/angularModules/angular-chosen/chosen.js"
+    - "vendor/angularModules/angular-file-upload/angular-file-upload.min.js"
+    - "vendor/angularModules/angular-file-upload/directives.js"
     - "vendor/ace/ace.min.js"
     - "vendor/ace/ace-elements.min.js"
     - "vendor/ace/ace-extra.min.js"

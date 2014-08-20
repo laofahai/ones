@@ -25,7 +25,7 @@ $BASEConfig = array(
     'LOG_RECORD' => true, // 开启日志记录
     'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,WARN,DEBUG,SQL', // 只记录EMERG ALERT CRIT ERR 错误
     
-    'APP_GROUP_LIST' => 'HOME,Passport,JXC', //项目分组设定
+    'APP_GROUP_LIST' => 'HOME,Passport,API', //项目分组设定
     'DEFAULT_GROUP'  => 'HOME', //默认分组
     'URL_MODEL' => 0,
     'URL_ROUTE_RULES' => require "route.php",
@@ -59,7 +59,8 @@ $BASEConfig = array(
             "workflow.workflowprocess.read",
             "dashboard.userdesktop.read",
             "dashboard.mydesktop.add",
-            "dashboard.mydesktop.read"
+            "dashboard.mydesktop.read",
+            "api.uploader.add"
         )
     ),
 

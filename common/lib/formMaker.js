@@ -1,8 +1,8 @@
 (function(){
     'use struct';
     angular.module("ones.formMaker", [])
-    .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout",
-    function($compile, $q, $parse, $injector, $timeout) {
+    .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config",
+    function($compile, $q, $parse, $injector, $timeout, ONESConfig) {
         var service = {};
         service.makeField = function(scope, opts) {
             var defaultOpts = {};
@@ -43,7 +43,9 @@
                         'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                         'data-html="true" bs-typeahead />',
                 'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>',
-                'fields/file': '<aceupload config="%(config)s"></aceupload>'
+                'fields/file': '<div class="fileUploadBtn btn btn-primary btn-minier" ng-click="showUploadModal()" ng-bind="i18n.lang.actions.upload"></div>' +
+                    '<div ng-bind="%(model)s"></div>' +
+                    '<input type="hidden" ng-model="%(model)s" />'
 //                'fields/file': '<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" \
 //                    ng-show="dropSupported">drop files here</div> \
 //                    <div ng-file-drop-available="dropSupported=true" \
@@ -60,7 +62,6 @@
                 compile: false
             };
             this.opts = $.extend(defaultOpts, opts);
-            this.opts.disabledAttrs = ["dataSource"];
         };
 
 
@@ -106,8 +107,20 @@
              * 生成字段属性
              * 包括表单项的事件绑定
              * */
-            _attr: function(name, fieldDefine) {
+            _attr: function(name, fieldDefine, blackList) {
                 var k, v, html = [];
+                var bl = [
+                    "inputType",
+                    "listable",
+                    "displayName",
+                    "nameField",
+                    "valueField",
+                    "hideInForm",
+                    "cellFilter",
+                    "primary",
+                    "dataSource"
+                ];
+                bl = $.extend(bl, blackList);
                 fieldDefine["autocomplete"] = "false";
                 //多行数据 如bill
                 if (!this.opts.multi) {
@@ -115,7 +128,7 @@
                     fieldDefine.name = name;
                 }
                 for (k in fieldDefine) {
-                    if (this.opts.disabledAttrs.indexOf(k) >= 0) {
+                    if (bl.indexOf(k) >= 0) {
                         continue;
                     }
                     v = fieldDefine[k];
@@ -164,10 +177,47 @@
             },
             //文件上传
             _file: function(name, fieldDefine, $scope) {
-                $scope.$parent[name+"FileConf"] = fieldDefine;
-                $scope.$parent.doUpload = function() {};
+                var parentScope = $scope.$parent;
+                parentScope.showUploadModal = function(){
+                    var modalInstance = $injector.get("$modal")({
+                        template: "common/base/views/uploader.html",
+                        scope: parentScope
+                    });
+                };
+
+                uploadermultiple = "";
+                if(fieldDefine.multiple) {
+                    parentScope.uploaderMultiple = "multiple";
+                }
+
+                parentScope.uploaderAccept = "*";
+                if(fieldDefine.accept) {
+                    parentScope.uploaderAccept = fieldDefine.accept;
+                }
+
+                var queueLimit = 1;
+                if(fieldDefine.multiple > 0) {
+                    queueLimit = parseInt(fieldDefine.multiple);
+                }
+                parentScope.uploaderQueueLimit = queueLimit;
+
+                var uploaderObj = $injector.get("FileUploader");
+                var uploaderInstance = parentScope.uploader = new uploaderObj({
+                    url: ONESConfig.BSU+"api/uploader",
+                    queueLimit: queueLimit
+                });
+
+//                parent.uploaderIsError = false;
+                var uploadedFiles = [];
+                uploaderInstance.onCompleteItem = function(i, msg, code){
+                    if(code == 200) {
+                        uploadedFiles.push(msg.uploadPath);
+                    }
+                    $parse(fieldDefine["ng-model"]).assign(parentScope, uploadedFiles.join("\n"));
+                }
+
                 return sprintf(this.$parent.templates["fields/file"], {
-                    config: name+"FileConf"
+                    model: fieldDefine["ng-model"]
                 });
             },
             _static: function(name, fieldDefine) {

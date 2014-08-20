@@ -55,6 +55,7 @@ $needMake = array(
     array("user", "Passport/User",),
     array("types", "HOME/Types",),
     array("config", "HOME/Config"),
+    array("api/uploader", "API/Uploader")
 );
 
 $urlRoutes = array();

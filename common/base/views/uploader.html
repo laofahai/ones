@@ -1,0 +1,112 @@
+<div class="modal" tabindex="-1">
+    <div class="modal-open modal-uploader">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="i18n.lang.widgetTitles.uploader"></h4>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="uploaderBtnContainer">
+                                <button class="btn btn-primary width-100 uploaderBtn" id="btnSelectFile" onclick="doSelectFile($(this))">选择文件</button>
+                                <input type="file" nv-file-select="" uploader="uploader" accept="{{uploaderAccept}}" multiple />
+                            </div>
+
+                            <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+
+                            <div ng-show="uploader.isHTML5">
+                                <!-- 3. nv-file-over uploader="link" over-class="className" -->
+                                <div class="well drop-zone" nv-file-over="" uploader="uploader">
+                                    拖拽文件到这里上传
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <p>
+                                {{i18n.lang.queue_length}}: {{ uploader.queue.length }}
+                                {{i18n.lang.queue_limit}}: {{uploaderQueueLimit}}
+                            </p>
+
+                            <table class="table uploaderTable">
+                                <thead>
+                                <tr>
+                                    <th ng-bind="i18n.lang.name">Name</th>
+                                    <th ng-show="uploader.isHTML5" ng-bind="i18n.lang.size"></th>
+                                    <th ng-show="uploader.isHTML5" ng-bind="i18n.lang.progress"></th>
+                                    <th ng-bind="i18n.lang.status"></th>
+                                    <th ng-bind="i18n.lang.operation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td>
+                                        <strong>{{ item.file.name }}</strong>
+                                        <!-- Image preview -->
+                                        <!--auto width-->
+                                        <div ng-show="uploader.isHTML5" class="uploaderThumb" ng-thumb="{ file: item._file, width: 150 }"></div>
+                                    </td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                    <td ng-show="uploader.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError" class="red"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                            <span class="glyphicon glyphicon-upload"></span> <span ng-bind="i18n.lang.actions.upload"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                            <span class="glyphicon glyphicon-ban-circle"></span> <span ng-bind="i18n.lang.actions.cancel"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> <span ng-bind="i18n.lang.actions.remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <div>
+                                    {{i18n.lang.upload_queue_progress}}:
+                                    <div class="progress" style="">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> <span ng-bind="i18n.lang.actions.upload_all"></span>
+                </button>
+                <button type="button" class="btn btn-primary btn-s" ng-bind="i18n.lang.actions.complete"></button>
+                <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
+                    <!--<span class="glyphicon glyphicon-ban-circle"></span> <span ng-bind="i18n.lang.actions.cancel_all"></span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">-->
+                    <!--<span class="glyphicon glyphicon-trash"></span> <span ng-bind="i18n.lang.actions.remove_all"></span>-->
+                <!--</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var doSelectFile = function(obj){
+        obj.next().trigger("click");
+    }
+</script>

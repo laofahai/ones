@@ -72,6 +72,8 @@ class FrontEndRuntime {
                 $content = file_get_contents($tmp);
                 $content = str_replace($find, $replace, $content);
                 $this->response($content);
+            } else {
+//                echo $tmp;exit;
             }
         }
     }
@@ -146,6 +148,7 @@ class FrontEndRuntime {
             "    ", "'use strict';", "'use strict'",
             "\t",
         ), "", $code);
+
         return $code;
     }
 

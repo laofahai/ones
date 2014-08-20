@@ -65,7 +65,8 @@
         "widgetTitles": {
             "fill_the_form": "请填写下面的表单",
             "operate_options": "操作选项",
-            "appDetail": "应用详情"
+            "appDetail": "应用详情",
+            "uploader": "文件上传"
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",
@@ -130,6 +131,7 @@
             "export": "导出",
             "edit": "编辑",
             "delete": "删除",
+            "remove": "删除",
             "list": "列表",
             "listAll": "全部",
             "view": "查看",
@@ -142,7 +144,12 @@
             "active": "激活",
             "inactive": "禁用",
             "upgrade": "更新",
-            "confirm": "确认"
+            "confirm": "确认",
+            "upload": "点击上传",
+            "upload_all": "上传全部",
+            "cancel_all": "取消全部",
+            "remove_all": "删除全部",
+            "complete": "完成"
         },
         "types" : {
             "purchase": "采购类型",
@@ -266,6 +273,11 @@
         "appUpdateHistory": "更新日志",
         "appCurrentVersion": "当前版本",
         "appLatestVersion" : "最新版本",
-        "requirementsApp": "依赖应用"
+        "requirementsApp": "依赖应用",
+        "size": "尺寸",
+        "progress": "进度",
+        "queue_length": "队列长度",
+        "upload_queue_progress": "队列上传进度",
+        "queue_limit": "队列最大长度"
     }
 }

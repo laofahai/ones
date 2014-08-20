@@ -145,6 +145,20 @@ function force_rmdir($path) {
         return $result;
     }
 }
+/*
+ * 递归创建目录
+ * **/
+function mkdirs($dir) {
+    if(!is_dir($dir)) {
+        if(!mkdirs(dirname($dir))){
+            return false;
+        }
+        if(!mkdir($dir,0777)){
+            return false;
+        }
+    }
+    return true;
+}
 
 /*
  * 生成日期序列

@@ -684,7 +684,7 @@ function rmbToBig(currencyDigits) {
                 a = /[def]/.test(h[8]) && h[3] && a >= 0 ? "+" + a : a, d = h[4] ? h[4] == "0" ? "0" : h[4].charAt(1) : " ", v = h[6] - String(a).length, p = h[6] ? i(d, v) : "", f.push(h[5] ? a + p : p + a)
             }
         }
-        return f.join("")
+        return f.join("").replace("[PCT]", "%");
     }, t.cache = {}, t.parse = function(e) {
         var t = e, n = [], r = [], i = 0;
         while (t) {

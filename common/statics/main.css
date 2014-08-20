@@ -1,5 +1,6 @@
 html {
     min-height:101%;
+    height:100%;overflow:hidden;
 }
 a{
     cursor:pointer;
@@ -419,6 +420,19 @@ commonform {
 .ace-file-input input[type=file] {
     display:none;
 }
+.fileUploadBtn {
+    height:28px;line-height:28px;
+    font-size:14px;
+    margin:0;
+    background:#f2f2f2;
+    cursor:pointer;
+}
+.fileUploadBtn span {
+    position:absolute;
+    left:0;top:0;
+    width:100%;
+    text-align:center;
+}
 
 /*
     App Center
@@ -617,4 +631,32 @@ commonform {
         background-color:#438eb9;
     }
 
+}
+
+.modal-uploader {
+    width:70%;
+    margin: 50px auto;
+}
+.uploaderBtnContainer {
+    position:relative;
+    height:60px;
+}
+.uploaderBtn {
+    position:absolute;left:0;top:0;
+    z-index:9;
+}
+.uploaderBtnContainer input[type=file]{
+    position:absolute;
+    left:0;top:0;
+    width:10px;height:10px;overflow:hidden;
+    z-index:8;
+}
+.drop-zone {
+    border:5px dashed #ddd;
+}
+.uploaderTable th:first-child {
+    width:180px;
+}
+.uploaderTable th:last-child{
+    width:220px;
 }
