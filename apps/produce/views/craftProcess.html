@@ -6,9 +6,9 @@
                 <h4 class="aside-title ng-binding" ng-bind="i18n.lang.actions.viewCraft"></h4>
             </div>
             <div class="aside-body ng-binding">
-                <h6 class="bolder">{{title.goods_name}}</h5>
+                <h6 class="bolder">{{asideContent.title.goods_name}}</h5>
                 <dl class="workflowProcessList tree tree-unselectable">
-                    <dd class="tree-item" ng-repeat="item in content">
+                    <dd class="tree-item" ng-repeat="item in asideContent.content">
                         <div class="tree-item-name">
                             <i class="icon icon-user"></i>
                             {{item.truename}} <small>{{item.start_time|dateFormat}}</small>

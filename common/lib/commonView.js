@@ -224,10 +224,13 @@
                  * */
                 service.aside = function(title, content, template){
                     template = template || "views/common/asides/default.html";
-                    $aside({
+                    $rootScope.asideContent = {
                         title: title,
-                        content: content,
-                        template: template
+                        content:content
+                    };
+                    $aside({
+                        template: template,
+                        scope: $rootScope
                     });
                 };
                 /**
