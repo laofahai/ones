@@ -37,4 +37,4 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-INSERT INTO `[PREFIX]goods_category` (id, pid, name, bind_model, pinyin, lft, rgt, listorder, deleted) VALUES(null,0,"ROOT",0,1,2,0,0);
+INSERT INTO `[PREFIX]goods_category` (id, pid, name, bind_model, pinyin, lft, rgt, listorder, deleted) VALUES(null,0,"ROOT",0,null,1,2,0,0);
