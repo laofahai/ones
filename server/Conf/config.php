@@ -46,8 +46,8 @@ $BASEConfig = array(
         'AUTH_DONT_NEED_LOGIN' => array(
             "passport.login.add",
             "passport.login.read",
-            "home.mydesktop.read",
-            "home.frontendruntime.read"
+            "home.frontendruntime.read",
+            "home.install.read"
         ),
         /**
          * 无需认证模块
@@ -55,12 +55,13 @@ $BASEConfig = array(
         'AUTH_DONT_NEED' => array(
             "home.types.read",
             "home.index.read",
+            "home.mydesktop.read",
             "workflow.workflownode.read",
             "workflow.workflowprocess.read",
             "dashboard.userdesktop.read",
             "dashboard.mydesktop.add",
             "dashboard.mydesktop.read",
-            "api.uploader.add"
+            "api.uploader.add",
         )
     ),
 

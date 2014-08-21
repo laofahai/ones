@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_accounting_period`
+-- 表的结构 `[PREFIX]accounting_period`
 --
 
-CREATE TABLE IF NOT EXISTS `x_accounting_period` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]accounting_period` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `year` smallint(4) NOT NULL,
   `period` smallint(2) NOT NULL,
@@ -36,19 +36,19 @@ CREATE TABLE IF NOT EXISTS `x_accounting_period` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- 转存表中的数据 `x_accounting_period`
+-- 转存表中的数据 `[PREFIX]accounting_period`
 --
 
-INSERT INTO `x_accounting_period` (`id`, `year`, `period`, `status`) VALUES
+INSERT INTO `[PREFIX]accounting_period` (`id`, `year`, `period`, `status`) VALUES
   (1, 2013, 12, 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_accounting_subject`
+-- 表的结构 `[PREFIX]accounting_subject`
 --
 
-CREATE TABLE IF NOT EXISTS `x_accounting_subject` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]accounting_subject` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `code` varchar(10) NOT NULL,
@@ -70,10 +70,10 @@ CREATE TABLE IF NOT EXISTS `x_accounting_subject` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=194 ;
 
 --
--- 转存表中的数据 `x_accounting_subject`
+-- 转存表中的数据 `[PREFIX]accounting_subject`
 --
 
-INSERT INTO `x_accounting_subject` (`id`, `pid`, `code`, `direction`, `category`, `name`, `lft`, `rgt`, `listorder`, `is_assist`, `assist_items`) VALUES
+INSERT INTO `[PREFIX]accounting_subject` (`id`, `pid`, `code`, `direction`, `category`, `name`, `lft`, `rgt`, `listorder`, `is_assist`, `assist_items`) VALUES
   (1, 0, '-1', -1, 0, '会计科目2013', 1, 372, 99, 0, ''),
   (5, 1, '0', -1, -1, '资产', 2, 91, 99, 0, ''),
   (6, 1, '1', -1, -1, '负债', 92, 161, 99, 0, ''),
@@ -264,10 +264,10 @@ INSERT INTO `x_accounting_subject` (`id`, `pid`, `code`, `direction`, `category`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_accounting_voucher`
+-- 表的结构 `[PREFIX]accounting_voucher`
 --
 
-CREATE TABLE IF NOT EXISTS `x_accounting_voucher` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]accounting_voucher` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mark_id` smallint(5) NOT NULL,
   `mark_num` varchar(10) NOT NULL,
@@ -288,10 +288,10 @@ CREATE TABLE IF NOT EXISTS `x_accounting_voucher` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_accounting_voucher_detail`
+-- 表的结构 `[PREFIX]accounting_voucher_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_accounting_voucher_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]accounting_voucher_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `voucher_id` int(11) NOT NULL,
   `subject_id` smallint(5) NOT NULL,
@@ -305,10 +305,10 @@ CREATE TABLE IF NOT EXISTS `x_accounting_voucher_detail` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_apps`
+-- 表的结构 `[PREFIX]apps`
 --
 
-CREATE TABLE IF NOT EXISTS `x_apps` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
   `alias` varchar(50) NOT NULL,
   `version` varchar(30) NOT NULL,
@@ -321,10 +321,10 @@ CREATE TABLE IF NOT EXISTS `x_apps` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
--- 转存表中的数据 `x_apps`
+-- 转存表中的数据 `[PREFIX]apps`
 --
 
-INSERT INTO `x_apps` (`id`, `alias`, `version`, `dateline`, `status`) VALUES
+INSERT INTO `[PREFIX]apps` (`id`, `alias`, `version`, `dateline`, `status`) VALUES
   (6, 'department', '0.1', 1406906639, 1),
   (24, 'shipment', '0.4', 1407805303, 0),
   (7, 'dashboard', '0.1', 1406906639, 1),
@@ -343,10 +343,10 @@ INSERT INTO `x_apps` (`id`, `alias`, `version`, `dateline`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_auth_group`
+-- 表的结构 `[PREFIX]auth_group`
 --
 
-CREATE TABLE IF NOT EXISTS `x_auth_group` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` char(100) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -354,10 +354,10 @@ CREATE TABLE IF NOT EXISTS `x_auth_group` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
--- 转存表中的数据 `x_auth_group`
+-- 转存表中的数据 `[PREFIX]auth_group`
 --
 
-INSERT INTO `x_auth_group` (`id`, `title`, `status`) VALUES
+INSERT INTO `[PREFIX]auth_group` (`id`, `title`, `status`) VALUES
   (1, '超级管理员', 1),
   (2, '库管', 1),
   (3, '财务', 1),
@@ -369,10 +369,10 @@ INSERT INTO `x_auth_group` (`id`, `title`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_auth_group_access`
+-- 表的结构 `[PREFIX]auth_group_access`
 --
 
-CREATE TABLE IF NOT EXISTS `x_auth_group_access` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
   `uid` mediumint(8) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
@@ -381,10 +381,10 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_access` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- 转存表中的数据 `x_auth_group_access`
+-- 转存表中的数据 `[PREFIX]auth_group_access`
 --
 
-INSERT INTO `x_auth_group_access` (`uid`, `group_id`) VALUES
+INSERT INTO `[PREFIX]auth_group_access` (`uid`, `group_id`) VALUES
   (0, 1),
   (0, 2),
   (0, 7),
@@ -408,10 +408,10 @@ INSERT INTO `x_auth_group_access` (`uid`, `group_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_auth_group_rule`
+-- 表的结构 `[PREFIX]auth_group_rule`
 --
 
-CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
   `group_id` smallint(5) NOT NULL,
   `rule_id` int(11) NOT NULL,
   `flag` tinyint(1) NOT NULL DEFAULT '1',
@@ -419,10 +419,10 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 转存表中的数据 `x_auth_group_rule`
+-- 转存表中的数据 `[PREFIX]auth_group_rule`
 --
 
-INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
+INSERT INTO `[PREFIX]auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
   (7, 96, 0),
   (7, 97, 0),
   (7, 98, 0),
@@ -605,10 +605,10 @@ INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_auth_rule`
+-- 表的结构 `[PREFIX]auth_rule`
 --
 
-CREATE TABLE IF NOT EXISTS `x_auth_rule` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(80) NOT NULL DEFAULT '',
   `title` char(20) NOT NULL DEFAULT '',
@@ -621,10 +621,10 @@ CREATE TABLE IF NOT EXISTS `x_auth_rule` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=384 ;
 
 --
--- 转存表中的数据 `x_auth_rule`
+-- 转存表中的数据 `[PREFIX]auth_rule`
 --
 
-INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) VALUES
+INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) VALUES
   (2, 'sale.orders.add', '新建订单', 1, '', 'sale'),
   (3, 'store.stockin.add', '新建入库单', 1, '', 'stock'),
   (11, 'department.authgroup.read', '权限组查看详情', 1, '', 'set'),
@@ -772,10 +772,10 @@ INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_config`
+-- 表的结构 `[PREFIX]config`
 --
 
-CREATE TABLE IF NOT EXISTS `x_config` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_alias` varchar(50) DEFAULT NULL,
   `alias` varchar(100) NOT NULL,
@@ -793,10 +793,10 @@ CREATE TABLE IF NOT EXISTS `x_config` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
--- 转存表中的数据 `x_config`
+-- 转存表中的数据 `[PREFIX]config`
 --
 
-INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `deleted`) VALUES
+INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `deleted`) VALUES
   (1, NULL, 'company_name', '公司名称', '诸城某某服装公司', NULL, 0),
   (2, NULL, 'company_address', '公司地址', '山东省诸城市人民东路', NULL, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-6086084', NULL, 0),
@@ -818,10 +818,10 @@ INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `descriptio
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_craft`
+-- 表的结构 `[PREFIX]craft`
 --
 
-CREATE TABLE IF NOT EXISTS `x_craft` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]craft` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -831,10 +831,10 @@ CREATE TABLE IF NOT EXISTS `x_craft` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- 转存表中的数据 `x_craft`
+-- 转存表中的数据 `[PREFIX]craft`
 --
 
-INSERT INTO `x_craft` (`id`, `name`, `listorder`, `memo`) VALUES
+INSERT INTO `[PREFIX]craft` (`id`, `name`, `listorder`, `memo`) VALUES
   (1, '工艺1', 0, ''),
   (2, '工艺2', 0, ''),
   (3, '工艺3', 0, ''),
@@ -844,10 +844,10 @@ INSERT INTO `x_craft` (`id`, `name`, `listorder`, `memo`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_data_model`
+-- 表的结构 `[PREFIX]data_model`
 --
 
-CREATE TABLE IF NOT EXISTS `x_data_model` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
   `alias` varchar(50) NOT NULL,
@@ -861,19 +861,19 @@ CREATE TABLE IF NOT EXISTS `x_data_model` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- 转存表中的数据 `x_data_model`
+-- 转存表中的数据 `[PREFIX]data_model`
 --
 
-INSERT INTO `x_data_model` (`id`, `name`, `alias`, `type`, `listable`, `deleted`) VALUES
+INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listable`, `deleted`) VALUES
   (1, '基本产品模型', 'product', 'product', 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_data_model_data`
+-- 表的结构 `[PREFIX]data_model_data`
 --
 
-CREATE TABLE IF NOT EXISTS `x_data_model_data` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source_id` int(11) NOT NULL,
   `model_id` int(11) NOT NULL,
@@ -890,10 +890,10 @@ CREATE TABLE IF NOT EXISTS `x_data_model_data` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=456 ;
 
 --
--- 转存表中的数据 `x_data_model_data`
+-- 转存表中的数据 `[PREFIX]data_model_data`
 --
 
-INSERT INTO `x_data_model_data` (`id`, `source_id`, `model_id`, `field_id`, `data`, `pinyin`, `deleted`) VALUES
+INSERT INTO `[PREFIX]data_model_data` (`id`, `source_id`, `model_id`, `field_id`, `data`, `pinyin`, `deleted`) VALUES
   (1, 17, 1, 2, '内六角', 'NLJ', 0),
   (2, 17, 1, 2, '外六角', 'WLJ', 0),
   (3, 17, 1, 1, '8*20', '8*20', 0),
@@ -1353,10 +1353,10 @@ INSERT INTO `x_data_model_data` (`id`, `source_id`, `model_id`, `field_id`, `dat
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_data_model_fields`
+-- 表的结构 `[PREFIX]data_model_fields`
 --
 
-CREATE TABLE IF NOT EXISTS `x_data_model_fields` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `model_id` int(11) NOT NULL,
   `display_name` varchar(30) NOT NULL,
@@ -1373,20 +1373,20 @@ CREATE TABLE IF NOT EXISTS `x_data_model_fields` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `x_data_model_fields`
+-- 转存表中的数据 `[PREFIX]data_model_fields`
 --
 
-INSERT INTO `x_data_model_fields` (`id`, `model_id`, `display_name`, `field_name`, `input_type`, `extra_data`, `listorder`, `deleted`) VALUES
+INSERT INTO `[PREFIX]data_model_fields` (`id`, `model_id`, `display_name`, `field_name`, `input_type`, `extra_data`, `listorder`, `deleted`) VALUES
   (1, 1, '规格', 'standard', 'select3', '', 97, 0),
   (2, 1, '型号', 'version', 'select3', '', 98, 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_department`
+-- 表的结构 `[PREFIX]department`
 --
 
-CREATE TABLE IF NOT EXISTS `x_department` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
@@ -1399,10 +1399,10 @@ CREATE TABLE IF NOT EXISTS `x_department` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
--- 转存表中的数据 `x_department`
+-- 转存表中的数据 `[PREFIX]department`
 --
 
-INSERT INTO `x_department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
+INSERT INTO `[PREFIX]department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
   (1, 0, '某公司', 1, 6, 99),
   (20, 1, '总经办', 2, 5, 99),
   (21, 20, '123', 3, 4, 99);
@@ -1410,10 +1410,10 @@ INSERT INTO `x_department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALU
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_finance_account`
+-- 表的结构 `[PREFIX]finance_account`
 --
 
-CREATE TABLE IF NOT EXISTS `x_finance_account` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -1425,10 +1425,10 @@ CREATE TABLE IF NOT EXISTS `x_finance_account` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_finance_pay_plan`
+-- 表的结构 `[PREFIX]finance_pay_plan`
 --
 
-CREATE TABLE IF NOT EXISTS `x_finance_pay_plan` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_pay_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
   `type_id` smallint(5) NOT NULL,
@@ -1455,10 +1455,10 @@ CREATE TABLE IF NOT EXISTS `x_finance_pay_plan` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_finance_receive_plan`
+-- 表的结构 `[PREFIX]finance_receive_plan`
 --
 
-CREATE TABLE IF NOT EXISTS `x_finance_receive_plan` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_receive_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
   `type_id` smallint(5) NOT NULL,
@@ -1485,10 +1485,10 @@ CREATE TABLE IF NOT EXISTS `x_finance_receive_plan` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_finance_record`
+-- 表的结构 `[PREFIX]finance_record`
 --
 
-CREATE TABLE IF NOT EXISTS `x_finance_record` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type_id` smallint(5) NOT NULL,
   `account_id` smallint(3) NOT NULL,
@@ -1511,10 +1511,10 @@ CREATE TABLE IF NOT EXISTS `x_finance_record` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_goods`
+-- 表的结构 `[PREFIX]goods`
 --
 
-CREATE TABLE IF NOT EXISTS `x_goods` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_category_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -1536,10 +1536,10 @@ CREATE TABLE IF NOT EXISTS `x_goods` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=145 ;
 
 --
--- 转存表中的数据 `x_goods`
+-- 转存表中的数据 `[PREFIX]goods`
 --
 
-INSERT INTO `x_goods` (`id`, `goods_category_id`, `name`, `pinyin`, `measure`, `price`, `cost`, `factory_code`, `store_min`, `store_max`, `deleted`) VALUES
+INSERT INTO `[PREFIX]goods` (`id`, `goods_category_id`, `name`, `pinyin`, `measure`, `price`, `cost`, `factory_code`, `store_min`, `store_max`, `deleted`) VALUES
   (1, 24, '支架总成', 'ZJZC', '件', '2000.00', '1600.00', 'A1000', '50.00', '200.00', 0),
   (2, 24, '主轴总成', 'ZZZC', '件', '600.00', '460.00', 'A1100', '50.00', '200.00', 0),
   (3, 23, '主轴', 'ZZ', '件', '360.00', '300.00', 'A1101', '50.00', '200.00', 0),
@@ -1688,10 +1688,10 @@ INSERT INTO `x_goods` (`id`, `goods_category_id`, `name`, `pinyin`, `measure`, `
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_goods_category`
+-- 表的结构 `[PREFIX]goods_category`
 --
 
-CREATE TABLE IF NOT EXISTS `x_goods_category` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
@@ -1710,10 +1710,10 @@ CREATE TABLE IF NOT EXISTS `x_goods_category` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=151 ;
 
 --
--- 转存表中的数据 `x_goods_category`
+-- 转存表中的数据 `[PREFIX]goods_category`
 --
 
-INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lft`, `rgt`, `listorder`, `deleted`) VALUES
+INSERT INTO `[PREFIX]goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lft`, `rgt`, `listorder`, `deleted`) VALUES
   (1, 0, '主节点不要删除', 0, NULL, 1, 226, 99, 0),
   (13, 1, '整机', 1, 'CP', 2, 13, 99, 0),
   (14, 1, '半成品零部件', 1, 'LBJ', 14, 127, 99, 1),
@@ -1831,10 +1831,10 @@ INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lf
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_goods_craft`
+-- 表的结构 `[PREFIX]goods_craft`
 --
 
-CREATE TABLE IF NOT EXISTS `x_goods_craft` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]goods_craft` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT,
   `craft_id` smallint(5) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -1842,10 +1842,10 @@ CREATE TABLE IF NOT EXISTS `x_goods_craft` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=145 ;
 
 --
--- 转存表中的数据 `x_goods_craft`
+-- 转存表中的数据 `[PREFIX]goods_craft`
 --
 
-INSERT INTO `x_goods_craft` (`goods_id`, `craft_id`, `listorder`) VALUES
+INSERT INTO `[PREFIX]goods_craft` (`goods_id`, `craft_id`, `listorder`) VALUES
   (1, 1, 2),
   (1, 2, 1),
   (1, 3, 3),
@@ -1864,10 +1864,10 @@ INSERT INTO `x_goods_craft` (`goods_id`, `craft_id`, `listorder`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_messages`
+-- 表的结构 `[PREFIX]messages`
 --
 
-CREATE TABLE IF NOT EXISTS `x_messages` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `subject` varchar(255) NOT NULL,
@@ -1881,10 +1881,10 @@ CREATE TABLE IF NOT EXISTS `x_messages` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_my_desktop`
+-- 表的结构 `[PREFIX]my_desktop`
 --
 
-CREATE TABLE IF NOT EXISTS `x_my_desktop` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
   `uid` int(11) NOT NULL,
   `desk_id` smallint(3) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -1892,10 +1892,10 @@ CREATE TABLE IF NOT EXISTS `x_my_desktop` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- 转存表中的数据 `x_my_desktop`
+-- 转存表中的数据 `[PREFIX]my_desktop`
 --
 
-INSERT INTO `x_my_desktop` (`uid`, `desk_id`, `listorder`) VALUES
+INSERT INTO `[PREFIX]my_desktop` (`uid`, `desk_id`, `listorder`) VALUES
   (1, 2, 99),
   (1, 1, 99),
   (13, 1, 99),
@@ -1908,10 +1908,10 @@ INSERT INTO `x_my_desktop` (`uid`, `desk_id`, `listorder`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_orders`
+-- 表的结构 `[PREFIX]orders`
 --
 
-CREATE TABLE IF NOT EXISTS `x_orders` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(20) NOT NULL,
   `sale_type` smallint(3) NOT NULL,
@@ -1932,10 +1932,10 @@ CREATE TABLE IF NOT EXISTS `x_orders` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
--- 转存表中的数据 `x_orders`
+-- 转存表中的数据 `[PREFIX]orders`
 --
 
-INSERT INTO `x_orders` (`id`, `bill_id`, `sale_type`, `saler_id`, `customer_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`, `deleted`) VALUES
+INSERT INTO `[PREFIX]orders` (`id`, `bill_id`, `sale_type`, `saler_id`, `customer_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`, `deleted`) VALUES
   (1, 'XS1406181639067', 4, 1, 2, '15.00', '15.00', '15.00', '1403080723', 1, 'asdf', 0),
   (2, 'XS1406182023150', 2, 1, 2, '25.00', '25.00', '25.00', '1403094110', 0, '123', 0),
   (3, 'XS1406182023189', 2, 1, 2, '25.00', '25.00', '25.00', '1403094110', 0, '123', 0),
@@ -1962,10 +1962,10 @@ INSERT INTO `x_orders` (`id`, `bill_id`, `sale_type`, `saler_id`, `customer_id`,
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_orders_detail`
+-- 表的结构 `[PREFIX]orders_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_orders_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]orders_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -1979,10 +1979,10 @@ CREATE TABLE IF NOT EXISTS `x_orders_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
--- 转存表中的数据 `x_orders_detail`
+-- 转存表中的数据 `[PREFIX]orders_detail`
 --
 
-INSERT INTO `x_orders_detail` (`id`, `goods_id`, `factory_code_all`, `num`, `unit_price`, `amount`, `discount`, `order_id`) VALUES
+INSERT INTO `[PREFIX]orders_detail` (`id`, `goods_id`, `factory_code_all`, `num`, `unit_price`, `amount`, `discount`, `order_id`) VALUES
   (1, 1, '0012-8-6', '3.00', '5.00', '15.00', 100, 1),
   (2, 1, '0012-8-6', '5.00', '5.00', '25.00', 100, 2),
   (3, 1, '0012-8-6', '5.00', '5.00', '25.00', 100, 3),
@@ -2011,10 +2011,10 @@ INSERT INTO `x_orders_detail` (`id`, `goods_id`, `factory_code_all`, `num`, `uni
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_boms`
+-- 表的结构 `[PREFIX]produce_boms`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_boms` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_boms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `plan_detail_id` int(11) NOT NULL,
@@ -2026,19 +2026,19 @@ CREATE TABLE IF NOT EXISTS `x_produce_boms` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `x_produce_boms`
+-- 转存表中的数据 `[PREFIX]produce_boms`
 --
 
-INSERT INTO `x_produce_boms` (`id`, `plan_id`, `plan_detail_id`, `goods_id`, `factory_code_all`, `num`) VALUES
+INSERT INTO `[PREFIX]produce_boms` (`id`, `plan_id`, `plan_detail_id`, `goods_id`, `factory_code_all`, `num`) VALUES
   (2, 1, 1, 3, 'A1101-455-454', '10.00');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_install`
+-- 表的结构 `[PREFIX]produce_install`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_install` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_install` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `outstock_id` smallint(5) NOT NULL,
   `instock_id` smallint(5) NOT NULL,
@@ -2060,10 +2060,10 @@ CREATE TABLE IF NOT EXISTS `x_produce_install` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_install_advance`
+-- 表的结构 `[PREFIX]produce_install_advance`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_install_advance` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_install_advance` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
   `instock_id` smallint(5) NOT NULL,
@@ -2079,10 +2079,10 @@ CREATE TABLE IF NOT EXISTS `x_produce_install_advance` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_install_detail`
+-- 表的结构 `[PREFIX]produce_install_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_install_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_install_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -2098,10 +2098,10 @@ CREATE TABLE IF NOT EXISTS `x_produce_install_detail` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_plan`
+-- 表的结构 `[PREFIX]produce_plan`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_plan` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` smallint(4) NOT NULL,
   `total_num` decimal(10,2) NOT NULL,
@@ -2115,20 +2115,20 @@ CREATE TABLE IF NOT EXISTS `x_produce_plan` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `x_produce_plan`
+-- 转存表中的数据 `[PREFIX]produce_plan`
 --
 
-INSERT INTO `x_produce_plan` (`id`, `type`, `total_num`, `start_time`, `end_time`, `create_time`, `status`, `memo`) VALUES
+INSERT INTO `[PREFIX]produce_plan` (`id`, `type`, `total_num`, `start_time`, `end_time`, `create_time`, `status`, `memo`) VALUES
   (1, 18, '5.00', '1406188016', '1406188016', '1406188057', 4, NULL),
   (2, 18, '5.00', '1406220610', '1406220610', '1406220643', 4, NULL);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_plan_detail`
+-- 表的结构 `[PREFIX]produce_plan_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_plan_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -2143,20 +2143,20 @@ CREATE TABLE IF NOT EXISTS `x_produce_plan_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `x_produce_plan_detail`
+-- 转存表中的数据 `[PREFIX]produce_plan_detail`
 --
 
-INSERT INTO `x_produce_plan_detail` (`id`, `plan_id`, `goods_id`, `factory_code_all`, `num`, `start_time`, `end_time`, `status`, `memo`) VALUES
+INSERT INTO `[PREFIX]produce_plan_detail` (`id`, `plan_id`, `goods_id`, `factory_code_all`, `num`, `start_time`, `end_time`, `status`, `memo`) VALUES
   (1, 1, 3, 'A1101-455-454', '5.00', '1406188016', '', 2, NULL),
   (2, 2, 3, 'A1101-455-454', '5.00', '1406220610', '', 2, NULL);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_produce_process`
+-- 表的结构 `[PREFIX]produce_process`
 --
 
-CREATE TABLE IF NOT EXISTS `x_produce_process` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `plan_detail_id` int(11) NOT NULL,
@@ -2174,10 +2174,10 @@ CREATE TABLE IF NOT EXISTS `x_produce_process` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- 转存表中的数据 `x_produce_process`
+-- 转存表中的数据 `[PREFIX]produce_process`
 --
 
-INSERT INTO `x_produce_process` (`id`, `plan_id`, `plan_detail_id`, `goods_id`, `factory_code_all`, `craft_id`, `start_time`, `end_time`, `status`, `memo`) VALUES
+INSERT INTO `[PREFIX]produce_process` (`id`, `plan_id`, `plan_detail_id`, `goods_id`, `factory_code_all`, `craft_id`, `start_time`, `end_time`, `status`, `memo`) VALUES
   (1, 2, 2, 3, 'A1101-455-454', 3, '1406220652', '1406220655', 1, ''),
   (2, 2, 2, 3, 'A1101-455-454', 4, '1406220655', '1406220658', 1, ''),
   (3, 2, 2, 3, 'A1101-455-454', 2, '1406220658', '', 0, '');
@@ -2185,10 +2185,10 @@ INSERT INTO `x_produce_process` (`id`, `plan_id`, `plan_detail_id`, `goods_id`, 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_product_tpl`
+-- 表的结构 `[PREFIX]product_tpl`
 --
 
-CREATE TABLE IF NOT EXISTS `x_product_tpl` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -2198,19 +2198,19 @@ CREATE TABLE IF NOT EXISTS `x_product_tpl` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- 转存表中的数据 `x_product_tpl`
+-- 转存表中的数据 `[PREFIX]product_tpl`
 --
 
-INSERT INTO `x_product_tpl` (`id`, `goods_id`, `factory_code_all`, `memo`) VALUES
+INSERT INTO `[PREFIX]product_tpl` (`id`, `goods_id`, `factory_code_all`, `memo`) VALUES
   (1, 3, 'A1101-455-454', NULL);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_product_tpl_detail`
+-- 表的结构 `[PREFIX]product_tpl_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_product_tpl_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tpl_id` smallint(5) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -2223,19 +2223,19 @@ CREATE TABLE IF NOT EXISTS `x_product_tpl_detail` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- 转存表中的数据 `x_product_tpl_detail`
+-- 转存表中的数据 `[PREFIX]product_tpl_detail`
 --
 
-INSERT INTO `x_product_tpl_detail` (`id`, `tpl_id`, `goods_id`, `factory_code_all`, `num`, `memo`) VALUES
+INSERT INTO `[PREFIX]product_tpl_detail` (`id`, `tpl_id`, `goods_id`, `factory_code_all`, `num`, `memo`) VALUES
   (1, 1, 3, 'A1101-455-454', 2, NULL);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_purchase`
+-- 表的结构 `[PREFIX]purchase`
 --
 
-CREATE TABLE IF NOT EXISTS `x_purchase` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]purchase` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(20) NOT NULL,
   `purchase_type` smallint(3) NOT NULL,
@@ -2254,10 +2254,10 @@ CREATE TABLE IF NOT EXISTS `x_purchase` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- 转存表中的数据 `x_purchase`
+-- 转存表中的数据 `[PREFIX]purchase`
 --
 
-INSERT INTO `x_purchase` (`id`, `bill_id`, `purchase_type`, `user_id`, `supplier_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`) VALUES
+INSERT INTO `[PREFIX]purchase` (`id`, `bill_id`, `purchase_type`, `user_id`, `supplier_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`) VALUES
   (1, 'CG1406292331293', 9, 1, 2, '3.00', '1080.00', '1000.00', '1404055855', 2, '人家老板给便宜了80'),
   (2, 'CG1406292339267', 0, 1, 2, '35.00', '12600.00', '12600.00', '1404056352', 2, ''),
   (3, 'CG1407201552539', 1, 1, 2, '5.00', '1800.00', '1800.00', '1405842758', 2, ''),
@@ -2266,10 +2266,10 @@ INSERT INTO `x_purchase` (`id`, `bill_id`, `purchase_type`, `user_id`, `supplier
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_purchase_detail`
+-- 表的结构 `[PREFIX]purchase_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_purchase_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]purchase_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `purchase_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -2283,10 +2283,10 @@ CREATE TABLE IF NOT EXISTS `x_purchase_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=5 ;
 
 --
--- 转存表中的数据 `x_purchase_detail`
+-- 转存表中的数据 `[PREFIX]purchase_detail`
 --
 
-INSERT INTO `x_purchase_detail` (`id`, `purchase_id`, `goods_id`, `num`, `unit_price`, `price`, `factory_code_all`) VALUES
+INSERT INTO `[PREFIX]purchase_detail` (`id`, `purchase_id`, `goods_id`, `num`, `unit_price`, `price`, `factory_code_all`) VALUES
   (1, 1, 3, '3.00', '360.00', '1080.00', 'A1101-455-454'),
   (2, 2, 4, '35.00', '360.00', '12600.00', 'A1102-455-454'),
   (3, 3, 3, '5.00', '360.00', '1800.00', 'A1101-455-454'),
@@ -2295,10 +2295,10 @@ INSERT INTO `x_purchase_detail` (`id`, `purchase_id`, `goods_id`, `num`, `unit_p
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_region`
+-- 表的结构 `[PREFIX]region`
 --
 
-CREATE TABLE IF NOT EXISTS `x_region` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]region` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
   `name` varchar(40) NOT NULL,
@@ -2309,10 +2309,10 @@ CREATE TABLE IF NOT EXISTS `x_region` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3410 ;
 
 --
--- 转存表中的数据 `x_region`
+-- 转存表中的数据 `[PREFIX]region`
 --
 
-INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
+INSERT INTO `[PREFIX]region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
   (1, 0, '中国', 0, 99),
   (2, 1, '北京', 1, 99),
   (3, 1, '安徽', 1, 99),
@@ -4024,7 +4024,7 @@ INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
   (1709, 203, '新化县', 3, 99),
   (1710, 204, '城步', 3, 99),
   (1711, 204, '双清区', 3, 99);
-INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
+INSERT INTO `[PREFIX]region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
   (1712, 204, '大祥区', 3, 99),
   (1713, 204, '北塔区', 3, 99),
   (1714, 204, '武冈市', 3, 99),
@@ -5620,7 +5620,7 @@ INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
   (3304, 390, '仙居县', 3, 99),
   (3305, 391, '鹿城区', 3, 99),
   (3306, 391, '龙湾区', 3, 99);
-INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
+INSERT INTO `[PREFIX]region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
   (3307, 391, '瓯海区', 3, 99),
   (3308, 391, '瑞安市', 3, 99),
   (3309, 391, '乐清市', 3, 99),
@@ -5728,10 +5728,10 @@ INSERT INTO `x_region` (`id`, `pid`, `name`, `type`, `listorder`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_relationship_company`
+-- 表的结构 `[PREFIX]relationship_company`
 --
 
-CREATE TABLE IF NOT EXISTS `x_relationship_company` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `pinyin` varchar(50) NOT NULL,
@@ -5754,10 +5754,10 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_relationship_company_group`
+-- 表的结构 `[PREFIX]relationship_company_group`
 --
 
-CREATE TABLE IF NOT EXISTS `x_relationship_company_group` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `discount` smallint(2) NOT NULL DEFAULT '1',
@@ -5765,10 +5765,10 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company_group` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- 转存表中的数据 `x_relationship_company_group`
+-- 转存表中的数据 `[PREFIX]relationship_company_group`
 --
 
-INSERT INTO `x_relationship_company_group` (`id`, `name`, `discount`) VALUES
+INSERT INTO `[PREFIX]relationship_company_group` (`id`, `name`, `discount`) VALUES
   (1, '客户', 100),
   (2, '供应商', 100),
   (3, '加工商', 100),
@@ -5777,10 +5777,10 @@ INSERT INTO `x_relationship_company_group` (`id`, `name`, `discount`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_relationship_company_linkman`
+-- 表的结构 `[PREFIX]relationship_company_linkman`
 --
 
-CREATE TABLE IF NOT EXISTS `x_relationship_company_linkman` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_linkman` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `relationship_company_id` int(11) NOT NULL,
   `contact` varchar(20) NOT NULL,
@@ -5799,10 +5799,10 @@ CREATE TABLE IF NOT EXISTS `x_relationship_company_linkman` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_returns`
+-- 表的结构 `[PREFIX]returns`
 --
 
-CREATE TABLE IF NOT EXISTS `x_returns` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]returns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(30) NOT NULL,
   `returns_type` smallint(3) NOT NULL,
@@ -5822,19 +5822,19 @@ CREATE TABLE IF NOT EXISTS `x_returns` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- 转存表中的数据 `x_returns`
+-- 转存表中的数据 `[PREFIX]returns`
 --
 
-INSERT INTO `x_returns` (`id`, `bill_id`, `returns_type`, `saler_id`, `customer_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`, `deleted`) VALUES
+INSERT INTO `[PREFIX]returns` (`id`, `bill_id`, `returns_type`, `saler_id`, `customer_id`, `total_num`, `total_amount`, `total_amount_real`, `dateline`, `status`, `memo`, `deleted`) VALUES
   (1, 'ST1407011439038', 0, 13, 2, '1.00', '360.00', '360.00', '1404196729', 2, NULL, 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_returns_detail`
+-- 表的结构 `[PREFIX]returns_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_returns_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]returns_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `returns_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -5846,19 +5846,19 @@ CREATE TABLE IF NOT EXISTS `x_returns_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- 转存表中的数据 `x_returns_detail`
+-- 转存表中的数据 `[PREFIX]returns_detail`
 --
 
-INSERT INTO `x_returns_detail` (`id`, `returns_id`, `goods_id`, `num`, `factory_code_all`) VALUES
+INSERT INTO `[PREFIX]returns_detail` (`id`, `returns_id`, `goods_id`, `num`, `factory_code_all`) VALUES
   (1, 1, 3, 1, 'A1101-455-454');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_session`
+-- 表的结构 `[PREFIX]session`
 --
 
-CREATE TABLE IF NOT EXISTS `x_session` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]session` (
   `session_id` varchar(255) NOT NULL,
   `session_expire` int(11) NOT NULL,
   `session_data` blob,
@@ -5866,19 +5866,19 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- 转存表中的数据 `x_session`
+-- 转存表中的数据 `[PREFIX]session`
 --
 
-INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
+INSERT INTO `[PREFIX]session` (`session_id`, `session_expire`, `session_data`) VALUES
   ('ccsvn7fjbg9bn1b3bbvpf67562', 1407814192, 0x757365727c613a31333a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31363a223333353435343235304071712e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333235323531363236223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a323a223230223b733a323a227171223b733a393a22333335343534323530223b733a363a2267726f757073223b613a333a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d693a323b613a333a7b733a323a226964223b733a313a2237223b733a353a227469746c65223b733a363a22e98787e8b4ad223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a373a7b733a323a226964223b733a323a223230223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e680bbe7bb8fe58a9e223b733a333a226c6674223b733a313a2232223b733a333a22726774223b733a313a2235223b733a393a226c6973746f72646572223b733a323a223939223b733a343a2270617468223b733a32313a22e69f90e585ace58fb8203e20e680bbe7bb8fe58a9e223b7d733a393a227573657267726f7570223b733a353a22312c322c37223b733a393a2267726f75705f696473223b613a333a7b693a303b733a313a2231223b693a313b733a313a2232223b693a323b733a313a2237223b7d733a31323a2267726f75705f6c6162656c73223b613a333a7b693a303b733a31353a22e8b685e7baa7e7aea1e79086e59198223b693a313b733a363a22e5ba93e7aea1223b693a323b733a363a22e98787e8b4ad223b7d7d);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_shipment`
+-- 表的结构 `[PREFIX]shipment`
 --
 
-CREATE TABLE IF NOT EXISTS `x_shipment` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]shipment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) DEFAULT '0',
   `shipment_type` smallint(4) NOT NULL,
@@ -5903,10 +5903,10 @@ CREATE TABLE IF NOT EXISTS `x_shipment` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stock`
+-- 表的结构 `[PREFIX]stock`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stock` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `managers` varchar(50) NOT NULL DEFAULT '',
   `name` varchar(50) NOT NULL,
@@ -5919,19 +5919,19 @@ CREATE TABLE IF NOT EXISTS `x_stock` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- 转存表中的数据 `x_stock`
+-- 转存表中的数据 `[PREFIX]stock`
 --
 
-INSERT INTO `x_stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES
+INSERT INTO `[PREFIX]stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES
   (1, '1', '总库', '', 0);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stockin`
+-- 表的结构 `[PREFIX]stockin`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stockin` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
   `type_id` smallint(5) DEFAULT NULL,
@@ -5951,10 +5951,10 @@ CREATE TABLE IF NOT EXISTS `x_stockin` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
--- 转存表中的数据 `x_stockin`
+-- 转存表中的数据 `[PREFIX]stockin`
 --
 
-INSERT INTO `x_stockin` (`id`, `bill_id`, `type_id`, `subject`, `dateline`, `total_num`, `user_id`, `stock_manager`, `status`, `source_model`, `source_id`, `memo`) VALUES
+INSERT INTO `[PREFIX]stockin` (`id`, `bill_id`, `type_id`, `subject`, `dateline`, `total_num`, `user_id`, `stock_manager`, `status`, `source_model`, `source_id`, `memo`) VALUES
   (1, 'RK1406292225492', NULL, 'ceshi ruku', '1404051886', '383.00', 1, 1, 2, NULL, NULL, '这只是个测试'),
   (2, 'RK1406292331378', NULL, '采购入库', '1404055897', '3.00', 1, 1, 2, 'Purchase', 1, '人家老板给便宜了80'),
   (3, 'RK1406292339367', NULL, '采购入库', '1404056376', '35.00', 1, 1, 2, 'Purchase', 2, ''),
@@ -5971,10 +5971,10 @@ INSERT INTO `x_stockin` (`id`, `bill_id`, `type_id`, `subject`, `dateline`, `tot
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stockin_detail`
+-- 表的结构 `[PREFIX]stockin_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockin_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -5989,10 +5989,10 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
--- 转存表中的数据 `x_stockin_detail`
+-- 转存表中的数据 `[PREFIX]stockin_detail`
 --
 
-INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`, `memo`) VALUES
+INSERT INTO `[PREFIX]stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`, `memo`) VALUES
   (1, 1, 3, '50.00', 'A1101-455-454', 1, NULL),
   (2, 1, 4, '333.00', 'A1102-455-454', 1, NULL),
   (3, 2, 3, '3.00', 'A1101-455-454', 1, NULL),
@@ -6012,10 +6012,10 @@ INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stockout`
+-- 表的结构 `[PREFIX]stockout`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stockout` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
   `source_id` int(11) NOT NULL,
@@ -6033,20 +6033,20 @@ CREATE TABLE IF NOT EXISTS `x_stockout` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `x_stockout`
+-- 转存表中的数据 `[PREFIX]stockout`
 --
 
-INSERT INTO `x_stockout` (`id`, `bill_id`, `source_id`, `source_model`, `dateline`, `outtime`, `total_num`, `stock_manager`, `status`, `memo`) VALUES
+INSERT INTO `[PREFIX]stockout` (`id`, `bill_id`, `source_id`, `source_model`, `dateline`, `outtime`, `total_num`, `stock_manager`, `status`, `memo`) VALUES
   (1, 'CK1407011403320', 20, 'Orders', '1404194612', '1404194645', '3.00', 1, 1, NULL),
   (2, 'CK1407241552376', 1, 'ProducePlan', '1406188357', '1406188525', '10.00', 1, 1, NULL);
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stockout_detail`
+-- 表的结构 `[PREFIX]stockout_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -6059,20 +6059,20 @@ CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- 转存表中的数据 `x_stockout_detail`
+-- 转存表中的数据 `[PREFIX]stockout_detail`
 --
 
-INSERT INTO `x_stockout_detail` (`id`, `stockout_id`, `factory_code_all`, `goods_id`, `stock_id`, `num`) VALUES
+INSERT INTO `[PREFIX]stockout_detail` (`id`, `stockout_id`, `factory_code_all`, `goods_id`, `stock_id`, `num`) VALUES
   (1, 1, 'A1101-455-454', 3, 1, '3.00'),
   (2, 2, 'A1101-455-454', 3, 1, '10.00');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stock_product_list`
+-- 表的结构 `[PREFIX]stock_product_list`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stock_product_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_code_all` varchar(40) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -6086,20 +6086,20 @@ CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
--- 转存表中的数据 `x_stock_product_list`
+-- 转存表中的数据 `[PREFIX]stock_product_list`
 --
 
-INSERT INTO `x_stock_product_list` (`id`, `factory_code_all`, `goods_id`, `stock_id`, `unit_price`, `cost`, `num`) VALUES
+INSERT INTO `[PREFIX]stock_product_list` (`id`, `factory_code_all`, `goods_id`, `stock_id`, `unit_price`, `cost`, `num`) VALUES
   (8, 'A1102-455-454', 4, 1, '360.00', '300.00', '701.00'),
   (14, 'A1101-455-454', 3, 1, '360.00', '300.00', '171.00');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stock_transfer`
+-- 表的结构 `[PREFIX]stock_transfer`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stock_transfer` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stock_transfer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -6113,10 +6113,10 @@ CREATE TABLE IF NOT EXISTS `x_stock_transfer` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_stock_transfer_detail`
+-- 表的结构 `[PREFIX]stock_transfer_detail`
 --
 
-CREATE TABLE IF NOT EXISTS `x_stock_transfer_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stock_transfer_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stock_transfer_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -6133,10 +6133,10 @@ CREATE TABLE IF NOT EXISTS `x_stock_transfer_detail` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_todo`
+-- 表的结构 `[PREFIX]todo`
 --
 
-CREATE TABLE IF NOT EXISTS `x_todo` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]todo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL,
   `gid` int(11) DEFAULT NULL,
@@ -6155,10 +6155,10 @@ CREATE TABLE IF NOT EXISTS `x_todo` (
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_types`
+-- 表的结构 `[PREFIX]types`
 --
 
-CREATE TABLE IF NOT EXISTS `x_types` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL,
   `alias` varchar(20) DEFAULT NULL,
@@ -6173,10 +6173,10 @@ CREATE TABLE IF NOT EXISTS `x_types` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用类型列表' AUTO_INCREMENT=2638 ;
 
 --
--- 转存表中的数据 `x_types`
+-- 转存表中的数据 `[PREFIX]types`
 --
 
-INSERT INTO `x_types` (`id`, `type`, `alias`, `name`, `listorder`, `status`, `deleted`) VALUES
+INSERT INTO `[PREFIX]types` (`id`, `type`, `alias`, `name`, `listorder`, `status`, `deleted`) VALUES
   (1, 'purchase', '', '本厂采购', 99, 1, 0),
   (2, 'sale', '', '阿里巴巴', 99, 1, 0),
   (3, 'sale', '', '零售', 99, 1, 0),
@@ -6211,10 +6211,10 @@ INSERT INTO `x_types` (`id`, `type`, `alias`, `name`, `listorder`, `status`, `de
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_user`
+-- 表的结构 `[PREFIX]user`
 --
 
-CREATE TABLE IF NOT EXISTS `x_user` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
   `truename` varchar(30) NOT NULL,
@@ -6233,10 +6233,10 @@ CREATE TABLE IF NOT EXISTS `x_user` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
--- 转存表中的数据 `x_user`
+-- 转存表中的数据 `[PREFIX]user`
 --
 
-INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`, `qq`) VALUES
+INSERT INTO `[PREFIX]user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`, `qq`) VALUES
   (1, '335454250@qq.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '13325251626', 1, 20, '335454250'),
   (2, '123@lasjdlf.xx', '销售姓名', '1销售姓名', 'd41d8cd98f00b204e9800998ecf8427e', '123123', 1, 15, NULL),
   (8, 'cai@wu.com', '财务1', '财务1', '4297f44b13955235245b2497399d7a93', '123123', 1, 14, NULL),
@@ -6249,10 +6249,10 @@ INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_user_desktop`
+-- 表的结构 `[PREFIX]user_desktop`
 --
 
-CREATE TABLE IF NOT EXISTS `x_user_desktop` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]user_desktop` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `template` varchar(255) NOT NULL,
@@ -6263,10 +6263,10 @@ CREATE TABLE IF NOT EXISTS `x_user_desktop` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- 转存表中的数据 `x_user_desktop`
+-- 转存表中的数据 `[PREFIX]user_desktop`
 --
 
-INSERT INTO `x_user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
+INSERT INTO `[PREFIX]user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
   (1, '最近入库', 'latestStockin.html', 6, 99),
   (2, '最近出库', 'latestStockout.html', 6, 99),
   (3, '出库待处理', 'needStockout.html', 6, 99),
@@ -6275,10 +6275,10 @@ INSERT INTO `x_user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VA
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_workflow`
+-- 表的结构 `[PREFIX]workflow`
 --
 
-CREATE TABLE IF NOT EXISTS `x_workflow` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alias` varchar(30) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -6289,10 +6289,10 @@ CREATE TABLE IF NOT EXISTS `x_workflow` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
--- 转存表中的数据 `x_workflow`
+-- 转存表中的数据 `[PREFIX]workflow`
 --
 
-INSERT INTO `x_workflow` (`id`, `alias`, `name`, `workflow_file`, `memo`) VALUES
+INSERT INTO `[PREFIX]workflow` (`id`, `alias`, `name`, `workflow_file`, `memo`) VALUES
   (1, 'order', '订单工作流', 'Orders', ''),
   (2, 'stockin', '普通入库单工作流', 'Stockin', ''),
   (3, 'returns', '普通退货', 'Returns', ''),
@@ -6307,10 +6307,10 @@ INSERT INTO `x_workflow` (`id`, `alias`, `name`, `workflow_file`, `memo`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_workflow_node`
+-- 表的结构 `[PREFIX]workflow_node`
 --
 
-CREATE TABLE IF NOT EXISTS `x_workflow_node` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -6336,10 +6336,10 @@ CREATE TABLE IF NOT EXISTS `x_workflow_node` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=60 ;
 
 --
--- 转存表中的数据 `x_workflow_node`
+-- 转存表中的数据 `[PREFIX]workflow_node`
 --
 
-INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_file`, `listorder`, `prev_node_id`, `next_node_id`, `executor`, `cond`, `default`, `execute_type`, `remind`, `max_time`, `status_text`, `memo`, `btn_class`, `status_class`) VALUES
+INSERT INTO `[PREFIX]workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_file`, `listorder`, `prev_node_id`, `next_node_id`, `executor`, `cond`, `default`, `execute_type`, `remind`, `max_time`, `status_text`, `memo`, `btn_class`, `status_class`) VALUES
   (1, 1, '申请财务审核', 2, 'RequireFinanceVerify', 2, '4', '2', 'g:1,5,9,10|d:3,6,7|u:1', NULL, 0, 0, 0, 100, '已提交财务审核', '', 'primary', 'info'),
   (2, 1, '财务审核通过', 2, 'FinanceVerifySuccess', 3, '1', '6', 'g:1,3,9,10|d:8|u:9', NULL, 1, 0, 0, 100, '财务审核通过，待生成出库单', '', 'success', 'success'),
   (3, 1, '财务审核不通过', 7, 'FinanceVerifyFailed', 3, '1', '1', 'g:1,3,9,10', NULL, 0, 0, 1, 300, '财务审核未通过', '', 'danger', ''),
@@ -6395,10 +6395,10 @@ INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_fil
 -- --------------------------------------------------------
 
 --
--- 表的结构 `x_workflow_process`
+-- 表的结构 `[PREFIX]workflow_process`
 --
 
-CREATE TABLE IF NOT EXISTS `x_workflow_process` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,
@@ -6415,10 +6415,10 @@ CREATE TABLE IF NOT EXISTS `x_workflow_process` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=101 ;
 
 --
--- 转存表中的数据 `x_workflow_process`
+-- 转存表中的数据 `[PREFIX]workflow_process`
 --
 
-INSERT INTO `x_workflow_process` (`id`, `workflow_id`, `node_id`, `mainrow_id`, `context`, `start_time`, `end_time`, `status`, `user_id`, `memo`) VALUES
+INSERT INTO `[PREFIX]workflow_process` (`id`, `workflow_id`, `node_id`, `mainrow_id`, `context`, `start_time`, `end_time`, `status`, `user_id`, `memo`) VALUES
   (1, 2, 11, 1, 'a:0:{}', '1404051949', '1404051955', 1, 1, ''),
   (2, 2, 14, 1, 'a:0:{}', '1404051955', '1404051957', 1, 1, ''),
   (3, 2, 12, 1, 'a:0:{}', '1404051957', '1404055070', 1, 1, ''),

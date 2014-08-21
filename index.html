@@ -134,9 +134,13 @@
 
         <script type="text/javascript">
             var ones = {};
+            localStorage.clear();
         </script>
-        <script src="common/vendor/bower_components.min.js"></script>
-        <script src="common/vendor/ace.min.js"></script>
+        <script src="common/vendor/jquery/jquery-2.1.1.min.js"></script>
+        <script src="common/vendor/angular-1.2.22/angular.min.js"></script>
+        <script src="common/vendor/ace/ace.js"></script>
+        <script src="common/vendor/ace/ace-extra.min.js"></script>
+        <script src="common/vendor/ace/ace-elements.min.js"></script>
         <!-- build:js({.tmp,app}) scripts/config.js -->
         <script src="common/lib/function.js"></script>
         <script src="common/base/config.js"></script>
@@ -146,7 +150,6 @@
         <!-- endbuild -->
 
         <script type="text/javascript">
-            localStorage.clear();
             function show_box(id) {
                 jQuery('.widget-box.visible').removeClass('visible');
                 jQuery('#' + id).addClass('visible');

@@ -106,8 +106,11 @@ ace.general_things = function($) {
 	icon.removeClass($match[0]);
 	$(this).off('click');
  });
- 
- $('.nav-list .badge[title],.nav-list .label[title]').tooltip({'placement':'right'});
+
+if($(".nav-list").length) {
+    $('.nav-list .badge[title],.nav-list .label[title]').tooltip({'placement':'right'});
+}
+
 
 
 
