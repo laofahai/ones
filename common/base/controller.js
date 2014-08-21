@@ -14,6 +14,10 @@
                     templateUrl: "common/base/views/home/appDetail.html",
                     controller: "AppViewDetailCtl"
                 })
+                .when('/HOME/viewDetail/apps/alias/:alias', {
+                    templateUrl: "common/base/views/home/appDetail.html",
+                    controller: "AppViewDetailCtl"
+                })
             ;
         }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
@@ -63,13 +67,13 @@
                 $scope.consoleMessages = [];
 
                 res.get({
-                    id: $routeParams.id
+                    id: $routeParams.id || 0,
+                    alias: $routeParams.alias
                 }).$promise.then(function(data){
                     $scope.appInfo = data;
                 });
 
                 $scope.consoleClass = "info";
-
 
                 //卸载确认
                 //@todo 卸载确认

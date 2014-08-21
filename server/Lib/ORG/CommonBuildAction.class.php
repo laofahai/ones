@@ -213,11 +213,13 @@ class CommonBuildAction {
                 unset($data[$workflowAlias]["_rows"][$nodeFile]["prev_node_id"]);
                 unset($data[$workflowAlias]["_rows"][$nodeFile]["next_node_id"]);
             }
+            $aliases[] = $workflowAlias;
         }
 
         $ids = $this->appHasManyInsert("Workflow", "WorkflowNode", $data);
 
         if(!$ids) {
+            Log::write("Install Error: error while install workflow ". implode(",", $aliases));
             return false;
         }
 
