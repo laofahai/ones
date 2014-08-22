@@ -100,7 +100,12 @@ function HTMLDecode(text)
  * */
 var toLang = function(key, section, $rootScope) {
     section = section ? "lang."+section : "lang";
-    var appAlias = $rootScope.currentPage.app;
+    var appAlias;
+    try {
+        appAlias = $rootScope.currentPage.app;
+    } catch(e) {
+        appAlias = "HOME";
+    }
     var langStr = "";
     var appSection = "App"+appAlias.ucfirst();
     var lang;
@@ -246,6 +251,7 @@ var getLabelContext = function(element) {
     context.inputAble = context.td.find("input");
     return context;
 };
+
 
 
 /* 

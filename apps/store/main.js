@@ -5,7 +5,7 @@
         var ComView = injector.get("ComView");
         var stockInRes = injector.get("StockinRes");
 
-        ones.pluginScope.dashboardAppBtns.push({
+        ones.pluginScope.append("dashboardAppBtns", {
             label: ComView.toLang("stockout"),
             name: "stockoutList",
             icon: "signout",
@@ -13,7 +13,7 @@
             sort: 6
         });
 
-        ones.pluginScope.dashboardAppBtns.push({
+        ones.pluginScope.append("dashboardAppBtns", {
             label: ComView.toLang("stockin"),
             name: "stockinList",
             icon: "signin",
@@ -30,7 +30,7 @@
             if(count <= 0) {
                 return;
             }
-            ones.pluginScope.dashboardSetBtnTip("stockinList", count);
+            ones.pluginScope.get("dashboardSetBtnTip")("stockinList", count);
         });
 
         var stockOutRes = injector.get("StockoutRes");
@@ -44,10 +44,10 @@
             if(count <= 0) {
                 return;
             }
-            ones.pluginScope.dashboardSetBtnTip("stockoutList", count);
+            ones.pluginScope.get("dashboardSetBtnTip")("stockoutList", count);
         });
 
-        ones.pluginScope.defer = defer;
+        ones.pluginScope.set("defer", defer);
     });
 
     angular.module("ones.store", [])
@@ -363,14 +363,14 @@
 
                     };
 
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                    plugin.callPlugin("binDataModelToStructure", {
                         structure: fields,
                         alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
 
-                    return rs.defer.promise;
+                    return ones.pluginScope.get("defer").promise;
                 };
 
 
@@ -487,14 +487,14 @@
 
                     };
 
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                    plugin.callPlugin("binDataModelToStructure", {
                         structure: fields,
                         alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
 
-                    return rs.defer.promise;
+                    return ones.pluginScope.get("defer").promise;
                 };
 
 

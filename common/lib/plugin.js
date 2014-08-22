@@ -31,16 +31,33 @@
 
     /**
      * ONES插件作用域
+     * ones.pluginVariables
      * */
-    ones.pluginScope = {};
-    ones.clearPluginScope = function(){
-        ones.pluginScope = {};
-    }
+    ones.pluginVariables = {};
+    ones.pluginScope = {
+        get: function(k) {
+            return ones.pluginVariables[k];
+        },
+        set: function(k,v) {
+            ones.pluginVariables[k] = v;
+            return v;
+        },
+        clear: function() {
+            ones.pluginVariables = {};
+        },
+        append: function(k, v) {
+            try {
+                if(!ones.pluginVariables) {
+                    ones.pluginVariables = [];
+                }
+                ones.pluginVariables[k].push(v);
+            } catch(e) {}
+        }
+    };
 
     /**
-     * 插件仅执行一次
+     * 插件注册器
      * */
-    //pluginExecutor执行对象
     ones.pluginRegister = function(hookName, callback) {
 
         if(!ones.pluginHooks[hookName]) {
@@ -58,9 +75,19 @@
     };
 
 
+    /**
+     * angular服务方式调用插件
+     * */
     angular.module("ones.pluginsModule", [])
         .service("pluginExecutor", ["$injector", "$q", function($injector, $q){
             return {
+
+                setDefer: function(defer) {
+                    this.defer = defer;
+                },
+                resetDefer: function() {
+                    this.defer = undefined;
+                },
                 /**
                  * 调用插件，需插件已加载
                  * */
@@ -75,7 +102,7 @@
                         return false;
                     }
 
-                    var defer = $q.defer();
+                    var defer = this.defer ? this.defer : $q.defer();
                     args.unshift(defer);
                     args.unshift($injector);
 
@@ -83,18 +110,7 @@
                         ones.plugins[p[i]].apply(null, args);
                     }
 
-                    var variables = ones.pluginScope;
-
-//                    if(ones.pluginScope.defer) {
-//                        ones.pluginScope.defer.promise.then(function(){
-////                            ones.clearPluginScope();
-//                        });
-//                    } else {
-////                        ones.clearPluginScope();
-//                    }
-
-                    return variables;
-
+                    return defer;
                 }
             };
         }])

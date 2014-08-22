@@ -122,14 +122,14 @@
 
                     };
 
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
+                    plugin.callPlugin("binDataModelToStructure", {
                         structure: fields,
                         alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
 
-                    return rs.defer.promise;
+                    return ones.pluginScope.get("defer").promise;
                 };
 
 

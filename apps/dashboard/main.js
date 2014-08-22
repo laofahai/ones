@@ -12,7 +12,8 @@
                     controller: "HomeMyDesktopCtl"
                 })
                 .when('/', {
-                    redirectTo: '/HOME/Index/dashboard'
+                    controller: "HOMEDashboardCtl",
+                    templateUrl: appView("dashboard.html", "dashboard")
                 })
                 .otherwise({
                     redirectTo: '/HOME/Index/dashboard'
@@ -66,8 +67,8 @@
                     "info", "purple", "pink", "grey", "light", "yellow"
                 ];
 
-                ones.pluginScope.dashboardAppBtns = [];
-                ones.pluginScope.dashboardSetBtnTip = function(btnName, tip){
+                ones.pluginScope.set("dashboardAppBtns", []);
+                ones.pluginScope.set("dashboardSetBtnTip", function(btnName, tip){
                     $timeout(function(){
                         for(var i=0;i<$scope.appBtns.length;i++) {
                             if($scope.appBtns[i].name == btnName) {
@@ -76,11 +77,22 @@
                             }
                         }
                     }, 1000);
-                };
+                });
+//                ones.pluginScope.dashboardAppBtns = [];
+//                ones.pluginScope.dashboardSetBtnTip = function(btnName, tip){
+//                    $timeout(function(){
+//                        for(var i=0;i<$scope.appBtns.length;i++) {
+//                            if($scope.appBtns[i].name == btnName) {
+//                                $scope.appBtns[i].tip = tip;
+//                                break;
+//                            }
+//                        }
+//                    }, 1000);
+//                };
                 $scope.appBtns = [];
                 $timeout(function(evt, data){
-                    var rs = plugin.callPlugin("hook.dashboard.appBtn", $scope);
-                    var dashboardAppBtns = ones.pluginScope.dashboardAppBtns;
+                    plugin.callPlugin("hook.dashboard.appBtn", $scope);
+                    var dashboardAppBtns = ones.pluginScope.get("dashboardAppBtns");
                     dashboardAppBtns.sort(arraySortBy("sort"));
                     angular.forEach(dashboardAppBtns, function(app){
                         //权限检测

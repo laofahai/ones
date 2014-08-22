@@ -43,7 +43,7 @@
              defer.resolve(result);
          });
 
-         ones.pluginScope.defer = defer;
+         ones.pluginScope.set("defer", defer);
 
     };
 

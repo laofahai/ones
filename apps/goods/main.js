@@ -14,7 +14,7 @@
                 obj.columns = 2;
                 obj.extraSelectActions = [
                     {
-                        label: $rootScope.i18n.lang.actions.viewCraft,
+                        label: toLang("viewCraft", "actions", $rootScope),
                         action: function($event, selectedItems){
                             var scope = obj.extraSelectActions[0].scope;
                             var injector = obj.extraSelectActions[0].injector;
@@ -27,7 +27,7 @@
 
                             var theModal = $modal({
                                 scope: scope,
-                                title: sprintf($rootScope.i18n.lang.widgetTitles._product_craft, item.name),
+                                title: sprintf(toLang("_product_craft", "widgetTitles", $rootScope), item.name),
                                 contentTemplate: appView('productCraft.html', 'produce'),
                                 show: false
                             });
@@ -41,60 +41,20 @@
                         }
                     }
                 ];
-                obj.getFieldsStruct = function(structOnly) {
-                    var i18n = $rootScope.i18n.lang;
-                    var struct = {
-                        id: {
-                            primary: true
-                        },
-                        factory_code: {
-                            ensureunique: "GoodsRes"
-                        },
-                        name: {},
-                        pinyin: {
-                            displayName: i18n.firstChar,
-                            required: false
-                        },
-                        measure: {},
-                        price: {
-                            inputType: "number",
-                            cellFilter: "currency:'￥'",
-                            value: 0.00
-                        },
-                        cost: {
-                            inputType: "number",
-                            cellFilter: "currency:'￥'",
-                            value: 0.00
-                        },
-                        goods_category_id: {
-                            displayName: i18n.category,
-                            inputType: "select",
-                            valueField: "id",
-                            nameField : "prefix_name",
-                            listable: false,
-                            dataSource: "GoodsCategoryRes"
-                        },
-                        category_name: {
-                            displayName: i18n.category,
-                            inputType: false,
-                            hideInForm: true
-                        },
-                        store_min: {
-                            inputType: "number",
-                            value: 0
-                        },
-                        store_max: {
-                            inputType: "number",
-                            value: 0
-                        }
-                    };
-
-                    var rs = plugin.callPlugin("binDataModelToStructure", {
-                        structure: struct,
-                        alias: "goodsBaseInfo"
+                obj.getFieldsStruct = function() {
+                    var defer = $q.defer();
+                    plugin.callPlugin("loadModelFromJson", "goods.Goods").promise.then(function(structure){
+                        plugin.setDefer(defer);
+                        plugin.callPlugin("binDataModelToStructure", {
+                            structure: structure,
+                            alias: "goodsBaseInfo"
+                        });
+                        plugin.resetDefer();
                     });
-                    return rs.defer.promise;
+
+                    return defer.promise;
                 };
+
                 return obj;
             }])
         .service("GoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
