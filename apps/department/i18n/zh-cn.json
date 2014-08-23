@@ -55,6 +55,13 @@
         },
         "AppDepartment": {
             "appName": "组织机构模块"
-        }
+        },
+
+        "department.authrule": "%s权限节点",
+        "department.user": "%s用户",
+        "department.authgroup": "%s用户组",
+        "department.department": "%s部门",
+        "department.authgrouprule.read": "查看用户组权限",
+        "department.authgrouprule.edit": "修改用户组权限"
     }
 }

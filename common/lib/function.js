@@ -128,6 +128,34 @@ var toLang = function(key, section, $rootScope) {
     }
 }
 
+var toLower = function(str) {
+    return str.toLowerCase();
+}
+/* *
+ * 根据权限节点返回当前的节点名称
+ * 首先判断是否存在真实的节点路径
+ * 如果不存在根据add,read,edit,delete四种操作处理
+ */
+var getAuthNodeName = function(node, $rootScope) {
+
+    var source = node;
+    if($rootScope.i18n.lang[node]) {
+        return $rootScope.i18n.lang[node];
+    }
+
+    node = node.split(".");
+    var action = node[2];
+
+
+    node = sprintf("%s.%s", node[0], node[1]);
+
+    if($rootScope.i18n.lang[node]) {
+        return sprintf($rootScope.i18n.lang[node], $rootScope.i18n.lang.actions[action]);
+    }
+
+    return source;
+
+}
 
 
 Array.prototype.in_array = function(e)

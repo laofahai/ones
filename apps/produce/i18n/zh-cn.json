@@ -77,6 +77,19 @@
         "next_craft": "下一工艺",
         "craft": "工艺",
         "ProducePlan": "生产计划",
-        "produce": "生产"
+        "produce": "生产",
+
+        "types" : {
+            "produce" : "生产计划类型"
+        },
+
+        "produce.craft": "%s生产工艺",
+        "produce.goodscraft": "%s产品工序",
+        "produce.docraft.read": "查看生产计划详情工序",
+        "produce.produceboms": "%s生产计划物料清单",
+        "produce.produceplan": "%s生产计划",
+        "produce.produceplandetail": "%s生产计划详情",
+        "produce.producttpl": "%s产品BOM",
+        "produce.producttpldetail": "%s产品BOM详情"
     }
 }

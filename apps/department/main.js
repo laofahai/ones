@@ -131,7 +131,10 @@
                     return {
                         id: {primary: true},
                         name: {},
-                        title: {},
+                        title: {
+                            field: "name",
+                            cellFilter: "toAuthNodeName"
+                        },
                         category: {
                             inputType: "select",
                             dataSource: [

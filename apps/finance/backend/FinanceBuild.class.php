@@ -57,4 +57,12 @@ class FinanceBuild extends CommonBuildAction {
         )
     );
 
+
+    protected $authNodes = array(
+        "finance.financeaccount.*",
+        "finance.financepayplan.*",
+        "finance.financereceiveplan.*",
+        "finance.financerecord.*"
+    );
+
 } 

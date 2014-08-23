@@ -50,4 +50,8 @@ class PurchaseBuild extends CommonBuildAction {
         )
     );
 
+    protected $authNodes = array(
+        "purchase.purchase.*"
+    );
+
 } 

@@ -36,7 +36,14 @@
             "appName": "销售模块"
         },
         "Orders": "销售订单",
-        "sale": "销售"
+        "sale": "销售",
+        "types": {
+            "sale": "销售类型",
+            "returns": "退货类型"
+        },
 
+        "sale.orders": "%s订单",
+        "sale.returns": "%s销售退货单",
+        "sale.ordersdetail.read": "查看订单详情"
     }
 }

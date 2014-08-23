@@ -231,15 +231,14 @@
                         }
                     };
 
-                    plugin.callPlugin("binDataModelToStructure", {
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
                         structure: s,
                         alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
 
-                    return ones.pluginScope.get("defer").promise;
-
+                    return rs.defer.promise;
                 }
             };
         }])
@@ -267,14 +266,14 @@
                         }
                     };
 
-                    plugin.callPlugin("binDataModelToStructure", {
+                    var rs = plugin.callPlugin("binDataModelToStructure", {
                         structure: s,
                         alias: "product",
                         require: ["goods_id"],
                         queryExtra: ["goods_id"]
                     });
 
-                    return ones.pluginScope.get("defer").promise;
+                    return rs.defer.promise;
                 }
             };
         }])
@@ -396,14 +395,14 @@
                         };
 
 
-                        plugin.callPlugin("binDataModelToStructure", {
+                        var rs = plugin.callPlugin("binDataModelToStructure", {
                             structure: structure,
                             alias: "product",
                             require: ["goods_id"],
                             queryExtra: ["goods_id"]
                         });
 
-                        return ones.pluginScope.get("defer").promise;
+                        return rs.defer.promise;
                     }
                 };
             }])
@@ -457,14 +456,14 @@
                             memo: {}
                         };
 
-                        plugin.callPlugin("binDataModelToStructure", {
+                        var rs = plugin.callPlugin("binDataModelToStructure", {
                             structure: s,
                             alias: "product",
                             require: ["goods_id"],
                             queryExtra: ["goods_id"]
                         });
 
-                        return ones.pluginScope.get("defer").promise;
+                        return rs.defer.promise;
                     }
                 };
             }])

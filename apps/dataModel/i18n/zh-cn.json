@@ -54,6 +54,10 @@
         },
         "input_type": "输入方式",
         "bindDataModel": "绑定数据模型",
-        "model_name": "模型名称"
+        "model_name": "模型名称",
+
+        "datamodel.datamodel" : "%s数据模型",
+        "datamodel.datamodelfields": "%s数据模型字段",
+        "datamodel.datamodeldata": "%s数据模型数据"
     }
 }

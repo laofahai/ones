@@ -125,20 +125,20 @@
                         <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
                             <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);goPage(nav.url)">
                                 <i class="icon-{{nav.icon}}"></i>
-                                <span class="menu-text" ng-bind="i18n.lang.navs[nav.label]"></span>
+                                <span class="menu-text" ng-bind="i18n.lang.navs[nav.label]||nav.label"></span>
                                 <b class="arrow icon-angle-down" ng-show="{{nav.childs.length}}"></b>
                             </a>
                             <ul class="submenu">
                                 <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
                                     <a ng-click="checkSubActiveNav(nc.id, nav.id);goPage(nc.url)">
                                         <i class="icon-double-angle-right"></i>
-                                        <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]"></span>
+                                        <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]||nc.label"></span>
                                     </a>
                                     <ul class="submenu">
                                         <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
                                             <a ng-click="checkThirdActiveNav(nct.id, nc.id);goPage(nct.url)">
                                                 <i class="icon-double-angle-right"></i>
-                                                <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]"></span>
+                                                <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]||nct.label"></span>
                                             </a>
                                         </li>
                                     </ul>

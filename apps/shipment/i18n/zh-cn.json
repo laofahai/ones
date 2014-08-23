@@ -40,6 +40,13 @@
 
         "AppShipment": {
             "appName": "发货单模块"
-        }
+        },
+
+        "types" : {
+            "shipment": "物流方式",
+            "freight" : "运费类型"
+        },
+
+        "shipment.shipment": "%s发货单"
     }
 }

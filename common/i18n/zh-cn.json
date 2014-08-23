@@ -149,24 +149,19 @@
             "upload_all": "上传全部",
             "cancel_all": "取消全部",
             "remove_all": "删除全部",
-            "complete": "完成"
+            "complete": "完成",
+            "read": "查看"
         },
-        "types" : {
-            "purchase": "采购类型",
-            "sale": "销售类型",
-            "returns": "退货类型",
-            "shipment": "物流方式",
-            "freight" : "运费类型",
-            "receive" : "收款类别",
-            "pay"     : "付款类别",
-            "voucher" : "凭证字号",
-            "produce" : "生产计划类型",
-            "stockin" : "入库类型"
-        },
+
         "navigation": {
             "back": "后退",
             "forward": "前进"
         },
+
+        "home.apps": "%s应用",
+        "home.types": "%s基本类型",
+        "home.config": "%s字段配置",
+        "home.clearcache": "清除缓存",
 
         "confirm_delete": "确定要删除这 %d 项吗？",
         "move_to_trash": "移到回收站",

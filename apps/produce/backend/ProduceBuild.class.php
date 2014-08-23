@@ -66,4 +66,15 @@ class ProduceBuild extends CommonBuildAction {
         )
     );
 
+    protected $authNodes = array(
+        "produce.craft.*",
+        "produce.goodscraft.*",
+        "produce.docraft.read",
+        "produce.produceboms.*",
+        "produce.produceplan.*",
+        "produce.produceplandetail.read",
+        "produce.producttpl.*",
+        "produce.producttpldetail.*"
+    );
+
 } 

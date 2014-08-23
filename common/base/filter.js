@@ -104,7 +104,13 @@
             return function(text, link) {
                 return sprintf('<a href="%s" target="_blank">%s</a>', link, text);
             };
-        }]);
+        }])
+        .filter("toAuthNodeName", ["$rootScope", function($rootScope){
+            return function(text) {
+                return getAuthNodeName(text, $rootScope);
+            };
+        }])
+
     ;
 
 })();

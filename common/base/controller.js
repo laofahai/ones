@@ -73,6 +73,8 @@
                     $scope.appInfo = data;
                 });
 
+
+
                 $scope.consoleClass = "info";
 
                 //卸载确认
@@ -124,6 +126,9 @@
                             $scope.consoleClass = "danger";
                             var req = [];
                             angular.forEach(data.requirements, function(item){
+                                if(!item) {
+                                    return;
+                                }
                                 req.push(ComView.toLang("appName", "App"+item.ucfirst()));
                             });
                             $scope.consoleMessages.push(

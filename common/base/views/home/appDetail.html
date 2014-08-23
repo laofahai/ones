@@ -42,8 +42,8 @@
                     <div class="col-sm-1"></div>
                     <div class="col-sm-4">
                         <br />
-                        <p ng-show="appInfo.installed"><icon class="icon icon-leaf green"></icon> <span ng-bind="i18n.lang.appStatusinstalled"></span></p>
-                        <p ng-show="appInfo.hasUpdate"><icon class="icon icon-arrow-up green"></icon> <span ng-bind="i18n.lang.appStatusinstalledhasUpdate"></span></p>
+                        <p ng-show="appInfo.installed"><icon class="icon icon-leaf green"></icon> <span ng-bind="i18n.lang.Installed"></span></p>
+                        <p ng-show="appInfo.hasUpdate"><icon class="icon icon-arrow-up green"></icon> <span ng-bind="i18n.lang.HasUpdate"></span></p>
                         <p>
                             <span ng-bind="i18n.lang.appLatestVersion"></span>:
                             <span class="green"> v<stong ng-bind="appInfo.latest_version"></stong></span>
@@ -53,7 +53,6 @@
                             <span class="green"> v<stong ng-bind="appInfo.currentVersion"></stong></span>
                         </p>
                     </div>
-
                     <div class="col-sm-12" ng-show="consoleMessages.length > 0">
                         <div class="alert alert-{{consoleClass}}">
                             <dl>

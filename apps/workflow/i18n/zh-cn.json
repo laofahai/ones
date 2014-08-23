@@ -47,6 +47,10 @@
         "is_default": "是否默认",
         "AppWorkflow": {
             "appName": "工作流模块"
-        }
+        },
+
+        "workflow.workflow": "%s工作流",
+        "workflow.workflownode": "%s工作流节点",
+        "workflow.workflowprocess.read": "查看工作流进程"
     }
 }

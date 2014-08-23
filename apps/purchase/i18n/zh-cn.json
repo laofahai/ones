@@ -27,6 +27,12 @@
         "purchase": "采购",
         "AppPurchase": {
             "appName": "采购模块"
-        }
+        },
+
+        "types" : {
+            "purchase": "采购类型"
+        },
+
+        "purchase.purchase" : "%s采购单"
     }
 }

@@ -149,7 +149,6 @@ class AppsAction extends CommonAction {
         $tmp = $http->get_data();
 //        echo $tmp;
         $appInfo = json_decode($tmp, true);
-
         $model = D("Apps");
         $installed = $model->where(array("alias" => $appInfo["alias"]))->find();
 
@@ -401,7 +400,7 @@ class AppsAction extends CommonAction {
 
         $loadedApp = F("loadedApp");
         foreach($appConf["requirements"] as $req) {
-            if(!in_array($req, $loadedApp)) {
+            if(!in_array($req, $loadedApp) && $req) {
                 $requirements[] = $req;
             }
         }

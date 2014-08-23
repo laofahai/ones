@@ -31,6 +31,8 @@
         "autodelete": "自动删除",
         "AppServices": {
             "appName": "ONES基础服务模块"
-        }
+        },
+        "services.databackup": "数据备份",
+        "services.systemupdate": "系统升级"
     }
 }

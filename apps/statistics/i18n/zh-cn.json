@@ -43,6 +43,10 @@
 
         "AppStatistics": {
             "appName": "统计模块"
-        }
+        },
+
+        "statistics.sale.read": "销售统计",
+        "statistics.overview.read": "统计纵览",
+        "statistics.productview.read": "产品进销存表"
     }
 }

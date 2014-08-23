@@ -88,6 +88,16 @@
         "stockout": "出库",
         "AppStore": {
             "appName": "仓储模块"
-        }
+        },
+
+        "types" : {
+            "stockin" : "入库类型"
+        },
+
+        "store.stock": "%s仓库",
+        "store.stockin": "%s入库单",
+        "store.stockout": "%s出库单",
+        "store.stockwarning.read": "库存警告",
+        "store.stockproductlist": "%s库存清单"
     }
 }

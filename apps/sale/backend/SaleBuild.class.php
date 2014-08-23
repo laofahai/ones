@@ -112,4 +112,10 @@ class SaleBuild extends CommonBuildAction {
             )
         )
     );
+
+    protected $authNodes = array(
+        "sale.orders.*",
+        "sale.returns.*"
+    );
+
 } 

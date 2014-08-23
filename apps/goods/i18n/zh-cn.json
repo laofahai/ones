@@ -35,6 +35,9 @@
         "factory_code_all": "原厂编码",
         "goods_name": "产品",
         "price": "销售价格",
-        "cost": "成本价格"
+        "cost": "成本价格",
+
+        "goods.goods": "%s基础商品信息",
+        "goods.goodscategory": "%s商品分类"
     }
 }

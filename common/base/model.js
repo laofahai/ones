@@ -4,24 +4,13 @@
             var obj = {};
             obj.getFieldsStruct = function(){
                 var i18n = $rootScope.i18n.lang;
-                return {
+                var structure = {
                     id: {
                         primary: true
                     },
                     type: {
                         inputType: "select",
-                        dataSource: [
-                            {id: "purchase", name:i18n.types.purchase},
-                            {id: "sale", name:i18n.types.sale},
-                            {id: "returns", name:i18n.types.returns},
-                            {id: "shipment", name:i18n.types.shipment},
-                            {id: "freight", name:i18n.types.freight},
-                            {id: "receive", name:i18n.types.receive},
-                            {id: "pay", name:i18n.types.pay},
-                            {id: "voucher", name:i18n.types.voucher},
-                            {id: "produce", name:i18n.types.produce},
-                            {id: "stockin", name:i18n.types.stockin}
-                        ]
+                        dataSource: []
                     },
                     alias: {},
                     name: {},
@@ -29,10 +18,16 @@
                         inputType: "number",
                         value: 99
                     }
-//                    status: {
-//                        inputType: "checkbox"
-//                    }
                 };
+
+                angular.forEach($rootScope.i18n.lang.types, function(item, k){
+                    structure.type.dataSource.push({
+                        id: k,
+                        name: item
+                    });
+                });
+
+                return structure;
             };
             return obj;
         }])

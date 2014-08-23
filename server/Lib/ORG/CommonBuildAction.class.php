@@ -44,6 +44,29 @@ class CommonBuildAction {
             }
         }
 
+        if($this->authNodes) {
+            $nodeActions = array(
+                "read", "add", "edit", "delete"
+            );
+            foreach($this->authNodes as $k=> $node) {
+                if(substr($node,-1,1) == "*") {
+                    foreach($nodeActions as $act) {
+                        array_push($this->authNodes, str_replace("*", $act, $node));
+                    }
+                    unset($this->authNodes[$k]);
+                }
+            }
+
+            $model = D("AuthRule");
+            foreach($this->authNodes as $node) {
+                $model->add(array(
+                    "name" => $node,
+                    "status"=>1,
+                    "category"=>$alias
+                ));
+            }
+        }
+
         return true;
     }
 
@@ -69,6 +92,13 @@ class CommonBuildAction {
 
         if($this->workflows) {
             $this->appDeleteWorkflow($this->workflows);
+        }
+
+        if($this->authNodes) {
+            $model = D("AuthRule");
+            $model->where(array(
+                "category"=>$this->appConfig["alias"]
+            ))->delete();
         }
 
         if(is_dir($this->appPath)) {

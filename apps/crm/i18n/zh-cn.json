@@ -39,6 +39,10 @@
         "is_primary": "是否首要联系人",
         "linkMan": "联系人",
         "supplier": "供应商",
-        "customer": "客户"
+        "customer": "客户",
+
+        "crm.relationshipcompanylinkman" : "%s往来单位联系人",
+        "crm.relationshipcompany" : "%s往来单位",
+        "crm.relationshipcompanygroup" : "%s往来单位分组"
     }
 }

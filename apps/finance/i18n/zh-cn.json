@@ -62,6 +62,16 @@
         "record_type": "记录类型",
         "account": "账户",
         "financer": "财务员",
-        "balance": "余额"
+        "balance": "余额",
+
+        "types" : {
+            "receive" : "收款类别",
+            "pay"     : "付款类别"
+        },
+
+        "finance.financeaccount": "%s财务账户",
+        "finance.financepayplan": "%s财务付款计划",
+        "finance.financereceiveplan": "%s财务收款计划",
+        "finance.financerecord": "%s财务收支记录"
     }
 }

@@ -84,4 +84,12 @@ class StoreBuild extends CommonBuildAction {
         )
     );
 
+    protected $authNodes = array(
+        "store.stock.*",
+        "store.stockin.*",
+        "store.stockout.*",
+        "store.stockwarning.read",
+        "store.stockproductlist.*"
+    );
+
 } 

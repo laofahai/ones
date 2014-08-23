@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
+CREATE TABLE IF NOT EXISTS `x_relationship_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `pinyin` varchar(50) NOT NULL,
@@ -19,20 +19,20 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
+CREATE TABLE IF NOT EXISTS `x_relationship_company_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `discount` smallint(2) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
-INSERT INTO `[PREFIX]relationship_company_group` (`id`, `name`, `discount`) VALUES
+INSERT INTO `x_relationship_company_group` (`id`, `name`, `discount`) VALUES
 (1, '客户', 100),
 (2, '供应商', 100),
 (3, '加工商', 100),
 (4, 'VIP客户', 90);
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_linkman` (
+CREATE TABLE IF NOT EXISTS `x_relationship_company_linkman` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `relationship_company_id` int(11) NOT NULL,
   `contact` varchar(20) NOT NULL,
