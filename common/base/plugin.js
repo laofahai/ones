@@ -2,7 +2,11 @@
     /**
      * ONES 基本插件
      * */
-    ones.pluginRegister("loadModelFromJson", function(injector, defer, modelPath, filename) {
+
+    /**
+     * JSON定义Model支持
+     * */
+     ones.pluginRegister("loadModelFromJson", function(injector, defer, modelPath, filename) {
         modelPath = modelPath.split(".");
         var model = modelPath[1];
 

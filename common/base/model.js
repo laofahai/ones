@@ -71,8 +71,9 @@
                         },
                         author: {},
                         description: {},
-                        status: {
-                            cellFilter: "lang"
+                        status_text: {
+                            cellFilter: "lang",
+                            displayName: toLang("status", "", $rootScope)
                         }
                     };
                 }

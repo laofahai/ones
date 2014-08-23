@@ -49,13 +49,15 @@ class AppsAction extends CommonAction {
             }
 
             foreach($allApps as $k=>$app) {
-                $allApps[$k]["status"] = "appStatus";
                 if(in_array($app["alias"], $installedApps)) {
-                    $allApps[$k]["status"] .= "installed";
+                    $allApps[$k]["status_text"] = "Installed";
                     $allApps[$k]["installed"] = true;
                     if($app["latest_version"] > $installedAppVersions[$app["alias"]]) {
-                        $allApps[$k]["status"] .= "hasUpdate";
+                        $allApps[$k]["status_text"] = "HasUpdate";
                         $allApps[$k]["hasUpdate"] = true;
+                    }
+                    if($app["status"] == 0) {
+                        $allApps[$k]["status_text"] = "Inactive";
                     }
                 }
             }
@@ -105,10 +107,13 @@ class AppsAction extends CommonAction {
                 $installedApps[$appMeta["alias"]]["author"] = $appMeta["author"];
                 $installedApps[$appMeta["alias"]]["link"] = $appMeta["link"];
                 $installedApps[$appMeta["alias"]]["description"] = $appMeta["description"];
-                $installedApps[$appMeta["alias"]]["status"] = "appStatusinstalled";
+                $installedApps[$appMeta["alias"]]["status_text"] = "Installed";
 
                 if($appMeta["latest_version"] > $installedApps[$appMeta["alias"]]["version"]) {
-                    $installedApps[$appMeta["alias"]]["status"] .= "hasUpdate";
+                    $installedApps[$appMeta["alias"]]["status"] = "HasUpdate";
+                }
+                if($installedApps[$appMeta["alias"]]["status"]==0) {
+                    $installedApps[$appMeta["alias"]]["status_text"] = "Inactive";
                 }
             }
 
