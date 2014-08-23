@@ -11,7 +11,7 @@ class WorkflowBuild extends CommonBuildAction {
     protected $authNodes = array(
         "workflow.workflow.*",
         "workflow.workflownode.*",
-        "workflow.workflowprocess.*"
+        "workflow.workflowprocess.read"
     );
 
 } 

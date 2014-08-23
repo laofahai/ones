@@ -29,9 +29,5 @@ return array(
             )
         ),
         "icon" => "cog"
-    ),
-    "stock" => array(
-        "childs" => array(),
-        "icon" => "th-large",
-    ),
+    )
 );

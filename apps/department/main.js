@@ -211,6 +211,15 @@
                     $scope.dataList = data.rules || {};
                 });
 
+                $scope.toggleThisLine = function(evt) {
+                    var tdContainer = $(evt.target).parents("td").next();
+                    if(tdContainer.find("input[type='checkbox']").eq(0).is(":checked")) {
+                        tdContainer.find("input[type='checkbox']").prop("checked", false);
+                    } else {
+                        tdContainer.find("input[type='checkbox']").prop("checked", true);
+                    }
+                }
+
                 $scope.doSubmit = function(){
                     AuthGroupRuleRes.update({id: $routeParams.pid}, $scope.permissionData).$promise.then(function(data){
                         if(!conf.DEBUG) {

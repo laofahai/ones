@@ -202,6 +202,10 @@ class CommonAction extends RestAction {
 
         $this->loginRequired();
 
+        if(in_array($this->user["id"], C("suid"))) {
+            return true;
+        }
+
         //工作流模式，通过工作流权限判断
         //安全漏洞
         if($_REQUEST["workflow"]) {

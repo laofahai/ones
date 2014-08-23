@@ -13,6 +13,7 @@
                     <label>
                         <input type="checkbox" class="ace" ng-click="toggleThisLine($event)" />
                         <span class="lbl"></span>
+                        <div ng-bind="i18n.lang['App'+itemList[0].category.ucfirst()].appName || itemList[0].category"></div>
                     </label>
                 </div>
             </td>

@@ -46,6 +46,7 @@ class AppsAction extends CommonAction {
             foreach($tmp as $app) {
                 $installedApps[] = $app["alias"];
                 $installedAppVersions[$app["alias"]] = $app["version"];
+                $installedaAppStatus[$app["alias"]] = $app["status"];
             }
 
             foreach($allApps as $k=>$app) {
@@ -56,7 +57,7 @@ class AppsAction extends CommonAction {
                         $allApps[$k]["status_text"] = "HasUpdate";
                         $allApps[$k]["hasUpdate"] = true;
                     }
-                    if($app["status"] == 0) {
+                    if($installedaAppStatus[$app["alias"]]["status"] == 0) {
                         $allApps[$k]["status_text"] = "Inactive";
                     }
                 }
@@ -147,7 +148,6 @@ class AppsAction extends CommonAction {
         $http->request($this->serviceUri."App/getInfo", $params);
 
         $tmp = $http->get_data();
-//        echo $tmp;
         $appInfo = json_decode($tmp, true);
         $model = D("Apps");
         $installed = $model->where(array("alias" => $appInfo["alias"]))->find();

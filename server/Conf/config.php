@@ -65,6 +65,10 @@ $BASEConfig = array(
         )
     ),
 
+    //超级用户ID
+    'suid' => array(
+        1
+    )
 );
 
 require ENTRY_PATH."/Lib/ORG/spyc.php";
