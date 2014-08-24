@@ -16,35 +16,33 @@ class AuthGroupRuleAction extends CommonAction {
     public function read() {
         
         $id = abs(intval($_GET["id"]));
-        $groupRuleModel = D("AuthGroupRule");
+        $groupRuleModel = D("AuthGroupRuleView");
         
         $groupModel = D("AuthGroup");
         $theGroup = $groupModel->find($id);
         
-        $tmp = $groupRuleModel->where("group_id=".$id)->select();
+        $tmp = $groupRuleModel->where("AuthGroupRule.group_id=".$id)->select();
+
         $selectedRules = array();
-        $selectedRulesArray = array(
-            "id_0" => false
-        );
         foreach($tmp as $v){
             $selectedRules[] = $v["rule_id"];
-            $selectedRulesArray["id_".$v["rule_id"]] = true;
+            $selectedRulesArray[$v["name"]] = true;
         }
 //        $selectedRules = explode(",", $theGroup["rules"]);
-        
+//        print_r($tmp);
         $ruleModel = D("AuthRule");
         $theRules = $ruleModel->where("status=1")->select();
         
-        foreach($theRules as $tr){
-            if(in_array($tr["id"], $selectedRules)) {
-                $tr["selected"] = 1;
+        foreach($theRules as $rule){
+            if(in_array($rule["id"], $selectedRules)) {
+                $rule["selected"] = 1;
             } else {
-                $tr["selected"] = 0;
+                $rule["selected"] = 0;
             }
-            $rsRules[$tr["category"]][] = $tr;
+            $rsRules[$rule["category"]][] = $rule;
         }
 //        $rsRules = reIndex($rsRules);
-//        print_r($rsRules);
+
         $return = array(
             "selected" => $selectedRulesArray,
             "rules"    => $rsRules
@@ -64,22 +62,21 @@ class AuthGroupRuleAction extends CommonAction {
         $putData = $putData ? $putData : $_POST;
         
         $gid = abs(intval($_GET["id"]));
-        //@todo 整合到model
+
+        $tmp = D("AuthRule")->select();
+        foreach($tmp as $v) {
+            $nodes[$v["name"]] = $v;
+        }
+
         $model = D("AuthGroupRule");
         $model->startTrans();
         $model->where("group_id=".$gid)->delete();
         
-        $ids = array();
-        $insertData = array();
-        foreach($putData as $k=>$v) {
-            $rule_id = str_replace("id_", "", $k);
-            if($rule_id<=0) {
-                continue;
-            }
+        foreach($putData["nodes"] as $nodeName=>$v) {
             if("true" === $v or $v > 0) {
                 if(!$model->add(array(
                     "group_id" => $gid,
-                    "rule_id"  => $rule_id,
+                    "rule_id"  => $nodes[$nodeName]["id"],
                     "flag"     => 0
                 ))){
                     Log::write("SQL Error:".$model->getLastSql(), Log::SQL);

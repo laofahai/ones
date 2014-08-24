@@ -20,7 +20,7 @@
             <td>
                 <div class="checkbox checkboxContainer">
                     <label ng-repeat="item in itemList">
-                        <input type="checkbox" class="ace" ng-model="permissionData['id_'+item.id]" />
+                        <input type="checkbox" class="ace" data-nodeid="{{item.name}}" ng-model="permissionData[item.name]" name="item.name" />
                         <span class="lbl" ng-bind="item.name|toAuthNodeName"></span>
                     </label>
                 </div>

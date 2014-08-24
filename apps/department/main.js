@@ -203,28 +203,37 @@
         }])
         .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams", "$location", "ones.config",
             function($scope, AuthGroupRuleRes, $routeParams, $location, conf){
-                $scope.permissionData = [];
+                $scope.permissionData = {};
                 $scope.selectAble = false;
                 $scope.dataList = [];
                 AuthGroupRuleRes.query({id: $routeParams.pid}).$promise.then(function(data){
-                    $scope.permissionData = data.selected || [];
+                    $scope.permissionData = data.selected || {};
                     $scope.dataList = data.rules || {};
                 });
 
                 $scope.toggleThisLine = function(evt) {
                     var tdContainer = $(evt.target).parents("td").next();
-                    if(tdContainer.find("input[type='checkbox']").eq(0).is(":checked")) {
-                        tdContainer.find("input[type='checkbox']").prop("checked", false);
+                    var node_id = tdContainer.find("input[type='checkbox']").eq(0).data("nodeid");
+                    if($scope.permissionData[node_id]) {
+                        $(tdContainer).find("input[type='checkbox']").each(function(){
+                            $scope.permissionData[$(this).data("nodeid")] = undefined;
+                            $(this).prop("checked", false);
+                        });
                     } else {
-                        tdContainer.find("input[type='checkbox']").prop("checked", true);
+                        $(tdContainer).find("input[type='checkbox']").each(function(){
+                            $scope.permissionData[$(this).data("nodeid")] = true;
+                            $(this).prop("checked", "checked");
+                        });
                     }
                 }
 
+
                 $scope.doSubmit = function(){
-                    AuthGroupRuleRes.update({id: $routeParams.pid}, $scope.permissionData).$promise.then(function(data){
-                        if(!conf.DEBUG) {
-                            $location.url("/department/list/authGroup");
-                        }
+                    console.log($scope.permissionData);
+                    AuthGroupRuleRes.update({id: $routeParams.pid}, {
+                        nodes: $scope.permissionData
+                    }).$promise.then(function(data){
+                        $location.url("/department/list/authGroup");
                     });
                 };
             }])

@@ -14,7 +14,7 @@ class AuthGroupRuleViewModel extends CommonViewModel {
     
     protected $viewFields = array(
         "AuthGroupRule" => array("group_id","rule_id","flag"),
-        "AuthRule" => array("name","title","_on"=>"AuthGroupRule.rule_id=AuthRule.id")
+        "AuthRule" => array("name","_on"=>"AuthGroupRule.rule_id=AuthRule.id")
     );
 
     public $searchFields = array(
