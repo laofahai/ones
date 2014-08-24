@@ -229,7 +229,6 @@
 
 
                 $scope.doSubmit = function(){
-                    console.log($scope.permissionData);
                     AuthGroupRuleRes.update({id: $routeParams.pid}, {
                         nodes: $scope.permissionData
                     }).$promise.then(function(data){
