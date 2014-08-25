@@ -112,11 +112,15 @@ var toLang = function(key, section, $rootScope) {
 
     langStr = sprintf("i18n.%s.%s.%s", section, appSection, key);
 
-    lang = $rootScope.$eval(langStr);
-    if(lang === undefined) {
-
-        langStr = sprintf("i18n.%s.%s", section, key);
+    try {
         lang = $rootScope.$eval(langStr);
+        if(lang === undefined) {
+
+            langStr = sprintf("i18n.%s.%s", section, key);
+            lang = $rootScope.$eval(langStr);
+        }
+    } catch(e) {
+        return key;
     }
 
     //通过递归合并的数组元素会追加成为新数组，返回最后一个元素
@@ -285,7 +289,7 @@ var getLabelContext = function(element) {
 /* 
  DoubleClick row plugin
  NG-GRID row 双击插件
-*/
+ */
 function ngGridDoubleClick() {
     var self = this;
     self.$scope = null;
@@ -406,8 +410,8 @@ var md5 = {
 
         var wordToHex = function(lValue) {
             var wordToHexValue = "",
-                    wordToHexValue_temp = "",
-                    lByte, lCount;
+                wordToHexValue_temp = "",
+                lByte, lCount;
             for (lCount = 0; lCount <= 3; lCount++) {
                 lByte = (lValue >>> (lCount * 8)) & 255;
                 wordToHexValue_temp = "0" + lByte.toString(16);
@@ -417,22 +421,22 @@ var md5 = {
         };
 
         var x = [],
-                k, AA, BB, CC, DD, a, b, c, d, S11 = 7,
-                S12 = 12,
-                S13 = 17,
-                S14 = 22,
-                S21 = 5,
-                S22 = 9,
-                S23 = 14,
-                S24 = 20,
-                S31 = 4,
-                S32 = 11,
-                S33 = 16,
-                S34 = 23,
-                S41 = 6,
-                S42 = 10,
-                S43 = 15,
-                S44 = 21;
+            k, AA, BB, CC, DD, a, b, c, d, S11 = 7,
+            S12 = 12,
+            S13 = 17,
+            S14 = 22,
+            S21 = 5,
+            S22 = 9,
+            S23 = 14,
+            S24 = 20,
+            S31 = 4,
+            S32 = 11,
+            S33 = 16,
+            S34 = 23,
+            S41 = 6,
+            S42 = 10,
+            S43 = 15,
+            S44 = 21;
 
         //str = this.utf8_encode(str);
         x = convertToWordArray(str);

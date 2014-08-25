@@ -5,22 +5,22 @@
      *
      * */
     angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
-        /**
-         * 通用路由适配
-         * 使用通用Controller
-         * Resource命名规则： ModuleNameRes
-         * Model   命名规则： ModelNameModel
-         * */
+    /**
+     * 通用路由适配
+     * 使用通用Controller
+     * Resource命名规则： ModuleNameRes
+     * Model   命名规则： ModelNameModel
+     * */
         .config(["$routeProvider", function($route){
             $route.when('/:group/list/:module', {
                 templateUrl: 'common/base/views/grid.html',
                 controller : 'ComViewGridCtl'
             })
-            //列表 with extraParams
-            .when('/:group/list/:module/:extra*', {
-                templateUrl: 'common/base/views/grid.html',
-                controller : 'ComViewGridCtl'
-            })
+                //列表 with extraParams
+                .when('/:group/list/:module/:extra*', {
+                    templateUrl: 'common/base/views/grid.html',
+                    controller : 'ComViewGridCtl'
+                })
             $route.when('/:group/listAll/:module', {
                 templateUrl: 'common/base/views/grid.html',
                 controller : 'ComViewGridCtl'
@@ -29,47 +29,47 @@
                 templateUrl: 'common/base/views/grid.html',
                 controller : 'ComViewGridCtl'
             })
-            //新增
-            .when('/:group/viewChild/:module/pid/:pid', {
-    //            templateUrl: 'views/common/grid.html',
-                controller : 'ComViewChildCtl'
-            })
-            .when('/:group/add/:module', {
-                templateUrl: 'common/base/views/edit.html',
-                controller : 'ComViewEditCtl'
-            })
-            //新增 with extraParams
-            .when('/:group/add/:module/:extra*', {
-                templateUrl: 'common/base/views/edit.html',
-                controller : 'ComViewEditCtl'
-            })
-            //修改
-            .when('/:group/edit/:module/id/:id', {
-                templateUrl: 'common/base/views/edit.html',
-                controller : 'ComViewEditCtl'
-            })
-            //修改 with extraParams
-            .when('/:group/edit/:module/id/:id/:extra*', {
-                templateUrl: 'common/base/views/edit.html',
-                controller : 'ComViewEditCtl'
-            })
-            //新增子项
-            .when('/:group/addChild/:module/pid/:pid', {
-                templateUrl: 'common/base/views/edit.html',
-                controller : 'ComViewEditCtl'
-            })
-            //打印
-            .when('/:group/print/:module/id/:id', {
-                controller : 'ComViewPrintCtl',
-                templateUrl: function(params){
-                    return appView(sprintf("%s/printDetail.html", params.module), params.group.toLowerCase());
-                }
-            })
-            .otherwise({
-                templateUrl: "common/base/views/404.html",
-                controller : "ComViewError404Ctl"
-            })
-            //子项列表
+                //新增
+                .when('/:group/viewChild/:module/pid/:pid', {
+                    //            templateUrl: 'views/common/grid.html',
+                    controller : 'ComViewChildCtl'
+                })
+                .when('/:group/add/:module', {
+                    templateUrl: 'common/base/views/edit.html',
+                    controller : 'ComViewEditCtl'
+                })
+                //新增 with extraParams
+                .when('/:group/add/:module/:extra*', {
+                    templateUrl: 'common/base/views/edit.html',
+                    controller : 'ComViewEditCtl'
+                })
+                //修改
+                .when('/:group/edit/:module/id/:id', {
+                    templateUrl: 'common/base/views/edit.html',
+                    controller : 'ComViewEditCtl'
+                })
+                //修改 with extraParams
+                .when('/:group/edit/:module/id/:id/:extra*', {
+                    templateUrl: 'common/base/views/edit.html',
+                    controller : 'ComViewEditCtl'
+                })
+                //新增子项
+                .when('/:group/addChild/:module/pid/:pid', {
+                    templateUrl: 'common/base/views/edit.html',
+                    controller : 'ComViewEditCtl'
+                })
+                //打印
+                .when('/:group/print/:module/id/:id', {
+                    controller : 'ComViewPrintCtl',
+                    templateUrl: function(params){
+                        return appView(sprintf("%s/printDetail.html", params.module), params.group.toLowerCase());
+                    }
+                })
+                .otherwise({
+                    templateUrl: "common/base/views/404.html",
+                    controller : "ComViewError404Ctl"
+                })
+                //子项列表
             ;
         }])
         .value('ComViewConfig', {
@@ -80,9 +80,9 @@
                 "export": "success"
             }
         })
-    //    .controller('ComViewChildCtl', ["$scope", "$location", "$routeParams", function($scope, $location, $routeParams){
-    //        $location.url(sprintf('/%(group)s/list/%(module)s'));
-    //    }])
+        //    .controller('ComViewChildCtl', ["$scope", "$location", "$routeParams", function($scope, $location, $routeParams){
+        //        $location.url(sprintf('/%(group)s/list/%(module)s'));
+        //    }])
         .controller('ComViewError404Ctl', ["$scope", function($scope){
             $scope.hidePageHeader = true;
         }])
@@ -102,14 +102,14 @@
                 id: $routeParams.id,
                 includeRows: true //包含子行
             }).$promise.then(function(data){
-                $scope.data = data.datas ? data : {datas: [data]};
-            });
+                    $scope.data = data.datas ? data : {datas: [data]};
+                });
 
             $scope.doPrint = function(){
                 window.print();
             };
 
-    //        $scope.doPrint();
+            //        $scope.doPrint();
 
         }])
         .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal", "ones.config",
@@ -156,14 +156,14 @@
             }])
         .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig",
             function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
-    //            var extraParams = parseParams($routeParams.extra) || "";
+                //            var extraParams = parseParams($routeParams.extra) || "";
                 var module,group,res,model,actions;
                 group = $routeParams.group;
                 module = $routeParams.module;
 
                 res = $injector.get(module.ucfirst()+"Res");
                 model = $injector.get(module.ucfirst()+"Model");
-    //            console.log($scope);console.log(res);
+                //            console.log($scope);console.log(res);
                 //可跳转按钮
                 try {
                     actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
@@ -176,9 +176,9 @@
                     var queryExtraParams = parseParams($routeParams.extra);
                     $routeParams = $.extend($routeParams, queryExtraParams);
                 }
-    //           console.log($routeParams);
+                //           console.log($routeParams);
                 $scope.selectAble = false;
-    //            $scope.pageActions = pageActions;
+                //            $scope.pageActions = pageActions;
                 var opts = {
                     id: $routeParams.id,
                     queryExtraParams: queryExtraParams
@@ -206,7 +206,7 @@
                  * */
                 service.alert = function(alertMsg, type, title, autohide) {
                     type = type || "warning";
-    //                title = title || type.ucfirst()+":";
+                    //                title = title || type.ucfirst()+":";
                     var erpalert = $alert({title: title,
                         content: alertMsg,
                         placement: 'top-right', type: type, show: true,
@@ -314,7 +314,7 @@
                 }
 
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
-    //                console.log(arguments);
+                    //                console.log(arguments);
                     $scope.config = {};
                     var defaultOpts = {
                         name: "form", //表单名称
@@ -391,7 +391,7 @@
 
                     //提交表单
                     $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
-    //                    console.log("submit");
+                        //                    console.log("submit");
 
                         if(!$scope.doFormValidate()) {
                             return;
@@ -415,7 +415,7 @@
                                     $location.url(lastPage[0] || opts.returnPage);
                                 }
                             });
-                        //新增
+                            //新增
                         } else {
 
                             var params = $.extend(getParams, $scope[opts.dataName]);
@@ -494,13 +494,13 @@
                     opts.subModule = opts.subModule ? "/" + opts.subModule : "";
 
 
-    //                console.log(typeof(fieldsDefine));
-    //                console.log("getFieldsStruct" in fieldsDefine);
-    //                console.log(typeof(fieldsDefine.getFieldsStruct) == "function");
+                    //                console.log(typeof(fieldsDefine));
+                    //                console.log("getFieldsStruct" in fieldsDefine);
+                    //                console.log(typeof(fieldsDefine.getFieldsStruct) == "function");
 
                     if(typeof(fieldsDefine) === "object"
-                            && "getFieldsStruct" in fieldsDefine
-                            && typeof(fieldsDefine.getFieldsStruct) === "function") {
+                        && "getFieldsStruct" in fieldsDefine
+                        && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
                         fieldsDefine = model.getFieldsStruct(true);
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
@@ -522,6 +522,7 @@
                     }
 
                     $scope.$on("commonGrid.structureReady", function() {
+
                         /**
                          * 字段名称
                          * */
@@ -583,7 +584,7 @@
 
 
 
-                    //导出excel
+                        //导出excel
                     $scope.doExport = function(){};
 
                     var setPagingData = function(remoteData, page, pageSize) {
@@ -728,9 +729,9 @@
                                 workflow_alias: model.workflowAlias,
                                 mainrow_id: $routeParams.id
                             }).$promise.then(function(data){
-                                $scope.mainrow_id = $routeParams.id;
-                                $scope.billWorkflowActions = data;
-                            });
+                                    $scope.mainrow_id = $routeParams.id;
+                                    $scope.billWorkflowActions = data;
+                                });
                         }
                     }
 
@@ -766,12 +767,12 @@
 
 
 
-    //                //监控数据变化，是否保存
-    //                $scope.watch(function(){
-    //                    return $scope[opts.dataName];
-    //                }, function(){
-    //
-    //                });
+                    //                //监控数据变化，是否保存
+                    //                $scope.watch(function(){
+                    //                    return $scope[opts.dataName];
+                    //                }, function(){
+                    //
+                    //                });
 
                     //默认单据提交方法，可自动判断是否编辑/新建
                     $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
@@ -913,8 +914,8 @@
                             workflow_alias: model.workflowAlias,
                             only_active: true
                         }).$promise.then(function(data){
-                            $scope.workflowActionList = data;
-                        });
+                                $scope.workflowActionList = data;
+                            });
 
                         $scope.doWorkflow = function(event, node_id, mainrow_id){
                             var doingWorkflow = function(mainrow_id) {
@@ -923,25 +924,25 @@
                                     node_id: node_id,
                                     id: mainrow_id
                                 }).$promise.then(function(data){
-                                    if(data.type) {
-                                        switch(data.type) {
-                                            case "redirect":
-                                                $location.url(data.location);
-                                                return;
-                                                break;
-                                            case "message":
-                                                service.alert(data.msg, data.error ? "danger" : "warning");
-                                                return;
-                                                break;
+                                        if(data.type) {
+                                            switch(data.type) {
+                                                case "redirect":
+                                                    $location.url(data.location);
+                                                    return;
+                                                    break;
+                                                case "message":
+                                                    service.alert(data.msg, data.error ? "danger" : "warning");
+                                                    return;
+                                                    break;
+                                            }
                                         }
-                                    }
-                                });
+                                    });
                             };
                             if(mainrow_id) {
                                 doingWorkflow(mainrow_id);
                             } else {
                                 var selectedItems = $scope.gridSelected || [];
-        //                        console.log(arguments);
+                                //                        console.log(arguments);
                                 if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
                                     return false;
                                 }
@@ -986,12 +987,12 @@
                                 id: $scope.gridSelected[0].id,
                                 workflowAlias: $scope.workflowAlias
                             }).$promise.then(function(data){
-                                service.aside({
-                                    bill_id: $scope.gridSelected[0].bill_id,
-                                    title: $scope.gridSelected[0].subject,
-                                    subTitle: $scope.gridSelected[0].dateline_lang
-                                }, data, appView("workflowProcess.html", "workflow"));
-                            });
+                                    service.aside({
+                                        bill_id: $scope.gridSelected[0].bill_id,
+                                        title: $scope.gridSelected[0].subject,
+                                        subTitle: $scope.gridSelected[0].dateline_lang
+                                    }, data, appView("workflowProcess.html", "workflow"));
+                                });
                         };
                     }
                     //删除
@@ -1047,7 +1048,7 @@
                 };
                 service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){
                     //可跳转按钮
-    //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
+                    //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
                     extraParams = extraParams ? "/"+extraParams : "";
                     var available = ["add", "list", "listAll", "export", "print"];
                     var actEnabled;

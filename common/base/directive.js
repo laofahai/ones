@@ -134,7 +134,7 @@
                 compile: function(element, attrs, transclude) {
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
-                            var b = new FormMaker.select3($scope);
+                            var b = new FormMaker.select3($scope, iAttrs);
                             setTimeout(function() {
                                 $(iElement).after($compile(b.makeHTML())($scope.$parent));
                                 iElement.remove();
@@ -207,11 +207,11 @@
             };
         }])
 
-        /**
-         * The ng-thumb directive
-         * @author: nerv
-         * @version: 0.1.2, 2014-01-09
-         */
+    /**
+     * The ng-thumb directive
+     * @author: nerv
+     * @version: 0.1.2, 2014-01-09
+     */
         .directive('ngThumb', ['$window', function($window) {
             var helper = {
                 support: !!($window.FileReader && $window.CanvasRenderingContext2D),
