@@ -20,7 +20,7 @@
                             <h5 class="bolder" ng-bind="i18n.lang.requirementsApp"></h5>
                             <p>
                                 <a class="label label-info arrowed arrowed-in-right"
-                                      ng-class="{'label-danger':isAppLoaded(req)}"
+                                      ng-class="{'label-danger':!isAppLoaded(req)}"
                                       ng-repeat="req in appInfo.versions[appInfo.currentVersion].requirements"
                                       ng-bind="i18n.lang['App'+req.ucfirst()].appName || req"
                                       ng-href="#/HOME/viewDetail/apps/alias/{{req}}">

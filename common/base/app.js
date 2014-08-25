@@ -136,6 +136,11 @@
                 $scope.removeDefaultKey = function() {
 
                 };
+
+                $scope.isAppLoaded = function(app) {
+                    return isAppLoaded(app);
+                }
+
                 /**
                  * 监控路由变化
                  * */
