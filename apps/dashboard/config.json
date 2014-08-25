@@ -1,4 +1,5 @@
 {
+    "primary": "true",
     "alias": "dashboard",
     "requirements": [],
     "version": "0.1",

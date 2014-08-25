@@ -66,9 +66,9 @@
         <div class="clearfix form-actions center">
             <button ng-click="doAppInstall()" ng-show="!appInfo.installed" class="btn btn-primary" ng-bind="i18n.lang.actions.install"></button>
             <button ng-click="doAppUpgrade()" ng-show="appInfo.hasUpdate" class="btn btn-success" ng-bind="i18n.lang.actions.upgrade"></button>
-            <button ng-click="doAppInactive()" ng-show="appInfo.status=='1'" class="btn btn-info" ng-bind="i18n.lang.actions.inactive"></button>
+            <button ng-click="doAppInactive()" ng-show="appInfo.status=='1' && !isPrimaryApp(appInfo.alias)" class="btn btn-info" ng-bind="i18n.lang.actions.inactive"></button>
             <button ng-click="doAppActive()" ng-show="appInfo.installed&&appInfo.status=='0'" class="btn btn-success" ng-bind="i18n.lang.actions.active"></button>
-            <button ng-click="doAppUninstall()" ng-show="appInfo.installed" class="btn btn-danger" ng-bind="i18n.lang.actions.uninstall"></button>
+            <button ng-click="doAppUninstall()" ng-show="appInfo.installed && !isPrimaryApp(appInfo.alias)" class="btn btn-danger" ng-bind="i18n.lang.actions.uninstall"></button>
             <a href="javascript:history.back();" ng-bind="i18n.lang.actions.return" class="btn"></a>
         </div>
     </div>

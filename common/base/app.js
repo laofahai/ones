@@ -141,6 +141,10 @@
                     return isAppLoaded(app);
                 }
 
+                $scope.isPrimaryApp = function(app) {
+                    return ['dashboard','department', 'services'].indexOf(app) >=0 ? true : false;
+                }
+
                 /**
                  * 监控路由变化
                  * */

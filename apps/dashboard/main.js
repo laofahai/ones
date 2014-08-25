@@ -56,6 +56,7 @@
             });
             $scope.doSubmit = function() {
                 res.save($scope.items);
+                $location.url("/");
             };
         }])
 
