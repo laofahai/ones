@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `x_workflow` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alias` varchar(30) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow` (
   KEY `alias` (`alias`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_workflow_node` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow_node` (
   `next_node_id` varchar(50) NOT NULL,
   `executor` varchar(255) NOT NULL,
   `cond` text COMMENT '可执行上下文条件',
-  `default` smallint(1) NOT NULL DEFAULT '0' COMMENT '若有分支，默认执行',
+  `is_default` smallint(1) NOT NULL DEFAULT '0' COMMENT '若有分支，默认执行',
   `execute_type` smallint(1) NOT NULL COMMENT '0一人执行,1所有人执行',
   `remind` int(11) NOT NULL COMMENT '是否提醒',
   `max_time` int(11) NOT NULL COMMENT '最大执行时间，超出失效，小时',
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `x_workflow_node` (
   KEY `default` (`default`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_workflow_process` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,

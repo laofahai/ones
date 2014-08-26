@@ -160,26 +160,18 @@
 
             return obj;
         }])
-        .service("StockProductListModel", ["$rootScope", function($rootScope) {
+        .service("StockProductListModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin) {
             var obj = {
                 deleteAble: false,
                 exportAble: true
             };
             obj.getFieldsStruct = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
-                return {
+                var fields = {
                     factory_code_all: {
                         hideInForm: true
                     },
                     goods_name: {
-                        inputType: "static",
-                        hideInForm: true
-                    },
-                    standard: {
-                        inputType: "static",
-                        hideInForm: true
-                    },
-                    version: {
                         inputType: "static",
                         hideInForm: true
                     },
@@ -214,6 +206,15 @@
                         hideInForm: true,
                     }
                 };
+
+                plugin.callPlugin("bind_dataModel_to_structure", {
+                    structure: fields,
+                    alias: "product",
+                    require: ["goods_id"],
+                    queryExtra: ["goods_id"]
+                });
+
+                return ones.pluginScope.get("defer").promise;
 
             };
             return obj;
@@ -376,18 +377,16 @@
 
                 return obj;
             }])
-        .service("StockWarningModel", ["$rootScope", function($rootScope){
+        .service("StockWarningModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             return {
                 getFieldsStruct: function(){
-                    return {
+                    var fields = {
                         factory_code_all: {
                             displayName: $rootScope.i18n.lang.factoryCodeAll
                         },
                         goods_name: {
                             displayName: $rootScope.i18n.lang.name
                         },
-                        standard: {},
-                        version: {},
                         measure: {},
                         category_name: {
                             displayName: $rootScope.i18n.lang.category
@@ -399,6 +398,13 @@
                         store_min: {},
                         store_max: {}
                     };
+
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: fields,
+                        alias: "product"
+                    });
+
+                    return ones.pluginScope.get("defer").promise;
                 }
             };
         }])

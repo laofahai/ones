@@ -295,10 +295,10 @@
                         $scope.modal = modal = $modal({
                             scope: $scope,
                             title: service.toLang("filters", "actions"),
-                            content: {
-                                config: $scope.config,
-                                defaultData: $scope.defaultData
-                            },
+//                            content: {
+//                                config: $scope.config,
+//                                defaultData: $scope.defaultData
+//                            },
                             contentTemplate: "common/base/views/filters.html"
                         });
                         modal.$promise.then(function(){
