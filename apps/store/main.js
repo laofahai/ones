@@ -197,13 +197,13 @@
                         displayName: i18n.storeNum
                     },
                     measure: {
-                        hideInForm: true,
+                        hideInForm: true
                     },
                     store_min: {
-                        hideInForm: true,
+                        hideInForm: true
                     },
                     store_max: {
-                        hideInForm: true,
+                        hideInForm: true
                     }
                 };
 
