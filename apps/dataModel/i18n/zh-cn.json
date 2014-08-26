@@ -1,0 +1,65 @@
+{
+    "urlMap": {
+        "dataModel": {
+            "name": "数据模型",
+            "modules": {
+                "DataModel": {
+                    "name": "数据模型",
+                    "actions": {
+                        "list": "数据模型管理",
+                        "add": "新建数据模型",
+                        "edit": "修改数据模型基础信息",
+                        "viewSub": "查看数据模型字段"
+                    }
+                },
+                "DataModelData": {
+                    "name": "模型数据",
+                    "actions": {
+                        "list": "模型数据管理",
+                        "add": "新增模型数据",
+                        "edit": "修改模型数据"
+                    }
+                },
+                "DataModelFields": {
+                    "name": "模型数据字段",
+                    "actions": {
+                        "list": "", "add": "", "edit": ""
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "data_model": "数据模型管理"
+        },
+        "actions": {
+            "viewDataModel": "查看数据模型",
+            "viewModelData": "查看模型数据"
+        },
+        "inputTypes": {
+            "text": "单行文本",
+            "number": "数字",
+            "select": "下拉选择框",
+            "select3": "select3选择器",
+            "email": "邮箱地址",
+            "textarea": "多行文本(textarea)",
+            "file": "文件上传"
+        },
+        "helpTexts": {
+            "field_alias": "字段的别名，必须为英文"
+        },
+        "AppDataModel": {
+            "appName": "数据模型模块"
+        },
+        "input_type": "输入方式",
+        "bindDataModel": "绑定数据模型",
+        "model_name": "模型名称",
+        "extra_configure": "扩展配置",
+        "dataModel_extraConfig_tip": "格式为“name:value”，每行一个，具体参数请参见<a href='http://project.ng-erp.com/projects/ones/wiki/DataModel_%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B#数据模型字段扩展配置' target='_blank'>ONES WIKI</a>",
+
+        "datamodel.datamodel" : "%s数据模型",
+        "datamodel.datamodelfields": "%s数据模型字段",
+        "datamodel.datamodeldata": "%s数据模型数据"
+    }
+}

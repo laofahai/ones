@@ -1,0 +1,29 @@
+<div class="aside right am-slide-right" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="aside-header">
+                <button type="button" class="close" ng-click="$hide()">×</button>
+                <h4 class="aside-title ng-binding" ng-bind="i18n.lang.actions.viewWorkflowProcess"></h4>
+            </div>
+            <div class="aside-body ng-binding">
+                <h5 class="bolder" ng-bind="asideContent.title.bill_id"></h5>
+                <h5 class="bolder">
+                    <span ng-bind="asideContent.title.title"></span>
+                    <em><small ng-bind="asideContent.title.subTitle"></small></em>
+                </h5>
+                <dl class="workflowProcessList tree tree-unselectable">
+                    <dd class="tree-item" ng-repeat="item in asideContent.content">
+                        <div class="tree-item-name">
+                            <i class="icon icon-user"></i>
+                            {{item.truename}} <small>{{item.start_time|dateFormat}}</small>
+                            <p>{{item.nodeName}} <em ng-show="item.memo">[{{item.memo}}]</em></p>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="aside-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="i18n.lang.actions.close"></button>
+            </div>
+        </div>
+    </div>
+</div>

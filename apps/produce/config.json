@@ -1,0 +1,23 @@
+{
+    "alias": "produce",
+    "version": "0.1",
+    "requirements": ["department", "workflow", "goods", "dataModel"],
+    "workflow": ["Produce"],
+    "navs": {
+        "produce": {
+            "childs" : {
+                "produce_plan" : "produce/list/producePlan",
+                "produce_plan_detail": "produce/list/producePlanDetail"
+            },
+            "icon" : "retweet"
+        },
+        "settings": {
+            "childs": {
+                "base_data_set": {
+                    "goods_tpl": "produce/list/productTpl",
+                    "craft_manage" : "produce/list/craft"
+                }
+            }
+        }
+    }
+}

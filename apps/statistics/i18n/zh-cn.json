@@ -1,0 +1,52 @@
+{
+    "urlMap": {
+        "statistics": {
+            "name": "统计分析",
+            "modules": {
+                "ProductView": {
+                    "name": "产品进销存表",
+                    "actions": {
+                        "list": ""
+                    }
+                },
+                "Sale": {
+                    "name": "销售统计",
+                    "actions": {
+                        "list": ""
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "statistics": "统计分析",
+            "sale_statistics": "销售统计",
+            "stock_warning": "库存警告",
+            "statistics_overview": "统计总览",
+            "statistics_product_overview": "产品进销存表"
+        },
+        "widgetTitles": {
+            "statistics": {
+                "sale": "销售统计"
+            }
+        },
+        "show_by_day": "按天查看",
+        "show_by_month": "按月查看",
+        "show_by_year" : "按年查看",
+        "showType": "查看方式",
+        "sale_num": "销售数量",
+        "sale_amount": "销售金额",
+        "purchase_num": "采购数量",
+        "purchase_amount": "采购金额",
+        "rmbyuan": "人民币 (元)",
+
+        "AppStatistics": {
+            "appName": "统计模块"
+        },
+
+        "statistics.sale.read": "销售统计",
+        "statistics.overview.read": "统计纵览",
+        "statistics.productview.read": "产品进销存表"
+    }
+}

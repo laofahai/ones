@@ -1,0 +1,103 @@
+{
+    "urlMap": {
+        "store": {
+            "name": "仓储管理",
+            "modules": {
+                "Stock" : {
+                    "name": "仓库管理",
+                    "actions": {
+                        "list": "仓库列表",
+                        "add": "新建仓库",
+                        "edit": "修改仓库信息"
+                    }
+                },
+                "StockWarning": {
+                    "name": "库存警告",
+                    "actions": {}
+                },
+                "Stockin": {
+                    "name": "入库单",
+                    "actions": {
+                        "list": "入库单列表",
+                        "add": "新建入库单",
+                        "edit": "入库单信息"
+                    }
+                },
+                "StockProductList": {
+                    "name": "库存管理",
+                    "actions": {
+                        "list": "库存物料(成品)列表",
+                        "export": "导出库存清单",
+                        "edit": "修改库存产品信息"
+                    }
+                },
+                "Stockout": {
+                    "name": "出库单",
+                    "actions": {
+                        "list": "出库单列表"
+                    }
+                }
+            }
+        },
+        "doWorkflow": {
+            "modules": {
+                "Stockout": {
+                    "name": "出库",
+                    "actions": {
+                        "confirm": "确认出库",
+                        "makeShipment": "生成发货单"
+                    }
+                },
+                "Stockin": {
+                    "name": "入库",
+                    "actions": {
+                        "confirm": "确认入库"
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "stock": "库存管理",
+            "stock_manage": "仓库管理",
+            "stock_list": "库存列表",
+            "stockin_paper": "入库单",
+            "stockout_paper": "出库单",
+            "shipment_paper": "发货单",
+            "stock_transfer": "库存调拨"
+        },
+        "modules": {
+            "Stockin": "入库单",
+            "Stockout": "出库单"
+        },
+        "widgetTitles": {
+            "latestStockin": "最近入库",
+            "latestStockout": "最近出库",
+            "needStockout": "待处理出库单",
+            "needStockin" : "待处理入库单"
+        },
+        "stock": "仓库",
+        "outStockTime": "出库时间",
+        "stock_manager": "库管员",
+        "stockManager": "库管员",
+        "storeNum": "库存数量",
+        "store_min": "库存下限",
+        "store_max": "库存上限",
+        "stockin": "入库",
+        "stockout": "出库",
+        "AppStore": {
+            "appName": "仓储模块"
+        },
+
+        "types" : {
+            "stockin" : "入库类型"
+        },
+
+        "store.stock": "%s仓库",
+        "store.stockin": "%s入库单",
+        "store.stockout": "%s出库单",
+        "store.stockwarning.read": "库存警告",
+        "store.stockproductlist": "%s库存清单"
+    }
+}

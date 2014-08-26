@@ -1,0 +1,12 @@
+{
+    "alias": "shipment",
+    "version": "0.4",
+    "requirements": ["crm"],
+    "navs": {
+        "stock": {
+            "childs": {
+                "shipment_paper" : "shipment/list/shipment"
+            }
+        }
+    }
+}

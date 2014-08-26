@@ -1,0 +1,16 @@
+{
+    "alias": "sale",
+    "version": "0.1",
+    "requirements": ["goods", "store", "workflow", "crm", "department"],
+    "workflow": ["Orders", "Returns"],
+    "navs": {
+        "sale" : {
+            "icon": "pencil",
+            "childs" : {
+                "add_new_orders": "sale/addBill/orders",
+                "orders": "sale/list/orders",
+                "returns": "sale/list/returns"
+            }
+        }
+    }
+}

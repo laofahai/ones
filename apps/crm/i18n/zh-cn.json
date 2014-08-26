@@ -1,0 +1,48 @@
+{
+    "urlMap": {
+        "crm": {
+            "name": "客户关系管理",
+            "modules": {
+                "RelationshipCompanyGroup": {
+                    "name": "往来单位分组",
+                    "actions": {
+                        "list": "往来单位分组列表",
+                        "add"  : "新增分组",
+                        "edit" : "修改分组信息"
+                    }
+                },
+                "RelationshipCompany": {
+                    "name": "往来单位基本信息",
+                    "actions": {
+                        "list": "往来单位列表",
+                        "add": "新增往来单位",
+                        "edit": "修改往来单位信息"
+                    }
+                }
+            }
+        }
+    },
+    "lang": {
+        "navs": {
+            "rel_company": "往来单位管理",
+            "relCompanyGroup": "分组",
+            "relCompanyRecord": "基础档案"
+        },
+        "widgetTitles": {
+            "relCompanyBaseInfo": "往来单位基本信息"
+        },
+        "AppCrm": {
+            "appName": "往来单位"
+        },
+        "contact": "联系人",
+        "tel": "电话",
+        "is_primary": "是否首要联系人",
+        "linkMan": "联系人",
+        "supplier": "供应商",
+        "customer": "客户",
+
+        "crm.relationshipcompanylinkman" : "%s往来单位联系人",
+        "crm.relationshipcompany" : "%s往来单位",
+        "crm.relationshipcompanygroup" : "%s往来单位分组"
+    }
+}

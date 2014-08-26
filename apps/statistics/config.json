@@ -1,0 +1,15 @@
+{
+    "alias": "statistics",
+    "version": "0.1",
+    "requirements": [],
+    "navs": {
+        "statistics": {
+            "icon": "bar-chart-o",
+            "childs" : {
+                "sale_statistics": "statistics/list/sale",
+                "stock_warning": "store/list/stockWarning",
+                "statistics_product_overview": "statistics/list/productView"
+            }
+        }
+    }
+}

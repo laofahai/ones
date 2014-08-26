@@ -1,0 +1,23 @@
+{
+    "alias": "store",
+    "version": "0.1",
+    "requirements": ["department", "goods", "dataModel", "workflow"],
+    "workflow": ["Stockin", "Stockout", "StockTransfer"],
+    "navs": {
+        "stock": {
+            "icon": "database",
+            "childs": {
+                "stock_list": "store/list/stockProductList",
+                "stockin_paper": "store/list/stockin",
+                "stockout_paper": "store/list/stockout"
+            }
+        },
+        "settings": {
+            "childs": {
+                "base_data_set": {
+                    "stock_manage": "store/list/stock"
+                }
+            }
+        }
+    }
+}
