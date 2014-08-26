@@ -772,7 +772,7 @@
                             }
                         };
                         parentScope.onSelect2Keydown = function(event) {
-                            console.log(arguments);
+//                            console.log(arguments);
                         };
                         parentScope.onSelect3Blur = function(event) {
                             var context = getInputContext(event.target);
@@ -996,9 +996,12 @@
                     $scope[this.opts.dataName] = {};
 
                     $scope.$parent.doKeydown = function(event){
-//                console.log("dokeydown")
-//                
-                        if(event.keyCode === 13 && $(event.target).attr("ng-model") && !$(event.target).hasClass("select3Input")) {
+
+                    //绑定回车提交事件
+                        if(event.keyCode === 13
+                            && $(event.target).attr("ng-model")
+                            && !$(event.target).is("textarea")
+                            && !$(event.target).hasClass("select3Input")) {
                             event.preventDefault();
                             event.stopPropagation();
                             $scope.$parent.doSubmit();
@@ -1047,7 +1050,6 @@
                                     var helpText = "";
                                     if(struct.helpText) {
                                         helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
-                                        console.log(helpText);
                                     }
                                     finalHTML.push(sprintf(boxHTML, {
                                         helpText: helpText,
@@ -1061,6 +1063,8 @@
                                 }
                             }
                         });
+
+                        //包含表单结尾
                         if(self.opts.includeFoot) {
                             finalHTML.push(this.makeActions());
                         }

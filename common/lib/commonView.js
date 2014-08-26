@@ -156,6 +156,12 @@
             }])
         .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig",
             function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
+
+                if($routeParams.extra) {
+                    var queryExtraParams = parseParams($routeParams.extra);
+                    $routeParams = $.extend($routeParams, queryExtraParams);
+                }
+
                 //            var extraParams = parseParams($routeParams.extra) || "";
                 var module,group,res,model,actions;
                 group = $routeParams.group;
@@ -172,10 +178,6 @@
                 }
                 ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra, model);
 
-                if($routeParams.extra) {
-                    var queryExtraParams = parseParams($routeParams.extra);
-                    $routeParams = $.extend($routeParams, queryExtraParams);
-                }
                 //           console.log($routeParams);
                 $scope.selectAble = false;
                 //            $scope.pageActions = pageActions;
@@ -186,6 +188,7 @@
                 if(model.returnPage) {
                     opts.returnPage = model.returnPage;
                 }
+
                 ComView.displayForm($scope, model, res, opts);
             }])
         .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout",
