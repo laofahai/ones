@@ -6,11 +6,12 @@
         <title>ONES - Present by ONES Team.</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="common/statics/vendor.css" />
-        <link rel="stylesheet" href="common/statics/ace.css" />
-        <!-- build:css({.tmp,app}) styles/main.css -->
-        <link rel="stylesheet" href="common/statics/main.css">
-        <!-- endbuild -->
+        <link rel="stylesheet" href="common/statics/css/vendor.css" />
+        <link rel="stylesheet" href="common/statics/css/bootstrap.css" />
+        <link rel="stylesheet" href="common/statics/css/ace.css" />
+        <link rel="stylesheet" href="common/statics/css/ace-skins.css" />
+        <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
+        <link rel="stylesheet" href="common/statics/css/main.css">
     </head>
     <body ng-app="ones" ng-controller="MainCtl">
         <div class="initCover" id="initCover">
@@ -131,13 +132,13 @@
                             <ul class="submenu">
                                 <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
                                     <a ng-click="checkSubActiveNav(nc.id, nav.id);goPage(nc.url)">
-                                        <i class="icon-double-angle-right"></i>
+                                        <i class="icon-angle-double-right"></i>
                                         <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]||nc.label"></span>
                                     </a>
                                     <ul class="submenu">
                                         <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
                                             <a ng-click="checkThirdActiveNav(nct.id, nc.id);goPage(nct.url)">
-                                                <i class="icon-double-angle-right"></i>
+                                                <i class="icon-angle-double-right"></i>
                                                 <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]||nct.label"></span>
                                             </a>
                                         </li>
@@ -148,7 +149,7 @@
                     </ul>
 
                     <div class="sidebar-collapse" id="sidebar-collapse">
-                        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                        <i class="icon-angle-double-left" data-icon1="icon-angle-double-left" data-icon2="icon-angle-double-right"></i>
                     </div>
                 </div>
 
@@ -177,7 +178,7 @@
                             <h1>
                                 {{currentPage.lang.action||"Welcome"}}
                                 <small>
-                                    <i class="icon-double-angle-right"></i>
+                                    <i class="icon-angle-double-right"></i>
                                     {{currentPage.lang.actionDesc}}
                                 </small>
                                 <small ng-bind="i18n.lang.messages.loading" ng-show="dataQuering"></small>
