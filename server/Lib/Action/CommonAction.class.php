@@ -321,6 +321,7 @@ class CommonAction extends RestAction {
             }
 
             $list = $model->select();
+//            echo $model->getLastSql();exit;
 
             $this->queryMeta = array(
                 "map" => $map,
@@ -384,12 +385,15 @@ class CommonAction extends RestAction {
                 }
             }
 
+//            print_r($where);exit;
             if(count($where) > 1) {
                 $where["_logic"] = "OR";
                 $map["_complex"] = $where;
             } else {
                 $map = array_merge_recursive($map, $where);
             }
+
+//            print_r($map);
         }
 
         //过滤器

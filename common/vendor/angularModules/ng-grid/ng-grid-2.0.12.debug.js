@@ -3988,7 +3988,7 @@ angular.module('ngGrid').run(['$templateCache', function($templateCache) {
     "\n" +
     "    <div ng-show=\"showFilter\">\r" +
     "\n" +
-    "        <input placeholder=\"{{i18n.ngSearchPlaceHolder}}\" type=\"text\" ng-model=\"filterText\"/>\r" +
+    "        <input placeholder=\"{{i18n.ngSearchPlaceHolder}}\" type=\"text\" ng-model=\"filterOptions.filterText\"/>\r" +
     "\n" +
     "    </div>\r" +
     "\n" +

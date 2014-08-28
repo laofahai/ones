@@ -13,7 +13,7 @@
 class AuthRuleModel extends CommonModel {
 
     public $searchFields = array(
-        "name", "title"
+        "name"
     );
 
 }

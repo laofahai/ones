@@ -18,7 +18,7 @@
     - "vendor/angular-1.2.22/angular-sanitize.min.js"
     - "vendor/angular-1.2.22/angular-route.min.js"
     - "vendor/angular-1.2.22/angular-animate.min.js"
-    - "vendor/angularModules/ng-grid/ng-grid-2.0.12.min.js"
+    - "vendor/angularModules/ng-grid/ng-grid-2.0.12.debug.js"
     - "vendor/angularModules/angular-strap/angular-strap.min.js"
     - "vendor/angularModules/angular-strap/angular-strap.tpl.min.js"
     - "vendor/angularModules/ui-utils/ui-utils.min.js"

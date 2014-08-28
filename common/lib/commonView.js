@@ -635,6 +635,7 @@
                                 _si: sb.join("|"),
                                 _ic: 1
                             };
+                            console.log(p);
                             p = $.extend(opts.queryExtraParams, p, extraParams||{});
                             resource.query(p).$promise.then(function(remoteData){
                                 setPagingData(remoteData, page, pageSize);
@@ -695,8 +696,14 @@
                     }, 300);
 
                     $scope.gridOptions = opts;
+//
+//                    setInterval(function(){
+//                        console.log($scope.filterText);
+//                    }, 2000)
+
 
                 };
+
 
 
                 service.displayBill = function($scope, fieldsDefine, resource, opts) {
