@@ -209,6 +209,7 @@
 
                 plugin.callPlugin("bind_dataModel_to_structure", {
                     structure: fields,
+                    after: "goods_name",
                     alias: "product",
                     require: ["goods_id"],
                     queryExtra: ["goods_id"]
@@ -512,7 +513,7 @@
                     {
                         label : $scope.i18n.lang.actions.export,
                         class : "deafult",
-                        href  : "/store/export/StockWarning"
+                        href  : "/store/export/stockProductList"
                     }
                 ];
                 $scope.selectAble = false;
@@ -573,26 +574,27 @@
                     {
                         label : $scope.i18n.lang.actions.list,
                         class : "primary",
-                        href  : "/store/StockProductList"
-                    },
-                    {
-                        label : $scope.i18n.lang.actions.export,
-                        class : "success",
-                        href  : "/store/StockProductList/Export"
+                        href  : "/store/list/stockProductList"
                     }
                 ];
                 $scope.selectAble = false;
-                ComView.displayForm($scope, StockProductExportModel, null, {
-                    name: "export"
-                }, true);
+                ComView.displayForm($scope, StockProductExportModel);
 
                 $scope.doSubmit = function(){
-                    var url = cnf.BSU+'store/StockProductList/Export';
-                    if($scope.exportData.stock) {
-                        url+= "/stock/"+$scope.exportData.stock.join('_');
+//                    console.log($scope);return;
+                    var url = cnf.BSU+'store/stockProductList/export/%s.json';
+                    var params = {};
+                    if($scope.formData.stock) {
+                        params.stock = $scope.formData.stock;
+//                        url+= "/stock/"+$scope.formData.stock.join('_');
                     }
-                    url+= "/category/"+$scope.exportData.category.join('_');
-                    url+= "/warningonly/"+$scope.exportData.stockWarningOnly;
+                    params.category = $scope.formData.category;
+//                    url+= "/category/"+$scope.formData.category.join('_');
+//                    url+= "/warningonly/"+$scope.formData.stockWarningOnly;
+                    params.warningonly = $scope.formData.stockWarningOnly;
+
+                    url = sprintf(url, base64encode(angular.toJson(params)));
+                    console.log(url);return;
                     window.open(url);
                 };
             }])

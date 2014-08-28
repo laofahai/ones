@@ -14,10 +14,16 @@ array("home/dataModel/:id", "HOME/DataModel/delete", "", "delete", "json"),
 if(!function_exists("routeMaker")) {
     function routeMaker($resName, $mapUrl, $methods = array()) {
         if(!$methods) {
-            $methods = array("list", "get", "put", "post", "delete");
+            $methods = array("list", "get", "put", "post", "delete", "export");
         }
 
         $return = array();
+
+        if(in_array("export", $methods)) {
+            array_push($return, array(
+                $resName."/export/:params", $mapUrl."/export", "", "get", "json"
+            ));
+        }
 
         if(in_array("get", $methods)) {
             array_push($return, array(
@@ -74,14 +80,23 @@ $groupMap = array(
 
 $tmp = explode("/", $_GET["s"]);
 //print_r($tmp);exit;
-//有ID参数的情况
-if(count($tmp) >= 4) {
-    list($null, $group, $module, $id) = $tmp;
-    list($id, $ext) = explode(".", $id);
-} else {
-    list($null, $group, $app) = $tmp;
-    list($module, $ext) = explode(".", $app);
+switch(count($tmp)) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+        list($null, $group, $app) = $tmp;
+        list($module, $ext) = explode(".", $app);
+        break;
+    case 4:
+        list($null, $group, $module, $id) = $tmp;
+        list($id, $ext) = explode(".", $id);
+        break;
+    case 5:
+        list($null, $group, $module, $action, $id) = $tmp;
+        list($id, $ext) = explode(".", $id);
 }
+
 
 $group = $groupMap[$group] ? $groupMap[$group] : ucfirst($group);
 if($ext == "json") {
@@ -106,5 +121,5 @@ if($ext == "json") {
 }
 
 unset($null, $tmp, $groupMap, $k, $action, $hasRule, $ext);
-
+//print_r($urlRoutes);
 return $urlRoutes;

@@ -20,12 +20,23 @@
          }
 
          //查询模型字段
-         //@todo 模型字段扩展信息
          res.query({
              modelAlias: params.alias
          }, function(data){
+             var extraConfigure = {};
+             var tmp;
+             var tmpConfig;
+             var defaultConfigure = {};
+             var labelConfigure = {};
              angular.forEach(data, function(item){
-                 result[item.field_name] = {
+
+                 tmp = item.extra_data.split("\n");
+                 for(var i=0;i<tmp.length;i++) {
+                     tmpConfig = tmp[i].split("::");
+                     extraConfigure[tmpConfig[0]] = eval(tmpConfig[1]);
+                 }
+
+                 defaultConfigure = {
                      inputType: item.input_type,
                      nameField: "data",
                      editAbleRequire: params.require || [],
@@ -34,26 +45,22 @@
                      autoQuery: !params.autoQuery || true,
                      queryParams: {
                          fieldAlias: item.field_name
-                     },
-                     listable: false
+                     }
                  };
-                 result[item.field_name+"_label"] = {
-                     inputType: item.input_type,
-                     nameField: "data",
-                     editAbleRequire: params.require || [],
-                     dataSource: injector.get("DataModelDataRes"),
-                     queryWithExistsData: params.queryExtra || [],
-                     autoQuery: !params.autoQuery || true,
-                     queryParams: {
-                         fieldAlias: item.field_name
-                     },
-                     hideInForm:true,
-                     billAble: false
-                 };
+
+                 defaultConfigure = $.extend(defaultConfigure, extraConfigure);
+                 result[item.field_name] = defaultConfigure;
+
+                 //显示绑定到_label字段
+                 if(defaultConfigure.bindToLabel) {
+                     labelConfigure = defaultConfigure;
+                     labelConfigure["hideInForm"] = true;
+                     labelConfigure["billAble"] = false;
+                     result[item.field_name+"_label"] = labelConfigure;
+                 }
              });
 
              result = $.extend(result, params.structure);
-
 
              defer.resolve(result);
          });
@@ -136,7 +143,8 @@
                         inputType: "textarea",
                         required: false,
                         style: "height:120px;",
-                        helpText: toLang("dataModel_extraConfig_tip", null, $rootScope)
+                        helpText: toLang("dataModel_extraConfig_tip", null, $rootScope),
+                        listable: false
                     }
                 };
 

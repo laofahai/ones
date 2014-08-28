@@ -20,8 +20,6 @@ class StockProductListAction extends CommonAction {
         "category_name" => "分类名称",
         "goods_name" => "品名",
         "measure" => "计量单位",
-        "standard"=> "规格",
-        "version" => "型号",
         "stock_name" => "仓库",
         "num" => "库存数量",
         "store_min" => "库存下限",
@@ -46,19 +44,21 @@ class StockProductListAction extends CommonAction {
             $map["factory_code_all"] = $_GET["factory_code_all"];
         }
     }
-    
-    public function Export() {
-        
+
+
+    public function export() {
+        $params = json_decode(base64_decode($_GET["params"]), true);
+
         $model = D("StockProductListView");
         $map = array();
         if($_GET["stock"]) {
-            $map["stock_id"] = array("IN", str_replace("_", ",", $_GET["stock"]));
+            $map["stock_id"] = array("IN", implode(",", $params["stock"]));
         }
-        if($_GET["warningonly"] > 0) {
+        if($params["warningonly"] > 0) {
             $map["_string"] = '((store_min>0 AND store_min>=num) OR (store_max>0 AND store_max<=num))';
         }
         if($_GET["category"]) {
-            $map["goods_category_id"] = array("IN", str_replace("_", ",", $_GET["category"]));
+            $map["goods_category_id"] = array("IN", implode(",", $params["category"]));
         }
         
         $data = $model->where($map)->order("stock_id ASC")->select();
