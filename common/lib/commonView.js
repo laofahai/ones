@@ -318,7 +318,7 @@
 
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
                     //                console.log(arguments);
-                    $scope.config = {};
+                    $scope.formConfig = {};
                     var defaultOpts = {
                         name: "form", //表单名称
                         id: null, //如为编辑，需传递此参数
@@ -332,11 +332,11 @@
                     };
                     opts = $.extend(defaultOpts, opts);
 //                    opts.dataName = opts.name + "Data";
-                    $scope.config.name = opts.name;
-                    $scope.config.dataName = opts.dataName;
+                    $scope.formConfig.name = opts.name;
+                    $scope.formConfig.dataName = opts.dataName;
 
                     var doDefine = function(fd) {
-                        $scope.config.fieldsDefine = fd;
+                        $scope.formConfig.fieldsDefine = fd;
                         //编辑
                         if (opts.id || opts.isEdit) {
                             //
@@ -345,7 +345,7 @@
                                 tmpParams.id = opts.id;
                             }
                             resource.get(tmpParams).$promise.then(function(defaultData) {
-                                $scope[opts.dataName] = dataFormat($scope.config.fieldsDefine, defaultData);
+                                $scope[opts.dataName] = dataFormat($scope.formConfig.fieldsDefine, defaultData);
                             });
                         }
                         //延时编译
@@ -361,9 +361,10 @@
                      * */
                     if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) === "function") {
                         var model = fieldsDefine;
-                        $scope.config.columns = model.columns || null;
-                        $scope.config.formActions = undefined === model.formActions ? true : false;
+                        $scope.formConfig.columns = model.columns || 1;
+                        $scope.formConfig.formActions = undefined === model.formActions ? true : false;
                         var field = model.getFieldsStruct();
+
                         if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
                             field.then(function(data){
                                 fieldsDefine = data;

@@ -14361,3 +14361,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     top: 65px;
   }
 }
+
+.badge {
+    color:#fff !important;
+}

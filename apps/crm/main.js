@@ -52,20 +52,20 @@
                 }
             };
         }])
-        .service("RelationshipCompanyModel", ["$rootScope", "RelationshipCompanyGroupRes", function($rootScope, RelationshipCompanyGroupRes){
+        .service("RelationshipCompanyModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             return {
                 columns: 2,
                 formActions: false,
                 isBill: true,
                 getFieldsStruct: function(){
-                    return {
+                    var structure = {
                         id: {
                             primary: true
                         },
                         name: {},
                         group_id: {
                             field: "Group.name",
-                            dataSource: RelationshipCompanyGroupRes,
+                            dataSource: "RelationshipCompanyGroupRes",
                             inputType: "select",
                             displayName: $rootScope.i18n.lang.group
                         },
@@ -86,13 +86,21 @@
                             inputType: "textarea"
                         }
                     };
+
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: structure,
+                        after: "address",
+                        alias: "crmBaseInfo"
+                    });
+
+                    return ones.pluginScope.get("defer").promise;
                 }
             };
         }])
-        .service("RelationshipCompanyLinkmanModel", ["$rootScope", function($rootScope){
+        .service("RelationshipCompanyLinkmanModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             return {
                 getFieldsStruct: function(){
-                    return {
+                    var structure = {
                         contact: {},
                         company_name: {
                             billAble: false,
@@ -120,6 +128,14 @@
                             listable: false
                         }
                     };
+
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: structure,
+                        after: "qq",
+                        alias: "crmContact"
+                    });
+
+                    return ones.pluginScope.get("defer").promise;
                 }
             };
         }])

@@ -331,7 +331,7 @@ class CommonAction extends RestAction {
 
             if($this->dataModelAlias) {
                 $params = array(
-                    $list, $this->dataModelAlias
+                    $list, $this->dataModelAlias, false, true
                 );
 
                 tag("assign_dataModel_data", $params);

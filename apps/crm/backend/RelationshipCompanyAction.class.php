@@ -28,6 +28,7 @@ class RelationshipCompanyAction extends CommonAction {
      *
      * **/
     protected function pretreatment() {
+
         $tmp["baseInfo"] = array(
             "name" => $_POST["name"],
             "pinyin" => Pinyin($_POST["name"]),
@@ -50,19 +51,53 @@ class RelationshipCompanyAction extends CommonAction {
             } else {
                 unset($_POST["rows"][$k]);
             }
-
         }
 
-        $_POST = $tmp;
+        $_POST["extraInfo"] = $tmp["baseInfo"];
+        foreach($_POST as $k=>$v) {
+            if($k == "rows" or $k == "extraInfo" or array_key_exists($k, $tmp["baseInfo"])) {
+                continue;
+            }
+            $_POST["extraInfo"][$k] = $v;
+        }
+//        print_R($_POST["extraInfo"]);
+//        echo 123;
+//exit;
+        $_POST["rows"] = $tmp["rows"];
+        $_POST["baseInfo"] = $tmp["baseInfo"];
+    }
+
+    public function index() {
+        $this->dataModelAlias = "crmBaseInfo";
+        return parent::index();
     }
     
     public function insert() {
         $this->pretreatment();
 
         $model = D("RelationshipCompany");
-        $rs = $model->newCompany($_POST["baseInfo"], $_POST["rows"]);
-        if(!$rs) {
+        $id = $model->newCompany($_POST["baseInfo"], $_POST["rows"]);
+
+        if(!$id) {
             $this->response($model->getError());
+        } else {
+            $_POST["extraInfo"]["id"] = $id;
+            $params = array(
+                "crmBaseInfo",
+                $_POST["extraInfo"]
+            );
+
+//            print_r($_POST["extraInfo"]);
+
+            tag("insert_dataModel_data", $params);
+
+            foreach($_POST["rows"] as $row) {
+                $params = array(
+                    "crmContact",
+                    $row
+                );
+                tag("insert_dataModel_data", $params);
+            }
         }
     }
 
@@ -71,12 +106,30 @@ class RelationshipCompanyAction extends CommonAction {
 
         $model = D("RelationshipCompany");
         $rs = $model->editCompany($_POST["baseInfo"], $_POST["rows"], $_GET["id"]);
+
         if(!$rs) {
             $this->response($model->getError());
+        } else {
+
+            $params = array(
+                "crmBaseInfo",
+                $_POST["extraInfo"]
+            );
+
+            tag("insert_dataModel_data", $params);
+
+            foreach($_POST["rows"] as $row) {
+                $params = array(
+                    "crmContact",
+                    $row
+                );
+                tag("insert_dataModel_data", $params);
+            }
         }
     }
 
     public function read() {
+        $this->dataModelAlias = "crmBaseInfo";
         $data = parent::read(true);
         if(!$_GET["includeRows"]) {
             $this->response($data);
@@ -84,9 +137,20 @@ class RelationshipCompanyAction extends CommonAction {
         }
 
         $model = D("RelationshipCompanyLinkman");
-        $tmp["rows"] = $model->where("relationship_company_id=".$_GET["id"])->select();
+        $rows = $model->where("relationship_company_id=".$_GET["id"])->select();
 
-        $this->response($tmp);
+        $params = array(
+            $rows,
+            "crmContact",
+            false,
+            false
+        );
+
+        tag("assign_dataModel_data", $params);
+
+        $data["rows"] = $params[0];
+
+        $this->response($data);
     }
     
 //    public function index() {

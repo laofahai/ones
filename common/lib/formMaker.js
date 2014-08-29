@@ -942,7 +942,7 @@
                     this.scope = $scope;
                     config = config || {};
                     if(isEmptyObject(config)) {
-                        config = $scope.$eval("$parent.config");
+                        config = $scope.$eval("$parent.formConfig");
                     }
                     if (!config.fieldsDefine) {
                         return false;
@@ -1020,6 +1020,8 @@
                         var self = this;
                         var fieldHTML, finalHTML = [];
                         var boxHTML = this.opts.templates["commonForm/box.html"];
+
+                        var colWidth = self.opts.columns ? 12/self.opts.columns : null;
                         //隐藏字段
                         angular.forEach(this.opts.fieldsDefine, function(struct, field){
                             if(struct.inputType === "hidden") {
@@ -1043,7 +1045,6 @@
                             if(!struct.hideInForm && !struct.primary) {
                                 fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                                 if (false !== fieldHTML) {
-                                    var colWidth = self.opts.columns ? 12/self.opts.columns : null;
                                     if(struct.colspan) {
                                         colWidth = colWidth * struct.colspan;
                                     }

@@ -13,7 +13,7 @@ class ONESInsertDataModelDataBehavior extends Behavior {
 
     /*
      * @param $bindModelAlias string 使用的数据模型别名
-     * @param $data array POST的数据，根据数据模型查询字段之后从此数组中取值
+     * @param $data array POST的数据，根据数据模型查询字段之后从此数组中取值，单条数据
      * **/
     public function run(&$params) {
         list($bindModelAlias, $data, $pinyin) = $params;

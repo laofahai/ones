@@ -24,11 +24,12 @@
              modelAlias: params.alias
          }, function(data){
              var extraConfigure = {};
-             var tmp;
-             var tmpConfig;
-             var defaultConfigure = {};
-             var labelConfigure = {};
+
              angular.forEach(data, function(item){
+                 var tmp;
+                 var tmpConfig;
+                 var defaultConfigure = {};
+                 var labelConfigure = {};
 
                  tmp = item.extra_data.split("\n");
                  for(var i=0;i<tmp.length;i++) {
@@ -36,7 +37,7 @@
                      extraConfigure[tmpConfig[0]] = eval(tmpConfig[1]);
                  }
 
-                 defaultConfigure = {
+                 var defaultConfigure = {
                      inputType: item.input_type,
                      nameField: "data",
                      editAbleRequire: params.require || [],
@@ -45,19 +46,33 @@
                      autoQuery: !params.autoQuery || true,
                      queryParams: {
                          fieldAlias: item.field_name
-                     }
+                     },
+                     width: "auto"
                  };
 
+
+
                  defaultConfigure = $.extend(defaultConfigure, extraConfigure);
-                 result[item.field_name] = defaultConfigure;
+
+
+                 if(!defaultConfigure.displayName || defaultConfigure.display == undefined) {
+                     defaultConfigure.displayName = item.display_name;
+                 }
 
                  //显示绑定到_label字段
                  if(defaultConfigure.bindToLabel) {
-                     labelConfigure = defaultConfigure;
-                     labelConfigure["hideInForm"] = true;
-                     labelConfigure["billAble"] = false;
+                     var labelConfigure = $.extend({}, defaultConfigure);
+                     labelConfigure.listable = extraConfigure.listable === undefined ? true : extraConfigure.listable;
+                     labelConfigure.hideInForm = true;
+                     labelConfigure.billAble = false;
                      result[item.field_name+"_label"] = labelConfigure;
+//                     console.log(labelConfigure);
+                     defaultConfigure.listable = false;
+                 } else {
+
                  }
+
+                 result[item.field_name] = defaultConfigure;
              });
 
              result = $.extend(result, params.structure);

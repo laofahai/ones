@@ -78,6 +78,8 @@ class RelationshipCompanyModel extends CommonRelationModel {
             }
         }
 
+        tag("insert_dataModel_data", $params);
+
         $this->commit();
 
         return $id;
@@ -87,14 +89,16 @@ class RelationshipCompanyModel extends CommonRelationModel {
     public function editCompany($baseInfo, $contacts, $id) {
         $this->startTrans();
         if(false === $this->where("id=".$id)->save($baseInfo)) {
-            $this->error = "edit company failed";
+//            echo $this->getLastSql();exit;
+//            var_dump($baseInfo);exit;
+            $this->error = "edit company failed while base info.";
             $this->rollback();
             return false;
         }
 
         $model = D("RelationshipCompanyLinkman");
         foreach($contacts as $row) {
-            if(false === $model->where("relationship_company_id=".$id)->save($row)) {
+            if(false === $model->where("id=".$row["id"])->save($row)) {
                 $this->error = "edit contact failed";
                 $this->rollback();
                 return false;
