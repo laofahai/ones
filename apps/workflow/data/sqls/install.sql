@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   PRIMARY KEY (`id`),
   KEY `workflow_id` (`workflow_id`,`prev_node_id`,`next_node_id`,`remind`),
   KEY `listorder` (`listorder`),
-  KEY `default` (`default`)
+  KEY `is_default` (`is_default`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (

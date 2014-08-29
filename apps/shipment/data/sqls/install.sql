@@ -1,7 +1,7 @@
-DELETE FROM `x_types` WHERE type = 'shipment';
-DELETE FROM `x_auth_rule` WHERE name LIKE 'shipment.Shipment.%';
+DELETE FROM `[PREFIX]types` WHERE type = 'shipment';
+DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.Shipment.%';
 
-CREATE TABLE IF NOT EXISTS `x_shipment` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]shipment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) DEFAULT '0',
   `shipment_type` smallint(4) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `x_shipment` (
   KEY `freight_type` (`freight_type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO `x_auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) VALUES
+INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) VALUES
 (null, 'shipment.Shipment.read', '发货单列表', 1, '', 'stock'),
 (null, 'shipment.Shipment.add', '新建发货单', 1, '', 'stock'),
 (null, 'shipment.Shipment.edit', '修改发货单', 1, '', 'stock'),

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `x_finance_account` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_account` (
   KEY `listorder` (`listorder`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_finance_pay_plan` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_pay_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
   `type_id` smallint(5) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_pay_plan` (
   KEY `type_id` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_finance_receive_plan` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_receive_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
   `type_id` smallint(5) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_receive_plan` (
   KEY `type_id` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_finance_record` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]finance_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type_id` smallint(5) NOT NULL,
   `account_id` smallint(3) NOT NULL,

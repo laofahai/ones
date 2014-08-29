@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `x_stock` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `managers` varchar(50) NOT NULL DEFAULT '',
   `name` varchar(50) NOT NULL,
@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS `x_stock` (
   KEY `pinyin` (`pinyin`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `x_stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES (1, '1', '总库', '', 0);
+INSERT INTO `[PREFIX]stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES (1, '1', '总库', '', 0);
 
-CREATE TABLE IF NOT EXISTS `x_stockin` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
   `type_id` smallint(5) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `x_stockin` (
   KEY `status` (`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockin_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
   KEY `stock_id` (`stock_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `x_stockout` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
   `source_id` int(11) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `x_stockout` (
   KEY `source_model` (`source_model`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]stock_product_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_code_all` varchar(40) NOT NULL,
   `goods_id` int(11) NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `x_craft` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]craft` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -7,14 +7,14 @@ CREATE TABLE IF NOT EXISTS `x_craft` (
   KEY `listorder` (`listorder`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_goods_craft` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]goods_craft` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT,
   `craft_id` smallint(5) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
   KEY `goods_id` (`goods_id`,`craft_id`,`listorder`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_produce_boms` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_boms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `plan_detail_id` int(11) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_boms` (
   KEY `plan_id` (`plan_id`,`plan_detail_id`,`goods_id`,`factory_code_all`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_produce_plan` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` smallint(4) NULL,
   `total_num` decimal(10,2) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_plan` (
   KEY `type` (`type`,`start_time`,`end_time`,`create_time`,`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_produce_plan_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_plan_detail` (
   KEY `plan_id` (`plan_id`,`goods_id`,`factory_code_all`,`start_time`,`end_time`,`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_produce_process` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]produce_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `plan_detail_id` int(11) NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_process` (
   KEY `goods_id` (`goods_id`,`factory_code_all`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_product_tpl` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `x_product_tpl` (
   KEY `goods_id` (`goods_id`,`factory_code_all`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `x_product_tpl_detail` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tpl_id` smallint(5) NOT NULL,
   `goods_id` int(11) NOT NULL,
