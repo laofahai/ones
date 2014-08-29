@@ -14,4 +14,4 @@ class DataModelBuild extends CommonBuildAction {
         "datamodel.datamodeldata.*",
     );
 
-} 
+}

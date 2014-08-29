@@ -27,6 +27,9 @@
         .factory("RelationshipCompanyGroupRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relationshipCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});
         }])
+        .factory("RelationshipCompanyLinkmanRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "crm/relationshipCompanyLinkman/:id.json");
+        }])
         .factory("RelationshipCompanyRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relationshipCompany/:id.json", null, {'update': {method: 'PUT'}});
         }])
@@ -86,32 +89,43 @@
                 }
             };
         }])
-        .service("RelationshipLinkmanModel", ["$rootScope", function($rootScope){
+        .service("RelationshipCompanyLinkmanModel", ["$rootScope", function($rootScope){
             return {
-                isBill: true,
                 getFieldsStruct: function(){
                     return {
                         contact: {},
-                        mobile: {},
-                        tel: {},
-                        email: {
-                            inputType: "email"
+                        company_name: {
+                            billAble: false,
+                            hideInForm: true
                         },
-                        qq: {},
+                        mobile: {
+                            required: false
+                        },
+                        tel: {
+                            required: false
+                        },
+                        email: {
+                            inputType: "email",
+                            required: false
+                        },
+                        qq: {
+                            required: false
+                        },
                         is_primary: {
                             inputType: "select",
                             dataSource: [
                                 {id: -1, name: toLang("no", null, $rootScope)},
                                 {id: 1, name: toLang("yes", null, $rootScope)}
-                            ]
+                            ],
+                            listable: false
                         }
                     };
                 }
             };
         }])
 
-        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "RelationshipLinkmanModel", "$routeParams",
-            function($scope, ComView, RelationshipCompanyModel, res, RelationshipLinkmanModel, $routeParams){
+        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "RelationshipCompanyLinkmanModel", "$routeParams",
+            function($scope, ComView, RelationshipCompanyModel, res, RelationshipCompanyLinkmanModel, $routeParams){
                 $scope.selectAble = false;
                 ComView.displayForm($scope, RelationshipCompanyModel, res, {
                     dataName: "baseInfo",
@@ -119,7 +133,7 @@
                     id: $routeParams.id
                 });
 
-                ComView.displayBill($scope, RelationshipLinkmanModel, res, {
+                ComView.displayBill($scope, RelationshipCompanyLinkmanModel, res, {
                     minRows: 4,
                     id: $routeParams.id
                 });

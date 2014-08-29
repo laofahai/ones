@@ -452,7 +452,7 @@
                             '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>',
                         'bills/fields/rowHead.html': '<th>%(i)s</th><td class="center"><label class="rowHead">'+
                             '<i class="icon icon-plus" ng-click="billAddRow($event.target)"></i> '+
-                            '<i class="icon icon-trash" ng-click="billRemoveRow($event.target)"></i> '+
+                            '<i class="icon icon-trash-o" ng-click="billRemoveRow($event.target)"></i> '+
                             '</label></td>',
                         'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" title="{{%(bind)s}}" %(event)s>%(label)s</label></td>',
                         'bills/fields/typeaheadList.html': '<ul class="typeAheadList editAble" />'+

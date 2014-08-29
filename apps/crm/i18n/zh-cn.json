@@ -18,6 +18,13 @@
                         "add": "新增往来单位",
                         "edit": "修改往来单位信息"
                     }
+                },
+                "RelationshipCompanyLinkman": {
+                    "name": "往来单位联系人",
+                    "actions": {
+                        "list": "",
+                        "edit": ""
+                    }
                 }
             }
         }
@@ -26,7 +33,8 @@
         "navs": {
             "rel_company": "往来单位管理",
             "relCompanyGroup": "分组",
-            "relCompanyRecord": "基础档案"
+            "relCompanyRecord": "基础档案",
+            "relCompanyContact": "联系人"
         },
         "widgetTitles": {
             "relCompanyBaseInfo": "往来单位基本信息"
@@ -40,6 +48,7 @@
         "linkMan": "联系人",
         "supplier": "供应商",
         "customer": "客户",
+        "company_name": "公司名称",
 
         "crm.relationshipcompanylinkman" : "%s往来单位联系人",
         "crm.relationshipcompany" : "%s往来单位",

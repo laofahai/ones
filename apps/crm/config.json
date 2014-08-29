@@ -9,6 +9,7 @@
         "rel_company" : {
             "childs" : {
                 "relCompanyRecord" : "crm/list/relationshipCompany",
+                "relCompanyContact" : "crm/list/relationshipCompanyLinkman",
                 "relCompanyGroup" : "crm/list/relationshipCompanyGroup"
             },
             "icon" : "link"
