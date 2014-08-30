@@ -84,19 +84,22 @@
                 if(!errors) {
                     return;
                 }
-                var i18n = $rootScope.i18n.lang;
-                var tips = [];
-                angular.forEach(errors, function(err, k){
-                    if(!err || k === "false") {
-                        return;
-                    }
-                    if(k in i18n.errors) {
-                        tips.push(i18n.errors[k]);
-                    } else {
-                        tips.push(k);
-                    }
 
-                });
+                var tips = [];
+                try {
+                    var i18n = $rootScope.i18n.lang;
+                    angular.forEach(errors, function(err, k){
+                        if(!err || k === "false") {
+                            return;
+                        }
+                        if(k in i18n.errors) {
+                            tips.push(i18n.errors[k]);
+                        } else {
+                            tips.push(k);
+                        }
+
+                    });
+                } catch(e) {}
                 return tips.join(", ");
             };
         }])
@@ -108,6 +111,11 @@
         .filter("toAuthNodeName", ["$rootScope", function($rootScope){
             return function(text) {
                 return getAuthNodeName(text, $rootScope);
+            };
+        }])
+        .filter('toTrustedHTML', ['$sce', function ($sce) {
+            return function (text) {
+                return $sce.trustAsHtml(text);
             };
         }])
 

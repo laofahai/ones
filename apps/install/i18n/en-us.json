@@ -1,0 +1,33 @@
+{
+    "lang": {
+        "title": "ONES install wizard",
+
+        "dbhost": "Database Host",
+        "dbname": "Database Name",
+        "dbuser": "Database User",
+        "dbpwd" : "Database Password",
+        "dbpre" : "Table Prefix",
+
+        "adminEmail": "Administrator Email",
+        "adminUsername": "Administrator Login Name",
+        "adminTruename": "Administrator Name",
+        "adminPwd": "Administrator Password",
+
+        "step_1": "Read ONES ERP agreements",
+        "step_2": "Configure the database",
+        "step_3": "Configure the administrator",
+        "step_4": "Install",
+
+        "prev": "Previous",
+        "next": "Next",
+
+        "helpText": {
+            "dbhost": "It usually be 127.0.0.1 or localhost"
+        },
+
+        "readAndAgree": "I have read the ONES agreements and agree.",
+        "mustAgree": "You must agree the ONES agreements first.",
+        "fillTheForm": "Please fill the form correct"
+
+    }
+}

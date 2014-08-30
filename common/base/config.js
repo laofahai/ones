@@ -26,7 +26,7 @@
         .run(["$rootScope", "$http", "$injector", "$location", function($rootScope, $http, $injector, $location) {
 
             var loginHash = uriParamsGet('hash');
-            if ($location.url() && !loginHash) {
+            if ($location.url() && !loginHash && !ones.installing) {
                 window.location.href = 'index.html';
             }
 

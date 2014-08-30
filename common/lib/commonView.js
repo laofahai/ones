@@ -364,7 +364,6 @@
                         $scope.formConfig.columns = model.columns || 1;
                         $scope.formConfig.formActions = undefined === model.formActions ? true : false;
                         var field = model.getFieldsStruct();
-
                         if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
                             field.then(function(data){
                                 fieldsDefine = data;

@@ -1,8 +1,8 @@
 (function(){
     'use struct';
     angular.module("ones.formMaker", [])
-        .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config",
-            function($compile, $q, $parse, $injector, $timeout, ONESConfig) {
+        .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config", "$rootScope",
+            function($compile, $q, $parse, $injector, $timeout, ONESConfig, $rootScope) {
                 var service = {};
                 service.makeField = function(scope, opts) {
                     var defaultOpts = {};
@@ -88,7 +88,7 @@
                             fieldDefine["data-row-index"] = context.trid;
                         }
                         if (!fieldDefine.displayName) {
-                            fieldDefine.displayName = this.$parent.scope.$parent.i18n.lang[context.field];
+                            fieldDefine.displayName = toLang(context.field, "", $rootScope);
                         }
                         var html = false;
                         if (method in this) {
