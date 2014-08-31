@@ -10,6 +10,19 @@ class InstallAction extends CommonAction {
 
     protected $installLockFile;
 
+    protected $writeableDirs = array(
+        "/apps",
+        "/server/Conf/config.php",
+        "/server/ones.sql",
+        "/server/Runtime",
+        "/server/Data",
+        "/server/Data/apps",
+        "/server/Data/Avatars",
+        "/server/Data/Backup",
+        "/server/Data/logs",
+        "/server/Data/Updates"
+    );
+
     public function __construct() {
         if(!$_POST) {
             $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
@@ -25,6 +38,9 @@ class InstallAction extends CommonAction {
         }
 
         switch($_POST['step']) {
+            case "checkPermission":
+                $this->checkDirPermission();
+                break;
             case "testDB":
                 $this->testDB($_POST["data"]);
                 break;
@@ -134,6 +150,26 @@ class InstallAction extends CommonAction {
     private function clearData($config) {
         file_put_contents($this->installLockFile, CTS);
         sleep(2);
+    }
+
+    private function checkDirPermission() {
+        $lists = array();
+        $hasUnwriteAble = false;
+        foreach($this->writeableDirs as $file) {
+            $writeable = is_writeable(ROOT_PATH.$file);
+            if(!$writeable) {
+                $hasUnwriteAble = true;
+            }
+            $lists[] = array(
+                "dir" => $file,
+                "writeable" => $writeable
+            );
+        }
+
+        $this->response(array(
+            "hasUnwriteable" => $hasUnwriteAble,
+            "lists" => $lists
+        ));
     }
 
 }

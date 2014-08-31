@@ -15,9 +15,10 @@
         "adminPwd": "Administrator Password",
 
         "step_1": "Read ONES ERP agreements",
-        "step_2": "Configure the database",
-        "step_3": "Configure the administrator",
-        "step_4": "Install",
+        "step_2": "Check directories writeable",
+        "step_3": "Configure the database",
+        "step_4": "Configure the administrator",
+        "step_5": "Install",
 
         "prev": "Previous",
         "next": "Next",

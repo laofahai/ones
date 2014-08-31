@@ -1,0 +1,10 @@
+<table class="table table-striped table-bordered table-hover">
+    <tbody>
+        <tr ng-repeat="p in permissions.lists">
+            <td ng-bind="p.dir"></td>
+            <td>
+                <i class="icon" ng-class="{'icon-check green': p.writeable, 'icon-times red': p.writeable===false}"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>

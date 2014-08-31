@@ -13,14 +13,18 @@
                     controller: "ReadAgreementCtl"
                 })
                 .when("/step-2", {
+                    templateUrl: appView("permissionCheck.html", "install"),
+                    controller: "PermissionCheckCtl"
+                })
+                .when("/step-3", {
                     templateUrl: appView("configure.html", "install"),
                     controller: "ConfigureCtl"
                 })
-                .when("/step-3", {
+                .when("/step-4", {
                     templateUrl: appView("initialize.html", "install"),
                     controller: "InitializeCtl"
                 })
-                .when("/step-4", {
+                .when("/step-5", {
                     templateUrl: appView("doInstall.html", "install"),
                     controller: "DoInstallCtl"
                 })
@@ -91,9 +95,12 @@
         }])
         .controller("MainCtl", ["$scope", "$location", "$rootScope", function($scope, $location, $rootScope){
 
-            $scope.step = 1;
 
             $scope.configure = {};
+
+            $scope.steps = [
+                1,2,3,4,5
+            ];
 
             $scope.$watch(function(){
                 return $rootScope.installLang;
@@ -130,7 +137,7 @@
 
 
             $scope.hasNext = function() {
-                return $scope.step < 4;
+                return $scope.step < 5;
             }
             $scope.hasPrev = function() {
                 return $scope.step > 1;
@@ -168,10 +175,30 @@
                 return $scope.agree;
             }
         }])
+        .controller("PermissionCheckCtl", ["$scope", "$rootScope", "$http", "ones.config", function($scope, $rootScope, $http, conf){
+            $scope.step = 2;
+            $scope.permissions = {
+                hasUnwriteable: true,
+                lists: []
+            };
+            $http.post(conf.BSU+"install", {
+                step: "checkPermission"
+            }).success(function(data){
+                $scope.permissions = data;
+            });
+
+            $scope.$parent.checkNext = function(){
+                if($scope.permissions.hasUnwriteable) {
+                    $scope.$parent.alert.msg = $rootScope.installLang.mustWriteable;
+                    $scope.$parent.alert.type = "danger";
+                    return false;
+                }
+            }
+        }])
         .controller("ConfigureCtl", ["$scope", "FormMaker", "ConfigureModel", "$compile", "$rootScope",
             function($scope, FormMaker, model, $compile, $rootScope){
 
-                $scope.$parent.step = 2;
+                $scope.$parent.step = 3;
                 var fm = new FormMaker.makeForm($scope, {
                     fieldsDefine: model.getFieldsStruct(),
                     includeFoot: false
@@ -198,7 +225,7 @@
             }])
         .controller("InitializeCtl", ["$scope", "FormMaker", "InitModel", "$compile", "$rootScope",
             function($scope, FormMaker, model, $compile, $rootScope){
-                $scope.$parent.step = 3;
+                $scope.$parent.step = 4;
                 var fm = new FormMaker.makeForm($scope, {
                     fieldsDefine: model.getFieldsStruct(),
                     includeFoot: false
@@ -224,7 +251,7 @@
 
             }])
         .controller("DoInstallCtl", ["$scope", "$rootScope", "$http", "ones.config", "$sce", function($scope,$rootScope, $http, config, $sce){
-            $scope.$parent.step = 4;
+            $scope.$parent.step = 5;
 
 //            $scope.$parent.configure = {"db":{"dbhost":"127.0.0.1","dbname":"ones_install","dbpre":"x_","dbuser":"root","dbpwd":"root"},"admin":{"username":"admin","truename":"Administrator","email":"admin@admin.com","password":"123123"}};
 

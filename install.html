@@ -73,26 +73,13 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="col-sm-3 installStepBox">
-                                    <h4 ng-class="{blue: step==1}">
-                                        Step 1
-                                        <i class="icon icon-angle-double-right" ng-show="step==1"></i>
-                                    </h4>
-                                    <p ng-bind="installLang.step_1"></p>
-                                    <h4 ng-class="{blue: step==2}">
-                                        Step 2
-                                        <i class="icon icon-angle-double-right" ng-show="step==2"></i>
-                                    </h4>
-                                    <p ng-bind="installLang.step_2"></p>
-                                    <h4 ng-class="{blue: step==3}">
-                                        Step 3
-                                        <i class="icon icon-angle-double-right" ng-show="step==3"></i>
-                                    </h4>
-                                    <p ng-bind="installLang.step_3"></p>
-                                    <h4 ng-class="{blue: step==4}">
-                                        Step 4
-                                        <i class="icon icon-angle-double-right" ng-show="step==4"></i>
-                                    </h4>
-                                    <p ng-bind="installLang.step_4"></p>
+                                    <div ng-repeat="st in steps">
+                                        <h4 ng-class="{blue: step==st}">
+                                            Step {{st}}
+                                            <i class="icon icon-angle-double-right" ng-show="step==st"></i>
+                                        </h4>
+                                        <p ng-bind="installLang['step_'+st]"></p>
+                                    </div>
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="alert alert-{{alert.type}}" ng-bind="alert.msg" ng-show="alert.msg"></div>
