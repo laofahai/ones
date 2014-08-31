@@ -31,7 +31,7 @@ $BASEConfig = array(
     'URL_ROUTE_RULES' => require "route.php",
 
     'SESSION_TYPE'=>   'DB',
-    'SESSION_TABLE'=>  '[db_pre]_session',
+    'SESSION_TABLE'=>  '[db_pre]session',
     'SESSION_EXPIRE' => 3600,
 
     /**
