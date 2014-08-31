@@ -213,6 +213,7 @@ var toLang = function(key, section, $rootScope) {
         return key;
     }
 
+
     //通过递归合并的数组元素会追加成为新数组，返回最后一个元素
     if(angular.isArray(lang)) {
         return lang.pop();

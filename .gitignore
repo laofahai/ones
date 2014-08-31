@@ -7,6 +7,7 @@
 /server/Data/Avatars/*.jpg
 /server/Data/apps/*
 /server/Data/logs/*
+/server/Data/install.lock
 /utils/.settings
 /utils/.project
 /utils/.pydevproject

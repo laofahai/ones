@@ -5,16 +5,16 @@ $BASEConfig = array(
     /*
      * API KEY
      * **/
-    'SERVICE_API_KEY' => md5("ones"),
-    
+    'SERVICE_API_KEY' => '[service_api_key]',
+
     /* 数据库配置 */
     'DB_TYPE'            =>    'mysql',        // 数据库类型
-    'DB_HOST'            =>    '127.0.0.1',    // 数据库服务器地址
-    'DB_NAME'            =>    'ones',            // 数据库名
-    'DB_USER'            =>    'root',        // 数据库用户名
-    'DB_PWD'             =>    'root',    // 数据库密码
-    'DB_PORT'            =>    3306,            // 数据库端口
-    'DB_PREFIX'          =>    'x_',            // 数据库表前缀
+    'DB_HOST'            =>    '[db_host]',    // 数据库服务器地址
+    'DB_NAME'            =>    '[db_name]',            // 数据库名
+    'DB_USER'            =>    '[db_user]',        // 数据库用户名
+    'DB_PWD'             =>    '[db_pwd]',    // 数据库密码
+    'DB_PORT'            =>    '[db_port]',            // 数据库端口
+    'DB_PREFIX'          =>    '[db_pre]',            // 数据库表前缀
     'DB_CHARSET'         =>    'utf8',            // 数据库编码
     'SECURE_CODE'        =>    'the_x',    // 数据加密密钥
     'MYSQL_BIN'          => '', //执行mysql bin目录，或者软链接至/usr/bin目录。目前需用到mysql, mysqldump命令
@@ -67,7 +67,7 @@ $BASEConfig = array(
 
     //超级用户ID
     'suid' => array(
-        1
+        '1'
     )
 );
 

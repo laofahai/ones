@@ -3,13 +3,31 @@
  * */
 var LoginModule = angular.module('login', ["ones.configModule"]);
 
-LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
-    function($scope, $http, $rootScope, conf) {
+LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout",
+    function($scope, $http, $rootScope, conf, $timeout) {
         $scope.error = {
             isError : false,
             msg: null
         };
+
         $scope.error.message = null;
+
+        $timeout(function(){
+            $.ajax({
+                url: "server/Data/install.lock",
+                statusCode: {
+                    404: function(){
+                        $scope.error.isError = true;
+                        $scope.error.msg = toLang("ones_not_installed", "messages", $rootScope);
+
+                        $scope.$digest();
+                    }
+                }
+            });
+        });
+
+
+
         $scope.doLogin = function() {
             if($scope.LoginForm.$invalid) {
                 return false;
@@ -20,7 +38,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
                 success(function(data, status, headers, config) {
                     if(data.error) {
                         $scope.error.isError = true;
-                        $scope.error.msg = data.msg;
+                        $scope.error.msg = toLang(data.msg, "messages", $rootScope);
                     } else if(data.sessionHash){
                         window.location.href = 'app.html?hash='+data.sessionHash;
                     }

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `x_apps` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
   `alias` varchar(50) NOT NULL,
   `abbreviation` varchar(10) NOT NULL,
@@ -13,13 +13,13 @@ CREATE TABLE IF NOT EXISTS `x_apps` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 
-INSERT INTO `x_apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`, `status`) VALUES
+INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`, `status`) VALUES
 (1, 'department', 'DP', '0.1', 1406906639, 1),
 (2, 'dashboard', 'DBD', '0.1', 1406906639, 1),
 (3, 'services', 'SVS', '0.1', 1406906639, 1);
 
 
-CREATE TABLE IF NOT EXISTS `x_auth_group` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` char(100) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -27,13 +27,13 @@ CREATE TABLE IF NOT EXISTS `x_auth_group` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 
-INSERT INTO `x_auth_group` (`id`, `title`, `status`) VALUES
+INSERT INTO `[PREFIX]auth_group` (`id`, `title`, `status`) VALUES
 (1, '超级管理员', 1),
 (2, '库管', 1),
 (3, '财务', 1);
 
 
-CREATE TABLE IF NOT EXISTS `x_auth_group_access` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
   `uid` mediumint(8) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
@@ -42,11 +42,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_access` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `x_auth_group_access` (`uid`, `group_id`) VALUES
-(1, 1),
-(1, 2);
-
-CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
   `group_id` smallint(5) NOT NULL,
   `rule_id` int(11) NOT NULL,
   `flag` tinyint(1) NOT NULL DEFAULT '1',
@@ -54,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
+INSERT INTO `[PREFIX]auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
 (1, 110, 0),
 (1, 111, 0),
 (1, 112, 0),
@@ -163,7 +159,7 @@ INSERT INTO `x_auth_group_rule` (`group_id`, `rule_id`, `flag`) VALUES
 (1, 465, 0);
 
 
-CREATE TABLE IF NOT EXISTS `x_auth_rule` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(80) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -175,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_rule` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=215 ;
 
 
-INSERT INTO `x_auth_rule` (`id`, `name`, `status`, `cond`, `category`) VALUES
+INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VALUES
 (11, 'department.authgroup.read', 1, '', 'set'),
 (12, 'department.authrule.add', 1, '', 'set'),
 (13, 'department.authrule.edit', 1, '', 'set'),
@@ -214,7 +210,7 @@ INSERT INTO `x_auth_rule` (`id`, `name`, `status`, `cond`, `category`) VALUES
 (214, 'home.apps.delete', 1, '', 'basedata');
 
 
-CREATE TABLE IF NOT EXISTS `x_config` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_alias` varchar(50) DEFAULT NULL,
   `alias` varchar(100) NOT NULL,
@@ -232,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `x_config` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 
-INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `deleted`) VALUES
+INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `deleted`) VALUES
 (1, NULL, 'company_name', '公司名称', '诸城某某服装公司', NULL, 0),
 (2, NULL, 'company_address', '公司地址', '山东省诸城市人民东路', NULL, 0),
 (3, NULL, 'company_phone', '联系电话', '0536-6086084', NULL, 0),
@@ -252,7 +248,7 @@ INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `descriptio
 (45, NULL, 'mail.fromname', '发件人名称', 'ONES Robots', '', 0);
 
 
-CREATE TABLE IF NOT EXISTS `x_department` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
@@ -266,12 +262,13 @@ CREATE TABLE IF NOT EXISTS `x_department` (
 
 
 
-INSERT INTO `x_department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
+INSERT INTO `[PREFIX]department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
 (1, 0, '某公司', 1, 4, 99),
 (2, 1, '总经办', 2, 3, 99);
 
 
-CREATE TABLE IF NOT EXISTS `x_my_desktop` (
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
   `uid` int(11) NOT NULL,
   `desk_id` smallint(3) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -279,14 +276,16 @@ CREATE TABLE IF NOT EXISTS `x_my_desktop` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `x_my_desktop` (`uid`, `desk_id`, `listorder`) VALUES
+
+INSERT INTO `[PREFIX]my_desktop` (`uid`, `desk_id`, `listorder`) VALUES
 (13, 1, 99),
 (13, 2, 99),
 (13, 3, 99),
 (13, 5, 99);
 
 
-CREATE TABLE IF NOT EXISTS `x_session` (
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]session` (
   `session_id` varchar(255) NOT NULL,
   `session_expire` int(11) NOT NULL,
   `session_data` blob,
@@ -294,7 +293,8 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE IF NOT EXISTS `x_types` (
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL,
   `alias` varchar(20) DEFAULT NULL,
@@ -309,13 +309,14 @@ CREATE TABLE IF NOT EXISTS `x_types` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-CREATE TABLE IF NOT EXISTS `x_user` (
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
   `truename` varchar(30) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `phone` varchar(20) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
   `status` smallint(1) NOT NULL,
   `department_id` int(11) NOT NULL,
   `qq` varchar(20) DEFAULT NULL,
@@ -325,14 +326,11 @@ CREATE TABLE IF NOT EXISTS `x_user` (
   KEY `email` (`email`,`username`),
   KEY `department_id` (`department_id`),
   KEY `truename` (`truename`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`, `qq`) VALUES
-(1, 'admine@ng-erp.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '13333333333', 1, 20, null);
 
-
-CREATE TABLE IF NOT EXISTS `x_user_desktop` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]user_desktop` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `template` varchar(255) NOT NULL,
@@ -344,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `x_user_desktop` (
 
 
 
-INSERT INTO `x_user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
+INSERT INTO `[PREFIX]user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
 (1, '最近入库', 'latestStockin.html', 6, 99),
 (2, '最近出库', 'latestStockout.html', 6, 99),
 (3, '出库待处理', 'needStockout.html', 6, 99),

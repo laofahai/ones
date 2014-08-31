@@ -174,8 +174,11 @@ class App {
         App::init();
         // 项目开始标签
         tag('app_begin');
-        // Session初始化
-        session(C('SESSION_OPTIONS'));
+
+        if($_GET["s"] !== "/install" && is_file(ENTRY_PATH."/Data/install.lock")) {
+            // Session初始化
+            session(C('SESSION_OPTIONS'));
+        }
         // 记录应用初始化时间
         G('initTime');
         App::exec();

@@ -7,6 +7,7 @@
         "dbuser": "Database User",
         "dbpwd" : "Database Password",
         "dbpre" : "Table Prefix",
+        "dbport": "Database Port",
 
         "adminEmail": "Administrator Email",
         "adminUsername": "Administrator Login Name",
@@ -25,11 +26,14 @@
             "dbhost": "It usually be 127.0.0.1 or localhost"
         },
 
+        "installLocked": "安装已被锁定",
+
         "readAndAgree": "I have read the ONES agreements and agree.",
         "mustAgree": "You must agree the ONES agreements first.",
         "fillTheForm": "Please fill the form correct",
 
         "startInstall": "开始安装...",
+        "configFileUnwriteable": "配置文件不可写 /server/Conf/config.php",
         "testDbConnectSuccess": "数据库连接成功",
         "testDbConnectFailed": "测试数据库连接失败",
         "importingData": "正在导入数据库...",

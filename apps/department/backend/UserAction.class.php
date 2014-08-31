@@ -33,7 +33,6 @@ class UserAction extends CommonAction {
                 }
                 break;
         }
-
     }
 
     public function update() {

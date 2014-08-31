@@ -7,6 +7,7 @@
         "dbuser": "数据库用户名",
         "dbpwd" : "数据库密码",
         "dbpre" : "数据表前缀",
+        "dbport": "数据库端口",
 
         "adminEmail": "管理员邮箱",
         "adminUsername": "管理员登陆用户名",
@@ -25,11 +26,14 @@
             "dbhost": "通常为127.0.0.1 或者 localhost"
         },
 
+        "installLocked": "安装已被锁定",
+
         "readAndAgree": "已经阅读并同意使用协议",
         "mustAgree": "您必须阅读并同意ONES使用协议",
         "fillTheForm": "请完整填写表单",
 
         "startInstall": "开始安装...",
+        "configFileUnwriteable": "配置文件不可写 /server/Conf/config.php",
         "testDbConnectSuccess": "数据库连接成功",
         "testDbConnectFailed": "测试数据库连接失败",
         "importingData": "正在导入数据库...",

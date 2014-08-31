@@ -26,6 +26,10 @@ class CommonAction extends RestAction {
     protected $dataModelAlias;
 
     public function __construct() {
+
+        if(!is_file(ENTRY_PATH."/Data/install.lock")) {
+            return;
+        }
         
         parent::__construct();
 

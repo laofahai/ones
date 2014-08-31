@@ -32,6 +32,7 @@
             var language = uriParamsGet("lang") || ones.defaultLanguage;
             $.getJSON("apps/install/i18n/"+language+".json", function(data){
                 $rootScope.installLang = data.lang;
+                $rootScope.$digest();
             });
         }])
         .service("ConfigureModel", ["ComView", "$rootScope", function(ComView, $rootScope){
@@ -50,6 +51,10 @@
                         dbpre: {
                             value: "x_",
                             displayName: $rootScope.installLang.dbpre
+                        },
+                        dbport: {
+                            value: 3306,
+                            displayName: $rootScope.installLang.dbport
                         },
                         dbuser: {
                             displayName: $rootScope.installLang.dbuser
@@ -96,7 +101,7 @@
             });
             $scope.$watch("step", function(newVal, oldVal){
                 if(!$scope.agreed && newVal !== 1) {
-//                    $location.urtrustHTML("/");
+                    $location.url("/");
                 }
             });
 
@@ -138,11 +143,11 @@
                 }
                 resetAlert();
                 $scope.step = parseInt($scope.step)+1;
-                $location.urtrustHTML("/step-"+$scope.step);
+                $location.url("/step-"+$scope.step);
             }
             $scope.goPrev = function() {
                 $scope.step = parseInt($scope.step)-1;
-                $location.urtrustHTML("/step-"+$scope.step);
+                $location.url("/step-"+$scope.step);
             }
 
         }])
@@ -221,7 +226,7 @@
         .controller("DoInstallCtl", ["$scope", "$rootScope", "$http", "ones.config", "$sce", function($scope,$rootScope, $http, config, $sce){
             $scope.$parent.step = 4;
 
-            $scope.$parent.configure = {"db":{"dbhost":"127.0.0.1","dbname":"ones_install","dbpre":"x_","dbuser":"root","dbpwd":"root"},"admin":{"username":"admin","truename":"Administrator","email":"admin@admin.com","password":"123123"}};
+//            $scope.$parent.configure = {"db":{"dbhost":"127.0.0.1","dbname":"ones_install","dbpre":"x_","dbuser":"root","dbpwd":"root"},"admin":{"username":"admin","truename":"Administrator","email":"admin@admin.com","password":"123123"}};
 
             $scope.installMsgs = [];
             $scope.installProgress = {
@@ -232,13 +237,27 @@
             /**
              *
              * */
-            var trustHTML = function(lang) {
-                return $sce.trustAsHtml($rootScope.installLang[lang]);
+            var trustHTML = function(lang, isLang) {
+                isLang = isLang === false ? false : true;
+                if(isLang) {
+                    return $sce.trustAsHtml($rootScope.installLang[lang]);
+                } else {
+                    return $sce.trustAsHtml(lang);
+                }
+
             }
             $scope.installProgress.messages.push(trustHTML("startInstall"));
 
             var installSteps = {
                 _query: function(step, callback) {
+//                    $http({
+//                        method: "POST",
+//                        url: config.BSU+"install",
+//                        data: {
+//                            step: step,
+//                            data: $scope.$parent.configure
+//                        }
+//                    }).then(callback);
                     $http.post(config.BSU+"install", {
                         step: step,
                         data: $scope.$parent.configure
@@ -249,6 +268,7 @@
                         if(rs.error) {
                             $scope.installProgress.type = "danger";
                             $scope.installProgress.messages.push(trustHTML("testDbConnectFailed"));
+                            $scope.installProgress.messages.push(trustHTML(rs.msg, false));
                             return false;
                         } else {
                             $scope.installProgress.messages.push(trustHTML("testDbConnectSuccess"));
@@ -260,8 +280,10 @@
                     $scope.installProgress.messages.push(trustHTML("importingData"));
                     installSteps._query("importDB", function(rs){
                         if(rs.error) {
+                            var msg = "SQL:"+rs.msg.replace("\n", "");
                             $scope.installProgress.type = "danger";
                             $scope.installProgress.messages.push(trustHTML("importFailed"));
+                            $scope.installProgress.messages.push(trustHTML(msg, false));
                             return false;
                         } else {
                             $scope.installProgress.messages.push(trustHTML("completeImport"));

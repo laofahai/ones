@@ -14,7 +14,7 @@ class IndexAction extends CommonAction {
             "navs" => $this->makeNav(),
             "user" => $_SESSION["user"]
         );
-        
+
         $this->response($data);
     }
 
@@ -34,8 +34,7 @@ class IndexAction extends CommonAction {
         $navs = array_merge_recursive($navs, $appConf["navs"]);
 
         import("@.ORG.Auth");
-        $auth = new Auth();
-        
+
         foreach($navs as $rootLabel => $data) {
             $theChild = array();
             foreach($data["childs"] as $childLabel => $childData) {
