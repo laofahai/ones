@@ -96,7 +96,7 @@
             });
             $scope.$watch("step", function(newVal, oldVal){
                 if(!$scope.agreed && newVal !== 1) {
-                    $location.url("/");
+//                    $location.urtrustHTML("/");
                 }
             });
 
@@ -128,7 +128,7 @@
                 return $scope.step < 4;
             }
             $scope.hasPrev = function() {
-                return $scope.step > 1 && $scope.step !== 4;
+                return $scope.step > 1;
             }
             $scope.goNext = function() {
                 if(typeof($scope.checkNext) == "function") {
@@ -138,11 +138,11 @@
                 }
                 resetAlert();
                 $scope.step = parseInt($scope.step)+1;
-                $location.url("/step-"+$scope.step);
+                $location.urtrustHTML("/step-"+$scope.step);
             }
             $scope.goPrev = function() {
                 $scope.step = parseInt($scope.step)-1;
-                $location.url("/step-"+$scope.step);
+                $location.urtrustHTML("/step-"+$scope.step);
             }
 
         }])
@@ -218,10 +218,89 @@
                 };
 
             }])
-        .controller("DoInstallCtl", ["$scope", function($scope){
+        .controller("DoInstallCtl", ["$scope", "$rootScope", "$http", "ones.config", "$sce", function($scope,$rootScope, $http, config, $sce){
             $scope.$parent.step = 4;
 
-            console.log($scope.$parent.configure);
+            $scope.$parent.configure = {"db":{"dbhost":"127.0.0.1","dbname":"ones_install","dbpre":"x_","dbuser":"root","dbpwd":"root"},"admin":{"username":"admin","truename":"Administrator","email":"admin@admin.com","password":"123123"}};
+
+            $scope.installMsgs = [];
+            $scope.installProgress = {
+                messages: [],
+                type: "info"
+            }
+
+            /**
+             *
+             * */
+            var trustHTML = function(lang) {
+                return $sce.trustAsHtml($rootScope.installLang[lang]);
+            }
+            $scope.installProgress.messages.push(trustHTML("startInstall"));
+
+            var installSteps = {
+                _query: function(step, callback) {
+                    $http.post(config.BSU+"install", {
+                        step: step,
+                        data: $scope.$parent.configure
+                    }).success(callback);
+                },
+                testDB: function() {
+                    installSteps._query("testDB", function(rs){
+                        if(rs.error) {
+                            $scope.installProgress.type = "danger";
+                            $scope.installProgress.messages.push(trustHTML("testDbConnectFailed"));
+                            return false;
+                        } else {
+                            $scope.installProgress.messages.push(trustHTML("testDbConnectSuccess"));
+                            installSteps.importData()
+                        }
+                    });
+                },
+                importData: function() {
+                    $scope.installProgress.messages.push(trustHTML("importingData"));
+                    installSteps._query("importDB", function(rs){
+                        if(rs.error) {
+                            $scope.installProgress.type = "danger";
+                            $scope.installProgress.messages.push(trustHTML("importFailed"));
+                            return false;
+                        } else {
+                            $scope.installProgress.messages.push(trustHTML("completeImport"));
+                            installSteps.importAdmin()
+                        }
+                    });
+                },
+                importAdmin: function() {
+                    $scope.installProgress.messages.push(trustHTML("configuringAdmin"));
+                    installSteps._query("init", function(rs){
+                        if(rs.error) {
+                            $scope.installProgress.type = "danger";
+                            $scope.installProgress.messages.push(trustHTML("configureAdminFailed"));
+                            return false;
+                        } else {
+                            $scope.installProgress.messages.push(trustHTML("completeConfigureAdmin"));
+                            installSteps.clearData()
+                        }
+                    });
+                },
+                clearData: function() {
+                    $scope.installProgress.messages.push(trustHTML("clearInstallData"));
+                    installSteps._query("clearData", function(rs){
+                        if(rs.error) {
+                            $scope.installProgress.type = "danger";
+                            $scope.installProgress.messages.push(trustHTML("clearInstallDataFailed"));
+                            return false;
+                        } else {
+                            $scope.installProgress.messages.push(trustHTML("installComplete"));
+                        }
+                    });
+                }
+            };
+
+            console.log();
+
+            installSteps.testDB();
+
+            //console.log(angular.toJson($scope.$parent.configure));
         }])
 
     ;

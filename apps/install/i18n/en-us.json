@@ -27,7 +27,21 @@
 
         "readAndAgree": "I have read the ONES agreements and agree.",
         "mustAgree": "You must agree the ONES agreements first.",
-        "fillTheForm": "Please fill the form correct"
+        "fillTheForm": "Please fill the form correct",
+
+        "startInstall": "开始安装...",
+        "testDbConnectSuccess": "数据库连接成功",
+        "testDbConnectFailed": "测试数据库连接失败",
+        "importingData": "正在导入数据库...",
+        "completeImport": "数据库导入完成",
+        "importFailed": "数据库写入失败，请检查您的数据库连接及权限",
+        "configuringAdmin": "正在创建超级管理员用户",
+        "completeConfigureAdmin": "超级管理员创建成功",
+        "configureAdminFailed": "创建管理员账户失败",
+        "clearInstallData": "正在清除安装文件",
+        "clearInstallDataFailed": "清除安装文件失败，系统已安装成功，请手动清除",
+
+        "installComplete": "安装成功, <a href='index.html'>点击这里登陆系统</a>"
 
     }
 }

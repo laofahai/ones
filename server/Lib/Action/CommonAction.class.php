@@ -191,7 +191,7 @@ class CommonAction extends RestAction {
         if (!$this->isLogin() and 
                 !in_array($current,
                         C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"))) {
-            $this->httpError(401);
+            $this->httpError(401, $current);
         }
     }
     
