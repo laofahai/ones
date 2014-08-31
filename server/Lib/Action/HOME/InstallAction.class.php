@@ -38,9 +38,6 @@ class InstallAction extends CommonAction {
         }
 
         switch($_POST['step']) {
-            case "checkPermission":
-                $this->checkDirPermission();
-                break;
             case "testDB":
                 $this->testDB($_POST["data"]);
                 break;
@@ -52,6 +49,10 @@ class InstallAction extends CommonAction {
                 break;
             case "clearData":
                 $this->clearData($_POST["data"]);
+                break;
+            case "checkPermission":
+            default:
+                $this->checkDirPermission();
                 break;
         }
 

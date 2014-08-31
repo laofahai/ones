@@ -153,6 +153,7 @@
                 $location.url("/step-"+$scope.step);
             }
             $scope.goPrev = function() {
+                resetAlert();
                 $scope.step = parseInt($scope.step)-1;
                 $location.url("/step-"+$scope.step);
             }
