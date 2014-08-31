@@ -30,6 +30,10 @@ $BASEConfig = array(
     'URL_MODEL' => 0,
     'URL_ROUTE_RULES' => require "route.php",
 
+    'SESSION_TYPE'=>   'DB',
+    'SESSION_TABLE'=>  '[db_pre]_session',
+    'SESSION_EXPIRE' => 3600,
+
     /**
      * AUTH 权限控制
      */
