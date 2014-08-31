@@ -31,17 +31,16 @@
                                 <div id="login-box" class="login-box visible widget-box no-border" ng-keydown="doKeyDown($event)">
                                     <div class="widget-body">
                                         <div class="widget-main">
-                                            <h4 class="header blue lighter bigger">
+                                            <h4 class="header blue lighter bigger" ng-show="!notInstalled">
                                                 <i class="icon-coffee green"></i>
                                                 <span ng-bind="i18n.lang.messages.please_enter_your_login_info"></span>
                                             </h4>
 
                                             <div class="space-6"></div>
-                                            
-                                            <form name="LoginForm">
-                                                <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
-                                                    <div><span ng-bind="error.msg"></span></div>
-                                                </div>
+                                            <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
+                                                <div><span ng-bind-html="error.msg"></span></div>
+                                            </div>
+                                            <form name="LoginForm" ng-show="!notInstalled">
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
@@ -70,13 +69,12 @@
                                                             <span ng-bind="i18n.lang.actions.login"></span>
                                                         </button>
                                                     </div>
-
                                                     <div class="space-4"></div>
                                                 </fieldset>
                                             </form>
                                         </div><!-- /widget-main -->
 
-                                        <div class="toolbar clearfix">
+                                        <div class="toolbar clearfix" ng-show="!notInstalled">
                                             <div>
                                                 <a href="#" onclick="show_box('forgot-box');
                                                             return false;" class="forgot-password-link">

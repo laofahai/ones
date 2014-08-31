@@ -3,8 +3,8 @@
  * */
 var LoginModule = angular.module('login', ["ones.configModule"]);
 
-LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout",
-    function($scope, $http, $rootScope, conf, $timeout) {
+LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout", "$sce",
+    function($scope, $http, $rootScope, conf, $timeout, $sce) {
         $scope.error = {
             isError : false,
             msg: null
@@ -18,8 +18,8 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
                 statusCode: {
                     404: function(){
                         $scope.error.isError = true;
-                        $scope.error.msg = toLang("ones_not_installed", "messages", $rootScope);
-
+                        $scope.error.msg = $sce.trustAsHtml(toLang("ones_not_installed", "messages", $rootScope));
+                        $scope.notInstalled = true;
                         $scope.$digest();
                     }
                 }
@@ -38,7 +38,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
                 success(function(data, status, headers, config) {
                     if(data.error) {
                         $scope.error.isError = true;
-                        $scope.error.msg = toLang(data.msg, "messages", $rootScope);
+                        $scope.error.msg = $sce.trustAsHtml(toLang(data.msg, "messages", $rootScope));
                     } else if(data.sessionHash){
                         window.location.href = 'app.html?hash='+data.sessionHash;
                     }
