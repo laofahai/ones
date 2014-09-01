@@ -1,0 +1,29 @@
+.print_shipment {
+    color:blue;
+    position:relative;
+}
+
+.print_shipment label {
+    position:absolute;
+    display:block;
+}
+
+
+.print_shipment_shunfeng {
+    width:1025px;
+    height:661px;
+    background:url(../apps/shipment/statics/images/sf.jpg);
+}
+
+.print_shipment_shunfeng label#shipment_from_company {top:180px;left:135px;}
+.print_shipment_shunfeng label#shipment_from_name {top:180px;left:365px;}
+.print_shipment_shunfeng label#shipment_from_address {top:210px;left:125px;width:320px;line-height:35px;}
+.print_shipment_shunfeng label#shipment_from_phone {top:288px;left:215px;}
+.print_shipment_shunfeng label#shipment_to_company {top:370px;left:135px;}
+.print_shipment_shunfeng label#shipment_to_name {top:370px;left:365px;}
+.print_shipment_shunfeng label#shipment_to_address {top:400px;left:125px;width:320px;line-height:35px;}
+.print_shipment_shunfeng label#shipment_to_phone {top:478px;left:215px;}
+
+@media print {
+
+}

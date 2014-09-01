@@ -209,6 +209,7 @@ class FrontEndRuntime {
 
     public function combineCSS($dir=null) {
         $dir = $dir ? $dir : ROOT_PATH."/apps";
+        header("Content-Type:text/css;charset=utf-8");
         if ($dh = opendir($dir)) {
             while (($app = readdir($dh)) !== false) {
 
@@ -216,7 +217,7 @@ class FrontEndRuntime {
                     continue;
                 }
 
-                $cssPath = $dir."/".$app."/"."style.css";
+                $cssPath = $dir."/".$app."/statics/style.css";
                 if(is_file($cssPath)) {
                     echo $this->doTrimCss(file_get_contents($cssPath));
                 }
