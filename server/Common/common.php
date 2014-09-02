@@ -70,6 +70,10 @@ function DBC($name="") {
     return $name ? $config[$name] : $config;
 }
 
+function strStartWith($searchIn, $key) {
+    return substr($searchIn, 0, strlen($key)) == $key;
+}
+
 /**
  * 去除数组索引
  */

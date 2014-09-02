@@ -40,11 +40,16 @@ class SystemUpdateAction extends CommonAction {
                 return;
             }
 
-
             import("ORG.Net.Http");
-            $remoteUri = str_replace("/index.php?s=/Update", "", $this->server)."Data/updates/".$version["file"];
 
-            $localPath = $this->local.$version["file"];
+            //文件路径为HTTP绝对地址
+            if(strStartWith($version["file"], "http://") or strStartWith($version["file"], "https://")) {
+                $remoteUri = $version["file"];
+            } else {
+                $remoteUri = str_replace("/index.php?s=/Update", "", $this->server)."Data/updates/".$version["file"];
+            }
+
+            $localPath = $this->getLocalPath($version["file"]);
             Http::curlDownload($remoteUri, $localPath);
 
             if(!file_exists_case($localPath)) {
@@ -56,11 +61,12 @@ class SystemUpdateAction extends CommonAction {
 
         //执行升级，需要zip模块支持
         if($_POST["doUpdate"] && $_POST["version"]) {
+            exit;
             $version = $this->getVersion($_POST["version"]);
             $zip = new ZipArchive();
             $tmpFolder = $this->local."update_".$_POST["version"];
 
-            $rs = $zip->open($this->local.$version["file"]);
+            $rs = $zip->open($this->getLocalPath($version["file"]));
             if($rs === true) {
                 if(!is_dir($tmpFolder)) {
                     $rs = mkdir($tmpFolder, 0777);
@@ -68,7 +74,7 @@ class SystemUpdateAction extends CommonAction {
                 $zip->extractTo($tmpFolder);
             }
             $zip->close();
-            unlink($this->local.$version["file"]);
+            unlink($this->getLocalPath($version["file"]));
             //暂定根目录为ENTRY_PATH上级目录
             //更新数据库
             $sqlFile = $tmpFolder."/upgrade.sql";
@@ -107,9 +113,8 @@ class SystemUpdateAction extends CommonAction {
         $versions = file_get_contents($url);
         if($versions) {
             $versions = json_decode($versions, true);
-//            print_r($versions);exit;
             foreach($versions as $k=>$ver) {
-                if(is_file($this->local.$ver["file"])) {
+                if(is_file($this->getLocalPath($ver["file"]))) {
                     $versions[$k]["downloaded"] = true;
                 }
             }
@@ -131,6 +136,10 @@ class SystemUpdateAction extends CommonAction {
             Log::write("try to install a version that doesn't match:".$upgradeTo);
             return false;
         }
+    }
+
+    private function getLocalPath($file) {
+        return $this->local.md5($file).".zip";
     }
 
 } 
