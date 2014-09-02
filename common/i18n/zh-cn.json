@@ -164,6 +164,8 @@
         "home.config": "%s字段配置",
         "home.clearcache": "清除缓存",
 
+        "dashboard": "控制面板",
+
         "confirm_delete": "确定要删除这 %d 项吗？",
         "move_to_trash": "移到回收站",
         "selected_action" : "选中 %s 项",

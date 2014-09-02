@@ -18,6 +18,9 @@
                     templateUrl: "common/base/views/home/appDetail.html",
                     controller: "AppViewDetailCtl"
                 })
+                .when('/', {
+                    redirectTo: "/HOME/Index/dashboard"
+                })
             ;
         }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
