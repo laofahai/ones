@@ -210,13 +210,14 @@ INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VAL
 (214, 'home.apps.delete', 1, '', 'basedata');
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_alias` varchar(50) DEFAULT NULL,
   `alias` varchar(100) NOT NULL,
   `name` varchar(30) NOT NULL,
   `value` varchar(50) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `protected` smallint(1) NOT NULL DEFAULT '0',
   `deleted` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias_2` (`alias`),
@@ -224,28 +225,28 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   KEY `name` (`name`,`value`),
   KEY `alias` (`alias`),
   KEY `deleted` (`deleted`),
-  KEY `app_id` (`app_alias`)
+  KEY `app_id` (`app_alias`),
+  KEY `protected` (`protected`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 
-INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `deleted`) VALUES
-(1, NULL, 'company_name', '公司名称', '诸城某某服装公司', NULL, 0),
-(2, NULL, 'company_address', '公司地址', '山东省诸城市人民东路', NULL, 0),
-(3, NULL, 'company_phone', '联系电话', '0536-6086084', NULL, 0),
-(8, NULL, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0),
-(9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0),
-(10, NULL, 'backup.sendto.email', '备份文件发送邮箱', '335454250@qq.com', '备份发送至邮箱', 0),
-(11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0),
-(12, NULL, 'remote.service.uri', '远程服务地址', 'http://service.ng-erp.com/index.php?s=/', '包括程序更新、帮助信息等', 0),
-(15, NULL, 'system.version', '当前系统版本', '0.1.2', '请勿手动修改', 0),
-(38, NULL, 'test', 'test', 'test', '123', 1),
-(39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code,standard,version', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0),
-(40, NULL, 'goods.unique.separator', '商品唯一字段分隔符', '-', '开始使用之后请勿修改', 0),
-(41, NULL, 'mail.address', '服务邮箱地址', 'ones_robot@163.com', '', 0),
-(42, NULL, 'mail.smtp', '邮箱SMTP服务器', 'smtp.163.com', '', 0),
-(43, NULL, 'mail.login', '邮箱登录账号', 'ones_robot@163.com', '', 0),
-(44, NULL, 'mail.password', '邮箱密码', 'thisisones', '', 0),
-(45, NULL, 'mail.fromname', '发件人名称', 'ONES Robots', '', 0);
+INSERT INTO `[PREFIX]_config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
+  (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
+  (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
+  (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
+  (8, NULL, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0, 0),
+  (9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0, 0),
+  (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'admin@domain.com', '备份发送至邮箱', 1, 0),
+  (11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0, 0),
+  (12, NULL, 'remote.service.uri', '远程服务地址', 'http://service.ng-erp.com/index.php?s=/', '包括程序更新、帮助信息等', 0, 0),
+  (15, NULL, 'system.version', '当前系统版本', '0.1.3', '请勿手动修改', 0, 0),
+  (39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code,color', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0, 0),
+  (40, NULL, 'goods.unique.separator', '商品唯一字段分隔符', '-', '开始使用之后请勿修改', 0, 0),
+  (41, NULL, 'mail.address', '服务邮箱地址', 'ones_robot@163.com', '', 1, 0),
+  (42, NULL, 'mail.smtp', '邮箱SMTP服务器', 'smtp.163.com', '', 1, 0),
+  (43, NULL, 'mail.login', '邮箱登录账号', 'ones_robot@163.com', '', 1, 0),
+  (44, NULL, 'mail.password', '邮箱密码', 'thisisones', '', 1, 0),
+  (45, NULL, 'mail.fromname', '发件人名称', 'ONES Robots', '', 1, 0);
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
