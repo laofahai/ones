@@ -81,27 +81,28 @@ class RelationshipCompanyAction extends CommonAction {
         if(!$id) {
             $this->response($model->getError());
         } else {
-            $_POST["extraInfo"]["id"] = $id;
-            $params = array(
-                "crmBaseInfo",
-                $_POST["extraInfo"]
-            );
+//            $_POST["extraInfo"]["id"] = $id;
+//            $params = array(
+//                "crmBaseInfo",
+//                $_POST["extraInfo"]
+//            );
+//
+////            print_r($_POST["extraInfo"]);
+//
+//            tag("insert_dataModel_data", $params);
 
-//            print_r($_POST["extraInfo"]);
-
-            tag("insert_dataModel_data", $params);
-
-            foreach($_POST["rows"] as $row) {
-                $params = array(
-                    "crmContact",
-                    $row
-                );
-                tag("insert_dataModel_data", $params);
-            }
+//            foreach($_POST["rows"] as $row) {
+//                $params = array(
+//                    "crmContact",
+//                    $row
+//                );
+//                tag("insert_dataModel_data", $params);
+//            }
         }
     }
 
     public function update() {
+
         $this->pretreatment();
 
         $model = D("RelationshipCompany");
@@ -109,22 +110,6 @@ class RelationshipCompanyAction extends CommonAction {
 
         if(!$rs) {
             $this->response($model->getError());
-        } else {
-
-            $params = array(
-                "crmBaseInfo",
-                $_POST["extraInfo"]
-            );
-
-            tag("insert_dataModel_data", $params);
-
-            foreach($_POST["rows"] as $row) {
-                $params = array(
-                    "crmContact",
-                    $row
-                );
-                tag("insert_dataModel_data", $params);
-            }
         }
     }
 

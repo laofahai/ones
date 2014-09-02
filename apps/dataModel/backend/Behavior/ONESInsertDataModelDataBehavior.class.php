@@ -50,6 +50,7 @@ class ONESInsertDataModelDataBehavior extends Behavior {
             "source_id" => $data["id"],
             "model_id" => $dataModel["id"],
         ))->delete();
+
         foreach($modelData as $fieldName=>$fieldValue) {
             $dataModelObject->add(array(
                 "source_id" => $data["id"],

@@ -710,8 +710,8 @@
                             self.reIndexTr();
                         };
                         parentScope.billRemoveRow = function(element) {
-                            if($("#billTable tbody tr").length < 3) {
-                                alert("at least 2 rows");
+                            if($("#billTable tbody tr").length < 2) {
+                                alert("At least 1 rows");
                                 return;
                             }
                             var tr = $(element).parents("tr");

@@ -625,10 +625,6 @@ class CommonAction extends RestAction {
             $rs = $model->where("id=".$id)->delete();
         }
 
-        if($return) {
-            return $rs;
-        }
-        
         if(false === $rs) {
             Log::write("Delete row failed:".$name.",".$id);
             $this->error("delete_failed");
@@ -638,6 +634,10 @@ class CommonAction extends RestAction {
                 $this->dataModelAlias
             );
             tag("delete_dataModel_data", $params);
+        }
+
+        if($return) {
+            return $rs;
         }
 //        
 //        return;

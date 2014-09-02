@@ -354,7 +354,6 @@ class AppsAction extends CommonAction {
             $try ++;
             sleep($sleep);
             clearstatcache();
-//            echo filesize($localPath);
             //下载成功
             if(is_file($localPath) and filesize($localPath) > 0) {
                 $downloaded = true;

@@ -68,17 +68,35 @@ class RelationshipCompanyModel extends CommonRelationModel {
             return false;
         }
 
+        $baseInfo["id"] = $id;
+
+        $params = array(
+            "crmBaseInfo",
+            $_POST["extraInfo"]
+        );
+
+        tag("insert_dataModel_data", $params);
+
         $model = D("RelationshipCompanyLinkman");
         foreach($contacts as $row) {
             $row["relationship_company_id"] = $id;
-            if(false === $model->add($row)) {
+            $rowId = $model->add($row);
+            if(false === $rowId) {
                 $this->error = "insert contact failed";
                 $this->rollback();
                 return false;
             }
+            $row["id"] = $rowId;
+
+            $params = array(
+                "crmContact",
+                $row
+            );
+            tag("insert_dataModel_data", $params);
+
         }
 
-        tag("insert_dataModel_data", $params);
+
 
         $this->commit();
 
@@ -87,6 +105,9 @@ class RelationshipCompanyModel extends CommonRelationModel {
     }
 
     public function editCompany($baseInfo, $contacts, $id) {
+
+//        print_r($contacts);exit;
+
         $this->startTrans();
         if(false === $this->where("id=".$id)->save($baseInfo)) {
 //            echo $this->getLastSql();exit;
@@ -96,16 +117,55 @@ class RelationshipCompanyModel extends CommonRelationModel {
             return false;
         }
 
+        $_POST["id"] = $id;
+        $params = array(
+            "crmBaseInfo",
+            $_POST
+        );
+
+//        print_r($_POST);
+
+        tag("insert_dataModel_data", $params);
+
         $model = D("RelationshipCompanyLinkman");
+        $tmp = $model->where("relationship_company_id=".$id)->select();
+        foreach($tmp as $t) {
+            $rowIds[] = $t["id"];
+        }
+
+        $params = array(
+            $rowIds,
+            "crmContact"
+        );
+
+        tag("delete_dataModel_data", $params);
+
+        $model->where("relationship_company_id=".$id)->delete();
         foreach($contacts as $row) {
-            if(false === $model->where("id=".$row["id"])->save($row)) {
+            $row["relationship_company_id"] = $id;
+            unset($row["id"]);
+            $rowId = $model->add($row);
+//            print_r($contacts);exit;
+            if(false === $rowId) {
                 $this->error = "edit contact failed";
                 $this->rollback();
                 return false;
             }
+
+            $row["id"] = $rowId;
+
+//            print_r($row);exit;
+
+            $params = array(
+                "crmContact",
+                $row
+            );
+            tag("insert_dataModel_data", $params);
+
         }
 
         $this->commit();
+
 
         return true;
     }
