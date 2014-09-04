@@ -36,6 +36,7 @@ class PurchaseModel extends CommonModel {
         $purchaseId = $this->add($data);
 //        echo $this->getLastSql();exit;
         if(!$purchaseId) {
+            $this->error = "insert purchase bill failed";
             Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
@@ -46,6 +47,7 @@ class PurchaseModel extends CommonModel {
             $row["purchase_id"] = $purchaseId;
             $row["price"] = $row["amount"];
             if(!$detailModel->add($row)) {
+                $this->error = "insert purchase bill detail failed";
                 Log::write("SQL Error:".$detailModel->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;
@@ -63,6 +65,7 @@ class PurchaseModel extends CommonModel {
         unset($data["rows"]);
 
         if(false === $this->save($data)) {
+            $this->error = "edit purchase bill failed";
             Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
@@ -74,6 +77,7 @@ class PurchaseModel extends CommonModel {
             $row["price"] = $row["amount"];
             $method = $row["id"] ? "save" : "add";
             if(false === $detailModel->$method($row)) {
+                $this->error = "edit purchase bill detail failed";
                 Log::write("SQL Error:".$detailModel->getLastSql(), Log::SQL);
                 $this->rollback();
                 return false;

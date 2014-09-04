@@ -61,7 +61,6 @@ class SystemUpdateAction extends CommonAction {
 
         //执行升级，需要zip模块支持
         if($_POST["doUpdate"] && $_POST["version"]) {
-            exit;
             $version = $this->getVersion($_POST["version"]);
             $zip = new ZipArchive();
             $tmpFolder = $this->local."update_".$_POST["version"];
@@ -89,6 +88,14 @@ class SystemUpdateAction extends CommonAction {
 
             //删除更新文件
             delDirAndFile($tmpFolder);
+
+            //更新系统版本
+            $model = D("Config");
+            $model->where(array(
+                "alias" => 'system.version'
+            ))->save(array(
+                "value" => $version["version"]
+            ));
         }
     }
 
