@@ -40,7 +40,7 @@ class CommonBuildAction {
             }
 
             if(!$this->appInsertWorkflow($this->workflows)) {
-                $this->error("install failed while insert workflow.");
+                return false;
             }
         }
 
@@ -249,7 +249,8 @@ class CommonBuildAction {
         $ids = $this->appHasManyInsert("Workflow", "WorkflowNode", $data);
 
         if(!$ids) {
-            Log::write("Install Error: error while install workflow ". implode(",", $aliases));
+            $this->error("Install Error: error while install workflow: ". implode(",", $aliases));
+            Log::write($this->error);
             return false;
         }
 
