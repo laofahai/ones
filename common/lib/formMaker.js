@@ -718,6 +718,9 @@
                             delete(parentScope[self.opts.dataName][tr.data("trid")])
                             tr.remove();
                             self.reIndexTr();
+
+                            recountTotalAmount();
+                            recountTotalAble();
                         };
 
                         //不同字段不同事件
@@ -816,12 +819,37 @@
                         var recountTotalAmount = parentScope.recountTotalAmount = function() {
                             var totalAmount = 0;
                             angular.forEach(parentScope.formData, function(row){
-                                if(!row.amount) {
+                                if(!row || !row.amount) {
                                     return;
                                 }
                                 totalAmount += Number(row.amount);
                             });
                             parentScope.formMetaData.total_amount = totalAmount;
+                        };
+
+                        var recountTotalAble = parentScope.recountTotalAble = function(){
+
+                            angular.forEach($("#billTable tbody tr:first td"), function(td){
+                                var element = $(td).find(".editAble");
+                                if(!element.length) {
+                                    return false;
+                                }
+                                if(element.attr("totalAble")) {
+                                    var total = 0;
+                                    var context = getInputContext(element);
+                                    angular.forEach(parentScope[self.opts.dataName], function(item){
+                                        if(item && context.field in item) {
+                                            total += parseFloat(item[context.field]);
+                                        }
+                                    });
+                                    total = total.toFixed(2);
+                                    var data = 0;
+                                    data = parseFloat(data).toFixed(2);
+                                    parentScope.formMetaData["total_"+context.field] = total;
+                                }
+                            });
+
+
                         };
 
                         /**
@@ -835,7 +863,7 @@
                             }
                             var totalNum = 0;
                             angular.forEach(parentScope.formData, function(item){
-                                if(!item.num) {
+                                if(!item || !item.num) {
                                     return;
                                 }
                                 totalNum += Number(item.num);
@@ -901,7 +929,7 @@
                             var total = 0;
                             var context = getInputContext(element);
                             angular.forEach(this.scope.$parent[this.opts.dataName], function(item){
-                                if(context.field in item) {
+                                if(item && context.field in item) {
                                     total += parseFloat(item[context.field]);
                                 }
                             });

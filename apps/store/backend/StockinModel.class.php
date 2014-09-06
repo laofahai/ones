@@ -63,6 +63,7 @@ class StockinModel extends CommonModel {
     
     public function editBill($bill, $rows) {
         $detailModel = D("StockinDetail");
+
         $this->startTrans();
         
         unset($bill["dateline"]);
@@ -73,22 +74,33 @@ class StockinModel extends CommonModel {
         unset($bill["source_id"]);
         
         if(false === $this->save($bill)) {
-//            echo $this->getLastSql();
             $this->rollback();
             return false;
         }
-//        echo $this->getLastSql();exit;
-        
+
+        $map = array(
+            "stockin_id"=>$bill["id"]
+        );
+        $this->removeDeletedRows($rows, $map, $detailModel);
+
+
         foreach($rows as $row) {
             if(!$row["id"]) {
-                continue;
+                $row["stockin_id"] = $bill["id"];
+                $rs = $detailModel->add($row);
+                if(false === $rs) {
+                    $this->rollback();
+                    return false;
+                }
+            } else {
+                $rs = $detailModel->save($row);
+
+                if(false === $rs) {
+                    $this->rollback();
+                    return false;
+                }
             }
-            if(false === $detailModel->save($row)) {
-//                echo $detailModel->getLastSql();exit;
-                $this->rollback();
-                return false;
-            }
-            echo $detailModel->getLastSql();
+
         }
         
         $this->commit();

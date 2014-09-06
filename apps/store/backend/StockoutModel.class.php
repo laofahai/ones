@@ -26,7 +26,7 @@ class StockoutModel extends CommonModel {
      * 创建出库单
      */
     public function makeStockoutPaper($sourceModelName, $sourceId, $sourceUidField="saler_id", $sourceDetailForeignKey="", $sourceStockIdFeild="stock_id") {
-        $sourceDetailForeignKey = $sourceDetailForeignKey ? $sourceDetailForeignKey : strtolower($sourceModel)."_id";
+        $sourceDetailForeignKey = $sourceDetailForeignKey ? $sourceDetailForeignKey : strtolower($sourceModelName)."_id";
         $sourceModel = D($sourceModelName);
         $source = $sourceModel->find($sourceId);
         

@@ -72,6 +72,12 @@ class PurchaseModel extends CommonModel {
         }
 
         $detailModel = D("PurchaseDetail");
+
+        $map = array(
+            "purchase_id"=>$data["id"]
+        );
+        $this->removeDeletedRows($rows, $map, $detailModel);
+
         foreach($rows as $row) {
             $row["purchase_id"] = $data["id"];
             $row["price"] = $row["amount"];

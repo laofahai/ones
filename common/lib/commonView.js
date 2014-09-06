@@ -809,6 +809,8 @@
 //                            return;
 //                        }
 
+                        return;
+
                         var lastPage = angular.fromJson(localStorage.lastPage);
                         $location.url(lastPage[0] || opts.returnPage);
                     };

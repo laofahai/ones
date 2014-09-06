@@ -170,6 +170,34 @@ class CommonModel extends AdvModel{
         return $rs;
         
     }
+
+    /*
+     * 删除单据详情中修改时被删除的行，以ID判断
+     * @param $rows 行数组
+     * @param $map = source_id=xxx 数组格式
+     * @param $model 行所在model
+     * **/
+    final protected function removeDeletedRows($rows, $map, $model="") {
+        $model = $model ? $model : $this;
+
+        $ids = array();
+        foreach($rows as $row) {
+            if($row["id"]) {
+                $ids[] = $row["id"];
+            }
+        }
+
+        //如果ID数量大于等于所有行数量，标明没有行需要被删除
+        if(count($ids) >= count($rows)) {
+            return true;
+        }
+
+        if($ids) {
+            $map["id"] = array("NOT IN", implode(",", $ids));
+        }
+
+        $model->where($map)->delete();
+    }
     
 }
 
