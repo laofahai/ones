@@ -32,6 +32,7 @@
     - "lib/function.js"
     - "lib/formMaker.js"
     - "lib/plugin.js"
+    - "lib/caches.js"
     - "base/controller.js"
     - "base/filter.js"
     - "base/directive.js"

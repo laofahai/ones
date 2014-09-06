@@ -1101,7 +1101,8 @@
                             autoQuery: false,
                             inputTpl: '<input type="text" ng-model="%(model)s_label" %(attr)s /><input type="hidden" ng-model="%(model)s" />',
                             selectTpl: '<ul class="select3Container" id="select3Container">'+
-                                '<li ng-repeat="s3it in select3Items" ng-class="{active:$index==selectedItem}" data-value="{{s3it.value}}" ng-bind="s3it.label" ui-event="%(events)s"></li>'+
+                                '<li ng-repeat="s3it in select3Items" ng-class="{active:$index==selectedItem}" data-value="{{s3it.value}}" ng-bind="s3it.label" ng-show="s3it.label.length>0" ui-event="%(events)s"></li>'+
+                                '<li class="select3_add" ng-click="doSelect3AddNew()"><i class="icon icon-plus"></i>{{$root.i18n.lang.actions.add}}</li>'+
                                 '</ul>'
                         };
                     };
@@ -1111,7 +1112,9 @@
                     scopeConfig = scopeConfig || {};
                     scopeConfig.fieldDefine.field = scopeConfig.name;
                     scopeConfig["ng-model"] = scopeConfig["ng-model"] || scopeConfig.fieldDefine["ng-model"];
+                    this.scopeConfig = scopeConfig;
                     this.opts = $.extend(this.getDefaultOpts(), scopeConfig.fieldDefine);
+
 
                     this.scope = $scope;
 
@@ -1167,6 +1170,7 @@
                             scopeConfig = scopeConfig || {};
                             scopeConfig.fieldDefine.field = scopeConfig.field;
                             scopeConfig["ng-model"] = scopeConfig["ng-model"] || scopeConfig.fieldDefine["ng-model"];
+                            self.scopeConfig = scopeConfig;
                             self.opts = $.extend(self.getDefaultOpts(), scopeConfig.fieldDefine);
 
 
@@ -1174,7 +1178,7 @@
                             if(self.opts.autoReset || (!val && self.opts.autoQuery)) {
                                 val = "_";
                             }
-                            if(val) {
+                            if(val || self.opts.dynamicAddAble) {
                                 self.scope.$parent.doSelect3Query(val);
                             }
                         };
@@ -1245,7 +1249,7 @@
                             self.scope.select3Items = [];
                             //非数组形式数据源
                             if(!angular.isArray(self.opts.dataSource)) {
-                                if(!$.trim(val)) {
+                                if(!$.trim(val) && !self.opts.dynamicAddAble) {
                                     self.scope.$parent.hideSelect3Options(true);
                                     return;
                                 }
@@ -1265,7 +1269,7 @@
                                 }
 
                                 self.opts.dataSource.query(queryParams).$promise.then(function(data){
-                                    if(data.length < 1) {
+                                    if(data.length < 1 && !self.opts.dynamicAddAble) {
                                         self.scope.$parent.hideSelect3Options(true);
                                         return;
                                     }
@@ -1280,7 +1284,7 @@
                                     self.scope.$parent.displaySelect3Options();
                                 });
                             } else {
-                                if(self.opts.dataSource.length < 1) {
+                                if(self.opts.dataSource.length < 1 && !self.opts.dynamicAddAble) {
                                     //@todo no result
                                     self.scope.$parent.hideSelect3Options(true);
                                     return;
@@ -1345,6 +1349,67 @@
 
                             self.scope.$parent.hideSelect3Options();
                         };
+                        this.scope.doSelect3AddNew = function(){
+                            var fieldDefine = self.scopeConfig.fieldDefine;
+                            if(!fieldDefine.dynamicAddAble || !fieldDefine.dynamicAddOpts) {
+                                alert(toLang("this field not support dynamic add"+fieldDefine.displayName, "messages", $rootScope));
+                                return false;
+                            }
+
+                            var $modal = $injector.get("$modal");
+                            var modal = $modal({
+                                scope: self.scope.$parent,
+                                title: toLang("add", "actions", $rootScope),
+//                            content: {
+//                                config: $scope.config,
+//                                defaultData: $scope.defaultData
+//                            },
+                                contentTemplate: "common/base/views/dynamicEdit.html"
+                            });
+
+                            var showModal = function(formFieldDefine) {
+                                $timeout(function(){
+                                    var cacheKey = "form_html_cache_"+fieldDefine.displayName;
+                                    modal.$promise.then(function(){
+                                        var modalHtml = ones.caches.getItem(cacheKey);
+//                                        console.log(modalHtml);
+                                        if(!modalHtml) {
+                                            var fm = new service.makeForm(self.scope.$parent, {
+                                                fieldsDefine: formFieldDefine,
+                                                includeFoot: false,
+                                                name: "dynamicEditForm",
+                                                dataName: "dynamicEditFormData"
+                                            });
+                                            ones.caches.setItem(cacheKey, fm.makeHTML());
+                                        }
+                                        modalHtml = ones.caches.getItem(cacheKey);
+                                        $("#dynamicEditContainer").append($compile(modalHtml)(self.scope.$parent));
+                                    });
+                                }, 100);
+
+                                self.scope.$parent.doDynamicAdd = function(){
+                                    if(!self.scope.$parent.dynamicEditForm.$valid) {
+                                        return false;
+                                    }
+
+                                    fieldDefine.dataSource.save(self.scope.$parent.dynamicEditFormData, function() {
+                                        modal.hide();
+                                    });
+                                };
+
+                            }
+
+                            var structure = $injector.get(fieldDefine.dynamicAddOpts.model).getFieldsStruct();
+                            if("then" in structure && typeof structure.then == "function") {
+                                structure.then(function(struct){
+                                    showModal(struct);
+                                });
+                            } else {
+                                showModal(structure);
+                            }
+
+
+                        }
                     }
                 };
 

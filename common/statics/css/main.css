@@ -658,3 +658,10 @@ commonform {
 .uploaderTable th:last-child{
     width:220px;
 }
+
+li.select3_add {
+    background:#f2f2f2;
+}
+li.select3_add i {
+    margin-right:10px;
+}
