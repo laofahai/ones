@@ -15,7 +15,7 @@
          * */
         setItem: function(k, v, persistence, toJson) {
 
-            if(angular.isObject(v)) {
+            if(angular.isObject(v) || angular.isArray(v)) {
                 toJson = true;
             }
 
@@ -31,7 +31,6 @@
                     if(toJson) {
                         v = angular.toJson(v);
                     }
-                    console.log(v);
                     localStorage.setItem(k, v);
                     break;
                 case 0:
@@ -58,13 +57,25 @@
                 v = angular.fromJson(v);
             } catch(e) {}
 
-            return null === v ? false : v;
+            return v;
 
         },
-        clear: function(persistence) {
-            ones.caches._cachesData = {};
-            localStorage.clear();
-            sessionStorage.clear();
+        clear: function(level) {
+            switch(level) {
+                case -1:
+                    ones.caches._cachesData = {};
+                    break;
+                case 0:
+                    sessionStorage.clear();
+                    break;
+                case 1:
+                    localStorage.clear();
+                    break;
+                default:
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    ones.caches._cachesData = {};
+            }
         },
         _cachesData: {}
     };
