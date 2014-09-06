@@ -92,10 +92,6 @@
                 templateUrl: "common/base/views/grid.html",
                 controller: "DataModelFieldsCtl"
             })
-            .when('/dataModel/DataModelData/catid/:catid', {
-                templateUrl: "common/base/views/blank.html",
-                controller: "DataModelDataCatidCtl"
-            })
             ;
         }])
         .factory("DataModelRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -243,21 +239,6 @@
                     },
                     module: "/dataModel/DataModelFields",
                     editExtraParams: "/pid/"+$routeParams.pid
-                });
-            }])
-
-        .controller("DataModelDataCatidCtl", ["$scope", "$location", "DataModelRes", "$routeParams",
-            function($scope, $location, res, $routeParams){
-                res.get({
-                    id: 0,
-                    cat_id: $routeParams.catid
-                }).$promise.then(function(data){
-                    if(!data.id) {
-                        return;
-                    }
-                    var lastPage = angular.fromJson(localStorage.lastPage);
-//                    $location.url(lastPage[0]);
-                    $location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+$routeParams.catid);
                 });
             }])
     ;

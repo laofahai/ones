@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "goods": {
+            "name": "基础商品模块",
             "modules": {
                 "Goods": {
                     "name": "物料(成品)管理",

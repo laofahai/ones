@@ -63,15 +63,26 @@
                 viewSubAble: false,
                 extraSelectActions: [
                     {
-                        label: $rootScope.i18n.lang.actions.viewDataModel,
+                        label: toLang("viewDataModel", "actions", $rootScope),
                         action: function($event, selectedItems){
                             var scope = this.scope;
                             var injector = this.injector;
                             var location = injector.get("$location");
+                            var routeParams = injector.get("$routeParams");
                             if(!selectedItems.length) {
                                 return;
                             }
-                            location.url("/dataModel/DataModelData/catid/"+selectedItems[0].id);
+
+                            injector.get("DataModelRes").get({
+                                id:0,
+                                alias: "product"
+                            }).$promise.then(function(data){
+                                if(!data.id) {
+                                    return;
+                                }
+                                location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+selectedItems[0].id);
+                            });
+
                         }
                     }
                 ]
@@ -90,35 +101,37 @@
                         hideInForm: true,
                         displayName: i18n.category
                     },
-                    bind_model_name: {
-                        displayName: i18n.bindDataModel,
-                        hideInForm:true
-                    },
+//                    bind_model_name: {
+//                        displayName: i18n.bindDataModel,
+//                        hideInForm:true
+//                    },
                     pinyin: {
                         displayName: i18n.firstChar,
                         required: false
                     },
-                    bind_model: {
-                        displayName: i18n.bindDataModel,
-                        inputType: "select",
-                        listable: false
-                    },
+//                    bind_model: {
+//                        displayName: i18n.bindDataModel,
+//                        inputType: "select",
+//                        listable: false
+//                    },
                     listorder: {
                         inputType: "number",
                         value: 99
                     }
                 };
 
-                if(structOnly) {
-                    return struct;
-                } else {
-                    var defer = $q.defer();
-                    DataModelRes.query(function(data){
-                        struct.bind_model.dataSource = data;
-                        defer.resolve(struct);
-                    });
-                    return defer.promise;
-                }
+                return struct;
+
+//                if(structOnly) {
+//                    return struct;
+//                } else {
+//                    var defer = $q.defer();
+//                    DataModelRes.query(function(data){
+//                        struct.bind_model.dataSource = data;
+//                        defer.resolve(struct);
+//                    });
+//                    return defer.promise;
+//                }
             };
             return obj;
         }])
