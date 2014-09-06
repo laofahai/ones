@@ -59,6 +59,7 @@ $BASEConfig = array(
         'AUTH_DONT_NEED' => array(
             "home.types.read",
             "home.index.read",
+            "home.index.dashboard",
             "home.mydesktop.read",
             "workflow.workflownode.read",
             "workflow.workflowprocess.read",

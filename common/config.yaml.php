@@ -20,7 +20,6 @@
     - "vendor/jquery/chosen/chosen.jquery.min.js"
     - "vendor/angularModules/angular-chosen/chosen.js"
     - "vendor/angularModules/angular-file-upload/angular-file-upload.min.js"
-    - "vendor/angularModules/angular-file-upload/directives.js"
     - "vendor/ace/ace.min.js"
     - "vendor/ace/ace-elements.min.js"
     - "vendor/ace/ace-extra.min.js"
