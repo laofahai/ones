@@ -31,7 +31,7 @@
 
         .service("UserDesktopModel", function(){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {primary: true},
                         name: {},
@@ -51,6 +51,9 @@
         })
 
         .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", function($scope, res){
+
+
+
             res.query().$promise.then(function(data){
                 $scope.items = data;
             });
@@ -60,8 +63,9 @@
             };
         }])
 
-        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout",
-            function($scope, $rootScope, MyDesktopRes, conf, plugin, $timeout){
+        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout", "DepartmentUserAPI",
+            function($scope, $rootScope, MyDesktopRes, conf, plugin, $timeout, user){
+
                 var chars = 'abcdefghijklmnopqrstuvwxyz';
                 var btnClasses = [
                     "default", "success", "inverse", "danger", "warning", "primary",

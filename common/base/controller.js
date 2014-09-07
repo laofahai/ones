@@ -62,14 +62,18 @@
         }])
 
         //app详情
-        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "AppsRes", "$routeParams", "$location", "$timeout", "$modal",
-            function($scope, $rootScope, ComView, res, $routeParams, $location, $timeout, $modal){
+        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "ones.dataAPI", "$routeParams", "$location", "$timeout", "$modal",
+            function($scope, $rootScope, ComView, dataAPI, $routeParams, $location, $timeout, $modal){
+
+                dataAPI.init("HOME", "apps");
+                var appModel = dataAPI.model;
+
                 $scope.selectAble = false;
                 ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listAll']);
 
                 $scope.consoleMessages = [];
 
-                res.get({
+                appModel.api.get({
                     id: $routeParams.id || 0,
                     alias: $routeParams.alias
                 }).$promise.then(function(data){
@@ -95,7 +99,7 @@
                     $scope.consoleMessages.push(
                         $rootScope.i18n.lang.messages.apps.uninstalling
                     );
-                    res.delete({
+                    appModel.api.delete({
                         id: $scope.appInfo.alias
                     }).$promise.then(function(data){
                         if(data.error) {
@@ -123,7 +127,7 @@
                     var params = {
                         alias: $scope.appInfo.alias
                     };
-                    res.save(params, function(data){
+                    appModel.api.save(params, function(data){
 
                         if(data.type == "requirements") {
                             $scope.consoleClass = "danger";
@@ -158,7 +162,7 @@
                         alias: $scope.appInfo.alias,
                         status: status
                     };
-                    res.update({id: $scope.appInfo.id}, params, function(data){
+                    appModel.api.update({id: $scope.appInfo.id}, params, function(data){
                         if(!data.error) {
                             $timeout(function(){
                                 $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.operateSuccess);
@@ -189,7 +193,7 @@
                     $scope.consoleMessages.push(
                         $rootScope.i18n.lang.messages.apps.upgrading
                     );
-                    res.update({
+                    appModel.api.update({
                         id: $scope.appInfo.id,
                         alias: $scope.appInfo.alias,
                         upgrade: true

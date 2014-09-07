@@ -1,23 +1,105 @@
-'use strict';
-/**
- * 定义资源
- * */
-(function(angular){
-    angular.module('ones.common.resources', [])
-        .factory("ConfigRes", ["$resource", "ones.config", function($resource, conf) {
-            return $resource(conf.BSU + "home/config/:id.json", null, {'update': {method: 'PUT'}});
+(function(){
+    'use strict';
+    angular.module("ones.common.services", [])
+
+        .service("HOME.TypesAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+            return  {
+                api: res.getResourceInstance({
+                    uri: "home/types",
+                    extraMethod: {
+                        update: {method: "PUT"}
+                    }
+                }),
+                structure: {
+                    id: {
+                        primary: true
+                    },
+                    type: {
+                        inputType: "select",
+                        dataSource: []
+                    },
+                    alias: {},
+                    name: {},
+                    listorder: {
+                        inputType: "number",
+                        value: 99
+                    }
+                },
+                getStructure : function() {
+                    var self = this;
+                    angular.forEach($rootScope.i18n.lang.types, function(item, k){
+                        self.structure.type.dataSource.push({
+                            id: k,
+                            name: item
+                        });
+                    });
+
+                    return this.structure;
+                }
+            };
         }])
-        .factory("TypesRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "home/types/:id.json", null, {'update': {method: 'PUT'}});
+        .service("HOME.ConfigAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+            return {
+                api: res.getResourceInstance({
+                    uri: "home/config",
+                    extraMethod: {
+                        update: {method: "PUT"}
+                    }
+                }),
+                structure: {
+                    id: {primary: true},
+                    alias: {},
+                    name: {},
+                    value: {
+                        inputType: "textarea"
+                    },
+                    description: {
+                        inputType: "textarea",
+                        required: false
+                    }
+                },
+                getStructure : function() {
+                    return this.structure;
+                }
+            };
         }])
-        .factory("StockTransferRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/stockTransfer/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
-        }])
-        .factory("OutsideRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "jxc/outside/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
-        }])
-        .factory("AppsRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "home/apps/:id.json", null, {update: {method: 'PUT'}});
+        .service("HOME.AppsAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+            return {
+                editAble: false,
+                deleteAble: false,
+                viewDetailAble: true,
+
+                api: res.getResourceInstance({
+                    uri: "home/apps",
+                    extraMethod: {
+                        update: {method: "PUT"}
+                    }
+                }),
+
+                structure: {
+                    name: {},
+                    alias: {
+                        listable: false
+                    },
+                    version: {
+                        listable: false
+                    },
+                    author: {},
+                    description: {},
+                    status_text: {
+                        cellFilter: "lang",
+                        displayName: toLang("status", "", $rootScope)
+                    }
+                },
+
+                getStructure : function() {
+                    return this.structure;
+                },
+
+                get: function(params) {
+                    return this.api.get(params);
+                }
+            };
         }])
     ;
-})(angular);
+})();

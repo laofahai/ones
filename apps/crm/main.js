@@ -36,7 +36,7 @@
 
         .service("RelationshipCompanyGroupModel", ["$rootScope", function($rootScope){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {
                             primary: true
@@ -57,7 +57,7 @@
                 columns: 2,
                 formActions: false,
                 isBill: true,
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var structure = {
                         id: {
                             primary: true
@@ -99,7 +99,7 @@
         }])
         .service("RelationshipCompanyLinkmanModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var structure = {
                         contact: {},
                         company_name: {

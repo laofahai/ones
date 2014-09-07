@@ -41,7 +41,7 @@
                         }
                     }
                 ];
-                obj.getFieldsStruct = function() {
+                obj.getStructure = function() {
                     var defer = $q.defer();
                     plugin.callPlugin("loadModelFromJson", "goods.Goods").promise.then(function(structure){
                         plugin.setDefer(defer);
@@ -87,7 +87,7 @@
                     }
                 ]
             };
-            obj.getFieldsStruct = function(structOnly) {
+            obj.getStructure = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
                 var struct = {
                     id : {

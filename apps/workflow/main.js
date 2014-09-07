@@ -20,7 +20,7 @@
         return {
             subAble: true,
             addSubAble: false,
-            getFieldsStruct: function(){
+            getStructure: function(){
                 return {
                     id: {
                         primary: true
@@ -42,7 +42,7 @@
                     pid: $route.pid
                 },
                 listUrl: sprintf("/workflow/viewChild"),
-                getFieldsStruct: function(structOnly){
+                getStructure: function(structOnly){
                     var struct = {
                         id: {primary: true},
                         name: {},

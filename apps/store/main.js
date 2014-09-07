@@ -118,7 +118,7 @@
 
         .service("StockModel", ["$rootScope", "UserRes", "$q", function($rootScope, userRes, $q){
             var obj = {};
-            obj.getFieldsStruct = function(structOnly){
+            obj.getStructure = function(structOnly){
                 var defer = $q.defer();
                 var fieldsStruct = {
                     id: {
@@ -165,7 +165,7 @@
                 deleteAble: false,
                 exportAble: true
             };
-            obj.getFieldsStruct = function(structOnly) {
+            obj.getStructure = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;
                 var fields = {
                     factory_code_all: {
@@ -222,7 +222,7 @@
         }])
         .service("StockProductEditModel", ["$rootScope", function($rootScope){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {primary: true},
                         unit_price: {
@@ -238,7 +238,7 @@
         .service("StockProductExportModel", ["$rootScope", "StockRes", "GoodsCategoryRes", "$q",
             function($rootScope, StockRes, GoodsCategoryRes, $q) {
                 var service = {
-                    getFieldsStruct : function() {
+                    getStructure : function() {
                         var i18n = $rootScope.i18n.lang;
                         var struct = {
                             stock: {
@@ -292,7 +292,7 @@
                     }
                 }
             };
-            obj.getFieldsStruct= function() {
+            obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
                 return {
                     bill_id: {
@@ -326,7 +326,7 @@
                 var obj = {
                     printAble: true
                 };
-                obj.getFieldsStruct = function() {
+                obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
                         id : {
@@ -380,7 +380,7 @@
             }])
         .service("StockWarningModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var fields = {
                         factory_code_all: {
                             displayName: $rootScope.i18n.lang.factoryCodeAll
@@ -423,7 +423,7 @@
                         inputType: "datepicker"
                     }
                 },
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         bill_id : {},
                         source_model: {
@@ -452,7 +452,7 @@
                     isBill: true,
                     printAble: true
                 };
-                obj.getFieldsStruct = function() {
+                obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
                         id : {

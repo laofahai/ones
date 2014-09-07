@@ -1427,7 +1427,7 @@
 
                             }
 
-                            var structure = $injector.get(fieldDefine.dynamicAddOpts.model).getFieldsStruct();
+                            var structure = $injector.get(fieldDefine.dynamicAddOpts.model).getStructure();
                             if("then" in structure && typeof structure.then == "function") {
                                 structure.then(function(struct){
                                     showModal(struct);

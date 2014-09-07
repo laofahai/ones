@@ -130,7 +130,7 @@
                         }
                     }
                 ],
-                getFieldsStruct: function() {
+                getStructure: function() {
                     var structure = {
                         id: {
                             primary: true,
@@ -174,7 +174,7 @@
             return {
                 isBill: true,
                 workflowAlias: "produce",
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {primary: true, width:50},
                         type_label: {
@@ -202,7 +202,7 @@
             return {
                 isBill: true,
                 selectAble: false,
-                getFieldsStruct: function() {
+                getStructure: function() {
                     var i18n = $rootScope.i18n.lang;
                     var s = {
                         goods_id: {
@@ -249,7 +249,7 @@
             return {
                 isBill: true,
                 workflowAlias: "produce",
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var s = {
                         plan_id: {
                             editAble: false
@@ -333,7 +333,7 @@
                         }
                     }
                 ],
-                getFieldsStruct: function() {
+                getStructure: function() {
                     var structure = {
                         id: {
                             primary: true,
@@ -379,7 +379,7 @@
                     subAble: true,
                     addSubAble: false,
                     viewSubAble : true,
-                    getFieldsStruct: function(structOnly) {
+                    getStructure: function(structOnly) {
                         var structure = {
                             id: {primary:true},
                             factory_code_all: {
@@ -413,7 +413,7 @@
 //        .service('ProductTplEditModel', ["$rootScope",
 //            function($rootScope){
 //                return {
-//                    getFieldsStruct: function(){
+//                    getStructure: function(){
 //                        return {
 //                            factory_code_all: {
 //                                hideInForm:true
@@ -439,7 +439,7 @@
         .service('ProductTplDetailModel', ["$rootScope", "StockRes", "GoodsRes", "pluginExecutor",
             function($rootScope,StockRes,GoodsRes, plugin){
                 return {
-                    getFieldsStruct: function() {
+                    getStructure: function() {
                         var i18n = $rootScope.i18n.lang;
                         var s = {
                             goods_id: {
@@ -475,7 +475,7 @@
 
         .service("CraftModel", ["$rootScope", function($rootScope){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {primary: true},
                         name: {},

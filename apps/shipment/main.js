@@ -18,7 +18,7 @@
             var i18n = $rootScope.i18n.lang;
             return {
                 printAble: true,
-                getFieldsStruct: function() {
+                getStructure: function() {
                     return {
                         id: {primary: true},
                         shipment_type: {

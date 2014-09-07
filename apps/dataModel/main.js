@@ -109,7 +109,7 @@
                 addSubAble: false,
                 subTpl: '/%(group)s/%(action)s/'
             };
-            obj.getFieldsStruct = function(){
+            obj.getStructure = function(){
                 return {
                     id: {
                         primary: true,
@@ -128,7 +128,7 @@
             var obj = {
                 returnPage: sprintf("/dataModel/viewChild/dataModel/pid/"+$routeParams.pid)
             };
-            obj.getFieldsStruct = function(){
+            obj.getStructure = function(){
                 var i18n = $rootScope.i18n.lang;
                 var structure = {
                     id: {
@@ -173,7 +173,7 @@
         .service("DataModelDataModel", ["$rootScope", "$q", "DataModelFieldsRes", "$routeParams",
             function($rootScope, $q, DataModelFieldsRes, $routeParams) {
                 var obj = {};
-                obj.getFieldsStruct = function(structOnly){
+                obj.getStructure = function(structOnly){
                     var i18n = $rootScope.i18n.lang;
                     var struct = {
                         id: {

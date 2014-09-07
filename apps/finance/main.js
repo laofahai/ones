@@ -35,7 +35,7 @@
             return {
                 editAble: false,
                 addAble: false,
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {
                             primary: true,
@@ -59,7 +59,7 @@
         }])
         .service("FinanceAccountModel", ["$rootScope", function(){
             return {
-                getFieldsStruct: function() {
+                getStructure: function() {
                     return {
                         id: {primary: true},
                         name: {},
@@ -76,7 +76,7 @@
         .service("FinancePayPlanModel", ["$rootScope","TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
             return {
                 workflowAlias: "financePay",
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {primary: true},
                         subject: {},
@@ -129,7 +129,7 @@
         .service("FinanceReceivePlanModel", ["$rootScope", "TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
             return {
                 workflowAlias: "financeReceive",
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         id: {primary: true},
                         subject: {},
@@ -182,7 +182,7 @@
 
         .service("ConfirmReceiveModel", ["$rootScope", "FinanceAccountRes", function($rootScope,res){
             return {
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         amount: {
                             inputType: "number"

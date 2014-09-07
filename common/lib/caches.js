@@ -1,4 +1,5 @@
-(function(){
+(function(ones){
+    'use strict';
     /**
      * ONES前端缓存对象，用于当前页面生命周期中的数据缓存及持久化缓存。
      * 使用ones.caches._cachesData对象，localStorage和sessionStorage三种方式存储
@@ -80,4 +81,4 @@
         _cachesData: {}
     };
 
-})(ones);
+})(window.ones);

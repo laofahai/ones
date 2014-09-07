@@ -36,7 +36,10 @@ function parseParams(str) {
     return params;
 }
 
-
+/***/
+var toAPIName = function(group, module) {
+    return group.ucfirst()+"."+module.ucfirst()+"API";
+};
 
 var toDate = function(timestamp, noTime) {
     if(!timestamp) {

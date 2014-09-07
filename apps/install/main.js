@@ -41,7 +41,7 @@
         }])
         .service("ConfigureModel", ["ComView", "$rootScope", function(ComView, $rootScope){
             return {
-                getFieldsStruct: function() {
+                getStructure: function() {
                     return {
                         dbhost: {
                             value: "127.0.0.1",
@@ -72,7 +72,7 @@
         }])
         .service("InitModel", ["ComView", "$rootScope", function(ComView, $rootScope){
             return {
-                getFieldsStruct: function() {
+                getStructure: function() {
                     return {
                         email: {
                             inputType: "email",
@@ -201,7 +201,7 @@
 
                 $scope.$parent.step = 3;
                 var fm = new FormMaker.makeForm($scope, {
-                    fieldsDefine: model.getFieldsStruct(),
+                    fieldsDefine: model.getStructure(),
                     includeFoot: false
                 });
                 var formHTML = fm.makeHTML();
@@ -232,7 +232,7 @@
             function($scope, FormMaker, model, $compile, $rootScope){
                 $scope.$parent.step = 4;
                 var fm = new FormMaker.makeForm($scope, {
-                    fieldsDefine: model.getFieldsStruct(),
+                    fieldsDefine: model.getStructure(),
                     includeFoot: false
                 });
                 var formHTML = fm.makeHTML();

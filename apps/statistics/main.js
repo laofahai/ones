@@ -26,7 +26,7 @@
                         inputType: "datepicker"
                     }
                 },
-                getFieldsStruct: function() {
+                getStructure: function() {
                     return {
                         factory_code_all: {},
                         goods_name: {},

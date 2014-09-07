@@ -46,11 +46,83 @@
                 'query' : {isArray: false}
             });
         }])
+
+        .service("DepartmentUserAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+            this.structure = {
+                id: {
+                    primary: true
+                },
+                email: {
+                    inputType: "email",
+                    ensureunique: "UserRes"
+                },
+                username: {
+                    ensureunique: "UserRes"
+                },
+                password: {
+                    inputType: "password",
+                    listable: false,
+                    required: false
+                },
+                truename: {},
+                phone: {
+                    inputType: "number"
+                },
+                group_name: {
+                    displayName: $rootScope.i18n.lang.usergroup,
+                    field: "usergroup",
+                    hideInForm: true
+                },
+                usergroup: {
+                    inputType: "select",
+                    multiple: "multiple",
+                    nameField: "title",
+                    valueField: "id",
+                    listable: false,
+                    dataSource: "AuthGroupRes"
+                },
+                department: {
+                    field: "Department.name",
+                    hideInForm: true,
+                    dataSource: "DepartmentRes"
+                },
+                department_id: {
+                    displayName: $rootScope.i18n.lang.department,
+                    nameField: "prefix_name",
+                    listable: false,
+                    inputType: "select"
+                },
+                status: {
+                    displayName: $rootScope.i18n.lang.isEnable,
+                    inputType: "select",
+                    dataSource: [
+                        {id: 1, name: $rootScope.i18n.lang.yes},
+                        {id: -1, name: $rootScope.i18n.lang.no}
+                    ]
+                }
+            };
+
+            this.api = res.getInstance({
+                uri: "department/user",
+                extraMethod: {
+                    "update": {method: "PUT"}
+                }
+            });
+
+            this.getStructure = function() {
+                return this.structure;
+            };
+
+            this.doLogin = function(username, password) {
+                //this.resource.post();
+            };
+        }])
+
         .factory("UserModel", ["DepartmentRes", "AuthGroupRes", "$q", "$rootScope",
             function(DepartmentRes, AuthGroupRes, $q, $rootScope){
 
                 var service = {
-                    getFieldsStruct: function(structOnly) {
+                    getStructure: function(structOnly) {
 
                         var fieldsStruct = {
                             id: {
@@ -127,7 +199,7 @@
             }])
         .factory("AuthRuleModel", ["$rootScope", function($rootScope){
             return {
-                getFieldsStruct : function() {
+                getStructure : function() {
                     return {
                         id: {primary: true},
                         name: {},
@@ -159,7 +231,7 @@
             return {
                 subAble: true,
                 viewSubAble: false,
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var i18n = $rootScope.i18n.lang;
                     return {
                         id : {
@@ -181,7 +253,7 @@
             return {
                 subAble: true,
                 addSubAble: false,
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var i18n = $rootScope.i18n.lang;
                     return {
                         id : {

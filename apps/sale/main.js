@@ -39,7 +39,7 @@
                 isBill: true,
                 workflowAlias: "order"
             };
-            obj.getFieldsStruct= function() {
+            obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
                 return {
                     bill_id: {
@@ -83,7 +83,7 @@
                 var obj = {
                     relateMoney: true
                 };
-                obj.getFieldsStruct = function() {
+                obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
                         id : {
@@ -139,7 +139,7 @@
             return {
                 isBill: true,
                 workflowAlias: "returns",
-                getFieldsStruct: function(){
+                getStructure: function(){
                     return {
                         bill_id: {},
                         returns_type_label: {
@@ -167,7 +167,7 @@
                     relateMoney: true,
                     workflowAlias: "returns"
                 };
-                obj.getFieldsStruct = function() {
+                obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
                         id : {

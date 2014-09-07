@@ -19,11 +19,38 @@
             '[ones.requirements.placeholder]',
 
             'ones.common',
-            'ones.common.models',
-            'ones.common.resources',
+            'ones.common.services',
             'ones.configModule',
             'ones.commonView' //需要先加载模块，让模块路由优先匹配
         ])
+        .service("ones.dataAPI", ["ones.config", "$resource", "$injector", function(config, $resource, $injector){
+
+            this.resource = {};
+            this.model = {};
+
+            this.getResourceInstance = function(opts){
+                var resUri = sprintf("%s%s/:id.json", config.BSU, opts.uri);
+                return $resource(resUri, opts.opts||{}, opts.extraMethod||{});
+            };
+            this.init = function(group, module) {
+                try {
+                    this.model = $injector.get(toAPIName(group, module));
+                    this.resource = this.model;
+                } catch(e) {
+                    try {
+                        this.resource = $injector.get(module.ucfirst()+"Res");
+                    } catch(e) {
+                        var $resource = $injector.get("$resource");
+                        this.resource = $resource(sprintf("%s%s/%s/:id.json", group, module), null, {
+                            update: {method: "PUT"}
+                        });
+                    }
+
+                    this.model = $injector.get(module.ucfirst()+"Model");
+                }
+            };
+
+        }])
         /**
          * $http interceptor.
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.

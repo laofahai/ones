@@ -19,7 +19,7 @@
         return {
             isBill: true,
             workflowAlias: "purchase",
-            getFieldsStruct: function(){
+            getStructure: function(){
                 return {
                     bill_id: {},
                     purchase_type: {
@@ -56,7 +56,7 @@
                 isBill: true,
                 relateMoney: true,
                 workflowAlias: "purchase",
-                getFieldsStruct: function(){
+                getStructure: function(){
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
                         id : {

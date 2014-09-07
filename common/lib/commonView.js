@@ -13,22 +13,22 @@
      * */
         .config(["$routeProvider", function($route){
             $route.when('/:group/list/:module', {
-                templateUrl: 'common/base/views/grid.html',
-                controller : 'ComViewGridCtl'
-            })
+                    templateUrl: 'common/base/views/grid.html',
+                    controller : 'ComViewGridCtl'
+                })
                 //列表 with extraParams
                 .when('/:group/list/:module/:extra*', {
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
-            $route.when('/:group/listAll/:module', {
-                templateUrl: 'common/base/views/grid.html',
-                controller : 'ComViewGridCtl'
-            })
-            $route.when('/:group/listAll/:module/:extra*', {
-                templateUrl: 'common/base/views/grid.html',
-                controller : 'ComViewGridCtl'
-            })
+                .when('/:group/listAll/:module', {
+                    templateUrl: 'common/base/views/grid.html',
+                    controller : 'ComViewGridCtl'
+                })
+                .when('/:group/listAll/:module/:extra*', {
+                    templateUrl: 'common/base/views/grid.html',
+                    controller : 'ComViewGridCtl'
+                })
                 //新增
                 .when('/:group/viewChild/:module/pid/:pid', {
                     //            templateUrl: 'views/common/grid.html',
@@ -80,9 +80,6 @@
                 "export": "success"
             }
         })
-        //    .controller('ComViewChildCtl', ["$scope", "$location", "$routeParams", function($scope, $location, $routeParams){
-        //        $location.url(sprintf('/%(group)s/list/%(module)s'));
-        //    }])
         .controller('ComViewError404Ctl', ["$scope", function($scope){
             $scope.hidePageHeader = true;
         }])
@@ -91,6 +88,10 @@
 
             group = $routeParams.group;
             module = $routeParams.module;
+
+            try {
+                $injector.get(group.ucfirst()+module.ucfirst()+"API");
+            } catch(e) {}
 
             res = $injector.get(module.ucfirst()+"Res");
             model = $injector.get(module.ucfirst()+"Model");
@@ -112,23 +113,18 @@
             //        $scope.doPrint();
 
         }])
-        .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "$modal", "ones.config",
-            function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, $modal, conf){
+        .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "ones.dataAPI",
+            function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, dataAPI){
                 var module,group,res,model,actions,pageActions=[];
                 $scope.selectAble = true;
 
                 group = $routeParams.group;
                 module = $routeParams.module;
-                try {
-                    res = $injector.get(module.ucfirst()+"Res");
-                } catch(e) {
-                    var $resource = $injector.get("$resource");
-                    res = $resource(sprintf("%s%s/%s/:id.json", group, module), null, {
-                        update: {method: "PUT"}
-                    });
-                }
 
-                model = $injector.get(module.ucfirst()+"Model");
+                dataAPI.init(group, module);
+                model = dataAPI.model;
+                res = dataAPI.resource;
+
                 var opts = {
                     queryExtraParams: {}
                 };
@@ -154,8 +150,8 @@
 
                 ComView.displayGrid($scope, model, res, opts);
             }])
-        .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig",
-            function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig){
+        .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "ones.dataAPI",
+            function($rootScope,$scope, ComView, $routeParams, dataAPI){
 
                 if($routeParams.extra) {
                     var queryExtraParams = parseParams($routeParams.extra);
@@ -167,8 +163,12 @@
                 group = $routeParams.group;
                 module = $routeParams.module;
 
-                res = $injector.get(module.ucfirst()+"Res");
-                model = $injector.get(module.ucfirst()+"Model");
+                dataAPI.init(group, module);
+                model = dataAPI.model;
+                res = dataAPI.resource;
+
+//                res = $injector.get(module.ucfirst()+"Res");
+//                model = $injector.get(module.ucfirst()+"Model");
                 //            console.log($scope);console.log(res);
                 //可跳转按钮
                 try {
@@ -344,7 +344,15 @@
                             if(opts.id) {
                                 tmpParams.id = opts.id;
                             }
-                            resource.get(tmpParams).$promise.then(function(defaultData) {
+
+                            var promise;
+                            try {
+                                promise = resource.get(tmpParams).$promise;
+                            } catch(e) {
+                                promise = resource.api.get(tmpParams).$promise;
+                            }
+
+                            promise.then(function(defaultData) {
                                 $scope[opts.dataName] = dataFormat($scope.formConfig.fieldsDefine, defaultData);
                             });
                         }
@@ -359,11 +367,11 @@
                     /**
                      * 自动获取字段
                      * */
-                    if(typeof(fieldsDefine) === "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) === "function") {
+                    if(typeof(fieldsDefine) === "object" && "getStructure" in fieldsDefine && typeof(fieldsDefine.getStructure) === "function") {
                         var model = fieldsDefine;
                         $scope.formConfig.columns = model.columns || 1;
                         $scope.formConfig.formActions = undefined === model.formActions ? true : false;
-                        var field = model.getFieldsStruct();
+                        var field = model.getStructure();
                         if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
                             field.then(function(data){
                                 fieldsDefine = data;
@@ -408,28 +416,30 @@
                             }
                             getParams[k] = $routeParams[k];
                         }
+                        var callback = function(data){
+                            if(data.error) {
+                                service.alert(data.msg);
+                            } else {
+                                var lastPage = ones.caches.getItem("lastPage");
+                                $location.url(lastPage[0] || opts.returnPage);
+                            }
+                        };
                         if (opts.id) {
                             getParams.id = opts.id;
-                            resource.update(getParams, $scope[opts.dataName], function(data){
-                                if(data.error) {
-                                    service.alert(data.msg);
-                                } else {
-                                    var lastPage = angular.fromJson(localStorage.lastPage);
-                                    $location.url(lastPage[0] || opts.returnPage);
-                                }
-                            });
+                            try {
+                                resource.update(getParams, $scope[opts.dataName], callback);
+                            } catch(e) {
+                                resource.api.update(getParams, $scope[opts.dataName], callback);
+                            }
+
                             //新增
                         } else {
-
                             var params = $.extend(getParams, $scope[opts.dataName]);
-                            resource.save(params, function(data){
-                                if(data.error) {
-                                    service.alert(data.msg);
-                                } else {
-                                    var lastPage = angular.fromJson(localStorage.lastPage);
-                                    $location.url(lastPage[0] || opts.returnPage);
-                                }
-                            });
+                            try {
+                                resource.save(params, $scope[opts.dataName], callback);
+                            } catch(e) {
+                                resource.api.save(params, $scope[opts.dataName], callback);
+                            }
                         }
                     };
                 };
@@ -498,14 +508,14 @@
 
 
                     //                console.log(typeof(fieldsDefine));
-                    //                console.log("getFieldsStruct" in fieldsDefine);
-                    //                console.log(typeof(fieldsDefine.getFieldsStruct) == "function");
+                    //                console.log("getStructure" in fieldsDefine);
+                    //                console.log(typeof(fieldsDefine.getStructure) == "function");
 
                     if(typeof(fieldsDefine) === "object"
-                        && "getFieldsStruct" in fieldsDefine
-                        && typeof(fieldsDefine.getFieldsStruct) === "function") {
+                        && "getStructure" in fieldsDefine
+                        && typeof(fieldsDefine.getStructure) === "function") {
                         var model = fieldsDefine;
-                        fieldsDefine = model.getFieldsStruct(true);
+                        fieldsDefine = model.getStructure(true);
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
                             fieldsDefine.then(function(data){
                                 fieldsDefine = data;
@@ -637,9 +647,22 @@
                             };
 //                            console.log(p);
                             p = $.extend(opts.queryExtraParams, p, extraParams||{});
-                            resource.query(p).$promise.then(function(remoteData){
+                            var promise;
+                            try {
+                                promise = resource.getList(p).$promise;
+                            } catch(e) {
+
+                                try {
+                                    promise = resource.api.query(p).$promise;
+                                } catch(e) {
+                                    promise = resource.query(p).$promise;
+                                }
+                            }
+
+                            promise.then(function(remoteData){
                                 setPagingData(remoteData, page, pageSize);
                             });
+
                         });
                     };
 
@@ -648,8 +671,6 @@
                     };
 
                     refresh();
-
-
 
                     /**
                      * 双击事件，支持：viewDetail, viewSub, edit （优先级排序）
@@ -714,9 +735,9 @@
                     };
 
                     //直接传入MODEL
-                    if(typeof(fieldsDefine) == "object" && "getFieldsStruct" in fieldsDefine && typeof(fieldsDefine.getFieldsStruct) == "function") {
+                    if(typeof(fieldsDefine) == "object" && "getStructure" in fieldsDefine && typeof(fieldsDefine.getStructure) == "function") {
                         var model = fieldsDefine;
-                        fieldsDefine = model.getFieldsStruct(true);
+                        fieldsDefine = model.getStructure(true);
                         opts.relateMoney = model.relateMoney || false;
 
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) == "function") {
