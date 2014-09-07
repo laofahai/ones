@@ -62,7 +62,7 @@
         }])
 
         //app详情
-        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "ones.dataAPI", "$routeParams", "$location", "$timeout", "$modal",
+        .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "ones.dataApiFactory", "$routeParams", "$location", "$timeout", "$modal",
             function($scope, $rootScope, ComView, dataAPI, $routeParams, $location, $timeout, $modal){
 
                 dataAPI.init("HOME", "apps");

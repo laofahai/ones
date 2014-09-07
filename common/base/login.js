@@ -1,10 +1,15 @@
 /**
  * 登陆页面逻辑处理
  * */
-var LoginModule = angular.module('login', ["ones.configModule"]);
+var LoginModule = angular.module('ones.login', [
+    "ngRoute",
+    "ngResource",
+    "ones.configModule",
+    "ones.department"
+]);
 
-LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout", "$sce",
-    function($scope, $http, $rootScope, conf, $timeout, $sce) {
+LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout", "$sce", "Department.UserAPI",
+    function($scope, $http, $rootScope, conf, $timeout, $sce, User) {
         $scope.error = {
             isError : false,
             msg: null
@@ -12,6 +17,7 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
 
         $scope.error.message = null;
 
+        //检测是否安装
         $timeout(function(){
             $.ajax({
                 url: "server/Data/install.lock",
@@ -26,27 +32,18 @@ LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config',
             });
         });
 
-
-
         $scope.doLogin = function() {
             if($scope.LoginForm.$invalid) {
                 return false;
             }
-            $rootScope.sessionHash = $rootScope.sessionHash || null;
 
-            $http.post(conf.BSU+'passport/userLogin', $scope.loginInfo).
-                success(function(data, status, headers, config) {
-                    if(data.error) {
-                        $scope.error.isError = true;
-                        $scope.error.msg = $sce.trustAsHtml(toLang(data.msg, "messages", $rootScope));
-                    } else if(data.sessionHash){
-                        window.location.href = 'app.html?hash='+data.sessionHash;
-                    }
-                }).
-                error(function(data, status, headers, config) {
-                    $scope.error.isError = true;
-                    $scope.error.msg = 'Server Error:'+data;
-                });
+            User.login($scope.loginInfo).promise.then(function(data){
+                window.location.href = 'app.html';
+            }, function(data){
+                $scope.error.isError = true;
+                $scope.error.msg = $sce.trustAsHtml(data);
+            });
+
         };
         
         $scope.doKeyDown = function(event){

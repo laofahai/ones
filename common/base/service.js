@@ -2,7 +2,7 @@
     'use strict';
     angular.module("ones.common.services", [])
 
-        .service("HOME.TypesAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+        .service("HOME.TypesAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, res){
             return  {
                 api: res.getResourceInstance({
                     uri: "home/types",
@@ -38,7 +38,7 @@
                 }
             };
         }])
-        .service("HOME.ConfigAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+        .service("HOME.ConfigAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, res){
             return {
                 api: res.getResourceInstance({
                     uri: "home/config",
@@ -63,7 +63,7 @@
                 }
             };
         }])
-        .service("HOME.AppsAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+        .service("HOME.AppsAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, res){
             return {
                 editAble: false,
                 deleteAble: false,

@@ -10,6 +10,36 @@
         LoadedApps: ['[ones.loadedApps.placeholder]']
     };
     angular.module("ones.configModule", [])
+        .service("ones.dataApiFactory", ["ones.config", "$resource", "$injector", function(config, $resource, $injector){
+
+            this.resource = {};
+            this.model = {};
+
+            this.getResourceInstance = function(opts){
+                var resUri = sprintf("%s%s/:id.json", config.BSU, opts.uri);
+                return $resource(resUri, opts.opts||{}, opts.extraMethod||{});
+            };
+            this.init = function(group, module) {
+                try {
+                    this.model = $injector.get(toAPIName(group, module));
+                    this.resource = this.model;
+                } catch(e) {
+                    try {
+                        this.resource = $injector.get(module.ucfirst()+"Res");
+                    } catch(e) {
+                        var $resource = $injector.get("$resource");
+                        this.resource = $resource(sprintf("%s%s/%s/:id.json", group, module), null, {
+                            update: {method: "PUT"}
+                        });
+                    }
+
+                    this.model = $injector.get(module.ucfirst()+"Model");
+                }
+
+                return this.model;
+            };
+
+        }])
         .factory("ones.config", ["$location", function($location) {
 
             ones.loadedApps = BaseConf.LoadedApps;
@@ -24,12 +54,7 @@
             return BaseConf;
         }])
         .run(["$rootScope", "$http", "$injector", "$location", function($rootScope, $http, $injector, $location) {
-            var loginHash = uriParamsGet('hash');
-            if ($location.url() && !loginHash && !ones.installing) {
-                window.location.href = 'index.html';
-            }
-
-            $http.defaults.headers.common["sessionHash"] = loginHash;
+//            $http.defaults.headers.common["sessionHash"] = loginHash;
 //                $http.defaults.headers.post = {
 //                    'Content-Type': 'application/x-www-form-urlencoded'
 //                };

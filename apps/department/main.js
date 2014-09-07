@@ -28,9 +28,7 @@
         .factory("UserProfileRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "department/profile.json", null, {'update': {method: 'PUT'}});
         }])
-        .factory("UserRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "department/user/:id.json", null, {'update': {method: 'PUT'}});
-        }])
+
         .factory("DepartmentRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "department/department/:id.json", null, {'update': {method: 'PUT'}});
         }])
@@ -47,7 +45,7 @@
             });
         }])
 
-        .service("DepartmentUserAPI", ["$rootScope", "ones.dataAPI", function($rootScope, res){
+        .service("Department.UserAPI", ["$rootScope", "ones.dataApiFactory", "$q", "$http", "ones.config", function($rootScope, res, $q, $http, conf){
             this.structure = {
                 id: {
                     primary: true
@@ -102,7 +100,7 @@
                 }
             };
 
-            this.api = res.getInstance({
+            this.api = res.getResourceInstance({
                 uri: "department/user",
                 extraMethod: {
                     "update": {method: "PUT"}
@@ -113,90 +111,23 @@
                 return this.structure;
             };
 
-            this.doLogin = function(username, password) {
-                //this.resource.post();
+            this.login = function(loginInfo) {
+                var defer = $q.defer();
+                $http.post(conf.BSU+'passport/userLogin', loginInfo).
+                    success(function(data, status, headers, config) {
+                        if(data.error) {
+                            defer.reject(toLang(data.msg, "messages", $rootScope));
+                        } else if(data.sessionHash){
+                            defer.resolve(data.sessionHash);
+                        }
+                    }).
+                    error(function(data, status, headers, config) {
+                        defer.reject(toLang(data, "messages", $rootScope));
+                    });
+                return defer;
             };
         }])
 
-        .factory("UserModel", ["DepartmentRes", "AuthGroupRes", "$q", "$rootScope",
-            function(DepartmentRes, AuthGroupRes, $q, $rootScope){
-
-                var service = {
-                    getStructure: function(structOnly) {
-
-                        var fieldsStruct = {
-                            id: {
-                                primary: true
-                            },
-                            email: {
-                                inputType: "email",
-                                ensureunique: "UserRes"
-                            },
-                            username: {
-                                ensureunique: "UserRes"
-                            },
-                            password: {
-                                inputType: "password",
-                                listable: false,
-                                required: false
-                            },
-                            truename: {},
-                            phone: {
-                                inputType: "number"
-                            },
-                            group_name: {
-                                displayName: $rootScope.i18n.lang.usergroup,
-                                field: "usergroup",
-                                hideInForm: true
-                            },
-                            usergroup: {
-                                inputType: "select",
-                                multiple: "multiple",
-                                nameField: "title",
-                                valueField: "id",
-                                listable: false
-                            },
-                            department: {
-                                field: "Department.name",
-                                hideInForm: true
-                            },
-                            department_id: {
-                                displayName: $rootScope.i18n.lang.department,
-                                nameField: "prefix_name",
-                                listable: false,
-                                inputType: "select"
-                            },
-                            status: {
-                                displayName: $rootScope.i18n.lang.isEnable,
-                                inputType: "select",
-                                dataSource: [
-                                    {id: 1, name: $rootScope.i18n.lang.yes},
-                                    {id: -1, name: $rootScope.i18n.lang.no}
-                                ]
-                            }
-                        };
-
-                        if(structOnly) {
-                            return fieldsStruct;
-                        } else {
-                            var defered = $q.defer();
-                            DepartmentRes.query().$promise.then(function(data){
-                                fieldsStruct.department_id.dataSource = data;
-                            }, function(){
-                                defered.reject();
-                            }).then(function(){
-                                AuthGroupRes.query().$promise.then(function(data){
-                                    fieldsStruct.usergroup.dataSource = data;
-                                    defered.resolve(fieldsStruct);
-                                });
-                            });
-                            return defered.promise;
-                        }
-                    }
-                };
-
-                return service;
-            }])
         .factory("AuthRuleModel", ["$rootScope", function($rootScope){
             return {
                 getStructure : function() {
@@ -309,7 +240,7 @@
                 };
             }])
 
-        .controller("PassportProfileCtl", ["$scope", "$modal", "UserRes", function($scope, $modal, UserRes){
+        .controller("PassportProfileCtl", ["$scope", "$modal", "Department.UserAPI", function($scope, $modal, User){
 
             var modal = $modal({
                 scope: $scope,
@@ -324,14 +255,15 @@
 
             $scope.doSubmitProfile = function() {
                 $scope.$parent.userInfo = $scope.userInfo;
-                UserRes.update({id: $scope.userInfo.id, editMine: true}, {
+                User.api.update({id: $scope.userInfo.id, editMine: true}, {
                     phone: $scope.userInfo.phone,
                     username: $scope.userInfo.username,
+                    truename: $scope.userInfo.truename,
                     password: $scope.userInfo.password,
                     email: $scope.userInfo.email
                 }).$promise.then(function(data){
-                        modal.hide();
-                    });
+                    modal.hide();
+                });
             };
         }])
     ;

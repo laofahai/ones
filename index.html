@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="common/statics/css/main.css">
     </head>
 
-    <body class="login-layout" ng-app="login">
+    <body class="login-layout" ng-app="ones.login">
         <div class="main-container" style="min-height:400px;">
             <div class="main-content">
                 <div class="row">
@@ -137,20 +137,18 @@
 
         <script type="text/javascript">
             var ones = {};
-            localStorage.clear();
         </script>
         <script src="common/vendor/jquery/jquery-2.1.1.min.js"></script>
         <script src="common/vendor/angular-1.2.22/angular.min.js"></script>
         <script src="common/vendor/ace/ace.js"></script>
         <script src="common/vendor/ace/ace-extra.min.js"></script>
         <script src="common/vendor/ace/ace-elements.min.js"></script>
-        <!-- build:js({.tmp,app}) scripts/config.js -->
+        <script src="common/vendor/angular-1.2.22/angular-route.min.js"></script>
+        <script src="common/vendor/angular-1.2.22/angular-resource.min.js"></script>
         <script src="common/lib/function.js"></script>
         <script src="common/base/config.js"></script>
-        <!-- endbuild -->
-        <!-- build:js({.tmp,app}) scripts/login.js -->
+        <script src="apps/department/main.js"></script>
         <script src="common/base/login.js"></script>
-        <!-- endbuild -->
 
         <script type="text/javascript">
             function show_box(id) {

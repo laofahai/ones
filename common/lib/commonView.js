@@ -113,7 +113,7 @@
             //        $scope.doPrint();
 
         }])
-        .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "ones.dataAPI",
+        .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "ones.dataApiFactory",
             function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, dataAPI){
                 var module,group,res,model,actions,pageActions=[];
                 $scope.selectAble = true;
@@ -150,7 +150,7 @@
 
                 ComView.displayGrid($scope, model, res, opts);
             }])
-        .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "ones.dataAPI",
+        .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "ones.dataApiFactory",
             function($rootScope,$scope, ComView, $routeParams, dataAPI){
 
                 if($routeParams.extra) {
