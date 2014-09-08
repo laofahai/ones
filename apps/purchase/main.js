@@ -108,8 +108,8 @@
             };
         }])
 
-    .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes",
-        function($scope, res, GoodsRes, model, ComView, RelationshipCompanyRes, $routeParams, TypesRes) {
+    .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+        function($scope, res, GoodsRes, model, ComView, RelationshipCompanyRes, $routeParams) {
 
             $scope.workflowAble = true;
             $scope.selectAble = false;
@@ -143,7 +143,7 @@
                 fieldDefine: {
                     inputType: "select",
                     "ng-model": "formMetaData.purchase_type",
-                    dataSource: TypesRes,
+                    dataSource: "HOME.TypesAPI",
                     queryParams: {
                         type: "purchase"
                     }

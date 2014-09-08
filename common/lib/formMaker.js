@@ -300,7 +300,9 @@
                                         : $scope.$parent[self.opts.dataName][qItem];
                                 });
                             }
-                            fieldDefine.dataSource.query(queryParams).$promise.then(function(result) {
+
+                            var promise = getDataApiPromise(fieldDefine.dataSource, "query", queryParams);
+                            promise.then(function(result) {
                                 angular.forEach(result, function(item) {
                                     data.push({
                                         value: item[valueField],
@@ -1296,8 +1298,13 @@
                                             : self.scope.$parent[self.opts.dataName][qItem];
                                     });
                                 }
-
-                                self.opts.dataSource.query(queryParams).$promise.then(function(data){
+                                var promise = getDataApiPromise(self.opts.dataSource, "query", queryParams);
+//                                try {
+//                                    promise = self.opts.dataSource.api.query(queryParams).$promise;
+//                                } catch(e) {
+//
+//                                }
+                                promise.then(function(data){
                                     if(data.length < 1 && !self.opts.dynamicAddAble) {
                                         self.scope.$parent.hideSelect3Options(true);
                                         return;
@@ -1421,9 +1428,16 @@
                                         return false;
                                     }
 
-                                    fieldDefine.dataSource.save(self.scope.$parent.dynamicEditFormData, function() {
+                                    var callback = function() {
                                         modal.hide();
-                                    });
+                                    };
+
+                                    try {
+                                        fieldDefine.dataSource.save(self.scope.$parent.dynamicEditFormData, callback);
+                                    } catch(e) {
+                                        fieldDefine.dataSource.api.save(self.scope.$parent.dynamicEditFormData, callback);
+                                    }
+
                                 };
 
                             }

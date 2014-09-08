@@ -157,18 +157,17 @@
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
                             $scope.$on("commonBill.ready", function(){
-                                $timeout(function(){
-                                    if ($scope.$parent.billConfig.isEdit) {
-                                        $scope.$on("bill.dataLoaded", function(evt, data) {
-                                            $scope.$parent.formMetaData = data;
-                                            var b = new FormMaker.makeBill($scope);
-                                            iElement.append($compile(b.makeHTML())($scope.$parent));
-                                        });
-                                    } else {
+                                if ($scope.$parent.billConfig.isEdit) {
+                                    $scope.$on("bill.dataLoaded", function(evt, data) {
+                                        $scope.$parent.formMetaData = data;
                                         var b = new FormMaker.makeBill($scope);
+
                                         iElement.append($compile(b.makeHTML())($scope.$parent));
-                                    }
-                                });
+                                    });
+                                } else {
+                                    var b = new FormMaker.makeBill($scope);
+                                    iElement.append($compile(b.makeHTML())($scope.$parent));
+                                }
                             });
                         }
                     };

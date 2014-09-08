@@ -121,6 +121,7 @@
                         },
                         is_primary: {
                             inputType: "select",
+                            cellFilter:"toYesOrNo",
                             dataSource: [
                                 {id: -1, name: toLang("no", null, $rootScope)},
                                 {id: 1, name: toLang("yes", null, $rootScope)}

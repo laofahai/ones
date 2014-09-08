@@ -17,7 +17,7 @@ class RelationshipCompanyLinkmanModel extends CommonModel {
         $data = parent::select($options);
 
         foreach($data as $k=>$v) {
-            $data[$k]["is_primary_label"] = $v["is_primary"] ? "yes" : "no";
+            $data[$k]["is_primary_label"];
         }
         return $data;
 

@@ -118,6 +118,12 @@
                 return $sce.trustAsHtml(text);
             };
         }])
+        .filter('toYesOrNo', ['$rootScope', function ($rootScope) {
+            return function (text) {
+                var lang = text == 1 ? "yes" : "no";
+                return toLang(lang, "", $rootScope);
+            };
+        }])
 
     ;
 

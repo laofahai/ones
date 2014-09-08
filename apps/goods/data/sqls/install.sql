@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
-  `bind_model` smallint(5) NOT NULL,
   `pinyin` varchar(15) DEFAULT NULL,
   `lft` smallint(5) NOT NULL,
   `rgt` smallint(5) NOT NULL,
@@ -33,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   KEY `lft` (`lft`,`rgt`,`listorder`),
   KEY `parentid` (`pid`),
   KEY `pinyin` (`pinyin`),
-  KEY `bind_model` (`bind_model`),
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-INSERT INTO `[PREFIX]goods_category` (id, pid, name, bind_model, pinyin, lft, rgt, listorder, deleted) VALUES(null,0,"ROOT",0,null,1,2,0,0);
+INSERT INTO `[PREFIX]goods_category` (id, pid, name, pinyin, lft, rgt, listorder, deleted) VALUES(null,0,"ROOT",null,1,2,0,0);

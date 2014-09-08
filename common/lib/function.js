@@ -226,6 +226,19 @@ var toLang = function(key, section, $rootScope) {
     }
 }
 
+var getDataApiPromise = function(dataSource, method, params) {
+    var promise;
+    try {
+        //首先尝试使用dataAPI.method
+        //dataSource为resource对象时或者dataAPI.method时
+        promise = dataSource[method](params).$promise;
+    } catch(e) {
+        //尝试使用dataAPI.api.method
+        promise = dataSource.api[method](params).$promise;
+    }
+    return promise;
+};
+
 var toLower = function(str) {
     return str.toLowerCase();
 }
