@@ -2,13 +2,35 @@
  * 登陆页面逻辑处理
  * */
 var LoginModule = angular.module('ones.login', [
-    "ngRoute",
     "ngResource",
-    "ones.configModule",
-    "ones.department"
+    "ones.configModule"
 ]);
 
-LoginModule.controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout", "$sce", "Department.UserAPI",
+LoginModule
+    .service("Department.UserAPI", ["$rootScope", "ones.dataApiFactory", "$q", "$http", "ones.config", function($rootScope, res, $q, $http, conf){
+        this.api = res.getResourceInstance({
+            uri: "department/user",
+            extraMethod: {
+                "update": {method: "PUT"}
+            }
+        });
+        this.login = function(loginInfo) {
+            var defer = $q.defer();
+            $http.post(conf.BSU+'passport/userLogin', loginInfo).
+                success(function(data, status, headers, config) {
+                    if(data.error) {
+                        defer.reject(toLang(data.msg, "messages", $rootScope));
+                    } else if(data.sessionHash){
+                        defer.resolve(data.sessionHash);
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    defer.reject(toLang(data, "messages", $rootScope));
+                });
+            return defer;
+        };
+    }])
+    .controller("LoginCtl", ['$scope','$http','$rootScope','ones.config', "$timeout", "$sce", "Department.UserAPI",
     function($scope, $http, $rootScope, conf, $timeout, $sce, User) {
         $scope.error = {
             isError : false,

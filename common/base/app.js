@@ -155,8 +155,7 @@
 
                     lastPage[0] = lastPage[1];
                     lastPage[1] = $location.path();
-
-                    localStorage.lastPage = angular.toJson(lastPage);
+                    ones.caches.setItem("lastPage", lastPage);
                 });
 
                 function doWhenLocationChanged() {

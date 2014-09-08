@@ -158,7 +158,7 @@
                         pre: function($scope, iElement, iAttrs, controller) {
                             $scope.$on("commonBill.ready", function(){
                                 $timeout(function(){
-                                    if ($scope.$parent.config.isEdit) {
+                                    if ($scope.$parent.billConfig.isEdit) {
                                         $scope.$on("bill.dataLoaded", function(evt, data) {
                                             $scope.$parent.formMetaData = data;
                                             var b = new FormMaker.makeBill($scope);

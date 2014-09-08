@@ -441,7 +441,8 @@
                     this.scope = $scope;
                     this.compile = $compile;
 
-                    this.opts = $.extend(defaultOpts, $scope.config);
+                    this.opts = $.extend(defaultOpts, $scope.$parent.billConfig);
+
 
                     this.scope.$parent[this.opts.dataName] = this.scope.$parent[this.opts.dataName] || [];
                     this.scope.$parent.formMetaData = this.scope.$parent.formMetaData || {};

@@ -791,19 +791,12 @@
                             });
                         }
 
-                        $scope.config = opts;
+                        $scope.billConfig = opts;
 
                         $scope.$broadcast("commonBill.ready");
                     });
 
 
-
-                    //                //监控数据变化，是否保存
-                    //                $scope.watch(function(){
-                    //                    return $scope[opts.dataName];
-                    //                }, function(){
-                    //
-                    //                });
 
                     //默认单据提交方法，可自动判断是否编辑/新建
                     $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
@@ -825,14 +818,8 @@
                             resource.save(getParams, data);
                         }
 
-//                        if(conf.DEBUG) {
-//                            service.alert("success", "success");
-//                            return;
-//                        }
 
-                        return;
-
-                        var lastPage = angular.fromJson(localStorage.lastPage);
+                        var lastPage = ones.caches.getItem("lastPage");
                         $location.url(lastPage[0] || opts.returnPage);
                     };
                 };

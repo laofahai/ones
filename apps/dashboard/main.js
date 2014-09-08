@@ -63,7 +63,7 @@
             };
         }])
 
-        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout", "DepartmentUserAPI",
+        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout", "Department.UserAPI",
             function($scope, $rootScope, MyDesktopRes, conf, plugin, $timeout, user){
 
                 var chars = 'abcdefghijklmnopqrstuvwxyz';

@@ -21,7 +21,7 @@
             }
 
             if(undefined == persistence) {
-                persistence = -1;
+                persistence = 1;
             }
 
             switch(persistence) {
