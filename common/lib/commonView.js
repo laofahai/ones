@@ -346,10 +346,10 @@
                             }
 
                             var promise;
-                            try {
-                                promise = resource.get(tmpParams).$promise;
-                            } catch(e) {
+                            if(typeof(resource.get) === undefined) {
                                 promise = resource.api.get(tmpParams).$promise;
+                            } else {
+                                promise = resource.get(tmpParams).$promise;
                             }
 
                             promise.then(function(defaultData) {
@@ -426,19 +426,18 @@
                         };
                         if (opts.id) {
                             getParams.id = opts.id;
-                            try {
-                                resource.update(getParams, $scope[opts.dataName], callback);
-                            } catch(e) {
+                            if(typeof(resource.update) == "undefined") {
                                 resource.api.update(getParams, $scope[opts.dataName], callback);
+                            } else {
+                                resource.update(getParams, $scope[opts.dataName], callback);
                             }
-
                             //新增
                         } else {
                             var params = $.extend(getParams, $scope[opts.dataName]);
-                            try {
-                                resource.save(params, $scope[opts.dataName], callback);
-                            } catch(e) {
+                            if(typeof(resource.save) == "undefined") {
                                 resource.api.save(params, $scope[opts.dataName], callback);
+                            } else {
+                                resource.save(params, $scope[opts.dataName], callback);
                             }
                         }
                     };
@@ -820,6 +819,7 @@
 
 
                         var lastPage = ones.caches.getItem("lastPage");
+
                         $location.url(lastPage[0] || opts.returnPage);
                     };
                 };

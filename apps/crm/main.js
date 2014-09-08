@@ -28,7 +28,7 @@
             return $resource(cnf.BSU + "crm/relationshipCompanyGroup/:id.json", null, {'update': {method: 'PUT'}});
         }])
         .factory("RelationshipCompanyLinkmanRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "crm/relationshipCompanyLinkman/:id.json");
+            return $resource(cnf.BSU + "crm/relationshipCompanyLinkman/:id.json", null, {update: {method: "PUT"}});
         }])
         .factory("RelationshipCompanyRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "crm/relationshipCompany/:id.json", null, {'update': {method: 'PUT'}});

@@ -21,12 +21,15 @@
             };
             this.init = function(group, module) {
                 try {
+                    //尝试使用DataAPI模式
                     this.model = $injector.get(toAPIName(group, module));
                     this.resource = this.model;
                 } catch(e) {
                     try {
+                        //尝试使用已定义的资源
                         this.resource = $injector.get(module.ucfirst()+"Res");
                     } catch(e) {
+                        //尝试使用动态定义资源
                         var $resource = $injector.get("$resource");
                         this.resource = $resource(sprintf("%s%s/%s/:id.json", group, module), null, {
                             update: {method: "PUT"}

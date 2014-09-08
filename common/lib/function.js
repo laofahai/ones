@@ -226,6 +226,10 @@ var toLang = function(key, section, $rootScope) {
     }
 }
 
+var isDataApi = function(resource) {
+    return "api" in resource && typeof(resource.api) == "function";
+};
+
 var getDataApiPromise = function(dataSource, method, params) {
     var promise;
     try {
