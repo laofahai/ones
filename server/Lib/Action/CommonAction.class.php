@@ -28,9 +28,10 @@ class CommonAction extends RestAction {
     public function __construct() {
 
         if(!is_file(ENTRY_PATH."/Data/install.lock")) {
+            redirect("install.html");
             return;
         }
-        
+
         parent::__construct();
 
         if(!APP_DEBUG && !IS_AJAX) {

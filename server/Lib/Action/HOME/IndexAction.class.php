@@ -2,7 +2,23 @@
 
 class IndexAction extends CommonAction {
 
-    public function index(){
+    public function index() {
+
+        if(!is_file(APP_PATH."/Data/install.lock")) {
+//            $this->display("install");
+            return;
+        }
+
+        $this->assign("siteTitle", DBC("site.title"));
+
+        if($this->isLogin()) {
+            $this->display("app");
+        } else {
+            $this->display("login");
+        }
+    }
+
+    public function read(){
         unset($_SESSION["user"]["password"]);
 
         $auth = new Auth();

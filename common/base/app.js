@@ -27,7 +27,7 @@
          * $http interceptor.
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
          */
-        .config(["$httpProvider", function($httpProvider) {
+        .config(["$httpProvider", "$locationProvider", function($httpProvider, $locationProvider) {
             var interceptor = ['$rootScope', '$q', function(scope, $q) {
                 function success(response) {
                     if (parseInt(response.data.error) > 0) {
@@ -54,6 +54,10 @@
                 return function(promise) {
                     return promise.then(success, error);
                 };
+
+                $locationProvider.html5Mode(true);
+                $locationProvider.hashPrefix('!');
+
             }];
 
             var reqInterceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', function ($q, $cacheFactory, $timeout, $rootScope) {
@@ -120,7 +124,7 @@
 
                 //监听全局事件
                 $scope.$on("event:loginRequired", function() {
-                    window.location.href = 'index.html';
+                    window.location.href = './';
                 });
 
                 $scope.$on("event:permissionDenied", function(evt, msg) {
@@ -229,7 +233,7 @@
                  *  navs: {}
                  * }
                  * */
-                $http.get(conf.BSU + "home/index.json").success(function(data) {
+                $http.get(conf.BSU + "home/index/0.json").success(function(data) {
                     $scope.$broadcast("initDataLoaded", data);
                 });
 

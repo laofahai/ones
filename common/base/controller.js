@@ -1,6 +1,7 @@
 (function(){
     angular.module('ones.common', ['ones.common.filters', 'ones.common.directives'])
-        .config(["$routeProvider", function($routeProvider) {
+        .config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
+
             $routeProvider
                 .when('/HOME/goTo/url/:url', {
                     controller: "HOMERedirectCtl",
@@ -22,6 +23,8 @@
                     redirectTo: "/HOME/Index/dashboard"
                 })
             ;
+//            $locationProvider.html5Mode(true);
+//            $locationProvider.hashPrefix('!');
         }])
         .controller("HOMERedirectCtl", ["$location", "$routeParams", function($location, $routeParams){
             $location.url($routeParams.url);

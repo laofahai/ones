@@ -58,7 +58,8 @@ LoginModule
             }
 
             User.login($scope.loginInfo).promise.then(function(data){
-                window.location.href = 'app.html?hash='+data;
+//                window.location.href = './?hash='+data;
+                window.location.reload();
             }, function(data){
                 $scope.error.isError = true;
                 $scope.error.msg = $sce.trustAsHtml(data);

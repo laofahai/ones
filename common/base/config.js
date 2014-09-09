@@ -5,7 +5,7 @@
      * */
     var BaseConf = {
         DEBUG: true,
-        BSU: "./server/gateway.php?s=/",
+        BSU: "./index.php?s=/",
         Prefix: "ones",
         LoadedApps: ['[ones.loadedApps.placeholder]']
     };

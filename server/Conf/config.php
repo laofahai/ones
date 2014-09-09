@@ -51,14 +51,14 @@ $BASEConfig = array(
             "passport.login.add",
             "passport.login.read",
             "home.frontendruntime.read",
-            "home.install.read"
+            "home.install.read",
+            "home.index.read"
         ),
         /**
          * 无需认证模块
          */
         'AUTH_DONT_NEED' => array(
             "home.types.read",
-            "home.index.read",
             "home.index.dashboard",
             "home.mydesktop.read",
             "workflow.workflownode.read",
@@ -76,6 +76,10 @@ $BASEConfig = array(
     )
 );
 
+
+
 require ENTRY_PATH."/Lib/ORG/spyc.php";
 $YAMLConfig = Spyc::YAMLLoad(ROOT_PATH."/common/config.yaml.php");
-return array_merge_recursive($BASEConfig, $YAMLConfig["backend"]);
+$BASEConfig = array_merge_recursive($BASEConfig, $YAMLConfig["backend"]);
+
+return $BASEConfig;

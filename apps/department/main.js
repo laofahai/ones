@@ -147,7 +147,6 @@
                 this.loginAPI.query().$promise.then(function(){
                     ones.caches.clear(-1);
                     ones.caches.clear(0);
-
                     window.location.href = "./";
                 });
             };

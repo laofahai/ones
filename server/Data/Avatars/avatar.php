@@ -12,7 +12,6 @@
     );
 
     if (!is_file($localPath) || (time() - filemtime($localPath)) > $timeLimit) {
-
         @copy($url, $localPath);
     }
     header("Content-Type: image/jpeg");

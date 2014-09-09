@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>ONES Login Page</title>
+    <meta name="description" content="User login page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="common/statics/css/vendor.css" />
+    <link rel="stylesheet" href="common/statics/css/bootstrap.css" />
+    <link rel="stylesheet" href="common/statics/css/ace.css" />
+    <link rel="stylesheet" href="common/statics/css/ace-skins.css" />
+    <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
+    <link rel="stylesheet" href="common/statics/css/main.css">
+</head>
+
+<body class="login-layout" ng-app="ones.login">
+<div class="main-container" style="min-height:400px;">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div class="center">
+                        <h1>
+                            <img src="common/statics/images/logo_mini_white.png" />
+                        </h1>
+                    </div>
+
+                    <div class="space-6"></div>
+
+                    <div class="position-relative" ng-controller="LoginCtl">
+                        <div id="login-box" class="login-box visible widget-box no-border" ng-keydown="doKeyDown($event)">
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <h4 class="header blue lighter bigger" ng-show="!notInstalled">
+                                        <i class="icon-coffee green"></i>
+                                        <span ng-bind="i18n.lang.messages.please_enter_your_login_info"></span>
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
+                                        <div><span ng-bind-html="error.msg"></span></div>
+                                    </div>
+                                    <form name="LoginForm" ng-show="!notInstalled">
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                        <span class="block input-icon input-icon-right">
+                                                            <input type="text" autofocus class="form-control" placeholder="{{i18n.lang.username}}" ng-model="loginInfo.username" required />
+                                                            <i class="icon-user"></i>
+                                                        </span>
+                                            </label>
+
+                                            <label class="block clearfix">
+                                                        <span class="block input-icon input-icon-right">
+                                                            <input type="password" class="form-control" placeholder="{{i18n.lang.password}}" ng-minlength="6" ng-model="loginInfo.password" required />
+                                                            <i class="icon-lock"></i>
+                                                        </span>
+                                            </label>
+
+                                            <div class="space"></div>
+
+                                            <div class="clearfix">
+                                                <label class="inline">
+                                                    <input type="checkbox" class="ace" ng-model="loginInfo.remember" />
+                                                    <span class="lbl"> <small ng-bind="i18n.lang.messages.remember_me"></small></span>
+                                                </label>
+
+                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
+                                                    <i class="icon-key"></i>
+                                                    <span ng-bind="i18n.lang.actions.login"></span>
+                                                </button>
+                                            </div>
+                                            <div class="space-4"></div>
+                                        </fieldset>
+                                    </form>
+                                </div><!-- /widget-main -->
+
+                                <div class="toolbar clearfix" ng-show="!notInstalled">
+                                    <div>
+                                        <a href="#" onclick="show_box('forgot-box');
+                                                            return false;" class="forgot-password-link">
+                                            <i class="icon-arrow-left"></i>
+                                            <span ng-bind="i18n.lang.messages.i_fogot_password"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- /widget-body -->
+                        </div><!-- /login-box -->
+
+                        <div id="forgot-box" class="forgot-box widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <h4 class="header red lighter bigger">
+                                        <i class="icon-key"></i>
+                                        Retrieve Password
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <p>
+                                        Enter your email and to receive instructions
+                                    </p>
+
+                                    <form name="RetrivePwdForm">
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                        <span class="block input-icon input-icon-right">
+                                                            <input type="email" class="form-control" placeholder="Email" ng-model="retriveInfo.email" />
+                                                            <i class="icon-envelope"></i>
+                                                        </span>
+                                            </label>
+
+                                            <div class="clearfix">
+                                                <button type="button" class="width-35 pull-right btn btn-sm btn-danger" ng-click="doRetrivePwd()">
+                                                    <i class="icon-lightbulb"></i>
+                                                    Send Me!
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div><!-- /widget-main -->
+
+                                <div class="toolbar center">
+                                    <a href="#" onclick="show_box('login-box');
+                                                        return false;" class="back-to-login-link">
+                                        Back to login
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div><!-- /widget-body -->
+                        </div><!-- /forgot-box -->
+                    </div><!-- /position-relative -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+</div><!-- /.main-container -->
+<p class="center white">Present by <a href="http://www.ng-erp.com" target="_blank" class="white">ONES Team</a>. &copy; 2014</p>
+
+<script type="text/javascript">
+    var ones = {};
+</script>
+<script src="common/vendor/jquery/jquery-2.1.1.min.js"></script>
+<script src="common/vendor/angular-1.2.22/angular.min.js"></script>
+<script src="common/vendor/ace/ace.js"></script>
+<script src="common/vendor/ace/ace-extra.min.js"></script>
+<script src="common/vendor/ace/ace-elements.min.js"></script>
+<script src="common/vendor/angular-1.2.22/angular-resource.min.js"></script>
+<script src="common/lib/function.js"></script>
+<script src="common/base/config.js"></script>
+<script src="common/base/login.js"></script>
+
+<script type="text/javascript">
+    function show_box(id) {
+        jQuery('.widget-box.visible').removeClass('visible');
+        jQuery('#' + id).addClass('visible');
+    }
+</script>
+</body>
+</html>
