@@ -29,7 +29,24 @@
 
         .controller("clearCacheCtl", ["$scope", "$http", "ones.config", "ComView", function($scope, $http, conf, ComView){
             $scope.cacheTypes = [null, true, true, true];
+            $scope.frontCache = [false, false, false];
             $scope.doClearCache = function() {
+                angular.forEach($scope.frontCache, function(item, k){
+                    if(!item) {
+                        return;
+                    }
+                    switch(k) {
+                        case 0:
+                            ones.caches.clear(-1);
+                            break;
+                        case 1:
+                            ones.caches.clear(0);
+                            break;
+                        case 2:
+                            ones.caches.clear(1);
+                            break;
+                    }
+                });
                 $http({method: "POST", url:conf.BSU+'home/clearCache.json', data:{types: $scope.cacheTypes}}).success(function(data){
                     ComView.alert($scope.i18n.lang.messages.cacheCleared, "info");
                 });
