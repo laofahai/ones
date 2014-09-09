@@ -107,25 +107,51 @@
                 }
             });
 
+            this.loginAPI = res.getResourceInstance({
+                uri: "passport/login"
+            });
+
             this.getStructure = function() {
                 return this.structure;
             };
 
             this.login = function(loginInfo) {
                 var defer = $q.defer();
-                $http.post(conf.BSU+'passport/userLogin', loginInfo).
-                    success(function(data, status, headers, config) {
-                        if(data.error) {
-                            defer.reject(toLang(data.msg, "messages", $rootScope));
-                        } else if(data.sessionHash){
-                            defer.resolve(data.sessionHash);
-                        }
-                    }).
-                    error(function(data, status, headers, config) {
-                        defer.reject(toLang(data, "messages", $rootScope));
-                    });
+
+                this.loginAPI.save(loginInfo).$promise.then(function(data){
+                    if(data.error) {
+                        defer.reject(toLang(data.msg, "messages", $rootScope));
+                    } else if(data.sessionHash){
+                        defer.resolve(data.sessionHash);
+                    }
+                }, function(data){
+                    defer.reject(toLang(data, "messages", $rootScope));
+                });
+
+//                $http.post(conf.BSU+'passport/userLogin', loginInfo).
+//                    success(function(data, status, headers, config) {
+//                        if(data.error) {
+//                            defer.reject(toLang(data.msg, "messages", $rootScope));
+//                        } else if(data.sessionHash){
+//                            defer.resolve(data.sessionHash);
+//                        }
+//                    }).
+//                    error(function(data, status, headers, config) {
+//                        defer.reject(toLang(data, "messages", $rootScope));
+//                    });
                 return defer;
             };
+
+            this.logout = function(){
+                var defer = $q.defer();
+                this.loginAPI.query().$promise.then(function(){
+                    ones.caches.clear(-1);
+                    ones.caches.clear(0);
+
+                    window.location.href = "./";
+                });
+            };
+
         }])
 
         .factory("AuthRuleModel", ["$rootScope", function($rootScope){
@@ -198,11 +224,8 @@
             };
         }])
 
-        .controller("LogoutCtl", ["$scope", "$http", "ones.config", function($scope, $http, conf){
-            $http.get(conf.BSU+"department/userLogout").success(function(){
-                window.location.href="index.html";
-            });
-
+        .controller("LogoutCtl", ["$scope", "$http", "ones.config", "Department.UserAPI", function($scope, $http, conf, User){
+             User.logout();
         }])
         .controller("AuthGroupAssignPermissionCtl", ["$scope", "AuthGroupRuleRes", "$routeParams", "$location", "ones.config",
             function($scope, AuthGroupRuleRes, $routeParams, $location, conf){

@@ -22,7 +22,7 @@ class LoginAction extends CommonAction {
     }
     
     private function doLogout() {
-        session_destroy();
+        //session_destroy();
     }
     
     private function doLogin() {

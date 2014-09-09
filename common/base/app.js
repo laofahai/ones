@@ -84,12 +84,14 @@
             function($scope, $rootScope, $location, $http, conf, ComView) {
 
                 setTimeout(function(){
-                    $("#initCover").fadeOut(function(){
-                        $("html").css({
-                            height: "auto",
-                            overflow: "scroll"
+                    if($("#initCover").length) {
+                        $("#initCover").fadeOut(function(){
+                            $("html").css({
+                                height: "auto",
+                                overflow: "scroll"
+                            });
                         });
-                    });
+                    }
                 }, 2000);
 
                 //有需要的APP未能加载
