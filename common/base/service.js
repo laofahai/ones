@@ -27,12 +27,15 @@
                 },
                 getStructure : function() {
                     var self = this;
-                    angular.forEach($rootScope.i18n.lang.types, function(item, k){
-                        self.structure.type.dataSource.push({
-                            id: k,
-                            name: item
+                    if(this.structure.type.dataSource.length < 1) {
+                        angular.forEach($rootScope.i18n.lang.types, function(item, k){
+                            self.structure.type.dataSource.push({
+                                id: k,
+                                name: item
+                            });
                         });
-                    });
+                    }
+
 
                     return this.structure;
                 }

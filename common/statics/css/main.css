@@ -173,12 +173,16 @@ commonform {
     min-width: 80%;
     background:#fff !important;
 }
+
 .chosen-container a {
     background:#fff !important;
     border:1px solid #d5d5d5 !important;
 }
+.chosen-container-active a{
+    border:1px solid #e99c51 !important;
+}
 .chosen-container .chosen-drop {
-    border-color:#d5d5d5
+    border-color:#e99c51
 }
 .billBody .chosen-container {
     position:absolute;

@@ -79,7 +79,7 @@
                 };
             }];
             $httpProvider.interceptors.push(reqInterceptor);
-            $httpProvider.responseInterceptors.push(interceptor);
+            $httpProvider.interceptors.push(interceptor);
         }])
         /**
          * Root Ctrl
