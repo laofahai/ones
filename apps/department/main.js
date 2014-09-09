@@ -52,10 +52,10 @@
                 },
                 email: {
                     inputType: "email",
-                    ensureunique: "UserRes"
+                    ensureunique: "Department.UserAPI"
                 },
                 username: {
-                    ensureunique: "UserRes"
+                    ensureunique: "Department.UserAPI"
                 },
                 password: {
                     inputType: "password",

@@ -89,7 +89,8 @@
                             excludeId:  $injector.get("$routeParams").id
                         };
                         queryParams[attrs.name] = scope.$eval(attrs.ngModel);
-                        res.get(queryParams).$promise.then(function(data){
+                        var promise = getDataApiPromise(res, "get", queryParams)
+                        promise.then(function(data){
                             if(data[attrs.name]) {
                                 c.$setValidity('unique', false);
                             } else {

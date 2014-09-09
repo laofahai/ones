@@ -51,39 +51,39 @@
                         listorder: {
                             value: 99
                         },
-                        prev_node_id: {
-                            inputType: "select",
-                            required: false,
-                            multiple: "multiple"
-                        },
-                        next_node_id: {
-                            inputType: "select",
-                            required: false,
-                            multiple: "multiple"
-                        },
-                        executor_group: {
-                            listable: false,
-                            required: false,
-                            dataSource: "AuthGroupRes",
-                            inputType: "select",
-                            multiple: "multiple",
-                            nameField: "title"
-                        },
-                        executor_department: {
-                            listable: false,
-                            required: false,
-                            dataSource: "DepartmentRes",
-                            inputType: "select",
-                            multiple: "multiple"
-                        },
-                        executor_user: {
-                            listable: false,
-                            required: false,
-                            dataSource: "UserRes",
-                            inputType: "select",
-                            multiple: "multiple",
-                            nameField: "truename"
-                        },
+//                        prev_node_id: {
+//                            inputType: "select",
+//                            required: false,
+//                            multiple: "multiple"
+//                        },
+//                        next_node_id: {
+//                            inputType: "select",
+//                            required: false,
+//                            multiple: "multiple"
+//                        },
+//                        executor_group: {
+//                            listable: false,
+//                            required: false,
+//                            dataSource: "AuthGroupRes",
+//                            inputType: "select",
+//                            multiple: "multiple",
+//                            nameField: "title"
+//                        },
+//                        executor_department: {
+//                            listable: false,
+//                            required: false,
+//                            dataSource: "DepartmentRes",
+//                            inputType: "select",
+//                            multiple: "multiple"
+//                        },
+//                        executor_user: {
+//                            listable: false,
+//                            required: false,
+//                            dataSource: "Department.UserAPI",
+//                            inputType: "select",
+//                            multiple: "multiple",
+//                            nameField: "truename"
+//                        },
                         cond: {
                             listable: false,
                             required: false
@@ -105,33 +105,33 @@
                         }
                     };
 
-                    if(!structOnly) {
-                        var defer = $q.defer();
-                        var queryParams = {
+                    return struct;
 
-                        };
-                        if($route.extra) {
-                            var extraParams = $route.extra.split("/");
-                            if(extraParams[0] === "pid") {
-                                struct.workflow_id = {
-                                    value: extraParams[1],
-                                    inputType: "hidden",
-                                    listable: false
-                                };
-                                queryParams.pid = extraParams[1];
-                            }
-                        } else if($route.id) {
-                            queryParams.by_node_id = $route.id;
-                        }
-                        res.query(queryParams, function(data){
-                            struct.prev_node_id.dataSource = data;
-                            struct.next_node_id.dataSource = data;
-                            defer.resolve(struct);
-                        });
-                        return defer.promise;
-                    } else {
-                        return struct;
-                    }
+//                    if(!structOnly) {
+//                        var defer = $q.defer();
+//                        var queryParams = {};
+//                        if($route.extra) {
+//                            var extraParams = $route.extra.split("/");
+//                            if(extraParams[0] === "pid") {
+//                                struct.workflow_id = {
+//                                    value: extraParams[1],
+//                                    inputType: "hidden",
+//                                    listable: false
+//                                };
+//                                queryParams.pid = extraParams[1];
+//                            }
+//                        } else if($route.id) {
+//                            queryParams.by_node_id = $route.id;
+//                        }
+//                        res.query(queryParams, function(data){
+//                            struct.prev_node_id.dataSource = data;
+//                            struct.next_node_id.dataSource = data;
+//                            defer.resolve(struct);
+//                        });
+//                        return defer.promise;
+//                    } else {
+//                        return struct;
+//                    }
                 }
             };
 

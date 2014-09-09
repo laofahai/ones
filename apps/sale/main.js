@@ -78,8 +78,8 @@
 
             return obj;
         }])
-        .service("OrdersEditModel", ["$rootScope", "GoodsRes", "StockRes", "pluginExecutor",
-            function($rootScope, GoodsRes, StockRes, plugin) {
+        .service("OrdersEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
+            function($rootScope, GoodsRes, plugin) {
                 var obj = {
                     relateMoney: true
                 };

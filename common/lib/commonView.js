@@ -345,12 +345,12 @@
                                 tmpParams.id = opts.id;
                             }
 
-                            var promise;
-                            if(typeof(resource.get) === undefined) {
-                                promise = resource.api.get(tmpParams).$promise;
-                            } else {
-                                promise = resource.get(tmpParams).$promise;
-                            }
+                            var promise = getDataApiPromise(resource, "get", tmpParams)
+//                            if(typeof(resource.get) === undefined) {
+//                                promise = resource.api.get(tmpParams).$promise;
+//                            } else {
+//                                promise = resource.get(tmpParams).$promise;
+//                            }
 
                             promise.then(function(defaultData) {
                                 $scope[opts.dataName] = dataFormat($scope.formConfig.fieldsDefine, defaultData);

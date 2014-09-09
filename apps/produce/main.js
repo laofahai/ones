@@ -436,8 +436,8 @@
 //                    }
 //                };
 //            }])
-        .service('ProductTplDetailModel', ["$rootScope", "StockRes", "GoodsRes", "pluginExecutor",
-            function($rootScope,StockRes,GoodsRes, plugin){
+        .service('ProductTplDetailModel', ["$rootScope", "pluginExecutor",
+            function($rootScope,GoodsRes, plugin){
                 return {
                     getStructure: function() {
                         var i18n = $rootScope.i18n.lang;
@@ -446,7 +446,7 @@
                                 displayName: i18n.goods,
                                 labelField: true,
                                 inputType: "select3",
-                                dataSource: GoodsRes,
+                                dataSource: "GoodsRes",
                                 valueField: "combineId",
                                 nameField: "combineLabel",
                                 listAble: false,

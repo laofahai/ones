@@ -38,7 +38,7 @@
         element.addClass('localytics-chosen');
         options = scope.$eval(attr.chosen) || {};
         angular.forEach(attr, function(value, key) {
-          if (__indexOf.call(CHOSEN_OPTION_WHITELIST, key) >= 0) {
+          if (CHOSEN_OPTION_WHITELIST.indexOf(key) >= 0) {
             return options[snakeCase(key)] = scope.$eval(value);
           }
         });

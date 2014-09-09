@@ -88,10 +88,6 @@
                 })
             ;
         }])
-
-        .factory("StockRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "store/stock/:id.json", null, {'update': {method: 'PUT'}});
-        }])
         .factory("StockWarningRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "store/stockWarning.json");
         }])
@@ -116,49 +112,40 @@
                 });
         }])
 
-        .service("StockModel", ["$rootScope", "UserRes", "$q", function($rootScope, userRes, $q){
-            var obj = {};
-            obj.getStructure = function(structOnly){
-                var defer = $q.defer();
-                var fieldsStruct = {
-                    id: {
-                        primary: true,
-                        displayName: "ID"
-                    },
-                    name: {
-                        ensureunique: "StockRes"
-                    },
-                    managers_name: {
-                        displayName: $rootScope.i18n.lang.stockManager,
-                        hideInForm:true
-                    },
-                    managers: {
-                        displayName: $rootScope.i18n.lang.stockManager,
-                        nameField: "truename",
-                        valueField: "id",
-                        inputType: "select",
-                        multiple: "multiple",
-                        remoteDataField: "managers",
-                        listable:false
-                    },
-                    total_num: {
-                        displayName: $rootScope.i18n.lang.total,
-                        hideInForm: true
-                    }
-                };
-                if(structOnly) {
-                    return fieldsStruct;
-                } else {
-                    userRes.query().$promise.then(function(data){
-                        fieldsStruct.managers.dataSource = data;
-                        defer.resolve(fieldsStruct);
-                    });
+        .service("Store.StockAPI", ["$rootScope", "$q", "ones.dataApiFactory", function($rootScope, $q, dataApiFactory){
+            this.structure = {
+                id: {
+                    primary: true,
+                    displayName: "ID"
+                },
+                name: {
+                    ensureunique: "Store.StockAPI"
+                },
+                managers_name: {
+                    displayName: toLang("stockManager", "", $rootScope),
+                    hideInForm:true
+                },
+                managers: {
+                    displayName: toLang("stockManager", "", $rootScope),
+                    nameField: "truename",
+                    valueField: "id",
+                    inputType: "select",
+                    multiple: "multiple",
+                    remoteDataField: "managers",
+                    listable:false,
+                    dataSource: "Department.UserAPI"
+                },
+                total_num: {
+                    displayName: $rootScope.i18n.lang.total,
+                    hideInForm: true
                 }
-
-                return defer.promise;
             };
-
-            return obj;
+            this.getStructure = function(){
+                return this.structure;
+            };
+            this.api = dataApiFactory.getResourceInstance({
+                uri: "store/stock"
+            });
         }])
         .service("StockProductListModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin) {
             var obj = {
@@ -235,8 +222,8 @@
                 }
             };
         }])
-        .service("StockProductExportModel", ["$rootScope", "StockRes", "GoodsCategoryRes", "$q",
-            function($rootScope, StockRes, GoodsCategoryRes, $q) {
+        .service("StockProductExportModel", ["$rootScope", "GoodsCategoryRes", "$q",
+            function($rootScope, GoodsCategoryRes, $q) {
                 var service = {
                     getStructure : function() {
                         var i18n = $rootScope.i18n.lang;
@@ -245,7 +232,7 @@
                                 inputType: "select",
                                 required: false,
                                 multiple: true,
-                                dataSource: StockRes
+                                dataSource: "Store.StockAPI"
                             },
                             category: {
                                 inputType: "select",
@@ -321,8 +308,8 @@
 
             return obj;
         }])
-        .service("StockinEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
-            function($rootScope, GoodsRes, StockRes, plugin) {
+        .service("StockinEditModel", ["$rootScope", "GoodsRes","pluginExecutor",
+            function($rootScope, GoodsRes, plugin) {
                 var obj = {
                     printAble: true
                 };
@@ -346,7 +333,7 @@
                         stock: {
                             editAbleRequire: ["goods_id"],
                             inputType: "select3",
-                            dataSource: StockRes,
+                            dataSource: "Store.StockAPI",
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true
@@ -446,8 +433,8 @@
                 }
             };
         }])
-        .service("StockoutEditModel", ["$rootScope", "GoodsRes","StockRes","pluginExecutor",
-            function($rootScope, GoodsRes, StockRes, plugin) {
+        .service("StockoutEditModel", ["$rootScope","pluginExecutor",
+            function($rootScope, plugin) {
                 var obj = {
                     isBill: true,
                     printAble: true
@@ -466,7 +453,7 @@
                             displayName: i18n.goods,
                             labelField: true,
                             inputType: "select3",
-                            dataSource: GoodsRes,
+                            dataSource: "GoodsRes",
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
@@ -475,7 +462,7 @@
                         stock: {
                             editAbleRequire: ["goods_id"],
                             inputType: "select3",
-                            dataSource: StockRes,
+                            dataSource: "Store.StockAPI",
                             autoQuery:true,
                             alwaysQueryAll: true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'

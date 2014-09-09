@@ -9,7 +9,7 @@
             'ngGrid',
             'ngAnimate',
             'mgcrea.ngStrap',
-            'localytics.directives',
+            'localytics.directives', //FOR CHOSEN
             'ui.utils',
 
             'angularFileUpload',

@@ -50,8 +50,8 @@
             }
         };
     }])
-    .service("PurchaseEditModel", ["$rootScope", "GoodsRes", "pluginExecutor", "StockRes",
-        function($rootScope, GoodsRes, plugin, StockRes){
+    .service("PurchaseEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
+        function($rootScope, GoodsRes, plugin){
             return {
                 isBill: true,
                 relateMoney: true,

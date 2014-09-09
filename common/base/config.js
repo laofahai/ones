@@ -16,6 +16,7 @@
             this.model = {};
 
             this.getResourceInstance = function(opts){
+                opts.extraMethod = $.extend({update: {method: "PUT"}}, opts.extraMethod);
                 var resUri = sprintf("%s%s/:id.json", config.BSU, opts.uri);
                 return $resource(resUri, opts.opts||{}, opts.extraMethod||{});
             };
