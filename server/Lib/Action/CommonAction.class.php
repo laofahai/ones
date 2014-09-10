@@ -34,16 +34,13 @@ class CommonAction extends RestAction {
 
         parent::__construct();
 
-        if(!APP_DEBUG && !IS_AJAX) {
-            $this->error("Direct Visit");exit;
-        }
-
         if(!$_POST) {
             $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
         }
         
         import("@.ORG.Auth");
 //        session(array());
+        //判断来路
         if ($_SERVER["HTTP_SESSIONHASH"]) {
 
             $isSameDomain = false;
