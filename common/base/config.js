@@ -3,12 +3,9 @@
     /**
      * 基本配置
      * */
-    var BaseConf = {
-        DEBUG: true,
-        BSU: "./index.php?s=/",
-        Prefix: "ones",
-        LoadedApps: ['[ones.loadedApps.placeholder]']
-    };
+    ones.BaseConf.BSU = "./index.php?s=/";
+    ones.BaseConf.Prefix= "ones";
+
     angular.module("ones.configModule", [])
         .service("ones.dataApiFactory", ["ones.config", "$resource", "$injector", function(config, $resource, $injector){
 
@@ -23,6 +20,7 @@
             this.init = function(group, module) {
                 try {
                     //尝试使用DataAPI模式
+//                    console.log(toAPIName(group, module));
                     this.model = $injector.get(toAPIName(group, module));
                     this.resource = this.model;
                 } catch(e) {
@@ -37,7 +35,12 @@
                         });
                     }
 
-                    this.model = $injector.get(module.ucfirst()+"Model");
+                    var modelName = module.ucfirst()+"Model";
+                    try {
+                        this.model = $injector.get(modelName);
+                    } catch(e) {
+                        throw("can't load model:"+ modelName);
+                    }
                 }
 
                 return this.model;
@@ -46,22 +49,32 @@
         }])
         .factory("ones.config", ["$location", function($location) {
 
-            ones.loadedApps = BaseConf.LoadedApps;
-            try{
-                var localValue = angular.fromJson(localStorage.getItem("ones.config"));
-                if (localValue) {
-                    return localValue;
-                }
-            } catch(err) {
-                return BaseConf;
+            ones.loadedApps = ones.BaseConf.LoadedApps;
+
+            var localValue = ones.caches.getItem("ones.config");
+            if(!localValue) {
+                ones.caches.setItem("ones.config", ones.BaseConf, 1);
             }
-            return BaseConf;
+
+            return ones.caches.getItem("ones.config");
+//
+//            try{
+//                var localValue = angular.fromJson(localStorage.getItem("ones.config"));
+//                if (localValue) {
+//                    return localValue;
+//                }
+//            } catch(err) {
+//                return BaseConf;
+//            }
+//            return BaseConf;
         }])
         .run(["$rootScope", "$http", "$injector", "$location", function($rootScope, $http, $injector, $location) {
 //            $http.defaults.headers.common["sessionHash"] = loginHash;
 //                $http.defaults.headers.post = {
 //                    'Content-Type': 'application/x-www-form-urlencoded'
 //                };
+            ones.defaultCacheLevel = ones.BaseConf.DEBUG ? 0 : 1;
+
             $http.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 //                $http.defaults.transformRequest = function (data) {
@@ -77,25 +90,25 @@
                     queryAll: true
                 }).$promise.then(function(data) {
                     angular.forEach(data, function(item) {
-                        BaseConf[item.alias] = item.value;
+                        ones.BaseConf[item.alias] = item.value;
                     });
-                    //localStorage.setItem("ones.config", angular.toJson(BaseConf));
+                    ones.caches.setItem("ones.config", ones.BaseConf, 1);
                 });
-            } catch (err) {
-
-            }
+            } catch (err) {}
 
             /**
              * 加载语言包
              * */
-            $rootScope.i18n = angular.fromJson(localStorage.getItem(BaseConf.Prefix + "i18n"));
-            if (BaseConf.DEBUG || !$rootScope.i18n) {
-                $http.get(BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
+
+            $rootScope.i18n = ones.caches.getItem("ones.i18n");
+            if(!$rootScope.i18n) {
+
+                $http.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
+                    ones.caches.setItem("ones.i18n", data, ones.defaultCacheLevel);
                     $rootScope.i18n = data;
                     if(!$rootScope.i18n) {
                         throw("can't load i18n package.");
                     }
-                    localStorage.setItem(BaseConf.Prefix + "i18n", angular.toJson(data));
                 });
             }
         }])

@@ -21,6 +21,8 @@ class FrontEndRuntime {
         "lib/commonView.js",
     );
 
+    private $javascripts;
+
     private $blackList = array(
         ".",
         "..",
@@ -53,25 +55,33 @@ class FrontEndRuntime {
         echo $this->doTrim($data);
     }
 
+    public function echoJS($file) {
+        header("Content-Type:application/javascript;charset=utf-8");
+        $find = array(
+            "'[ones.requirements.placeholder]'"
+        );
+//        foreach($this->loadedApps as $app) {
+//            $loadedApps[] = "ones.".$app;
+//        }
+        $replace = array(
+            sprintf("'ones.%s'", implode("','ones.", $this->loadedApps)),
+        );
+
+        $file = ROOT_PATH."/".$file;
+        if(is_file($file)) {
+            echo str_replace($find, $replace, file_get_contents($file));
+        }
+    }
+
 
     public function preloadJS() {
-        $find = array(
-            "'[ones.requirements.placeholder]'",
-            "'[ones.loadedApps.placeholder]'"
-        );
-        foreach($this->loadedApps as $app) {
-            $loadedApps[] = "ones.".$app;
-        }
-        $replace = array(
-            sprintf("'%s'", implode("','", $loadedApps)),
-            sprintf("'%s'", implode("','", $loadedApps)),
-        );
         foreach($this->preLoadingList as $pre) {
             $tmp = $this->baseDir."/".$pre;
             if(is_file($tmp)){
-                $content = file_get_contents($tmp);
-                $content = str_replace($find, $replace, $content);
-                $this->response($content);
+                $this->javascripts[] = "./common/".$pre;
+//                $content = file_get_contents($tmp);
+//                $content = str_replace($find, $replace, $content);
+//                $this->response($content);
             } else {
 //                echo $tmp;exit;
             }
@@ -82,9 +92,10 @@ class FrontEndRuntime {
         foreach($this->afterLoadingList as $af) {
             $tmp = $this->baseDir."/".$af;
             if(is_file($tmp)){
-                $content = file_get_contents($tmp);
-//                $content = str_replace($find, $replace, $content);
-                $this->response($content);
+                $this->javascripts[] = "./common/".$af;
+//                $content = file_get_contents($tmp);
+////                $content = str_replace($find, $replace, $content);
+//                $this->response($content);
             }
         }
     }
@@ -161,6 +172,7 @@ class FrontEndRuntime {
     }
 
     private function loadAppStatic($appPath, $app) {
+        $basePath = "./apps/".$app."/";
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
             if(in_array($appFile, $this->blackList)) {
@@ -193,7 +205,8 @@ class FrontEndRuntime {
                 }
                 if(!in_array($tmpPath, $this->included)) {
                     if(end(explode(".", $tmpPath)) === "js") {
-                        $this->response(file_get_contents($tmpPath));
+                        $this->javascripts[] = $basePath.basename($tmpPath);
+                        //$this->response(file_get_contents($tmpPath));
                     }
                     $this->included[md5($tmpPath)] = $tmpPath;
                 }
@@ -204,7 +217,7 @@ class FrontEndRuntime {
     }
 
     private function combineAppConfig() {
-        echo sprintf("ones.LoadedAppsConfig=angular.fromJson('%s');", json_encode($this->appConfigJson));
+//        echo sprintf("ones.LoadedAppsConfig=angular.fromJson('%s');", json_encode($this->appConfigJson));
     }
 
     public function combineCSS($dir=null) {
@@ -225,6 +238,17 @@ class FrontEndRuntime {
             }
             closedir($dh);
         }
+    }
+
+    public function getJavascripts() {
+        $this->preloadJS();
+        $this->combineJS();
+        $this->afterLoadJS();
+        return $this->javascripts;
+    }
+
+    public function jsEntry() {
+
     }
 
     private function doTrimCss($content) {

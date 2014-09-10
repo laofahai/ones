@@ -9,7 +9,19 @@ class IndexAction extends CommonAction {
             return;
         }
 
+        $this->assign("isDebug", APP_DEBUG ? 'true' : 'false');
+
         $this->assign("siteTitle", DBC("site.title"));
+
+        $loadedApps = F("loadedApp");
+        $this->assign("loadedApps", $loadedApps);
+        $this->assign("loadedAppsStr", implode("','",$loadedApps));
+
+        //静态资源
+        import("@.ORG.staticRuntime");
+        $runtime = new FrontEndRuntime($loadedApps);
+        $this->assign("javascripts", $runtime->getJavascripts());
+//        print_r($runtime->getJavascripts());exit;
 
         if($this->isLogin()) {
             $this->display("app");

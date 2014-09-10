@@ -191,8 +191,16 @@
 </div><!-- /.main-container -->
 
 <script type="text/javascript">
-    var ones = {};
+    var ones = {
+        BaseConf: {
+            LoadedApps: ['{$loadedAppsStr}'],
+            DEBUG: {$isDebug}
+        }
+    };
 </script>
-<script src="{:U('FrontendRuntime/index')}"></script>
+<foreach name="javascripts" item="js">
+    <script src="{$js}"></script>
+</foreach>
+<script src="{:U('FrontendRuntime/read?file=common/base/app.js')}"></script>
 </body>
 </html>

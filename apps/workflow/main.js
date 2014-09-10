@@ -35,78 +35,81 @@
             }
         };
     }])
-    .service("WorkflowNodeModel", ["$rootScope", "WorkflowNodeRes", "$routeParams", "$q",
+    .service("Workflow.WorkflowNodeAPI", ["$rootScope", "ones.dataApiFactory", "$routeParams", "$q",
         function($rootScope, res, $route, $q){
-            var service = {
+            return {
                 extraParams: {
                     pid: $route.pid
                 },
                 listUrl: sprintf("/workflow/viewChild"),
-                getStructure: function(structOnly){
-                    var struct = {
-                        id: {primary: true},
-                        name: {},
-                        type: {},
-                        execute_file: {},
-                        listorder: {
-                            value: 99
-                        },
-                        prev_node_id: {
-                            inputType: "select",
-                            required: false,
-                            multiple: "multiple"
-                        },
-                        next_node_id: {
-                            inputType: "select",
-                            required: false,
-                            multiple: "multiple"
-                        },
-                        executor_group: {
-                            listable: false,
-                            required: false,
-                            dataSource: "AuthGroupRes",
-                            inputType: "select",
-                            multiple: "multiple",
-                            nameField: "title"
-                        },
-                        executor_department: {
-                            listable: false,
-                            required: false,
-                            dataSource: "DepartmentRes",
-                            inputType: "select",
-                            multiple: "multiple"
-                        },
-                        executor_user: {
-                            listable: false,
-                            required: false,
-                            dataSource: "Department.UserAPI",
-                            inputType: "select",
-                            multiple: "multiple",
-                            nameField: "truename"
-                        },
-                        cond: {
-                            listable: false,
-                            required: false
-                        },
-                        is_default: {
-                            listable: false,
-                            inputType: "select",
-                            dataSource: [
-                                {id: 1, name: $rootScope.i18n.lang.yes},
-                                {id: -1, name: $rootScope.i18n.lang.no}
-                            ]
-                        },
-                        remind: {
-                            listable: false
-                        },
-                        status_text: {},
-                        memo: {
-                            required: false
-                        }
-                    };
 
-
-                    if(!structOnly) {
+                api: res.getResourceInstance({
+                    uri: "workflow/workflowNode"
+                }),
+                structure: {
+                    id: {primary: true},
+                    name: {},
+                    type: {},
+                    execute_file: {},
+                    listorder: {
+                        value: 99
+                    },
+                    prev_node_id: {
+                        inputType: "select",
+                        required: false,
+                        multiple: "multiple"
+                    },
+                    next_node_id: {
+                        inputType: "select",
+                        required: false,
+                        multiple: "multiple"
+                    },
+                    executor_group: {
+                        listable: false,
+                        required: false,
+                        dataSource: "AuthGroupRes",
+                        inputType: "select",
+                        multiple: "multiple",
+                        nameField: "title"
+                    },
+                    executor_department: {
+                        listable: false,
+                        required: false,
+                        dataSource: "DepartmentRes",
+                        inputType: "select",
+                        multiple: "multiple"
+                    },
+                    executor_user: {
+                        listable: false,
+                        required: false,
+                        dataSource: "Department.UserAPI",
+                        inputType: "select",
+                        multiple: "multiple",
+                        nameField: "truename"
+                    },
+                    cond: {
+                        listable: false,
+                        required: false
+                    },
+                    is_default: {
+                        listable: false,
+                        inputType: "select",
+                        dataSource: [
+                            {id: 1, name: $rootScope.i18n.lang.yes},
+                            {id: -1, name: $rootScope.i18n.lang.no}
+                        ]
+                    },
+                    remind: {
+                        listable: false
+                    },
+                    status_text: {},
+                    memo: {
+                        required: false
+                    }
+                },
+                getStructure: function(structureOnly){
+                    var self = this;
+                    if(!structureOnly) {
                         var defer = $q.defer();
                         var queryParams = {};
                         if($route.extra) {
@@ -122,28 +125,31 @@
                         } else if($route.id) {
                             queryParams.by_node_id = $route.id;
                         }
-                        res.query(queryParams, function(data){
-                            struct.prev_node_id.dataSource = data;
-                            struct.next_node_id.dataSource = data;
-                            defer.resolve(struct);
+                        this.api.query(queryParams, function(data){
+                            data = filterDataFields(data);
+                            self.structure.prev_node_id.dataSource = data;
+                            self.structure.next_node_id.dataSource = data;
+                            defer.resolve(self.structure);
                         });
                         return defer.promise;
                     } else {
-                        return struct;
+                        return this.structure;
                     }
                 }
             };
-
-            return service;
         }])
-        .controller("WorkflowNodeCtl", ["$scope", "WorkflowNodeRes", "WorkflowNodeModel", "ComView", "$routeParams",
-            function($scope, WorkflowNodeRes, WorkflowNodeModel, ComView, $routeParams){
-                $routeParams.group = "HOME";
+        .controller("WorkflowNodeCtl", ["$scope", "ComView", "$routeParams", "ones.dataApiFactory",
+            function($scope, ComView, $routeParams, dataAPI){
+                $routeParams.group = "workflow";
                 $routeParams.module = "workflowNode";
+
+                dataAPI.init($routeParams.group, $routeParams.module);
+
                 var actions = $scope.$parent.i18n.urlMap.workflow.modules.WorkflowNode.actions;
+
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
-                ComView.makeGridSelectedActions($scope, WorkflowNodeModel, WorkflowNodeRes, "workflow", "WorkflowNode");
-                ComView.displayGrid($scope,WorkflowNodeModel,WorkflowNodeRes, {
+                ComView.makeGridSelectedActions($scope, dataAPI.model, dataAPI.resource, "workflow", "WorkflowNode");
+                ComView.displayGrid($scope,dataAPI.model,dataAPI.resource, {
                     queryExtraParams: {
                         workflow_id: $routeParams.pid
                     },

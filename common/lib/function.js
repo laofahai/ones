@@ -36,7 +36,9 @@ function parseParams(str) {
     return params;
 }
 
-/***/
+/**
+ * 根据APP和MODULE获得真实的数据API名称
+ * */
 var toAPIName = function(group, module) {
     return group.ucfirst()+"."+module.ucfirst()+"API";
 };
@@ -167,8 +169,9 @@ var appView = function(viewPath, app){
 
 }
 
+//判断APP是否加载
 var isAppLoaded = function(app) {
-    return ones.loadedApps.indexOf("ones."+app) >= 0;
+    return ones.BaseConf.loadedApps.indexOf(app) >= 0;
 };
 
 function HTMLEncode(html)
@@ -226,10 +229,12 @@ var toLang = function(key, section, $rootScope) {
     }
 }
 
+//判断资源对象是否是数据API
 var isDataApi = function(resource) {
     return "api" in resource && typeof(resource.api) == "function";
 };
 
+//获得resource请求之后的promise
 var getDataApiPromise = function(dataSource, method, params) {
     var promise;
     try {
@@ -242,6 +247,34 @@ var getDataApiPromise = function(dataSource, method, params) {
     }
     return promise;
 };
+
+//过滤数据对象/数组，仅保留需包含的字段
+var filterDataFields = function(data, fields) {
+    fields = angular.isArray(fields) ? fields : ["id", "name", "alias"];
+
+    if(angular.isArray(data)) {
+        var returned = [];
+        var tmp;
+        for(var i=0; i<data.length; i++) {
+            tmp = {};
+            for(var j=0;j<fields.length;j++) {
+                if(data[i][fields[j]] !== undefined) {
+                    tmp[fields[j]] = data[i][fields[j]];
+                }
+            }
+            returned.push(tmp);
+        }
+        return returned;
+    } else {
+        var returned = {};
+        for(var i=0;i<fields.length;i++) {
+            if(data[fields[i]] !== undefined) {
+                returned[fields[i]] = data[fields[i]];
+            }
+        }
+        return returned;
+    }
+}
 
 var toLower = function(str) {
     return str.toLowerCase();

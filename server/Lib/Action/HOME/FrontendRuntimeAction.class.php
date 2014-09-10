@@ -22,7 +22,6 @@ class FrontendRuntimeAction extends CommonAction {
                 header("Content-Type:text/css;charset=utf-8");
                 $data = $runtime->combineCSS();
                 break;
-                echo $data;
             default:
                 header("Content-Type:application/javascript;charset=utf-8");
                 ob_start();
@@ -40,6 +39,14 @@ class FrontendRuntimeAction extends CommonAction {
         }
 
 
+    }
+
+    public function read() {
+        $file = $_GET["file"];
+        import("@.ORG.staticRuntime");
+        $loadedApps = F("loadedApp");
+        $runtime = new FrontEndRuntime($loadedApps);
+        $runtime->echoJS($file);
     }
 
 } 

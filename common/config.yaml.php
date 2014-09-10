@@ -36,5 +36,4 @@
     - "base/filter.js"
     - "base/directive.js"
     - "base/service.js"
-    - "base/app.js"
     - "base/plugin.js"
