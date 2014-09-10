@@ -126,7 +126,7 @@
                 }
             };
         }])
-        .service("FinanceReceivePlanModel", ["$rootScope", "TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
+        .service("FinanceReceivePlanModel", ["$rootScope", "FinanceAccountRes", function($rootScope, FinanceAccountRes){
             return {
                 workflowAlias: "financeReceive",
                 getStructure: function(){
@@ -137,7 +137,7 @@
                             field: "type",
                             displayName: $rootScope.i18n.lang.type,
                             inputType: "select",
-                            dataSource: TypesRes,
+                            dataSource: "HOME.TypesAPI",
                             queryParams: {
                                 type: "receive"
                             }

@@ -20,7 +20,7 @@ class OrdersAction extends CommonAction {
     
     protected $mainRowIdField = "order_id";
     
-    protected $workflowAlias = "order";
+    protected $workflowAlias = "orders";
     
     protected $readModel = "OrdersView";
     

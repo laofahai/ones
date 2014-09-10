@@ -136,7 +136,12 @@
 <p class="center white">Present by <a href="http://www.ng-erp.com" target="_blank" class="white">ONES Team</a>. &copy; 2014</p>
 
 <script type="text/javascript">
-    var ones = {};
+    var ones = {
+        BaseConf: {
+            LoadedApps: ['{$loadedAppsStr}'],
+            DEBUG: {$isDebug}
+        }
+    };
 </script>
 <script src="common/vendor/jquery/jquery-2.1.1.min.js"></script>
 <script src="common/vendor/angular-1.3.0-rc/angular.min.js"></script>
@@ -145,6 +150,7 @@
 <script src="common/vendor/ace/ace-elements.min.js"></script>
 <script src="common/vendor/angular-1.3.0-rc/angular-resource.min.js"></script>
 <script src="common/lib/function.js"></script>
+<script src="common/lib/caches.js"></script>
 <script src="common/base/config.js"></script>
 <script src="common/base/login.js"></script>
 

@@ -47,13 +47,25 @@ class OrdersModel extends CommonModel {
         }
         
         $orderId = $this->$method($data);
+
         if(false === $orderId) {
             Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
             return false;
         }
+
+
+
 //        print_r($data["rows"]);exit;
         $detail = D("OrdersDetail");
+
+        if($data["id"]) {
+            $map = array(
+                "order_id" => $data["id"]
+            );
+            $this->removeDeletedRows($data["rows"], $map, $detail);
+        }
+
         foreach($data["rows"] as $row) {
             if($method !== "save") {
                 $row["order_id"] = $orderId;

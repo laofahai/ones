@@ -220,7 +220,7 @@
 
         .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams) {
-                ComView.makeDefaultPageAction($scope, "JXC/orders");
+                ComView.makeDefaultPageAction($scope, "sale/orders");
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;

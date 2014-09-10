@@ -38,6 +38,8 @@ class ReturnsModel extends CommonModel {
         }
 //        print_r($data["rows"]);exit;
         $detail = D("ReturnsDetail");
+
+
         foreach($data["rows"] as $row) {
             $row["returns_id"] = $returnsId;
             if(!$detail->add($row)) {

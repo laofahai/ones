@@ -188,15 +188,17 @@ class CommonModel extends AdvModel{
         }
 
         //如果ID数量大于等于所有行数量，标明没有行需要被删除
-        if(count($ids) >= count($rows)) {
-            return true;
-        }
+//        if(count($ids) >= count($rows)) {
+//            return true;
+//        }
 
         if($ids) {
             $map["id"] = array("NOT IN", implode(",", $ids));
         }
 
         $model->where($map)->delete();
+//        print_r($rows);
+//        echo $model->getLastSql();exit;
     }
     
 }

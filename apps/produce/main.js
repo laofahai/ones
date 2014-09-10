@@ -493,8 +493,8 @@
             };
         }])
 
-        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailEditModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams","TypesRes",
-            function($scope, model, res, detailRes, comView, $routeParams, TypesRes){
+        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailEditModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams",
+            function($scope, model, res, detailRes, comView, $routeParams){
 
                 $scope.selectAble = false;
 
@@ -511,7 +511,7 @@
                     fieldDefine: {
                         inputType: "select",
                         "ng-model": "formMetaData.type",
-                        dataSource: TypesRes,
+                        dataSource: "HOME.TypesAPI",
                         queryParams: {
                             type: "produce"
                         }

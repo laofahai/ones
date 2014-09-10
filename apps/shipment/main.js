@@ -14,7 +14,7 @@
                 }
             );
         }])
-        .service("ShipmentModel", ["$rootScope", "TypesRes", function($rootScope, TypesRes) {
+        .service("ShipmentModel", ["$rootScope", function($rootScope) {
             var i18n = $rootScope.i18n.lang;
             return {
                 printAble: true,
@@ -24,7 +24,7 @@
                         shipment_type: {
                             field: "shipment_type_label",
                             inputType: "select",
-                            dataSource: TypesRes,
+                            dataSource: "HOME.TypesAPI",
                             queryParams: {
                                 type: "shipment"
                             }
@@ -61,7 +61,7 @@
                         freight_type: {
                             field: "freight_type_label",
                             inputType: "select",
-                            dataSource: TypesRes,
+                            dataSource: "HOME.TypesAPI",
                             queryParams: {
                                 type: "freight"
                             },

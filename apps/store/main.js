@@ -507,8 +507,8 @@
                 ComView.displayGrid($scope, model, res);
 
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams", "TypesRes",
-        function($scope, StockinRes, StockinEditModel, ComView, $routeParams, TypesRes) {
+        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
+        function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
             ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinEditModel);
 
             $scope.workflowAble = true;
@@ -527,7 +527,7 @@
                 fieldDefine: {
                     inputType: "select",
                     "ng-model": "formMetaData.type_id",
-                    dataSource: TypesRes,
+                    dataSource: "HOME.TypesAPI",
                     queryParams: {
                         type: "stockin"
                     }
