@@ -18,7 +18,9 @@
                         inputType: "select",
                         dataSource: []
                     },
-                    alias: {},
+                    alias: {
+                        required: false
+                    },
                     name: {},
                     listorder: {
                         inputType: "number",

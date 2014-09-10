@@ -199,7 +199,7 @@
     };
 </script>
 <foreach name="javascripts" item="js">
-    <script src="{$js}"></script>
+    <script src="{$js}<if condition="$isDebug">?r={:rand(0,99999)}</if>"></script>
 </foreach>
 <script src="{:U('FrontendRuntime/read?file=common/base/app.js')}"></script>
 </body>

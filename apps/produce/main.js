@@ -521,6 +521,7 @@
                 comView.displayBill($scope, model, res, {
                     id: $routeParams.id
                 });
+
             }])
 
         .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",

@@ -1146,7 +1146,6 @@
                     this.scopeConfig = scopeConfig;
                     this.opts = $.extend(this.getDefaultOpts(), scopeConfig.fieldDefine);
 
-
                     this.scope = $scope;
 
                 };
@@ -1408,7 +1407,6 @@
                                     var cacheKey = "form_html_cache_"+fieldDefine.displayName;
                                     modal.$promise.then(function(){
                                         var modalHtml = ones.caches.getItem(cacheKey);
-//                                        console.log(modalHtml);
                                         if(!modalHtml) {
                                             var fm = new service.makeForm(self.scope.$parent, {
                                                 fieldsDefine: formFieldDefine,
@@ -1419,7 +1417,8 @@
                                             ones.caches.setItem(cacheKey, fm.makeHTML());
                                         }
                                         modalHtml = ones.caches.getItem(cacheKey);
-                                        $("#dynamicEditContainer").append($compile(modalHtml)(self.scope.$parent));
+                                        console.log(modalHtml);
+//                                        $("#dynamicEditContainer").append($compile(modalHtml)(self.scope.$parent));
                                     });
                                 }, 100);
 

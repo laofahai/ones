@@ -114,6 +114,7 @@ class PurchaseModel extends CommonModel {
         $data["dateline"] = strtotime($data["inputTime"]);
         $data["user_id"] = getCurrentUid();
 
+
         return $data;
     }
     

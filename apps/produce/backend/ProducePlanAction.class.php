@@ -23,7 +23,8 @@ class ProducePlanAction extends CommonAction {
         }
         
         $formData = parent::read(true);
-        $formData["inputTime"] = $formData["dateline"]*1000;
+        $formData["start_time"] = $formData["start_time"]*1000;
+        $formData["end_time"] = $formData["end_time"]*1000;
         
         $rowModel = D("ProducePlanDetailView");
         $rows = $rowModel->where("ProducePlanDetail.plan_id=".$formData["id"])->select();
@@ -39,11 +40,11 @@ class ProducePlanAction extends CommonAction {
             $v["stock_label"] = $v["stock_name"];
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+            $v["start_time"] = $v["start_time"]*1000;
+            $v["end_time"] = $v["end_time"]*1000;
             $rowData[$v["id"]] = $v;
         }
 //        array_flip(array_flip($modelIds));
-
-        $dataModel = D("DataModelDataView");
 
         $params = array(
             $rowData, $modelIds
@@ -62,51 +63,39 @@ class ProducePlanAction extends CommonAction {
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }
-        
-        $data = array(
-            "start_time"=> strtotime($_POST["startTime"]),
-            "end_time"  => strtotime($_POST["endTime"]),
-            "type" => $_POST["type"],
-            "memo" => $_POST["memo"],
-            "total_num" => $_POST["total_num"],
-            "create_time"=> CTS
-        );
-        
-        $rows = array();
-        $needed = array(
-            "goods_id", "num"
-        );
-        foreach($_POST["rows"] as $row) {
-            $tmp = array();
-            if(!checkParamsFull($row, $needed)) {
-                continue;
-            }
-            list($factoryCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
-            $tmp["goods_id"] = $row["goods_id"] = $goods_id;
-            $tmp["factory_code_all"] = makeFactoryCode($row, $factoryCode);
-            $tmp["num"] = $row["num"];
-            $tmp["start_time"] = $data["start_time"];
-            $tmp["status"] = 0;
-            $tmp["memo"] = $row["memo"];
-            $tmp["create_time"] = CTS;
-            $rows[] = $tmp;
-        }
-        
-        if(!$rows) {
-            $this->httpError(500, "fillTheForm");
-        }
-        
-        $data["rows"] = $rows;
-        
+
         $model = D("ProducePlan");
+        $data = $model->formatData($_POST);
+        
+        if(!$data) {
+            $this->httpError(500, $model->getError());
+        }
+        
         $id = $model->newPlan($data);
+
         if(!$id) {
-            $this->httpError(500);
+            $this->httpError(500, $model->getError());
         }
         
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $workflow->doNext($id, "", true);
+    }
+
+    public function update() {
+        $model = D("ProducePlan");
+        $data = $model->formatData($_POST);
+
+        if(!$data) {
+
+            $this->httpError(500, $model->getError());
+        }
+
+        $id = $model->editPlan($data);
+
+        if(!$id) {
+            $this->httpError(500, $model->getError());
+        }
     }
     
 }

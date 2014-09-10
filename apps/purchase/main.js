@@ -115,7 +115,7 @@
             $scope.selectAble = false;
             $scope.showWeeks = true;
             $scope.formMetaData = {
-                inputTime : new Date(),
+                inputTime : Date.parse(new Date()),
                 total_amount_real: 0.00
             };
 //                $scope.formMetaData.inputTime = new Date();

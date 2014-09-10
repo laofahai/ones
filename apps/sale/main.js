@@ -165,7 +165,8 @@
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
                     relateMoney: true,
-                    workflowAlias: "returns"
+                    workflowAlias: "returns",
+                    isBill: true
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -292,7 +293,7 @@
             }])
         .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams) {
-                ComView.makeDefaultPageAction($scope, "JXC/returns");
+                ComView.makeDefaultPageAction($scope, "sale/returns", [], ReturnsEditModel);
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;

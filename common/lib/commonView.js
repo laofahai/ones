@@ -1125,6 +1125,11 @@ return;
                     var cssClass = ["default", "primary", "success"];
                     $scope.pageActions = [];
                     for(var i=0;i<actions.length;i++) {
+
+                        if(model && model.isBill && actions[i] == "add") {
+                            actions[i] = "addBill";
+                        }
+
                         $scope.pageActions.push({
                             label: $scope.i18n.lang.actions[actions[i]],
                             class: cssClass[i],
