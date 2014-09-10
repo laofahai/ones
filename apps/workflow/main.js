@@ -9,9 +9,6 @@
     .factory("WorkflowRes", ["$resource", "ones.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/workflow/:id.json", null, {'update': {method: 'PUT'}});
     }])
-    .factory("WorkflowNodeRes", ["$resource", "ones.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "workflow/workflowNode/:id.json", null, {'update': {method: 'PUT'}});
-    }])
     .factory("WorkflowProcessRes", ["$resource", "ones.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/workflowProcess/:id.json", {type: "@type"});
     }])
@@ -30,7 +27,9 @@
                     workflow_file: {
                         displayName: $rootScope.i18n.lang.workflowAssitFile
                     },
-                    memo: {}
+                    memo: {
+                        required: false
+                    }
                 };
             }
         };

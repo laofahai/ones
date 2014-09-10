@@ -73,7 +73,7 @@
                 }
             };
         }])
-        .service("FinancePayPlanModel", ["$rootScope","TypesRes", "FinanceAccountRes", function($rootScope, TypesRes, FinanceAccountRes){
+        .service("FinancePayPlanModel", ["$rootScope", function($rootScope){
             return {
                 workflowAlias: "financePay",
                 getStructure: function(){
@@ -84,7 +84,7 @@
                             field: "type",
                             displayName: $rootScope.i18n.lang.type,
                             inputType: "select",
-                            dataSource: TypesRes,
+                            dataSource: "HOME.TypesAPI",
                             queryParams: {
                                 type: "pay"
                             }
@@ -99,7 +99,7 @@
                             field: "account_name",
                             displayName: $rootScope.i18n.lang.account,
                             inputType: "select",
-                            dataSource: FinanceAccountRes,
+                            dataSource: "FinanceAccountRes",
                             nameField: "name",
                             valueField: "id"
                         },

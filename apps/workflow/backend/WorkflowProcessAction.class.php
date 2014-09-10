@@ -18,7 +18,7 @@ class WorkflowProcessAction extends CommonAction {
         
         $modelName = ucfirst($workflowAlias);
         $model =  D($modelName);
-        
+
         $workflow = new Workflow($workflowAlias);
         $process = $workflow->getItemProcesses($modelName, $mainrowId, $model->relationModels);
         

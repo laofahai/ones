@@ -12,7 +12,7 @@
  */
 class OrdersViewModel extends CommonViewModel {
     
-    protected $workflowAlias = "order";
+    protected $workflowAlias = "orders";
     
     protected $viewFields = array(
         "Orders" => array("*", "_type"=>"left"),

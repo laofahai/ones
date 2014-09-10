@@ -12,7 +12,7 @@
  */
 class OrdersModel extends CommonModel {
     
-    protected $workflowAlias = "order";
+    protected $workflowAlias = "orders";
     
     protected $_auto = array(
         array("dateline", CTS),
@@ -22,6 +22,10 @@ class OrdersModel extends CommonModel {
         array("total_price_real", 0),
         array("bill_code", "makeBillCode", 1, "function"),
         array("saler_id", "getCurrentUid", 1, "function"),
+    );
+
+    public $relationModels = array(
+        "Stockout"
     );
     
     public function newOrder($data) {

@@ -171,7 +171,7 @@ var appView = function(viewPath, app){
 
 //判断APP是否加载
 var isAppLoaded = function(app) {
-    return ones.BaseConf.loadedApps.indexOf(app) >= 0;
+    return ones.BaseConf.LoadedApps.indexOf(app) >= 0;
 };
 
 function HTMLEncode(html)

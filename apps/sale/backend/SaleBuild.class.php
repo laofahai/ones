@@ -9,7 +9,7 @@
 class SaleBuild extends CommonBuildAction {
 
     protected $workflows = array(
-        "order" => array(
+        "orders" => array(
             "name" => "订单工作流",
             "workflow_file" => "Orders",
 

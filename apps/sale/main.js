@@ -37,7 +37,7 @@
         .service("OrdersModel", ["$rootScope", function($rootScope){
             var obj = {
                 isBill: true,
-                workflowAlias: "order"
+                workflowAlias: "orders"
             };
             obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -218,8 +218,8 @@
                 return obj;
             }])
 
-        .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes", "$timeout",
-            function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams, TypesRes, $timeout) {
+        .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+            function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "JXC/orders");
 
                 $scope.workflowAble = true;
@@ -254,7 +254,7 @@
                     fieldDefine: {
                         inputType: "select",
                         "ng-model": "formMetaData.sale_type",
-                        dataSource: TypesRes,
+                        dataSource: "HOME.TypesAPI",
                         queryParams: {
                             type: "sale"
                         }
@@ -290,8 +290,8 @@
                 $scope.format = $scope.formats[0];
 
             }])
-        .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams", "TypesRes",
-            function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams, TypesRes) {
+        .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+            function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "JXC/returns");
 
                 $scope.workflowAble = true;
@@ -326,7 +326,7 @@
                     fieldDefine: {
                         inputType: "select",
                         "ng-model": "formMetaData.returns_type",
-                        dataSource: TypesRes,
+                        dataSource: "HOME.TypesAPI",
                         queryParams: {
                             type: "returns"
                         }

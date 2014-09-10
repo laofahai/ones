@@ -490,7 +490,7 @@ class Workflow {
      * );
      */
     public function getItemProcesses($model, $id, $relationModels=array(), $relationMainrowField="source_id") {
-        
+
         $workflowModel = D("Workflow");
         $models = array_merge((array)$relationModels, array($model));
         $workflows = $workflowModel->where(array(
@@ -512,8 +512,13 @@ class Workflow {
         );
 //        echo $workflowModel->getLastSql();
 //        print_r($theWorkflows);exit;
+        /*
+         * 相关工作流程
+         * **/
         if($relationModels) {
-            $relationModels = explode(",", $relationModels);
+            if(!is_array($relationModels)) {
+                $relationModels = explode(",", $relationModels);
+            }
             foreach($relationModels as $rm) {
                 $tmpMap = array(
                     $relationMainrowField => $id,
@@ -537,9 +542,11 @@ class Workflow {
         $map = array(
             "_complex" => $where
         );
-        return $processViewModel->where($map)->order("start_time ASC")->select();
+
+        $processes = $processViewModel->where($map)->order("start_time ASC")->select();
 //        echo $processViewModel->getLastSql();exit;
-        
+        return $processes;
+
     }
     
     /**

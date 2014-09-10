@@ -755,13 +755,15 @@
 
                         //工作流按钮
                         if(model.workflowAlias && $routeParams.id) {
-                            $injector.get("WorkflowNodeRes").query({
+
+                            $injector.get("Workflow.WorkflowNodeAPI").api.query({
                                 workflow_alias: model.workflowAlias,
-                                mainrow_id: $routeParams.id
+                                mainrow_id: $routeParams.id,
+                                filterFields: ["id", "name"]
                             }).$promise.then(function(data){
-                                    $scope.mainrow_id = $routeParams.id;
-                                    $scope.billWorkflowActions = data;
-                                });
+                                $scope.mainrow_id = $routeParams.id;
+                                $scope.billWorkflowActions = data;
+                            });
                         }
                     }
 
@@ -929,13 +931,13 @@
                     if(model.workflowAlias && isAppLoaded("workflow")) {
                         $scope.workflowAble = true;
                         $scope.workflowAlias = model.workflowAlias;
-                        var workflowNodeRes = $injector.get("WorkflowNodeRes");
+                        var workflowNodeRes = $injector.get("Workflow.WorkflowNodeAPI").api;
                         workflowNodeRes.query({
                             workflow_alias: model.workflowAlias,
                             only_active: true
                         }).$promise.then(function(data){
-                                $scope.workflowActionList = data;
-                            });
+                            $scope.workflowActionList = data;
+                        });
 
                         $scope.doWorkflow = function(event, node_id, mainrow_id){
                             var doingWorkflow = function(mainrow_id) {
