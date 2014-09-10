@@ -17,7 +17,7 @@
     - "vendor/angularModules/angular-strap/angular-strap.min.js"
     - "vendor/angularModules/angular-strap/angular-strap.tpl.min.js"
     - "vendor/angularModules/ui-utils/ui-utils.min.js"
-    - "vendor/jquery/chosen/chosen.jquery.min.js"
+    - "vendor/jquery/chosen/chosen.jquery.js"
     - "vendor/angularModules/angular-chosen/chosen.js"
     - "vendor/angularModules/angular-file-upload/angular-file-upload.min.js"
     - "vendor/ace/ace.min.js"

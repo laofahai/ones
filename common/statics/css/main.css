@@ -184,6 +184,9 @@ commonform {
 .chosen-container .chosen-drop {
     border-color:#e99c51
 }
+.chosen-container-active .chosen-choices {
+    border-color:#e99c51;
+}
 .billBody .chosen-container {
     position:absolute;
     left:0;top:0;
