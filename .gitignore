@@ -5,8 +5,8 @@
 /uploads/*
 /server/Runtime/
 /server/Data/Avatars/*.jpg
-/server/Data/apps/*
-/server/Data/logs/*
+/server/Data/apps/*.zip
+/server/Data/logs/*.log
 /server/Data/install.lock
 /utils/.settings
 /utils/.project
