@@ -81,14 +81,14 @@
                 },
                 department: {
                     field: "Department.name",
-                    hideInForm: true,
-                    dataSource: "DepartmentRes"
+                    hideInForm: true
                 },
                 department_id: {
                     displayName: $rootScope.i18n.lang.department,
                     nameField: "prefix_name",
                     listable: false,
-                    inputType: "select"
+                    inputType: "select",
+                    dataSource: "DepartmentRes"
                 },
                 status: {
                     displayName: $rootScope.i18n.lang.isEnable,

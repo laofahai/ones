@@ -39,7 +39,13 @@
         options = scope.$eval(attr.chosen) || {};
         angular.forEach(attr, function(value, key) {
           if (CHOSEN_OPTION_WHITELIST.indexOf(key) >= 0) {
-            return options[snakeCase(key)] = scope.$eval(value);
+              var rs;
+              try {
+                  rs = options[snakeCase(key)] = scope.$eval(value);
+                  return rs;
+              } catch(e) {
+              }
+//            return options[snakeCase(key)] = scope.$eval(value);
           }
         });
         startLoading = function() {
