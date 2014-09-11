@@ -525,6 +525,7 @@ class Workflow {
                     "source_model" => $model
                 );
                 $tmpModel = D($rm);
+
                 $relationItem = $tmpModel->where($tmpMap)->find();
                 if($relationItem) {
                     array_push($where, array(
