@@ -3,10 +3,7 @@
  */
 (function(){
     angular.module("ones.produce", [
-            "ones.goods",
-            "ones.dataModel",
-            "ones.department",
-            "ones.workflow"
+            "ones.pluginsModule"
         ])
         .config(["$routeProvider", function($route){
             $route
@@ -437,7 +434,7 @@
 //                };
 //            }])
         .service('ProductTplDetailModel', ["$rootScope", "pluginExecutor",
-            function($rootScope,GoodsRes, plugin){
+            function($rootScope, plugin){
                 return {
                     getStructure: function() {
                         var i18n = $rootScope.i18n.lang;
@@ -529,6 +526,7 @@
                 $scope.formMetaData = {};
                 $scope.selectAble = false;
                 $routeParams.id = $routeParams.pid;
+                console.log(model);
                 ComView.displayBill($scope, model, res, {
                     id: $routeParams.pid,
                     module: "/produce/productTplDetail",

@@ -45,7 +45,7 @@ class StockoutViewModel extends CommonViewModel {
          */
         $modelIds = array();
         foreach($data["rows"] as $k=>$v) {
-            $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+            $tmp = explode(DBC("goods.unique.separator"), $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
             $factory_code = array_shift($tmp);
             $modelIds = array_merge($modelIds, $tmp);
             $v["modelIds"] = $tmp;

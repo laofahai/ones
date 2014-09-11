@@ -89,11 +89,11 @@
                 configRes.query({
                     queryAll: true
                 }).$promise.then(function(data) {
-                    angular.forEach(data, function(item) {
-                        ones.BaseConf[item.alias] = item.value;
+                        angular.forEach(data, function(item) {
+                            ones.BaseConf[item.alias] = item.value;
+                        });
+                        ones.caches.setItem("ones.config", ones.BaseConf, 1);
                     });
-                    ones.caches.setItem("ones.config", ones.BaseConf, 1);
-                });
             } catch (err) {}
 
             /**
@@ -101,8 +101,7 @@
              * */
 
             $rootScope.i18n = ones.caches.getItem("ones.i18n");
-            if(!$rootScope.i18n) {
-
+            if(!$rootScope.i18n && !ones.installing) {
                 $http.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
                     ones.caches.setItem("ones.i18n", data, ones.defaultCacheLevel);
                     $rootScope.i18n = data;

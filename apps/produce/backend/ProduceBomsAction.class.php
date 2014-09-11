@@ -22,7 +22,7 @@ class ProduceBomsAction extends CommonAction {
 //        echo $model->getLastSql();
         $modelIds = array();
         foreach($rows as $k=>$v) {
-            $tmp = explode("-", $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+            $tmp = explode(DBC("goods.unique.separator"), $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
             $factory_code = array_shift($tmp);
 //            $rows[$k]["stock"] = $v["stock_id"];
 //            $rows[$k]["goods_id"] = $v["factory_code_all"];

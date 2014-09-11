@@ -41,7 +41,7 @@ class ProduceBomsViewModel extends CommonViewModel {
         
         foreach($data as $k=>$v) {
             $data[$k]["goods_id_label"] = $goods[$v["goods_id"]]["name"];
-            list($factory_code,) = explode("-", $v["factory_code_all"]);
+            list($factory_code,) = explode(DBC("goods.unique.separator"), $v["factory_code_all"]);
             $data[$k]["goods_id"] = sprintf("%s_%s_%s", 
                     $factory_code, 
                     $v["goods_id"],

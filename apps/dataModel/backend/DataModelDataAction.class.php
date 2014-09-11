@@ -12,12 +12,12 @@
  * @author nemo
  */
 class DataModelDataAction extends CommonAction {
-    
+
     protected $indexModel = "DataModelDataView";
     protected $readModel = "DataModelDataView";
-    
+
     protected function _filter(&$map) {
-        
+
         if($_GET["modelId"]) {
             $map["DataModelData.model_id"] = abs(intval($_GET["modelId"]));
         }
@@ -37,14 +37,14 @@ class DataModelDataAction extends CommonAction {
                 $model = D("GoodsCategory");
                 $category = $model->find($catid);
                 if($category) {
-                    $map["DataModelData.model_id"] = $category["bind_model"];
+                    $map["DataModel.alias"] = "product";
                     $map["DataModelData.source_id"] = $catid;
                 }
             } else {
                 $model = D("GoodsCatView");
                 $category = $model->find($_GET["goods_id"]);
                 if($category) {
-                    $map["DataModelData.model_id"] = $category["bind_model_id"];
+                    $map["DataModel.alias"] = "product";
                     $map["DataModelData.source_id"] = $category["goods_category_id"];
                 }
             }
@@ -56,14 +56,15 @@ class DataModelDataAction extends CommonAction {
                 $map["DataModelData.model_id"] = $category["bind_model"];
             }
         }
-        
+
         $map["DataModelData.deleted"] = 0;
 
+
     }
-    
+
     protected function pretreatment() {
         $_POST["model_id"] = $_POST["modelId"];
         $_POST["pinyin"] = Pinyin($_POST["data"]);
     }
-    
+
 }

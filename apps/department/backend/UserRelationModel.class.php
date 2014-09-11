@@ -21,7 +21,7 @@ class UserRelationModel extends RelationModel {
             "mapping_name" => "groups",
             "foreign_key" => "uid",
             "relation_foreign_key" => "group_id",
-            "relation_table" => "x_auth_group_access"
+            "relation_table" => "auth_group_access"
         ),
         "Department" => BELONGS_TO
     );
@@ -37,6 +37,11 @@ class UserRelationModel extends RelationModel {
     public $searchFields = array(
         "username", "truename", "email", "phone"
     );
+
+    public function __construct() {
+        $this->_link['AuthGroup']["relation_table"] = C("DB_PREFIX").$this->_link['AuthGroup']["relation_table"];
+        parent::__construct();
+    }
     
      /**
      * @override

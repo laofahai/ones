@@ -1,22 +1,22 @@
 <?php
 
 /**
- * @filename GoodsCategoryModel.class.php 
- * @encoding UTF-8 
+ * @filename GoodsCategoryModel.class.php
+ * @encoding UTF-8
  * @author nemo.xiaolan <a href="mailto:335454250@qq.com">335454250@qq.com</a>
  * @link <a href="http://www.sep-v.com">http://www.sep-v.com</a>
  * @license http://www.sep-v.com/code-license
  * @datetime 2013-11-12  17:15:48
  * @Description
- * 
+ *
  */
 
 class GoodsCategoryModel extends CommonTreeModel {
-    
+
     public function __construct($modelName="", $tablePrefix="", $connection="") {
         parent::__construct("GoodsCategory", $tablePrefix, $connection);
     }
-    
+
     /**
      * 获取分类树
      */
@@ -25,7 +25,7 @@ class GoodsCategoryModel extends CommonTreeModel {
         if(!$node) {
             return;
         }
-        
+
         $map = array(
             "lft" => array("between", array($node["lft"], $node["rgt"])),
             "GoodsCategory.deleted" => 0
@@ -34,14 +34,13 @@ class GoodsCategoryModel extends CommonTreeModel {
         $this->excludeDeletedMap = true;
 //        print_r($map);exit;
         $data = $this->table(C("DB_PREFIX")."goods_category GoodsCategory")
-                ->field("GoodsCategory.*,DataModel.name AS bind_model_name")
-                ->join(C("DB_PREFIX")."data_model DataModel ON DataModel.id=GoodsCategory.bind_model")
-                ->where($map)->order("lft ASC,listorder DESC")->select();
+            ->field("GoodsCategory.*")
+            ->where($map)->order("lft ASC,listorder DESC")->select();
 //        echo $this->getLastSql();exit;
         $right = array();
         $items = array();
         foreach($data as $row) {
-            
+
             // only check stack if there is one
             if (count($right) > 0) {
                 // 检查我们是否应该将节点移出堆栈
@@ -52,7 +51,7 @@ class GoodsCategoryModel extends CommonTreeModel {
                     }
                 }
             }
-            
+
 //            if(count($right) > $level) {
 //                break;
 //            }
@@ -63,16 +62,16 @@ class GoodsCategoryModel extends CommonTreeModel {
             } else {
                 $row["prefix"] = "";
             }
-            
+
             $row["deep"] = $rightLength;
             $items[] = $row;
             // 将这个节点加入到堆栈中
             $right[] = $row['rgt'];
-            
+
         }
-        
+
         return $items;
     }
- 
-    
+
+
 }

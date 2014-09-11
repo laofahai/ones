@@ -33,6 +33,9 @@
 
                  tmp = item.extra_data.split("\n");
                  for(var i=0;i<tmp.length;i++) {
+                     if(!tmp[i]) {
+                         continue;
+                     }
                      tmpConfig = tmp[i].split("::");
                      extraConfigure[tmpConfig[0]] = eval([tmpConfig[0]]+"="+tmpConfig[1]);
                  }

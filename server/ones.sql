@@ -210,7 +210,7 @@ INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VAL
 (214, 'home.apps.delete', 1, '', 'basedata');
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]_config` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_alias` varchar(50) DEFAULT NULL,
   `alias` varchar(100) NOT NULL,
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]_config` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 
-INSERT INTO `[PREFIX]_config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
+INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
   (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),

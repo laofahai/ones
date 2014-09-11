@@ -37,7 +37,7 @@ class StockProductListViewModel extends ViewModel {
         foreach($data as $k=>$v) {
             $data[$k]["modelIndex"] = sprintf("%d-%d", $v["goods_category_id"], $v["bind_model"]);
             $modelIds[$v["bind_model_id"]] = $v["bind_model_id"];
-            $data[$k]["goodsCode"] = explode("-", $v["factory_code_all"]);
+            $data[$k]["goodsCode"] = explode(DBC("goods.unique.separator"), $v["factory_code_all"]);
 //            $data[$k]["num"] = intval($data[$k]["num"]);
         }
         
