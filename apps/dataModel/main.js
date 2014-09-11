@@ -5,85 +5,85 @@
      * 接受参数： structure 标识模型数据结构
      *          type 标识数据模型的类型
      * */
-     ones.plugins.bind_dataModel_to_structure = function(injector, defer,  params){
-         var res = injector.get("DataModelFieldsRes");
-         //模型字段位置
-         var modelFieldsPosition = params.after || "goods_id";
-         var result = {};
+    ones.plugins.bind_dataModel_to_structure = function(injector, defer,  params){
+        var res = injector.get("DataModelFieldsRes");
+        //模型字段位置
+        var modelFieldsPosition = params.after || "goods_id";
+        var result = {};
 
-         for(name in params.structure) {
-             result[name] = params.structure[name];
-             delete(params.structure[name]);
-             if(name == modelFieldsPosition) {
-                 break;
-             }
-         }
+        for(name in params.structure) {
+            result[name] = params.structure[name];
+            delete(params.structure[name]);
+            if(name == modelFieldsPosition) {
+                break;
+            }
+        }
 
-         //查询模型字段
-         res.query({
-             modelAlias: params.alias
-         }, function(data){
-             var extraConfigure = {};
+        //查询模型字段
+        res.query({
+            modelAlias: params.alias
+        }, function(data){
+            var extraConfigure = {};
 
-             angular.forEach(data, function(item){
-                 var tmp;
-                 var tmpConfig;
-                 var defaultConfigure = {};
-                 var labelConfigure = {};
+            angular.forEach(data, function(item){
+                var tmp;
+                var tmpConfig;
+                var labelConfigure = {};
 
-                 tmp = item.extra_data.split("\n");
-                 for(var i=0;i<tmp.length;i++) {
-                     if(!tmp[i]) {
-                         continue;
-                     }
-                     tmpConfig = tmp[i].split("::");
-                     extraConfigure[tmpConfig[0]] = eval([tmpConfig[0]]+"="+tmpConfig[1]);
-                 }
+                tmp = item.extra_data.split("\n");
+                for(var i=0;i<tmp.length;i++) {
+                    if(!tmp[i]) {
+                        continue;
+                    }
+                    tmpConfig = tmp[i].split("::");
+                    extraConfigure[tmpConfig[0]] = eval([tmpConfig[0]]+"="+tmpConfig[1]);
+                }
 
-                 var defaultConfigure = {
-                     inputType: item.input_type,
-                     nameField: "data",
-                     editAbleRequire: params.require || [],
-                     dataSource: injector.get("DataModelDataRes"),
-                     queryWithExistsData: params.queryExtra || [],
-                     autoQuery: !params.autoQuery || true,
-                     queryParams: {
-                         fieldAlias: item.field_name
-                     },
-                     width: "auto"
-                 };
-
+                var defaultConfigure = {
+                    inputType: item.input_type,
+                    nameField: "data",
+                    editAbleRequire: params.require || [],
+                    dataSource: injector.get("DataModelDataRes"),
+                    queryWithExistsData: params.queryExtra || [],
+                    autoQuery: !params.autoQuery || true,
+                    queryParams: {
+                        fieldAlias: item.field_name
+                    },
+                    width: "auto"
+                };
 
 
-                 defaultConfigure = $.extend(defaultConfigure, extraConfigure);
+                defaultConfigure = $.extend(defaultConfigure, extraConfigure);
+
+                defaultConfigure = $.extend(defaultConfigure, params.config || {});
 
 
-                 if(!defaultConfigure.displayName || defaultConfigure.display == undefined) {
-                     defaultConfigure.displayName = item.display_name;
-                 }
+                if(!defaultConfigure.displayName || defaultConfigure.display == undefined) {
+                    defaultConfigure.displayName = item.display_name;
+                }
 
-                 //显示绑定到_label字段
-                 if(defaultConfigure.bindToLabel) {
-                     var labelConfigure = $.extend({}, defaultConfigure);
-                     labelConfigure.listable = extraConfigure.listable === undefined ? true : extraConfigure.listable;
-                     labelConfigure.hideInForm = true;
-                     labelConfigure.billAble = false;
-                     result[item.field_name+"_label"] = labelConfigure;
+                //显示绑定到_label字段
+                if(defaultConfigure.bindToLabel) {
+                    var labelConfigure = $.extend({}, defaultConfigure);
+                    labelConfigure.listable = extraConfigure.listable === undefined ? true : extraConfigure.listable;
+                    labelConfigure.hideInForm = true;
+                    labelConfigure.billAble = false;
+                    result[item.field_name+"_label"] = labelConfigure;
 //                     console.log(labelConfigure);
-                     defaultConfigure.listable = false;
-                 } else {
+                    defaultConfigure.listable = false;
+                } else {
 
-                 }
+                }
 
-                 result[item.field_name] = defaultConfigure;
-             });
+                result[item.field_name] = defaultConfigure;
 
-             result = $.extend(result, params.structure);
+            });
 
-             defer.resolve(result);
-         });
+            result = $.extend(result, params.structure);
+            defer.resolve(result);
+        });
 
-         ones.pluginScope.set("defer", defer);
+        ones.pluginScope.set("defer", defer);
 
     };
 
@@ -219,7 +219,7 @@
                         var params = {
                             modelId:$routeParams.modelId
                         };
-    //                        console.log($routeParams);
+                        //                        console.log($routeParams);
                         DataModelFieldsRes.query(params, function(data){
                             struct.field_id.dataSource = data;
                             defer.resolve(struct);

@@ -11,54 +11,65 @@
  * @author 志鹏
  */
 class StockProductListViewModel extends ViewModel {
-    
+
     protected $viewFields = array(
         "StockProductList" => array("*", "_type"=>"left"),
         "Goods" => array("name"=>"goods_name","measure","goods_category_id","store_min","store_max", "_on"=>"Goods.id=StockProductList.goods_id"),
-        "GoodsCategory" => array("name"=>"category_name","bind_model"=>"bind_model_id", "_on"=>"Goods.goods_category_id=GoodsCategory.id"),
+        "GoodsCategory" => array("name"=>"category_name", "_on"=>"Goods.goods_category_id=GoodsCategory.id"),
         "Stock" => array("name"=>"stock_name", "_on"=>"Stock.id=StockProductList.stock_id"),
     );
-    
+
 
     public $searchFields = array(
         "Goods.name", "factory_code_all", "GoodsCategory.name", "Stock.name"
     );
-    
+
     /**
      * @override
-     * 
+     *
      * factory_code_all : 商品编码+规格ID+型号ID
      */
     public function select($options=array()) {
         $data = parent::select($options);
 //        echo $this->getLastSql();exit;
 //        print_r($data);exit;
-        
+
+        $theDataModel = D("DataModel")->getByAlias("product");
+
         foreach($data as $k=>$v) {
-            $data[$k]["modelIndex"] = sprintf("%d-%d", $v["goods_category_id"], $v["bind_model"]);
-            $modelIds[$v["bind_model_id"]] = $v["bind_model_id"];
+            $data[$k]["modelIndex"] = sprintf("%d-%d", $v["goods_category_id"], $theDataModel["id"]);
             $data[$k]["goodsCode"] = explode(DBC("goods.unique.separator"), $v["factory_code_all"]);
 //            $data[$k]["num"] = intval($data[$k]["num"]);
         }
-        
-        $dmd = D("DataModelDataView");
-        $map = array(
-            "model_id" => array("IN", implode(',', $modelIds))
+
+        $params = array(
+            $data, null, false, true
         );
-        $tmp = $dmd->where($map)->select();
-        
-        foreach($tmp as $k=>$v) {
-            $dataView[$v["id"]] = $v; 
-        }
-        
-        foreach($data as $k=>$v) {
-            foreach($v["goodsCode"] as $i=> $gc) {
-                if($i==0) {
-                    continue;
-                }
-                $data[$k][$dataView[$gc]["field_name"]] = $dataView[$gc]["data"];
-            }
-        }
+        tag("assign_dataModel_data", $params);
+
+
+        $data = $params[0];
+
+//        print_r($params);exit;
+
+//        $dmd = D("DataModelDataView");
+//        $map = array(
+//            "model_id" => array("IN", implode(',', $modelIds))
+//        );
+//        $tmp = $dmd->where($map)->select();
+//
+//        foreach($params[0] as $k=>$v) {
+//            $dataView[$v["id"]] = $v;
+//        }
+//
+//        foreach($data as $k=>$v) {
+//            foreach($v["goodsCode"] as $i=> $gc) {
+//                if($i==0) {
+//                    continue;
+//                }
+//                $data[$k][$dataView[$gc]["field_name"]] = $dataView[$gc]["data"];
+//            }
+//        }
         
 //        print_r($data);exit;
         return $data;

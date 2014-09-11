@@ -258,8 +258,6 @@
         .controller("DoInstallCtl", ["$scope", "$rootScope", "$http", "ones.config", "$sce", function($scope,$rootScope, $http, config, $sce){
             $scope.$parent.step = 5;
 
-//            $scope.$parent.configure = {"db":{"dbhost":"127.0.0.1","dbname":"ones_install","dbpre":"x_","dbuser":"root","dbpwd":"root"},"admin":{"username":"admin","truename":"Administrator","email":"admin@admin.com","password":"123123"}};
-
             $scope.installMsgs = [];
             $scope.installProgress = {
                 messages: [],

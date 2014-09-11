@@ -18,6 +18,10 @@ class StockinModel extends CommonModel {
     );
     
     protected $workflowAlias = "stockin";
+
+    public $relationModels = array(
+        "Purchase","Returns"
+    );
     
     /**
      * 创建新单据

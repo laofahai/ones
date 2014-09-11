@@ -199,7 +199,10 @@
                     after: "goods_name",
                     alias: "product",
                     require: ["goods_id"],
-                    queryExtra: ["goods_id"]
+                    queryExtra: ["goods_id"],
+                    config: {
+                        hideInForm: true
+                    }
                 });
 
                 return ones.pluginScope.get("defer").promise;

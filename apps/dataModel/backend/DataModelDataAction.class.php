@@ -50,11 +50,7 @@ class DataModelDataAction extends CommonAction {
             }
         }
         if($_GET["cat_id"]) {
-            $model = D("GoodsCategory");
-            $category = $model->find($_GET["cat_id"]);
-            if($category) {
-                $map["DataModelData.model_id"] = $category["bind_model"];
-            }
+            $map["DataModel.alias"] = "product";
         }
 
         $map["DataModelData.deleted"] = 0;
