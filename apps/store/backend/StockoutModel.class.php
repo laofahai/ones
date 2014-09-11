@@ -19,6 +19,8 @@ class StockoutModel extends CommonModel {
         array("datelie", CTS),
         array("stock_manager", 0)
     );
+
+    public $relationModels = array("Orders", "ProducePlan");
     
     
     
