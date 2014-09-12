@@ -10,17 +10,20 @@
                     direction: "ASC"
                 };
                 this.methodsList = {
-                    doEditItem: function(id, extra){
-                        extra = extra || "";
-                        $location.url(sprintf("/%(group)s/%(action)s/%(module)s/id/%(id)d", {
-                            group: $routeParams.group,
-                            action: self.scope.config.isBill ? "editBill" : "edit",
-                            module: $routeParams.module,
-                            id: parseInt(id)
-                        })+extra);
-                    },
-                    doGridDblClick: function(id, extra){
-                        this.doEditItem(id, extra);
+//                    doEditItem: function(id, extra){
+//                        if(self.config.editAble === false) {
+//                            return;
+//                        }
+//                        extra = extra || "";
+//                        $location.url(sprintf("/%(group)s/%(action)s/%(module)s/id/%(id)d", {
+//                            group: $routeParams.group,
+//                            action: self.scope.config.isBill ? "editBill" : "edit",
+//                            module: $routeParams.module,
+//                            id: parseInt(id)
+//                        })+extra);
+//                    },
+                    doGridDblClick: function(item, extra){
+                        self.scope.$parent.doEditSelected(item);
                     },
                     doGridClick: function(index, evt){
 //                        this.recordSelected(index);
@@ -36,23 +39,23 @@
 //                        }
 
                     },
-                    doDeleteItem: function(id){
-                        self.scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), 1);
-                        self.scope.doConfirm = function(){
-                            var api = dataAPI.getResourceInstance({
-                                uri: $routeParams.group+"/"+$routeParams.module
-                            });
-                            api.delete({id: id}, function() {
-                                self.scope.$parent.$broadcast("gridData.changed");
-                            });
-                        };
-
-                        var modal = $modal({
-                            scope: self.scope,
-                            title: toLang("confirm", "actions", $rootScope),
-                            template: "common/base/views/confirm.html"
-                        });
-                    },
+//                    doDeleteItem: function(id){
+//                        self.scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), 1);
+//                        self.scope.doConfirm = function(){
+//                            var api = dataAPI.getResourceInstance({
+//                                uri: $routeParams.group+"/"+$routeParams.module
+//                            });
+//                            api.delete({id: id}, function() {
+//                                self.scope.$parent.$broadcast("gridData.changed");
+//                            });
+//                        };
+//
+//                        var modal = $modal({
+//                            scope: self.scope,
+//                            title: toLang("confirm", "actions", $rootScope),
+//                            template: "common/base/views/confirm.html"
+//                        });
+//                    },
                     doGridSortBy: function(field){
                         var direction = self.sortInfo.direction == "ASC" ? "DESC" : "ASC"
                         self.scope.$parent.sortInfo = {
@@ -62,8 +65,13 @@
                         self.sortInfo.direction = direction;
                         self.scope.sorting = field+" "+direction;
                     },
-                    doSearchByKeyword: function(){},
-                    doFilter: function(){},
+                    doRefresh: function(){
+                        self.scope.$parent.getPagedDataAsync(
+                            self.scope.$parent.pagingOptions.pageSize,
+                            self.scope.$parent.pagingOptions.currentPage,
+                            self.scope.$parent.filterOptions.filterText
+                        );
+                    },
                     setPage: function(p){
                         var goPage = 1;
                         var currentPage = self.scope.$parent.pagingOptions.currentPage;
@@ -126,21 +134,29 @@
                 compile: function(element, attrs, transclude){
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
+
+                            angular.forEach(GridView.methodsList, function(method, k){
+                                $scope[k] = method;
+                            });
+
                             $scope.itemsList = [];
                             $scope.$on("gridData.changed", function(evt, itemsList){
-                                $scope.itemsList = itemsList;
+                                if(itemsList === true) {
+                                    $scope.doRefresh();
+                                } else {
+                                    $scope.itemsList = itemsList;
+                                }
                                 ones.GridScope = $scope;
                             });
 
                             $scope.gridSelected = {};
+                            $scope.selectedActions = GridView.selectedActions;
                             $scope.$parent.gridSelected = [];
                             $scope.$parent.searchAble = true;
 
                             GridView.scope = $scope;
 
-                            angular.forEach(GridView.methodsList, function(method, k){
-                                $scope[k] = method;
-                            });
+
 
 //                            setInterval(function(){
 //                                console.log($scope.selectedItems);

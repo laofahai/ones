@@ -191,8 +191,8 @@
 
                 ComView.displayForm($scope, model, res, opts);
             }])
-        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout",
-            function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout){
+        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout", "GridView",
+            function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout, GridView){
                 var service = {};
 
                 /**
@@ -862,8 +862,9 @@
                     if(model.editAble === undefined || model.editAble) {
                         $scope.selectedActions.push({
                             label: service.toLang('edit', "actions"),
-                            action: function(){
-                                return $scope.doEditSelected($scope.gridSelected[0]);
+                            icon: "pencil",
+                            action: function(evt, selected, theItem){
+                                return $scope.doEditSelected(theItem||$scope.gridSelected[0]);
                             },
                             class: "default",
                             multi: false
@@ -894,11 +895,12 @@
                                 label: service.toLang('addChild', "actions"),
                                 class: "primary",
                                 multi: false,
-                                action: function(){
+                                icon: "plus",
+                                action: function(evt, selected, theItem){
                                     $location.url(sprintf('/%(group)s/addChild/%(module)s/pid/%(id)d', {
                                         group : group,
                                         module: module,
-                                        id: Number($scope.gridSelected[0].id)
+                                        id: Number(theItem.id||$scope.gridSelected[0].id)
                                     })+extraParams);
                                 }
                             });
@@ -910,11 +912,11 @@
                                 label: service.toLang('viewChild', "actions"),
                                 class: "primary",
                                 multi: false,
-                                action: function(){
+                                action: function(evt, selected, theItem){
                                     $location.url(sprintf('/%(group)s/viewChild/%(module)s/pid/%(id)d', {
                                         group : group,
                                         module: module,
-                                        id: Number($scope.gridSelected[0].id)
+                                        id: Number(theItem.id||$scope.gridSelected[0].id)
                                     })+extraParams);
                                 }
                             });
@@ -926,11 +928,11 @@
                             label: service.toLang('viewDetail', "actions"),
                             class: "primary",
                             multi: false,
-                            action: function(){
+                            action: function(evt, selected, theItem){
                                 $location.url(sprintf('/%(group)s/viewDetail/%(module)s/id/%(id)d', {
                                     group : group,
                                     module: module,
-                                    id: Number($scope.gridSelected[0].id)
+                                    id: Number(theItem.id||$scope.gridSelected[0].id)
                                 })+extraParams);
                             }
                         });
@@ -1041,9 +1043,11 @@
                     if(model.deleteAble === undefined || model.deleteAble) {
                         $scope.selectedActions.push({
                             label: service.toLang('delete', "actions"),
-                            action: function(){
+                            icon: "trash-o",
+                            action: function(evt, selected, theItem){
                                 var ids = [];
-                                angular.forEach($scope.gridSelected, function(item){
+                                var items = theItem ? [theItem] : $scope.gridSelected;
+                                angular.forEach(items, function(item){
                                     ids.push(item.id);
                                 });
                                 if (!confirm(sprintf(service.toLang('confirm_delete'), $scope.gridSelected.length))) {
@@ -1064,9 +1068,11 @@
                         $scope.selectedActions.push({
                             label: service.toLang('print', "actions"),
                             multi: true,
-                            action: function(){
+                            icon: "print",
+                            action: function(evt, selected, theItem){
                                 var ids = [];
-                                angular.forEach($scope.gridSelected, function(item){
+                                var items = theItem ? [theItem] : $scope.gridSelected;
+                                angular.forEach(items, function(item){
                                     ids.push(item.id);
                                 });
                                 $location.url(sprintf("/%(group)s/print/%(module)s/id/%(id)s", {
@@ -1086,6 +1092,8 @@
                             $scope.selectedActions.push(item);
                         });
                     }
+
+                    GridView.selectedActions = $scope.selectedActions;
 
                 };
                 service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){

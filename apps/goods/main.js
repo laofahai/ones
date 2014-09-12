@@ -65,12 +65,14 @@
                 extraSelectActions: [
                     {
                         label: toLang("viewDataModel", "actions", $rootScope),
-                        action: function($event, selectedItems){
+                        icon: "eye",
+                        action: function($event, selectedItems, item){
                             var scope = this.scope;
                             var injector = this.injector;
                             var location = injector.get("$location");
                             var routeParams = injector.get("$routeParams");
-                            if(!selectedItems.length) {
+
+                            if(!selectedItems.length && !item) {
                                 return;
                             }
 
@@ -81,7 +83,7 @@
                                 if(!data.id) {
                                     return;
                                 }
-                                location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+selectedItems[0].id);
+                                location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+(item.id||selectedItems[0].id));
                             });
 
                         }

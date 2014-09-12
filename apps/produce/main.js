@@ -277,21 +277,22 @@
                 }
             };
         }])
-        .service("ProducePlanDetailModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin) {
+        .service("ProducePlanDetailModel", ["$rootScope", "pluginExecutor", "ComView", function($rootScope, plugin, ComView) {
             return {
                 editAble: false,
                 deleteAble: false,
                 extraSelectActions: [
                     {
                         label: $rootScope.i18n.lang.actions.doCraft,
-                        action: function($event, selectedItems){
+                        icon: "level-down",
+                        action: function($event, selectedItems, theItem){
                             var scope = this.scope;
                             var injector = this.injector;
                             var res = injector.get("DoCraftRes");
                             var conf = injector.get("ones.config");
                             var $location = injector.get("$location");
 
-                            if(selectedItems.length <= 0) {
+                            if(selectedItems.length <= 0 && !theItem) {
                                 return;
                             }
                             var ids = [];
@@ -300,30 +301,33 @@
                             });
 
                             res.update({
-                                id: ids.join(),
+                                id: theItem.id || ids.join(),
                                 workflow: true
-                            }, {}, function(){
-                                if(!conf.DEBUG) {
-                                    var url = "/HOME/goTo/url/"+encodeURI(encodeURIComponent($location.$$url));
-                                    $location.url(url);
+                            }, {}, function(data){
+                                if(data.error) {
+                                    ComView.alert(toLang(data.msg, "messages", $rootScope), "danger");
+                                } else {
+                                    scope.$broadcast("gridData.changed", true);
                                 }
+
                             });
                         }
                     },
                     {
                         label: $rootScope.i18n.lang.actions.viewCraft,
-                        action: function($event, selectedItems){
+                        icon: "eye",
+                        action: function($event, selectedItems, theItem){
                             var scope = this.scope;
                             var injector = this.injector;
                             var res = injector.get("DoCraftRes");
                             var ComView = injector.get("ComView");
 
-                            if(selectedItems.length !== 1) {
+                            if(selectedItems.length !== 1 && !theItem) {
                                 return;
                             }
 
                             res.get({
-                                id: selectedItems[0].id
+                                id: theItem.id || selectedItems[0].id
                             }).$promise.then(function(data){
                                 ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
                             });
@@ -349,10 +353,10 @@
                             displayName: $rootScope.i18n.lang.current_craft
                         },
                         start_time: {
-                            cellFilter: "dateFormat:1"
+                            cellFilter: "dateFormat:0"
                         },
                         plan_end_time: {
-                            cellFilter: "dateFormat:1"
+                            cellFilter: "dateFormat:0"
                         },
                         num: {
                         },

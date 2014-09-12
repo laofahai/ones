@@ -56,7 +56,7 @@ var toDate = function(timestamp, noTime) {
     var second = d.getSeconds();
 
     var rs = sprintf("%s-%s-%s", year, month, date);
-    if(!noTime) {
+    if(!noTime || parseInt(noTime)===0) {
         rs = rs+ sprintf(" %s:%s:%s", hour, minute, second);
     }
 
