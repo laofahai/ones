@@ -2,7 +2,6 @@
 .idea
 .idea/*
 .settings
-/uploads/*/*
 /server/Runtime/
 /uploads/Avatars/*.jpg
 /server/Data/apps/*.zip
