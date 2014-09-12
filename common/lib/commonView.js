@@ -639,8 +639,8 @@
                     };
                     //获取数据
                     $scope.getPagedDataAsync = function(pageSize, page, searchText, extraParams) {
-                        pageSize = pageSize || pagingOptions.pageSize;
-                        page = page || pagingOptions.currentPage;
+                        pageSize = pageSize || $scope.pagingOptions.pageSize;
+                        page = page || $scope.pagingOptions.currentPage;
                         $timeout(function(){
                             var data;
                             var sb = [];

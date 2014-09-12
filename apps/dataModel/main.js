@@ -71,8 +71,6 @@
                     result[item.field_name+"_label"] = labelConfigure;
 //                     console.log(labelConfigure);
                     defaultConfigure.listable = false;
-                } else {
-
                 }
 
                 result[item.field_name] = defaultConfigure;
@@ -221,6 +219,7 @@
                         };
                         //                        console.log($routeParams);
                         DataModelFieldsRes.query(params, function(data){
+                            data = filterDataFields(data, ["id", "display_name"]);
                             struct.field_id.dataSource = data;
                             defer.resolve(struct);
                         });

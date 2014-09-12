@@ -59,7 +59,14 @@ class DataModelDataAction extends CommonAction {
     }
 
     protected function pretreatment() {
-        $_POST["model_id"] = $_POST["modelId"];
+        if($_GET["id"]) {
+            unset($_POST["model_id"]);
+            echo $this->_method;
+            print_r($_POST);exit;
+        } else {
+            $_POST["model_id"] = $_POST["modelId"];
+        }
+
         $_POST["pinyin"] = Pinyin($_POST["data"]);
     }
 
