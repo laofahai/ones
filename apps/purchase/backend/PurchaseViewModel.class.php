@@ -22,7 +22,7 @@ class PurchaseViewModel extends CommonViewModel {
     );
 
     public $searchFields = array(
-        "bill_id", "subject", "User.truename", "RelationshipCompany.name", "Types.name"
+        "bill_id", "User.truename", "RelationshipCompany.name", "Types.name"
     );
     
 }
