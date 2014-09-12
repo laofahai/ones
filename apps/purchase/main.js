@@ -87,11 +87,11 @@
                         unit_price: {
                             inputType: "number",
                             "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:'￥'"
+                            cellFilter: "currency:￥"
                         },
                         amount: {
                             inputType: "number",
-                            cellFilter: "currency:'￥'",
+                            cellFilter: "currency:￥",
                             totalAble: true
                         },
                         memo: {}
