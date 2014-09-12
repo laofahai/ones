@@ -21,7 +21,7 @@
             </td>
             <td ng-repeat="field in config.columnDefs" class="td-{{field.field}}" ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$parent.$index"></td>
             <td align="center" class="table-grid-operation">
-                <a class="{{sa.class}}" ng-click="sa.action($event, gridSelected, item)" ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}" ng-repeat="sa in selectedActions" title="{{sa.label}}">
+                <a class="{{sa.class}}" ng-click="sa.action($event, gridSelected, item)" ng-hide="true===sa.hideInLine" ng-repeat="sa in selectedActions" title="{{sa.label}}">
                     <i class="icon icon-{{sa.icon}}" ng-show="sa.icon!==undefined"></i>
                     <span ng-show="sa.icon===undefined" class="blue" ng-bind="sa.label"></span> &nbsp;
                 </a>

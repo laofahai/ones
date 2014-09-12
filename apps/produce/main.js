@@ -102,6 +102,8 @@
                 extraSelectActions: [
                     {
                         label: toLang("doCraft", "actions", $rootScope),
+                        icon: "level-down",
+
                         action: function($event, selectedItems){
                             var scope = this.scope;
                             var injector = this.injector;
