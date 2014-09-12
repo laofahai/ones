@@ -7,31 +7,14 @@
                     <label ng-bind="i18n.lang.customer"></label>:
                     <inputfield config="customerSelectOpts"></inputfield>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>{{i18n.lang.dateline}}: </label>
                     <span class="input-icon input-icon-right">
-                        <input type="text" class="form-control" 
-                               size="10"
-                               ng-model="formMetaData.inputTime" 
-                               data-date-format="yyyy-MM-dd" 
-                               data-date-type="object" 
-                               data-max-date="today" 
-                               data-autoclose="true"
-                               bs-datepicker />
+                        <input type="datetime-local" placeholder="yyyy-mm-dd HH:mm" name="inputTime" ng-model="formMetaData.inputTime" />
                         <i class="icon-calendar gray"></i>
                     </span>
-                    <span class="input-icon input-icon-right">
-                        <input type="text" size="8" 
-                               class="form-control" 
-                               ng-model="formMetaData.inputTime" 
-                               data-time-format="HH:mm" 
-                               data-time-type="object" 
-                               data-autoclose="1" 
-                               bs-timepicker />
-                        <i class="icon-time gray"></i>
-                    </span>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <inputfield config="typeSelectOpts"></inputfield>
                 </div>
                 <div class="col-sm-3 align-right">

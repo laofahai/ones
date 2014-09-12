@@ -44,7 +44,7 @@ class OrdersAction extends CommonAction {
         
         $this->readModel = "OrdersView";
         $formData = parent::read(true);
-        
+
         $formData["inputTime"] = $formData["dateline"]*1000;
         
         $rowModel = D("OrdersDetailView");

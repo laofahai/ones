@@ -158,6 +158,23 @@
                             $scope.$on("commonBill.ready", function(){
                                 if ($scope.$parent.billConfig.isEdit) {
                                     $scope.$on("bill.dataLoaded", function(evt, data) {
+                                        timeToFormat = [
+                                            "inputTime",
+                                            "input_time",
+                                            "dateline",
+                                            "start_time",
+                                            "end_time"
+                                        ];
+                                        angular.forEach(data, function(item, k){
+                                            for(var i=0;i<timeToFormat.length;i++) {
+                                                if(k === timeToFormat[i]) {
+                                                    if(String(item).length <= 10) {
+                                                        item*=1000;
+                                                    }
+                                                    data[k] = new Date(item);
+                                                }
+                                            }
+                                        });
                                         $scope.$parent.formMetaData = data;
                                         var b = new FormMaker.makeBill($scope);
 

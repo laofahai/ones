@@ -110,14 +110,15 @@
             };
         }])
 
-    .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
-        function($scope, res, GoodsRes, model, ComView, RelationshipCompanyRes, $routeParams) {
+    .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "$routeParams",
+        function($scope, res, GoodsRes, model, ComView, $routeParams) {
 
             $scope.workflowAble = true;
             $scope.selectAble = false;
             $scope.showWeeks = true;
             $scope.formMetaData = {
-                inputTime : Date.parse(new Date()),
+//                inputTime : Date.parse(new Date()),
+                inputTime: new Date(),
                 total_amount_real: 0.00
             };
 //                $scope.formMetaData.inputTime = new Date();
@@ -134,7 +135,7 @@
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                     inputType: "select3",
                     "ng-model": "formMetaData.supplier_id",
-                    dataSource: RelationshipCompanyRes
+                    dataSource: "RelationshipCompanyRes"
                 }
             };
             //销售类型字段定义
@@ -151,9 +152,6 @@
                     }
                 }
             };
-            $scope.maxDate = new Date();
-            $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
-            $scope.format = $scope.formats[0];
 
         }])
     ;

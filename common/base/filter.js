@@ -125,6 +125,15 @@
                 return toLang(lang, "", $rootScope);
             };
         }])
+        .filter("toDateObject", [function(){
+            return function(timestamp){
+                if(String(timestamp) <= 10) {
+                    timestamp = parseInt(timestamp)*1000;
+                }
+
+                return new Date(timestamp);
+            };
+        }])
 
     ;
 

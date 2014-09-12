@@ -541,7 +541,6 @@
             $scope.formMetaData = {};
             $scope.formMetaData.inputTime = new Date();
             $scope.maxDate = new Date();
-            $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
             $scope.format = $scope.formats[0];
 
         }])

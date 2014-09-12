@@ -751,6 +751,8 @@
                         queryExtraParams: {}
                     };
 
+                    $scope.selectAble = false;
+
                     //直接传入MODEL
                     if(typeof(fieldsDefine) == "object" && "getStructure" in fieldsDefine && typeof(fieldsDefine.getStructure) == "function") {
                         var model = fieldsDefine;

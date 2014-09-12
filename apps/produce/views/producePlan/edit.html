@@ -9,21 +9,14 @@
                 <div class="col-sm-3">
                     <label ng-bind="i18n.lang.start_time|colon"></label>
                     <span class="input-icon input-icon-right">
-                        <input type="date" class="form-control" placeholder="yyyy-MM-dd" />
+                        <input type="date" class="form-control" placeholder="yyyy-MM-dd" ng-model="formMetaData.start_time" />
                         <i class="icon-calendar gray"></i>
                     </span>
                 </div>
                 <div class="col-sm-3">
                     <label ng-bind="i18n.lang.end_time|colon"></label>
                     <span class="input-icon input-icon-right">
-                        <input type="text" class="form-control" 
-                               size="10"
-                               ng-model="formMetaData.end_time"
-                               data-date-format="yyyy-MM-dd" 
-                               data-date-type="object" 
-                               data-min-date="today" 
-                               data-autoclose="true"
-                               bs-datepicker />
+                        <input type="date" class="form-control" placeholder="yyyy-MM-dd" ng-model="formMetaData.end_time" />
                         <i class="icon-calendar gray"></i>
                     </span>
                 </div>
