@@ -133,6 +133,7 @@
                             });
 
                             $scope.gridSelected = {};
+                            $scope.$parent.gridSelected = [];
                             $scope.$parent.searchAble = true;
 
                             GridView.scope = $scope;

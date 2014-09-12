@@ -66,8 +66,13 @@ class AppsAction extends CommonAction {
             $allApps = reIndex($allApps);
 
             if($_GET["_ic"]) {
+                $response["total"] = $response["total"] ? $response["total"] : $response["count"];
+                $totalPages = ceil($response["total"]/$_GET["_ps"]);
+                if(!$totalPages) {
+                    $totalPages = 1;
+                }
                 $response = array(
-                    array("count" => $response["count"]),
+                    array("count" => $response["count"], "totalPages"=>$totalPages),
                     $allApps
                 );
             } else {
@@ -96,7 +101,6 @@ class AppsAction extends CommonAction {
             $http->request($this->serviceUri."App/getList", array(
                 "alias" => implode(",", $installedAppAlias),
                 "api_key" => C("SERVICE_API_KEY")
-
             ));
 
             $tmp = $http->get_data();
@@ -119,9 +123,14 @@ class AppsAction extends CommonAction {
             }
 
             $count = D("Apps")->where($this->queryMeta["map"])->count("id");
-//            print_r($installedApps);exit;
+
+            $total = D("Apps")->count("id");
+            $totalPages = ceil($total/$_GET["_ps"]);
+            if(!$totalPages) {
+                $totalPages = 1;
+            }
             $this->response(array(
-                array("count"=>$count),
+                array("count"=>$count, "totalPages"=>$totalPages),
                 reIndex($installedApps)
             ));
             return;

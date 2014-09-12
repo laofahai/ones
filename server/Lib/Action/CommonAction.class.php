@@ -355,7 +355,7 @@ class CommonAction extends RestAction {
             );
 
             if($return) {
-                return $returnData;
+                return $list;
             }
 
             $this->response($returnData);

@@ -13,8 +13,13 @@ class RelationshipCompanyLinkmanViewModel extends CommonViewModel {
         "RelationshipCompany" => array("name"=>"company_name", "_type"=>"left", "_on"=>"RelationshipCompany.id=RelationshipCompanyLinkman.relationship_company_id")
     );
 
-    protected $searchField = array(
-        "contact","company_name","mobile","tel",'email',"qq"
+    public $searchFields = array(
+        "RelationshipCompanyLinkman.contact",
+        "RelationshipCompanyLinkman.mobile",
+        "RelationshipCompanyLinkman.tel",
+        'RelationshipCompanyLinkman.email',
+        "RelationshipCompanyLinkman.qq",
+        "RelationshipCompany.name"
     );
 
 } 
