@@ -14,6 +14,8 @@
 class StockProductListAction extends CommonAction {
     
     protected $indexModel = "StockProductListView";
+
+    protected $dataModelAlias = "product";
     
     protected $exportFields = array(
         "factory_code_all" => "原厂编码",

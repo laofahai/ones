@@ -303,7 +303,7 @@
                         field: "processes.status_text"
                     },
                     sponsor: {},
-                    stock_manager: {
+                    stock_manager_name: {
                         displayName: i18n.stockManager
                     }
                 };

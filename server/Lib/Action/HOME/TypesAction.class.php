@@ -18,9 +18,6 @@ class TypesAction extends CommonAction {
             $map["type"] = $_GET["type"];
         }
     }
-    
-    protected function _order(&$order) {
-        $order = "listorder DESC, id DESC";
-    }
+
     
 }

@@ -60,6 +60,7 @@
         .service("GoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
             var obj = {
                 subAble: true,
+                addSubAble: true,
                 viewSubAble: false,
                 extraSelectActions: [
                     {

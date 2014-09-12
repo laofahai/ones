@@ -280,6 +280,8 @@
         "progress": "进度",
         "queue_length": "队列长度",
         "upload_queue_progress": "队列上传进度",
-        "queue_limit": "队列最大长度"
+        "queue_limit": "队列最大长度",
+        "totalServerItem": "条目总数：",
+        "paginationInfo": "分页信息："
     }
 }

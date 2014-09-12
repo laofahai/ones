@@ -52,8 +52,13 @@
                     }
                 }),
                 structure: {
-                    id: {primary: true},
-                    alias: {},
+                    id: {
+                        primary: true,
+                        sortAble: true
+                    },
+                    alias: {
+                        sortAble: true
+                    },
                     name: {},
                     value: {
                         inputType: "textarea"

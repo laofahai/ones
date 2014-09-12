@@ -672,3 +672,41 @@ li.select3_add {
 li.select3_add i {
     margin-right:10px;
 }
+
+.table-grid th {
+    height:40px;background:#f2f2f2;
+}
+.table-grid th.th-id {
+    width:50px;
+    text-align:center;
+}
+.table-grid td.td-id {
+    text-align:center;
+}
+.table-grid td {
+    min-height:40px;vertical-align: middle !important;
+}
+.pagination {
+    margin:0;
+}
+.pagination > li {
+    float:left;
+    margin-left:3px;
+}
+.pagingInput {
+    float:left;
+    width:40px;
+    text-align:center;
+    padding-left:8px;
+    height:33px;
+}
+th.sorting_asc,th.sorting_desc {
+    background:#f3f3f3
+}
+.table-grid-operation a {
+    color:#222;
+}
+.table-grid-operation a:hover {
+    text-decoration:none;
+    color:#428bca
+}

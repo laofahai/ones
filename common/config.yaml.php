@@ -30,6 +30,7 @@
     - "base/config.js"
     - "lib/function.js"
     - "lib/formMaker.js"
+    - "lib/gridView.js"
     - "lib/plugin.js"
     - "lib/caches.js"
     - "base/controller.js"

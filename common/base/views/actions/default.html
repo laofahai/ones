@@ -24,6 +24,7 @@
                 </li>
             </ul>
         </div>
+
         <!--//选中项操作-->
         <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
@@ -42,6 +43,14 @@
                 <span ng-bind="i18n.lang.actions.filters"></span>
             </a>
         </div>
+
+        <div class="actionsBtnRight" ng-show="searchAble">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" ng-model-options="{ debounce: 1000 }" ng-model="filterOptions.filterText" autocomplete="off">
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+        </div>
+
     </div>
 
 </section>

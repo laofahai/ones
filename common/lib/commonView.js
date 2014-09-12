@@ -445,6 +445,7 @@
 
                 service.displayGrid = function($scope, fieldsDefine, resource, opts){
                     $scope.totalServerItems = 0;
+                    $scope.totalPages = 1;
                     $scope.gridSelected = [];
 
                     var options = opts ? opts : {};
@@ -465,7 +466,7 @@
                     };
                     $scope.sortInfo = {
                         fields: ["id"],
-                        directions: ["DESC"]
+                        directions: ["ASC"]
                     };
 
 
@@ -535,6 +536,28 @@
 
                     $scope.$on("commonGrid.structureReady", function() {
 
+                        if(model.config) {
+                            opts = $.extend(opts, model.config);
+                        } else {
+                            var configsList = [
+                                "isBill",
+                                "workflowAlias",
+                                "editAble",
+                                "deleteAble",
+                                "printAble",
+                                "viewDetailAble",
+                                "subAble",
+                                "addSubAble",
+                                "viewSubAble",
+                                "exportAble"
+                            ];
+                            angular.forEach(configsList, function(conf){
+                                opts[conf] = model[conf];
+                            });
+                        }
+
+                        opts.resource = resource;
+
                         /**
                          * 字段名称
                          * */
@@ -575,13 +598,13 @@
 
                     });
 
-                    $scope.$on('gridData.changed', function() {
-                        service.redirectTo($location.url());
-                        return;
-                        //                        $scope.gridSelected = [];
-                        $scope.gridOptions.selectedItems = [];
-                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-                    });
+//                    $scope.$on('gridData.changed', function() {
+//                        service.redirectTo($location.url());
+//                        return;
+//                        //                        $scope.gridSelected = [];
+//                        $scope.gridOptions.selectedItems = [];
+//                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+//                    });
 
                     /**
                      * 自定义过滤器
@@ -595,7 +618,6 @@
                      * */
 
 
-
                         //导出excel
                     $scope.doExport = function(){};
 
@@ -604,15 +626,15 @@
                         if(remoteData && typeof(remoteData[0]) == "object" && ("count" in remoteData[0])) {
                             data = remoteData[1];
                             $scope.totalServerItems = remoteData[0].count;
+                            $scope.totalPages = remoteData[0].totalPages;
                         } else {
                             data = remoteData;
                             $scope.totalServerItems = remoteData.length;
+                            $scope.totalPages = parseInt(remoteData.length/$scope.pagingOptions.pageSize)+1;
                         }
 
-                        $scope.itemsList = data;
-                        if (!$scope.$$phase) {
-                            $scope.$apply();
-                        }
+//                        $scope.itemsList = data;/
+                        $scope.$broadcast("gridData.changed", data);
 
                     };
                     //获取数据
@@ -697,6 +719,9 @@
                          * */
                         $scope.$watch('pagingOptions', function(newVal, oldVal) {
                             if (newVal !== oldVal) {
+                                if(newVal.currentPage >= $scope.totalPages) {
+                                    $scope.pagingOptions.currentPage = $scope.totalPages;
+                                }
                                 refresh ();
                             }
                         }, true);
@@ -821,7 +846,7 @@
 
 
                         var lastPage = ones.caches.getItem("lastPage");
-return;
+
                         $location.url(lastPage[0] || opts.returnPage);
                     };
                 };

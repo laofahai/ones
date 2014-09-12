@@ -303,7 +303,6 @@ class CommonAction extends RestAction {
                 $model = $model->relation(true);
             }
 
-
             $model = $model->where($map)->order($order);
 
             //AutoComplete字段默认只取10条
@@ -323,7 +322,6 @@ class CommonAction extends RestAction {
             }
 
             $list = $model->select();
-//            echo $model->getLastSql();exit;
 
             $this->queryMeta = array(
                 "map" => $map,
@@ -339,23 +337,31 @@ class CommonAction extends RestAction {
                 tag("assign_dataModel_data", $params);
                 $list = $params[0];
             }
-
-            if($return) {
-                return $list;
-            }
         }
 
+//        echo $model->getLastSql();exit;
 //        print_r($list);exit;
         //包含总数
         if($_GET["_ic"]) {
-            $total = false === $total ? $total : $model->where($map)->count();
-//            echo $model->getLastSql();exit;
-            $return = array(
-                array("count" => $total),
-                $list
+            $total = $model->where($map)->count();
+            $totalPages = ceil($total/$_GET["_ps"]);
+            if(!$totalPages) {
+                $totalPages = 1;
+            }
+            $returnData = array(
+                array("count" => $total, "totalPages"=>$totalPages),
+                $list,
             );
-            $this->response($return);
+
+            if($return) {
+                return $returnData;
+            }
+
+            $this->response($returnData);
         } else {
+            if($return) {
+                return $list;
+            }
             $this->response($list);
         }
     }
@@ -371,6 +377,7 @@ class CommonAction extends RestAction {
 
         if($_GET["_kw"]) {
             $kw = $_GET["_kw"];
+
             if($model->searchFields) {
                 foreach($model->searchFields as $k => $sf) {
                     $where[$sf] = array('like', "%{$kw}%");
@@ -410,14 +417,15 @@ class CommonAction extends RestAction {
 
     public function beforeOrder($model) {
         //排序
-        $order = array("id DESC");
+        $order = array();
+        $orderFields = ["id"];
         if($_GET["_si"]) {
             $sortInfos = explode("|", $_GET["_si"]);
             foreach($sortInfos as $s) {
                 $direct = substr($s, 0, 1);
                 $field = substr($s, 1, strlen($s));
-                if($model->orderFields && in_array($field, $model->orderFields)) {
-                    $order[] = $field." ".$direct === "+" ? "ASC" : "DESC";
+                if(($model->orderFields && in_array($field, $model->orderFields)) or in_array($field, $orderFields)) {
+                    $order[] = $field." ".($direct === "-" ? "ASC" : "DESC");
                 } else {
                     //判断是否存在此字段
                     //@todo 目前只是简单判断是不是有relationModel的字段
@@ -427,6 +435,7 @@ class CommonAction extends RestAction {
                 }
             }
         }
+        $order = $order ? $order : array("id DESC");
         return $order;
     }
 

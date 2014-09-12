@@ -328,6 +328,17 @@ Array.prototype.remove = function(val) {
         this.splice(index, 1);
     }
 };
+Array.prototype.delRepeat=function(){
+    var newArray=[];
+    var provisionalTable = {};
+    for (var i = 0, item; (item= this[i]) != null; i++) {
+        if (!provisionalTable[item]) {
+            newArray.push(item);
+            provisionalTable[item] = true;
+        }
+    }
+    return newArray;
+}
 
 /**
  * 按照某字段排序数组

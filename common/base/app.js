@@ -11,6 +11,7 @@
             'mgcrea.ngStrap',
             'localytics.directives', //FOR CHOSEN
             'ui.utils',
+            'ones.gridView',
 
             'angularFileUpload',
 
