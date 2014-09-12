@@ -341,6 +341,7 @@ class CommonAction extends RestAction {
 
 //        echo $model->getLastSql();exit;
 //        print_r($list);exit;
+        $list = reIndex($list);
         //包含总数
         if($_GET["_ic"]) {
             $total = $model->where($map)->count();

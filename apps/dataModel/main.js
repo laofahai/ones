@@ -198,10 +198,6 @@
                             displayName: i18n.displayName,
                             hideInForm: true
                         },
-                        field_name: {
-                            displayName: i18n.name,
-                            hideInForm: true
-                        },
                         field_id: {
                             displayName: i18n.field,
                             listable: false,

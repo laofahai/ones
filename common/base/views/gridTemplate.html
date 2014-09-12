@@ -12,20 +12,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in itemsList" ng-dblclick="doGridDblClick(item.id)">
-        <td align="center">
-            <label>
-                <input type="checkbox" class="ace" ng-change="recordSelected(result)" ng-true-value="{{$index+1}}" ng-false-value="{{-($index+1)}}" ng-model="result" />
-                <span class="lbl"></span>
-            </label>
-        </td>
-        <td ng-repeat="field in config.columnDefs" class="td-{{field.field}}" ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field"></td>
-        <td align="center" class="table-grid-operation">
-            <a href="" ng-click="addChild(item.id)" ng-show="config.addSubAble===true"> <i class="icon icon-plus"></i> &nbsp; </a>
-            <a href="" ng-click="doEditItem(item.id)" ng-hide="config.editAble===false"> <i class="icon icon-pencil"> </i> &nbsp; </a>
-            <a href="" ng-click="doDeleteItem(item.id)" ng-hide="config.deleteAble===false"> <i class="icon icon-trash-o"> </i> </a>
-        </td>
-    </tr>
+        <tr ng-repeat="item in itemsList" ng-dblclick="doGridDblClick(item.id)" ng-click="doGridClick($index, $event)">
+            <td align="center">
+                <label>
+                    <input type="checkbox" class="ace" ng-change="recordSelected(result)" ng-true-value="{{$index+1}}" ng-false-value="{{-($index+1)}}" ng-model="result" />
+                    <span class="lbl"></span>
+                </label>
+            </td>
+            <td ng-repeat="field in config.columnDefs" class="td-{{field.field}}" ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$index"></td>
+            <td align="center" class="table-grid-operation">
+                <a href="" ng-click="addChild(item.id)" ng-show="config.addSubAble===true"> <i class="icon icon-plus"></i> &nbsp; </a>
+                <a href="" ng-click="doEditItem(item.id)" ng-hide="config.editAble===false"> <i class="icon icon-pencil"> </i> &nbsp; </a>
+                <a href="" ng-click="doDeleteItem(item.id)" ng-hide="config.deleteAble===false"> <i class="icon icon-trash-o"> </i> </a>
+            </td>
+        </tr>
+        <tr ng-show="itemsList.length<1">
+            <td colspan="{{config.columnDefs.length+3}}" class="td-unfound" align="center" ng-bind="$root.i18n.lang.messages.nodata"></td>
+        </tr>
     </tbody>
     <tfoot>
     <tr>

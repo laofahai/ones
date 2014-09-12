@@ -363,6 +363,14 @@ var arraySortBy = function(name,minor)
     }
 }
 
+var reIndex = function(data) {
+    var a = [];
+    angular.forEach(data, function(item){
+        a.push(item);
+    });
+    return a;
+};
+
 String.prototype.ucfirst = function() {
 
     // Split the string into words if string contains multiple words.

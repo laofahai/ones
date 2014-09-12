@@ -598,13 +598,6 @@
 
                     });
 
-//                    $scope.$on('gridData.changed', function() {
-//                        service.redirectTo($location.url());
-//                        return;
-//                        //                        $scope.gridSelected = [];
-//                        $scope.gridOptions.selectedItems = [];
-//                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-//                    });
 
                     /**
                      * 自定义过滤器
@@ -633,7 +626,7 @@
                             $scope.totalPages = parseInt(remoteData.length/$scope.pagingOptions.pageSize)+1;
                         }
 
-//                        $scope.itemsList = data;/
+                        data = reIndex(data);
                         $scope.$broadcast("gridData.changed", data);
 
                     };

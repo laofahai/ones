@@ -21,7 +21,9 @@
             workflowAlias: "purchase",
             getStructure: function(){
                 return {
-                    bill_id: {},
+                    bill_id: {
+                        cellFilter: "toLink:#/purchase/editBill/purchase/id/+id"
+                    },
                     purchase_type: {
                         listable: false
                     },
@@ -34,10 +36,10 @@
                     },
                     total_num: {},
                     total_amount: {
-                        cellFilter: "currency:'￥'"
+                        cellFilter: "currency:￥"
                     },
                     total_amount_real: {
-                        cellFilter: "currency:'￥'"
+                        cellFilter: "currency:￥"
                     },
                     dateline: {
                         cellFilter: "dateFormat"

@@ -104,8 +104,9 @@
             };
         }])
         .filter("toLink", [function(){
-            return function(text, link) {
-                return sprintf('<a href="%s" target="_blank">%s</a>', link, text);
+            return function(text, link, target) {
+                target = target || "_self";
+                return sprintf('<a href="%s" target="%s">%s</a>', link, target, text);
             };
         }])
         .filter("toAuthNodeName", ["$rootScope", function($rootScope){

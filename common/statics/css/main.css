@@ -710,3 +710,6 @@ th.sorting_asc,th.sorting_desc {
     text-decoration:none;
     color:#428bca
 }
+.table-grid .td-unfound{
+    padding:15px 0;
+}

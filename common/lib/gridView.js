@@ -22,6 +22,20 @@
                     doGridDblClick: function(id, extra){
                         this.doEditItem(id, extra);
                     },
+                    doGridClick: function(index, evt){
+//                        this.recordSelected(index);
+//                        if($(evt.target).attr("type") == "checkbox") {
+//                            return;
+//                        }
+//                        var checkbox = $(evt.target).parent().find("input[type='checkbox']");
+//                        console.log(checkbox);
+//                        if(checkbox.attr("checked") === "checked") {
+//                            checkbox.removeAttr("checked");
+//                        } else {
+//                            checkbox.attr("checked", true);
+//                        }
+
+                    },
                     doDeleteItem: function(id){
                         self.scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), 1);
                         self.scope.doConfirm = function(){
@@ -80,7 +94,7 @@
                     //记录选中项
                     recordSelected: function(index){
                         var absIndex = Math.abs(index)-1;
-                        if(index < 0) {
+                        if(undefined !== self.scope.gridSelected["index_"+absIndex]) {
                             delete(self.scope.gridSelected["index_"+absIndex]);
                         } else {
                             self.scope.gridSelected["index_"+absIndex] = self.scope.itemsList[absIndex];
@@ -92,11 +106,15 @@
                             self.scope.$parent.gridSelected.push(item);
                         });
 
+//                        if(self.scope.$$phase) {
+//                            self.scope.$apply();
+//                        }
+
                         //self.scope.selectedItems.push();
                     }
                 };
             }])
-        .directive("tableView", ["$compile", "$timeout", "GridView", function($compile, $timeout, GridView){
+        .directive("tableView", ["$compile", "$timeout", "GridView", "$filter", function($compile, $timeout, GridView, $filter){
             return {
                 restrict: "E",
                 replace: true,
@@ -108,6 +126,7 @@
                 compile: function(element, attrs, transclude){
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
+                            $scope.itemsList = [];
                             $scope.$on("gridData.changed", function(evt, itemsList){
                                 $scope.itemsList = itemsList;
                                 ones.GridScope = $scope;
@@ -138,6 +157,25 @@
                     return ones.GridScope.$eval("itemsList["+index+"]."+key);
                 }
             }
+        }])
+        .filter("tryGridFilter", ["$filter", function($filter){
+            return function(text, filter, $index){
+                if(!filter) {
+                    return text;
+                }
+
+                var item = ones.GridScope.$eval("itemsList["+$index+"]");
+                if(item) {
+                    filter = filter.replace(/\+id/ig, item.id);
+                }
+
+                args = filter.split(":");
+                filter = args[0];
+                args = Array.prototype.slice.call(args, 1)
+                args.unshift(text);
+                args.push($index);
+                return $filter(filter).apply(null, args);
+            };
         }])
     ;
 
