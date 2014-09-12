@@ -13,7 +13,7 @@
  */
 class ConfigModel extends CommonModel {
 
-    protected $searchFields = array(
+    public $searchFields = array(
         "alias", "name", "app_alias"
     );
 

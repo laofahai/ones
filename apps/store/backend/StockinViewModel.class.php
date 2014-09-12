@@ -18,7 +18,7 @@ class StockinViewModel extends CommonViewModel {
         "Stockin" => array("*", "_type"=>"left"),
     );
 
-    protected $searchFields = array(
+    public $searchFields = array(
         "Stockin.bill_id", "Stockin.subject"
     );
 

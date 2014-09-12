@@ -96,7 +96,8 @@
                     dataSource: [
                         {id: 1, name: $rootScope.i18n.lang.yes},
                         {id: -1, name: $rootScope.i18n.lang.no}
-                    ]
+                    ],
+                    cellFilter: "toYesOrNo"
                 }
             };
 

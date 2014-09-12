@@ -267,7 +267,7 @@ class CommonAction extends RestAction {
      * 
      * 通用REST列表返回 
      **/
-    public function index($return=false) {
+    public function index($return=false, $returnIncludeCount=false) {
 
         if(method_exists($this, "_before_index")){
             $this->_before_index();
