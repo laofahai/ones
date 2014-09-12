@@ -2,12 +2,13 @@
 .idea
 .idea/*
 .settings
-/uploads/*
+/uploads/*/*
 /server/Runtime/
-/server/Data/Avatars/*.jpg
+/uploads/Avatars/*.jpg
 /server/Data/apps/*.zip
 /server/Data/logs/*.log
 /server/Data/install.lock
+/server/Data/Updates/*.zip
 /utils/.settings
 /utils/.project
 /utils/.pydevproject
