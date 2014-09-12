@@ -166,9 +166,9 @@
                 }
 
                 var item = ones.GridScope.$eval("itemsList["+$index+"]");
-                if(item) {
-                    filter = filter.replace(/\+id/ig, item.id);
-                }
+//                console.log("itemsList["+$index+"]");return;
+                filter = filter.replace(/\+id/ig, item.id);
+                filter = filter.replace(/'/g, "");
 
                 args = filter.split(":");
                 filter = args[0];

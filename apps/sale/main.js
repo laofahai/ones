@@ -63,7 +63,7 @@
                         displayName: i18n.totalNum
                     },
                     total_amount_real: {
-                        cellFilter: "currency:￥",
+                        cellFilter: "currency:'￥'",
                     },
                     dateline: {
                         cellFilter: "dateFormat"
@@ -111,11 +111,11 @@
                         unit_price: {
                             inputType: "number",
                             "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:￥"
+                            cellFilter: "currency:'￥'"
                         },
                         amount: {
                             inputType: "number",
-                            cellFilter: "currency:￥",
+                            cellFilter: "currency:'￥'",
                             totalAble: true
                         },
                         memo: {}
@@ -193,11 +193,11 @@
                         unit_price: {
                             inputType: "number",
                             "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:￥"
+                            cellFilter: "currency:'￥'"
                         },
                         amount: {
                             inputType: "number",
-                            cellFilter: "currency:￥",
+                            cellFilter: "currency:'￥'",
                             totalAble: true
                         },
                         memo: {}

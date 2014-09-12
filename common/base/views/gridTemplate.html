@@ -19,7 +19,7 @@
                     <span class="lbl"></span>
                 </label>
             </td>
-            <td ng-repeat="field in config.columnDefs" class="td-{{field.field}}" ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$index"></td>
+            <td ng-repeat="field in config.columnDefs" class="td-{{field.field}}" ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$parent.$index"></td>
             <td align="center" class="table-grid-operation">
                 <a href="" ng-click="addChild(item.id)" ng-show="config.addSubAble===true"> <i class="icon icon-plus"></i> &nbsp; </a>
                 <a href="" ng-click="doEditItem(item.id)" ng-hide="config.editAble===false"> <i class="icon icon-pencil"> </i> &nbsp; </a>

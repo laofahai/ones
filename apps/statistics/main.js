@@ -39,7 +39,7 @@
                         },
                         sale_num: {},
                         sale_amount: {
-                            cellFilter: "currency:￥"
+                            cellFilter: "currency:'￥'"
                         },
                         purchase_num: {},
                         purchase_amount: {},
