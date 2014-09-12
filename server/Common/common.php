@@ -282,7 +282,7 @@ function Pinyin($zh) {
  */
 function isModuleEnabled($moduleName) {
     $modules = F("loadedApp");
-    return in_array($moduleName, $modules);
+    return in_array(strtolower($moduleName), $modules);
 }
 function isAppLoaded($appName) {
     return isModuleEnabled($appName);
@@ -525,6 +525,8 @@ function getTypeIdByAlias($type, $alias) {
             return $t["id"];
         }
     }
+
+    return 0;
 }
 
 /*

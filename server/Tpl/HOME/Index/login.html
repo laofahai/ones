@@ -31,7 +31,7 @@
                         <div id="login-box" class="login-box visible widget-box no-border" ng-keydown="doKeyDown($event)">
                             <div class="widget-body">
                                 <div class="widget-main">
-                                    <h4 class="header blue lighter bigger" ng-show="!notInstalled">
+                                    <h4 class="header blue lighter bigger">
                                         <i class="icon-coffee green"></i>
                                         <span ng-bind="i18n.lang.messages.please_enter_your_login_info"></span>
                                     </h4>
@@ -40,7 +40,7 @@
                                     <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
                                         <div><span ng-bind-html="error.msg"></span></div>
                                     </div>
-                                    <form name="LoginForm" ng-show="!notInstalled">
+                                    <form name="LoginForm">
                                         <fieldset>
                                             <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
@@ -74,7 +74,7 @@
                                     </form>
                                 </div><!-- /widget-main -->
 
-                                <div class="toolbar clearfix" ng-show="!notInstalled">
+                                <div class="toolbar clearfix">
                                     <div>
                                         <a href="#" onclick="show_box('forgot-box');
                                                             return false;" class="forgot-password-link">

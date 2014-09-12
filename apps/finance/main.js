@@ -132,7 +132,6 @@
                 getStructure: function(){
                     return {
                         id: {primary: true},
-                        subject: {},
                         type_id: {
                             field: "type",
                             displayName: $rootScope.i18n.lang.type,
@@ -141,6 +140,12 @@
                             queryParams: {
                                 type: "receive"
                             }
+                        },
+                        source_model: {
+                            cellFilter: "lang"
+                        },
+                        customer_name: {
+                            displayName: toLang("customer", "", $rootScope)
                         },
                         sponsor: {
                             hideInForm: true
@@ -154,7 +159,8 @@
                             inputType: "select",
                             dataSource: FinanceAccountRes,
                             nameField: "name",
-                            valueField: "id"
+                            valueField: "id",
+                            listable: false
                         },
                         amount: {
                             inputType: "number"

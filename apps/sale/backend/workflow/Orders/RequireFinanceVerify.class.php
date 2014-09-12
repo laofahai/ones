@@ -23,31 +23,28 @@ class OrdersRequireFinanceVerify extends WorkflowAbstract {
         );
         $order->save($data);
         
-        //财务
-        if(isModuleEnabled("Finance")) {
-            $financeModel = D("FinanceReceivePlan");
+        //开启财务模块时，自动写入财务收入计划
+        if(isModuleEnabled("finance")) {
+
             $theOrder = $order->find($this->mainrowId);
+
+            $financeModel = D("FinanceReceivePlan");
+
             $data = array(
                 "source_model" => "Orders",
                 "source_id" => $this->mainrowId,
-                "subject" => "",
+                "subject" => "-",
                 "customer_id" => $theOrder["customer_id"],
                 "amount" => $theOrder["total_amount_real"],
-                "create_dateline" => CTS,
-                "status" => 0,
-                "type_id" => getTypeIdByAlias("receive", "sale"),
-                "user_id" => getCurrentUid()
+                "type_id" => getTypeIdByAlias("receive", "sale")
             );
-            
-            $lastId = $financeModel->add($data);
+
+            $lastId = $financeModel->record($data);
 
 //            echo $financeModel->getLastSql();exit;
             if(!$lastId) {
                 return false;
             }
-            import("@.Workflow.Workflow");
-            $workflow = new Workflow("financeReceive");
-            $node = $workflow->doNext($lastId, "", true);
 //            var_dump($node);
         }
 //        exit;

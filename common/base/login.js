@@ -37,21 +37,6 @@ LoginModule
 
         $scope.error.message = null;
 
-        //检测是否安装
-        $timeout(function(){
-            $.ajax({
-                url: "server/Data/install.lock",
-                statusCode: {
-                    404: function(){
-                        $scope.error.isError = true;
-                        $scope.error.msg = $sce.trustAsHtml(toLang("ones_not_installed", "messages", $rootScope));
-                        $scope.notInstalled = true;
-                        $scope.$digest();
-                    }
-                }
-            });
-        });
-
         $scope.doLogin = function() {
             if($scope.LoginForm.$invalid) {
                 return false;

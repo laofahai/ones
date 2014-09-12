@@ -21,5 +21,28 @@ class FinanceReceivePlanModel extends CommonModel {
         array("source_id", ""),
         array("user_id", "getCurrentUid", 1, "function"),
     );
+
+    /*
+     * 财务收入计划新增接口
+     * @param array $data
+     *
+     * **/
+    public function record($data) {
+        $data["create_dateline"] = CTS;
+        $data["status"] = 0;
+        $data["user_id"] = getCurrentUid();
+
+        $lastId = $this->add($data);
+
+        if(!$lastId) {
+            Log::write($this->getLastSql(), Log::SQL);
+            return false;
+        }
+
+        $workflow = new Workflow("financeReceive");
+        $workflow->doNext($lastId, "", true);
+
+        return $lastId;
+    }
     
 }
