@@ -85,8 +85,8 @@
         /**
          * Root Ctrl
          * */
-        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView",
-            function($scope, $rootScope, $location, $http, conf, ComView) {
+        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout",
+            function($scope, $rootScope, $location, $http, conf, ComView, $timeout) {
 
                 setTimeout(function(){
                     if($("#initCover").length) {
@@ -222,7 +222,14 @@
                     $scope.currentPage.action = action;
                     $scope.currentPage.module = module;
                     $rootScope.currentPage = $scope.currentPage;
-                }
+
+                    /**
+                     * 搜索框自动获得焦点
+                     * */
+                    $timeout(function(){
+                        $("#gridSearchInput").focus();
+                    }, 500);
+                 }
 
                 doWhenLocationChanged();
 
