@@ -426,19 +426,32 @@
                         };
                         if (opts.id) {
                             getParams.id = opts.id;
-                            if(typeof(resource.update) == "undefined") {
-                                resource.api.update(getParams, $scope[opts.dataName], callback);
-                            } else {
+                            try {
+                                //首先尝试使用dataAPI.method
+                                //dataSource为resource对象时或者dataAPI.method时
                                 resource.update(getParams, $scope[opts.dataName], callback);
+                            } catch(e) {
+                                //尝试使用dataAPI.api.method
+                                resource.api.update(getParams, $scope[opts.dataName], callback);
+//                                resource.update(getParams, $scope[opts.dataName], callback);
                             }
+                            return promise;
+//                            getDataApiPromise(resource, "update", getParams).then(callback);
+//                            if(typeof(resource.update) == "undefined") {
+//                                resource.api.update(getParams, $scope[opts.dataName], callback);
+//                            } else {
+//                                resource.update(getParams, $scope[opts.dataName], callback);
+//                            }
                             //新增
                         } else {
                             var params = $.extend(getParams, $scope[opts.dataName]);
-                            if(typeof(resource.save) == "undefined") {
-                                resource.api.save(params, $scope[opts.dataName], callback);
-                            } else {
-                                resource.save(params, $scope[opts.dataName], callback);
-                            }
+                            getDataApiPromise(resource, "save", params).then(callback);
+//
+//                            if(typeof(resource.save) == "undefined") {
+//                                resource.api.save(params, $scope[opts.dataName], callback);
+//                            } else {
+//                                resource.save(params, $scope[opts.dataName], callback);
+//                            }
                         }
                     };
                 };

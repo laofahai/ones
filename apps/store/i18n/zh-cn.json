@@ -34,7 +34,8 @@
                 "Stockout": {
                     "name": "出库单",
                     "actions": {
-                        "list": "出库单列表"
+                        "list": "出库单列表",
+                        "add": "新增出库单"
                     }
                 }
             }
