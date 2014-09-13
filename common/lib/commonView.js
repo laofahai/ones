@@ -1008,7 +1008,7 @@
                                 }
                             }
 
-                            $scope.$broadcast("gridData.changed");
+                            $scope.$broadcast("gridData.changed", true);
                         };
                         $scope.workflowActionDisabled = function(id) {
                             var selectedItems = $scope.gridSelected || [];
@@ -1067,7 +1067,7 @@
                                     return false;
                                 }
                                 res.delete({id: ids.join()}, function(data) {
-                                    $scope.$broadcast("gridData.changed");
+                                    $scope.$broadcast("gridData.changed", true);
                                 });
 
                                 $scope.gridOptions.selectedItems = [];

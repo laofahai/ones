@@ -160,6 +160,8 @@
                 }, function() {
                     doWhenLocationChanged();
 
+                    $('body,html').animate({scrollTop:0},300);
+
                     lastPage[0] = lastPage[1];
                     lastPage[1] = $location.path();
                     ones.caches.setItem("lastPage", lastPage);

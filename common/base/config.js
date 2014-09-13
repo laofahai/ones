@@ -13,17 +13,21 @@
             this.model = {};
 
             this.getResourceInstance = function(opts){
-                opts.extraMethod = $.extend({update: {method: "PUT"}}, opts.extraMethod);
+                if(undefined === opts.extraMethod) {
+                    opts.extraMethod = $.extend({update: {method: "PUT"}}, opts.extraMethod);
+                }
+
                 var resUri = sprintf("%s%s/:id.json", config.BSU, opts.uri);
                 return $resource(resUri, opts.opts||{}, opts.extraMethod||{});
             };
+
             this.init = function(group, module) {
                 try {
                     //尝试使用DataAPI模式
-//                    console.log(toAPIName(group, module));
                     this.model = $injector.get(toAPIName(group, module));
                     this.resource = this.model;
                 } catch(e) {
+//                    console.log(e);
                     try {
                         //尝试使用已定义的资源
                         this.resource = $injector.get(module.ucfirst()+"Res");

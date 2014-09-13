@@ -92,9 +92,6 @@
                 })
             ;
         }])
-        .factory("StockWarningRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "store/stockWarning.json");
-        }])
         .factory("StockinRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "store/stockin/:id.json", null,
                 {
@@ -102,9 +99,6 @@
                     'doPostWorkflow': {method: 'POST'},
                     'update': {method: 'PUT'}
                 });
-        }])
-        .factory("StockProductListRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "store/stockProductList/:id.json", null, {'update': {method: 'PUT'}});
         }])
 
         .factory("StockoutRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -151,14 +145,29 @@
                 uri: "store/stock"
             });
         }])
-        .service("StockProductListModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin) {
-            var obj = {
-                deleteAble: false,
-                exportAble: true
-            };
-            obj.getStructure = function(structOnly) {
-                var i18n = $rootScope.i18n.lang;
-                var fields = {
+        .service("Store.StockProductListAPI", ["$rootScope", "pluginExecutor", "ones.dataApiFactory",
+            function($rootScope, plugin, dataAPI){
+                this.config = {
+                    deleteAble: false,
+                    exportAble: true
+                };
+                this.api = dataAPI.getResourceInstance({
+                    uri: "Store/StockProductList"
+                });
+                this.getStructure = function(){
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: this.structure,
+                        after: "goods_name",
+                        alias: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"],
+                        config: {
+                            hideInForm: true
+                        }
+                    });
+                    return ones.pluginScope.get("defer").promise;
+                };
+                this.structure = {
                     factory_code_all: {
                         hideInForm: true,
                         billAble:false
@@ -177,16 +186,16 @@
                     },
                     category_name: {
                         hideInForm: true,
-                        displayName: i18n.category
+                        displayName: toLang("category", "", $rootScope)
                     },
                     stock_name: {
                         inputType: "static",
-                        displayName: i18n.stock,
+                        displayName: toLang("stock", "", $rootScope),
                         hideInForm: true
                     },
                     num: {
                         hideInForm: true,
-                        displayName: i18n.storeNum
+                        displayName: toLang("storeNum", "", $rootScope),
                     },
                     measure: {
                         hideInForm: true
@@ -198,38 +207,8 @@
                         hideInForm: true
                     }
                 };
+            }])
 
-                plugin.callPlugin("bind_dataModel_to_structure", {
-                    structure: fields,
-                    after: "goods_name",
-                    alias: "product",
-                    require: ["goods_id"],
-                    queryExtra: ["goods_id"],
-                    config: {
-                        hideInForm: true
-                    }
-                });
-
-                return ones.pluginScope.get("defer").promise;
-
-            };
-            return obj;
-        }])
-        .service("StockProductEditModel", ["$rootScope", function($rootScope){
-            return {
-                getStructure: function(){
-                    return {
-                        id: {primary: true},
-                        unit_price: {
-                            inputType: "number"
-                        },
-                        cost: {
-                            inputType: "number"
-                        }
-                    };
-                }
-            };
-        }])
         .service("StockProductExportModel", ["$rootScope", "GoodsCategoryRes", "$q",
             function($rootScope, GoodsCategoryRes, $q) {
                 var service = {
@@ -373,35 +352,38 @@
 
                 return obj;
             }])
-        .service("StockWarningModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
-            return {
-                getStructure: function(){
-                    var fields = {
-                        factory_code_all: {
-                            displayName: $rootScope.i18n.lang.factoryCodeAll
-                        },
-                        goods_name: {
-                            displayName: $rootScope.i18n.lang.name
-                        },
-                        measure: {},
-                        category_name: {
-                            displayName: $rootScope.i18n.lang.category
-                        },
-                        stock_name: {
-                            displayName: $rootScope.i18n.lang.stock
-                        },
-                        num: {},
-                        store_min: {},
-                        store_max: {}
-                    };
+        .service("Store.StockWarningAPI", ["$rootScope", "pluginExecutor", "ones.dataApiFactory", function($rootScope, plugin, dataAPI){
+            this.api = dataAPI.getResourceInstance({
+                uri: "store/stockWarning",
+                extraMethod: {}
+            });
+            this.structure = {
+                factory_code_all: {
+                    displayName: $rootScope.i18n.lang.factoryCodeAll
+                },
+                goods_name: {
+                    displayName: $rootScope.i18n.lang.name
+                },
+                measure: {},
+                category_name: {
+                    displayName: $rootScope.i18n.lang.category
+                },
+                stock_name: {
+                    displayName: $rootScope.i18n.lang.stock
+                },
+                num: {},
+                store_min: {},
+                store_max: {}
+            };
 
-                    plugin.callPlugin("bind_dataModel_to_structure", {
-                        structure: fields,
-                        alias: "product"
-                    });
+            this.getStructure = function(){
+                plugin.callPlugin("bind_dataModel_to_structure", {
+                    structure: this.structure,
+                    alias: "product",
+                    after: "goods_name"
+                });
 
-                    return ones.pluginScope.get("defer").promise;
-                }
+                return ones.pluginScope.get("defer").promise;
             };
         }])
         .service('StockoutModel', ["$rootScope", function($rootScope){

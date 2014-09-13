@@ -76,30 +76,70 @@
                 }
             };
         }])
-        .directive('ensureunique', ['$http', "$injector", function($http, $injector) {
+        .directive('ensureunique', ['$http', "$injector", "$timeout", function($http, $injector, $timeout) {
             return {
                 require: 'ngModel',
-                link: function(scope, ele, attrs, c) {
-                    var res = $injector.get(attrs.ensureunique);
-                    scope.$watch(attrs.ngModel, function() {
-                        var queryParams = {
-                            id: 0,
-                            excludeId:  $injector.get("$routeParams").id
-                        };
-                        queryParams[attrs.name] = scope.$eval(attrs.ngModel);
-                        var promise = getDataApiPromise(res, "get", queryParams)
-                        promise.then(function(data){
-                            if(data[attrs.name]) {
-                                c.$setValidity('unique', false);
-                            } else {
-                                c.$setValidity('unique', true);
-                            }
+                compile: function(element, iattrs, transclude) {
+                    return {
+                        pre: function($scope, iElement, attrs, c) {
+                            var res = $injector.get(attrs.ensureunique);
+                            $scope.$watch(attrs.ngModel, function(newVal, oldVal) {
+                                var queryParams = {
+                                    id: 0,
+                                    excludeId:  $injector.get("$routeParams").id
+                                };
+                                if(!newVal) {
+                                    c.$setValidity('unique', true);
+                                    return;
+                                }
+                                queryParams[attrs.name] = $scope.$eval(attrs.ngModel);
+                                var promise = getDataApiPromise(res, "get", queryParams)
+                                promise.then(function(data){
+                                    if(data[attrs.name]) {
+                                        c.$setValidity('unique', false);
+                                    } else {
+                                        c.$setValidity('unique', true);
+                                    }
 
-                        }, function(){
-                            c.$setValidity('unique', false);
-                        });
-                    });
+                                }, function(){
+                                    c.$setValidity('unique', false);
+                                });
+
+//                                if(!$scope.$$phase) {
+//                                    $scope.$digest();
+//                                }
+                            });
+                        }
+                    };
                 }
+//                link: function(scope, ele, attrs, c) {
+//                    var res = $injector.get(attrs.ensureunique);
+//                    scope.$watch(attrs.ngModel, function(newVal, oldVal) {
+//                        $timeout(function(){
+//                            var queryParams = {
+//                                id: 0,
+//                                excludeId:  $injector.get("$routeParams").id
+//                            };
+//                            if(!newVal) {
+//                                c.$setValidity('unique', true);
+//                                return;
+//                            }
+//                            queryParams[attrs.name] = scope.$eval(attrs.ngModel);
+//                            var promise = getDataApiPromise(res, "get", queryParams)
+//                            promise.then(function(data){
+//                                if(data[attrs.name]) {
+//                                    c.$setValidity('unique', false);
+//                                } else {
+//                                    c.$setValidity('unique', true);
+//                                }
+//
+//                            }, function(){
+//                                c.$setValidity('unique', false);
+//                            });
+//                        }, 100);
+//
+//                    });
+//                }
             };
         }])
         .directive("inputfield", ["$compile", "FormMaker", function($compile, FormMaker) {

@@ -21,9 +21,7 @@ class StockoutModel extends CommonModel {
     );
 
     public $relationModels = array("Orders", "ProducePlan");
-    
-    
-    
+
     /**
      * 创建出库单
      */
