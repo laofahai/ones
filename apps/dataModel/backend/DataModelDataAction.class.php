@@ -38,14 +38,19 @@ class DataModelDataAction extends CommonAction {
                 $category = $model->find($catid);
                 if($category) {
                     $map["DataModel.alias"] = "product";
-                    $map["DataModelData.source_id"] = $catid;
+                    if(DBC("dataModel.showOnlyBind")) {
+                        $map["DataModelData.source_id"] = $catid;
+                    }
+
                 }
             } else {
                 $model = D("GoodsCatView");
                 $category = $model->find($_GET["goods_id"]);
                 if($category) {
                     $map["DataModel.alias"] = "product";
-                    $map["DataModelData.source_id"] = $category["goods_category_id"];
+                    if(DBC("dataModel.showOnlyBind")) {
+                        $map["DataModelData.source_id"] = $category["goods_category_id"];
+                    }
                 }
             }
         }
