@@ -418,7 +418,7 @@ class CommonAction extends RestAction {
     public function beforeOrder($model) {
         //排序
         $order = array();
-        $orderFields = ["id"];
+        $orderFields = array("id");
         if($_GET["_si"]) {
             $sortInfos = explode("|", $_GET["_si"]);
             foreach($sortInfos as $s) {

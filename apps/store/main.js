@@ -541,7 +541,7 @@
             $scope.formMetaData = {};
             $scope.formMetaData.inputTime = new Date();
             $scope.maxDate = new Date();
-            $scope.format = $scope.formats[0];
+//            $scope.format = $scope.formats[0];
 
         }])
         .controller("JXCStockoutEditCtl", ["$scope", "StockoutRes", "StockoutEditModel", "ComView", "$routeParams", "$route",

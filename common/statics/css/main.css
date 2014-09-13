@@ -705,6 +705,7 @@ th.sorting_asc,th.sorting_desc {
 }
 .table-grid-operation a {
     color:#222;
+    margin:0 3px;
 }
 .table-grid-operation a:hover {
     text-decoration:none;

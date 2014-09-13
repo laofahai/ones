@@ -287,8 +287,8 @@
                     }
                 });
                 $scope.maxDate = new Date();
-                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
-                $scope.format = $scope.formats[0];
+//                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
+//                $scope.format = $scope.formats[0];
 
             }])
         .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
@@ -337,8 +337,8 @@
 
 
                 $scope.maxDate = new Date();
-                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
-                $scope.format = $scope.formats[0];
+//                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
+//                $scope.format = $scope.formats[0];
 
             }])
     ;
