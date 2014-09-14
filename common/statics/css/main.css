@@ -269,11 +269,14 @@ commonform {
     content: ""
 }
 
+.aside {
+    max-width:30%;
+}
 .workflowProcessList .tree-item {
-    min-height:50px;
+    height:auto;
 }
 .workflowProcessList.tree {
-    overflow:hidden;
+    /*overflow:hidden;*/
 }
 
 .selectize-control {

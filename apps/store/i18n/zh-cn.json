@@ -78,6 +78,9 @@
             "needStockout": "待处理出库单",
             "needStockin" : "待处理入库单"
         },
+        "messages": {
+            "all_have_outed_stock": "所有产品均已出库"
+        },
         "stock": "仓库",
         "outStockTime": "出库时间",
         "stock_manager": "库管员",

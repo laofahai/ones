@@ -229,6 +229,7 @@ class Workflow {
      * @todo 判断当前流程状态是否可以执行node_id动作
      */
     public function getCurrentNode ($mainrow_id,$node_id="",$ignoreCheck=false) {
+
         if($node_id) {
             $node = $this->nodeModel->find($node_id);
             //当前节点上文
@@ -237,6 +238,7 @@ class Workflow {
                 "mainrow_id"  => $mainrow_id
             );
             $currentProcess = $this->processModel->where($map)->order("start_time DESC")->find();
+        //没有node_id参数时，尝试自动判断下一个节点
         } else {
             $map = array(
                 "workflow_id" => $this->currentWorkflow["id"],
@@ -314,20 +316,22 @@ class Workflow {
      * @todo 判断当前流程是否已执行，防止出现多人多次执行 【驳回怎么办？ context】 
      * 判断依据：1、next->current.listorder==0，说明为新建 存在process即返回
      * 2、 最新进程listorder >= 需执行进程listorder 初步认定为已执行过，判断上一条listorder
-     *    如果上一条listorder > 当前listorder 认定为驳回 重新处理，否则为已处理过
      * 3、 如果是自动执行，则不检查 $auto 参数
+     * 4、另加入判断如果当前需执行节点虽然执行过，但是也属于当前需执行节点的下一节点，同样可以执行
      *        
      */
     public function doNext($mainRowid, $nodeId="", $ignoreCheck=false, $auto=true) {
-        
-        $next = $this->getCurrentNode($mainRowid, $nodeId, $ignoreCheck);
+
+        $nextNodeObj = $this->getCurrentNode($mainRowid, $nodeId, $ignoreCheck);
         
 //        var_dump($next) ;
 //        if($this->workflowAlias == "order"){
 //            var_dump($next);exit;
 //        }
+
+//        var_dump($next);exit;
         
-        if(!$next) {
+        if(!$nextNodeObj) {
             return false; //@todo
         }
         
@@ -335,35 +339,52 @@ class Workflow {
             "workflow_id" => $this->currentWorkflow["id"],
             "mainrow_id" => $mainRowid
         );
-//        var_dump($auto);
-//        var_dump($ignoreCheck);exit;
         $hasProcessed = false;
         if(false === $auto) {
-            if(0 == $next->currentNode["listorder"]) {
+            //当前为第一个节点
+            if(0 == $nextNodeObj->currentNode["listorder"]) {
                 $hasProcessed = $this->processModel->where($map)->find();
             } else {
+                //最后一条执行的进程
                 $tmp = $this->processModel->where($map)->order("id DESC")->find();
-                $node = $this->nodeModel->find($tmp["node_id"]);
-                if($node["listorder"] >= $next->currentNode["listorder"]) {
-                    $map["id"] = array("LT", $tmp["id"]);
-                    $prevProcess = $this->processModel->where($map)->order("id DESC")->find();
-                    $prevNode = $this->nodeModel->find($prevProcess["node_id"]);
-//                    print_r($prevNode);
-//                    print_r($next->currentNode);
-                    if($prevNode and $prevNode["listorder"] > $next->currentNode["listorder"]) {
-                        $hasProcessed = false;
-                    } else {
+                //最后一次执行的节点
+                $lastNode = $this->nodeModel->find($tmp["node_id"]); //最后已执行节点
+
+                //process表存在当前节点数据，初步判定已执行过，尝试判断最后一个执行节点的下一节点是否包含当前需执行节点
+                //或者判断当前需执行节点的上一节点是否包含最后一个已执行节点
+                if($lastNode["listorder"] >= $nextNodeObj->currentNode["listorder"]) {
+
+                    $theNextNodes = explode(",", $lastNode["next_node_id"]);
+                    if(!in_array($lastNode["id"], $theNextNodes)){
                         $hasProcessed = true;
+                    } else {
+                        $hasProcessed = false;
                     }
+
+//                    $map["id"] = array("LT", $tmp["id"]);
+//                    $prevProcess = $this->processModel->where($map)->order("id DESC")->find();
+//                    $prevNode = $this->nodeModel->find($prevProcess["node_id"]);
+//
+//                    if($prevNode and $prevNode["listorder"] > $nextNodeObj->currentNode["listorder"]) {
+//                        $hasProcessed = false;
+//                    } else {
+//
+//                        $thisNodeNextNodes = explode(",", $lastNode["next_node_id"]);
+//                        if(in_array($lastNode, $thisNodeNextNodes)) {
+//
+//                        }
+//
+//                        $hasProcessed = true;
+//                    }
                 }
             }
         }
         
         if($hasProcessed) {
-            $next->error("has_processed");
+            $nextNodeObj->error("has_processed");
         }
         
-        if(!$this->checkCondition($mainRowid, $next->currentNode)) {
+        if(!$this->checkCondition($mainRowid, $nextNodeObj->currentNode)) {
             return false;
         }
         
@@ -371,13 +392,14 @@ class Workflow {
 //        exit;
         
 //        echo $nodeId;
-        $rs = $next->run();
+        $rs = $nextNodeObj->run();
         
 //        var_dump($next);
-        $context = $next->context ? $next->context : $this->context;
+        $context = $nextNodeObj->context ? $nextNodeObj->context : $this->context;
 //        var_dump($rs);exit;
+        //执行结果返回为true或者其他任意非 == false 值均认为已成功执行；
         if(true === $rs or !$rs) {
-            $this->afterRun($mainRowid, $next->currentNode["id"], $context, $next);
+            $this->afterRun($mainRowid, $nextNodeObj->currentNode["id"], $context, $nextNodeObj);
         }
         return $rs;
     }

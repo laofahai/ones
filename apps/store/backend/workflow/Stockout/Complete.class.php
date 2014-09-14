@@ -13,15 +13,18 @@
 class StockoutComplete extends WorkflowAbstract {
     
     public function run() {
-        $sourceNode = $this->getNodeByAlias($this->context["sourceModel"], "Complete");
+
         $model = D("Stockout");
         
         $theStockout = $model->find($this->mainrowId);
         
         $model->where("id=".$this->mainrowId)->save(array("status"=>2));
-        
-        $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
-        $rs = $workflow->doNext($theStockout["source_id"], $sourceNode["id"], true);
+
+        if($this->context["sourceModel"]) {
+            $sourceNode = $this->getNodeByAlias($this->context["sourceModel"], "Complete");
+            $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
+            $rs = $workflow->doNext($theStockout["source_id"], $sourceNode["id"], true);
+        }
     }
     
 }

@@ -37,12 +37,11 @@ class StockoutViewModel extends CommonViewModel {
         if($data["source_model"]) {
             $sourceModel = D($data["source_model"]."View");
             $data["source"] = $sourceModel->find($data["source_id"]);
-            $detailModel = D("StockoutDetailView");
-            $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
         }
-//        print_r($data);exit;
-//        echo $detailModel->getLastSql();exit;
-        
+
+        $detailModel = D("StockoutDetailView");
+        $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
+
         /**
          * 每列信息处理
          */
@@ -56,9 +55,11 @@ class StockoutViewModel extends CommonViewModel {
             $v["stock_label"] = $v["stock_name"];
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+            $v["num"] = $v["num"] - $v["outed"];
             $data["rows"][$k] = $v;
             $fca[] = $v["factory_code_all"];
         }
+
 
         $params = array(
             $data["rows"], $modelIds

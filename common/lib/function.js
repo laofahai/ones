@@ -248,6 +248,10 @@ var getDataApiPromise = function(dataSource, method, params) {
     return promise;
 };
 
+var nl2br = function(str) {
+    return str.replace(/\n/ig, "<br />");
+};
+
 //过滤数据对象/数组，仅保留需包含的字段
 var filterDataFields = function(data, fields) {
     fields = angular.isArray(fields) ? fields : ["id", "name", "alias"];

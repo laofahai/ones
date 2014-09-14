@@ -15,61 +15,90 @@ class StockoutConfirmStockout extends WorkflowAbstract {
     /**
      * 1、修改库存数量  判断库存数量
      * 2、修改出库单状态
+     * 3、判断是否已完全出库
+     *
+     * 在显示确认出库页面时获取的数据已经减去了已出库的数量
+     * 所以仅需按照提交的表单进行处理即可。
+     *
+     * 三种情况：足额出库
+     *          超额出库
+     *          未完全出库
      */
     public function run() {
+
+        //判定是否已完全出库
+        $stockout = D("Stockout");
+        $theStockout = $stockout->find($this->mainrowId);
+
         if(!$_REQUEST["donext"]) {
-            $data = array(
-                "type" => "redirect",
-                "location" => sprintf("/doWorkflow/Stockout/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
-            );
+            if($theStockout["outed_num"] >= $theStockout["total_num"]) {
+                $data = array(
+                    "type" => "message",
+                    "error"=> "true",
+                    "msg"  => "all_have_outed_stock"
+                );
+            } else {
+                $data = array(
+                    "type" => "redirect",
+                    "location" => sprintf("/doWorkflow/Stockout/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
+                );
+            }
+
             $this->response($data);
         }
-//        echo 123;exit;
-        //减少库存
+
         $data = $_POST["data"];
-        $stockout = D("Stockout");
-        $detailModel = D("StockoutDetailView");
+
         $dm = D("StockoutDetail");
-        
-//        print_r($details);exit;
+
         $stockout->startTrans();
-        
-        //更新出库单信息
-        $theStockout = $stockout->where("id=".$this->mainrowId)->find();
-        $stockout->where("id=".$this->mainrowId)->save(array(
-            "memo"   => $data["memo"],
-            "status" => 1,
-            "outtime" => CTS,
-            "stock_manager" => getCurrentUid()
-        ));
-        //获取当前需要的库存数量
-        //减少库存
+
+        $totalOuted = 0;
         $storeProduct = D("StockProductList");
-        $success = true;
-//        print_r($data["rows"]);exit;
+
+        $dataModel = D("DataModel")->getByAlias("product");
+        $tmp = D("DataModelFields")->where("model_id=".$dataModel["id"])->select();
+        $dataModelFields = array();
+
+        foreach($tmp as $field) {
+            $dataModelFields[] = $field["field_name"];
+        }
+
+        $logs = array();
         foreach($data["rows"] as $k=>$v) {
-            if(!$v) {
+            if(!$v or !$v["id"]) {
                 continue;
             }
+
+            //未选择出库仓库
             if(!$v["stock"]) {
                 $stockout->rollback();
-                $this->error("请选择出库仓库");
+                $this->error("select_stock");
+                return "error";
             }
-            $dm->where("id=".$v["id"])->save(array(
-                "stock_id" => $v["stock"],
-//                "memo"     => $v["memo"],
-                "num"      => $v["num"]
-            ));
+
+            //本次出库总数量
+            $totalOuted += $v["num"];
+
+            //更新本行出库数量
+            $dm->where("id=".$v["id"])->setInc("outed", $v["num"]);
+
+            //出库日志(工作流MEMO)
+            //dataModel
+            $modelData = "";
+            foreach($dataModelFields as $f) {
+                $modelData.="/".$v[$f."_label"];
+            }
+            $tmp = sprintf("%s%s: %s (%s)", $v["goods_name"], $modelData, $v["num"], $v["stock_label"]);
+            array_push($logs, $tmp);
+
+            //减少库存
             $storeProduct->where(array(
                 "factory_code_all" => $v["factory_code_all"],
                 "stock_id" => $v["stock"]
             ))->setDec("num", $v["num"]);
-//            echo $storeProduct->getLastSql();exit;
         }
-//        if(!$success) {
-//            $this->error(sprintf("%s %s %s", $nfFca, $nfName, L("store_num_not_full")));
-//        }
-        
+
         //不允许负数库存存在, 库存自动清零
         //@todo 判断库存数量
         if(!DBC("allow_negative_store")) {
@@ -77,16 +106,29 @@ class StockoutConfirmStockout extends WorkflowAbstract {
                 "num" => 0
             ));
         }
+
+//        echo $totalOuted;exit;
+
+        //更新出库单信息
+        $theStockout = $stockout->find($this->mainrowId);
+        if($theStockout["status"] == 1) {
+            $stockout->where("id=".$this->mainrowId)->setInc("outed_num", $totalOuted);
+        } else {
+            //第一次出库
+            $stockout->where("id=".$this->mainrowId)->save(array(
+                "memo"   => $data["memo"],
+                "status" => 1,
+                "outtime" => CTS,
+                "outed_num"   => $totalOuted,
+                "stock_manager" => getCurrentUid()
+            ));
+        }
+
+        //本次出库日志
+        $this->context['memo'] = implode("\n", $logs);
+
+
         $stockout->commit();
-        //自动执行外部下一工作流程，查看订单状态
-//        import("@.Workflow.Workflow");
-//        if($this->context["sourceWorkflow"]) {
-//            $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
-//    //        var_dump($workflow);exit;
-//            $workflow->doNext($theStockout["source_id"], "", true);
-//        }
-        
-        
     }
     
 }

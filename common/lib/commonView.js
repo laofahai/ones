@@ -988,7 +988,7 @@
                                                     return;
                                                     break;
                                                 case "message":
-                                                    service.alert(data.msg, data.error ? "danger" : "warning");
+                                                    service.alert(service.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
                                                     return;
                                                     break;
                                             }

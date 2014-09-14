@@ -243,7 +243,7 @@
                         "fields/select": '<select %(attr)s '+
                             'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
                             'search_contains="true" disable_search_threshold="10"'+
-                            '></select>',
+                            '><option></option></select>',
                         'fields/static': '<span ng-bind="%s"></span>',
                         'fields/email': '<input type="email" %s />',
                         'fields/textarea': '<textarea %s>%s</textarea>',

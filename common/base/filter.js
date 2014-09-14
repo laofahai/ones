@@ -134,6 +134,11 @@
                 return new Date(timestamp);
             };
         }])
+        .filter("nl2br", [function(){
+            return function(str){
+                return nl2br(str);
+            };
+        }])
 
     ;
 
