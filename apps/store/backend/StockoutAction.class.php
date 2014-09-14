@@ -11,7 +11,7 @@
  *
  * @author nemo
  */
-class StockoutAction extends CommonAction {
+class StockoutAction extends CommonBillAction {
     
     protected $workflowAlias = "stockout";
     
@@ -33,27 +33,54 @@ class StockoutAction extends CommonAction {
     
     public function read() {
         if($_GET["workflow"]) {
-            parent::read();
+            $data = parent::read(true);
+            $data["dateline"]*=1000;
+            $this->response($data);
             return;
         }
         $model = D("StockoutView");
         if(false === strpos($_GET["id"], ",")) {
             $data = $model->getStockoutBill($_GET["id"]);
+            $data["dateline"]*=1000;
         } else {
             //多条数据
             $data["datas"] = $model->getStockoutBillsByIds(explode(",", $_GET["id"]));
+            foreach($data["datas"] as $k=>$v) {
+                $data["datas"][$k]["dateline"] *= 1000;
+            }
         }
 //        print_r($data);exit;
         $this->response($data);
-        exit;
-        $data = parent::read(true);
+//        exit;
+//        $data = parent::read(true);
         /**
          * 工作流执行中
          */
 //        print_r($data);
 //        
 //        exit;
-        $this->response($data);
+//        $this->response($data);
     }
+
+//    public function insert() {
+//        if($_REQUEST["workflow"]) {
+//            return parent::doWorkflow();
+//        }
+//        $model = D("Stockout");
+//        if(!$model->newBill($_POST)) {
+//            $this->error($model->getError());
+//        }
+////        print_r($data);exit;
+//    }
+//
+//    public function update() {
+//        if($_REQUEST["workflow"]) {
+//            return parent::doWorkflow();
+//        }
+//        $model = D("Stockout");
+//        if($model->editBill($_POST)) {
+//            $this->error($model->getError());
+//        }
+//    }
     
 }

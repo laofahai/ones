@@ -82,6 +82,121 @@ class StockoutModel extends CommonModel {
         
         return $stockoutId;
     }
+
+    public function formatData($postData) {
+        if(!$postData["id"]) {
+            $data["bill_id"] = makeBillCode("CK");
+            $data["source_id"] = "";
+            $data["source_model"] = "";
+            $data["dateline"] = strtotime($postData['dateline']);
+            $data["stock_manager"] = getCurrentUid();
+            $data["status"] = 0;
+        } else {
+            $data["id"] = $postData["id"];
+        }
+
+        $data["total_num"] = $postData["total_num"];
+        $data["memo"] = $postData["memo"];
+
+        $rows = array();
+
+        $needed = array(
+            "goods_id", "num"
+        );
+        foreach($postData["rows"] as $row) {
+            list($fc,$goods_id) = explode("_", $row["goods_id"]);
+            if(!checkParamsFull($row, $needed)) {
+                continue;
+            }
+            $rows[] = array(
+                "id" => $row["id"] ? $row["id"] : 0,
+                "stockout_id" => $row["stockout_id"],
+                "factory_code_all" => makeFactoryCode($row, $fc),
+                "goods_id" => $goods_id,
+                "stock_id" => $row["stock"],
+                "num" => $row["num"],
+                "outed" => $row["outed"] ? $row["outed"] :0,
+                "memo" => $row["memo"]
+            );
+        }
+
+        $data["rows"] = $rows;
+        return $data;
+
+    }
+
+    public function newBill($data) {
+        $data = $this->formatData($data);
+
+        $rows = $data["rows"];
+
+        if(!$rows) {
+            return false;
+        }
+        unset($data["rows"]);
+
+        $this->startTrans();
+
+        $stockOutId = $this->add($data);
+
+        if(!$stockOutId) {
+            $this->rollback();
+            Log::write($this->getLastSql(), Log::SQL);
+            return false;
+        }
+
+        $detailModel = D("StockoutDetail");
+        foreach($rows as $row) {
+            $row["stockout_id"] = $stockOutId;
+            if(!$detailModel->add($row)) {
+                $this->rollback();
+                Log::write($this->getLastSql(), Log::SQL);
+                return false;
+            }
+        }
+
+        $this->commit();
+
+        import("@.Workflow.Workflow");
+        $workflow = new Workflow($this->workflowAlias);
+        $node = $workflow->doNext($stockOutId, "", true);
+        return $stockOutId;
+
+    }
+
+    public function editBill($data) {
+        $bill = $this->formatData($data);
+//        print_r($bill);exit;
+        $rows = $bill["rows"];
+        unset($bill["rows"]);
+
+//        print_r($rows);exit;
+
+        $this->startTrans();
+        $this->save($bill);
+
+        $map = array(
+            "stockout_id"=>$bill["id"]
+        );
+        $detailModel = D("StockoutDetail");
+        $this->removeDeletedRows($rows, $map, $detailModel);
+
+        foreach($rows as $row) {
+            $method = $row["id"] ? "save" : "add";
+            if($method == "add") {
+                $row["stockout_id"] = $bill["id"];
+            }
+            if(false === $detailModel->$method($row)) {
+                $this->rollback();
+                Log::write($detailModel->getLastSql(), Log::SQL);
+                return false;
+            }
+        }
+
+        $this->commit();
+        return $bill["id"];
+
+    }
     
 }
 

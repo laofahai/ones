@@ -33,11 +33,14 @@ class StockoutViewModel extends CommonViewModel {
     public function getStockoutBill($id) {
        
         $data = $this->find($id);
-        
-        $sourceModel = D($data["source_model"]."View");
-        $data["source"] = $sourceModel->find($data["source_id"]);
-        $detailModel = D("StockoutDetailView");
-        $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
+
+        if($data["source_model"]) {
+            $sourceModel = D($data["source_model"]."View");
+            $data["source"] = $sourceModel->find($data["source_id"]);
+            $detailModel = D("StockoutDetailView");
+            $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
+        }
+//        print_r($data);exit;
 //        echo $detailModel->getLastSql();exit;
         
         /**

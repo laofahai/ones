@@ -56,20 +56,20 @@
                 //入库
                 .when('/store/addBill/stockin', {
                     templateUrl: appView("stockin/edit.html", "store"),
-                    controller: 'JXCStockinEditCtl'
+                    controller: 'StockinEditCtl'
                 })
                 .when('/store/editBill/stockin/id/:id', {
                     templateUrl: appView("stockin/edit.html", "store"),
-                    controller: 'JXCStockinEditCtl'
+                    controller: 'StockinEditCtl'
                 })
                 //出库
                 .when('/store/addBill/stockout', {
                     templateUrl: appView("stockout/edit.html", "store"),
-                    controller: 'JXCStockoutEditCtl'
+                    controller: 'StockoutEditCtl'
                 })
                 .when('/store/editBill/stockout/id/:id', {
                     templateUrl: appView("stockout/edit.html", "store"),
-                    controller: 'JXCStockoutEditCtl'
+                    controller: 'StockoutEditCtl'
                 })
                 //库存列表
                 .when('/store/export/stockProductList', {
@@ -431,53 +431,6 @@
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
-//                    var fields = {
-//                        id : {
-//                            primary: true,
-//                            billAble: false
-//                        },
-//                        factory_code_all: {
-//                            editAble: false
-//                        },
-//                        goods_id: {
-//                            displayName: i18n.goods,
-//                            labelField: true,
-//                            inputType: "select3",
-//                            dataSource: "GoodsRes",
-//                            valueField: "combineId",
-//                            nameField: "combineLabel",
-//                            listAble: false,
-//                            width: 300
-//                        },
-//                        stock: {
-//                            editAbleRequire: ["goods_id"],
-//                            inputType: "select3",
-//                            dataSource: "Store.StockAPI",
-//                            autoQuery:true,
-//                            alwaysQueryAll: true
-////                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
-//                        },
-//                        store_num: {
-//                            displayName: i18n.storeNum,
-//                            editAble:false
-//                        },
-//                        num: {
-//                            inputType: "number",
-//                            totalAble: true
-//                        },
-//                        memo: {
-//                            editAble:false
-//                        }
-//
-//                    };
-//
-//                    plugin.callPlugin("bind_dataModel_to_structure", {
-//                        structure: fields,
-//                        alias: "product",
-//                        require: ["goods_id"],
-//                        queryExtra: ["goods_id"]
-//                    });
-
                     var fields = {
                         id : {
                             primary: true,
@@ -528,55 +481,41 @@
 
                 return obj;
             }])
-        .controller("StockWarningCtl", ["$scope", "StockWarningRes", "StockWarningModel", "ComView",
-            function($scope, res, model, ComView){
-                $scope.pageActions = [
-                    {
-                        label : $scope.i18n.lang.actions.export,
-                        class : "deafult",
-                        href  : "/store/export/stockProductList"
-                    }
-                ];
+
+        .controller("StockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
+            function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
+                ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinEditModel);
+
+                $scope.workflowAble = true;
                 $scope.selectAble = false;
-                ComView.displayGrid($scope, model, res);
+                $scope.showWeeks = true;
+
+                ComView.displayBill($scope, StockinEditModel, StockinRes, {
+                    id: $routeParams.id
+                });
+
+                //入库类型字段定义
+                $scope.typeSelectOpts = {
+                    context: {
+                        field: "type_id"
+                    },
+                    fieldDefine: {
+                        inputType: "select",
+                        "ng-model": "formMetaData.type_id",
+                        dataSource: "HOME.TypesAPI",
+                        queryParams: {
+                            type: "stockin"
+                        }
+                    }
+                };
+
+
+                $scope.formMetaData.inputTime = new Date();
+    //            $scope.format = $scope.formats[0];
 
             }])
-        .controller("JXCStockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
-        function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
-            ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinEditModel);
-
-            $scope.workflowAble = true;
-            $scope.selectAble = false;
-            $scope.showWeeks = true;
-
-            ComView.displayBill($scope, StockinEditModel, StockinRes, {
-                id: $routeParams.id
-            });
-
-            //入库类型字段定义
-            $scope.typeSelectOpts = {
-                context: {
-                    field: "type_id"
-                },
-                fieldDefine: {
-                    inputType: "select",
-                    "ng-model": "formMetaData.type_id",
-                    dataSource: "HOME.TypesAPI",
-                    queryParams: {
-                        type: "stockin"
-                    }
-                }
-            };
-
-
-            $scope.formMetaData = {};
-            $scope.formMetaData.inputTime = new Date();
-            $scope.maxDate = new Date();
-//            $scope.format = $scope.formats[0];
-
-        }])
-        .controller("JXCStockoutEditCtl", ["$scope", "StockoutRes", "StockoutEditModel", "ComView", "$routeParams", "$route",
-            function($scope, res, model, ComView, $routeParams, $route) {
+        .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutEditModel", "ComView", "$routeParams",
+            function($scope, res, model, ComView, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "store/stockout", [], model);
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -585,8 +524,27 @@
                     id: $routeParams.id
                 });
 
-                $scope.doSubmit = function() {};
+                //出库类型字段定义
+                $scope.typeSelectOpts = {
+                    context: {
+                        field: "type_id"
+                    },
+                    fieldDefine: {
+                        inputType: "select",
+                        "ng-model": "formMetaData.type_id",
+                        dataSource: "HOME.TypesAPI",
+                        queryParams: {
+                            type: "stockout"
+                        }
+                    }
+                };
 
+
+                if(!$routeParams.id) {
+                    $scope.formMetaData = {
+                        dateline: new Date()
+                    };
+                }
             }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "ones.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {
@@ -637,8 +595,8 @@
                         data: $scope.formMetaData
                     }).$promise.then(function(data){
 //                    console.log(data);return;
-                            $location.url("/store/list/stockout");
-                        });
+//                        $location.url("/store/list/stockout");
+                    });
                 };
             }])
         //确认入库

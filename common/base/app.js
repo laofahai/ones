@@ -69,13 +69,36 @@
                     },
 
                     'response': function(response) {
+
                         $rootScope.dataQuering = false;
+
+                        if (parseInt(response.data.error) > 0) {
+                            $rootScope.$broadcast('event:serverError', response.data.msg);
+                            return $q.reject(response);
+                        } else {
+                            return response;
+                        }
+
                         return response;
                     },
 
-                    'responseError': function(rejection) {
+                    'responseError': function(response) {
+                        var status = response.status;
+                        switch(status) {
+                            case 401:
+                                $rootScope.$broadcast('event:loginRequired', response.data);
+                                break;
+                            case 403:
+                                $rootScope.$broadcast('event:permissionDenied', response.data);
+                                break;
+                            case 500:
+                                $rootScope.$broadcast('event:serverError', response.data);
+                                break;
+                            default:
+                                break;
+                        };
                         $rootScope.dataQuering = false;
-                        return $q.reject(rejection);
+                        return $q.reject(response);
                     }
                 };
             }];
@@ -125,7 +148,7 @@
 
                 //监听全局事件
                 $scope.$on("event:loginRequired", function() {
-                    window.location.href = './';
+                    window.location.reload();
                 });
 
                 $scope.$on("event:permissionDenied", function(evt, msg) {

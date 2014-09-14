@@ -50,10 +50,7 @@
             };
         })
 
-        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", function($scope, res){
-
-
-
+        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", "$location", function($scope, res, $location){
             res.query().$promise.then(function(data){
                 $scope.items = data;
             });
@@ -120,9 +117,14 @@
                             authNode = [tmp[0],tmp[2],action].join(".").toLowerCase();
                         }
 
-                        if($scope.$parent.authedNodes.indexOf(authNode) < 0) {
-                            return;
+                        try {
+                            if($scope.$parent.authedNodes.indexOf(authNode) < 0) {
+                                return false;
+                            }
+                        } catch(e) {
+                            return false;
                         }
+
 
                         //底色
                         if(!app.btnClass){

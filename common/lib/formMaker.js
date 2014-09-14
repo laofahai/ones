@@ -1029,11 +1029,12 @@
                                 } else {
                                     queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
                                 }
-                                $injector.get("StockProductListRes").get(queryParams).$promise.then(function(data){
-                                    self.parentScope[self.opts.dataName][context.trid].store_num=data.num || 0;
-                                    //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
-                                    //                self.parentScope[self.opts.dataName][context.trid].store_num=data.num;
-                                });
+                                getDataApiPromise($injector.get("Store.StockProductListAPI"), "get", queryParams)
+                                    .then(function(data){
+                                        self.parentScope[self.opts.dataName][context.trid].store_num=data.num || 0;
+                                        //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
+                                        //                self.parentScope[self.opts.dataName][context.trid].store_num=data.num;
+                                    });
                             }, 200);
 
                         };

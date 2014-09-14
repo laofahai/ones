@@ -5,20 +5,20 @@
                 //订单
                 .when('/sale/addBill/orders', {
                     templateUrl: appView('orders/edit.html', "sale"),
-                    controller: 'JXCOrdersEditCtl'
+                    controller: 'OrdersEditCtl'
                 })
                 .when('/sale/editBill/orders/id/:id', {
                     templateUrl: appView('orders/edit.html', "sale"),
-                    controller: 'JXCOrdersEditCtl'
+                    controller: 'OrdersEditCtl'
                 })
                 //订单退货
                 .when('/sale/addBill/returns', {
                     templateUrl: appView('returns/edit.html', "sale"),
-                    controller: 'JXCReturnsEditCtl'
+                    controller: 'ReturnsEditCtl'
                 })
                 .when('/sale/editBill/returns/id/:id', {
                     templateUrl: appView('returns/edit.html', "sale"),
-                    controller: 'JXCReturnsEditCtl'
+                    controller: 'ReturnsEditCtl'
                 })
             ;
         }])
@@ -219,7 +219,7 @@
                 return obj;
             }])
 
-        .controller("JXCOrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+        .controller("OrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "sale/orders");
 
@@ -291,7 +291,7 @@
 //                $scope.format = $scope.formats[0];
 
             }])
-        .controller("JXCReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+        .controller("ReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "sale/returns", [], ReturnsEditModel);
 

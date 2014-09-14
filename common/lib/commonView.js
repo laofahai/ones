@@ -435,7 +435,7 @@
                                 resource.api.update(getParams, $scope[opts.dataName], callback);
 //                                resource.update(getParams, $scope[opts.dataName], callback);
                             }
-                            return promise;
+//                            return promise;
 //                            getDataApiPromise(resource, "update", getParams).then(callback);
 //                            if(typeof(resource.update) == "undefined") {
 //                                resource.api.update(getParams, $scope[opts.dataName], callback);
@@ -854,7 +854,7 @@
 
 
                         var lastPage = ones.caches.getItem("lastPage");
-
+                        return;
                         $location.url(lastPage[0] || opts.returnPage);
                     };
                 };

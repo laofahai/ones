@@ -94,7 +94,8 @@
         },
 
         "types" : {
-            "stockin" : "入库类型"
+            "stockin" : "入库类型",
+            "stockout": "出库类型"
         },
 
         "store.stock": "%s仓库",
