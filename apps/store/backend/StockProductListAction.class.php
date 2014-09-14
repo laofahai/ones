@@ -28,14 +28,32 @@ class StockProductListAction extends CommonAction {
         "store_max" => "库存上限"
     );
     
-//    public function read() {
-//        $map = array();
-//        $this->_filter($map);
-//        $model = D("StockProductListView");
-//        $data = $model->where($map)->find();
-//        print_r($data);exit;
-//        $this->response();
-//    }
+    public function read() {
+
+        if(is_numeric($_GET["id"]) && intval($_GET["id"]) === 0) {
+            $map = array();
+            $this->_filter($map);
+
+            list($factoryCode, ) = explode("_", $_GET["goods_id"]);
+            $fca = makeFactoryCode($_GET, $factoryCode);
+
+            $map["factory_code_all"] = $fca;
+
+//            print_r($fca);exit;
+
+            $model = D("StockProductList");
+            $data = $model->where($map)->find();
+//            echo $model->getLastSql();exit;
+//            print_r($map);exit;
+            $this->response(array(
+                "num" => $data["num"]
+            ));
+        } else {
+            return parent::read();
+        }
+
+
+    }
     
     protected function _filter(&$map) {
         if($_GET["stock_id"]) {

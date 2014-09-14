@@ -105,6 +105,9 @@
         "store.stockin": "%s入库单",
         "store.stockout": "%s出库单",
         "store.stockwarning.read": "库存警告",
-        "store.stockproductlist": "%s库存清单"
+        "store.stockproductlist": "%s库存清单",
+
+        "outed": "已出库",
+        "outed_num": "已出库数量"
     }
 }

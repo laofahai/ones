@@ -55,6 +55,7 @@ class StockoutViewModel extends CommonViewModel {
             $v["stock_label"] = $v["stock_name"];
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+            $v["total_num"] = $v["num"];
             $v["num"] = $v["num"] - $v["outed"];
             $data["rows"][$k] = $v;
             $fca[] = $v["factory_code_all"];

@@ -27,7 +27,6 @@ class StockProductListViewModel extends ViewModel {
     /**
      * @override
      *
-     * factory_code_all : 商品编码+规格ID+型号ID
      */
     public function select($options=array()) {
         $data = parent::select($options);
@@ -49,29 +48,6 @@ class StockProductListViewModel extends ViewModel {
 
 
         $data = $params[0];
-
-//        print_r($params);exit;
-
-//        $dmd = D("DataModelDataView");
-//        $map = array(
-//            "model_id" => array("IN", implode(',', $modelIds))
-//        );
-//        $tmp = $dmd->where($map)->select();
-//
-//        foreach($params[0] as $k=>$v) {
-//            $dataView[$v["id"]] = $v;
-//        }
-//
-//        foreach($data as $k=>$v) {
-//            foreach($v["goodsCode"] as $i=> $gc) {
-//                if($i==0) {
-//                    continue;
-//                }
-//                $data[$k][$dataView[$gc]["field_name"]] = $dataView[$gc]["data"];
-//            }
-//        }
-        
-//        print_r($data);exit;
         return $data;
         
         

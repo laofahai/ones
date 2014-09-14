@@ -14,5 +14,14 @@
 class DataModelFieldsModel extends CommonModel {
     
     protected $readonlyField = array("model_id");
+
+    public function getFieldsByAlias($alias) {
+        $dataModel = D("DataModel")->getByAlias($alias);
+        if(!$dataModel) {
+            return array();
+        }
+
+        return $this->where("model_id=".$dataModel["id"])->select();
+    }
     
 }

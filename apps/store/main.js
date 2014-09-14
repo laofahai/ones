@@ -460,9 +460,17 @@
                             editAble:false,
                             min: -9999
                         },
+                        total_num: {
+                            inputType: "static",
+                            onlyInEdit: true
+                        },
                         num: {
                             inputType: "number",
                             totalAble: true
+                        },
+                        outed: {
+                            inputType: "static",
+                            onlyInEdit: true
                         },
                         memo: {}
 

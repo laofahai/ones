@@ -710,14 +710,22 @@
                     },
                     makeHead: function(fieldsDefine){
                         var html = [];
+                        var self = this;
                         angular.forEach(fieldsDefine, function(item){
-                            if(item.billAble !== false) {
-                                var attr = [];
-                                if(item && "width" in item) {
-                                    attr.push('width="'+item.width+'"');
-                                }
-                                html.push(sprintf('<th %s>%s</th>', attr.join(""), item.displayName));
+                            if(false === item.billAble) {
+                                return;
                             }
+                            if(self.opts.isEdit && true === item.onlyInAdd) {
+                                return;
+                            }
+                            if(!self.opts.isEdit && true === item.onlyInEdit) {
+                                return;
+                            }
+                            var attr = [];
+                            if(item && "width" in item) {
+                                attr.push('width="'+item.width+'"');
+                            }
+                            html.push(sprintf('<th %s>%s</th>', attr.join(""), item.displayName));
                         });
                         return html.join("");
                     },
@@ -755,18 +763,26 @@
                     makeFoot: function(fieldsDefine){
                         var html = ['<td colspan="2" align="center">'+this.scope.$parent.i18n.lang.total+'</td>'];
                         var hasTotalAble = false;
+                        var self = this;
                         angular.forEach(fieldsDefine, function(item, field){
-                            if(item.billAble !== false) {
-                                if(item.totalAble) {
-                                    hasTotalAble = true;
-                                    html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s" title="{{%(dataBind)s}}">0</td>',
-                                        {
-                                            field: field,
-                                            dataBind: item.cellFilter ? "formMetaData.total_"+field + "|"+item.cellFilter : "formMetaData.total_"+field
-                                        }));
-                                } else {
-                                    html.push("<td></td>");
-                                }
+                            if(false === item.billAble) {
+                                return;
+                            }
+                            if(self.opts.isEdit && true === item.onlyInAdd) {
+                                return;
+                            }
+                            if(!self.opts.isEdit && true === item.onlyInEdit) {
+                                return;
+                            }
+                            if(item.totalAble) {
+                                hasTotalAble = true;
+                                html.push(sprintf('<td class="tdTotalAble" tdname="%(field)s" id="tdTotalAble%(field)s" ng-bind="%(dataBind)s" title="{{%(dataBind)s}}">0</td>',
+                                    {
+                                        field: field,
+                                        dataBind: item.cellFilter ? "formMetaData.total_"+field + "|"+item.cellFilter : "formMetaData.total_"+field
+                                    }));
+                            } else {
+                                html.push("<td></td>");
                             }
                         });
                         if(hasTotalAble) {
@@ -786,34 +802,42 @@
                         var labelBind;
 
                         angular.forEach(fieldsDefine, function(item, field){
-                            if(item.billAble!==false) {
-                                if(defaultData.length) {
-                                    var curRowData = self.scope.$parent[self.opts.dataName][i];
-                                    //判断返回数据中是否有_label显示的字段
-                                    if(item.field+"_label" in curRowData) {
-                                        curRowData[item.field+"_label"] = defaultData[i][item.field+"_label"];
-                                        labelBind = sprintf('%s[%d].%s_label', self.opts.dataName, i, field);
-                                    } else {
-                                        labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, field);
-                                    }
-                                } else {
-                                    labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, item.labelField ? field+"_label" : field);
-                                }
-                                //过滤器
-                                if(item.cellFilter) {
-                                    labelBind = sprintf("%s|%s", labelBind, item.cellFilter);
-                                }
-
-                                item.inputType = item.inputType ? item.inputType : "text";
-                                html.push(sprintf(self.templates['bills/fields/td.html'], {
-                                    field: field,
-                                    type: item.inputType,
-                                    tdClass: false !== item.editAble ? "tdEditAble" : "",
-                                    event: false !== item.editAble ? 'ng-click="billFieldEdit($event.target)"' : "",
-                                    label: label,
-                                    bind: labelBind
-                                }));
+                            if(false === item.billAble) {
+                                return;
                             }
+                            if(self.opts.isEdit && true === item.onlyInAdd) {
+                                return;
+                            }
+                            if(!self.opts.isEdit && true === item.onlyInEdit) {
+                                return;
+                            }
+
+                            if(defaultData.length) {
+                                var curRowData = self.scope.$parent[self.opts.dataName][i];
+                                //判断返回数据中是否有_label显示的字段
+                                if(item.field+"_label" in curRowData) {
+                                    curRowData[item.field+"_label"] = defaultData[i][item.field+"_label"];
+                                    labelBind = sprintf('%s[%d].%s_label', self.opts.dataName, i, field);
+                                } else {
+                                    labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, field);
+                                }
+                            } else {
+                                labelBind = sprintf('%s[%d].%s', self.opts.dataName, i, item.labelField ? field+"_label" : field);
+                            }
+                            //过滤器
+                            if(item.cellFilter) {
+                                labelBind = sprintf("%s|%s", labelBind, item.cellFilter);
+                            }
+
+                            item.inputType = item.inputType ? item.inputType : "text";
+                            html.push(sprintf(self.templates['bills/fields/td.html'], {
+                                field: field,
+                                type: item.inputType,
+                                tdClass: false !== item.editAble ? "tdEditAble" : "",
+                                event: false !== item.editAble ? 'ng-click="billFieldEdit($event.target)"' : "",
+                                label: label,
+                                bind: labelBind
+                            }));
                         });
 
                         this.maxTrId = i;
@@ -1024,11 +1048,13 @@
                                     id: 0,
                                     stock_id: tmp.stock
                                 };
-                                if(tmp.factory_code_all) {
-                                    queryParams.factory_code_all = tmp.factory_code_all;
-                                } else {
-                                    queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
-                                }
+                                queryParams = $.extend(tmp, queryParams);
+//                                console.log(queryParams);
+//                                if(tmp.factory_code_all) {
+//                                    queryParams.factory_code_all = tmp.factory_code_all;
+//                                } else {
+//                                    queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
+//                                }
                                 getDataApiPromise($injector.get("Store.StockProductListAPI"), "get", queryParams)
                                     .then(function(data){
                                         self.parentScope[self.opts.dataName][context.trid].store_num=data.num || 0;
