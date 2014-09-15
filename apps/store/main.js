@@ -3,7 +3,7 @@
     //桌面图标
     ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer, $scope) {
         var ComView = injector.get("ComView");
-        var stockInRes = injector.get("StockinRes");
+
 
         ones.pluginScope.append("dashboardAppBtns", {
             label: ComView.toLang("stockout"),
@@ -21,7 +21,16 @@
             sort: 4
         });
 
+        ones.pluginScope.append("dashboardAppBtns", {
+            label: ComView.toLang("stock_warning"),
+            name: "stockWarningList",
+            icon: "warning",
+            link: "store/list/stockWarning",
+            sort: 3
+        });
+
         //未处理入库单
+        var stockInRes = injector.get("StockinRes");
         stockInRes.query({
             unhandled: true,
             onlyCount: true
@@ -33,9 +42,8 @@
             ones.pluginScope.get("dashboardSetBtnTip")("stockinList", count);
         });
 
-        var stockOutRes = injector.get("StockoutRes");
-
         //未处理出库单
+        var stockOutRes = injector.get("StockoutRes");
         stockOutRes.query({
             unhandled: true,
             onlyCount: true
@@ -45,6 +53,19 @@
                 return;
             }
             ones.pluginScope.get("dashboardSetBtnTip")("stockoutList", count);
+        });
+
+        //库存警告
+        var stockWarningAPI = injector.get("Store.StockWarningAPI");
+        stockWarningAPI.api.query({
+            unhandled: true,
+            onlyCount: true
+        }).$promise.then(function(data){
+            var count = parseInt(data[0].count);
+            if(count <= 0) {
+                return;
+            }
+            ones.pluginScope.get("dashboardSetBtnTip")("stockWarningList", count);
         });
 
         ones.pluginScope.set("defer", defer);
@@ -353,6 +374,10 @@
                 return obj;
             }])
         .service("Store.StockWarningAPI", ["$rootScope", "pluginExecutor", "ones.dataApiFactory", function($rootScope, plugin, dataAPI){
+            this.config = {
+                editAble: false,
+                deleteAble: false
+            };
             this.api = dataAPI.getResourceInstance({
                 uri: "store/stockWarning",
                 extraMethod: {}

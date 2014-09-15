@@ -80,6 +80,13 @@ class OrdersAction extends CommonAction {
     
     public function update() {
         $model = D("Orders");
+        $theOrder = $model->find($_GET["id"]);
+
+        if($theOrder["status"] >= 1) {
+            $this->error("in_workflow");
+            return false;
+        }
+
         $data = $model->formatData($_POST);
         $orderId = $model->newOrder($data);
     }

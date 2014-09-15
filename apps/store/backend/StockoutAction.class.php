@@ -16,6 +16,9 @@ class StockoutAction extends CommonBillAction {
     protected $workflowAlias = "stockout";
     
     protected $indexModel = "StockoutView";
+
+    //被保护状态  不能再修改
+    protected $protectedStatus = 1;
     
     protected function _filter(&$map) {
         if(isset($_GET["unhandled"])) {
@@ -61,6 +64,8 @@ class StockoutAction extends CommonBillAction {
 //        exit;
 //        $this->response($data);
     }
+
+
 
 //    public function insert() {
 //        if($_REQUEST["workflow"]) {

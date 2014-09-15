@@ -19,8 +19,19 @@ class StockWarningAction extends CommonAction {
             "_string" => "(store_min>0 and num<=store_min) or (store_max>0 and num>=store_max)"
         );
         $data = $model->where($map)->select();
+
+        if($_GET["onlyCount"]) {
+            $this->response(array(
+                array(
+                    "count" => count($data)
+                )
+            ));
+        } else {
+            $this->response($data);
+        }
+
 //        print_r($data);
-        $this->response($data);
+
     }
     
 }

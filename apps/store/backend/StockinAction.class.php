@@ -72,6 +72,7 @@ class StockinAction extends CommonAction {
         $data = $model->find($id);
         if($data["status"] > 0) {
             $this->error("in_workflow");
+            return false;
         }
         
         list($bill, $rows) = $model->formatData($_POST);

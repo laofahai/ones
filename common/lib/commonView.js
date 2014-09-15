@@ -528,34 +528,38 @@
                         && "getStructure" in fieldsDefine
                         && typeof(fieldsDefine.getStructure) === "function") {
                         var model = fieldsDefine;
-                        fieldsDefine = model.getStructure(true);
-                        if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
-                            fieldsDefine.then(function(data){
-                                fieldsDefine = data;
-                                $scope.$broadcast("commonGrid.structureReady");
-                            }, function(msg){
-                                service.alert(msg);
-                            });
-                        } else {
-                            $timeout(function(){
-                                $scope.$broadcast("commonGrid.structureReady");
-                            });
-                        }
-                    } else {
-                        $timeout(function(){
-                            $scope.$broadcast("commonGrid.structureReady");
-                        });
-                    }
-
-                    $scope.$on("commonGrid.structureReady", function() {
 
                         if(model.config) {
                             opts = $.extend(opts, model.config);
+                            angular.forEach(model.config, function(item,k){
+                                model[k] = item;
+                            });
                         } else {
                             angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
                                 opts[conf] = model[conf];
                             });
                         }
+
+                        fieldsDefine = model.getStructure(true);
+                        if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
+                            fieldsDefine.then(function(data){
+                                fieldsDefine = data;
+                                $scope.$broadcast("commonGrid.structureReady", model);
+                            }, function(msg){
+                                service.alert(msg);
+                            });
+                        } else {
+                            $timeout(function(){
+                                $scope.$broadcast("commonGrid.structureReady", model);
+                            });
+                        }
+                    } else {
+                        $timeout(function(){
+                            $scope.$broadcast("commonGrid.structureReady", model);
+                        });
+                    }
+
+                    $scope.$on("commonGrid.structureReady", function(evt, model) {
 
                         opts.resource = resource;
 
@@ -804,9 +808,12 @@
                         opts = $.extend(defaultOpt, opts);
 
                         opts.fieldsDefine = fieldsDefine;
-
+                        console.log(model);
                         if(model.config) {
                             opts = $.extend(opts, model.config);
+                            angular.forEach(model.config, function(item, k){
+                                model[k] = item;
+                            });
                         } else {
                             angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
                                 opts[conf] = model[conf];
@@ -884,6 +891,10 @@
                             if(!item.id) {
                                 return;
                             }
+                            if(model.editAble === false) {
+                                return false;
+                            }
+//                            console.log(model);return;
                             var action = "edit";
                             //如果是单据形式的
                             if(model.isBill) {
@@ -1048,18 +1059,45 @@
                             action: function(evt, selected, theItem){
                                 var ids = [];
                                 var items = theItem ? [theItem] : $scope.gridSelected;
-                                angular.forEach(items, function(item){
-                                    ids.push(item.id);
-                                });
-                                if (!confirm(sprintf(service.toLang('confirm_delete'), $scope.gridSelected.length))) {
+
+                                if(model.deleteAble === false) {
                                     return false;
                                 }
-                                res.delete({id: ids.join()}, function(data) {
-                                    $scope.$broadcast("gridData.changed", true);
-                                });
 
-                                $scope.gridOptions.selectedItems = [];
-                                $scope.gridSelected = [];
+                                self.scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), items.length);
+                                self.scope.doConfirm = function(){
+                                    var api = dataAPI.getResourceInstance({
+                                        uri: $routeParams.group+"/"+$routeParams.module
+                                    });
+
+                                    angular.forEach(items, function(item){
+                                        ids.push(item.id);
+                                    });
+
+                                    api.delete({id: ids}, function() {
+                                        self.scope.$parent.$broadcast("gridData.changed", true);
+                                    });
+                                };
+
+                                var modal = $modal({
+                                    scope: self.scope,
+                                    title: toLang("confirm", "actions", $rootScope),
+                                    template: "common/base/views/confirm.html"
+                                });
+//
+//
+//                                angular.forEach(items, function(item){
+//                                    ids.push(item.id);
+//                                });
+//                                if (!confirm(sprintf(service.toLang('confirm_delete'), $scope.gridSelected.length))) {
+//                                    return false;
+//                                }
+//                                res.delete({id: ids.join()}, function(data) {
+//                                    $scope.$broadcast("gridData.changed", true);
+//                                });
+//
+//                                $scope.gridOptions.selectedItems = [];
+//                                $scope.gridSelected = [];
                             },
                             class: "danger",
                             multi: true

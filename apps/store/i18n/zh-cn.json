@@ -91,6 +91,7 @@
         "stockin": "入库",
         "stockout": "出库",
         "stockWarningOnly": "仅库存警告数据",
+        "stock_warning": "库存警告",
 
         "AppStore": {
             "appName": "仓储模块"
