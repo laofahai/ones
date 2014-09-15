@@ -81,7 +81,8 @@
         .service("OrdersEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
-                    relateMoney: true
+                    relateMoney: true,
+                    workflowAlias: "orders"
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -221,7 +222,11 @@
 
         .controller("OrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams) {
+
                 ComView.makeDefaultPageAction($scope, "sale/orders");
+
+                $routeParams.group = "sale";
+                $routeParams.module = "orders";
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -295,6 +300,9 @@
         .controller("ReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "sale/returns", [], ReturnsEditModel);
+
+                $routeParams.group = "sale";
+                $routeParams.module = "returns";
 
                 $scope.workflowAble = true;
                 if(!$scope.formMetaData) {

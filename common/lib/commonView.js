@@ -83,36 +83,29 @@
         .controller('ComViewError404Ctl', ["$scope", function($scope){
             $scope.hidePageHeader = true;
         }])
-        .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", function($scope, $injector, $routeParams) {
-            var group, module, res, model;
+        .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", "ones.dataApiFactory", "CommonPrint",
+            function($scope, $injector, $routeParams, dataAPI, print) {
+                var group, module, res, model;
 
-            group = $routeParams.group;
-            module = $routeParams.module;
+                group = $routeParams.group;
+                module = $routeParams.module;
 
-            try {
-                $injector.get(group.ucfirst()+module.ucfirst()+"API");
-            } catch(e) {}
+                dataAPI.init(group, module);
+                model = dataAPI.model;
+                res = dataAPI.resource;
 
-            res = $injector.get(module.ucfirst()+"Res");
-            model = $injector.get(module.ucfirst()+"Model");
+                $scope.selectAble = false;
+                $scope.printModule = group+"_"+module;
 
-            $scope.selectAble = false;
-            $scope.printModule = group+"_"+module;
 
-            res.get({
-                id: $routeParams.id,
-                includeRows: true //包含子行
-            }).$promise.then(function(data){
-                $scope.data = data.datas ? data : {datas: [data]};
-            });
 
-            $scope.doPrint = function(){
-                window.print();
-            };
+                $scope.doPrint = function(){
+                    window.print();
+                };
 
-            //        $scope.doPrint();
+                //        $scope.doPrint();
 
-        }])
+            }])
         .controller('ComViewGridCtl', ["$rootScope", "$scope","ComView","$routeParams", "$injector", "ComViewConfig", "$location", "ones.dataApiFactory",
             function($rootScope,$scope, ComView, $routeParams, $injector, ComViewConfig, $location, dataAPI){
                 var module,group,res,model,actions,pageActions=[];
@@ -780,7 +773,6 @@
 
                         //工作流按钮
                         if(model.workflowAlias && $routeParams.id) {
-
                             $injector.get("Workflow.WorkflowNodeAPI").api.query({
                                 workflow_alias: model.workflowAlias,
                                 mainrow_id: $routeParams.id,
@@ -789,6 +781,15 @@
                                 $scope.mainrow_id = $routeParams.id;
                                 $scope.billWorkflowActions = data;
                             });
+
+                            $scope.doWorkflow = function(event, node_id){
+                                var mainrow_id = $scope.mainrow_id;
+                                var workflowAPI = $injector.get("Workflow.WorkflowAPI");
+                                if(mainrow_id) {
+                                    workflowAPI.doWorkflow(resource, node_id, mainrow_id);
+                                }
+                            };
+
                         }
                     }
 
@@ -808,7 +809,6 @@
                         opts = $.extend(defaultOpt, opts);
 
                         opts.fieldsDefine = fieldsDefine;
-                        console.log(model);
                         if(model.config) {
                             opts = $.extend(opts, model.config);
                             angular.forEach(model.config, function(item, k){
@@ -832,6 +832,19 @@
                         $scope.billConfig = opts;
 
                         $scope.$broadcast("commonBill.ready");
+
+                        if(opts.isEdit && $routeParams.id && isAppLoaded("workflow")) {
+                            $injector.get("Workflow.WorkflowNodeAPI").api.query({
+                                workflow_alias: model.workflowAlias,
+                                mainrow_id: $routeParams.id,
+                                filterFields: ["id", "name"]
+                            }).$promise.then(function(data){
+                                $scope.workflowInBill = data;
+                                $scope.mainrow_id = $routeParams.id;
+                            });
+
+                        }
+
                     });
 
 
@@ -983,28 +996,9 @@
                         });
 
                         $scope.doWorkflow = function(event, node_id, mainrow_id){
-                            var doingWorkflow = function(mainrow_id) {
-                                res.doWorkflow({
-                                    workflow: true,
-                                    node_id: node_id,
-                                    id: mainrow_id
-                                }).$promise.then(function(data){
-                                    if(data.type) {
-                                        switch(data.type) {
-                                            case "redirect":
-                                                $location.url(data.location);
-                                                return;
-                                                break;
-                                            case "message":
-                                                service.alert(service.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
-                                                return;
-                                                break;
-                                        }
-                                    }
-                                });
-                            };
+                            var workflowAPI = $injector.get("Workflow.WorkflowAPI");
                             if(mainrow_id) {
-                                doingWorkflow(mainrow_id);
+                                workflowAPI.doWorkflow(res, node_id, mainrow_id);
                             } else {
                                 var selectedItems = $scope.gridSelected || [];
                                 //                        console.log(arguments);
@@ -1012,7 +1006,7 @@
                                     return false;
                                 }
                                 for(var i=0;i<selectedItems.length;i++) {
-                                    doingWorkflow(selectedItems[i].id);
+                                    workflowAPI.doWorkflow(res, node_id, selectedItems[i].id);
                                 }
                             }
 

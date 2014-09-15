@@ -31,6 +31,15 @@ class StockinModel extends CommonModel {
             $this->error = "params_error";
             return false;
         }
+
+        /*
+         * 预检测factory_code_all
+         * **/
+        if(!$this->checkFactoryCodeAll($billItems)) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
+
         $this->startTrans();
         
         if(!$billData["bill_id"]){

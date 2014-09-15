@@ -26,6 +26,11 @@ class ReturnsModel extends CommonModel {
         if(!$data["rows"]) {
             return false;
         }
+
+        if(!$this->checkFactoryCodeAll($data["rows"])) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
         
         $this->startTrans();
         

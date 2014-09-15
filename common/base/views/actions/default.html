@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="col-lg-8 right">
-        <!--//工作流-->
+        <!--//workflow-->
         <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble">
                 {{i18n.lang.workflow}}
@@ -25,7 +25,7 @@
             </ul>
         </div>
 
-        <!--//选中项操作-->
+        <!--//selected-->
         <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
                 {{i18n.lang.selected_action|sprintf:gridSelected.length}}
@@ -44,11 +44,22 @@
             </a>
         </div>
 
+        <!--//search box-->
         <div class="actionsBtnRight" ng-show="searchAble">
             <span class="input-icon">
                 <input type="text" placeholder="Search ..." id="gridSearchInput" class="nav-search-input" ng-model-options="{ debounce: 300 }" ng-model="filterOptions.filterText" autocomplete="off" autofocus />
                 <i class="icon-search nav-search-icon"></i>
             </span>
+        </div>
+
+        <!--//workflow in detail page-->
+        <div class="actionsBtnRight btn-group" ng-show="workflowInBill.length>0">
+            <button class="btn btn-sm disabled">{{i18n.lang.workflow}}:</button>
+            <button class="btn btn-sm btn-{{w.btn_class||'success'}}"
+                    ng-repeat="w in workflowInBill"
+                    ng-bind="w.name"
+                    ng-click="doWorkflow($event, w.id)"
+                    ></button>
         </div>
 
     </div>

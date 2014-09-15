@@ -100,6 +100,7 @@ class ReturnsAction extends CommonAction {
 //        var_dump($returnsId);exit;
         if(!$returnsId) {
             $this->error($model->getError());
+            return;
         }
         
         import("@.Workflow.Workflow");

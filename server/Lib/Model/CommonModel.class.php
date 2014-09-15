@@ -200,6 +200,45 @@ class CommonModel extends AdvModel{
 //        print_r($rows);
 //        echo $model->getLastSql();exit;
     }
+
+    /*
+     * 预检测行内的factory_code_all是否完整
+     * **/
+    final protected function checkFactoryCodeAll($rows) {
+        $template = explode(",", DBC("goods.unique.template"));
+
+        //预检测，判断factory_code_all为空或者元素数量和模板不对等
+        foreach($rows as $row) {
+            $fca = explode(DBC("goods.unique.separator"), $row["factory_code_all"]);
+            if(!$row["factory_code_all"] or count($fca) !== count($template)) {
+                return false;
+            }
+
+            $factoryCode[] = $fca[0];
+            for($i=1;$i<count($template);$i++) {
+                $modelIds[$template[$i]][] = $fca[$i];
+            }
+        }
+
+//        print_r($modelIds);exit;
+
+        //再次检测，factory_code不存在于goods表中
+        $model = D("Goods");
+        $map = array(
+            "factory_code" => array("IN", $factoryCode)
+        );
+        $count = $model->where($map)->count();
+        if($count < count($factoryCode)) {
+            return false;
+        }
+
+        //或者modelDataId的字段名和模板不能对应起来
+//        $model = D("DataModelFields");
+//        $modelFields = $model->getFieldsByAlias("product");
+
+
+        return true;
+    }
     
 }
 

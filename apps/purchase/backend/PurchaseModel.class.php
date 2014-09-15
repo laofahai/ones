@@ -30,6 +30,11 @@ class PurchaseModel extends CommonModel {
         if(!$data["rows"]) {
             return;
         }
+
+        if(!$this->checkFactoryCodeAll($data["rows"])) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
         
         $this->startTrans();
         
@@ -63,6 +68,11 @@ class PurchaseModel extends CommonModel {
         $this->startTrans();
         $rows = $data["rows"];
         unset($data["rows"]);
+
+        if(!$this->checkFactoryCodeAll($rows)) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
 
         if(false === $this->save($data)) {
             $this->error = "edit purchase bill failed";

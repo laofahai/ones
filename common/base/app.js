@@ -16,6 +16,7 @@
             'angularFileUpload',
 
             "ones.pluginsModule",
+            "ones.print",
 
             '[ones.requirements.placeholder]',
 

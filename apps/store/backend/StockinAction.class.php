@@ -78,7 +78,9 @@ class StockinAction extends CommonAction {
         list($bill, $rows) = $model->formatData($_POST);
 //        print_r($bill);
 //        print_r($rows);exit;
-        $model->editBill($bill, $rows);
+        if($model->editBill($bill, $rows)) {
+            $this->error($model->getError());
+        }
     }
     
     /**
@@ -130,7 +132,9 @@ class StockinAction extends CommonAction {
 //        print_r($billData);
 //        print_r($billItems);exit;
 //        
-        $billId = $stockinModel->newBill($bill, $rows);
+        if(!$stockinModel->newBill($bill, $rows)) {
+            $this->error($stockinModel->getError());
+        }
         
 //        var_dump($billId);
     }

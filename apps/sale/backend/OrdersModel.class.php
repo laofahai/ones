@@ -33,6 +33,11 @@ class OrdersModel extends CommonModel {
         if(!$data["rows"]) {
             return false;
         }
+
+        if(!$this->checkFactoryCodeAll($data["rows"])) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
         
         $method = $data["id"] ? "save" : "add";
         
@@ -95,10 +100,10 @@ class OrdersModel extends CommonModel {
             list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
             $data["rows"][$k]["goods_id"] = $goods_id;
             $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
-            
-            unset($data["rows"][$k]["standard"]);
-            unset($data["rows"][$k]["version"]);
+
         }
+
+
         
         $id = abs(intval($_GET["id"]));
         if($id) {

@@ -319,7 +319,9 @@
         .service("StockinEditModel", ["$rootScope", "GoodsRes","pluginExecutor",
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
-                    printAble: true
+                    printAble: true,
+                    isBill:true,
+                    workflowAlias: "stockin"
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -452,7 +454,8 @@
             function($rootScope, plugin) {
                 var obj = {
                     isBill: true,
-                    printAble: true
+                    printAble: true,
+                    workflowAlias: "stockout"
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;

@@ -135,6 +135,11 @@ class StockoutModel extends CommonModel {
         }
         unset($data["rows"]);
 
+        if(!$this->checkFactoryCodeAll($rows)) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
+
         $this->startTrans();
 
         $stockOutId = $this->add($data);
@@ -169,6 +174,14 @@ class StockoutModel extends CommonModel {
 //        print_r($bill);exit;
         $rows = $bill["rows"];
         unset($bill["rows"]);
+
+        /*
+         * 预检测factory_code_all
+         * **/
+        if(!$this->checkFactoryCodeAll($rows)) {
+            $this->error = "factory_code_not_full";
+            return false;
+        }
 
 //        print_r($rows);exit;
 

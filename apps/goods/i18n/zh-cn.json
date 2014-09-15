@@ -30,6 +30,9 @@
         "AppGoods" : {
             "appName": "商品基础信息模块"
         },
+        "messages": {
+            "factory_code_not_full": "提交数据部分属性没有正确填写"
+        },
         "goods": "物料(成品)",
         "factory_code": "基础原厂编码",
         "factoryCodeAll": "原厂编码",

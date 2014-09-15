@@ -88,7 +88,10 @@ class OrdersAction extends CommonAction {
         }
 
         $data = $model->formatData($_POST);
-        $orderId = $model->newOrder($data);
+        if(!$model->newOrder($data)) {
+            $this->error($model->getError());
+            retur;
+        }
     }
     
     
@@ -102,6 +105,7 @@ class OrdersAction extends CommonAction {
         $orderId = $model->newOrder($data);
         if(!$orderId) {
             $this->error($model->getError());
+            retur;
         }
         
         import("@.Workflow.Workflow");
