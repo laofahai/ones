@@ -283,6 +283,9 @@
                             return false;
                         }
 
+                        var formName = "dynamicEditForm"+fieldDefine.field;
+                        var formDataName = "dynamicEditForm"+fieldDefine.field+"Data";
+
                         var $modal = $injector.get("$modal");
                         var modal = $modal({
                             scope: parentScope,
@@ -298,14 +301,14 @@
                             $timeout(function(){
                                 var cacheKey = "form_html_cache_dynamic_add_"+fieldDefine.field;
                                 modal.$promise.then(function(){
-                                    parentScope["dynamicEditForm"+fieldDefine.field+"Data"] = {};
+                                    parentScope[formDataName] = {};
                                     var modalHtml = ones.caches.getItem(cacheKey);
                                     if(!modalHtml || undefined === modalHtml || modalHtml === "undefined") {
                                         var fm = new FormMaker.makeForm(parentScope, {
                                             fieldsDefine: formFieldDefine,
                                             includeFoot: false,
-                                            name: "dynamicEditForm"+fieldDefine.field,
-                                            dataName: "dynamicEditForm"+fieldDefine.field+"Data"
+                                            name: formName,
+                                            dataName: formDataName
                                         });
                                         ones.caches.setItem(cacheKey, fm.makeHTML(), -1);
                                     }
@@ -320,17 +323,16 @@
 
                             parentScope.doDynamicAdd = function(){
 
-                                if(!parentScope.dynamicEditForm.$valid) {
+                                if(!parentScope[formName].$valid) {
                                     ComView.alert(toLang("fillTheForm", "messages", $rootScope), "danger");
 //                                    return false;
                                 }
 
                                 var callback = function() {
-                                    return;
                                     modal.hide();
                                 };
 
-                                postParams = $.extend(parentScope.dynamicEditFormData, fieldDefine.dynamicAddOpts.postParams);
+                                postParams = $.extend(parentScope[formDataName], fieldDefine.dynamicAddOpts.postParams);
 
                                 //命名歧义。。 应该是包含行内已有的某条数据
                                 if(fieldDefine.dynamicAddOpts.postWithExtraData) {
