@@ -146,6 +146,8 @@
                                 } else {
                                     $scope.itemsList = itemsList;
                                 }
+                                $scope.gridSelected = {};
+                                $scope.$parent.gridSelected = [];
                                 ones.GridScope = $scope;
                             });
 

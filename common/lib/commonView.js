@@ -1058,9 +1058,9 @@
                                     return false;
                                 }
 
-                                self.scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), items.length);
-                                self.scope.doConfirm = function(){
-                                    var api = dataAPI.getResourceInstance({
+                                $scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), items.length);
+                                $scope.doConfirm = function(){
+                                    var api = $injector.get("ones.dataApiFactory").getResourceInstance({
                                         uri: $routeParams.group+"/"+$routeParams.module
                                     });
 
@@ -1069,12 +1069,12 @@
                                     });
 
                                     api.delete({id: ids}, function() {
-                                        self.scope.$parent.$broadcast("gridData.changed", true);
+                                        $scope.$parent.$broadcast("gridData.changed", true);
                                     });
                                 };
 
-                                var modal = $modal({
-                                    scope: self.scope,
+                                var modal = $injector.get("$modal")({
+                                    scope: $scope,
                                     title: toLang("confirm", "actions", $rootScope),
                                     template: "common/base/views/confirm.html"
                                 });
