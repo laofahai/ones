@@ -517,9 +517,12 @@
                     }
                 };
 
+                if(!$scope.formMetaData) {
+                    $scope.formMetaData = {
+                        inputTime: new Date()
+                    };
+                }
 
-                $scope.formMetaData.inputTime = new Date();
-    //            $scope.format = $scope.formats[0];
 
             }])
         .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutEditModel", "ComView", "$routeParams",
@@ -580,7 +583,7 @@
                     params.warningonly = $scope.formData.stockWarningOnly;
 
                     url = sprintf(url, base64encode(angular.toJson(params)));
-                    console.log(url);return;
+//                    console.log(url);return;
                     window.open(url);
                 };
             }])

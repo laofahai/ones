@@ -552,19 +552,7 @@
                         if(model.config) {
                             opts = $.extend(opts, model.config);
                         } else {
-                            var configsList = [
-                                "isBill",
-                                "workflowAlias",
-                                "editAble",
-                                "deleteAble",
-                                "printAble",
-                                "viewDetailAble",
-                                "subAble",
-                                "addSubAble",
-                                "viewSubAble",
-                                "exportAble"
-                            ];
-                            angular.forEach(configsList, function(conf){
+                            angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
                                 opts[conf] = model[conf];
                             });
                         }
@@ -817,6 +805,15 @@
 
                         opts.fieldsDefine = fieldsDefine;
 
+                        if(model.config) {
+                            opts = $.extend(opts, model.config);
+                        } else {
+                            angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
+                                opts[conf] = model[conf];
+                            });
+                        }
+
+
                         if($routeParams.id) {
                             opts.isEdit = true;
                             var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
@@ -981,19 +978,19 @@
                                     node_id: node_id,
                                     id: mainrow_id
                                 }).$promise.then(function(data){
-                                        if(data.type) {
-                                            switch(data.type) {
-                                                case "redirect":
-                                                    $location.url(data.location);
-                                                    return;
-                                                    break;
-                                                case "message":
-                                                    service.alert(service.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
-                                                    return;
-                                                    break;
-                                            }
+                                    if(data.type) {
+                                        switch(data.type) {
+                                            case "redirect":
+                                                $location.url(data.location);
+                                                return;
+                                                break;
+                                            case "message":
+                                                service.alert(service.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
+                                                return;
+                                                break;
                                         }
-                                    });
+                                    }
+                                });
                             };
                             if(mainrow_id) {
                                 doingWorkflow(mainrow_id);
@@ -1010,29 +1007,20 @@
 
                             $scope.$broadcast("gridData.changed", true);
                         };
-                        $scope.workflowActionDisabled = function(id) {
-                            var selectedItems = $scope.gridSelected || [];
-                            if(selectedItems.length > 1) {
-                                return true;
-                            }
-                            if(!selectedItems.length) {
-                                return true;
-                            }
-                            var result = true;
-                            for(var i=0;i<selectedItems.length;i++) {
+                        $scope.workflowActionDisabled = function(id, item) {
+                            item = item || $scope.gridSelected[0];
 
-                                var item = selectedItems[i];
-                                if(!item.processes) {
-                                    result = true;
-                                    break;
-                                }
-                                angular.forEach(item.processes.nextNodes, function(node){
-                                    if(node.id === id) {
-                                        result = false;
-                                        return;
-                                    }
-                                });
+                            if(!item || !item.processes) {
+                                return true;
                             }
+
+                            var result = true;
+                            angular.forEach(item.processes.next_node_id.split(","), function(node){
+                                if(node === id) {
+                                    result = false;
+                                    return;
+                                }
+                            });
                             return result;
                         };
                         //查看工作进程

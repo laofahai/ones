@@ -115,12 +115,12 @@
 
             $scope.workflowAble = true;
             $scope.selectAble = false;
-            $scope.showWeeks = true;
-            $scope.formMetaData = {
-//                inputTime : Date.parse(new Date()),
-                inputTime: new Date(),
-                total_amount_real: 0.00
-            };
+            if(!$scope.formMetaData) {
+                $scope.formMetaData = {
+                    inputTime: new Date(),
+                    total_amount_real: 0
+                };
+            }
 //                $scope.formMetaData.inputTime = new Date();
 
             ComView.displayBill($scope, model, res, {

@@ -15,11 +15,16 @@
                 obj.extraSelectActions = [
                     {
                         label: toLang("viewCraft", "actions", $rootScope),
-                        action: function($event, selectedItems){
+                        action: function($event, selectedItems, item){
                             var scope = obj.extraSelectActions[0].scope;
                             var injector = obj.extraSelectActions[0].injector;
-                            var item = selectedItems[0];
+                            item = item || selectedItems[0];
                             var res = injector.get("GoodsCraftRes");
+
+                            if(!item.id) {
+                                return false;
+                            }
+
 
                             res.query({goods_id: item.id}).$promise.then(function(data){
                                 scope.craftsList = data;

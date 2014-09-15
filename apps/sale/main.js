@@ -225,11 +225,12 @@
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
-                $scope.showWeeks = true;
-                $scope.formMetaData = {
-                    inputTime : new Date(),
-                    total_amount_real: 0.00
-                };
+                if(!$scope.formMetaData) {
+                    $scope.formMetaData = {
+                        inputTime: new Date(),
+                        total_amount_real: 0
+                    };
+                }
 //                $scope.formMetaData.inputTime = new Date();
 
                 ComView.displayBill($scope, OrdersEditModel, OrdersRes, {
@@ -296,12 +297,12 @@
                 ComView.makeDefaultPageAction($scope, "sale/returns", [], ReturnsEditModel);
 
                 $scope.workflowAble = true;
-                $scope.selectAble = false;
-                $scope.showWeeks = true;
-                $scope.formMetaData = {
-                    inputTime : new Date(),
-                    total_amount_real: 0.00
-                };
+                if(!$scope.formMetaData) {
+                    $scope.formMetaData = {
+                        inputTime: new Date(),
+                        total_amount_real: 0
+                    };
+                }
 //                $scope.formMetaData.inputTime = new Date();
 
                 ComView.displayBill($scope, ReturnsEditModel, OrdersRes, {

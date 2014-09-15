@@ -73,7 +73,14 @@ class Workflow {
     /**
      * 获取当前流程所处进程
      */
-    public function getCurrentProcess($mainRowid, $ignoreCheckPermission=true) {
+    public function getCurrentProcess($mainRowid, $ignoreCheckPermission=true, $returnFields=null) {
+
+        if(!$returnFields) {
+            $returnFields = array(
+
+            );
+        }
+
         $map = array(
             "mainrow_id" => $mainRowid,
             "workflow_id"=> $this->currentWorkflow["id"]
@@ -107,7 +114,7 @@ class Workflow {
         
         foreach($nextNode as $pn) {
             if(!$ignoreCheckPermission and (!$this->checkExecutorPermission($allNodes[$pn]["executor"]) 
-                    or !$this->checkCondition($mainrowId, $allNodes[$pn]))) {
+                    or !$this->checkCondition($mainRowid, $allNodes[$pn]))) {
                 continue;
             }
             if($pn) {
@@ -128,7 +135,8 @@ class Workflow {
         
         $process["currentNode"] = $currentNode;
         $process["prevProcess"] = $prevProcess;
-        
+
+
         return $process;
     }
     
@@ -172,8 +180,9 @@ class Workflow {
 //            "type" => array("NEQ", 3) //排除等待外部响应的节点
         ))->select();
 //        print_r($tmp);exit;
+        $needed = array("id", "workflow_id", "name", "status_text");
         foreach($tmp as $k=>$v) {
-            $theNodes[$v["id"]] = $v;
+            $theNodes[$v["id"]] = filterDataFields($v, $needed);
         }
         
         //获取所有process的上一process
@@ -219,7 +228,8 @@ class Workflow {
                 $processes[$k]["prevProcess"] = $prevProcess[$v["mainrow_id"]];
             }
         }
-        
+
+
         return $processes;
         
     }

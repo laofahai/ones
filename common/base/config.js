@@ -5,6 +5,18 @@
      * */
     ones.BaseConf.BSU = "./index.php?s=/";
     ones.BaseConf.Prefix= "ones";
+    ones.BaseConf.modelConfigFields = [
+        "isBill",
+        "workflowAlias",
+        "editAble",
+        "deleteAble",
+        "printAble",
+        "viewDetailAble",
+        "subAble",
+        "addSubAble",
+        "viewSubAble",
+        "exportAble"
+    ];
 
     angular.module("ones.configModule", [])
         .service("ones.dataApiFactory", ["ones.config", "$resource", "$injector", function(config, $resource, $injector){

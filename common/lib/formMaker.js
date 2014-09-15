@@ -677,6 +677,7 @@
 
                     this.scope.$parent[this.opts.dataName] = this.scope.$parent[this.opts.dataName] || [];
                     this.scope.$parent.formMetaData = this.scope.$parent.formMetaData || {};
+                    this.scope.$parent.isEdit = this.opts.isEdit;
 
                     this.opts.templates = this.templates = {
                         'bills/box.html' : '<table class="table table-bordered" id="billTable">'+
@@ -696,6 +697,10 @@
                         multi: true, //指定为表单绑定多条数据
                         dataName: this.opts.dataName
                     });
+
+                    if(isAppLoaded("workflow") && this.opts.workflowAlias) {
+
+                    }
 
                 };
 

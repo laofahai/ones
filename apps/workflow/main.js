@@ -6,33 +6,35 @@
             controller: "WorkflowNodeCtl"
         });
     }])
-    .factory("WorkflowRes", ["$resource", "ones.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "workflow/workflow/:id.json", null, {'update': {method: 'PUT'}});
-    }])
     .factory("WorkflowProcessRes", ["$resource", "ones.config", function($resource, cnf) {
         return $resource(cnf.BSU + "workflow/workflowProcess/:id.json", {type: "@type"});
     }])
 
-    .service("WorkflowModel", ["$rootScope", function($rootScope){
-        return {
+    .service("Workflow.WorkflowAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, dataAPI){
+        this.config = {
             subAble: true,
-            addSubAble: false,
-            getStructure: function(){
-                return {
-                    id: {
-                        primary: true
-                    },
-                    alias : {},
-                    name: {},
-                    workflow_file: {
-                        displayName: $rootScope.i18n.lang.workflowAssitFile
-                    },
-                    memo: {
-                        required: false
-                    }
-                };
+            addSubAble: true
+        };
+        this.structure = {
+            id: {
+                primary: true
+            },
+            alias : {},
+            name: {},
+            workflow_file: {
+                displayName: toLang("workflowAssitFile", "", $rootScope)
+            },
+            memo: {
+                required: false,
+                inputType: "textarea"
             }
         };
+        this.getStructure = function(){
+            return this.structure;
+        };
+        this.api = dataAPI.getResourceInstance({
+            uri: "workflow/workflow"
+        });
     }])
     .service("Workflow.WorkflowNodeAPI", ["$rootScope", "ones.dataApiFactory", "$routeParams", "$q",
         function($rootScope, res, $route, $q){

@@ -309,6 +309,19 @@ function makeFactoryCode($data, $factoryCode=null) {
 }
 
 /*
+ * 过滤数组中的数据
+ * **/
+function filterDataFields($data, $fields) {
+    $result = array();
+    foreach($data as $k=>$v) {
+        if(in_array($k, $fields)) {
+            $result[$k] = $v;
+        }
+    }
+    return $result;
+}
+
+/*
  * 记录数据库错误
  * **/
 function LogSQLError($model, $rollback=false) {
