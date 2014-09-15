@@ -1,6 +1,6 @@
 (function(){
     'use struct';
-    angular.module("ones.formMaker", [])
+    angular.module("ones.formMaker", ["ones.select3Module"])
         .directive("commonform", ["$compile", "FormMaker", function($compile, FormMaker) {
             return {
                 restrict: "E",
@@ -55,7 +55,6 @@
                 compile: function() {
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
-                            console.log($scope.$parent);
                             var config = $scope.$parent.$eval(iAttrs.config) || {};
                             iElement.append(sprintf('<input type="file" %s />', config.multiple || ""));
                             var conf = {
@@ -69,7 +68,6 @@
                                 thumbnail: "fit"
                             }
                             conf = $.extend(conf, config);
-                            console.log(conf);
                             iElement.find("input").ace_file_input(conf);
                         }
                     };
@@ -162,28 +160,7 @@
                 }
             };
         }])
-        .directive("select3", ["$compile", "FormMaker", function($compile, FormMaker) {
-            return {
-                restrict: "E",
-                replace: true,
-                scope: {
-                    config: "="
-                },
-                transclusion: true,
-                compile: function(element, attrs, transclude) {
-                    return {
-                        pre: function($scope, iElement, iAttrs, controller) {
-                            var b = new FormMaker.select3($scope, iAttrs);
-                            setTimeout(function() {
-                                $(iElement).after($compile(b.makeHTML())($scope.$parent));
-                                iElement.remove();
-                            });
 
-                        }
-                    };
-                }
-            };
-        }])
         .directive("bill", ["$compile", "FormMaker", "$timeout", function($compile, FormMaker, $timeout) {
             return {
                 restrict: "E",
@@ -551,7 +528,7 @@
 
                     },
                     _select3: function(name, fieldDefine, $scope) {
-                        var key = name+"Select3Config";
+                        var key = "s"+md5.createHash(fieldDefine["ng-model"]+"Select3Config");
                         fieldDefine.dataName = this.opts.dataName
                         $scope.$parent[key] = {
                             name: name,
@@ -940,7 +917,6 @@
 
                                 //自动跳到下一可编辑元素
                                 if(self.opts.autoFocusNext && !isBlur) {
-
                                     if(!next) { //当前行无下一元素
                                         if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
                                             self.parentScope.billAddRow(null, true);
@@ -1388,6 +1364,7 @@
                  * */
                 service.select3 = function($scope, attrs){
 
+
                     this.getDefaultOpts = function(){
                         return {
                             autoQuery: false,
@@ -1406,7 +1383,7 @@
                     scopeConfig["ng-model"] = scopeConfig["ng-model"] || scopeConfig.fieldDefine["ng-model"];
                     this.scopeConfig = scopeConfig;
                     this.opts = $.extend(this.getDefaultOpts(), scopeConfig.fieldDefine);
-
+                    this.opts.configHash = attrs.config;
                     this.scope = $scope;
 
                 };
@@ -1424,19 +1401,17 @@
                             eval('tmpEvents='+this.opts["ui-event"]);
                             angular.forEach(tmpEvents, function(evt, key){
                                 if(key in events) {
-//                            console.log(events[key].replace(")'", ");"+evt+"'"));
                                     events[key] = events[key].replace(")'", ");"+evt+"'");
                                 }
                             });
-//                    console.log(events);
-//                    console.log($.parseJSON(this.opts["ui-event"]));
                         }
 
                         events = $.extend(events, this.opts.events);
                         var attrs = [
                             ["ui-event", angular.toJson(events).replace(/"/g, "")],
                             ["class", "select3Input editAble"],
-                            ["data-field", this.opts.field]
+                            ["data-field", this.opts.field],
+                            ["data-config-hash", this.opts.configHash]
                         ];
                         var attrHTML = [];
                         angular.forEach(attrs, function(item){
@@ -1453,18 +1428,16 @@
                     bindEvents: function(){
                         var self = this;
 
-                        this.scope.$parent.doSelect3Focus = function($event){
-                            var field = $($event.target).data("field");
-
-                            var scopeConfig = self.scope.$parent.$eval(field+"Select3Config");
-
-                            scopeConfig = scopeConfig || {};
+                        this.setCurrentSelect3Config = function(target){
+                            var scopeConfig = self.scope.$parent.$eval($(target).data("config-hash"));
                             scopeConfig.fieldDefine.field = scopeConfig.field;
                             scopeConfig["ng-model"] = scopeConfig["ng-model"] || scopeConfig.fieldDefine["ng-model"];
                             self.scopeConfig = scopeConfig;
                             self.opts = $.extend(self.getDefaultOpts(), scopeConfig.fieldDefine);
+                        };
 
-
+                        this.scope.$parent.doSelect3Focus = function($event){
+                            self.setCurrentSelect3Config($event.target);
                             var val = $($event.target).val();
                             if(self.opts.autoReset || (!val && self.opts.autoQuery)) {
                                 val = "_";
@@ -1475,6 +1448,7 @@
                         };
 
                         this.scope.$parent.doSelect3Keydown = function($event){
+                            self.setCurrentSelect3Config($event.target);
                             var Keys = {
                                 Enter: 13,
                                 Tab: 9,
@@ -1493,7 +1467,7 @@
                                             return false;
                                         }
 
-                                        self.scope.setValue($("#select3Container li.active"));
+                                        self.scope.setValue($("#select3Container li.active"), $event);
 
                                         //
                                         //                                $parse(self.opts["ng-model"]).assign(value, self.scope);
@@ -1635,13 +1609,16 @@
                         this.scope.doSelect3Click = function($event) {
                             self.scope.setValue($event.target);
                         };
-                        this.scope.setValue = function(element){
+                        this.scope.setValue = function(element, $sourceEle){
+                            self.setCurrentSelect3Config($sourceEle.target);
                             var getter = $parse(self.opts["ng-model"]);
                             getter.assign(self.scope.$parent, $(element).data("value"));
 
                             //label
                             getter = $parse(self.opts["ng-model"]+"_label");
                             getter.assign(self.scope.$parent, $(element).text());
+
+//                            console.log(self.scope.$parent);
 
                             self.scope.$parent.hideSelect3Options();
                         };
@@ -1678,7 +1655,6 @@
                                             ones.caches.setItem(cacheKey, fm.makeHTML());
                                         }
                                         modalHtml = ones.caches.getItem(cacheKey);
-                                        console.log(modalHtml);
 //                                        $("#dynamicEditContainer").append($compile(modalHtml)(self.scope.$parent));
                                     });
                                 }, 100);

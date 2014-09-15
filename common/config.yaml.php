@@ -31,6 +31,7 @@
     - "lib/caches.js"
     - "lib/plugin.js"
     - "lib/function.js"
+    - "lib/select3.js"
     - "lib/formMaker.js"
     - "lib/gridView.js"
     - "lib/print.js"
