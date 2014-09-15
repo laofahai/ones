@@ -71,6 +71,19 @@ class DataModelDataAction extends CommonAction {
         }
 
         $_POST["pinyin"] = Pinyin($_POST["data"]);
+
+        //动态新增
+        if($_POST["goods_id"]) {
+            list($fa, $goods_id, $cat_id) = explode("_", $_POST["goods_id"]);
+            $_POST["source_id"] = $cat_id;
+        }
+
+        if($_POST["modelAlias"]) {
+            $theModel = D("DataModel")->getByAlias($_POST["modelAlias"]);
+            $_POST["model_id"] = $theModel["id"];
+        }
+
+//        print_r($_POST);exit;
     }
 
 }

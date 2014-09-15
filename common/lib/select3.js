@@ -1,8 +1,8 @@
 (function(){
 
     angular.module("ones.select3Module", [])
-        .service("select3Field", ["$timeout", "$compile", "$parse", "$injector", "$rootScope", "FormMaker",
-            function($timeout, $compile, $parse, $injector, $rootScope, FormMaker){
+        .service("select3Field", ["$timeout", "$compile", "$parse", "$injector", "$rootScope", "FormMaker", "ComView",
+            function($timeout, $compile, $parse, $injector, $rootScope, FormMaker, ComView){
 
                 var self = this;
 
@@ -81,7 +81,7 @@
                         inputTpl: '<input type="text" ng-model="%(model)s_label" %(attr)s /><input type="hidden" ng-model="%(model)s" />',
                         selectTpl: '<ul class="select3Container" id="select3Container">'+
                             '<li ng-repeat="s3it in select3Items" ng-class="{active:$index==selectedItem}" data-value="{{s3it.value}}" ng-bind="s3it.label" ng-show="s3it.label.length>0" ui-event="%(events)s"></li>'+
-                            '<li class="select3_add" ng-click="doSelect3AddNew()"><i class="icon icon-plus"></i>{{$root.i18n.lang.actions.add}}</li>'+
+                            '<li class="select3_add" ng-click="doSelect3AddNew(\'%(field)s\')"><i class="icon icon-plus"></i>{{$root.i18n.lang.actions.add}}</li>'+
                             '</ul>'
                     };
                 };
@@ -235,7 +235,8 @@
                             return;
                         }
                         var selectHTML = sprintf(self.currentConfig.selectTpl, {
-                            events: "{keydown:'doSelect3Keydown($event)', click:'doSelect3Click($event)'}"
+                            events: "{keydown:'doSelect3Keydown($event)', click:'doSelect3Click($event)'}",
+                            field: self.currentConfig.field
                         });
                         var selectHTMLCompiled = $compile(selectHTML)(self.scope);
                         $("body").append(selectHTMLCompiled);
@@ -285,7 +286,7 @@
                         var $modal = $injector.get("$modal");
                         var modal = $modal({
                             scope: parentScope,
-                            title: toLang("add", "actions", $rootScope),
+                            title: toLang("add", "actions", $rootScope) + self.currentConfig.displayName,
     //                            content: {
     //                                config: $scope.config,
     //                                defaultData: $scope.defaultData
@@ -295,37 +296,60 @@
 
                         var showModal = function(formFieldDefine) {
                             $timeout(function(){
-                                var cacheKey = "form_html_cache_"+fieldDefine.displayName;
+                                var cacheKey = "form_html_cache_dynamic_add_"+fieldDefine.field;
                                 modal.$promise.then(function(){
+                                    parentScope["dynamicEditForm"+fieldDefine.field+"Data"] = {};
                                     var modalHtml = ones.caches.getItem(cacheKey);
-                                    if(!modalHtml) {
+                                    if(!modalHtml || undefined === modalHtml || modalHtml === "undefined") {
                                         var fm = new FormMaker.makeForm(parentScope, {
                                             fieldsDefine: formFieldDefine,
                                             includeFoot: false,
-                                            name: "dynamicEditForm",
-                                            dataName: "dynamicEditFormData"
+                                            name: "dynamicEditForm"+fieldDefine.field,
+                                            dataName: "dynamicEditForm"+fieldDefine.field+"Data"
                                         });
-                                        ones.caches.setItem(cacheKey, fm.makeHTML());
+                                        ones.caches.setItem(cacheKey, fm.makeHTML(), -1);
                                     }
+
                                     modalHtml = ones.caches.getItem(cacheKey);
                                     $("#dynamicEditContainer").html($compile(modalHtml)(parentScope));
                                 });
                             }, 100);
 
+//                            console.log(self.currentConfig["data-row-index"]);
+//                            console.log(parentScope[self.currentConfig.dataName]);
+
                             parentScope.doDynamicAdd = function(){
+
                                 if(!parentScope.dynamicEditForm.$valid) {
-                                    return false;
+                                    ComView.alert(toLang("fillTheForm", "messages", $rootScope), "danger");
+//                                    return false;
                                 }
 
                                 var callback = function() {
+                                    return;
                                     modal.hide();
                                 };
 
-                                try {
-                                    fieldDefine.dataSource.save(parentScope.dynamicEditFormData, callback);
-                                } catch(e) {
-                                    fieldDefine.dataSource.api.save(parentScope.dynamicEditFormData, callback);
+                                postParams = $.extend(parentScope.dynamicEditFormData, fieldDefine.dynamicAddOpts.postParams);
+
+                                //命名歧义。。 应该是包含行内已有的某条数据
+                                if(fieldDefine.dynamicAddOpts.postWithExtraData) {
+                                    angular.forEach(fieldDefine.dynamicAddOpts.postWithExtraData, function(field){
+                                        var tmp = parentScope[self.currentConfig.dataName][self.currentConfig["data-row-index"]][field];
+                                        if(tmp !== undefined) {
+                                            postParams[field] = tmp;
+                                        }
+                                    });
+//                                    console.log(postParams);
                                 }
+
+                                getDataApiPromise(fieldDefine.dataSource, "save", postParams).then(callback);
+
+//                                try {
+//                                    fieldDefine.dataSource.save(parentScope.dynamicEditFormData, callback);
+//                                } catch(e) {
+//                                    fieldDefine.dataSource.api.save(parentScope.dynamicEditFormData, callback);
+//                                }
 
                             };
 

@@ -255,7 +255,12 @@
                     $timeout(function(){
                         $("#gridSearchInput").focus();
                     }, 500);
-                 }
+
+                    /**
+                     * 清除即时缓存
+                     * */
+                     ones.caches.clear(-1);
+                  }
 
                 doWhenLocationChanged();
 

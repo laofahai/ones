@@ -871,7 +871,7 @@
 
 
                         var lastPage = ones.caches.getItem("lastPage");
-                        return;
+//                        return;
                         $location.url(lastPage[0] || opts.returnPage);
                     };
                 };

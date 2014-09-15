@@ -171,6 +171,7 @@
             };
             return obj;
         }])
+
         .service("DataModelDataModel", ["$rootScope", "$q", "DataModelFieldsRes", "$routeParams",
             function($rootScope, $q, DataModelFieldsRes, $routeParams) {
                 var obj = {};
@@ -202,25 +203,32 @@
                             displayName: i18n.field,
                             listable: false,
                             inputType: "select",
-                            nameField: "display_name"
+                            nameField: "display_name",
+                            dataSource: "DataModelFieldsRes",
+                            queryParams: {
+                                modelId: $routeParams.modelId
+                            }
                         }
                     };
 
-                    if(structOnly) {
-                        return struct;
-                    } else {
-                        var defer = $q.defer();
-                        var params = {
-                            modelId:$routeParams.modelId
-                        };
-                        //                        console.log($routeParams);
-                        DataModelFieldsRes.query(params, function(data){
-                            data = filterDataFields(data, ["id", "display_name"]);
-                            struct.field_id.dataSource = data;
-                            defer.resolve(struct);
-                        });
-                        return defer.promise;
-                    }
+                    return struct;
+
+//                    if(structOnly) {
+//                        return struct;
+//                    } else {
+//                        var defer = $q.defer();
+//                        var params = {
+//                            modelId:$routeParams.modelId
+//                        };
+//                        //                        console.log($routeParams);
+//                        DataModelFieldsRes.query(params, function(data){
+//                            data = filterDataFields(data, ["id", "display_name"]);
+//                            struct.field_id.dataSource = data;
+//                            console.log(struct);
+//                            defer.resolve(struct);
+//                        });
+//                        return defer.promise;
+//                    }
                 };
                 return obj;
             }])
