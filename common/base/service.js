@@ -57,7 +57,8 @@
                         sortAble: true
                     },
                     alias: {
-                        sortAble: true
+                        sortAble: true,
+                        onlyInAdd: true
                     },
                     name: {},
                     value: {

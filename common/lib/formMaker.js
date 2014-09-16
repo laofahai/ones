@@ -1308,8 +1308,19 @@
                         var boxHTML = this.opts.templates["commonForm/box.html"];
 
                         var colWidth = self.opts.columns ? 12/self.opts.columns : null;
-                        //隐藏字段
+
                         angular.forEach(this.opts.fieldsDefine, function(struct, field){
+
+                            if(struct.hideInForm || struct.primary) {
+                                return false;
+                            }
+                            if(self.opts.isEdit && struct.onlyInAdd) {
+                                return false;
+                            }
+                            if(!self.opts.isEdit && struct.onlyInEdit) {
+                                return false;
+                            }
+
                             if(struct.inputType === "hidden") {
                                 boxHTML = self.opts.templates["commonForm/hide.html"];
                             } else {
@@ -1327,28 +1338,26 @@
                             if(struct.value) {
                                 self.scope.$parent[self.opts.dataName][field] = struct.value;
                             }
-
-                            if(!struct.hideInForm && !struct.primary) {
-                                fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
-                                if (false !== fieldHTML) {
-                                    if(struct.colspan) {
-                                        colWidth = colWidth * struct.colspan;
-                                    }
-                                    var helpText = "";
-                                    if(struct.helpText) {
-                                        helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
-                                    }
-                                    finalHTML.push(sprintf(boxHTML, {
-                                        helpText: helpText,
-                                        colWidth: colWidth,
-                                        inputBoxWidth: self.opts.columns>1 ? 6 : 4,
-                                        formname: self.opts.name,
-                                        fieldname: struct.name ? struct.name : field,
-                                        label: struct.displayName,
-                                        inputHTML: fieldHTML
-                                    }));
+                            fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
+                            if (false !== fieldHTML) {
+                                if(struct.colspan) {
+                                    colWidth = colWidth * struct.colspan;
                                 }
+                                var helpText = "";
+                                if(struct.helpText) {
+                                    helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
+                                }
+                                finalHTML.push(sprintf(boxHTML, {
+                                    helpText: helpText,
+                                    colWidth: colWidth,
+                                    inputBoxWidth: self.opts.columns>1 ? 6 : 4,
+                                    formname: self.opts.name,
+                                    fieldname: struct.name ? struct.name : field,
+                                    label: struct.displayName,
+                                    inputHTML: fieldHTML
+                                }));
                             }
+
                         });
 
                         //包含表单结尾

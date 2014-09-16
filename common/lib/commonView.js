@@ -340,9 +340,14 @@
                         }) //表单提交之后的返回页面地址
                     };
                     opts = $.extend(defaultOpts, opts);
+                    if(opts.id) {
+                        opts.isEdit = true;
+                    }
 //                    opts.dataName = opts.name + "Data";
-                    $scope.formConfig.name = opts.name;
-                    $scope.formConfig.dataName = opts.dataName;
+                    $scope.formConfig = opts;
+//                    $scope.formConfig.name = opts.name;
+//                    $scope.formConfig.dataName = opts.dataName;
+//                    $scope.formConfig.isEdit = opts.isEdit;
 
                     var doDefine = function(fd) {
                         $scope.formConfig.fieldsDefine = fd;

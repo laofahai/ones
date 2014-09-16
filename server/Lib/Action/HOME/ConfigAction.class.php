@@ -13,21 +13,13 @@
  */
 class ConfigAction extends CommonAction {
     
-    public function index() {
-        $tmp = parent::index(true);
-        if(!$_GET["queryAll"]) {
-            $this->response($tmp);return;
-        }
-        
-        array_push($tmp, array(
-            "alias" => "remoteConfig.loaded",
-            "value" => true
-        ));
-        array_push($tmp, array(
-            "alias" => "DEBUG",
-            "value" => APP_DEBUG
-        ));
-        $this->response($tmp);
-    }
+//    public function index() {
+//        $tmp = parent::index(true);
+//        if(!$_GET["queryAll"]) {
+//            $this->response($tmp);return;
+//        }
+//
+//        $this->response($tmp);
+//    }
     
 }
