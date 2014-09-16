@@ -1,80 +1,87 @@
 (function(angular, ones){
 
     angular.module("ones.gridView", [])
-        .service("GridView", ["$rootScope", "$routeParams", "$location", "$modal", "ones.dataApiFactory",
-            function($rootScope, $routeParams, $location, $modal, dataAPI){
+        .service("GridView", ["$rootScope", "$routeParams", "$location", "$modal", "ones.dataApiFactory", "$timeout",
+            function($rootScope, $routeParams, $location, $modal, dataAPI, $timeout){
                 var self = this;
                 this.scope = {};
+                this.selected = {};
                 this.sortInfo = {
                     field: "id",
                     direction: "ASC"
                 };
+
+                this.init = function($scope, options){
+
+                    self.scope = $scope;
+                    self.options = options;
+
+                    var optsField = ["pagingOptions", "filterOptions", "sortInfo"];
+                    angular.forEach(optsField, function(field){
+                        self.scope[field] = options[field];
+                    });
+
+                    /**
+                     * 监视器
+                     * */
+                    self.scope.$watch('pagingOptions', function(newVal, oldVal) {
+                        if (newVal !== oldVal) {
+                            if(newVal.currentPage >= $scope.totalPages) {
+                                self.scope.pagingOptions.currentPage = self.scope.totalPages;
+                            }
+                            ones.caches.setItem("ones.pageSize", self.scope.pagingOptions.pageSize, 1);
+                            self.refresh ();
+                        }
+                    }, true);
+                    self.scope.$watch('filterOptions', function(newVal, oldVal) {
+                        if (newVal !== oldVal) {
+                            self.refresh ();
+                        }
+                    }, true);
+                    self.scope.$watch('sortInfo', function (newVal, oldVal) {
+                        if (newVal !== oldVal) {
+                            self.refresh ();
+                        }
+                    }, true);
+                    self.scope.sortData = function(){
+                        self.refresh ();
+                    };
+
+                    self.refresh();
+
+                }
+
+                this.refresh = function(){
+                    self.methodsList.getPagedDataAsync(
+                        self.scope.pagingOptions.pageSize,
+                        self.scope.pagingOptions.currentPage,
+                        self.scope.filterOptions.filterText
+                    );
+                }
+
                 this.methodsList = {
-//                    doEditItem: function(id, extra){
-//                        if(self.config.editAble === false) {
-//                            return;
-//                        }
-//                        extra = extra || "";
-//                        $location.url(sprintf("/%(group)s/%(action)s/%(module)s/id/%(id)d", {
-//                            group: $routeParams.group,
-//                            action: self.scope.config.isBill ? "editBill" : "edit",
-//                            module: $routeParams.module,
-//                            id: parseInt(id)
-//                        })+extra);
-//                    },
+                    //双击事件
                     doGridDblClick: function(item, extra){
                         self.scope.$parent.doEditSelected(item);
                     },
-                    doGridClick: function(index, evt){
-//                        this.recordSelected(index);
-//                        if($(evt.target).attr("type") == "checkbox") {
-//                            return;
-//                        }
-//                        var checkbox = $(evt.target).parent().find("input[type='checkbox']");
-//                        console.log(checkbox);
-//                        if(checkbox.attr("checked") === "checked") {
-//                            checkbox.removeAttr("checked");
-//                        } else {
-//                            checkbox.attr("checked", true);
-//                        }
-
-                    },
-//                    doDeleteItem: function(id){
-//                        self.scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), 1);
-//                        self.scope.doConfirm = function(){
-//                            var api = dataAPI.getResourceInstance({
-//                                uri: $routeParams.group+"/"+$routeParams.module
-//                            });
-//                            api.delete({id: id}, function() {
-//                                self.scope.$parent.$broadcast("gridData.changed");
-//                            });
-//                        };
-//
-//                        var modal = $modal({
-//                            scope: self.scope,
-//                            title: toLang("confirm", "actions", $rootScope),
-//                            template: "common/base/views/confirm.html"
-//                        });
-//                    },
+                    //排序
                     doGridSortBy: function(field){
                         var direction = self.sortInfo.direction == "ASC" ? "DESC" : "ASC"
-                        self.scope.$parent.sortInfo = {
+                        self.scope.sortInfo = {
                             fields: [field],
                             directions: [direction]
                         }
                         self.sortInfo.direction = direction;
                         self.scope.sorting = field+" "+direction;
                     },
+                    //刷新
                     doRefresh: function(){
-                        self.scope.$parent.getPagedDataAsync(
-                            self.scope.$parent.pagingOptions.pageSize,
-                            self.scope.$parent.pagingOptions.currentPage,
-                            self.scope.$parent.filterOptions.filterText
-                        );
+                        self.refresh();
                     },
+                    //设置当前页
                     setPage: function(p){
                         var goPage = 1;
-                        var currentPage = self.scope.$parent.pagingOptions.currentPage;
+                        var currentPage = self.scope.pagingOptions.currentPage;
                         switch(p) {
                             case "-1":
                                 goPage = currentPage-1;
@@ -83,7 +90,7 @@
                                 goPage = currentPage+1;
                                 break;
                             case "max":
-                                goPage = self.scope.$parent.totalPages;
+                                goPage = self.scope.totalPages;
                                 break;
                             default:
                                 goPage = parseInt(p);
@@ -93,24 +100,24 @@
                         if(goPage <=0) {
                             goPage = 1;
                         }
-                        if(goPage > self.scope.$parent.totalPages) {
-                            goPage = self.scope.$parent.totalPages;
+                        if(goPage > self.scope.totalPages) {
+                            goPage = self.scope.totalPages;
                         }
 
-                        self.scope.$parent.pagingOptions.currentPage = goPage;
+                        self.scope.pagingOptions.currentPage = goPage;
                     },
                     //记录选中项
                     recordSelected: function(index){
                         var absIndex = Math.abs(index)-1;
-                        if(undefined !== self.scope.gridSelected["index_"+absIndex]) {
-                            delete(self.scope.gridSelected["index_"+absIndex]);
+                        if(undefined !== self.selected["index_"+absIndex]) {
+                            delete(self.selected["index_"+absIndex]);
                         } else {
-                            self.scope.gridSelected["index_"+absIndex] = self.scope.itemsList[absIndex];
+                            self.selected["index_"+absIndex] = self.scope.itemsList[absIndex];
                         }
 
                         self.scope.$parent.gridSelected = [];
 
-                        angular.forEach(self.scope.gridSelected, function(item){
+                        angular.forEach(self.selected, function(item){
                             self.scope.$parent.gridSelected.push(item);
                         });
 
@@ -119,6 +126,72 @@
 //                        }
 
                         //self.scope.selectedItems.push();
+                    },
+                    //设置数据
+                    setPagingData : function(remoteData, page, pageSize) {
+                        var data = [];
+                        if(remoteData && typeof(remoteData[0]) == "object" && ("count" in remoteData[0])) {
+                            data = remoteData[1];
+                            self.scope.totalServerItems = remoteData[0].count;
+                            self.scope.totalPages = remoteData[0].totalPages;
+                        } else {
+                            data = remoteData;
+                            self.scope.totalServerItems = remoteData.length;
+                            self.scope.totalPages = parseInt(remoteData.length/self.scope.pagingOptions.pageSize)+1;
+                        }
+
+                        data = reIndex(data);
+                        self.scope.$broadcast("gridData.changed", data);
+
+                    },
+                    //获取数据
+                    getPagedDataAsync : function(pageSize, page, searchText, extraParams) {
+                        pageSize = pageSize || self.scope.pagingOptions.pageSize;
+                        page = page || self.scope.pagingOptions.currentPage;
+                        $timeout(function(){
+                            var data;
+                            var sb = [];
+                            if(self.scope.sortInfo.fields) {
+                                for (var i = 0; i < self.scope.sortInfo.fields.length; i++) {
+                                    sb.push(sprintf("%s%s",
+                                        self.scope.sortInfo.directions[i].toUpperCase() === "DESC" ? "-" : "+",
+                                        self.scope.sortInfo.fields[i]
+                                    ));
+                                }
+                            }
+                            /**
+                             * kw : 搜索关键字
+                             * pn : 当前页
+                             * ps : 一页N行
+                             * si : 排序
+                             * ic : 包含count info
+                             * */
+                            var p = {
+                                _kw: self.scope.filterOptions.filterText,
+                                _pn: self.scope.pagingOptions.currentPage,
+                                _ps: self.scope.pagingOptions.pageSize,
+                                _si: sb.join("|"),
+                                _ic: 1
+                            };
+    //                            console.log(p);
+                            p = $.extend(self.options.queryExtraParams, p, extraParams||{});
+                            var promise;
+                            try {
+                                promise = self.options.resource.getList(p).$promise;
+                            } catch(e) {
+
+                                try {
+                                    promise = self.options.resource.api.query(p).$promise;
+                                } catch(e) {
+                                    promise = self.options.resource.query(p).$promise;
+                                }
+                            }
+
+                            promise.then(function(remoteData){
+                                self.scope.setPagingData(remoteData, page, pageSize);
+                            });
+
+                        });
                     }
                 };
             }])
@@ -135,38 +208,47 @@
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
 
+                            $scope.$on("commonGrid.ready", function(){
+
+                            });
+
+                            var gridOptions = $scope.$parent.$eval(iAttrs.config);
+                            GridView.init($scope, gridOptions);
+
                             angular.forEach(GridView.methodsList, function(method, k){
                                 $scope[k] = method;
                             });
 
-                            $scope.$on("commonGrid.ready", function(){
-                                $scope.itemsList = [];
-                                $scope.$on("gridData.changed", function(evt, itemsList){
-                                    if(itemsList === true) {
-                                        $scope.doRefresh();
-                                    } else {
-                                        $scope.itemsList = itemsList;
-                                    }
-                                    $scope.gridSelected = {};
-                                    $scope.$parent.gridSelected = [];
-                                    ones.GridScope = $scope;
-                                });
+                            $scope.itemsList = [];
+                            $scope.$on("gridData.changed", function(evt, itemsList){
+                                if(itemsList === true) {
+                                    $scope.doRefresh();
+                                } else {
+                                    $scope.itemsList = itemsList;
+                                }
+                                $scope.gridSelected = [];
+                                GridView.selected = {};
+                                ones.GridScope = $scope;
 
-                                $scope.gridSelected = {};
-                                $scope.selectedActions = GridView.selectedActions;
-                                $scope.$parent.gridSelected = [];
-                                $scope.$parent.searchAble = true;
 
-                                GridView.scope = $scope;
+
                             });
 
+                            $scope.gridSelected = {};
+                            $scope.gridSelected = [];
 
+                            $scope.selectedActions = GridView.selectedActions;
+                            $scope.$parent.searchAble = true;
 
+                            //每页显示条数
+                            var pageSize = ones.caches.getItem("ones.pageSize");
+                            if(!pageSize) {
+                                pageSize = $scope.pagingOptions.pageSize;
+                                ones.caches.setItem("ones.pageSize", pageSize, 1);
+                            }
+                            $scope.pagingOptions.pageSize = pageSize;
+                            $scope.pageSizes = $scope.pagingOptions.pageSizes;
 
-
-//                            setInterval(function(){
-//                                console.log($scope.selectedItems);
-//                            }, 2000);
                         }
                     };
                 }

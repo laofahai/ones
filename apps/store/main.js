@@ -246,7 +246,8 @@
                             category: {
                                 inputType: "select",
                                 multiple: true,
-                                nameField: "prefix_name"
+                                nameField: "prefix_name",
+                                dataSource: "GoodsCategoryRes"
                             },
                             stockWarningOnly: {
                                 inputType: "select",
@@ -263,12 +264,7 @@
                                 required: false
                             }
                         };
-                        var defer = $q.defer();
-                        GoodsCategoryRes.query(function(data){
-                            struct.category.dataSource = data;
-                            defer.resolve(struct);
-                        });
-                        return defer.promise;
+                        return struct;
                     }
                 };
                 return service;

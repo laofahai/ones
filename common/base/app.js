@@ -120,6 +120,7 @@
                                 overflow: "scroll"
                             });
                         });
+                        $("#initCover").remove();
                     }
                 }, 2000);
 
@@ -162,10 +163,36 @@
                     ComView.alert(msg, "danger");
                 });
 
-                //屏蔽默认快捷键
-                $scope.removeDefaultKey = function() {
-
+                //全局键盘事件
+                $scope.doMainKeyDown = function($event){
+                    //back space
+                    if($event.keyCode === 8) {
+                        window.event.returnValue = false;
+                        return false;
+                    }
                 };
+
+                //历史
+                var pathHistory = function(){
+                    this.back = function(){};
+                    this.forward = function() {};
+                    this.go =function() {};
+
+                    this.getHistories = function() {
+                        return ones.caches.getItem("ones.pathHistory");
+                    };
+
+                    this.setHistories = function() {
+                        var histories = this.getHistories();
+                        histories.push($location.path());
+                        ones.caches.setItem("ones.pathHistory", histories, -1);
+                    };
+
+                    this._historys = [];
+                };
+                var ph = new pathHistory();
+
+//                console.log(ph.getHistories());
 
                 $scope.isAppLoaded = function(app) {
                     return isAppLoaded(app);
@@ -178,17 +205,17 @@
                 /**
                  * 监控路由变化
                  * */
-                var lastPage = []; //最后一页
-                $scope.$watch(function() {
-                    return $location.path();
-                }, function() {
+                 var lastPage = [];
+                 $rootScope.$on("$locationChangeSuccess", function() {
                     doWhenLocationChanged();
 
                     $('body,html').animate({scrollTop:0},300);
 
+//                    var lastPage = ones.caches.getItem("pageHistory");
+
                     lastPage[0] = lastPage[1];
                     lastPage[1] = $location.path();
-                    ones.caches.setItem("lastPage", lastPage);
+                    ones.caches.setItem("lastPage", lastPage, -1);
                 });
 
                 function doWhenLocationChanged() {

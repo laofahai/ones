@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="common/statics/css/main.css">
     <link rel="stylesheet" href="{:U('FrontendRuntime/index?action=getCss')}" />
 </head>
-<body ng-app="ones" ng-controller="MainCtl">
+<body ng-app="ones" ng-controller="MainCtl" ng-keydown="doMainKeyDown($event)">
 <div class="initCover" id="initCover">
     <div id="spinningSquaresG">
         <for start="1" end="9">

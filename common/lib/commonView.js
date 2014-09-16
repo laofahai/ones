@@ -479,8 +479,8 @@
                      * 分页/Grid 过滤器默认项
                      * */
                     $scope.pagingOptions = {
-                        pageSizes: [15, 30, 50],
-                        pageSize: 15,
+                        pageSizes: [10, 20, 30, 50],
+                        pageSize: 10,
                         currentPage: 1
                     };
                     $scope.filterOptions = {
@@ -598,17 +598,6 @@
                             }
                         }
 
-
-
-                        /**
-                         * 加入动作列
-                         * */
-//                        if(false !== $scope.selecteAble) {
-//                            columnDefs.push({
-//                                displayName: $rootScope.i18n.lang.operation
-//                            });
-//                        }
-
                         opts.columnDefs = columnDefs;
 
                         $scope.$broadcast("commonGrid.ready");
@@ -623,139 +612,7 @@
                         service.makeFilters($scope, model.filters);
                     }
 
-                    /**
-                     * 快捷键
-                     * */
-
-
-                        //导出excel
-                    $scope.doExport = function(){};
-
-                    var setPagingData = function(remoteData, page, pageSize) {
-                        var data = [];
-                        if(remoteData && typeof(remoteData[0]) == "object" && ("count" in remoteData[0])) {
-                            data = remoteData[1];
-                            $scope.totalServerItems = remoteData[0].count;
-                            $scope.totalPages = remoteData[0].totalPages;
-                        } else {
-                            data = remoteData;
-                            $scope.totalServerItems = remoteData.length;
-                            $scope.totalPages = parseInt(remoteData.length/$scope.pagingOptions.pageSize)+1;
-                        }
-
-                        data = reIndex(data);
-                        $scope.$broadcast("gridData.changed", data);
-
-                    };
-                    //获取数据
-                    $scope.getPagedDataAsync = function(pageSize, page, searchText, extraParams) {
-                        pageSize = pageSize || $scope.pagingOptions.pageSize;
-                        page = page || $scope.pagingOptions.currentPage;
-                        $timeout(function(){
-                            var data;
-                            var sb = [];
-                            if($scope.sortInfo.fields) {
-                                for (var i = 0; i < $scope.sortInfo.fields.length; i++) {
-                                    sb.push(sprintf("%s%s",
-                                        $scope.sortInfo.directions[i].toUpperCase() === "DESC" ? "-" : "+",
-                                        $scope.sortInfo.fields[i]
-                                    ));
-                                }
-                            }
-                            /**
-                             * kw : 搜索关键字
-                             * pn : 当前页
-                             * ps : 一页N行
-                             * si : 排序
-                             * ic : 包含count info
-                             * */
-                            var p = {
-                                _kw: $scope.filterOptions.filterText,
-                                _pn: $scope.pagingOptions.currentPage,
-                                _ps: $scope.pagingOptions.pageSize,
-                                _si: sb.join("|"),
-                                _ic: 1
-                            };
-//                            console.log(p);
-                            p = $.extend(opts.queryExtraParams, p, extraParams||{});
-                            var promise;
-                            try {
-                                promise = resource.getList(p).$promise;
-                            } catch(e) {
-
-                                try {
-                                    promise = resource.api.query(p).$promise;
-                                } catch(e) {
-                                    promise = resource.query(p).$promise;
-                                }
-                            }
-
-                            promise.then(function(remoteData){
-                                setPagingData(remoteData, page, pageSize);
-                            });
-
-                        });
-                    };
-
-                    var refresh = function(){
-                        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
-                    };
-
-                    refresh();
-
-                    /**
-                     * 双击事件，支持：viewDetail, viewSub, edit （优先级排序）
-                     * 支持覆盖此方法
-                     * */
-                    $scope.gridDblClick = function(item){
-                        if(!item) {
-                            return;
-                        }
-                        if(model.viewDetailAble === true) {
-                            $scope.doViewSelected($scope.gridSelected[0]);
-                        } else if(model.editAble !== false) {
-                            $scope.doEditSelected($scope.gridSelected[0]);
-                        } else if(model.subAble && model.viewSubAble) {
-
-                        }
-                    };
-                    opts.dblClickFn = $scope.gridDblClick;
-
-
-
-                    $timeout(function(){
-                        /**
-                         * 监视器
-                         * */
-                        $scope.$watch('pagingOptions', function(newVal, oldVal) {
-                            if (newVal !== oldVal) {
-                                if(newVal.currentPage >= $scope.totalPages) {
-                                    $scope.pagingOptions.currentPage = $scope.totalPages;
-                                }
-                                refresh ();
-                            }
-                        }, true);
-                        $scope.$watch('filterOptions', function(newVal, oldVal) {
-                            if (newVal !== oldVal) {
-                                refresh ();
-                            }
-                        }, true);
-                        $scope.$watch('sortInfo', function (newVal, oldVal) {
-                            if (newVal !== oldVal) {
-                                refresh ();
-                            }
-                        }, true);
-                        $scope.sortData = function(){
-                            refresh ();
-                        };
-                    }, 300);
-
                     $scope.gridOptions = opts;
-//
-//                    setInterval(function(){
-//                        console.log($scope.filterText);
-//                    }, 2000)
-
 
                 };
 
