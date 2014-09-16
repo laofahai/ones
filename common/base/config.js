@@ -18,6 +18,14 @@
         "exportAble"
     ];
 
+    ones.keyCodes = {
+        Enter: 13,
+        Tab: 9,
+        Up: 38,
+        Down: 40,
+        Escape: 27
+    };
+
     angular.module("ones.configModule", [])
         .service("ones.dataApiFactory", ["ones.config", "$resource", "$injector", function(config, $resource, $injector){
 

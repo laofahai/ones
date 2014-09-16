@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2014-09-16 22:07:21
+-- Generation Time: 2014-09-17 00:37:52
 -- 服务器版本： 5.1.73
 -- PHP Version: 5.4.24
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `x_apps` (
   KEY `alias` (`alias`,`dateline`,`status`),
   KEY `version` (`version`),
   KEY `abbreviation` (`abbreviation`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- 转存表中的数据 `x_apps`
@@ -58,7 +58,8 @@ INSERT INTO `x_apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`, `sta
 (11, 'finance', '', '0.1', 1409042764, 1),
 (12, 'shipment', '', '0.4', 1409042774, 1),
 (13, 'produce', '', '0.1', 1409042786, 1),
-(14, 'statistics', '', '0.1', 1409042796, 1);
+(14, 'statistics', '', '0.1', 1409042796, 1),
+(15, 'multiSearch', 'MTSC', '0.1', 1406906639, 1);
 
 -- --------------------------------------------------------
 
@@ -103,8 +104,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_access` (
 INSERT INTO `x_auth_group_access` (`uid`, `group_id`) VALUES
 (1, 1),
 (1, 2),
-(2, 2),
-(2, 3);
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `x_auth_group_rule` (
   `rule_id` int(11) NOT NULL,
   `flag` tinyint(1) NOT NULL DEFAULT '1',
   KEY `group_id` (`group_id`,`rule_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `x_auth_group_rule`
@@ -493,7 +493,7 @@ INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `descriptio
 (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
 (8, NULL, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0, 0),
 (9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0, 0),
-(10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'admin@domain.com', '备份发送至邮箱', 0, 0),
+(10, NULL, 'backup.sendto.email', '备份文件发送邮箱', '335454250@qq.com', '备份发送至邮箱', 0, 0),
 (11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0, 0),
 (12, NULL, 'remote.service.uri', '远程服务地址', 'http://service.ng-erp.com/index.php?s=/', '包括程序更新、帮助信息等', 0, 0),
 (15, NULL, 'system.version', '当前系统版本', '0.1.3', '请勿手动修改', 0, 0),
@@ -570,15 +570,67 @@ CREATE TABLE IF NOT EXISTS `x_data_model_data` (
   KEY `deleted` (`deleted`),
   KEY `pinyi` (`pinyin`),
   KEY `data` (`data`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=55 ;
 
 --
 -- 转存表中的数据 `x_data_model_data`
 --
 
 INSERT INTO `x_data_model_data` (`id`, `source_id`, `model_id`, `field_id`, `data`, `pinyin`, `deleted`) VALUES
-(1, 10, 2, 1, '通用', 'TY', 0),
-(2, 10, 2, 4, '120瓦', '120W', 0);
+(1, 10, 2, 1, '1233', '1233', 1),
+(2, 10, 2, 4, '370瓦', '370W', 1),
+(3, 10, 2, 4, '370瓦', '370W', 1),
+(4, 10, 2, 1, '通用', 'TY', 0),
+(5, 10, 2, 4, '180瓦', '180W', 1),
+(6, 10, 2, 4, '120瓦', '120W', 1),
+(7, 14, 2, 1, '150平', '150P', 0),
+(8, 14, 2, 4, '横式', 'HS', 0),
+(9, 14, 2, 4, '横式', 'HS', 1),
+(10, 14, 2, 4, '横式', 'HS', 1),
+(11, 14, 2, 4, '横式', 'HS', 1),
+(12, 10, 2, 4, '通用', 'TY', 0),
+(13, 11, 2, 1, '4x10', '4x10', 1),
+(14, 13, 2, 1, '4x10', '4x10', 0),
+(15, 13, 2, 1, '42x4', '42x4', 0),
+(16, 13, 2, 1, '110x4', '110x4', 0),
+(17, 13, 2, 1, '60x8', '60x8', 0),
+(18, 13, 2, 4, '370瓦', '370W', 0),
+(19, 13, 2, 4, '180瓦', '180W', 0),
+(20, 13, 2, 4, '120瓦', '120W', 0),
+(21, 13, 2, 1, '12x70', '12x70', 0),
+(22, 13, 2, 1, '12x30', '12x30', 0),
+(23, 13, 2, 1, '8x30', '8x30', 0),
+(24, 13, 2, 1, '10x30', '10x30', 0),
+(25, 13, 2, 4, '大', 'D', 0),
+(26, 13, 2, 4, '小', 'xiao', 0),
+(27, 11, 2, 1, '0.8', '0.8', 0),
+(28, 11, 2, 1, '1.0', '1.0', 0),
+(29, 10, 2, 1, '42x4', '42x4', 0),
+(30, 10, 2, 1, '110x4', '110x4', 0),
+(31, 10, 2, 1, '60x8', '60x8', 0),
+(32, 10, 2, 4, '方形', 'FX', 0),
+(33, 10, 2, 4, '大圆', 'DY', 0),
+(34, 10, 2, 4, '中圆', 'ZY', 0),
+(35, 10, 2, 4, '102', '102', 0),
+(36, 10, 2, 4, '42', '42', 0),
+(37, 10, 2, 4, '33', '33', 0),
+(38, 10, 2, 1, '1.0', '1.0', 1),
+(39, 10, 2, 1, '0.8', '0.8', 1),
+(40, 10, 2, 1, '3.2', '3.2', 1),
+(41, 10, 2, 1, '12x70', '12x70', 0),
+(42, 10, 2, 1, '12x30', '12x30', 0),
+(43, 10, 2, 1, '8x30', '8x30', 0),
+(44, 10, 2, 1, '10x30', '10x30', 0),
+(45, 11, 2, 1, '3.2', '3.2', 0),
+(46, 13, 2, 4, '370瓦', '370W', 1),
+(47, 13, 2, 4, '180瓦', '180W', 1),
+(48, 13, 2, 4, '120瓦', '120W', 1),
+(49, 13, 2, 1, '台州', 'TZ', 0),
+(50, 10, 2, 1, '95瓦', '95W', 0),
+(51, 13, 2, 4, '普通', 'PT', 0),
+(52, 13, 2, 4, '镀锌', 'D', 0),
+(53, 13, 2, 4, '4x10', '4x10', 0),
+(54, 13, 2, 4, '小', '', 1);
 
 -- --------------------------------------------------------
 
@@ -628,15 +680,16 @@ CREATE TABLE IF NOT EXISTS `x_department` (
   PRIMARY KEY (`id`),
   KEY `lft` (`lft`,`rgt`,`listorder`),
   KEY `parentid` (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `x_department`
 --
 
 INSERT INTO `x_department` (`id`, `pid`, `name`, `lft`, `rgt`, `listorder`) VALUES
-(1, 0, '某公司', 1, 4, 99),
-(2, 1, '总经办', 2, 3, 99);
+(1, 0, '峰鑫炉业', 1, 6, 99),
+(2, 1, '总经办', 2, 3, 99),
+(3, 1, '库管', 4, 5, 99);
 
 -- --------------------------------------------------------
 
@@ -651,7 +704,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_account` (
   `balance` float(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`),
   KEY `listorder` (`listorder`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `x_finance_account`
@@ -688,7 +741,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_pay_plan` (
   KEY `account_id` (`account_id`),
   KEY `financer_id` (`financer_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -718,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_receive_plan` (
   KEY `account_id` (`account_id`),
   KEY `financer_id` (`financer_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -744,7 +797,7 @@ CREATE TABLE IF NOT EXISTS `x_finance_record` (
   KEY `user_id` (`user_id`),
   KEY `financer_id` (`financer_id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -771,16 +824,61 @@ CREATE TABLE IF NOT EXISTS `x_goods` (
   KEY `store_max` (`store_max`),
   KEY `pinyin` (`pinyin`),
   KEY `deleted` (`deleted`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 --
 -- 转存表中的数据 `x_goods`
 --
 
 INSERT INTO `x_goods` (`id`, `goods_category_id`, `name`, `pinyin`, `measure`, `price`, `cost`, `factory_code`, `store_min`, `store_max`, `deleted`) VALUES
-(1, 10, '风机', 'FJ', '台', '300.00', '200.00', 'FJ001', '10.00', '30.00', 0),
-(2, 14, '锅炉', 'GL', '台', '5980.00', '1.00', 'gl', '1.00', '10.00', 0),
-(3, 10, '产品1', 'CP1', '件', '100.00', '1.00', '001', '1.00', '1.00', 1);
+(1, 10, '风机', 'FJ', '台', '300.00', '200.00', 'FJ001', '10.00', '30.00', 1),
+(2, 14, '锅炉', 'GL', '台', '5980.00', '1.00', 'gl', '1.00', '10.00', 1),
+(3, 13, '风机', 'FJ', '台', '500.00', '400.00', '风机370', '20.00', '50.00', 1),
+(4, 13, '风机', 'FJ', '台', '400.00', '300.00', '风机180', '30.00', '50.00', 1),
+(5, 13, '风机', 'FJ', '台', '300.00', '200.00', '020', '30.00', '50.00', 0),
+(6, 13, '数控箱', 'SKX', '个', '600.00', '500.00', '019', '30.00', '51.00', 0),
+(7, 13, '保温棉', 'BWM', '捆', '300.00', '200.00', '018', '20.00', '50.00', 0),
+(8, 13, '弯头', 'WT', '个', '30.00', '20.00', '017', '20.00', '30.00', 0),
+(9, 13, '内丝管', 'NSG', '套', '30.00', '20.00', '016', '2.00', '10.00', 0),
+(10, 13, '底座螺母', 'DZLM', '个', '10.00', '10.00', '015', '50.00', '999.99', 0),
+(11, 13, '炉门把手', 'LMBS', '个', '10.00', '8.00', '014', '30.00', '999.99', 0),
+(12, 13, '炉门轴承', 'LMZC', '根', '15.00', '10.00', '013', '30.00', '999.99', 0),
+(13, 13, '炉门工字座', 'LMGZZ', '个', '5.00', '2.00', '012', '100.00', '1000.00', 0),
+(14, 13, '炉门口座', 'LMKZ', '个', '2.00', '1.00', '011', '100.00', '999.99', 0),
+(15, 13, '炉门冲压边沿（方形）', 'LMCYBYFX', '个', '15.00', '10.00', '炉门冲压边沿（方形）', '101.00', '999.99', 1),
+(16, 13, '炉门冲压边沿（大圆）', 'LMCYBYDY', '个', '3.00', '2.00', '炉门冲压边沿（大圆）', '100.00', '999.99', 1),
+(17, 14, '炉门冲压边沿（中圆）', 'LMCYBYZY', '个', '3.00', '2.00', '炉门冲压边沿（中圆）', '300.00', '999.99', 1),
+(18, 13, '102烟道圆', '102YDY', '个', '2.00', '1.00', '102烟道圆', '100.00', '999.99', 1),
+(19, 13, '42冲压圆', '42CYY', '个', '2.00', '1.00', '42冲压圆', '20.00', '999.99', 1),
+(20, 13, '冲压圆', 'CYY', '个', '2.00', '1.00', '010', '20.00', '999.99', 0),
+(21, 13, '底座盘', 'DZP', '个', '10.00', '8.00', '009', '10.00', '999.99', 0),
+(22, 13, '宣传彩页', 'XCCY', '本', '3.00', '2.00', '008', '100.00', '999.99', 0),
+(23, 10, '油锯条', 'YJT', '根', '300.00', '200.00', '007', '6.00', '100.00', 0),
+(24, 13, '炉门小弹簧', 'LMDH', '个', '3.00', '2.00', '006', '100.00', '999.99', 0),
+(25, 11, '汽保焊丝', 'QBHS', '盘', '300.00', '200.00', '005', '1.00', '10.00', 0),
+(26, 11, '汽保焊丝', 'QBHS', '盘', '300.00', '200.00', '004', '1.00', '10.00', 0),
+(27, 11, '电焊条', 'DHT', '盒', '100.00', '80.00', '003', '5.00', '100.00', 0),
+(28, 11, '汽保焊导电咀', 'QBHDDJ', '个', '20.00', '10.00', '002', '3.00', '100.00', 0),
+(29, 11, '眼镜', 'YJ', '副', '20.00', '10.00', 'YJ001', '3.00', '20.00', 0),
+(30, 11, '滑石笔', 'HSB', '盒', '20.00', '10.00', 'HSB001', '2.00', '20.00', 0),
+(31, 11, '大薄片砂轮', 'DBPSL', '个', '30.00', '20.00', 'DMPSL001', '3.00', '50.00', 0),
+(32, 10, '布磨光片', 'BMGP', '个', '5.00', '3.00', '布磨光片', '5.00', '30.00', 1),
+(33, 10, '磨光片', 'MGP', '个', '2.00', '1.00', 'MGP001', '10.00', '200.00', 0),
+(34, 13, '炉门螺栓', 'LMLS', '个', '3.00', '2.00', 'LMLS001', '20.00', '300.00', 0),
+(35, 13, '火道口塑料把手', 'HDKSLBS', '个', '20.00', '5.00', 'HDKSLBS001', '20.00', '300.00', 0),
+(36, 10, '剥线钳', 'BXQ', '把', '30.00', '20.00', 'BXQ001', '1.00', '2.00', 0),
+(37, 10, '接线插头', 'JXCT', '个', '3.00', '2.00', 'JXCT001', '3.00', '30.00', 0),
+(38, 10, '插排', 'CP', '个', '30.00', '20.00', 'CP001', '1.00', '10.00', 0),
+(39, 10, '胶布', 'JB', '个', '3.00', '2.00', 'JB001', '2.00', '20.00', 0),
+(40, 10, '照明灯泡', 'ZMDP', '个', '3.00', '2.00', 'ZMDP001', '2.00', '10.00', 0),
+(41, 10, '胶带', 'JD', '个', '6.00', '5.00', 'JD001', '5.00', '100.00', 0),
+(42, 10, '锡箔纸（大）', 'XBZD', '个', '30.00', '20.00', '锡箔纸（大）', '5.00', '100.00', 1),
+(43, 13, '锡箔纸', 'XBZ', '个', '22.00', '20.00', 'XBZ001', '6.00', '100.00', 0),
+(44, 13, '镀锌螺丝', 'DLS', '套', '0.50', '0.26', 'DXLS001', '100.00', '999.00', 0),
+(45, 13, '螺丝8x30', 'LS8x30', '套', '0.30', '0.20', '螺丝8x30', '5.00', '50.00', 1),
+(46, 13, '螺丝', 'LS', '套', '0.30', '0.15', 'LS001', '10.00', '100.00', 0),
+(47, 13, '拉铆钉', 'LD', '盒', '10.00', '8.00', 'LMD001', '1.00', '10.00', 0),
+(48, 13, '壁纸刀', 'BZD', '片', '10.00', '5.00', '0300', '5.00', '100.00', 0);
 
 -- --------------------------------------------------------
 
@@ -804,21 +902,19 @@ CREATE TABLE IF NOT EXISTS `x_goods_category` (
   KEY `pinyin` (`pinyin`),
   KEY `bind_model` (`bind_model`),
   KEY `deleted` (`deleted`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- 转存表中的数据 `x_goods_category`
 --
 
 INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lft`, `rgt`, `listorder`, `deleted`) VALUES
-(1, 0, 'ROOT', 0, NULL, 1, 16, 0, 0),
-(10, 1, '电气配件', 0, 'DQPJ', 2, 7, 99, 0),
-(11, 1, '焊接耗材', 0, 'HJHC', 8, 11, 99, 0),
+(1, 0, 'ROOT', 0, NULL, 1, 12, 0, 0),
+(10, 1, '电气配件', 0, 'DQPJ', 2, 3, 99, 0),
+(11, 1, '焊接耗材', 0, 'HJHC', 4, 7, 99, 0),
 (12, 11, '123', 0, '123', 5, 6, 99, 1),
-(13, 1, '装机配件', 0, 'ZJPJ', 12, 13, 99, 0),
-(14, 1, '成品锅炉', 0, 'CPGL', 14, 15, 99, 0),
-(15, 10, '123', 0, '123', 3, 4, 99, 1),
-(16, 10, '12', 0, '12', 5, 6, 99, 0);
+(13, 1, '装机配件', 0, 'ZJPJ', 8, 9, 99, 0),
+(14, 1, '成品锅炉', 0, 'CPGL', 10, 11, 99, 0);
 
 -- --------------------------------------------------------
 
@@ -884,7 +980,7 @@ CREATE TABLE IF NOT EXISTS `x_orders` (
   KEY `sale_type` (`sale_type`),
   KEY `saler_id` (`saler_id`),
   KEY `deleted` (`deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -903,7 +999,7 @@ CREATE TABLE IF NOT EXISTS `x_orders_detail` (
   `order_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`,`factory_code_all`,`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -920,7 +1016,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_boms` (
   `num` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `plan_id` (`plan_id`,`plan_detail_id`,`goods_id`,`factory_code_all`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -939,7 +1035,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_plan` (
   `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`,`start_time`,`end_time`,`create_time`,`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -959,7 +1055,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_plan_detail` (
   `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plan_id` (`plan_id`,`goods_id`,`factory_code_all`,`start_time`,`end_time`,`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -982,7 +1078,7 @@ CREATE TABLE IF NOT EXISTS `x_produce_process` (
   KEY `plan_id` (`plan_id`,`plan_detail_id`,`start_time`,`end_time`,`status`),
   KEY `craft_id` (`craft_id`),
   KEY `goods_id` (`goods_id`,`factory_code_all`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1039,7 +1135,7 @@ CREATE TABLE IF NOT EXISTS `x_purchase` (
   KEY `subject` (`supplier_id`,`dateline`,`status`),
   KEY `sale_type` (`purchase_type`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1058,7 +1154,7 @@ CREATE TABLE IF NOT EXISTS `x_purchase_detail` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`purchase_id`,`goods_id`,`num`),
   KEY `factory_code_all` (`factory_code_all`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1177,7 +1273,7 @@ CREATE TABLE IF NOT EXISTS `x_returns` (
   KEY `subject` (`saler_id`,`customer_id`,`dateline`,`status`),
   KEY `sale_type` (`returns_type`),
   KEY `deleted` (`deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1194,7 +1290,7 @@ CREATE TABLE IF NOT EXISTS `x_returns_detail` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`returns_id`,`goods_id`,`num`),
   KEY `factory_code_all` (`factory_code_all`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1214,7 +1310,7 @@ CREATE TABLE IF NOT EXISTS `x_session` (
 --
 
 INSERT INTO `x_session` (`session_id`, `session_expire`, `session_data`) VALUES
-('7adv0evsdodbjho7vmvr199946', 1410838968, 0x757365727c613a31333a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31373a2261646d696e65406e672d6572702e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333333333333333333223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a313a2232223b733a323a227171223b4e3b733a363a2267726f757073223b613a323a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a373a7b733a323a226964223b733a313a2232223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e680bbe7bb8fe58a9e223b733a333a226c6674223b733a313a2232223b733a333a22726774223b733a313a2233223b733a393a226c6973746f72646572223b733a323a223939223b733a343a2270617468223b733a32313a22e69f90e585ace58fb8203e20e680bbe7bb8fe58a9e223b7d733a393a227573657267726f7570223b733a333a22312c32223b733a393a2267726f75705f696473223b613a323a7b693a303b733a313a2231223b693a313b733a313a2232223b7d733a31323a2267726f75705f6c6162656c73223b613a323a7b693a303b733a31353a22e8b685e7baa7e7aea1e79086e59198223b693a313b733a363a22e5ba93e7aea1223b7d7d);
+('7adv0evsdodbjho7vmvr199946', 1410888551, 0x757365727c613a31333a7b733a323a226964223b733a313a2231223b733a353a22656d61696c223b733a31373a2261646d696e65406e672d6572702e636f6d223b733a383a22747275656e616d65223b733a393a22e7aea1e79086e59198223b733a383a22757365726e616d65223b733a31333a2261646d696e6973747261746f72223b733a353a2270686f6e65223b733a31313a223133333333333333333333223b733a363a22737461747573223b733a313a2231223b733a31333a226465706172746d656e745f6964223b733a313a2232223b733a323a227171223b4e3b733a363a2267726f757073223b613a323a7b693a303b613a333a7b733a323a226964223b733a313a2231223b733a353a227469746c65223b733a31353a22e8b685e7baa7e7aea1e79086e59198223b733a363a22737461747573223b733a313a2231223b7d693a313b613a333a7b733a323a226964223b733a313a2232223b733a353a227469746c65223b733a363a22e5ba93e7aea1223b733a363a22737461747573223b733a313a2231223b7d7d733a31303a224465706172746d656e74223b613a373a7b733a323a226964223b733a313a2232223b733a333a22706964223b733a313a2231223b733a343a226e616d65223b733a393a22e680bbe7bb8fe58a9e223b733a333a226c6674223b733a313a2232223b733a333a22726774223b733a313a2233223b733a393a226c6973746f72646572223b733a323a223939223b733a343a2270617468223b733a32343a22e5b3b0e991abe78289e4b89a203e20e680bbe7bb8fe58a9e223b7d733a393a227573657267726f7570223b733a333a22312c32223b733a393a2267726f75705f696473223b613a323a7b693a303b733a313a2231223b693a313b733a313a2232223b7d733a31323a2267726f75705f6c6162656c73223b613a323a7b693a303b733a31353a22e8b685e7baa7e7aea1e79086e59198223b693a313b733a363a22e5ba93e7aea1223b7d7d);
 
 -- --------------------------------------------------------
 
@@ -1242,7 +1338,7 @@ CREATE TABLE IF NOT EXISTS `x_shipment` (
   KEY `stockout_id` (`stockout_id`),
   KEY `shipment_type` (`shipment_type`),
   KEY `freight_type` (`freight_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1260,7 +1356,7 @@ CREATE TABLE IF NOT EXISTS `x_stock` (
   KEY `name` (`name`),
   KEY `deleted` (`deleted`),
   KEY `pinyin` (`pinyin`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `x_stock`
@@ -1294,16 +1390,29 @@ CREATE TABLE IF NOT EXISTS `x_stockin` (
   KEY `type_id` (`type_id`,`dateline`,`user_id`,`stock_manager`,`source_model`,`source_id`),
   KEY `status` (`status`),
   KEY `deleted` (`deleted`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 --
 -- 转存表中的数据 `x_stockin`
 --
 
 INSERT INTO `x_stockin` (`id`, `bill_id`, `type_id`, `subject`, `dateline`, `total_num`, `user_id`, `stock_manager`, `status`, `source_model`, `source_id`, `memo`, `deleted`) VALUES
-(1, '1409160927345', NULL, NULL, '1410830834', '10.00', 1, 0, 0, NULL, NULL, NULL, 0),
-(3, '1409161042070', NULL, NULL, '1410835299', '2.00', 1, 0, 0, NULL, NULL, NULL, 0),
-(4, '1409161042363', NULL, NULL, '1410835343', '1.00', 1, 0, 0, NULL, NULL, NULL, 0);
+(1, '1409151552421', NULL, '风机', '1410767503', '90.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(2, '1409151555141', NULL, '弯头', '1410767626', '157.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(3, '1409151557531', NULL, '保温棉', '1410767776', '38.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(4, '1409151559345', NULL, '内丝管', '1410767937', '7.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(5, '1409151606441', NULL, '底座螺母', '1410768366', '330.00', 2, 0, 2, NULL, NULL, NULL, 0),
+(6, '1409151616125', NULL, '炉门把手', '1410768878', '5040.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(7, '1409160947024', NULL, '灯泡等', '1410831931', '38.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(8, '1409161002538', NULL, '螺丝等', '1410832892', '200.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(9, '1409161024252', NULL, NULL, '1410834229', '1.00', 2, 0, 0, NULL, NULL, NULL, 1),
+(10, '1409161029161', NULL, '拉铆钉', '1410834523', '1.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(11, '1409161031511', NULL, '壁纸刀', '1410834677', '20.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(12, '1409161035548', NULL, NULL, '1410834940', '1.00', 2, 0, 0, NULL, NULL, NULL, 1),
+(13, '1409161036393', NULL, NULL, '1410834986', '13.00', 2, 0, 0, NULL, NULL, NULL, 1),
+(14, '1409161039165', NULL, '锡箔纸', '1410835129', '10.00', 2, 2, 2, NULL, NULL, NULL, 0),
+(15, '1409161041097', NULL, NULL, '1410835246', '3.00', 2, 0, 0, NULL, NULL, NULL, 1),
+(16, '1409161041409', NULL, '锡箔纸', '1410835275', '3.00', 2, 2, 2, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -1323,16 +1432,40 @@ CREATE TABLE IF NOT EXISTS `x_stockin_detail` (
   KEY `stockin_id` (`stockin_id`,`goods_id`),
   KEY `factory_code_all` (`factory_code_all`),
   KEY `stock_id` (`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- 转存表中的数据 `x_stockin_detail`
 --
 
 INSERT INTO `x_stockin_detail` (`id`, `stockin_id`, `goods_id`, `num`, `factory_code_all`, `stock_id`, `memo`) VALUES
-(1, 1, 1, '10.00', 'FJ001-1-2', 1, NULL),
-(2, 3, 1, '2.00', 'FJ001-1-2', 1, NULL),
-(3, 4, 1, '1.00', 'FJ001-1-2', 1, NULL);
+(1, 1, 5, '59.00', '020-49-20', 1, NULL),
+(2, 1, 5, '27.00', '020-49-19', 1, NULL),
+(3, 1, 5, '4.00', '020-49-18', 1, NULL),
+(4, 2, 8, '121.00', '017-29-12', 1, NULL),
+(5, 2, 8, '2.00', '017-30-12', 1, NULL),
+(6, 2, 8, '34.00', '017-31-12', 1, NULL),
+(7, 3, 7, '38.00', '018-4-12', 1, NULL),
+(8, 4, 9, '7.00', '016-4-12', 1, NULL),
+(9, 5, 10, '330.00', '015-4-12', 1, NULL),
+(10, 6, 11, '270.00', '014-4-12', 1, NULL),
+(11, 6, 12, '460.00', '013-4-12', 1, NULL),
+(12, 6, 13, '3218.00', '012-4-12', 1, NULL),
+(13, 6, 14, '1092.00', '011-4-12', 1, NULL),
+(14, 7, 40, '6.00', 'ZMDP001-4-12', 1, NULL),
+(15, 7, 39, '9.00', 'JB001-4-12', 1, NULL),
+(16, 7, 41, '3.00', 'JD001-4-12', 1, NULL),
+(17, 7, 37, '20.00', 'JXCT001-4-12', 1, NULL),
+(18, 8, 46, '200.00', 'LS001-44-52', 1, NULL),
+(19, 9, 47, '1.00', 'LMD001-14-51', 1, NULL),
+(20, 10, 47, '1.00', 'LMD001-14-51', 1, NULL),
+(21, 11, 48, '20.00', '0300-4-12', 1, NULL),
+(22, 12, 5, '1.00', '020-4-20', 1, NULL),
+(23, 13, 43, '3.00', 'XBZ001-4-25', 1, NULL),
+(24, 13, 43, '10.00', 'XBZ001-4-54', 1, NULL),
+(25, 14, 43, '10.00', 'XBZ001-4-26', 1, NULL),
+(26, 15, 43, '3.00', 'XBZ001-4-25', 1, NULL),
+(27, 16, 43, '3.00', 'XBZ001-4-25', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1356,14 +1489,14 @@ CREATE TABLE IF NOT EXISTS `x_stockout` (
   KEY `source_id` (`source_id`,`dateline`,`outtime`,`stock_manager`),
   KEY `status` (`status`),
   KEY `source_model` (`source_model`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `x_stockout`
 --
 
 INSERT INTO `x_stockout` (`id`, `bill_id`, `source_id`, `source_model`, `dateline`, `outtime`, `total_num`, `outed_num`, `stock_manager`, `status`, `memo`) VALUES
-(1, 'CK1409160946522', 0, '', '1410832002', NULL, '1.00', '0.00', 1, 0, NULL);
+(1, 'CK1409161004493', 0, '', '1410833065', '1410833101', '25.00', '25.00', 2, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1383,14 +1516,14 @@ CREATE TABLE IF NOT EXISTS `x_stockout_detail` (
   PRIMARY KEY (`id`),
   KEY `stockout_id` (`stockout_id`),
   KEY `factory_code_all` (`factory_code_all`,`goods_id`,`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `x_stockout_detail`
 --
 
 INSERT INTO `x_stockout_detail` (`id`, `stockout_id`, `factory_code_all`, `goods_id`, `stock_id`, `num`, `outed`, `memo`) VALUES
-(1, 1, 'FJ001-1-2', 1, 1, '1.00', '0.00', NULL);
+(1, 1, 'LS001-44-52', 46, 1, '25.00', '25.00', NULL);
 
 -- --------------------------------------------------------
 
@@ -1409,7 +1542,35 @@ CREATE TABLE IF NOT EXISTS `x_stock_product_list` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `factory_code_all` (`factory_code_all`,`stock_id`),
   KEY `goods_id` (`goods_id`,`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+
+--
+-- 转存表中的数据 `x_stock_product_list`
+--
+
+INSERT INTO `x_stock_product_list` (`id`, `factory_code_all`, `goods_id`, `stock_id`, `unit_price`, `cost`, `num`) VALUES
+(1, '020-49-20', 5, 1, '300.00', '200.00', '59.00'),
+(2, '020-49-19', 5, 1, '300.00', '200.00', '27.00'),
+(3, '020-49-18', 5, 1, '300.00', '200.00', '4.00'),
+(4, '017-29-12', 8, 1, '30.00', '20.00', '121.00'),
+(5, '017-30-12', 8, 1, '30.00', '20.00', '2.00'),
+(6, '017-31-12', 8, 1, '30.00', '20.00', '34.00'),
+(7, '018-4-12', 7, 1, '300.00', '200.00', '38.00'),
+(8, '016-4-12', 9, 1, '30.00', '20.00', '7.00'),
+(9, '015-4-12', 10, 1, '10.00', '10.00', '330.00'),
+(10, '014-4-12', 11, 1, '10.00', '8.00', '270.00'),
+(11, '013-4-12', 12, 1, '15.00', '10.00', '460.00'),
+(12, '012-4-12', 13, 1, '5.00', '2.00', '3218.00'),
+(13, '011-4-12', 14, 1, '2.00', '1.00', '1092.00'),
+(14, 'JXCT001-4-12', 37, 1, '3.00', '2.00', '20.00'),
+(15, 'JB001-4-12', 39, 1, '3.00', '2.00', '9.00'),
+(16, 'ZMDP001-4-12', 40, 1, '3.00', '2.00', '6.00'),
+(17, 'JD001-4-12', 41, 1, '6.00', '5.00', '3.00'),
+(18, 'LS001-44-52', 46, 1, '0.30', '0.15', '175.00'),
+(19, 'LMD001-14-51', 47, 1, '10.00', '8.00', '1.00'),
+(20, '0300-4-12', 48, 1, '10.00', '5.00', '20.00'),
+(21, 'XBZ001-4-26', 43, 1, '22.00', '20.00', '10.00'),
+(22, 'XBZ001-4-25', 43, 1, '22.00', '20.00', '3.00');
 
 -- --------------------------------------------------------
 
@@ -1472,7 +1633,7 @@ CREATE TABLE IF NOT EXISTS `x_user` (
 
 INSERT INTO `x_user` (`id`, `email`, `truename`, `username`, `password`, `phone`, `status`, `department_id`, `qq`) VALUES
 (1, 'admine@ng-erp.com', '管理员', 'administrator', '4297f44b13955235245b2497399d7a93', '13333333333', 1, 2, NULL),
-(2, 'admin@admin.com', '第二个管理员', 'admin', '4297f44b13955235245b2497399d7a93', '123', 1, 2, NULL);
+(2, 'admin@admin.com', '孙鹏飞', '峰鑫炉业', '4297f44b13955235245b2497399d7a93', '123', 1, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -1495,10 +1656,10 @@ CREATE TABLE IF NOT EXISTS `x_user_desktop` (
 --
 
 INSERT INTO `x_user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
-(1, '最近入库', 'latestStockin.html', 6, 99),
-(2, '最近出库', 'latestStockout.html', 6, 99),
-(3, '出库待处理', 'needStockout.html', 6, 99),
-(5, '在产产品', 'producePlanDetail.html', 6, 99);
+(1, '最近入库', 'latestStockin.html', 4, 99),
+(2, '最近出库', 'latestStockout.html', 4, 99),
+(3, '出库待处理', 'needStockout.html', 4, 99),
+(5, '在产产品', 'producePlanDetail.html', 4, 99);
 
 -- --------------------------------------------------------
 
@@ -1569,10 +1730,10 @@ INSERT INTO `x_workflow_node` (`id`, `workflow_id`, `name`, `type`, `execute_fil
 (1, 1, '新建入库单', 1, 'StartProcess', 0, '', '2', '', NULL, 0, 0, 0, 0, '新入库单', NULL, '', ''),
 (2, 1, '确认入库', 1, 'ConfirmStockin', 1, '1', '', 'g:1', NULL, -1, 0, 0, 0, '已入库', NULL, '', ''),
 (3, 2, '新建出库单', 1, 'StartProcess', 0, '', '4,5', 'g:1', NULL, 0, 0, 0, 0, '新出库单', NULL, '', ''),
-(4, 2, '确认出库', 7, 'ConfirmStockout', 1, '3', '4,6,7', 'g:1', NULL, 0, 0, 0, 0, '出库单已确认', NULL, '', ''),
+(4, 2, '确认出库', 7, 'ConfirmStockout', 1, '3', '6', 'g:1', NULL, 0, 0, 0, 0, '出库单已确认', NULL, '', ''),
 (5, 2, '驳回出库', 7, 'RejectStockout', 1, '', '', '', NULL, 0, 0, 0, 0, '出库单已驳回', NULL, '', ''),
 (6, 2, '生成发货单', 1, 'MakeShipment', 2, '4', '7', 'g:1', NULL, 0, 0, 0, 0, '待发货', NULL, '', ''),
-(7, 2, '完成出库', 1, 'Complete', 3, '4', '', 'g:1', NULL, 0, 0, 0, 0, '已完成', NULL, '', ''),
+(7, 2, '完成出库', 2, 'Complete', 3, '', '', '', NULL, 0, 0, 0, 0, '已完成', NULL, '', ''),
 (8, 3, '新建订单', 2, 'StartProcess', 0, '', '9', 'g:1', NULL, 0, 0, 0, 0, '新订单', NULL, '', ''),
 (9, 3, '保存订单', 1, 'SaveOrder', 1, '8', '10', 'g:1', NULL, 0, 0, 0, 0, '订单已保存', NULL, '', ''),
 (10, 3, '申请财务审核', 2, 'RequireFinanceVerify', 2, '9', '11', 'g:1', NULL, 0, 0, 0, 0, '已申请财务审核', NULL, '', ''),
@@ -1619,17 +1780,43 @@ CREATE TABLE IF NOT EXISTS `x_workflow_process` (
   PRIMARY KEY (`id`),
   KEY `workflow_id` (`workflow_id`,`node_id`,`start_time`,`end_time`,`status`,`user_id`),
   KEY `mainrow_id` (`mainrow_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 --
 -- 转存表中的数据 `x_workflow_process`
 --
 
 INSERT INTO `x_workflow_process` (`id`, `workflow_id`, `node_id`, `mainrow_id`, `context`, `start_time`, `end_time`, `status`, `user_id`, `memo`) VALUES
-(1, 1, 1, 1, 'a:0:{}', '1410830854', '', 0, 1, ''),
-(2, 2, 3, 1, 'a:0:{}', '1410832012', '', 0, 1, ''),
-(3, 1, 1, 3, 'a:0:{}', '1410835327', '', 0, 1, ''),
-(4, 1, 1, 4, 'a:0:{}', '1410835356', '', 0, 1, '');
+(1, 1, 1, 1, 'a:0:{}', '1410767562', '1410767605', 1, 2, ''),
+(2, 1, 2, 1, 'a:0:{}', '1410767605', '', 0, 2, ''),
+(3, 1, 1, 2, 'a:0:{}', '1410767714', '1410767725', 1, 2, ''),
+(4, 1, 2, 2, 'a:0:{}', '1410767725', '', 0, 2, ''),
+(5, 1, 1, 3, 'a:0:{}', '1410767873', '1410767916', 1, 2, ''),
+(6, 1, 2, 3, 'a:0:{}', '1410767916', '', 0, 2, ''),
+(7, 1, 1, 4, 'a:0:{}', '1410767974', '1410767984', 1, 2, ''),
+(8, 1, 2, 4, 'a:0:{}', '1410767984', '', 0, 2, ''),
+(9, 1, 1, 5, 'a:0:{}', '1410768404', '1410768515', 1, 2, ''),
+(10, 1, 2, 5, 'a:0:{}', '1410768515', '', 0, 2, ''),
+(11, 1, 1, 6, 'a:0:{}', '1410768972', '1410831535', 1, 2, ''),
+(12, 1, 2, 6, 'a:0:{}', '1410831535', '', 0, 2, ''),
+(13, 1, 1, 7, 'a:0:{}', '1410832022', '1410832031', 1, 2, ''),
+(14, 1, 2, 7, 'a:0:{}', '1410832031', '', 0, 2, ''),
+(15, 1, 1, 8, 'a:0:{}', '1410832973', '1410833064', 1, 2, ''),
+(16, 1, 2, 8, 'a:0:{}', '1410833064', '', 0, 2, ''),
+(17, 2, 3, 1, 'a:0:{}', '1410833088', '1410833101', 1, 2, ''),
+(18, 2, 4, 1, 'a:0:{}', '1410833101', '', 0, 2, '螺丝/10x30/镀锌: 25 (总库)'),
+(19, 1, 1, 9, 'a:0:{}', '1410834265', '', 0, 2, ''),
+(20, 1, 1, 10, 'a:0:{}', '1410834555', '1410834563', 1, 2, ''),
+(21, 1, 2, 10, 'a:0:{}', '1410834563', '', 0, 2, ''),
+(22, 1, 1, 11, 'a:0:{}', '1410834711', '1410834718', 1, 2, ''),
+(23, 1, 2, 11, 'a:0:{}', '1410834718', '', 0, 2, ''),
+(24, 1, 1, 12, 'a:0:{}', '1410834954', '', 0, 2, ''),
+(25, 1, 1, 13, 'a:0:{}', '1410834999', '', 0, 2, ''),
+(26, 1, 1, 14, 'a:0:{}', '1410835156', '1410835185', 1, 2, ''),
+(27, 1, 2, 14, 'a:0:{}', '1410835185', '', 0, 2, ''),
+(28, 1, 1, 15, 'a:0:{}', '1410835269', '', 0, 2, ''),
+(29, 1, 1, 16, 'a:0:{}', '1410835300', '1410835309', 1, 2, ''),
+(30, 1, 2, 16, 'a:0:{}', '1410835309', '', 0, 2, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

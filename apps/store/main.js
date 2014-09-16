@@ -71,6 +71,17 @@
         ones.pluginScope.set("defer", defer);
     });
 
+    //综合搜索
+    ones.pluginRegister("hook.multiSearch.items", function(inject, defer, params){
+        ones.pluginScope.append("ones.multiSearch.items", {
+            name: "stockin",
+            dataSource: "StockinRes",
+            labelField: "bill_id",
+            linkTpl: "store/editBill/stockin/id/+id",
+            link: "store/list/stockin"
+        });
+    });
+
     angular.module("ones.store", [])
         .config(["$routeProvider", function($route){
             $route

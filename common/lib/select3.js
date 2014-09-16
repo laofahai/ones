@@ -120,13 +120,7 @@
                         var config = self.currentConfig;
 
 
-                        var Keys = {
-                            Enter: 13,
-                            Tab: 9,
-                            Up: 38,
-                            Down: 40,
-                            Escape: 27
-                        };
+                        var Keys = ones.keyCodes;
                         if($event.keyCode === Keys.Up || $event.keyCode === Keys.down) {
                             window.event.returnValue =false;
                         }

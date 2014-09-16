@@ -47,8 +47,8 @@
         },
         append: function(k, v) {
             try {
-                if(!ones.pluginVariables) {
-                    ones.pluginVariables = [];
+                if(!ones.pluginVariables[k]) {
+                    ones.pluginVariables[k] = [];
                 }
                 ones.pluginVariables[k].push(v);
             } catch(e) {}

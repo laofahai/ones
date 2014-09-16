@@ -475,9 +475,9 @@ commonform {
     -moz-animation:spinPulse 2s infinite ease-in-out;
     -webkit-animation:spinPulse 2s infinite linear;
     position:absolute;
-    top:50%;
+    top:350px;
     left:50%;
-    margin-left:-25px !important;
+    margin-left:-35px !important;
     margin-top:-25px !important;
 }
 .loadingCircle1 {
@@ -496,9 +496,9 @@ commonform {
     -moz-animation:spinoffPulse 1s infinite linear;
     -webkit-animation:spinoffPulse 1s infinite linear;
     position:absolute;
-    top:50%;
+    top:350px;
     left:50%;
-    margin-left:-15px !important;
+    margin-left:-25px !important;
     margin-top:-15px !important;
 }
 
@@ -520,8 +520,20 @@ commonform {
     0% { -webkit-transform:rotate(0deg); }
     100% { -webkit-transform:rotate(360deg); }
 }
-
-
+.loadingState {
+    position:fixed;
+    left:50%;
+    top:100px;
+}
+.loadingState .loadingCircle, .loadingState .loadingCircle1 {
+    position:static;
+}
+.loadingState .loadingCircle {
+    margin-top:-5px !important;
+}
+.loadingState .loadingCircle1 {
+    margin-top:-40px !important;
+}
 
 
 
@@ -606,4 +618,22 @@ th.sorting_asc,th.sorting_desc {
 }
 .table-grid .td-unfound{
     padding:15px 0;
+}
+
+.nav-search ul.dropdown-menu {
+    display:block;
+}
+.nav-search .dropdown-menu li {
+    list-style:none;
+}
+.nav-search .dropdown-menu li ul li a {
+    padding-left:13px;
+    font-size:12px;
+    display:block;
+}
+.nav-search .dropdown-menu li ul {
+    margin:0;padding:0;
+}
+.nav-search .dropdown-menu li ul li{
+    padding-left:0;
 }

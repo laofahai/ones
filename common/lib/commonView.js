@@ -779,6 +779,7 @@
                     }
 
                     //编辑
+//                    console.log(model.editAble);
                     if(model.editAble === undefined || model.editAble) {
                         $scope.selectedActions.push({
                             label: service.toLang('edit', "actions"),

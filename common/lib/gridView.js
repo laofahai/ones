@@ -62,7 +62,11 @@
                 this.methodsList = {
                     //双击事件
                     doGridDblClick: function(item, extra){
-                        self.scope.$parent.doEditSelected(item);
+                        try {
+                            self.scope.$parent.doViewSelected(item);
+                        } catch(e) {
+                            self.scope.$parent.doEditSelected(item);
+                        }
                     },
                     //排序
                     doGridSortBy: function(field){
@@ -233,6 +237,8 @@
 
                             $scope.gridSelected = {};
                             $scope.gridSelected = [];
+
+//                            console.log($scope.$parent);
 
                             $scope.selectedActions = GridView.selectedActions;
                             $scope.$parent.searchAble = true;

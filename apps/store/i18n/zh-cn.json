@@ -90,8 +90,8 @@
         "storeNum": "库存数量",
         "store_min": "库存下限",
         "store_max": "库存上限",
-        "stockin": "入库",
-        "stockout": "出库",
+        "stockin": "入库单",
+        "stockout": "出库单",
         "stockWarningOnly": "仅库存警告数据",
         "stock_warning": "库存警告",
 

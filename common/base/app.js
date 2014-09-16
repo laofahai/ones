@@ -175,6 +175,13 @@
                 $scope.doMainKeyDown = function($event){
                     //back space
                     if($event.keyCode === 8) {
+                        var skips = [
+                            "input",
+                            "textarea"
+                        ];
+                        if(skips.indexOf($($event.target).context.localName) >= 0) {
+                            return true;
+                        }
                         window.event.returnValue = false;
                         return false;
                     }
@@ -207,7 +214,7 @@
                 }
 
                 $scope.isPrimaryApp = function(app) {
-                    return ['dashboard','department', 'services'].indexOf(app) >=0 ? true : false;
+                    return ['dashboard','department', 'services', 'multiSearch'].indexOf(app) >=0 ? true : false;
                 }
 
                 /**
@@ -279,8 +286,6 @@
                      * 设定当前APP信息
                      * current location info
                      * */
-
-
                     $scope.currentPage.app = app;
                     $scope.currentPage.action = action;
                     $scope.currentPage.module = module;

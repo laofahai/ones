@@ -37,7 +37,6 @@
 
                         <i class="icon-caret-down"></i>
                     </a>
-
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
                             <a href="#/department/Profile">
@@ -45,7 +44,6 @@
                                 <span ng-bind="i18n.lang.myprofile"></span>
                             </a>
                         </li>
-
                         <li class="divider"></li>
                         <li>
                             <a href="#/dashboard/list/myDesktop">
@@ -53,9 +51,7 @@
                                 <span ng-bind="i18n.lang.my_desktop"></span>
                             </a>
                         </li>
-
                         <li class="divider"></li>
-
                         <li>
                             <a href="#/department/Logout">
                                 <i class="icon-power-off"></i>
@@ -140,7 +136,6 @@
 
         <div class="main-content">
             <div class="breadcrumbs" id="breadcrumbs">
-
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home home-icon"></i>
@@ -150,12 +145,40 @@
                     <li class="active" ng-bind="currentPage.lang.module"></li>
                 </ul><!-- .breadcrumb -->
 
-                <div class="nav-search">
-                            <span class="input-icon">
-                                <input type="text" placeholder="Search ..." class="nav-search-input" autocomplete="off" />
-                                <i class="icon-search nav-search-icon"></i>
-                            </span>
+                <div class="nav-search" ng-controller="multiSearchCtl">
+                    <span class="input-icon">
+                        <input type="text"
+                               placeholder="Search ..."
+                               class="nav-search-input"
+                               autocomplete="off"
+                               ng-model="keyword"
+                               ng-model-options="{debounce:300}"
+                               ng-keydown="doSearchKeydown($event)"
+                               ng-blur="doSearchBlur($event)"
+                               ng-focus="doSearchFocus($event)" />
+                        <i class="icon-search nav-search-icon"></i>
+                    </span>
+
+                    <ul class="typeahead dropdown-menu" ng-show="results">
+                        <li ng-repeat="p in results" ng-show="p.datas.length>0">
+                            <a ng-href="#/{{p.subject.link}}">
+                                <span ng-bind="p.subject.title|lang"></span>
+                                <i class="icon icon-level-down"></i>
+                            </a>
+                            <ul>
+                                <li ng-repeat="row in p.datas" data-href="{{row.link}}">
+                                    <a ng-href="#/{{row.link}}" ng-bind="row.label"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
                 </div><!-- #nav-search -->
+            </div>
+
+            <div class="loadingState hide" ng-show="$root.dataQuering">
+                <div class="loadingCircle"></div>
+                <div class="loadingCircle1"></div>
             </div>
 
             <div class="page-content">
