@@ -168,6 +168,7 @@
         }])
         .service("Store.StockProductListAPI", ["$rootScope", "pluginExecutor", "ones.dataApiFactory",
             function($rootScope, plugin, dataAPI){
+                var self = this;
                 this.config = {
                     deleteAble: false,
                     exportAble: true
@@ -177,7 +178,7 @@
                 });
                 this.getStructure = function(){
                     plugin.callPlugin("bind_dataModel_to_structure", {
-                        structure: this.structure,
+                        structure: self.structure,
                         after: "goods_name",
                         alias: "product",
                         require: ["goods_id"],

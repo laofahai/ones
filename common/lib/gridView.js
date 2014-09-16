@@ -139,24 +139,28 @@
                                 $scope[k] = method;
                             });
 
-                            $scope.itemsList = [];
-                            $scope.$on("gridData.changed", function(evt, itemsList){
-                                if(itemsList === true) {
-                                    $scope.doRefresh();
-                                } else {
-                                    $scope.itemsList = itemsList;
-                                }
+                            $scope.$on("commonGrid.ready", function(){
+                                $scope.itemsList = [];
+                                $scope.$on("gridData.changed", function(evt, itemsList){
+                                    if(itemsList === true) {
+                                        $scope.doRefresh();
+                                    } else {
+                                        $scope.itemsList = itemsList;
+                                    }
+                                    $scope.gridSelected = {};
+                                    $scope.$parent.gridSelected = [];
+                                    ones.GridScope = $scope;
+                                });
+
                                 $scope.gridSelected = {};
+                                $scope.selectedActions = GridView.selectedActions;
                                 $scope.$parent.gridSelected = [];
-                                ones.GridScope = $scope;
+                                $scope.$parent.searchAble = true;
+
+                                GridView.scope = $scope;
                             });
 
-                            $scope.gridSelected = {};
-                            $scope.selectedActions = GridView.selectedActions;
-                            $scope.$parent.gridSelected = [];
-                            $scope.$parent.searchAble = true;
 
-                            GridView.scope = $scope;
 
 
 

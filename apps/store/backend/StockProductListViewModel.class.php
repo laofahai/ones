@@ -21,7 +21,7 @@ class StockProductListViewModel extends ViewModel {
 
 
     public $searchFields = array(
-        "Goods.name", "factory_code_all", "GoodsCategory.name", "Stock.name"
+        "Goods.name", "factory_code_all", "GoodsCategory.name", "Stock.name", "Goods.pinyin"
     );
 
     /**

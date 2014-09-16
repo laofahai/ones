@@ -10,10 +10,11 @@
         //模型字段位置
         var modelFieldsPosition = params.after || "goods_id";
         var result = {};
+        var structure = angular.copy(params.structure);
 
-        for(name in params.structure) {
-            result[name] = params.structure[name];
-            delete(params.structure[name]);
+        for(name in structure) {
+            result[name] = structure[name];
+            delete(structure[name]);
             if(name == modelFieldsPosition) {
                 break;
             }
@@ -77,7 +78,7 @@
 
             });
 
-            result = $.extend(result, params.structure);
+            result = $.extend(result, structure);
             defer.resolve(result);
         });
 
