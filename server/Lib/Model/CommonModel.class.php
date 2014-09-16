@@ -214,7 +214,7 @@ class CommonModel extends AdvModel{
                 return false;
             }
 
-            $factoryCode[] = $fca[0];
+            $factoryCode[$fca[0]] = $fca[0];
             for($i=1;$i<count($template);$i++) {
                 $modelIds[$template[$i]][] = $fca[$i];
             }

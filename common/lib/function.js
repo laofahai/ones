@@ -237,14 +237,28 @@ var isDataApi = function(resource) {
 //获得resource请求之后的promise
 var getDataApiPromise = function(dataSource, method, params) {
     var promise;
+    var args = Array.prototype.slice.call(arguments, 2);
+
     try {
-        //首先尝试使用dataAPI.method
-        //dataSource为resource对象时或者dataAPI.method时
-        promise = dataSource[method](params).$promise;
+        if(method in dataSource && typeof(dataSource[method]) === "function") {
+            promise = dataSource[method].apply(null, args).$promise;
+        } else {
+            promise = dataSource.api[method].apply(null, args).$promise;
+        }
     } catch(e) {
-        //尝试使用dataAPI.api.method
-        promise = dataSource.api[method](params).$promise;
+        console.log(e);
     }
+
+//    try {
+//        //首先尝试使用dataAPI.method
+//        //dataSource为resource对象时或者dataAPI.method时
+//        promise = dataSource[method].apply(null, args).$promise;
+//        //promise = dataSource[method](params).$promise;
+//    } catch(e) {
+//        //尝试使用dataAPI.api.method
+//        promise = dataSource.api[method].apply(null, args).$promise;
+////        promise = dataSource.api[method](params).$promise;
+//    }
     return promise;
 };
 

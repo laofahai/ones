@@ -435,15 +435,16 @@
                         };
                         if (opts.id) {
                             getParams.id = opts.id;
-                            try {
-                                //首先尝试使用dataAPI.method
-                                //dataSource为resource对象时或者dataAPI.method时
-                                resource.update(getParams, $scope[opts.dataName], callback);
-                            } catch(e) {
-                                //尝试使用dataAPI.api.method
-                                resource.api.update(getParams, $scope[opts.dataName], callback);
+                            getDataApiPromise(resource, "update", getParams, $scope[opts.dataName]).then(callback);
+//                            try {
+//                                //首先尝试使用dataAPI.method
+//                                //dataSource为resource对象时或者dataAPI.method时
 //                                resource.update(getParams, $scope[opts.dataName], callback);
-                            }
+//                            } catch(e) {
+//                                //尝试使用dataAPI.api.method
+//                                resource.api.update(getParams, $scope[opts.dataName], callback);
+////                                resource.update(getParams, $scope[opts.dataName], callback);
+//                            }
 //                            return promise;
 //                            getDataApiPromise(resource, "update", getParams).then(callback);
 //                            if(typeof(resource.update) == "undefined") {
@@ -841,7 +842,6 @@
                             opts.isEdit = true;
                             var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
                             resource.get(queryExtraParams).$promise.then(function(data){
-                                console.log(data);
                                 $scope.$broadcast("bill.dataLoaded", data);
                             });
                         }
@@ -879,17 +879,24 @@
                             getParams[k] = $routeParams[k];
                         }
 
+                        var rs ;
+
                         if (opts.id) {
                             getParams.id = opts.id;
-                            resource.update(getParams, data);
+                            rs = resource.update(getParams, data);
                         } else {
-                            resource.save(getParams, data);
+                            rs = resource.save(getParams, data);
                         }
 
+                        rs.$promise.then(function(data){
+                            if(!data.error) {
+                                var lastPage = ones.caches.getItem("lastPage");
+                                $location.url(lastPage[0] || opts.returnPage);
+                            }
+                        });
 
-                        var lastPage = ones.caches.getItem("lastPage");
-//                        return;
-                        $location.url(lastPage[0] || opts.returnPage);
+
+
                     };
                 };
 

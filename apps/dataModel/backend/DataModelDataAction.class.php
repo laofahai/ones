@@ -70,7 +70,10 @@ class DataModelDataAction extends CommonAction {
             $_POST["model_id"] = $_POST["modelId"];
         }
 
-        $_POST["pinyin"] = Pinyin($_POST["data"]);
+        if(!$_POST["pinyin"]) {
+            $_POST["pinyin"] = Pinyin($_POST["data"]);
+        }
+
 
         //动态新增
         if($_POST["goods_id"]) {
