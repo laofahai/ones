@@ -176,21 +176,19 @@
     //                            console.log(p);
                             p = $.extend(self.options.queryExtraParams, p, extraParams||{});
                             var promise;
-                            try {
-                                promise = self.options.resource.getList(p).$promise;
-                            } catch(e) {
-
+                            if(angular.isFunction(self.options.resource.query)) {
+                                promise = self.options.resource.query(p).$promise;
+                            } else {
                                 try {
                                     promise = self.options.resource.api.query(p).$promise;
                                 } catch(e) {
-                                    promise = self.options.resource.query(p).$promise;
+                                    conle.log("can't load resource instance.");
                                 }
                             }
 
                             promise.then(function(remoteData){
                                 self.scope.setPagingData(remoteData, page, pageSize);
                             });
-
                         });
                     }
                 };
@@ -228,11 +226,10 @@
                                 }
                                 $scope.gridSelected = [];
                                 GridView.selected = {};
-                                ones.GridScope = $scope;
-
-
 
                             });
+
+                            ones.GridScope = $scope;
 
                             $scope.gridSelected = {};
                             $scope.gridSelected = [];
@@ -254,6 +251,7 @@
                 }
             };
         }])
+        //尝试使用$eval
         .filter("tryGridEval", [function(){
             return function(item, index, key){
                 if(item) {
@@ -263,6 +261,7 @@
                 }
             }
         }])
+        //尝试使用过滤器
         .filter("tryGridFilter", ["$filter", function($filter){
             return function(text, filter, $index){
                 if(!filter) {

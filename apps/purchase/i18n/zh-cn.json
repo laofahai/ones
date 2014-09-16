@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "purchase": {
+            "name": "采购",
             "modules": {
                 "Purchase": {
                     "name": "采购",

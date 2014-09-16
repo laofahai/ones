@@ -124,6 +124,14 @@
                     }
                 }, 2000);
 
+                //左侧是否展开
+                var expand = ones.caches.getItem("ones.sidebar.expand");
+                $scope.expand = expand;
+                $scope.sidebarToggleExpand = function() {
+                    $scope.expand = !$scope.expand;
+                    ones.caches.setItem("ones.sidebar.expand", $scope.expand, 1);
+                }
+
                 //有需要的APP未能加载
                 if(ones.unfoundApp) {
                     ComView.alert(

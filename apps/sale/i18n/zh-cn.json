@@ -1,6 +1,7 @@
 {
     "urlMap": {
         "sale": {
+            "name": "销售",
             "modules": {
                 "Orders": {
                     "name": "销售订单",

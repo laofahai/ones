@@ -79,7 +79,7 @@
             <span class="menu-text"></span>
         </a>
 
-        <div class="sidebar" id="sidebar">
+        <div class="sidebar" id="sidebar" ng-class="{'menu-min':expand!==true}">
             <div class="sidebar-shortcuts" id="sidebar-shortcuts">
                 <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
                     <a class="btn btn-success" href="#/HOME/list/apps">
@@ -136,8 +136,8 @@
                 </li>
             </ul>
 
-            <div class="sidebar-collapse" id="sidebar-collapse">
-                <i class="icon-angle-double-left" data-icon1="icon-angle-double-left" data-icon2="icon-angle-double-right"></i>
+            <div class="sidebar-collapse" ng-click="sidebarToggleExpand()">
+                <i class="icon" ng-class="{'icon-angle-double-right':expand!==true,'icon-angle-double-left':expand===true}"></i>
             </div>
         </div>
 
