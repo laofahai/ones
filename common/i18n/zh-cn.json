@@ -152,7 +152,8 @@
             "cancel_all": "取消全部",
             "remove_all": "删除全部",
             "complete": "完成",
-            "read": "查看"
+            "read": "查看",
+            "trash": "回收站"
         },
 
         "navigation": {

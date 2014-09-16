@@ -197,7 +197,7 @@
                      * 两种URL模式： 普通模式 app/module/action
                      *             URL友好模式 app/action(list|add|edit)/module
                      * */
-                    var actionList = ['list', 'listAll', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print'];
+                    var actionList = ['list', 'listAll', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print', 'trash'];
                     var fullPath, app, module, action;
                     fullPath = $location.path().split("/").slice(1, 4);
                     if (!fullPath[1]) {
@@ -244,10 +244,14 @@
                      * 设定当前APP信息
                      * current location info
                      * */
+
+
                     $scope.currentPage.app = app;
                     $scope.currentPage.action = action;
                     $scope.currentPage.module = module;
                     $rootScope.currentPage = $scope.currentPage;
+
+//                    console.log($rootScope.currentPage);
 
                     /**
                      * 搜索框自动获得焦点

@@ -20,7 +20,8 @@
                     "actions": {
                         "list": "入库单列表",
                         "add": "新建入库单",
-                        "edit": "入库单信息"
+                        "edit": "入库单信息",
+                        "trash": "入库单回收站"
                     }
                 },
                 "StockProductList": {
@@ -35,7 +36,8 @@
                     "name": "出库单",
                     "actions": {
                         "list": "出库单列表",
-                        "add": "新增出库单"
+                        "add": "新增出库单",
+                        "trash": "出库单回收站"
                     }
                 }
             }

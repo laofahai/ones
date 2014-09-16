@@ -25,6 +25,7 @@ class StockinAction extends CommonAction {
         if(isset($_GET["handled"])) {
             $map["status"] = array("EGT", 1);
         }
+
     }
     
     
@@ -35,7 +36,7 @@ class StockinAction extends CommonAction {
         }
         
         $formData = parent::read(true);
-        $formData["inputTime"] = $formData["dateline"]*1000;
+        $formData["dateline"] *= 1000;
         
         $rowModel = D("StockinDetailView");
         $rows = $rowModel->where("StockinDetail.stockin_id=".$formData["id"])->select();

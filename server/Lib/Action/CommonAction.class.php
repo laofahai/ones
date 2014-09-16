@@ -412,6 +412,12 @@ class CommonAction extends RestAction {
                 $_GET["_filter_end_dateline"]/1000
             ));
         }
+
+        //仅回收站数据
+        if($_GET["onlyTrash"]) {
+            $map["deleted"] = 1;
+        }
+
         return $map;
     }
 

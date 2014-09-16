@@ -44,23 +44,28 @@ class CommonViewModel extends ViewModel{
 //        echo substr($this->name, 0, -4);exit;
 //        print_r($model->fields);
 //        var_dump($model->fields["_type"]["deleted"]);
-        if($model->fields["_type"]["deleted"]) {
-            $where["deleted"] = 0;
+
+        if(!isset($where["deleted"])) {
+            if($model->fields["_type"]["deleted"]) {
+                $where["deleted"] = 0;
+            } else {
+                $tmp = $this->viewFields;
+                foreach($tmp as $k=>$v) {
+                    $tmpModel = D($k);
+                    if($tmpModel->fields["_type"]["deleted"]) {
+                        if(!is_array($where)) {
+                            $tmp = explode("=", $where);
+                            $where = array();
+                            $where[$tmp[0]] = $tmp[1];
+                        }
+                        $where[$k.".deleted"] = 0;
+                    }
+                    break;
+                }
+            }
+
         }
 
-        $tmp = $this->viewFields;
-        foreach($tmp as $k=>$v) {
-            $tmpModel = D($k);
-            if($tmpModel->fields["_type"]["deleted"]) {
-                if(!is_array($where)) {
-                    $tmp = explode("=", $where);
-                    $where = array();
-                    $where[$tmp[0]] = $tmp[1];
-                }
-                $where[$k.".deleted"] = 0;
-            }
-            break;
-        }
 //        print_r($where);
         return parent::where($where, $parse);
     }

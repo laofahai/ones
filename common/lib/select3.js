@@ -16,8 +16,8 @@
 
                     scopeConfig.fieldDefine.field = scopeConfig.name;
                     scopeConfig["ng-model"] = scopeConfig["ng-model"] || scopeConfig.fieldDefine["ng-model"];
-                    if(typeof(scopeConfig.dataSource) === "string") {
-                        scopeConfig.dataSource = $injector.get(scopeConfig.dataSource);
+                    if(typeof(scopeConfig.fieldDefine.dataSource) === "string") {
+                        scopeConfig.fieldDefine.dataSource = $injector.get(scopeConfig.fieldDefine.dataSource);
                     }
 
                     self.configs[attrs.config] = $.extend(self.getDefaultOpts(), scopeConfig.fieldDefine);
@@ -119,6 +119,7 @@
 
                         var config = self.currentConfig;
 
+
                         var Keys = {
                             Enter: 13,
                             Tab: 9,
@@ -175,9 +176,9 @@
                     parentScope.doSelect3Query = function(val){
                         var config = self.currentConfig;
                         //总是取得所有数据
-                        if(config.alwaysQueryAll) {
-                            val = "_";
-                        }
+//                        if(config.autoQuery) {
+//                            val = "_";
+//                        }
                         self.scope.select3Items = [];
                         //非数组形式数据源
                         if(!angular.isArray(config.dataSource)) {

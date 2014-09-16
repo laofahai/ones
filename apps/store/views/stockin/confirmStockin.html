@@ -7,13 +7,13 @@
                     <label ng-bind="i18n.lang.subject">: </label>
                     <input type="text" ng-model="formMetaData.subject" readonly />
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label>{{i18n.lang.dateline}}: </label>
                     <span class="input-icon input-icon-right">
-                        <input type="text" value="{{formMetaData.dateline | dateFormat}}" readonly />
+                        <input type="datetime-local" ng-model="formMetaData.dateline" readonly />
                     </span>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                 </div>
                 <div class="col-sm-3 align-right">
                     <span>{{i18n.lang.billId}}:</span>

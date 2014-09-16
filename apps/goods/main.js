@@ -12,6 +12,7 @@
             function($rootScope, GoodsCategoryRes, $q, $location, $modal, plugin) {
                 var obj = {};
                 obj.columns = 2;
+                obj.trashAble = true;
                 obj.extraSelectActions = [
                     {
                         label: toLang("viewCraft", "actions", $rootScope),

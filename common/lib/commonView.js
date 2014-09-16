@@ -12,11 +12,12 @@
      * Model   命名规则： ModelNameModel
      * */
         .config(["$routeProvider", function($route){
-            $route.when('/:group/list/:module', {
+            $route
+                //列表 with extraParams
+                .when('/:group/list/:module', {
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
-                //列表 with extraParams
                 .when('/:group/list/:module/:extra*', {
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
@@ -26,6 +27,15 @@
                     controller : 'ComViewGridCtl'
                 })
                 .when('/:group/listAll/:module/:extra*', {
+                    templateUrl: 'common/base/views/grid.html',
+                    controller : 'ComViewGridCtl'
+                })
+                //回收站
+                .when('/:group/trash/:module', {
+                    templateUrl: 'common/base/views/grid.html',
+                    controller : 'ComViewGridCtl'
+                })
+                .when('/:group/trash/:module/:extra*', {
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
@@ -127,8 +137,14 @@
                 }
 
                 //加入查询全部条件
-                if($location.url().indexOf("/listAll/") > 0) {
+                if($rootScope.currentPage.action === "listAll") {
                     opts.queryExtraParams.queryAll = true;
+                }
+
+                //加入仅查询回收站
+                if($rootScope.currentPage.action === "trash") {
+                    opts.queryExtraParams.onlyTrash = true;
+                    $routeParams.extra = "onlyTrash/1";
                 }
 
                 //Grid 可跳转按钮
@@ -176,7 +192,7 @@
                 //            $scope.pageActions = pageActions;
                 var opts = {
                     id: $routeParams.id,
-                    queryExtraParams: queryExtraParams
+                    queryParams: queryExtraParams
                 };
                 if(model.returnPage) {
                     opts.returnPage = model.returnPage;
@@ -825,6 +841,7 @@
                             opts.isEdit = true;
                             var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
                             resource.get(queryExtraParams).$promise.then(function(data){
+                                console.log(data);
                                 $scope.$broadcast("bill.dataLoaded", data);
                             });
                         }
@@ -1133,7 +1150,7 @@
                     //可跳转按钮
                     //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
                     extraParams = extraParams ? "/"+extraParams : "";
-                    var available = ["add", "list", "listAll", "export", "print"];
+                    var available = ["add", "list", "listAll", "export", "print", "trash"];
                     var actEnabled;
                     $scope.pageActions = [];
                     angular.forEach(actions, function(act, k){

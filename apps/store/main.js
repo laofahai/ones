@@ -279,6 +279,7 @@
                 isBill: true,
                 printAble: true,
                 workflowAlias: "stockin",
+                trashAble: true,
                 filters: {
                     between: {
                         field: "dateline",
@@ -547,7 +548,7 @@
 
                 if(!$scope.formMetaData) {
                     $scope.formMetaData = {
-                        inputTime: new Date()
+                        dateline: new Date()
                     };
                 }
 
@@ -642,13 +643,13 @@
         .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinEditModel", "$location", "$injector",
             function($scope, $routeParams, ComView, res, model, $location, $injector){
                 $scope.selectAble= false;
+
                 ComView.displayBill($scope, model, res, {
                     id: $routeParams.id,
                     queryExtraParams: {includeSource: true, workflowing: true}
                 });
 
                 $scope.doSubmit = function() {
-
                     $scope.formMetaData.rows = $scope.formData;
                     var data = {
                         workflow: true,
