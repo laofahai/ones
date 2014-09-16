@@ -119,8 +119,8 @@
                                 height: "auto",
                                 overflow: "scroll"
                             });
+                            $("#initCover").remove();
                         });
-                        $("#initCover").remove();
                     }
                 }, 2000);
 

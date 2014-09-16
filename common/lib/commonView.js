@@ -221,14 +221,16 @@
                     //                title = title || type.ucfirst()+":";
                     var erpalert = $alert({title: title,
                         content: alertMsg,
-                        placement: 'top-right', type: type, show: true,
+                        placement: 'top',
+                        type: type,
+                        show: true,
                         container: '#alerts-container'
                     });
 
                     if(autohide !== false) {
                         setTimeout(function(){
                             erpalert.hide();
-                        }, 5000);
+                        }, autohide < 3000 ? 3000 : 5000);
                     }
                 };
                 /**
@@ -484,7 +486,7 @@
                      * 分页/Grid 过滤器默认项
                      * */
                     $scope.pagingOptions = {
-                        pageSizes: [10, 20, 30, 50],
+                        pageSizes: [10, 15, 20, 30, 50],
                         pageSize: 10,
                         currentPage: 1
                     };
