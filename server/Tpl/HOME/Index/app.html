@@ -148,6 +148,7 @@
                 <div class="nav-search" ng-controller="multiSearchCtl">
                     <span class="input-icon">
                         <input type="text"
+                               id="multiSearchInput"
                                placeholder="Search ..."
                                class="nav-search-input"
                                autocomplete="off"
@@ -159,14 +160,14 @@
                         <i class="icon-search nav-search-icon"></i>
                     </span>
 
-                    <ul class="typeahead dropdown-menu" ng-show="results">
-                        <li ng-repeat="p in results" ng-show="p.datas.length>0">
+                    <ul class="typeahead dropdown-menu" ng-show="results.length>0">
+                        <li ng-repeat="p in results track by $index" ng-show="p.datas.length>0">
                             <a ng-href="#/{{p.subject.link}}">
                                 <span ng-bind="p.subject.title|lang"></span>
                                 <i class="icon icon-level-down"></i>
                             </a>
                             <ul>
-                                <li ng-repeat="row in p.datas" data-href="{{row.link}}">
+                                <li ng-repeat="row in p.datas track by $index" ng-class="{active:row.index===selectedIndex}">
                                     <a ng-href="#/{{row.link}}" ng-bind="row.label"></a>
                                 </li>
                             </ul>
@@ -176,7 +177,7 @@
                 </div><!-- #nav-search -->
             </div>
 
-            <div class="loadingState hide" ng-show="$root.dataQuering">
+            <div class="loadingState" ng-show="$root.dataQuering">
                 <div class="loadingCircle"></div>
                 <div class="loadingCircle1"></div>
             </div>

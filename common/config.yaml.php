@@ -13,7 +13,6 @@
     - "vendor/angular-1.3.0-rc/angular-sanitize.min.js"
     - "vendor/angular-1.3.0-rc/angular-route.min.js"
     - "vendor/angular-1.3.0-rc/angular-animate.min.js"
-    - "vendor/angularModules/ng-grid/ng-grid-2.0.12.debug.js"
     - "vendor/angularModules/angular-strap/angular-strap.min.js"
     - "vendor/angularModules/angular-strap/angular-strap.tpl.min.js"
     - "vendor/angularModules/ui-utils/ui-utils.min.js"

@@ -280,7 +280,7 @@
                 args = filter.split(":");
                 filter = args[0];
 
-                if(args[1].indexOf("item.") >=0) {
+                if(args[1] && args[1].indexOf("item.") >=0) {
                     var itemField = args[1].split(".");
                     args[1] = ones.GridScope.$eval("itemsList["+$index+"]."+itemField[1]);
                 }

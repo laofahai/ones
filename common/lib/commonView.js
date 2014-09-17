@@ -107,8 +107,6 @@
                 $scope.selectAble = false;
                 $scope.printModule = group+"_"+module;
 
-
-
                 $scope.doPrint = function(){
                     window.print();
                 };

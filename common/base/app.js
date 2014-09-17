@@ -6,7 +6,6 @@
             'ngResource',
             'ngSanitize',
             'ngRoute',
-            'ngGrid',
             'ngAnimate',
             'mgcrea.ngStrap',
             'localytics.directives', //FOR CHOSEN
@@ -109,8 +108,8 @@
         /**
          * Root Ctrl
          * */
-        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout",
-            function($scope, $rootScope, $location, $http, conf, ComView, $timeout) {
+        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor",
+            function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin) {
 
                 setTimeout(function(){
                     if($("#initCover").length) {
@@ -185,6 +184,8 @@
                         window.event.returnValue = false;
                         return false;
                     }
+
+                    plugin.callPlugin("hook.hotKey", $event);
                 };
 
                 //历史

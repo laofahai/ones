@@ -80,6 +80,13 @@
             linkTpl: "store/editBill/stockin/id/+id",
             link: "store/list/stockin"
         });
+        ones.pluginScope.append("ones.multiSearch.items", {
+            name: "stockout",
+            dataSource: "StockoutRes",
+            labelField: "bill_id",
+            linkTpl: "store/editBill/stockout/id/+id",
+            link: "store/list/stockout"
+        });
     });
 
     angular.module("ones.store", [])
