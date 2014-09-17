@@ -1,50 +1,23 @@
-<pageactions></pageactions>
 
-<div class="printAbleContainer print_{{printModule}}">
-    <h1 ng-bind="i18n.lang.stockout"></h1>
-    <div ng-repeat="bill in data.datas">
-        <hr class="hr-10" />
-        <table class="width-100">
-            <thead>
-                <tr>
-                    <th ng-bind="rowField.displayName" ng-repeat="rowField in rowsStructure"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="row in bill.rows">
-                    <td ng-repeat="rowField in rowsStructure" ng-bind="row[rowField.field+'_label']||row[rowField.field]"></td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="{{rowsStructure.length}}">
-                        <div class="printAbleBillHead row">
-                            <div class="col-xs-4">
-                                <span ng-bind="i18n.lang.bill_id|colon"></span>
-                                <span ng-bind="bill.bill_id"></span>
-                            </div>
-                            <div class="col-xs-3">
-                                <span ng-bind="bill.outtime|dateFormat"></span>
-                            </div>
-                            <div class="col-xs-3">
-                                <span ng-show="bill.source_model" ng-bind="i18n.lang.source_model|colon"></span>
-                                <span ng-show="bill.source_id" ng-bind="bill.source_id|idFormat"></span>
-                                <span ng-show="bill.source_model" ng-bind="bill.source_model|lang"></span>
-                            </div>
-                            <div class="col-xs-2 text-right">
-                                <span ng-bind="i18n.lang.stock_manager|colon"></span>
-                                <span ng-bind="bill.stock_manager"></span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+<tr>
+<td colspan="{{rowsStructure.length}}">
+    <div class="printAbleBillHead row">
+        <div class="col-xs-4">
+            <span ng-bind="i18n.lang.bill_id|colon"></span>
+            <span ng-bind="bill.bill_id"></span>
+        </div>
+        <div class="col-xs-3">
+            <span ng-bind="bill.outtime|dateFormat"></span>
+        </div>
+        <div class="col-xs-3">
+            <span ng-show="bill.source_model" ng-bind="i18n.lang.source_model|colon"></span>
+            <span ng-show="bill.source_id" ng-bind="bill.source_id|idFormat"></span>
+            <span ng-show="bill.source_model" ng-bind="bill.source_model|lang"></span>
+        </div>
+        <div class="col-xs-2 text-right">
+            <span ng-bind="i18n.lang.stock_manager|colon"></span>
+            <span ng-bind="bill.stock_manager"></span>
+        </div>
     </div>
-    <div class="row text-center">
-        <button class="btn btn-primary btn-sm hidden-print" ng-click="doPrint()">
-            <i class="icon icon-print"></i> 
-            {{i18n.lang.actions.print}}
-        </button>
-    </div>
-</div>
+</td>
+</tr>

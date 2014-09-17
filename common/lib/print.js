@@ -85,7 +85,6 @@
                     if(angular.isFunction(rowsStructure.then)) {
                         rowsStructure.then(function(data){
                             self.scope.rowsStructure = self.filterStructure(data, "printAble");
-                            console.log(self.scope.rowsStructure);
                         });
                     } else {
                         self.scope.rowsStructure = self.filterStructure(rowsStructure, "printAble");

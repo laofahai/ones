@@ -71,9 +71,7 @@
                 //打印
                 .when('/:group/print/:module/id/:id', {
                     controller : 'ComViewPrintCtl',
-                    templateUrl: function(params){
-                        return appView(sprintf("%s/printDetail.html", params.module), params.group.toLowerCase());
-                    }
+                    templateUrl: "common/base/views/print.html"
                 })
                 .otherwise({
                     templateUrl: "common/base/views/404.html",
@@ -103,6 +101,8 @@
                 dataAPI.init(group, module);
                 model = dataAPI.model;
                 res = dataAPI.resource;
+
+                $scope.printFooterTemplate = appView(sprintf("%s/printDetail.html", module), group.toLowerCase());
 
                 $scope.selectAble = false;
                 $scope.printModule = group+"_"+module;

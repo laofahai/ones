@@ -91,11 +91,11 @@
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
             try {
-                var configRes = $injector.get("ConfigRes");
+                var configRes = $injector.get("HOME.ConfigAPI");
                 /**
                  * 加载配置
                  * */
-                configRes.query({
+                configRes.api.query({
                     queryAll: true
                 }).$promise.then(function(data) {
                     angular.forEach(data, function(item) {
