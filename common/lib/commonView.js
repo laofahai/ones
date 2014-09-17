@@ -94,7 +94,7 @@
             $scope.hidePageHeader = true;
         }])
         .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", "ones.dataApiFactory", "CommonPrint",
-            function($scope, $injector, $routeParams, dataAPI, print) {
+            function($scope, $injector, $routeParams, dataAPI, printer) {
                 var group, module, res, model;
 
                 group = $routeParams.group;
@@ -107,8 +107,11 @@
                 $scope.selectAble = false;
                 $scope.printModule = group+"_"+module;
 
+                printer.init($scope, $routeParams.id);
+                printer.displayPrintPage(model, res);
+
                 $scope.doPrint = function(){
-                    window.print();
+                    printer.doPrint();
                 };
 
                 //        $scope.doPrint();

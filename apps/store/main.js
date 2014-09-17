@@ -438,6 +438,7 @@
             return {
                 isBill: true,
                 printAble: true,
+                rowsModel: "StockoutEditModel",
                 workflowAlias: "stockout",
                 filters: {
                     between: {
@@ -483,6 +484,17 @@
                             primary: true,
                             billAble: false
                         },
+                        factory_code_all: {
+                            billAble:false,
+                            hideInForm:true,
+                            printAble: true
+                        },
+                        goods_name: {
+                            printAble: true,
+                            billAble: false,
+                            hideInForm:true,
+                            listable: false
+                        },
                         goods_id: {
                             displayName: i18n.goods,
                             labelField: true,
@@ -499,7 +511,8 @@
                             dataSource: "Store.StockAPI",
                             autoQuery: true,
                             autoReset: true,
-                            autoHide: true
+                            autoHide: true,
+                            printAble: true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {
@@ -509,7 +522,8 @@
                         },
                         total_num: {
                             inputType: "static",
-                            onlyInEdit: true
+                            onlyInEdit: true,
+                            printAble: true
                         },
                         num: {
                             inputType: "number",
@@ -519,7 +533,9 @@
                             inputType: "static",
                             onlyInEdit: true
                         },
-                        memo: {}
+                        memo: {
+                            printAble: true
+                        }
 
                     };
 

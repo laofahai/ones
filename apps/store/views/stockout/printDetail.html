@@ -1,33 +1,23 @@
 <pageactions></pageactions>
 
 <div class="printAbleContainer print_{{printModule}}">
-    <h1 ng-bind="i18n.lang.stockout">123</h1>
+    <h1 ng-bind="i18n.lang.stockout"></h1>
     <div ng-repeat="bill in data.datas">
         <hr class="hr-10" />
         <table class="width-100">
             <thead>
                 <tr>
-                    <th ng-bind="i18n.lang.factory_code_all"></th>
-                    <th ng-bind="i18n.lang.goods_name"></th>
-                    <th ng-bind="i18n.lang.standard"></th>
-                    <th ng-bind="i18n.lang.version"></th>
-                    <th ng-bind="i18n.lang.stock"></th>
-                    <th ng-bind="i18n.lang.num"></th>
+                    <th ng-bind="rowField.displayName" ng-repeat="rowField in rowsStructure"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="row in bill.rows">
-                    <td ng-bind="row.factory_code_all"></td>
-                    <td ng-bind="row.goods_name"></td>
-                    <td ng-bind="row.standard_label"></td>
-                    <td ng-bind="row.version_label"></td>
-                    <td ng-bind="row.stock_name"></td>
-                    <td ng-bind="row.num"></td>
+                    <td ng-repeat="rowField in rowsStructure" ng-bind="row[rowField.field+'_label']||row[rowField.field]"></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6">
+                    <td colspan="{{rowsStructure.length}}">
                         <div class="printAbleBillHead row">
                             <div class="col-xs-4">
                                 <span ng-bind="i18n.lang.bill_id|colon"></span>

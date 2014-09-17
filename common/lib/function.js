@@ -362,7 +362,7 @@ Array.prototype.delRepeat=function(){
  * 按照某字段排序数组
  * array.sort(arraySortBy(id));
  * */
-var arraySortBy = function(name,minor)
+var arraySortBy = function(name, minor)
 {
     return function(o, p)
     {
@@ -380,6 +380,9 @@ var arraySortBy = function(name,minor)
         }
     }
 }
+var objectSortBy = function(obj, sortArray){
+
+};
 
 var reIndex = function(data) {
     var a = [];
