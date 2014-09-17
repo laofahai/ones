@@ -139,7 +139,11 @@
                 return nl2br(str);
             };
         }])
-
+        .filter("colorize", [function(){
+            return function(str, color) {
+                return sprintf('<span class="%s">%s</span>', color, str);
+            };
+        }])
     ;
 
 })();

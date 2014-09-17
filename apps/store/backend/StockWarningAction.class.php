@@ -12,26 +12,28 @@
  * @author nemo
  */
 class StockWarningAction extends CommonAction {
+
+    protected $indexModel = "StockProductListView";
+
+    protected function _filter(&$map) {
+        $map["_string"] = "(store_min>0 and num<=store_min) or (store_max>0 and num>=store_max)";
+    }
     
     public function index() {
-        $model = D("StockProductListView");
-        $map = array(
-            "_string" => "(store_min>0 and num<=store_min) or (store_max>0 and num>=store_max)"
-        );
-        $data = $model->where($map)->select();
 
+        $data = parent::index(true);
         if($_GET["onlyCount"]) {
-            $this->response(array(
-                array(
-                    "count" => count($data)
-                )
-            ));
+            $this->response($data);
         } else {
+            foreach($data as $k=>$v) {
+                if($v["num"] <= $v["store_min"]) {
+                    $data[$k]["colorize"] = "red";
+                } else {
+                    $data[$k]["colorize"] = "green";
+                }
+            }
             $this->response($data);
         }
-
-//        print_r($data);
-
     }
     
 }

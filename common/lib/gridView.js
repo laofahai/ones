@@ -180,6 +180,7 @@
     //                            console.log(p);
                             p = $.extend(self.options.queryExtraParams, p, extraParams||{});
                             var promise;
+
                             if(angular.isFunction(self.options.resource.query)) {
                                 promise = self.options.resource.query(p).$promise;
                             } else {
@@ -211,47 +212,44 @@
                         pre: function($scope, iElement, iAttrs, controller) {
 
                             $scope.$on("commonGrid.ready", function(){
+                                var gridOptions = $scope.$parent.$eval(iAttrs.config);
+                                GridView.init($scope, gridOptions);
 
-                            });
+                                angular.forEach(GridView.methodsList, function(method, k){
+                                    $scope[k] = method;
+                                });
 
-                            var gridOptions = $scope.$parent.$eval(iAttrs.config);
-                            GridView.init($scope, gridOptions);
+                                $scope.itemsList = [];
+                                $scope.$on("gridData.changed", function(evt, itemsList){
+                                    if(itemsList === true) {
+                                        $scope.doRefresh();
+                                    } else {
+                                        $scope.itemsList = itemsList;
+                                    }
+                                    $scope.gridSelected = [];
+                                    GridView.selected = {};
 
-                            angular.forEach(GridView.methodsList, function(method, k){
-                                $scope[k] = method;
-                            });
+                                });
 
-                            $scope.itemsList = [];
-                            $scope.$on("gridData.changed", function(evt, itemsList){
-                                if(itemsList === true) {
-                                    $scope.doRefresh();
-                                } else {
-                                    $scope.itemsList = itemsList;
-                                }
+                                ones.GridScope = $scope;
+
+                                $scope.gridSelected = {};
                                 $scope.gridSelected = [];
-                                GridView.selected = {};
-
-                            });
-
-                            ones.GridScope = $scope;
-
-                            $scope.gridSelected = {};
-                            $scope.gridSelected = [];
 
 //                            console.log($scope.$parent);
 
-                            $scope.selectedActions = GridView.selectedActions;
-                            $scope.$parent.searchAble = true;
+                                $scope.selectedActions = GridView.selectedActions;
+                                $scope.$parent.searchAble = true;
 
-                            //每页显示条数
-                            var pageSize = ones.caches.getItem("ones.pageSize");
-                            if(!pageSize) {
-                                pageSize = $scope.pagingOptions.pageSize;
-                                ones.caches.setItem("ones.pageSize", pageSize, 1);
-                            }
-                            $scope.pagingOptions.pageSize = pageSize;
-                            $scope.pageSizes = $scope.pagingOptions.pageSizes;
-
+                                //每页显示条数
+                                var pageSize = ones.caches.getItem("ones.pageSize");
+                                if(!pageSize) {
+                                    pageSize = $scope.pagingOptions.pageSize;
+                                    ones.caches.setItem("ones.pageSize", pageSize, 1);
+                                }
+                                $scope.pagingOptions.pageSize = pageSize;
+                                $scope.pageSizes = $scope.pagingOptions.pageSizes;
+                            });
                         }
                     };
                 }
@@ -281,9 +279,17 @@
 
                 args = filter.split(":");
                 filter = args[0];
+
+                if(args[1].indexOf("item.") >=0) {
+                    var itemField = args[1].split(".");
+                    args[1] = ones.GridScope.$eval("itemsList["+$index+"]."+itemField[1]);
+                }
+
                 args = Array.prototype.slice.call(args, 1)
                 args.unshift(text);
                 args.push($index);
+
+
                 return $filter(filter).apply(null, args);
             };
         }])

@@ -142,6 +142,7 @@
                 });
         }])
 
+
         .service("Store.StockAPI", ["$rootScope", "$q", "ones.dataApiFactory", function($rootScope, $q, dataApiFactory){
             this.structure = {
                 id: {
@@ -407,7 +408,9 @@
                 stock_name: {
                     displayName: $rootScope.i18n.lang.stock
                 },
-                num: {},
+                num: {
+                    cellFilter:"colorize:item.colorize"
+                },
                 store_min: {},
                 store_max: {}
             };
