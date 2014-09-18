@@ -211,35 +211,13 @@
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
 
-                            $scope.$on("commonGrid.ready", function(){
+                            var fetchData = function(){
                                 var gridOptions = $scope.$parent.$eval(iAttrs.config);
                                 GridView.init($scope, gridOptions);
 
                                 angular.forEach(GridView.methodsList, function(method, k){
                                     $scope[k] = method;
                                 });
-
-                                $scope.itemsList = [];
-                                $scope.$on("gridData.changed", function(evt, itemsList){
-                                    if(itemsList === true) {
-                                        $scope.doRefresh();
-                                    } else {
-                                        $scope.itemsList = itemsList;
-                                    }
-                                    $scope.gridSelected = [];
-                                    GridView.selected = {};
-
-                                });
-
-                                ones.GridScope = $scope;
-
-                                $scope.gridSelected = {};
-                                $scope.gridSelected = [];
-
-//                            console.log($scope.$parent);
-
-                                $scope.selectedActions = GridView.selectedActions;
-                                $scope.$parent.searchAble = true;
 
                                 //每页显示条数
                                 var pageSize = ones.caches.getItem("ones.pageSize");
@@ -249,7 +227,38 @@
                                 }
                                 $scope.pagingOptions.pageSize = pageSize;
                                 $scope.pageSizes = $scope.pagingOptions.pageSizes;
+                            };
+
+                            $scope.$on("commonGrid.ready", function(){
+                                fetchData();
                             });
+
+                            fetchData();
+
+                            $scope.itemsList = [];
+                            $scope.$on("gridData.changed", function(evt, itemsList){
+                                if(itemsList === true) {
+                                    $scope.doRefresh();
+                                } else {
+                                    $scope.itemsList = itemsList;
+                                }
+                                $scope.gridSelected = [];
+                                GridView.selected = {};
+
+                            });
+
+                            ones.GridScope = $scope;
+
+                            $scope.gridSelected = {};
+                            $scope.gridSelected = [];
+
+//                            console.log($scope.$parent);
+
+                            $scope.selectedActions = GridView.selectedActions;
+                            $scope.$parent.searchAble = true;
+
+
+
                         }
                     };
                 }

@@ -974,6 +974,8 @@
                             tr.remove();
                             self.reIndexTr();
 
+                            console.log(parentScope[self.opts.dataName]);
+
                             recountTotalAmount();
                             recountTotalAble();
                         };

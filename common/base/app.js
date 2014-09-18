@@ -161,7 +161,7 @@
                 });
 
                 $scope.$on("event:permissionDenied", function(evt, msg) {
-                    msg = ComView.toLang(msg || "permissionDenied", "messages");
+                    msg = ComView.toLang("permissionDenied", "messages") + ComView.toLang(msg, "messages");
                     ComView.alert(msg, "danger");
                 });
 

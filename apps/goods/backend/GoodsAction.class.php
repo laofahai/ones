@@ -37,6 +37,7 @@ class GoodsAction extends CommonAction {
         if(!$_GET["typeahead"]) {
             return parent::index();
         }
+
         $model = D("Goods");
         $map = $this->beforeFilter($model);
         $this->_filter($map);

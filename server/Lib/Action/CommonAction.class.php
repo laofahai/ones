@@ -229,12 +229,14 @@ class CommonAction extends RestAction {
         } else {
             $rs = $auth->check($rule, $_SESSION["user"]["id"]);
         }
+
         if($return){
             return $rs ? true : false;
         } else {
             if(!$rs) {
                 Log::write(sprintf("%s try to do: %s, but permission denied.", $this->user["username"], $rule));
-                $this->error("Permission Denied:".$rule);
+                $this->httpError(403, $rule);
+//                $this->error("Permission Denied:".$rule);
                 exit;
             }
             
@@ -276,7 +278,6 @@ class CommonAction extends RestAction {
 
         $model = D($name);
 
-        
         /**
          * 查看是否在fields列表中
          */
@@ -292,6 +293,12 @@ class CommonAction extends RestAction {
 
         $this->_filter($map);
         $this->_order($order);
+
+        //扩展查询条件
+        $params = array(
+            $map, $model, $this
+        );
+        tag("external_condition_check", $params);
 
         $total = false;
         if($_GET["onlyCount"]) {
@@ -351,17 +358,17 @@ class CommonAction extends RestAction {
             }
             $returnData = array(
                 array("count" => $total, "totalPages"=>$totalPages),
-                $list,
+                reIndex($list),
             );
 
             if($return) {
-                return $list;
+                return $returnData;
             }
 
             $this->response($returnData);
         } else {
             if($return) {
-                return $list;
+                return reIndex($list);
             }
             $this->response($list);
         }

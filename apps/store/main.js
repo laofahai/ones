@@ -237,6 +237,7 @@
                     num: {
                         hideInForm: true,
                         displayName: toLang("storeNum", "", $rootScope),
+                        cellFilter:"colorize:item.colorize"
                     },
                     measure: {
                         hideInForm: true

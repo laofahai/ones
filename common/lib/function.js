@@ -47,6 +47,7 @@ var toDate = function(timestamp, noTime) {
     if(!timestamp) {
         return;
     }
+
     var d = new Date(parseInt(timestamp) * 1000);
     var year = d.getFullYear();
     var month = d.getMonth() + 1;
@@ -56,7 +57,7 @@ var toDate = function(timestamp, noTime) {
     var second = d.getSeconds();
 
     var rs = sprintf("%s-%s-%s", year, month, date);
-    if(!noTime || parseInt(noTime)===0) {
+    if(noTime !== true || parseInt(noTime)===0) {
         rs = rs+ sprintf(" %s:%s:%s", hour, minute, second);
     }
 

@@ -27,6 +27,22 @@ class StockProductListAction extends CommonAction {
         "store_min" => "库存下限",
         "store_max" => "库存上限"
     );
+
+    public function index() {
+        $data = parent::index(true);
+
+        foreach($data[1] as $k=>$v) {
+            if($v["num"] <= $v["store_min"]) {
+                $data[1][$k]["colorize"] = "red";
+            } else if($v["num"] >= $v["store_max"]) {
+                $data[1][$k]["colorize"] = "green";
+            }
+        }
+
+//        print_r($data);exit;
+
+        $this->response($data);
+    }
     
     public function read() {
 
