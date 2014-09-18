@@ -3,9 +3,7 @@
     "version": "0.1",
     "requirements": ["goods", "store", "workflow", "crm", "department"],
     "workflow": ["Orders", "Returns"],
-    "plugins": {
-        "external_condition_check": ["SaleExtraCondition"]
-    },
+    "plugins": {},
     "navs": {
         "sale" : {
             "icon": "pencil",

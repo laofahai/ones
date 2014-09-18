@@ -28,10 +28,6 @@
         .factory("UserProfileRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "department/profile.json", null, {'update': {method: 'PUT'}});
         }])
-
-        .factory("DepartmentRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "department/department/:id.json", null, {'update': {method: 'PUT'}});
-        }])
         .factory("AuthRuleRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "department/authRule/:id.json", null, {'update': {method: 'PUT'}});
         }])
@@ -45,114 +41,105 @@
             });
         }])
 
-        .service("Department.UserAPI", ["$rootScope", "ones.dataApiFactory", "$q", "$http", "ones.config", function($rootScope, res, $q, $http, conf){
-            this.structure = {
-                id: {
-                    primary: true
-                },
-                email: {
-                    inputType: "email",
-                    ensureunique: "Department.UserAPI"
-                },
-                username: {
-                    ensureunique: "Department.UserAPI"
-                },
-                password: {
-                    inputType: "password",
-                    listable: false,
-                    required: false
-                },
-                truename: {},
-                phone: {
-                    inputType: "number"
-                },
-                group_name: {
-                    displayName: $rootScope.i18n.lang.usergroup,
-                    field: "usergroup",
-                    hideInForm: true
-                },
-                usergroup: {
-                    inputType: "select",
-                    multiple: "multiple",
-                    nameField: "title",
-                    valueField: "id",
-                    listable: false,
-                    dataSource: "AuthGroupRes"
-                },
-                department: {
-                    field: "Department.name",
-                    hideInForm: true
-                },
-                department_id: {
-                    displayName: $rootScope.i18n.lang.department,
-                    nameField: "prefix_name",
-                    listable: false,
-                    inputType: "select",
-                    dataSource: "DepartmentRes"
-                },
-                status: {
-                    displayName: $rootScope.i18n.lang.isEnable,
-                    inputType: "select",
-                    dataSource: [
-                        {id: 1, name: $rootScope.i18n.lang.yes},
-                        {id: -1, name: $rootScope.i18n.lang.no}
-                    ],
-                    cellFilter: "toYesOrNo"
-                }
-            };
-
-            this.api = res.getResourceInstance({
-                uri: "department/user",
-                extraMethod: {
-                    "update": {method: "PUT"}
-                }
-            });
-
-            this.loginAPI = res.getResourceInstance({
-                uri: "passport/login"
-            });
-
-            this.getStructure = function() {
-                return this.structure;
-            };
-
-            this.login = function(loginInfo) {
-                var defer = $q.defer();
-
-                this.loginAPI.save(loginInfo).$promise.then(function(data){
-                    if(data.error) {
-                        defer.reject(toLang(data.msg, "messages", $rootScope));
-                    } else if(data.sessionHash){
-                        defer.resolve(data.sessionHash);
+        .service("Department.UserAPI", ["$rootScope", "ones.dataApiFactory", "$q", "$injector",
+            function($rootScope, res, $q, $injector){
+                this.structure = {
+                    id: {
+                        primary: true
+                    },
+                    email: {
+                        inputType: "email",
+                        ensureunique: "Department.UserAPI"
+                    },
+                    username: {
+                        ensureunique: "Department.UserAPI"
+                    },
+                    password: {
+                        inputType: "password",
+                        listable: false,
+                        required: false
+                    },
+                    truename: {},
+                    phone: {
+                        inputType: "number"
+                    },
+                    group_name: {
+                        displayName: $rootScope.i18n.lang.usergroup,
+                        field: "usergroup",
+                        hideInForm: true
+                    },
+                    usergroup: {
+                        inputType: "select",
+                        multiple: "multiple",
+                        nameField: "title",
+                        valueField: "id",
+                        listable: false,
+                        dataSource: "AuthGroupRes"
+                    },
+                    department: {
+                        field: "Department.name",
+                        hideInForm: true
+                    },
+                    department_id: {
+                        displayName: $rootScope.i18n.lang.department,
+                        nameField: "prefix_name",
+                        listable: false,
+                        inputType: "select",
+                        dataSource: "Department.DepartmentAPI"
+                    },
+                    status: {
+                        displayName: $rootScope.i18n.lang.isEnable,
+                        inputType: "select",
+                        dataSource: [
+                            {id: 1, name: $rootScope.i18n.lang.yes},
+                            {id: -1, name: $rootScope.i18n.lang.no}
+                        ],
+                        cellFilter: "toYesOrNo"
                     }
-                }, function(data){
-                    defer.reject(toLang(data, "messages", $rootScope));
+                };
+
+                this.api = res.getResourceInstance({
+                    uri: "department/user",
+                    extraMethod: {
+                        "update": {method: "PUT"}
+                    }
                 });
 
-//                $http.post(conf.BSU+'passport/userLogin', loginInfo).
-//                    success(function(data, status, headers, config) {
-//                        if(data.error) {
-//                            defer.reject(toLang(data.msg, "messages", $rootScope));
-//                        } else if(data.sessionHash){
-//                            defer.resolve(data.sessionHash);
-//                        }
-//                    }).
-//                    error(function(data, status, headers, config) {
-//                        defer.reject(toLang(data, "messages", $rootScope));
-//                    });
-                return defer;
-            };
-
-            this.logout = function(){
-                var defer = $q.defer();
-                this.loginAPI.query().$promise.then(function(){
-                    ones.caches.clear(-1);
-                    ones.caches.clear(0);
-                    window.location.href = "./";
+                this.loginAPI = res.getResourceInstance({
+                    uri: "passport/login"
                 });
-            };
 
-        }])
+                this.getStructure = function() {
+                    return this.structure;
+                };
+
+                this.login = function(loginInfo) {
+                    var defer = $q.defer();
+
+                    this.loginAPI.save(loginInfo).$promise.then(function(data){
+                        if(data.error) {
+                            defer.reject(toLang(data.msg, "messages", $rootScope));
+                        } else if(data.sessionHash){
+                            defer.resolve(data.sessionHash);
+                        }
+                    }, function(data){
+                        defer.reject(toLang(data, "messages", $rootScope));
+                    });
+
+                    return defer;
+                };
+
+
+                this.logout = function(){
+                    var defer = $q.defer();
+                    this.loginAPI.query().$promise.then(function(){
+                        ones.caches.clear(-1);
+                        ones.caches.clear(0);
+                        window.location.href = "./";
+                    });
+                };
+
+            }])
 
         .factory("AuthRuleModel", ["$rootScope", function($rootScope){
             return {
@@ -184,25 +171,60 @@
                 }
             };
         }])
-        .factory("DepartmentModel", ["$rootScope", function($rootScope){
+        .service("Department.DepartmentAPI", ["$rootScope", "ones.dataApiFactory", "$q", function($rootScope, dataAPI, $q){
             return {
                 subAble: true,
                 viewSubAble: false,
+                structure: {
+                    id : {
+                        primary: true
+                    },
+                    name: {
+                        listable: false
+                    },
+                    prefix_name: {
+                        hideInForm: true,
+                        displayName: toLang("name", "", $rootScope)
+                    },
+                    leader: {
+                        inputType: "select",
+                        dataSource: "Department.UserAPI",
+                        multiple: true,
+                        nameField: "truename",
+                        required: false
+                    }
+                },
+                api: dataAPI.getResourceInstance({
+                    uri: "department/department"
+                }),
                 getStructure: function(){
-                    var i18n = $rootScope.i18n.lang;
-                    return {
-                        id : {
-                            primary: true
-                        },
-                        name: {
-                            displayName: i18n.category,
-                            listable: false
-                        },
-                        prefix_name: {
-                            hideInForm: true,
-                            displayName: i18n.category
+                    return this.structure;
+                },
+                //获取当前部门的所有父部门
+                getParentCats: function(did) {
+                    return this.api.query({
+                        onlyParents: true
+                    });
+                },
+                /**
+                 * 查看用户是否有某部门的负责权限
+                 * */
+                canUserLeader: function(departmentId, uid){
+                    uid = uid || ones.userInfo.id;
+                    var defer = $q.defer();
+                    this.api.get({
+                        act: "canLeader",
+                        department: departmentId,
+                        user: uid
+                    }).$promise.then(function(data){
+                        if(data.isLeader) {
+                            defer.resolve();
+                        } else {
+                            defer.reject();
                         }
-                    };
+                    });
+
+                    return defer.promise;
                 }
             };
         }])

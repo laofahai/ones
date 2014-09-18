@@ -108,8 +108,8 @@
         /**
          * Root Ctrl
          * */
-        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor",
-            function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin) {
+        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor", "$injector",
+            function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin, $injector) {
 
                 setTimeout(function(){
                     if($("#initCover").length) {
@@ -322,9 +322,10 @@
                 });
 
                 $scope.$on("initDataLoaded", function(event, data) {
-                    $scope.userInfo = data.user;
                     $scope.authedNodes = data.authed;
                 });
+
+                $scope.userInfo = ones.userInfo;
 
             }])
     ;

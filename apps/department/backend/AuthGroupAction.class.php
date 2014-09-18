@@ -20,5 +20,7 @@ class AuthGroupAction extends CommonAction {
             "group_id" => array("IN", $_REQUEST["id"])
         ))->delete();
     }
+
+
     
 }

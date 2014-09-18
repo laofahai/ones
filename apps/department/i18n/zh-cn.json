@@ -57,6 +57,8 @@
             "appName": "组织机构模块"
         },
 
+        "leader": "负责人",
+
         "department.authrule": "%s权限节点",
         "department.user": "%s用户",
         "department.authgroup": "%s用户组",

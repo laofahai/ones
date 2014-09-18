@@ -24,6 +24,7 @@ class IndexAction extends CommonAction {
 //        print_r($runtime->getJavascripts());exit;
 
         if($this->isLogin()) {
+            $this->assign("userInfo", json_encode($this->user));
             $this->display("app");
         } else {
             $this->display("login");
@@ -40,7 +41,7 @@ class IndexAction extends CommonAction {
         $data = array(
             "authed" => reIndex($rules),
             "navs" => $this->makeNav(),
-            "user" => $_SESSION["user"]
+//            "user" => $_SESSION["user"]
         );
 
         $this->response($data);

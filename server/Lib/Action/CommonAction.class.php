@@ -25,6 +25,8 @@ class CommonAction extends RestAction {
 
     protected $dataModelAlias;
 
+    protected $breakAction = false;
+
     public function __construct() {
 
         if(!is_file(ENTRY_PATH."/Data/install.lock")) {
@@ -264,16 +266,31 @@ class CommonAction extends RestAction {
             "msg"   => $msg
         ));
     }
-    
+
+    protected function _external_action() {
+        //动作执行
+        $method = "ACT_".$_GET["act"];
+        if(method_exists($this, $method)) {
+            $this->breakAction = true;
+            return $this->$method();
+        }
+    }
+
     /**
      * 
      * 通用REST列表返回 
      **/
     public function index($return=false, $returnIncludeCount=false) {
 
+        $this->_external_action();
+        if($this->breakAction) {
+            return;
+        }
+
         if(method_exists($this, "_before_index")){
             $this->_before_index();
         }
+
         $name = $this->indexModel ? $this->indexModel : $this->getActionName();
 
         $model = D($name);
@@ -472,6 +489,12 @@ class CommonAction extends RestAction {
      * 通用REST GET方法
      */
     public function read($return=false) {
+
+        $this->_external_action();
+        if($this->breakAction) {
+            return;
+        }
+
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }

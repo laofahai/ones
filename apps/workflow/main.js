@@ -97,7 +97,7 @@
                     executor_department: {
                         listable: false,
                         required: false,
-                        dataSource: "DepartmentRes",
+                        dataSource: "Department.DepartmentAPI",
                         inputType: "select",
                         multiple: "multiple"
                     },

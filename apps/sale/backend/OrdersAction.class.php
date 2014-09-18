@@ -33,7 +33,7 @@ class OrdersAction extends CommonAction {
     protected $relationModel = "Stockout";
     
     protected function _filter(&$map) {
-        $map["deleted"] = 0;
+
     }
     
     public function read() {
@@ -49,7 +49,7 @@ class OrdersAction extends CommonAction {
         
         $rowModel = D("OrdersDetailView");
         $rows = $rowModel->where("OrdersDetail.order_id=".$formData["id"])->select();
-//        echo $rowModel->getLastSql();exit;
+
         $modelIds = array();
         $rowData = array();
         foreach($rows as $v) {
@@ -62,8 +62,7 @@ class OrdersAction extends CommonAction {
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
             $rowData[$v["id"]] = $v;
         }
-//        array_flip(array_flip($modelIds));
-        
+
         $formData["customer_id_label"] = $formData["customer"];
         
 
@@ -90,7 +89,7 @@ class OrdersAction extends CommonAction {
         $data = $model->formatData($_POST);
         if(!$model->newOrder($data)) {
             $this->error($model->getError());
-            retur;
+            return;
         }
     }
     
@@ -105,22 +104,12 @@ class OrdersAction extends CommonAction {
         $orderId = $model->newOrder($data);
         if(!$orderId) {
             $this->error($model->getError());
-            retur;
+            return;
         }
         
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $node = $workflow->doNext($orderId, "", true);
-//        $this->redirect("/JXC/Orders/editDetail/id/".$id);
-        
-//        $this->success(L("operate_success"));
     }
 
-//    public function delete() {
-//        if(parent::delete(true)) {
-//            $model = D("OrdersDetail");
-//            $model->where($map)->delete();
-//        }
-//    }
-            
 }
