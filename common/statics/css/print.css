@@ -24,6 +24,12 @@
         min-height:100% !important;
         color:#000 !important;
     }
+    * {
+        color:#000 !important;
+        background:none !important;
+        box-shadow:none !important;
+        text-shadow:none !important;
+    }
     h1 {
         font-weight:bold !important;
     }
