@@ -3,17 +3,13 @@
     angular.module("ones.dashboard", [])
         .config(["$routeProvider", function($route){
             $route
-                .when('/HOME/Index/dashboard', {
+                .when('/', {
                     controller: "HOMEDashboardCtl",
                     templateUrl: appView("dashboard.html", "dashboard")
                 })
                 .when('/dashboard/list/myDesktop', {
                     templateUrl: appView("myDesktop.html", "dashboard"),
                     controller: "HomeMyDesktopCtl"
-                })
-                .when('/', {
-                    controller: "HOMEDashboardCtl",
-                    templateUrl: appView("dashboard.html", "dashboard")
                 })
                 .otherwise({
                     redirectTo: '/HOME/Index/dashboard'

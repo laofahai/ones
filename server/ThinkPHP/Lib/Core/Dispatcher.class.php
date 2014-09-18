@@ -142,6 +142,7 @@ class Dispatcher {
 
         // URL常量
         define('__SELF__',strip_tags($_SERVER['REQUEST_URI']));
+
         // 当前项目地址
         define('__APP__',strip_tags(PHP_FILE));
 

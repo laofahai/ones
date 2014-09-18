@@ -78,7 +78,7 @@ class FrontEndRuntime {
         foreach($this->preLoadingList as $pre) {
             $tmp = $this->baseDir."/".$pre;
             if(is_file($tmp)){
-                $this->javascripts[] = "./common/".$pre;
+                $this->javascripts[] = "common/".$pre;
 //                $content = file_get_contents($tmp);
 //                $content = str_replace($find, $replace, $content);
 //                $this->response($content);
@@ -92,7 +92,7 @@ class FrontEndRuntime {
         foreach($this->afterLoadingList as $af) {
             $tmp = $this->baseDir."/".$af;
             if(is_file($tmp)){
-                $this->javascripts[] = "./common/".$af;
+                $this->javascripts[] = "common/".$af;
 //                $content = file_get_contents($tmp);
 ////                $content = str_replace($find, $replace, $content);
 //                $this->response($content);
@@ -172,7 +172,7 @@ class FrontEndRuntime {
     }
 
     private function loadAppStatic($appPath, $app) {
-        $basePath = "./apps/".$app."/";
+        $basePath = "apps/".$app."/";
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
             if(in_array($appFile, $this->blackList)) {

@@ -25,7 +25,11 @@ class StockoutViewModel extends CommonViewModel {
     
     public function getStockoutBillsByIds($ids) {
         foreach($ids as $id) {
-            $data[] = $this->getStockoutBill($id);
+            $rs = $this->getStockoutBill($id);
+            if(!$rs) {
+                continue;
+            }
+            $data[] = $rs;
         }
         return $data;
     }
@@ -34,6 +38,10 @@ class StockoutViewModel extends CommonViewModel {
        
         $data = $this->find($id);
 
+        if(!$data) {
+            return false;
+        }
+
         if($data["source_model"]) {
             $sourceModel = D($data["source_model"]."View");
             $data["source"] = $sourceModel->find($data["source_id"]);
@@ -41,7 +49,6 @@ class StockoutViewModel extends CommonViewModel {
 
         $detailModel = D("StockoutDetailView");
         $data["rows"] = $detailModel->where("stockout_id=".$data["id"])->select();
-
         /**
          * 每列信息处理
          */

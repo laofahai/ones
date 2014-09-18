@@ -29,49 +29,19 @@
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
          */
         .config(["$httpProvider", "$locationProvider", function($httpProvider, $locationProvider) {
-            var interceptor = ['$rootScope', '$q', function(scope, $q) {
-                function success(response) {
-                    if (parseInt(response.data.error) > 0) {
-                        scope.$broadcast('event:serverError', response.data.msg);
-                        return $q.reject(response);
-                    } else {
-                        return response;
-                    }
-                }
-                function error(response) {
-                    var status = response.status;
-                    var deferred = $q.defer();
-                    if (401 === status) {
-                        scope.$broadcast('event:loginRequired', response.data);
-                        return deferred.promise;
-                    } else if (403 === status) {
-                        scope.$broadcast('event:permissionDenied', response.data);
-                    } else if (500 === status) {
-                        scope.$broadcast('event:serverError', response.data);
-                    }
-                    return $q.reject(response);
-                }
-
-                return function(promise) {
-                    return promise.then(success, error);
-                };
-
-                $locationProvider.html5Mode(true);
-                $locationProvider.hashPrefix('!');
-
-            }];
 
             var reqInterceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', function ($q, $cacheFactory, $timeout, $rootScope) {
+
+                $rootScope.dataQuering = 0;
+
                 return {
                     'request': function(config) {
-                        $rootScope.dataQuering = true;
+                        $rootScope.dataQuering++;
                         return config;
                     },
 
                     'response': function(response) {
-
-                        $rootScope.dataQuering = false;
-
+                        $rootScope.dataQuering--;
                         if (parseInt(response.data.error) > 0) {
                             $rootScope.$broadcast('event:serverError', response.data.msg);
                             return $q.reject(response);
@@ -102,8 +72,11 @@
                     }
                 };
             }];
+
+//            $locationProvider.html5Mode(true);
+//            $locationProvider.hashPrefix('!');
+
             $httpProvider.interceptors.push(reqInterceptor);
-            $httpProvider.interceptors.push(interceptor);
         }])
         /**
          * Root Ctrl

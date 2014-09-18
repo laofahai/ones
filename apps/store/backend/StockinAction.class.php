@@ -34,36 +34,58 @@ class StockinAction extends CommonAction {
         if(!$_GET["includeRows"] or $_GET['workflow']) {
             return parent::read();
         }
-        
-        $formData = parent::read(true);
-        $formData["dateline"] *= 1000;
-        
+
+        $formDatas = parent::read(true);
         $rowModel = D("StockinDetailView");
-        $rows = $rowModel->where("StockinDetail.stockin_id=".$formData["id"])->select();
-        $modelIds = array();
-        $rowData = array();
-        foreach($rows as $v) {
-            $tmp = explode(DBC("goods.unique.separator"), $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
-            $factory_code = array_shift($tmp);
-            $modelIds = array_merge($modelIds, $tmp);
-            $v["modelIds"] = $tmp;
-            $v["stock"] = $v["stock_id"];
-            $v["stock_label"] = $v["stock_name"];
-            $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
-            $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
-            $rowData[$v["id"]] = $v;
+
+        if($formDatas["id"]) {
+            $isSingle = true;
+            $formDatas = array($formDatas);
         }
+
+        foreach($formDatas as $id=>$formData) {
+
+            $formData["dateline"] *= 1000;
+            $formData["stock_manager"] = toTruename($formData["stock_manager"]);
+
+            $rows = $rowModel->where("StockinDetail.stockin_id=".$formData["id"])->select();
+            $modelIds = array();
+            $rowData = array();
+            foreach($rows as $v) {
+                $tmp = explode(DBC("goods.unique.separator"), $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+                $factory_code = array_shift($tmp);
+                $modelIds = array_merge($modelIds, $tmp);
+                $v["modelIds"] = $tmp;
+                $v["stock"] = $v["stock_id"];
+                $v["stock_label"] = $v["stock_name"];
+                $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
+                $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
+                $rowData[$v["id"]] = $v;
+            }
 //        array_flip(array_flip($modelIds));
 
-        $params = array(
-            $rowData, $modelIds
-        );
-        tag("assign_dataModel_data", $params);
+            $params = array(
+                $rowData, $modelIds
+            );
+            tag("assign_dataModel_data", $params);
 
-        $formData["rows"] = reIndex($params[0]);
-        
-        
-        $this->response($formData);
+            $formData["rows"] = reIndex($params[0]);
+
+            $results[] = $formData;
+        }
+
+        if($isSingle) {
+//            print_r($formData);exit;
+            $this->response($formData);
+            return;
+        }
+
+        $response = array(
+            "count" => count($results),
+            "datas" => $results
+        );
+
+        $this->response($response);
         
     }
     

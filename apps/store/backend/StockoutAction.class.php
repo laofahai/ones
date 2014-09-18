@@ -41,13 +41,25 @@ class StockoutAction extends CommonBillAction {
             $this->response($data);
             return;
         }
+
         $model = D("StockoutView");
+
+        $data = array();
+
         if(false === strpos($_GET["id"], ",")) {
             $data = $model->getStockoutBill($_GET["id"]);
+            if(!$data) {
+                $this->httpError(404);
+                return;
+            }
             $data["dateline"]*=1000;
         } else {
             //多条数据
             $data["datas"] = $model->getStockoutBillsByIds(explode(",", $_GET["id"]));
+            if(!$data["datas"]) {
+                $this->httpError(404);
+                return;
+            }
             foreach($data["datas"] as $k=>$v) {
                 $data["datas"][$k]["dateline"] *= 1000;
             }

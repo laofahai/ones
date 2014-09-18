@@ -48,6 +48,10 @@ var toDate = function(timestamp, noTime) {
         return;
     }
 
+    if(String(timestamp).length > 10) {
+        timestamp = timestamp/1000;
+    }
+
     var d = new Date(parseInt(timestamp) * 1000);
     var year = d.getFullYear();
     var month = d.getMonth() + 1;

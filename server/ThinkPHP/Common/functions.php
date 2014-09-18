@@ -273,6 +273,8 @@ function U($url='',$vars='',$suffix=true,$redirect=false,$domain=false) {
     if(isset($anchor)){
         $url  .= '#'.$anchor;
     }
+
+
     if($domain) {
         $url   =  (is_ssl()?'https://':'http://').$domain.$url;
     }

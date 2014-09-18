@@ -89,7 +89,6 @@
                     } else {
                         self.scope.rowsStructure = self.filterStructure(rowsStructure, "printAble");
                     }
-
                 }
 
             }

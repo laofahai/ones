@@ -1,5 +1,8 @@
-html {
-    min-height:101%;
+@import "print.css";
+
+
+body {
+    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
 }
 a{
     cursor:pointer;
@@ -362,34 +365,7 @@ commonform {
 }
 
 
-/**
-打印
-*/
-.printAbleContainer h1 {
-    font-size:20px;text-align:center;
-    margin:0 auto;
-    padding:0 0 8px 0;
-    letter-spacing: 20px;
-    padding-left:20px;
-}
-.printAbleContainer table {
-    margin-bottom:10px;
-}
-.printAbleContainer table th, .printAbleContainer table td{
-    border-bottom:1px solid #666;
-    padding:2px 4px;
-}
-.printAbleContainer table tfoot td {
-    border:none;
-}
-@media print {
-    .navbar, .breadcrumbs, .sidebar, .page-header, pageactions, .unprintable, .ace-settings-container, .btn-scroll-up, .footer-copy {
-        display:none;
-    }
-    .main-content, .page-content {
-        margin: 0;
-    }
-}
+
 
 /**
     reset datepicker

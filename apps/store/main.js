@@ -295,6 +295,8 @@
             var obj = {
                 isBill: true,
                 printAble: true,
+                printTitle: toLang("stockin", "", $rootScope),
+                rowsModel: "StockinEditModel",
                 workflowAlias: "stockin",
                 trashAble: true,
                 filters: {
@@ -348,6 +350,17 @@
                             primary: true,
                             billAble: false
                         },
+                        factory_code_all: {
+                            billAble:false,
+                            hideInForm:true,
+                            printAble: true
+                        },
+                        goods_name: {
+                            printAble: true,
+                            billAble: false,
+                            hideInForm:true,
+                            listable: false
+                        },
                         goods_id: {
                             displayName: i18n.goods,
                             labelField: true,
@@ -364,7 +377,8 @@
                             dataSource: "Store.StockAPI",
                             autoQuery: true,
                             autoReset: true,
-                            autoHide: true
+                            autoHide: true,
+                            printAble: true
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {
@@ -374,9 +388,12 @@
                         },
                         num: {
                             inputType: "number",
-                            totalAble: true
+                            totalAble: true,
+                            printAble: true
                         },
-                        memo: {}
+                        memo: {
+                            printAble: true
+                        }
 
                     };
 
@@ -439,6 +456,7 @@
             return {
                 isBill: true,
                 printAble: true,
+                printTitle: toLang("stockout", "", $rootScope),
                 rowsModel: "StockoutEditModel",
                 workflowAlias: "stockout",
                 filters: {

@@ -19,9 +19,6 @@
                     templateUrl: "common/base/views/home/appDetail.html",
                     controller: "AppViewDetailCtl"
                 })
-                .when('/', {
-                    redirectTo: "/HOME/Index/dashboard"
-                })
             ;
 //            $locationProvider.html5Mode(true);
 //            $locationProvider.hashPrefix('!');
@@ -73,9 +70,6 @@
                     $scope.activeSubNav = pid;
                 };
                 $scope.goPage = function(url) {
-                    if(!url) {
-                        return;
-                    }
                     $location.url("/"+url);
                 };
             });

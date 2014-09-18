@@ -181,19 +181,21 @@
                             p = $.extend(self.options.queryExtraParams, p, extraParams||{});
                             var promise;
 
-                            if(angular.isFunction(self.options.resource.query)) {
-                                promise = self.options.resource.query(p).$promise;
-                            } else {
-                                try {
-                                    promise = self.options.resource.api.query(p).$promise;
-                                } catch(e) {
-                                    conle.log("can't load resource instance.");
+                            try {
+                                if(angular.isFunction(self.options.resource.query)) {
+                                    promise = self.options.resource.query(p).$promise;
+                                } else {
+                                    try {
+                                        promise = self.options.resource.api.query(p).$promise;
+                                    } catch(e) {
+                                        conle.log("can't load resource instance.");
+                                    }
                                 }
-                            }
 
-                            promise.then(function(remoteData){
-                                self.scope.setPagingData(remoteData, page, pageSize);
-                            });
+                                promise.then(function(remoteData){
+                                    self.scope.setPagingData(remoteData, page, pageSize);
+                                });
+                            } catch(e) {}
                         });
                     }
                 };

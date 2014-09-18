@@ -1,0 +1,37 @@
+/**
+打印
+*/
+.printAbleContainer h1 {
+    font-size:20px;text-align:center;
+    margin:0 auto;
+    padding:0 0 8px 0;
+    letter-spacing: 20px;
+    padding-left:20px;
+}
+.printAbleContainer table {
+    margin-bottom:10px;
+}
+.printAbleContainer table th, .printAbleContainer table td{
+    border-bottom:1px solid #666;
+    padding:2px 4px;
+}
+.printAbleContainer table tfoot td {
+    border:none;
+}
+
+@media print {
+    html {
+        min-height:100% !important;
+        color:#000 !important;
+    }
+    h1 {
+        font-weight:bold !important;
+    }
+    .navbar, .breadcrumbs, .sidebar, .page-header, pageactions, .unprintable, .ace-settings-container, .btn-scroll-up, .footer-copy {
+        display:none !important;
+    }
+    .main-content, .page-content {
+        margin: 0 !important;
+        padding:0 !important;
+    }
+}

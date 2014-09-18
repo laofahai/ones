@@ -14,8 +14,7 @@
 return array(
     "dashboard" => array(
         "childs" => array(),
-        "icon" => "home",
-        "action" => "HOME/Index/dashboard"
+        "icon" => "home"
     ),
     "settings" => array(
         "childs" => array(

@@ -508,11 +508,10 @@ class CommonAction extends RestAction {
             $model = $model->relation(true);
         }
         
-        $id = abs(intval($_GET["id"]));
-
+        $id = $_GET["id"];
 
         if($id) {
-            $map["id"] = $id;
+            $map["id"] = array("IN", explode(",", $id));
         } else {
             foreach($_GET as $k=>$g) {
                 if(in_array($k, array("id", "s", "_URL_"))) {
@@ -523,22 +522,30 @@ class CommonAction extends RestAction {
         }
         $this->_filter($map);
 
-        $item = $model->where($map)->find();
+        $tmp = $model->where($map)->select();
+
+        $item = array();
 
         if($this->dataModelAlias) {
             $params = array(
-                array($item),
+                $tmp,
                 $this->dataModelAlias,
-                true,
                 false
             );
 
             tag("assign_dataModel_data", $params);
 
-            $item = $params[0];
+            $tmp = $params[0];
         }
 
-//        echo $model->getLastSql();exit;
+        if(count($tmp) === 1) {
+            $item = $tmp[0];
+        } else {
+            foreach($tmp as $v) {
+                $item[$v["id"]] = $v;
+            }
+        }
+
         if($return) {
             return $item;
         }

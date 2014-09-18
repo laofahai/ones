@@ -1,4 +1,3 @@
-
 <tr>
 <td colspan="{{rowsStructure.length}}">
     <div class="printAbleBillHead row">
@@ -6,15 +5,10 @@
             <span ng-bind="i18n.lang.bill_id|colon"></span>
             <span ng-bind="bill.bill_id"></span>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-4">
             <span ng-bind="bill.outtime|dateFormat"></span>
         </div>
-        <div class="col-xs-3">
-            <span ng-show="bill.source_model" ng-bind="i18n.lang.source_model|colon"></span>
-            <span ng-show="bill.source_id" ng-bind="bill.source_id|idFormat"></span>
-            <span ng-show="bill.source_model" ng-bind="bill.source_model|lang"></span>
-        </div>
-        <div class="col-xs-2 text-right">
+        <div class="col-xs-4 text-right">
             <span ng-bind="i18n.lang.stock_manager|colon"></span>
             <span ng-bind="bill.stock_manager"></span>
         </div>
