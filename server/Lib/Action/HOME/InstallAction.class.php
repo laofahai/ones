@@ -17,10 +17,11 @@ class InstallAction extends CommonAction {
         "/server/Runtime",
         "/server/Data",
         "/server/Data/apps",
-        "/server/Data/Avatars",
         "/server/Data/Backup",
         "/server/Data/logs",
-        "/server/Data/Updates"
+        "/server/Data/Updates",
+        "/uploads",
+        "/uploads/Avatars"
     );
 
     public function __construct() {

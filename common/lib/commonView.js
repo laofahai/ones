@@ -4,7 +4,7 @@
      * 通用视图
      *
      * */
-    angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap'])
+    angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap', 'ones.gridView'])
     /**
      * 通用路由适配
      * 使用通用Controller

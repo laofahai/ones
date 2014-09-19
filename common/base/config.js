@@ -90,26 +90,29 @@
             $http.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-            try {
-                var configRes = $injector.get("HOME.ConfigAPI");
-                /**
-                 * 加载配置
-                 * */
-                configRes.api.query({
-                    queryAll: true
-                }).$promise.then(function(data) {
-                    angular.forEach(data, function(item) {
-                        ones.BaseConf[item.alias] = item.value;
-                    });
-                    ones.caches.setItem("ones.config", ones.BaseConf, 1);
-                });
-            } catch (err) {}
-
             /**
              * 加载语言包
              * */
             $rootScope.i18n = ones.caches.getItem("ones.i18n");
             if(!$rootScope.i18n && !ones.installing) {
+
+
+                try {
+                    var configRes = $injector.get("HOME.ConfigAPI");
+                    /**
+                     * 加载配置
+                     * */
+                    configRes.api.query({
+                        queryAll: true
+                    }).$promise.then(function(data) {
+                            angular.forEach(data, function(item) {
+                                ones.BaseConf[item.alias] = item.value;
+                            });
+                            ones.caches.setItem("ones.config", ones.BaseConf, 1);
+                        });
+                } catch (err) {}
+
+
                 $http.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
                     ones.caches.setItem("ones.i18n", data, ones.defaultCacheLevel);
                     $rootScope.i18n = data;

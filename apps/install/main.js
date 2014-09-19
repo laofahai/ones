@@ -1,7 +1,11 @@
 (function(){
     ones.installLang = {};
     angular.module("ones.install", [
+            'ngCookies',
+            'ngResource',
+            'ngSanitize',
             'ngRoute',
+            'ngAnimate',
             "ones.configModule",
             "ones.common.filters",
             "ones.commonView"
@@ -87,7 +91,8 @@
                             value: "Administrator"
                         },
                         password: {
-                            displayName: $rootScope.installLang.adminPwd
+                            displayName: $rootScope.installLang.adminPwd,
+                            minLength: 6
                         }
                     };
                 }
@@ -347,8 +352,6 @@
                     });
                 }
             };
-
-            console.log();
 
             installSteps.testDB();
 
