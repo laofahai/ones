@@ -70,6 +70,9 @@
                     $scope.activeSubNav = pid;
                 };
                 $scope.goPage = function(url) {
+                    if(undefined === url) {
+                        return;
+                    }
                     $location.url("/"+url);
                 };
             });
