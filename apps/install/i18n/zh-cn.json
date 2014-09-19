@@ -47,7 +47,7 @@
         "clearInstallData": "正在清除安装文件",
         "clearInstallDataFailed": "清除安装文件失败，系统已安装成功，请手动清除",
 
-        "installComplete": "安装成功, <a href='index.html'>点击这里登陆系统</a>"
+        "installComplete": "安装成功, <a href='./'>点击这里登陆系统</a>"
 
     }
 }

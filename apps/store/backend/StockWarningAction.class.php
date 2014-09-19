@@ -25,11 +25,11 @@ class StockWarningAction extends CommonAction {
         if($_GET["onlyCount"]) {
             $this->response($data);
         } else {
-            foreach($data as $k=>$v) {
+            foreach($data[1] as $k=>$v) {
                 if($v["num"] <= $v["store_min"]) {
-                    $data[$k]["colorize"] = "red";
+                    $data[1][$k]["colorize"] = "red";
                 } else {
-                    $data[$k]["colorize"] = "green";
+                    $data[1][$k]["colorize"] = "green";
                 }
             }
             $this->response($data);

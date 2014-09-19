@@ -83,8 +83,7 @@ class AppsAction extends CommonAction {
 
         } else {
 
-            $tmp = parent::index(true);
-
+            $tmp = parent::index(true, false);
             if(!$tmp) {
                 $this->response(array(
                     array("count"=>0),

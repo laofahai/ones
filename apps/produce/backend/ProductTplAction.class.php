@@ -21,8 +21,8 @@ class ProductTplAction extends CommonAction {
     protected $relation = true;
     
     public function index() {
-        
-        $data = parent::index(true);
+
+        $data = parent::index(true, false);
 
         $params = array(
             $data, false

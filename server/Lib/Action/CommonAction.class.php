@@ -280,7 +280,7 @@ class CommonAction extends RestAction {
      * 
      * 通用REST列表返回 
      **/
-    public function index($return=false, $returnIncludeCount=false) {
+    public function index($return=false, $returnIncludeCount=true) {
 
         $this->_external_action();
         if($this->breakAction) {
@@ -367,12 +367,13 @@ class CommonAction extends RestAction {
 //        print_r($list);exit;
         $list = reIndex($list);
         //包含总数
-        if($_GET["_ic"]) {
+        if($_GET["_ic"] && $returnIncludeCount) {
             $total = $model->where($map)->count();
             $totalPages = ceil($total/$_GET["_ps"]);
             if(!$totalPages) {
                 $totalPages = 1;
             }
+
             $returnData = array(
                 array("count" => $total, "totalPages"=>$totalPages),
                 reIndex($list),
