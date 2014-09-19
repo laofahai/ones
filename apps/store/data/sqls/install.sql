@@ -48,11 +48,12 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
-  `source_id` int(11) NOT NULL,
-  `source_model` varchar(20) NOT NULL,
+  `source_id` int(11) DEFAULT NULL,
+  `source_model` varchar(20) DEFAULT NULL,
   `dateline` varchar(12) NOT NULL,
   `outtime` varchar(12) DEFAULT NULL,
   `total_num` decimal(10,2) NOT NULL,
+  `outed_num` decimal(10,2) NOT NULL DEFAULT '0.00',
   `stock_manager` int(11) NOT NULL DEFAULT '0',
   `status` smallint(1) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
@@ -60,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   KEY `source_id` (`source_id`,`dateline`,`outtime`,`stock_manager`),
   KEY `status` (`status`),
   KEY `source_model` (`source_model`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,6 +70,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `goods_id` int(11) NOT NULL,
   `stock_id` smallint(5) NOT NULL,
   `num` decimal(10,2) NOT NULL,
+  `outed` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `stockout_id` (`stockout_id`),
   KEY `factory_code_all` (`factory_code_all`,`goods_id`,`stock_id`)
