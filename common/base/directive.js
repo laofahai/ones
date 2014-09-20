@@ -32,7 +32,8 @@
                 restrict: "E",
                 templateUrl: 'common/base/views/actions/default.html',
                 replace: false,
-                transclude: true
+                transclude: true,
+                scope: false
             };
         }])
 

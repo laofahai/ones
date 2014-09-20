@@ -258,78 +258,6 @@
                     $location.url(url);
                 }
 
-                /**
-                 * 过滤器
-                 * */
-                service.makeFilters = function($scope, filters){
-                    $scope.filters = filters;
-                    $scope.showFilters = true;
-                    var FieldsDefine = {};
-                    var fm = $injector.get("FormMaker");
-                    angular.forEach(filters, function(item, type){
-                        switch(type) {
-                            case "between":
-                                FieldsDefine["_filter_start_"+item.field] = {
-                                    displayName: service.toLang(item.field) + service.toLang("start"),
-                                    inputType: item.inputType || "number",
-                                    value: item.defaultData[0] || 0
-                                };
-                                FieldsDefine["_filter_end_"+item.field] = {
-                                    displayName: service.toLang(item.field) + service.toLang("end"),
-                                    inputType: item.inputType || "number",
-                                    value: item.defaultData[1] || 0
-                                };
-                                break;
-                            case "select":
-                                FieldsDefine["_filter_"+item.field] = item;
-                                break;
-
-                        }
-                    });
-
-                    var modal = null;
-                    var modalHtml = null;
-                    var $compile = $injector.get("$compile");
-                    var $modal = $injector.get("$modal");
-                    if(!$scope.doFilter) {
-                        $scope.doFilter = function(){
-                            $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText, $scope.formData);
-                            modal.hide();
-                        };
-                    }
-
-                    $scope.showFiltersModal = function(){
-                        if(modal && modalHtml) {
-                            modal.show();
-                            $timeout(function(){
-                                $("#filterContainer").append($compile(modalHtml)($scope));
-                            });
-                            return;
-                        }
-                        $scope.modal = modal = $modal({
-                            scope: $scope,
-                            title: service.toLang("filters", "actions"),
-//                            content: {
-//                                config: $scope.config,
-//                                defaultData: $scope.defaultData
-//                            },
-                            contentTemplate: "common/base/views/filters.html"
-                        });
-                        modal.$promise.then(function(){
-                            $timeout(function(){
-                                var FormMaker = $injector.get("FormMaker");
-                                var fm = new FormMaker.makeForm($scope, {
-                                    fieldsDefine: FieldsDefine,
-                                    includeFoot: false
-                                });
-                                modalHtml = fm.makeHTML();
-                                $("#filterContainer").append($compile(modalHtml)($scope));
-                            });
-                        });
-                    };
-
-                }
-
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
                     //                console.log(arguments);
                     $scope.formConfig = {};
@@ -539,7 +467,6 @@
                     opts = $.extend(defaults, options);
                     opts.subModule = opts.subModule ? "/" + opts.subModule : "";
 
-
                     //                console.log(typeof(fieldsDefine));
                     //                console.log("getStructure" in fieldsDefine);
                     //                console.log(typeof(fieldsDefine.getStructure) == "function");
@@ -548,6 +475,10 @@
                         && "getStructure" in fieldsDefine
                         && typeof(fieldsDefine.getStructure) === "function") {
                         var model = fieldsDefine;
+
+                        if(model.filters) {
+                            opts.filters = model.filters;
+                        }
 
                         if(model.config) {
                             opts = $.extend(opts, model.config);
@@ -612,20 +543,14 @@
 
                         $scope.$broadcast("commonGrid.ready");
 
+
+
                     });
 
-
-                    /**
-                     * 自定义过滤器
-                     * */
-                    if(model.filters) {
-                        service.makeFilters($scope, model.filters);
-                    }
 
                     $scope.gridOptions = opts;
 
                 };
-
 
 
                 service.displayBill = function($scope, fieldsDefine, resource, opts) {

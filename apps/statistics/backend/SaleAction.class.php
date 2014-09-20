@@ -35,15 +35,8 @@ class SaleAction extends CommonAction {
                 $format = "m-d";
                 break;
         }
-        $_GET["_filter_start_dateline"] = str_replace('"', "", $_GET["_filter_start_dateline"]);
-        $_GET["_filter_end_dateline"] = str_replace('"', "", $_GET["_filter_end_dateline"]);
-        if($_GET["_filter_start_dateline"]) {
-            $starttime = substr($_GET["_filter_start_dateline"], -3, 3) == "000" ? $_GET["_filter_start_dateline"] / 1000 : strtotime($_GET["_filter_start_dateline"]);
-        }
-        if($_GET["_filter_end_dateline"]) {
-            $endtime = substr($_GET["_filter_end_dateline"], -3, 3) == "000" ? $_GET["_filter_end_dateline"] / 1000 : strtotime($_GET["_filter_end_dateline"]);
-        }
-
+        $starttime = strtotime($_GET["_filter_start_dateline"]);
+        $endtime = strtotime($_GET["_filter_end_dateline"]);
 
         switch($_GET["type"]) {
             case "customer":
@@ -148,7 +141,7 @@ class SaleAction extends CommonAction {
     }
 
     /*
-     * 销售，走势图
+     * 销售，柱状图
      * **/
     protected function ForSaleTotal($data, $start, $end, $step, $format="m-d") {
         $dateRange = makeDateRange($start, $end, $step, $format);

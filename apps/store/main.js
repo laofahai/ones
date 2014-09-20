@@ -290,8 +290,9 @@
                 return service;
             }])
         .service("StockinModel", ["$rootScope", function($rootScope){
-            var timestamp = Date.parse(new Date());
-            var startTime = timestamp-3600*24*30*1000;
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setMonth(startTime.getMonth()-1);
             var obj = {
                 isBill: true,
                 printAble: true,
@@ -302,8 +303,8 @@
                 filters: {
                     between: {
                         field: "dateline",
-                        defaultData: [startTime, timestamp],
-                        inputType: "datepicker"
+                        defaultData: [startTime, endTime],
+                        inputType: "datetime"
                     }
                 }
             };
@@ -451,8 +452,9 @@
             };
         }])
         .service('StockoutModel', ["$rootScope", function($rootScope){
-            var timestamp = Date.parse(new Date());
-            var startTime = timestamp-3600*24*30*1000;
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setMonth(startTime.getMonth()-1);
             return {
                 isBill: true,
                 printAble: true,
@@ -462,8 +464,8 @@
                 filters: {
                     between: {
                         field: "dateline",
-                        defaultData: [startTime, timestamp],
-                        inputType: "datepicker"
+                        defaultData: [startTime, endTime],
+                        inputType: "datetime"
                     }
                 },
                 getStructure: function(){

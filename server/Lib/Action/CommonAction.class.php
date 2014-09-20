@@ -433,8 +433,8 @@ class CommonAction extends RestAction {
         //过滤器
         if($_GET["_filter_start_dateline"] && $_GET["_filter_end_dateline"]) {
             $map["dateline"] = array("BETWEEN", array(
-                $_GET["_filter_start_dateline"]/1000,
-                $_GET["_filter_end_dateline"]/1000
+                strtotime($_GET["_filter_start_dateline"]),
+                strtotime($_GET["_filter_end_dateline"])
             ));
         }
 

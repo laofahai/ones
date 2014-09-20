@@ -16,14 +16,15 @@
         }])
 
         .service("ProductViewModel", ["$rootScope", function($rootScope){
-            var timestamp = Date.parse(new Date());
-            var startTime = timestamp-3600*24*30*1000;
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setMonth(startTime.getMonth()-1);
             return {
                 filters: {
                     between: {
                         field: "dateline",
-                        defaultData: [startTime, timestamp],
-                        inputType: "datepicker"
+                        defaultData: [startTime, endTime],
+                        inputType: "datetime"
                     }
                 },
                 getStructure: function() {
@@ -54,21 +55,22 @@
             };
         }])
 
-        .controller("StatisticsSaleCtl", ["$scope", "$timeout", "ComView", "StatisticsSaleRes", "$rootScope",
-            function($scope, $timeout, ComView, res, $rootScope){
+        .controller("StatisticsSaleCtl", ["$scope", "$timeout", "ComView", "StatisticsSaleRes", "$rootScope", "GridView",
+            function($scope, $timeout, ComView, res, $rootScope, GridView){
 
                 //变量预设
-                var timestamp = Date.parse(new Date());
-                var startTime = timestamp-3600*24*30*1000;
+                var startTime = new Date();
+                var endTime = new Date();
+                startTime.setMonth(startTime.getMonth()-1);
                 $scope.formData = $scope.formData || {};
                 $scope.formData._filter_start_dateline = startTime;
-                $scope.formData._filter_end_dateline = timestamp;
+                $scope.formData._filter_end_dateline = endTime;
                 $scope.formData.timeStep = "day";
                 var filters = {
                     between: {
                         field: "dateline",
-                        defaultData: [startTime, timestamp],
-                        inputType: "datepicker"
+                        defaultData: [startTime, endTime],
+                        inputType: "datetime"
                     },
                     select: {
                         field: "timeStep",
@@ -90,7 +92,7 @@
                 $scope.selectAble = false;
 
                 //过滤器
-                ComView.makeFilters($scope, filters);
+                GridView.methodsList.makeFilters($scope, filters);
                 $scope.doFilter = function() {
                     doQuery();
                     $scope.modal.hide();

@@ -1,8 +1,8 @@
 (function(angular, ones){
 
     angular.module("ones.gridView", [])
-        .service("GridView", ["$rootScope", "$routeParams", "$location", "$modal", "ones.dataApiFactory", "$timeout",
-            function($rootScope, $routeParams, $location, $modal, dataAPI, $timeout){
+        .service("GridView", ["$rootScope", "$routeParams", "$location", "$modal", "ones.dataApiFactory", "$timeout", "$injector",
+            function($rootScope, $routeParams, $location, $modal, dataAPI, $timeout, $injector){
                 var self = this;
                 this.scope = {};
                 this.selected = {};
@@ -49,13 +49,18 @@
 
                     self.refresh();
 
+                    if(self.options.showFilter) {
+                        self.methodsList.makeFilters(self.scope.$parent);
+                    }
+
                 }
 
                 this.refresh = function(){
                     self.methodsList.getPagedDataAsync(
                         self.scope.pagingOptions.pageSize,
                         self.scope.pagingOptions.currentPage,
-                        self.scope.filterOptions.filterText
+                        self.scope.filterOptions.filterText,
+                        self.filtersData
                     );
                 }
 
@@ -197,6 +202,77 @@
                                 });
                             } catch(e) {}
                         });
+                    },
+                    //过滤器
+                    makeFilters: function($scope, filters){
+
+                        $scope.showFilters = true
+
+                        filters = filters || self.options.filters;
+
+                        if(!filters) {
+                             return;
+                        }
+
+                        var FieldsDefine = {};
+                        angular.forEach(filters, function(item, type){
+                            switch(type) {
+                                case "between":
+                                    FieldsDefine["_filter_start_"+item.field] = {
+                                        displayName: toLang(item.field, "", $rootScope) + toLang("start", "", $rootScope),
+                                        inputType: item.inputType || "number",
+                                        value: item.defaultData[0] || 0
+                                    };
+                                    FieldsDefine["_filter_end_"+item.field] = {
+                                        displayName: toLang(item.field, "", $rootScope) + toLang("end", "", $rootScope),
+                                        inputType: item.inputType || "number",
+                                        value: item.defaultData[1] || 0
+                                    };
+                                    break;
+                                case "select":
+                                    FieldsDefine["_filter_"+item.field] = item;
+                                    break;
+
+                            }
+                        });
+
+                        var modal = null;
+                        var modalHtml = null;
+                        var $compile = $injector.get("$compile");
+
+                        if(!$scope.doFilter) {
+                            $scope.doFilter = function(){
+                                self.filtersData = $scope.formData;
+                                self.scope.doRefresh();
+                                modal.hide();
+                            };
+                        }
+
+                        $scope.showFiltersModal = function(){
+                            if(modal && modalHtml) {
+                                modal.show();
+                                $timeout(function(){
+                                    $("#filterContainer").append($compile(modalHtml)($scope));
+                                });
+                                return;
+                            }
+                            $scope.modal = modal = $modal({
+                                scope: $scope,
+                                title: toLang("filters", "actions", $rootScope),
+                                contentTemplate: "common/base/views/filters.html"
+                            });
+                            modal.$promise.then(function(){
+                                $timeout(function(){
+                                    var FormMaker = $injector.get("FormMaker");
+                                    var fm = new FormMaker.makeForm($scope, {
+                                        fieldsDefine: FieldsDefine,
+                                        includeFoot: false
+                                    });
+                                    modalHtml = fm.makeHTML();
+                                    $("#filterContainer").append($compile(modalHtml)($scope));
+                                });
+                            });
+                        };
                     }
                 };
             }])
@@ -215,6 +291,7 @@
 
                             var fetchData = function(){
                                 var gridOptions = $scope.$parent.$eval(iAttrs.config);
+
                                 GridView.init($scope, gridOptions);
 
                                 angular.forEach(GridView.methodsList, function(method, k){
@@ -231,11 +308,21 @@
                                 $scope.pageSizes = $scope.pagingOptions.pageSizes;
                             };
 
+                            var fetched = false;
+
                             $scope.$on("commonGrid.ready", function(){
-                                fetchData();
+                                if(!fetched) {
+                                    fetchData();
+                                    fetched = true;
+                                }
                             });
 
-                            fetchData();
+                            $timeout(function(){
+                                if(!fetched) {
+                                    fetchData();
+                                    fetched = true;
+                                }
+                            }, 300);
 
                             $scope.itemsList = [];
                             $scope.$on("gridData.changed", function(evt, itemsList){

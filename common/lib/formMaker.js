@@ -246,12 +246,11 @@
                             '</choices>'+
                             '</ui-select>',
                         'fields/datepicker': '<span class="input-icon input-icon-right"> \
-                                    <input type="text" class="form-control" \
-                            size="%(size)s" \
-                            ng-model="%(model)s" \
-                            data-date-format="%(format)s" \
-                            data-autoclose="true" %(attrs)s \
-                            bs-datepicker /> \
+                                    <input type="date" ng-model="%(model)s" %(attrs)s /> \
+                                <i class="icon-calendar gray"></i> \
+                            </span>',
+                        'fields/datetime': '<span class="input-icon input-icon-right"> \
+                                    <input type="datetime-local" ng-model="%(model)s" %(attrs)s /> \
                                 <i class="icon-calendar gray"></i> \
                             </span>',
 //                "fields/select2": '<select ngyn-select2 %(attrs)s '+
@@ -375,20 +374,30 @@
                         delete(fieldDefine.value);
                         return sprintf(this.$parent.templates["fields/password"], this._attr(name, fieldDefine));
                     },
-                    _datepicker: function(name, fieldDefine) {
-                        if(fieldDefine.max) {
-                            fieldDefine["data-date-max"] = fieldDefine.max;
-                            delete(fieldDefine.max);
-                        }
-                        if(fieldDefine.min) {
-                            fieldDefine["data-date-min"] = fieldDefine.min;
-                            delete(fieldDefine.min);
+                    _datepicker: function(name, fieldDefine, $scope) {
+                        if(fieldDefine.value) {
+//                            console.log(fieldDefine["ng-model"]);
+                            var getter = $parse(fieldDefine["ng-model"]);
+                            $scope.$apply(function(){
+                                getter.assign($scope, fieldDefine.value);
+                            });
                         }
                         return sprintf(this.$parent.templates["fields/datepicker"], {
                             attrs: this._attr(name, fieldDefine),
-                            model: fieldDefine["ng-model"],
-                            format: fieldDefine.format || "yyyy-MM-dd",
-                            size: fieldDefine.size || 10
+                            model: fieldDefine["ng-model"]
+                        });
+                    },
+                    _datetime: function(name, fieldDefine, $scope) {
+                        if(fieldDefine.value) {
+//                            console.log(fieldDefine["ng-model"]);
+                            var getter = $parse(fieldDefine["ng-model"]);
+                            $scope.$apply(function(){
+                                getter.assign($scope, fieldDefine.value);
+                            });
+                        }
+                        return sprintf(this.$parent.templates["fields/datetime"], {
+                            attrs: this._attr(name, fieldDefine),
+                            model: fieldDefine["ng-model"]
                         });
                     },
                     //多选框
