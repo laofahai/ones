@@ -23,10 +23,6 @@ define("DS", DIRECTORY_SEPARATOR);
 define("ROOT_PATH", dirname(__FILE__));
 define("ENTRY_PATH", ROOT_PATH."/server");
 
-if(!is_file(ENTRY_PATH."/Data/install.lock")) {
-    header("Location:install.html");
-    return;
-}
 
 define("APP_NAME", "ONES");
 define("APP_DEBUG", true);

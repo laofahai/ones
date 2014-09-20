@@ -188,7 +188,8 @@
                 lists: []
             };
             $http.post(conf.BSU+"install", {
-                step: "checkPermission"
+                step: "checkPermission",
+                installing: true
             }).success(function(data){
                 $scope.permissions = data;
             });
@@ -223,10 +224,6 @@
 
                         return false;
                     }
-
-
-
-
 
                     $scope.$parent.configure.db = $scope.formData;
 
@@ -295,7 +292,8 @@
 //                    }).then(callback);
                     $http.post(config.BSU+"install", {
                         step: step,
-                        data: $scope.$parent.configure
+                        data: $scope.$parent.configure,
+                        installing: true
                     }).success(callback);
                 },
                 testDB: function() {

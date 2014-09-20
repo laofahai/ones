@@ -13,7 +13,6 @@ class InstallAction extends CommonAction {
     protected $writeableDirs = array(
         "/apps",
         "/server/Conf/config.php",
-        "/server/ones.sql",
         "/server/Runtime",
         "/server/Data",
         "/server/Data/apps",

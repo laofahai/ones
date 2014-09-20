@@ -1,7 +1,3 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
 CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
   `alias` varchar(50) NOT NULL,
@@ -25,6 +21,39 @@ INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`
   (4, 'dataModel', '', '0.1', 1409042540, 1),
   (5, 'workflow', '', '0.1', 1409042547, 1),
   (6, 'multiSearch', 'MTSC', '0.1', 1406906639, 1);
+
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `title` char(100) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+
+INSERT INTO `[PREFIX]auth_group` (`id`, `title`, `status`) VALUES
+  (1, '超级管理员', 1);
+
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
+  `uid` mediumint(8) unsigned NOT NULL,
+  `group_id` mediumint(8) unsigned NOT NULL,
+  UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
+  KEY `uid` (`uid`),
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `[PREFIX]auth_group_access` (`uid`, `group_id`) VALUES
+  (1, 1);
+
+
+CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
+  `group_id` smallint(5) NOT NULL,
+  `rule_id` int(11) NOT NULL,
+  `flag` tinyint(1) NOT NULL DEFAULT '1',
+  KEY `group_id` (`group_id`,`rule_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -127,6 +156,7 @@ INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `desc
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
   (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
+  (3, NULL, 'dataModel.showOnlyBind', '数据模型查询选项', '0', '是否仅显示所绑定分类的数据模型项', 0, 0),
   (8, NULL, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0, 0),
   (9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0, 0),
   (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'admin@domain.com', '备份发送至邮箱', 0, 0),

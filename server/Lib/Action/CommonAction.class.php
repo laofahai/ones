@@ -29,6 +29,11 @@ class CommonAction extends RestAction {
 
     public function __construct() {
 
+        if(!$_REQUEST["installing"] && !is_file(ENTRY_PATH."/Data/install.lock")) {
+            header("Location:install.html");
+            return;
+        }
+
         parent::__construct();
 
         if(!$_POST) {
