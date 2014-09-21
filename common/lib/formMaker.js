@@ -702,10 +702,6 @@
                         dataName: this.opts.dataName
                     });
 
-                    if(isAppLoaded("workflow") && this.opts.workflowAlias) {
-
-                    }
-
                 };
 
                 service.makeBill.prototype = {
@@ -912,17 +908,17 @@
                             var html = self.fm.maker.factory(context, struct, scope);
                             html = self.compile(html)(parentScope);
                             context.td.append(html);
-
-                            //触发结束编辑事件
                             $timeout(function(){
                                 context = getInputContext(ele);
                                 context.inputAble.focus();
                                 context.inputAble.bind("keydown", function(e){
                                     if(e.keyCode === 13) {
-                                        self.parentScope.billEndEdit(context.td);
+                                        $timeout(function(){
+                                            self.parentScope.billEndEdit(context.td);
+                                        },100);
                                     }
                                 });
-                            }, 100);
+                            }, 200);
                         };
 
                         //结束编辑 ele 应为td子元素
@@ -930,35 +926,30 @@
                          * @todo 回调方法
                          * */
                         parentScope.billEndEdit = function(td, isBlur){
-                            $timeout(function(){
-                                var next = false;
-                                var tdEditAbles = td.parent().find(".tdEditAble");
-                                //            console.log(tdEditAbles);
-                                var tds = [];
-                                angular.forEach(tdEditAbles, function(td){
-                                    tds.push(td);
-                                });
-                                if(tds.length > 1 && tds.indexOf(td[0])+1 < tds.length) {
-                                    next = $(tds).eq(tds.indexOf(td[0])+1);
-                                }
+                            var next = false;
+                            var tdEditAbles = td.parent().find(".tdEditAble");
+                            var tds = [];
+                            angular.forEach(tdEditAbles, function(td){
+                                tds.push(td);
+                            });
+                            if(tds.length > 1 && tds.indexOf(td[0])+1 < tds.length) {
+                                next = $(tds).eq(tds.indexOf(td[0])+1);
+                            }
 
-                                //自动跳到下一可编辑元素
-                                if(self.opts.autoFocusNext && !isBlur) {
-                                    if(!next) { //当前行无下一元素
-                                        if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
-                                            self.parentScope.billAddRow(null, true);
-                                        }
-                                        next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
+                            //自动跳到下一可编辑元素
+                            if(self.opts.autoFocusNext && !isBlur) {
+                                if(!next) { //当前行无下一元素
+                                    if(td.parent().index()+1 >= $("#billTable tbody tr").length) { //无更多行 自动增加一行
+                                        self.parentScope.billAddRow(null, true);
                                     }
-                                    $timeout(function(){
-                                        self.parentScope.billFieldEdit($(next).find("label"));
-                                    });
+                                    next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
                                 }
-                                self.scope.editing = false;
-                                if("callback" in self.fieldsDefine[$(td).data("bind-model")]) {
-                                    self.fieldsDefine[$(td).data("bind-model")].callback($(td).parent());
-                                }
-                            },200);
+                                self.parentScope.billFieldEdit($(next).find("label"));
+                            }
+                            self.scope.editing = false;
+                            if("callback" in self.fieldsDefine[$(td).data("bind-model")]) {
+                                self.fieldsDefine[$(td).data("bind-model")].callback($(td).parent());
+                            }
 
                         };
 

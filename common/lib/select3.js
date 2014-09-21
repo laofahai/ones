@@ -237,6 +237,10 @@
                         $("body").append(selectHTMLCompiled);
                         var currentInput = $(".select3Input:focus");
 
+                        if(!currentInput || !currentInput.offset()) {
+                            return;
+                        }
+
                         $("#select3Container").css({
                             minWidth: currentInput.outerWidth(),
                             left: currentInput.offset().left,
