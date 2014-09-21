@@ -46,12 +46,32 @@
             };
         })
 
-        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", "$location", function($scope, res, $location){
-            res.query().$promise.then(function(data){
-                $scope.items = data;
+        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", "$location", "pluginExecutor", function($scope, res, $location, plugin){
+            plugin.callPlugin("hook.dashboard.blocks");
+
+            $scope.blocks = ones.pluginScope.get("dashboardBlocks");
+
+            var actived = [];
+            var activedItem = {};
+            res.query({
+                onlyUsed: true
+            }).$promise.then(function(data){
+                angular.forEach(data, function(item) {
+                    actived.push(item.name);
+                    activedItem[item.name] = item;
+                });
+
+                angular.forEach($scope.blocks, function(block, k){
+                    if(actived.indexOf(block.name) >= 0) {
+                        $scope.blocks[k]["listorder"] = parseInt(activedItem[block.name].listorder);
+                        $scope.blocks[k]["selected"] = true;
+                    } else {
+                        $scope.blocks[k]["listorder"] = 99;
+                    }
+                });
             });
             $scope.doSubmit = function() {
-                res.save($scope.items);
+                res.save($scope.blocks);
                 $location.url("/");
             };
         }])
@@ -138,55 +158,24 @@
                 }, 300);
 
 
+                plugin.callPlugin("hook.dashboard.blocks");
+
+                var tmp = ones.pluginScope.get("dashboardBlocks");
+                var dashboardItemsArray = {};
+                angular.forEach(tmp, function(blk){
+                    dashboardItemsArray[blk.name] = blk;
+                });
+
                 $scope.dashboardItems = [];
-                ones.pluginScope.set("dashbordBlocks", []);
                 MyDesktopRes.query({
                     onlyUsed: true
                 }, function(data){
-                    angular.forEach(data, function(block){
-                        if(block.template.indexOf("/") < 0) {
-                            block.template = appView("blocks/"+block.template, "dashboard");
-                        }
+                    angular.forEach(data, function(item){
+                        $scope.dashboardItems.push(dashboardItemsArray[item.name]);
                     });
-                    $scope.dashboardItems = data;
+                    ones.pluginScope.remove("dashboardBlocks");
+
                 });
             }])
-
-        .controller("DashboardProduceInProcess", ["$scope", "ProducePlanDetailRes", function($scope, res){
-            res.query({
-                limit: 5
-            }).$promise.then(function(data){
-                $scope.items = data;
-            });
-        }])
-
-        .controller("DashboardStockinCtl", ["$scope", "StockinRes", function($scope, res){
-            res.query({
-                latest: true,
-                limit: 5
-            }).$promise.then(function(data){
-                $scope.items = data;
-            });
-        }])
-
-        .controller("DashboardStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
-            res.query({
-                latest: true,
-                limit: 5,
-                handled: true
-            }).$promise.then(function(data){
-                $scope.items = data;
-            });
-        }])
-
-        .controller("DashboardNeedStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
-            res.query({
-                latest: true,
-                unhandled: true,
-                limit: 5
-            }).$promise.then(function(data){
-                $scope.items = data;
-            });
-        }])
     ;
 })();

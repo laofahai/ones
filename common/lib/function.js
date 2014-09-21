@@ -376,7 +376,7 @@ var arraySortBy = function(name, minor)
         {
             a = o[name] || 99;
             b = p[name] || 99;
-            if (a === b) {return typeof minor==='function' ?minor(o,p):0;}
+            if (a === b) {return typeof minor==='function' ? minor(o,p):0;}
             if (typeof a === typeof b) { return a < b ? -1 : 1;}
             return typeof a < typeof b ? -1 : 1;
         }
@@ -385,9 +385,7 @@ var arraySortBy = function(name, minor)
         }
     }
 }
-var objectSortBy = function(obj, sortArray){
 
-};
 
 var reIndex = function(data) {
     var a = [];

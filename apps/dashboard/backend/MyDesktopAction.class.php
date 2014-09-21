@@ -13,15 +13,12 @@
  */
 class MyDesktopAction extends CommonAction {
     
-    public function index() {
-        if($_GET["onlyUsed"]) {
-            $model = D("MyDesktopView");
-            $data = $model->where("uid=".$this->user["id"])->order("MyDesktop.listorder DESC")->select();
-            $this->response($data);
-        } else {
-            $model = D("MyDesktop");
-            $this->response($model->getDesks($this->user["id"]));
-        }
+    public function _filter(&$map) {
+        $map["uid"] = getCurrentUid();
+    }
+
+    public function _order(&$order) {
+        $order = "listorder DESC";
     }
     
     public function insert() {
@@ -33,7 +30,7 @@ class MyDesktopAction extends CommonAction {
             }
             $model->add(array(
                 "uid" => $this->user["id"],
-                "desk_id" => $row["id"],
+                "name" => $row["name"],
                 "listorder"=>$row["listorder"]
             ));
         }

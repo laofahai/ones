@@ -9,13 +9,6 @@
                         "dashboard": "控制面板"
                     }
                 },
-                "UserDesktop": {
-                    "name" : "用户桌面项",
-                    "actions": {
-                        "list": "",
-                        "add" : ""
-                    }
-                },
                 "MyDesktop": {
                     "name": "我的桌面",
                     "actions": {

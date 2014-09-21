@@ -14,11 +14,11 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="item in items">
+                <tr ng-repeat="item in blocks">
                     <td>
                         <input type="checkbox" ng-model="item.selected" />
                     </td>
-                    <td ng-bind="item.name"></td>
+                    <td ng-bind="item.name|lang:'widgetTitles'"></td>
                     <td>
                         <input type="number" ng-model="item.listorder" class="input-mini" />
                     </td>

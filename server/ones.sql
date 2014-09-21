@@ -255,12 +255,10 @@ INSERT INTO `[PREFIX]department` (`id`, `pid`, `name`, `leader`, `lft`, `rgt`, `
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
   `uid` int(11) NOT NULL,
-  `desk_id` smallint(3) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
   KEY `uid` (`uid`,`listorder`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 
 
@@ -307,27 +305,6 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
   KEY `department_id` (`department_id`),
   KEY `truename` (`truename`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-
-CREATE TABLE IF NOT EXISTS `[PREFIX]user_desktop` (
-  `id` smallint(3) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `template` varchar(255) NOT NULL,
-  `width` smallint(2) NOT NULL DEFAULT '6',
-  `listorder` smallint(3) NOT NULL DEFAULT '99',
-  PRIMARY KEY (`id`),
-  KEY `listorder` (`listorder`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
-
-
-
-INSERT INTO `[PREFIX]user_desktop` (`id`, `name`, `template`, `width`, `listorder`) VALUES
-  (1, '最近入库', 'latestStockin.html', 4, 99),
-  (2, '最近出库', 'latestStockout.html', 4, 99),
-  (3, '出库待处理', 'needStockout.html', 4, 99),
-  (5, '在产产品', 'producePlanDetail.html', 4, 99);
-
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (

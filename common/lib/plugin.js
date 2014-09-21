@@ -45,6 +45,9 @@
         clear: function() {
             ones.pluginVariables = {};
         },
+        remove: function(k){
+            delete(ones.pluginVariables[k]);
+        },
         append: function(k, v) {
             try {
                 if(!ones.pluginVariables[k]) {

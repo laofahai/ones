@@ -2,6 +2,16 @@
  * Created by nemo on 14-7-7.
  */
 (function(){
+
+    //桌面块
+    ones.pluginRegister("hook.dashboard.blocks", function(injector, defer, params) {
+        ones.pluginScope.append("dashboardBlocks", {
+            name: "produceInProcess",
+            template: appView("producePlan/dashboardProducePlanDetail.html", "produce"),
+            width:4
+        });
+    });
+
     angular.module("ones.produce", [
             "ones.pluginsModule"
         ])
@@ -608,5 +618,13 @@
                         });
                 };
             }])
+
+        .controller("DashboardProduceInProcess", ["$scope", "ProducePlanDetailRes", function($scope, res){
+            res.query({
+                limit: 5
+            }).$promise.then(function(data){
+                    $scope.items = data;
+                });
+        }])
     ;
 })();

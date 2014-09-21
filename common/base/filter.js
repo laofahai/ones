@@ -73,9 +73,8 @@
         })
         //.filter("append|prepend")
         .filter("lang", ["$injector", function($injector){
-            return function(str) {
-                var rootScope = $injector.get("$rootScope");
-                return rootScope.i18n.lang[str] || str;
+            return function(str, section) {
+                return toLang(str, section, $injector.get("$rootScope"));
             };
         }])
         .filter("toError", ["$rootScope", function($rootScope){
@@ -143,6 +142,11 @@
             return function(str, color) {
                 return sprintf('<span class="%s">%s</span>', color, str);
             };
+        }])
+        .filter("default", [function(){
+            return function(source, placeholder) {
+                return source || placeholder;
+            }
         }])
     ;
 

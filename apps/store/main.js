@@ -89,6 +89,26 @@
         });
     });
 
+    //桌面块
+    ones.pluginRegister("hook.dashboard.blocks", function(injector, defer, params) {
+        ones.pluginScope.append("dashboardBlocks", {
+            name: "latestStockin",
+            template: appView("stockin/dashboardLatestStockin.html", "store"),
+            width:4
+        });
+        ones.pluginScope.append("dashboardBlocks", {
+            name: "latestStockout",
+            template: appView("stockout/dashboardLatestStockout.html", "store"),
+            width:4
+        });
+        ones.pluginScope.append("dashboardBlocks", {
+            name: "needStockout",
+            template: appView("stockout/dashboardNeedStockout.html", "store"),
+            width:4
+        });
+    });
+
+
     angular.module("ones.store", [])
         .config(["$routeProvider", function($route){
             $route
@@ -719,5 +739,34 @@
                     });
                 };
             }])
+
+
+        .controller("DashboardStockinCtl", ["$scope", "StockinRes", function($scope, res){
+            res.query({
+                latest: true,
+                limit: 5
+            }).$promise.then(function(data){
+                $scope.items = data;
+            });
+        }])
+
+        .controller("DashboardStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
+            res.query({
+                latest: true,
+                limit: 5,
+                handled: true
+            }).$promise.then(function(data){
+                $scope.items = data;
+            });
+        }])
+        .controller("DashboardNeedStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
+            res.query({
+                latest: true,
+                unhandled: true,
+                limit: 5
+            }).$promise.then(function(data){
+                $scope.items = data;
+            });
+        }])
     ;
 })();
