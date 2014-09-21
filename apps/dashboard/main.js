@@ -76,17 +76,7 @@
                         }
                     }, 1000);
                 });
-//                ones.pluginScope.dashboardAppBtns = [];
-//                ones.pluginScope.dashboardSetBtnTip = function(btnName, tip){
-//                    $timeout(function(){
-//                        for(var i=0;i<$scope.appBtns.length;i++) {
-//                            if($scope.appBtns[i].name == btnName) {
-//                                $scope.appBtns[i].tip = tip;
-//                                break;
-//                            }
-//                        }
-//                    }, 1000);
-//                };
+
                 $scope.appBtns = [];
                 $timeout(function(evt, data){
                     plugin.callPlugin("hook.dashboard.appBtn", $scope);
@@ -149,6 +139,7 @@
 
 
                 $scope.dashboardItems = [];
+                ones.pluginScope.set("dashbordBlocks", []);
                 MyDesktopRes.query({
                     onlyUsed: true
                 }, function(data){

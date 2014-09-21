@@ -690,6 +690,13 @@
                         });
                     }
 
+                    if(model.config) {
+                        angular.forEach(model.config, function(v, k){
+                            model[k] = v;
+                        });
+                    }
+
+
                     //编辑
 //                    console.log(model.editAble);
                     if(model.editAble === undefined || model.editAble) {
