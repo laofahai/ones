@@ -64,7 +64,7 @@
                         inputType: "number"
                     },
                     group_name: {
-                        displayName: $rootScope.i18n.lang.usergroup,
+                        displayName: toLang("usergroup", "", $rootScope),
                         field: "usergroup",
                         hideInForm: true
                     },

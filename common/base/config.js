@@ -95,7 +95,11 @@
              * */
             $rootScope.i18n = ones.caches.getItem("ones.i18n");
             if(!$rootScope.i18n && !ones.installing) {
-
+                if(!ones.caches.getItem("ones.reloading")){
+                    ones.caches.setItem("ones.reloading", true, 1);
+                    window.location.reload();
+                    return;
+                }
 
                 try {
                     var configRes = $injector.get("HOME.ConfigAPI");
@@ -120,6 +124,8 @@
                         throw("can't load i18n package.");
                     }
                 });
+
+                ones.caches.removeItem("ones.reloading");
             }
         }])
     ;

@@ -61,6 +61,11 @@
             return v;
 
         },
+        removeItem: function(k){
+            delete(ones.caches._cachesData[k]);
+            sessionStorage.removeItem(k);
+            localStorage.removeItem(k);
+        },
         clear: function(level) {
             switch(level) {
                 case -1:
