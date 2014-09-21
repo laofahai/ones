@@ -1,4 +1,29 @@
 (function(){
+
+    //桌面按钮
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
+        var ComView = injector.get("ComView");
+        ones.pluginScope.append("dashboardAppBtns", {
+            label: ComView.toLang("Orders"),
+            name: "Orders",
+            icon: "pencil",
+            link: "sale/list/orders"
+        });
+
+        ones.pluginScope.set("defer", defer);
+    });
+
+    //综合搜索
+    ones.pluginRegister("hook.multiSearch.items", function(inject, defer, params){
+        ones.pluginScope.append("ones.multiSearch.items", {
+            name: "Orders",
+            dataSource: "OrdersRes",
+            labelField: "bill_id",
+            linkTpl: "sale/editBill/orders/id/+id",
+            link: "sale/list/orders"
+        });
+    });
+
     angular.module("ones.sale", [])
         .config(["$routeProvider", function($route){
             $route
