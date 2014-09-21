@@ -6,7 +6,7 @@
     //桌面块
     ones.pluginRegister("hook.dashboard.blocks", function(injector, defer, params) {
         ones.pluginScope.append("dashboardBlocks", {
-            name: "producing",
+            name: "produceInProcess",
             template: appView("producePlan/dashboardProducePlanDetail.html", "produce"),
             width:4
         });
@@ -623,8 +623,8 @@
             res.query({
                 limit: 5
             }).$promise.then(function(data){
-                    $scope.items = data;
-                });
+                $scope.items = data;
+            });
         }])
     ;
 })();
