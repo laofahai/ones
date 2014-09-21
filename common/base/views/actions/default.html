@@ -2,7 +2,7 @@
     <div class="col-lg-4">
         <div class="actionsBtnLeft btn-group">
             <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
-            <a class="btn btn-sm btn-light" href="#/HOME/goTo/url/{{$parent.currentURI}}"><i class="icon icon-refresh"></i></a>
+            <a class="btn btn-sm btn-light" href="" ng-click="$parent.doPageRefresh()"><i class="icon icon-refresh"></i></a>
             <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
             <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
 

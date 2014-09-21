@@ -143,6 +143,13 @@
                     ComView.alert(msg, "danger");
                 });
 
+                //刷新NG-VIEW
+                $scope.doPageRefresh = function(){
+                    if($rootScope.currentPage.action === "list") {
+                        $scope.$broadcast("gridData.refreshed");
+                    }
+                };
+
                 //全局键盘事件
                 $scope.doMainKeyDown = function($event){
                     //back space

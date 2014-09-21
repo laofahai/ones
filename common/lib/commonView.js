@@ -413,22 +413,6 @@
                     fieldsDefine = fieldsDefine ? fieldsDefine : [];
                     var columnDefs = [];
 
-                    /**
-                     * 分页/Grid 过滤器默认项
-                     * */
-                    $scope.pagingOptions = {
-                        pageSizes: [10, 15, 20, 30, 50],
-                        pageSize: 10,
-                        currentPage: 1
-                    };
-                    $scope.filterOptions = {
-                        filterText: "",
-                        useExternalFilter: false
-                    };
-                    $scope.sortInfo = {
-                        fields: ["id"],
-                        directions: ["ASC"]
-                    };
 
 
                     //默认选项

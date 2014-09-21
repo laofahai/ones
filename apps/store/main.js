@@ -305,7 +305,8 @@
                         field: "dateline",
                         defaultData: [startTime, endTime],
                         inputType: "datetime"
-                    }
+                    },
+                    workflow: "stockin"
                 }
             };
             obj.getStructure= function() {

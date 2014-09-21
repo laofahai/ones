@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     {{'totalServerItem'|lang}} {{totalServerItems}}<br />
-                    {{'paginationInfo'|lang}} {{config.pagingOptions.currentPage}}/{{totalPages}}
+                    {{'paginationInfo'|lang}} {{pagingOptions.currentPage}}/{{totalPages}}
                 </div>
                 <div class="col-sm-8 text-right">
                     <select class="actionsBtnRight" ng-options="p for p in pageSizes" ng-model="pagingOptions.pageSize"></select>
@@ -50,7 +50,7 @@
                                 <a href=""><i class="icon-angle-double-left"></i></a>
                             </li>
                             <li ng-click="setPage('-1')"><a href=""><i class="icon-angle-left"></i></a></li>
-                            <li><input type="number" class="input-mini pagingInput" ng-model-options="{ debounce: 500 }" ng-model="config.pagingOptions.currentPage" min="1" max="{{totalPages}}" /></li>
+                            <li><input type="number" class="input-mini pagingInput" ng-model-options="{ debounce: 500 }" ng-model="pagingOptions.currentPage" min="1" max="{{totalPages}}" /></li>
                             <li ng-click="setPage('+1')"><a href=""><i class="icon-angle-right"></i></a></li>
                             <li class="next" ng-click="setPage('max')">
                                 <a href=""><i class="icon-angle-double-right"></i></a>

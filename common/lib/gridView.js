@@ -15,11 +15,9 @@
 
                     self.scope = $scope;
                     self.options = options;
+                    self.parentScope = self.scope.$parent;
 
-                    var optsField = ["pagingOptions", "filterOptions", "sortInfo"];
-                    angular.forEach(optsField, function(field){
-                        self.scope[field] = options[field];
-                    });
+                    self.methodsList.doResetGridOptions();
 
                     /**
                      * 监视器
@@ -33,7 +31,7 @@
                             self.refresh ();
                         }
                     }, true);
-                    self.scope.$watch('filterOptions', function(newVal, oldVal) {
+                    self.scope.$watch('$parent.filterOptions', function(newVal, oldVal) {
                         if (newVal !== oldVal) {
                             self.refresh ();
                         }
@@ -59,7 +57,7 @@
                     self.methodsList.getPagedDataAsync(
                         self.scope.pagingOptions.pageSize,
                         self.scope.pagingOptions.currentPage,
-                        self.scope.filterOptions.filterText,
+                        self.parentScope.filterOptions.filterText,
                         self.filtersData
                     );
                 }
@@ -86,6 +84,23 @@
                     //刷新
                     doRefresh: function(){
                         self.refresh();
+                    },
+                    doResetGridOptions: function(){
+                        self.scope.pagingOptions = {
+                            pageSizes: [10, 15, 20, 30, 50],
+                            pageSize: 15,
+                            currentPage: 1
+                        };
+                        self.parentScope.filterOptions = {
+                            filterText: "",
+                            useExternalFilter: false
+                        };
+                        self.scope.sortInfo = {
+                            fields: ["id"],
+                            directions: ["ASC"]
+                        };
+                        self.scope.filterFormData = {};
+                        self.filtersData = {};
                     },
                     //设置当前页
                     setPage: function(p){
@@ -176,14 +191,14 @@
                              * ic : 包含count info
                              * */
                             var p = {
-                                _kw: self.scope.filterOptions.filterText,
+                                _kw: self.parentScope.filterOptions.filterText,
                                 _pn: self.scope.pagingOptions.currentPage,
                                 _ps: self.scope.pagingOptions.pageSize,
                                 _si: sb.join("|"),
                                 _ic: 1
                             };
-    //                            console.log(p);
-                            p = $.extend(self.options.queryExtraParams, p, extraParams||{});
+
+                            p = $.extend(p, self.options.queryExtraParams, extraParams||{});
                             var promise;
 
                             try {
@@ -221,20 +236,38 @@
                                     FieldsDefine["_filter_start_"+item.field] = {
                                         displayName: toLang(item.field, "", $rootScope) + toLang("start", "", $rootScope),
                                         inputType: item.inputType || "number",
-                                        value: item.defaultData[0] || 0
+                                        value: item.defaultData[0] || 0,
+                                        required: false
                                     };
                                     FieldsDefine["_filter_end_"+item.field] = {
                                         displayName: toLang(item.field, "", $rootScope) + toLang("end", "", $rootScope),
                                         inputType: item.inputType || "number",
-                                        value: item.defaultData[1] || 0
+                                        value: item.defaultData[1] || 0,
+                                        required: false
                                     };
                                     break;
                                 case "select":
+                                    item.required = false;
                                     FieldsDefine["_filter_"+item.field] = item;
+                                    break;
+                                case "workflow":
+                                    FieldsDefine["_filter_workflow_node_"] = {
+                                        displayName: toLang("workflow", "", $rootScope),
+                                        inputType: "select",
+                                        multiple: true,
+                                        dataSource: "Workflow.WorkflowNodeAPI",
+                                        nameField: "status_text",
+                                        queryParams: {
+                                            workflow_alias: item
+                                        },
+                                        required: false
+                                    };
                                     break;
 
                             }
                         });
+
+//                        console.log(FieldsDefine);
 
                         var modal = null;
                         var modalHtml = null;
@@ -242,7 +275,7 @@
 
                         if(!$scope.doFilter) {
                             $scope.doFilter = function(){
-                                self.filtersData = $scope.formData;
+                                self.filtersData = $scope.filterFormData;
                                 self.scope.doRefresh();
                                 modal.hide();
                             };
@@ -266,7 +299,8 @@
                                     var FormMaker = $injector.get("FormMaker");
                                     var fm = new FormMaker.makeForm($scope, {
                                         fieldsDefine: FieldsDefine,
-                                        includeFoot: false
+                                        includeFoot: false,
+                                        dataName: "filterFormData"
                                     });
                                     modalHtml = fm.makeHTML();
                                     $("#filterContainer").append($compile(modalHtml)($scope));
@@ -298,9 +332,12 @@
                                     $scope[k] = method;
                                 });
 
+                                $scope.doResetGridOptions();
+
                                 //每页显示条数
                                 var pageSize = ones.caches.getItem("ones.pageSize");
-                                if(!pageSize) {
+
+                                if(!pageSize || "undefined" === pageSize) {
                                     pageSize = $scope.pagingOptions.pageSize;
                                     ones.caches.setItem("ones.pageSize", pageSize, 1);
                                 }
@@ -333,7 +370,13 @@
                                 }
                                 $scope.gridSelected = [];
                                 GridView.selected = {};
+                            });
 
+                            $scope.$on("gridData.refreshed", function(evt){
+                                $scope.gridSelected = [];
+                                GridView.selected = {};
+                                $scope.doResetGridOptions();
+                                $scope.doRefresh();
                             });
 
                             ones.GridScope = $scope;
@@ -345,9 +388,6 @@
 
                             $scope.selectedActions = GridView.selectedActions;
                             $scope.$parent.searchAble = true;
-
-
-
                         }
                     };
                 }
