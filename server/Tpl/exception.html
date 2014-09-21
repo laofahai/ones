@@ -1,0 +1,7 @@
+<?php
+    $reponse = array(
+        "error" => 1,
+        "msg" => sprintf("%s:%d %s", end(explode("/", $e["file"])), $e["line"], $e["message"])
+    );
+    echo json_encode($reponse);
+?>
