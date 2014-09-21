@@ -49,6 +49,8 @@
         "supplier": "供应商",
         "customer": "客户",
         "company_name": "公司名称",
+        "relationshipCompany": "往来单位",
+        "relationshipCompanyLinkman": "往来单位联系人",
 
         "crm.relationshipcompanylinkman" : "%s往来单位联系人",
         "crm.relationshipcompany" : "%s往来单位",

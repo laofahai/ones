@@ -628,7 +628,7 @@
 
                         $scope.$broadcast("commonBill.ready");
 
-                        if(opts.isEdit && $routeParams.id && isAppLoaded("workflow")) {
+                        if(model.workflowAlias && opts.isEdit && $routeParams.id && isAppLoaded("workflow")) {
                             $injector.get("Workflow.WorkflowNodeAPI").api.query({
                                 workflow_alias: model.workflowAlias,
                                 mainrow_id: $routeParams.id,

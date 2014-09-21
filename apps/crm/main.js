@@ -1,5 +1,6 @@
 (function(){
 
+    //桌面按钮
     ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
         var ComView = injector.get("ComView");
         ones.pluginScope.append("dashboardAppBtns", {
@@ -10,6 +11,24 @@
         });
 
         ones.pluginScope.set("defer", defer);
+    });
+
+    //综合搜索
+    ones.pluginRegister("hook.multiSearch.items", function(inject, defer, params){
+        ones.pluginScope.append("ones.multiSearch.items", {
+            name: "relationshipCompany",
+            dataSource: "RelationshipCompanyRes",
+            labelField: "name",
+            linkTpl: "crm/editBill/relationshipCompany/id/+id",
+            link: "crm/list/relationshipCompany"
+        });
+        ones.pluginScope.append("ones.multiSearch.items", {
+            name: "relationshipCompanyLinkman",
+            dataSource: "RelationshipCompanyLinkmanRes",
+            labelField: "contact",
+            linkTpl: "crm/edit/relationshipCompanyLinkman/id/+id",
+            link: "crm/list/relationshipCompanyLinkman"
+        });
     });
 
     angular.module("ones.crm", ["ones.department"])
@@ -144,6 +163,7 @@
         .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "RelationshipCompanyLinkmanModel", "$routeParams",
             function($scope, ComView, RelationshipCompanyModel, res, RelationshipCompanyLinkmanModel, $routeParams){
                 $scope.selectAble = false;
+
                 ComView.displayForm($scope, RelationshipCompanyModel, res, {
                     dataName: "baseInfo",
                     name: "baseInfoForm",
