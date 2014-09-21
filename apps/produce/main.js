@@ -6,7 +6,7 @@
     //桌面块
     ones.pluginRegister("hook.dashboard.blocks", function(injector, defer, params) {
         ones.pluginScope.append("dashboardBlocks", {
-            name: "produceInProcess",
+            name: "producing",
             template: appView("producePlan/dashboardProducePlanDetail.html", "produce"),
             width:4
         });
@@ -190,10 +190,10 @@
                             displayName: $rootScope.i18n.lang.type
                         },
                         start_time: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:1"
                         },
                         end_time: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:"
                         },
                         create_time: {
                             cellFilter: "dateFormat"

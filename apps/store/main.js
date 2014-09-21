@@ -711,7 +711,7 @@
                         data: $scope.formMetaData
                     }).$promise.then(function(data){
 //                    console.log(data);return;
-//                        $location.url("/store/list/stockout");
+                        $location.url("/store/list/stockout");
                     });
                 };
             }])

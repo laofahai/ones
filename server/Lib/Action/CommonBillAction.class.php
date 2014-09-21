@@ -8,6 +8,8 @@
 
 class CommonBillAction extends CommonAction {
 
+    protected $protectedStatus = 1;
+
     public function insert() {
 
         if($_REQUEST["workflow"]) {
@@ -27,6 +29,13 @@ class CommonBillAction extends CommonAction {
         }
 
         $model = D($this->getActionName());
+
+        $sourceData = $model->find($_POST["id"]);
+        if($sourceData["status"] >= $this->protectedStatus) {
+            $this->error("in_workflow");
+            return;
+        }
+
         if(!$model->editBill($_POST)) {
             $this->error($model->getError());
         }

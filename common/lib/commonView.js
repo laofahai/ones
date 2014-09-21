@@ -231,9 +231,14 @@
                     });
 
                     if(autohide !== false) {
-                        setTimeout(function(){
+                        sleep = parseInt(autohide);
+                        if(isNaN(sleep) || sleep < 3000) {
+                            sleep = 3000;
+                        }
+
+                        $timeout(function(){
                             erpalert.hide();
-                        }, autohide < 3000 ? 3000 : 5000);
+                        }, sleep);
                     }
                 };
                 /**
@@ -756,6 +761,7 @@
                                 label: service.toLang('viewChild', "actions"),
                                 class: "primary",
                                 multi: false,
+                                icon: "eye",
                                 action: function(evt, selected, theItem){
                                     $location.url(sprintf('/%(group)s/viewChild/%(module)s/pid/%(id)d', {
                                         group : group,
@@ -823,7 +829,11 @@
                             $scope.$broadcast("gridData.changed", true);
                         };
                         $scope.workflowActionDisabled = function(id, item) {
-                            item = item || $scope.gridSelected[0];
+                            try {
+                                item = item || $scope.gridSelected[0];
+                            } catch(e) {
+                                return true;
+                            }
 
                             if(!item || !item.processes) {
                                 return true;
