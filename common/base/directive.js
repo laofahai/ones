@@ -36,8 +36,25 @@
                 scope: false
             };
         }])
+        .directive('ngRightClick', ["$parse", function($parse) {
+            return {
+                restrict: "A",
+                link: function($scope, element, attrs, oController) {
+                    var fn;
+                    fn = $parse(attrs.ngRightClick);
+                    element.bind("contextmenu", function(event) {
+                        $scope.$apply(function() {
+                            fn($scope, {
+                                $event: event
+                            });
+                        });
+                        event.preventDefault();
+                    });
+                }
+            }
+        }])
 
-    /**
+            /**
      * The ng-thumb directive
      * @author: nerv
      * @version: 0.1.2, 2014-01-09

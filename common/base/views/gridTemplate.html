@@ -2,33 +2,34 @@
     <table class="table table-bordered table-hover table-grid dataTable">
         <thead>
         <tr>
-            <th width="40"> </th>
+            <th width="40" class="hidden-480"> </th>
             <th
                 class="th-{{f.field}}"
                 ng-bind-html="f.displayName"
-                ng-class="{sortable: f.sortAble||f.field=='id', sorting_asc:sorting==f.field+' DESC',sorting_desc:sorting==f.field+' ASC'}"
+                ng-class="{sortable: f.sortAble||f.field=='id', sorting_asc:sorting==f.field+' DESC',sorting_desc:sorting==f.field+' ASC', 'hidden-480': hiddenWhen480px.indexOf(f.field)>=0}"
                 ng-repeat="f in config.columnDefs"
                 ng-click="doGridSortBy(f.field)"></th>
-            <th> </th>
+            <th class="hidden-480"> </th>
         </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in itemsList" ng-dblclick="doGridDblClick(item)" ng-click="doGridClick($index, $event)">
-                <td align="center">
+            <tr ng-repeat="item in itemsList" ng-dblclick="doGridDblClick(item)" ng-click="doGridClick($index, $event)" ng-right-click="doContextMenu($event,item,config)">
+                <td align="center" class="hidden-480">
                     <label>
                         <input type="checkbox" class="ace" ng-change="recordSelected(result)" ng-true-value="{{$index+1}}" ng-false-value="{{-($index+1)}}" ng-model="result" />
                         <span class="lbl"></span>
                     </label>
                 </td>
-                <td ng-repeat="field in config.columnDefs" class="td-{{field.field}}" ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$parent.$index"></td>
-                <td align="center" class="table-grid-operation">
+                <td ng-repeat="field in config.columnDefs"
+                    class="td-{{field.field}}"
+                    ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$parent.$index"
+                    ng-class="{'hidden-480': hiddenWhen480px.indexOf(field.field)>=0}"
+                        ></td>
+                <td align="center" class="table-grid-operation hidden-480">
                     <a class="{{sa.class}}" ng-click="sa.action($event, gridSelected, item)" ng-hide="true===sa.hideInLine" ng-repeat="sa in selectedActions" title="{{sa.label}}">
                         <i class="icon icon-{{sa.icon}}" ng-show="sa.icon!==undefined"></i>
                         <span ng-show="sa.icon===undefined" class="blue" ng-bind="sa.label"></span>
                     </a>
-                    <!--<a href="" ng-click="addChild(item.id)" ng-show="config.addSubAble===true"> <i class="icon icon-plus"></i> &nbsp; </a>-->
-                    <!--<a href="" ng-click="doEditItem(item.id)" ng-hide="config.editAble===false"> <i class="icon icon-pencil"> </i> &nbsp; </a>-->
-                    <!--<a href="" ng-click="doDeleteItem(item.id)" ng-hide="config.deleteAble===false"> <i class="icon icon-trash-o"> </i> </a>-->
                 </td>
             </tr>
             <tr ng-show="itemsList.length<1">

@@ -63,6 +63,22 @@
                 }
 
                 this.methodsList = {
+                    //
+                    hiddenWhen480px: [
+                        'memo',
+                        'value',
+                        'dateline',
+                        'pinyin',
+                        'type',
+                        'alias',
+                        'source_model',
+                        'description',
+                        'subject',
+                        'id'
+                    ],
+                    doContextMenu: function(evt, item, config){
+                        console.log(arguments);
+                    },
                     //双击事件
                     doGridDblClick: function(item, extra){
                         try {
