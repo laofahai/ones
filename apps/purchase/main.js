@@ -74,7 +74,6 @@
                             nameField: "combineLabel",
                             listAble: false,
                             width: 300,
-                            dynamicAddAble: true,
                             dynamicAddOpts: {
                                 model: "GoodsModel"
                             }
@@ -135,7 +134,10 @@
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                     inputType: "select3",
                     "ng-model": "formMetaData.supplier_id",
-                    dataSource: "RelationshipCompanyRes"
+                    dataSource: "RelationshipCompanyRes",
+                    dynamicAddOpts: {
+                        model: "RelationshipCompanyModel"
+                    }
                 }
             };
             //销售类型字段定义

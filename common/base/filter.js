@@ -78,8 +78,9 @@
             };
         }])
         .filter("toError", ["$rootScope", function($rootScope){
-            return function(errors) {
-//                    console.log(errors);
+            return function(field) {
+
+                var errors = field.$error;
                 if(!errors) {
                     return;
                 }
@@ -91,6 +92,7 @@
                         if(!err || k === "false") {
                             return;
                         }
+//                        tips.push(sprintf(toLang(k, "errors", $rootScope), field.$viewValue));
                         if(k in i18n.errors) {
                             tips.push(i18n.errors[k]);
                         } else {

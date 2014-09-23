@@ -17,56 +17,7 @@ a{
     height:550px;
     border:1px solid #ddd;
 }
-.ngHeaderContainer {
-    border-bottom:1px solid #ddd;
-}
-.ngHeaderScoller {
-    color: #707070;
-    font-weight: normal;
-    background: #f2f2f2;
-    background-image: -webkit-gradient(linear,left 0,left 100%,from(#f8f8f8),to(#ececec));
-    background-image: -webkit-linear-gradient(top,#f8f8f8,0%,#ececec,100%);
-    background-image: -moz-linear-gradient(top,#f8f8f8 0,#ececec 100%);
-    background-image: linear-gradient(to bottom,#f8f8f8 0,#ececec 100%);
-    background-repeat: repeat-x;
-    line-height:40px;height:40px;
-}
-.ngHeaderText {
-    height:30px;
-    line-height:30px;
-}
-.ngSelectionCell {
-    margin-left:4px;
-    margin-top:12px;
-}
-.ngCell {
-    height:30px;line-height:30px;
-    border-bottom:1px solid #ddd;
-}
-.ngRow.odd {
-    background:#fff;
-}
-.ngRow.even {
-    background:#fff
-}
-.ngRow.selected{
-    background:#f9f9f9;
-} 
-.ngTopPanel {
-    color: #707070;
-    font-weight: normal;
-    border-bottom:1px solid #ddd;
-    background: #F2F2F2;
-    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#f8f8f8), to(#ececec));
-    background-image: -webkit-linear-gradient(top, #f8f8f8, 0%, #ececec, 100%);
-    background-image: -moz-linear-gradient(top, #f8f8f8 0%, #ececec 100%);
-    background-image: linear-gradient(to bottom, #f8f8f8 0%, #ececec 100%);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#ffececec', GradientType=0);
-}
-.ngSelectionCell input {
-    top:5px;
-}
+
 .help-block {
     display:inline-block;
 }

@@ -131,7 +131,7 @@ class StockinModel extends CommonModel {
         $billData = array(
             "bill_id" => makeBillCode(C("BILL_PREFIX.Stockin")),
             "subject" => $postData["subject"],
-            "dateline"=> $postData["dateline"] ? strtotime($postData["inputTime"]) : CTS,
+            "dateline"=> $postData["dateline"] ? strtotime($postData["dateline"]) : CTS,
             "status"  => 0,
             "user_id" => getCurrentUid(),
             "stock_manager" => 0,

@@ -102,7 +102,7 @@
                         if(config.autoReset || (!val && config.autoQuery)) {
                             val = "_";
                         }
-                        if(val || config.dynamicAddAble || config.dataSource.dynamicAddAble) {
+                        if(val || config.dynamicAddOpts || config.dataSource.dynamicAddOpts) {
                             parentScope.doSelect3Query(val);
                         }
 
@@ -176,7 +176,7 @@
                         self.scope.select3Items = [];
                         //非数组形式数据源
                         if(!angular.isArray(config.dataSource)) {
-                            if(!$.trim(val) && !config.dynamicAddAble) {
+                            if(!$.trim(val) && !config.dynamicAddOpts) {
                                 parentScope.hideSelect3Options(true);
                                 return;
                             }
@@ -192,7 +192,7 @@
                             }
                             var promise = getDataApiPromise(config.dataSource, "query", queryParams);
                             promise.then(function(data){
-                                if(data.length < 1 && !config.dynamicAddAble) {
+                                if(data.length < 1 && !config.dynamicAddOpts) {
                                     parentScope.hideSelect3Options(true);
                                     return;
                                 }
@@ -207,7 +207,7 @@
                                 parentScope.displaySelect3Options();
                             });
                         } else {
-                            if(config.dataSource.length < 1 && !config.dynamicAddAble) {
+                            if(config.dataSource.length < 1 && !config.dynamicAddOpts) {
                                 //@todo no result
                                 parentScope.hideSelect3Options(true);
                                 return;
@@ -277,7 +277,7 @@
 
                     this.scope.doSelect3AddNew = function(){
                         var fieldDefine = self.currentConfig;
-                        if(!fieldDefine.dynamicAddAble || !fieldDefine.dynamicAddOpts) {
+                        if(!fieldDefine.dynamicAddOpts || !fieldDefine.dynamicAddOpts) {
                             alert(toLang("this field not support dynamic add "+fieldDefine.displayName, "messages", $rootScope));
                             return false;
                         }

@@ -1263,7 +1263,7 @@
                                 '<label class="col-sm-3 control-label no-padding-right">%(label)s</label>' +
                                 '<div class="col-sm-%(inputBoxWidth)s">%(inputHTML)s</div>' +
                                 '<div class="help-block col-sm-reset">' +
-                                '<span ng-bind="%(formname)s.%(fieldname)s.$error|toError" ng-hide="%(formname)s.%(fieldname)s.$valid"></span>' +
+                                '<span ng-bind="%(formname)s.%(fieldname)s|toError" ng-hide="%(formname)s.%(fieldname)s.$valid"></span>' +
                                 '<span> %(helpText)s</span>' +
                                 '</div>' +
                                 '</div>',

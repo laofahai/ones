@@ -114,7 +114,11 @@
             "required": "必填",
             "number"  : "必须是数字",
             "unique"  : "必须唯一",
-            "email"   : "必须是email"
+            "email"   : "必须是email",
+            "max"     : "允许最大值:%s",
+            "min"     : "允许最小值:%s",
+            "minLength": "最小长度:%s",
+            "maxLength": "最大长度:%s"
         },
         "actions": {
             "addBill": "新增",

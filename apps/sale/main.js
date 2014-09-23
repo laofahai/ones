@@ -62,7 +62,9 @@
         .service("OrdersModel", ["$rootScope", function($rootScope){
             var obj = {
                 isBill: true,
-                workflowAlias: "orders"
+                workflowAlias: "orders",
+                printAble: true,
+                rowsModel: "OrdersEditModel"
             };
             obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -124,12 +126,17 @@
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300
+                            width: 300,
+                            printAble:true,
+                            dynamicAddOpts: {
+                                model: "GoodsModel"
+                            }
                         },
                         num: {
                             inputType: "number",
                             totalAble: true,
                             "ui-event": "{blur: 'afterNumBlur($event)'}",
+                            printAble:true
                         },
                         discount: {
                             inputType: "number"
@@ -137,12 +144,14 @@
                         unit_price: {
                             inputType: "number",
                             "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:'￥'"
+                            cellFilter: "currency:'￥'",
+                            printAble:true
                         },
                         amount: {
                             inputType: "number",
                             cellFilter: "currency:'￥'",
-                            totalAble: true
+                            totalAble: true,
+                            printAble:true
                         },
                         memo: {}
 

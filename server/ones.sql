@@ -156,7 +156,7 @@ INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `desc
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
   (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
-  (3, NULL, 'dataModel.showOnlyBind', '数据模型查询选项', '0', '是否仅显示所绑定分类的数据模型项', 0, 0),
+  (4, NULL, 'dataModel.showOnlyBind', '数据模型查询选项', '0', '是否仅显示所绑定分类的数据模型项', 0, 0),
   (8, NULL, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0, 0),
   (9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0, 0),
   (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'admin@domain.com', '备份发送至邮箱', 0, 0),

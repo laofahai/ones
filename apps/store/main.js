@@ -391,7 +391,10 @@
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300
+                            width: 300,
+                            dynamicAddOpts: {
+                                model: "GoodsModel"
+                            }
                         },
                         stock: {
                             editAbleRequire: ["goods_id"],
@@ -545,7 +548,10 @@
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300
+                            width: 300,
+                            dynamicAddOpts: {
+                                model: "GoodsModel"
+                            }
                         },
                         stock: {
                             editAbleRequire: ["goods_id"],
