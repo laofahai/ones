@@ -109,6 +109,23 @@ class WorkflowNodeAction extends CommonAction {
         $data = parent::read(true);
         $data["prev_node_id"] = explode(",", $data["prev_node_id"]);
         $data["next_node_id"] = explode(",", $data["next_node_id"]);
+        $executors = explode("|", $data["executor"]);
+
+        foreach($executors as $exe) {
+            $tmp = explode(":", $exe);
+            switch($tmp[0]) {
+                case "g":
+                    $data["executor_group"] = explode(",", $tmp[1]);
+                    break;
+                case "d":
+                    $data["executor_department"] = explode(",", $tmp[1]);
+                    break;
+                case "u":
+                    $data["executor_user"] = explode(",", $tmp[1]);
+            }
+        }
+
+
         $this->response($data);
     }
     

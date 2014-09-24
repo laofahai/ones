@@ -42,7 +42,7 @@ class NetestCategoryAction extends CommonAction {
         if($rs) {
             $this->success('添加成功');
         } else {
-            Log::error("Add NetestCategory failed: ". $_POST["pid"]);
+            Log::write("Add NetestCategory failed: ". $_POST["pid"]);
             $this->error('添加失败');
         }
     }

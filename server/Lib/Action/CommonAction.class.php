@@ -634,6 +634,7 @@ class CommonAction extends RestAction {
         }
         // 更新数据
         $result = $model->save();
+//        echo $model->getLastSql();exit;
 
         if ($result !== false) { //保存成功
 
