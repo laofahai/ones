@@ -92,6 +92,12 @@ class CommonTreeModel extends CommonModel {
 
         $node = $this->find($id);
         if(!$node) {
+            $this->error = "can't find item";
+            return false;
+        }
+
+        if($node["lft"] == 1) {
+            $this->error = "root can't be deleted";
             return false;
         }
 

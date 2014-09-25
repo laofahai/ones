@@ -39,11 +39,9 @@ class NetestCategoryAction extends CommonAction {
     public function insert() {
         $catModel = D(MODULE_NAME);
         $rs = $catModel->addChildNode($_POST);
-        if($rs) {
-            $this->success('添加成功');
-        } else {
+        if(!$rs) {
             Log::write("Add NetestCategory failed: ". $_POST["pid"]);
-            $this->error('添加失败');
+            $this->error($catModel->getError());
         }
     }
     
@@ -52,7 +50,7 @@ class NetestCategoryAction extends CommonAction {
         if($catModel->deleteNode($_GET["id"])) {
             $this->success("operate_success");
         } else {
-            $this->error("operate_failed");
+            $this->error($catModel->getError());
         }
     }
     
