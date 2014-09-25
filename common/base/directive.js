@@ -53,17 +53,19 @@
                 }
             }
         }])
-        .directive("masonry", ["$timeout", function($timeout){
+        .directive("masonry", ["$rootScope", function($rootScope){
             return {
                 restrict: "A",
                 link: function($scope, element, attrs, ctl) {
-                    $timeout(function(){
-                        var container = document.querySelector("#"+attrs.id);
+                    var container = document.querySelector("#"+attrs.id);
+                    if(!container) {
+                        return;
+                    }
+                    $scope.$on("dashboardItems.loaded", function(){
                         var msnry = new Masonry( container, {
                             itemSelector: '.masonry-brick'
                         });
-                    },1000);
-
+                    });
                 }
             }
         }])

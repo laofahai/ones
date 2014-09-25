@@ -46,7 +46,8 @@
             };
         })
 
-        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", "$location", "pluginExecutor", function($scope, res, $location, plugin){
+        .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", "$location", "pluginExecutor", "$rootScope", function($scope, res, $location, plugin, $rootScope){
+
             plugin.callPlugin("hook.dashboard.blocks");
 
             $scope.blocks = ones.pluginScope.get("dashboardBlocks");
@@ -166,6 +167,15 @@
                     dashboardItemsArray[blk.name] = blk;
                 });
 
+                $scope.$watch(function(){
+                    return $rootScope.dataQuering;
+                }, function(dataQuering){
+                    if(dataQuering <= 0) {
+                        $scope.$broadcast("dashboardItems.loaded");
+                    }
+                });
+
+
                 $scope.dashboardItems = [];
                 MyDesktopRes.query({
                     onlyUsed: true
@@ -174,7 +184,6 @@
                         $scope.dashboardItems.push(dashboardItemsArray[item.name]);
                     });
                     ones.pluginScope.remove("dashboardBlocks");
-
                 });
             }])
     ;
