@@ -81,8 +81,8 @@
         /**
          * Root Ctrl
          * */
-        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor", "$injector",
-            function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin, $injector) {
+        .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor", "$injector", "$route",
+            function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin, $injector, $route) {
 
                 setTimeout(function(){
                     if($("#initCover").length) {
@@ -145,9 +145,7 @@
 
                 //刷新NG-VIEW
                 $scope.doPageRefresh = function(){
-                    if($rootScope.currentPage.action === "list") {
-                        $scope.$broadcast("gridData.refreshed");
-                    }
+                    $route.reload();
                 };
 
                 //全局键盘事件
