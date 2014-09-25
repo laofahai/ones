@@ -77,7 +77,13 @@
                         'id'
                     ],
                     doContextMenu: function(evt, item, config){
-                        console.log(arguments);
+                        self.scope.$emit("contextMenu", {
+                            items: self.selectedActions,
+                            left: evt.clientX,
+                            top: evt.clientY,
+                            selectedItems: self.selected,
+                            currentItem: item
+                        });
                     },
                     //双击事件
                     doGridDblClick: function(item, extra){

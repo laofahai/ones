@@ -564,3 +564,12 @@ th.sorting_asc,th.sorting_desc {
 .nav-search .dropdown-menu li ul li{
     padding-left:0;
 }
+
+.contextMenuDropdown.dropdown-menu {
+    display:block;
+    min-width:0;
+}
+
+.contextMenuDropdown.dropdown-menu:focus {
+    border:1px solid red !important;
+}

@@ -195,7 +195,6 @@
                         v{:DBC('system.version')}
                     </p>
                 </div>
-
                 <!--//demo-->
             </div><!-- /.page-content -->
         </div><!-- /.main-content -->
@@ -203,6 +202,18 @@
     </div><!-- /.main-container-inner -->
 </div><!-- /.main-container -->
 
+<ul class="dropdown-menu contextMenuDropdown"
+    ng-hide="contextMenu.items.length<=0"
+    id="contextMenuDropdown"
+    style="left:{{contextMenu.left}}px;top:{{contextMenu.top}}px;">
+    <li ng-repeat="act in contextMenu.items">
+        <a tabindex="-1"
+           ng-click="act.action(null,contextMenu.selectedItems,contextMenu.currentItem);hideContextMenu();">
+            <i class="icon icon-{{act.icon}}"></i>
+            <span ng-bind="act.label"></span>
+           </a>
+    </li>
+</ul>
 <script type="text/javascript">
     var ones = {
         BaseConf: {

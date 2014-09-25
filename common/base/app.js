@@ -143,6 +143,21 @@
                     ComView.alert(msg, "danger");
                 });
 
+                $scope.hideContextMenu = function() {
+                    $timeout(function(){
+                        $scope.contextMenu = {};
+                    }, 50);
+                };
+                $scope.$on("contextMenu", function(evt, param) {
+                    $scope.contextMenu = param;
+
+                    $(document).click(function(){
+                        $scope.$apply(function(){
+                            $scope.hideContextMenu();
+                        });
+                    });
+                });
+
                 //刷新NG-VIEW
                 $scope.doPageRefresh = function(){
                     $route.reload();

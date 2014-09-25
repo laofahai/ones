@@ -203,8 +203,8 @@
 
                 ComView.displayForm($scope, model, res, opts);
             }])
-        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout", "GridView",
-            function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout, GridView){
+        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout", "GridView", "$route",
+            function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout, GridView, $route){
                 var service = {};
 
                 /**
@@ -587,6 +587,7 @@
                                 var workflowAPI = $injector.get("Workflow.WorkflowAPI");
                                 if(mainrow_id) {
                                     workflowAPI.doWorkflow(resource, node_id, mainrow_id);
+                                    $route.reload();
                                 }
                             };
 
