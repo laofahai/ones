@@ -149,11 +149,14 @@
                     }, 50);
                 };
                 $scope.$on("contextMenu", function(evt, param) {
+
+                    param.top += document.body.scrollTop;
+
                     $scope.contextMenu = param;
 
                     $(document).click(function(){
                         $scope.$apply(function(){
-                            $scope.hideContextMenu();
+                            $scope.contextMenu = {};
                         });
                     });
                 });

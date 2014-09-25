@@ -90,7 +90,9 @@
                         try {
                             self.scope.$parent.doViewSelected(item);
                         } catch(e) {
-                            self.scope.$parent.doEditSelected(item);
+                            try {
+                                self.scope.$parent.doEditSelected(item);
+                            } catch(e) {}
                         }
                     },
                     //排序

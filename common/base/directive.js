@@ -53,6 +53,20 @@
                 }
             }
         }])
+        .directive("masonry", ["$timeout", function($timeout){
+            return {
+                restrict: "A",
+                link: function($scope, element, attrs, ctl) {
+                    $timeout(function(){
+                        var container = document.querySelector("#"+attrs.id);
+                        var msnry = new Masonry( container, {
+                            itemSelector: '.masonry-brick'
+                        });
+                    },1000);
+
+                }
+            }
+        }])
 
             /**
      * The ng-thumb directive
