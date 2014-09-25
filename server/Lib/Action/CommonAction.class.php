@@ -806,13 +806,12 @@ class CommonAction extends RestAction {
         
         foreach($data as $item) {
             $rowTpl = array();
-            $fieldTpl = "%s";
 
             foreach($head as $k=>$v) {
                 if(array_key_exists($k."_label", $item)) {
-                    $rowTpl[$k] = sprintf($fieldTpl, $item[$k."_label"]);
+                    $rowTpl[$k] = $item[$k."_label"];
                 } else if(array_key_exists($k, $item)) {
-                    $rowTpl[$k] = sprintf($fieldTpl, $item[$k]);
+                    $rowTpl[$k] = $item[$k];
                 }
             }
             $xls->addPageRow($head, $rowTpl);

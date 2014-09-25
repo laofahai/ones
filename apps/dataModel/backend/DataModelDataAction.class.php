@@ -86,7 +86,19 @@ class DataModelDataAction extends CommonAction {
             $_POST["model_id"] = $theModel["id"];
         }
 
-//        print_r($_POST);exit;
+        //检测重复项
+        if($_POST["model_id"] && $_POST["source_id"] && $_POST["field_id"] && $_POST["data"]) {
+            $_map = array(
+                "model_id" => $_POST["model_id"],
+                "source_id"=> $_POST["source_id"],
+                "field_id" => $_POST["field_id"],
+                "data" => $_POST["data"]
+            );
+            if(D("DataModelData")->where($_map)->find()) {
+                $this->error("repeat_item");
+                exit;
+            }
+        }
     }
 
 }

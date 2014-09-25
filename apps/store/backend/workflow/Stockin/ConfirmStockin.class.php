@@ -28,6 +28,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
         $id = $this->mainrowId;
         if(!$id) {
             $this->error("params_error");
+            exit;
         }
         
         $map = array(
@@ -46,7 +47,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
         foreach($data["rows"] as $row) {
             if(!$row["stock"]) {
                 $this->error("fillTheForm");
-                break;
+                exit;
             }
             if($row["id"]) {
                 $stockinDetailModel->where("id=".$row["id"])->save(array(
