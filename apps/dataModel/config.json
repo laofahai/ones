@@ -6,7 +6,8 @@
     "plugins": {
         "assign_dataModel_data": ["ONESAssignDataModelData"],
         "insert_dataModel_data": ["ONESInsertDataModelData"],
-        "delete_dataModel_data": ["ONESDeleteDataModelData"]
+        "delete_dataModel_data": ["ONESDeleteDataModelData"],
+        "bind_dataModel_structure": ["ONESBindDataModelStructure"]
     },
     "navs": {
         "settings" : {

@@ -16,16 +16,16 @@ class StockProductListAction extends CommonAction {
     protected $indexModel = "StockProductListView";
 
     protected $dataModelAlias = "product";
-    
+
     protected $exportFields = array(
-        "factory_code_all" => "原厂编码",
-        "category_name" => "分类名称",
-        "goods_name" => "品名",
-        "measure" => "计量单位",
-        "stock_name" => "仓库",
-        "num" => "库存数量",
-        "store_min" => "库存下限",
-        "store_max" => "库存上限"
+        "factory_code_all",
+        "category_name",
+        "goods_name",
+        "measure",
+        "stock_name",
+        "num",
+        "store_min",
+        "store_max"
     );
 
     public function index() {
@@ -98,9 +98,22 @@ class StockProductListAction extends CommonAction {
         }
         
         $data = $model->where($map)->order("stock_id ASC")->select();
-//        echo $model->getLastSql();
-//        print_r($data);exit;
-//        
+
+        $configedFields = DBC("store.stockProductList.exportFields");
+        if($configedFields) {
+            $this->exportFields = explode(",", $configedFields);
+        } else {
+            $params = array(
+                "fields" => $this->exportFields,
+                "dataModelAlias"=> "product"
+            );
+
+            tag("bind_dataModel_structure", $params);
+
+            $this->exportFields = $params["fields"];
+        }
+
+
         $this->doExport(sprintf("export_kcqd_%s", date("YmdHis", CTS)), $data);
     }
     

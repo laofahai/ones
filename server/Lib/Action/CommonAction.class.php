@@ -783,6 +783,7 @@ class CommonAction extends RestAction {
      * @todo 循环效率
      */
     protected function doExport($filename, $data) {
+
         if(!$this->exportFields or !$data) {
             return;
         }
@@ -794,17 +795,24 @@ class CommonAction extends RestAction {
 	    $xls->setDefaultAlign("center");
         $head = array();
         foreach($this->exportFields as $k=>$v) {
-//            array_push($row, sprintf('<b>%s</b>', $v));
-            array_push($head, sprintf('<b>%s</b>', $v));
+            if(is_numeric($k)) {
+                $head[$v] = lang($v);
+            } else {
+                $head[$k] = $v;
+            }
         }
+
+//        print_r($head);exit;
         
         foreach($data as $item) {
-            $rowTpl = $this->exportFields;
+            $rowTpl = array();
             $fieldTpl = "%s";
 
-            foreach($item as $k=>$v) {
-                if(array_key_exists($k, $this->exportFields)) {
-                    $rowTpl[$k] = sprintf($fieldTpl, $v);
+            foreach($head as $k=>$v) {
+                if(array_key_exists($k."_label", $item)) {
+                    $rowTpl[$k] = sprintf($fieldTpl, $item[$k."_label"]);
+                } else if(array_key_exists($k, $item)) {
+                    $rowTpl[$k] = sprintf($fieldTpl, $item[$k]);
                 }
             }
             $xls->addPageRow($head, $rowTpl);
