@@ -417,8 +417,10 @@ function F($name, $value='', $path=DATA_PATH) {
             // 缓存数据
             $dir            =   dirname($filename);
             // 目录不存在则创建
-            if (!is_dir($dir))
+            if (!is_dir($dir)) {
+                $dir = ROOT_PATH."/".str_replace("./", "", $dir);
                 mkdir($dir,0755,true);
+            }
             $_cache[$name]  =   $value;
             return file_put_contents($filename, strip_whitespace("<?php\treturn " . var_export($value, true) . ";?>"));
         }

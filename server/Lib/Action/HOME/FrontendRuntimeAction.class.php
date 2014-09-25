@@ -15,8 +15,17 @@ class FrontendRuntimeAction extends CommonAction {
 
         switch($_GET["action"]) {
             case "getI18n":
+
                 header("Content-Type:application/json;charset=utf-8");
-                echo json_encode(combineI18n($runtime, $_GET["lang"]));
+                $lang = $_GET["lang"] ? $_GET["lang"] : C("lang");
+                $i18n = F("i18n/".$lang);
+
+                if(!$i18n) {
+                    $i18n = combineI18n($runtime, $lang);
+                    F("i18n/".$lang, $i18n);
+                }
+
+                echo json_encode($i18n);
                 break;
             case "getCss":
                 header("Content-Type:text/css;charset=utf-8");

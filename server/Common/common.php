@@ -84,6 +84,34 @@ function reIndex($data) {
     return $tmp;
 }
 
+/*
+ * 语言包
+ * **/
+function lang($key, $data=array()) {
+
+    $data = $data ? $data : F("i18n/".C("lang"));
+
+    if(strtolower(substr($key, 0, 6) !== "urlmap") && $data["urlMap"]) {
+        $data = $data["lang"];
+    }
+
+    $keys = explode(".", $key);
+
+    //最终节点
+    if(count($keys) === 1) {
+        return $data[$keys[0]];
+    }
+
+    $tmpKey = array_shift($keys);
+
+    if(!is_array($data[$tmpKey])) {
+        return $data[$tmpKey];
+    }
+
+    return lang(implode(".", $keys), $data[$tmpKey]);
+
+}
+
 /**
  * 清除缓存
  */
