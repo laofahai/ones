@@ -913,7 +913,6 @@ CREATE TABLE IF NOT EXISTS `x_goods_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
-  `bind_model` smallint(5) NOT NULL,
   `pinyin` varchar(15) DEFAULT NULL,
   `lft` smallint(5) NOT NULL,
   `rgt` smallint(5) NOT NULL,
@@ -923,7 +922,6 @@ CREATE TABLE IF NOT EXISTS `x_goods_category` (
   KEY `lft` (`lft`,`rgt`,`listorder`),
   KEY `parentid` (`pid`),
   KEY `pinyin` (`pinyin`),
-  KEY `bind_model` (`bind_model`),
   KEY `deleted` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
@@ -931,13 +929,13 @@ CREATE TABLE IF NOT EXISTS `x_goods_category` (
 -- 转存表中的数据 `x_goods_category`
 --
 
-INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `bind_model`, `pinyin`, `lft`, `rgt`, `listorder`, `deleted`) VALUES
-(1, 0, 'ROOT', 0, NULL, 1, 12, 0, 0),
-(10, 1, '电气配件', 0, 'DQPJ', 2, 3, 99, 0),
-(11, 1, '焊接耗材', 0, 'HJHC', 4, 7, 99, 0),
-(12, 11, '123', 0, '123', 5, 6, 99, 1),
-(13, 1, '装机配件', 0, 'ZJPJ', 8, 9, 99, 0),
-(14, 1, '成品锅炉', 0, 'CPGL', 10, 11, 99, 0);
+INSERT INTO `x_goods_category` (`id`, `pid`, `name`, `pinyin`, `lft`, `rgt`, `listorder`, `deleted`) VALUES
+(1, 0, 'ROOT', NULL, 1, 12, 0, 0),
+(10, 1, '电气配件', 'DQPJ', 2, 3, 99, 0),
+(11, 1, '焊接耗材', 'HJHC', 4, 7, 99, 0),
+(12, 11, '123', '123', 5, 6, 99, 1),
+(13, 1, '装机配件', 'ZJPJ', 8, 9, 99, 0),
+(14, 1, '成品锅炉', 'CPGL', 10, 11, 99, 0);
 
 -- --------------------------------------------------------
 

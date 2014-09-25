@@ -88,19 +88,26 @@ class CommonTreeModel extends CommonModel {
      */
     public function deleteNode($id) {
 
+        $id = abs(intval($id));
+
         $node = $this->find($id);
         if(!$node) {
             return false;
         }
 
-        $this->where(array(
-            "lft" => array("EGT", $node['lft']),
-            "rgt" => array("ELT", $node['rgt'])
-        ))->save(array(
-            "deleted" => 1
-        ));
+        if(array_key_exists("deleted", $this->fields["_type"])) {
 
-        return true;
+            $this->where(array(
+                "lft" => array("EGT", $node['lft']),
+                "rgt" => array("ELT", $node['rgt'])
+            ))->save(array(
+                "deleted" => 1
+            ));
+
+            return true;
+        }
+
+
 
         //DELETE FROM category WHERE lft BETWEEN @myLeft AND @myRight;
 //        $this->where("id=".$id)->save(array(
