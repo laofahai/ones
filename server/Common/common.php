@@ -507,26 +507,37 @@ function recursionCopy($src,$dst) {  // 原目录，复制到的目录
 
 /*
  * 导入SQL
- * 需mysql命令行支持
  * **/
 function importSQL($sqlPath) {
 
-    $sql = file_get_contents($sqlPath);
-    $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
-    file_put_contents($sqlPath, $sql);
+    $sqls = file_get_contents($sqlPath);
 
-    $command = sprintf("%smysql -h%s -u%s -p%s --default-character-set=utf8 %s < %s",
-        C("MYSQL_BIN"),
-        C("DB_HOST"),
-        C("DB_USER"),
-        C("DB_PWD"),
-        C("DB_NAME"),
-        $sqlPath
-    );
+    $sqls = explode("\n\n", $sqls);
 
-    passthru($command, $result);
+    $model = M();
+    foreach($sqls as $sql) {
+        $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
+        if(false === $model->execute($sql)) {
+            return false;
+        }
+    }
 
-    return $result;
+    return true;
+//    $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
+//    file_put_contents($sqlPath, $sql);
+//
+//    $command = sprintf("%smysql -h%s -u%s -p%s --default-character-set=utf8 %s < %s",
+//        C("MYSQL_BIN"),
+//        C("DB_HOST"),
+//        C("DB_USER"),
+//        C("DB_PWD"),
+//        C("DB_NAME"),
+//        $sqlPath
+//    );
+//
+//    passthru($command, $result);
+
+//    return $result;
 }
 
 /**
