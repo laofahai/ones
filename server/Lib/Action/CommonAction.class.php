@@ -674,7 +674,9 @@ class CommonAction extends RestAction {
         if(method_exists($model, "doDelete")) {
             $rs = $model->doDelete($id);
         } else {
-            $rs = $model->where("id=".$id)->delete();
+            $rs = $model->where(array(
+                "id" => array("IN", explode(",", $id))
+            ))->delete();
         }
 
         if(false === $rs) {

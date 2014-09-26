@@ -15,7 +15,8 @@
         "subAble",
         "addSubAble",
         "viewSubAble",
-        "exportAble"
+        "exportAble",
+        "multiSelect"
     ];
 
     ones.keyCodes = {

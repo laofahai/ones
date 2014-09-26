@@ -156,7 +156,16 @@
                     },
                     //记录选中项
                     recordSelected: function(index){
+
                         var absIndex = Math.abs(index)-1;
+
+                        if(self.options.multiSelect === false) {
+                            self.selected = {};
+                            self.selected["index_"+absIndex] = self.scope.itemsList[absIndex];
+                            self.scope.$parent.gridSelected = [self.scope.itemsList[absIndex]];
+                            return;
+                        }
+
                         if(undefined !== self.selected["index_"+absIndex]) {
                             delete(self.selected["index_"+absIndex]);
                         } else {

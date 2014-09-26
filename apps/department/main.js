@@ -175,6 +175,7 @@
             return {
                 subAble: true,
                 viewSubAble: false,
+                multiSelect: false,
                 structure: {
                     id : {
                         primary: true

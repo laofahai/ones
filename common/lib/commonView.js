@@ -469,16 +469,14 @@
                             opts.filters = model.filters;
                         }
 
-                        if(model.config) {
-                            opts = $.extend(opts, model.config);
-                            angular.forEach(model.config, function(item,k){
-                                model[k] = item;
-                            });
-                        } else {
+                        if(!model.config) {
+                            model.config = {};
                             angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
-                                opts[conf] = model[conf];
+                                model.config[conf] = model[conf];
                             });
                         }
+
+                        opts = $.extend(opts, model.config);
 
                         fieldsDefine = model.getStructure(true);
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据

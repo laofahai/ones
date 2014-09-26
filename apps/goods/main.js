@@ -68,6 +68,7 @@
                 subAble: true,
                 addSubAble: true,
                 viewSubAble: false,
+                multiSelect: false,
                 extraSelectActions: [
                     {
                         label: toLang("viewDataModel", "actions", $rootScope),
