@@ -90,10 +90,10 @@
                         displayName: i18n.totalNum
                     },
                     total_amount_real: {
-                        cellFilter: "currency:'￥'",
+                        cellFilter: "currency:'￥'"
                     },
                     dateline: {
-                        cellFilter: "dateFormat"
+                        cellFilter: "dateFormat:0"
                     },
                     status_text: {
                         displayName: i18n.status,
@@ -186,7 +186,7 @@
                         total_amount: {},
                         total_amount_real: {},
                         dateline: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         status_text: {
                             displayName: $rootScope.i18n.lang.status,

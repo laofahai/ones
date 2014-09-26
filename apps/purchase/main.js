@@ -42,7 +42,7 @@
                         cellFilter: "currency:'￥'"
                     },
                     dateline: {
-                        cellFilter: "dateFormat"
+                        cellFilter: "dateFormat:0"
                     },
                     status_text: {
                         displayName: $rootScope.i18n.lang.status,

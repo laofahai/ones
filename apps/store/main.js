@@ -343,7 +343,7 @@
                         displayName: i18n.totalNum
                     },
                     dateline: {
-                        cellFilter: "dateFormat"
+                        cellFilter: "dateFormat:0"
                     },
                     status_text: {
                         displayName: i18n.status,
@@ -501,7 +501,7 @@
                         total_num: {},
                         stock_manager: {},
                         dateline: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         status_text: {
                             displayName: $rootScope.i18n.lang.status,
@@ -509,7 +509,7 @@
                         },
                         outtime: {
                             displayName: $rootScope.i18n.lang.outStockTime,
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         }
                     };
                 }

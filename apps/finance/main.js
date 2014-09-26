@@ -48,7 +48,7 @@
                         record_type: {},
                         amount: {},
                         dateline: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         memo: {},
                         sponsor: {},
@@ -108,11 +108,11 @@
                         },
                         create_dateline: {
                             hideInForm: true,
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         pay_dateline: {
                             hideInForm: true,
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         status: {
                             hideInForm: true,
@@ -167,11 +167,11 @@
                         },
                         create_dateline: {
                             hideInForm: true,
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         pay_dateline: {
                             hideInForm: true,
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         status: {
                             hideInForm: true,

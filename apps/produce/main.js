@@ -158,7 +158,7 @@
                             displayName: $rootScope.i18n.lang.current_craft
                         },
                         start_time: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         next_craft: {
                             field: "processes.next_craft_name",
@@ -190,13 +190,13 @@
                             displayName: $rootScope.i18n.lang.type
                         },
                         start_time: {
-                            cellFilter: "dateFormat:1"
+                            cellFilter: "dateFormat:0"
                         },
                         end_time: {
-                            cellFilter: "dateFormat:"
+                            cellFilter: "dateFormat:0"
                         },
                         create_time: {
-                            cellFilter: "dateFormat"
+                            cellFilter: "dateFormat:0"
                         },
                         status_text: {
                             displayName: $rootScope.i18n.lang.status,
