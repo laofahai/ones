@@ -4,13 +4,15 @@
             "primary": true
         },
         "factory_code": {
-            "ensureunique": "GoodsRes"
+            "ensureunique": "GoodsRes",
+            "hiddenWhen480": true
         },
         "name": {},
         "pinyin": {
             "displayName": ["firstChar"],
             "required": false,
-            "onlyInEdit": true
+            "onlyInEdit": true,
+            "hiddenWhen480": true
         },
         "measure": {},
         "goods_category_id": {
@@ -19,11 +21,13 @@
             "valueField": "id",
             "nameField" : "prefix_name",
             "listable": false,
-            "dataSource": "GoodsCategoryRes"
+            "dataSource": "GoodsCategoryRes",
+            "hiddenWhen480": true
         },
         "category_name": {
             "displayName": ["category"],
-            "hideInForm": true
+            "hideInForm": true,
+            "hiddenWhen480": true
         },
         "price": {
             "inputType": "number",
@@ -33,15 +37,18 @@
         "cost": {
             "inputType": "number",
             "cellFilter": "currency:'￥'",
-            "value": 0.00
+            "value": 0.00,
+            "hiddenWhen480": true
         },
         "store_min": {
             "inputType": "number",
-            "value": 0
+            "value": 0,
+            "hiddenWhen480": true
         },
         "store_max": {
             "inputType": "number",
-            "value": 0
+            "value": 0,
+            "hiddenWhen480": true
         },
 
         "_property": {

@@ -551,10 +551,16 @@
                     $scope.selectAble = false;
 
                     //直接传入MODEL
-                    if(typeof(fieldsDefine) == "object" && "getStructure" in fieldsDefine && typeof(fieldsDefine.getStructure) == "function") {
+                    if(typeof(fieldsDefine) == "object" &&
+                        "getStructure" in fieldsDefine &&
+                        typeof(fieldsDefine.getStructure) == "function") {
+
                         var model = fieldsDefine;
                         fieldsDefine = model.getStructure(true);
                         opts.relateMoney = model.relateMoney || false;
+
+                        //单据即时保存
+                        if(model.autoSaving) {}
 
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) == "function") {
                             fieldsDefine.then(function(data){

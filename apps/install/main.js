@@ -39,8 +39,9 @@
         .run(["$rootScope", function($rootScope){
             var language = uriParamsGet("lang") || ones.defaultLanguage;
             $.getJSON("apps/install/i18n/"+language+".json", function(data){
-                $rootScope.installLang = data.lang;
-                $rootScope.$digest();
+                $rootScope.$apply(function(){
+                    $rootScope.installLang = data.lang;
+                });
             });
         }])
         .service("ConfigureModel", ["ComView", "$rootScope", function(ComView, $rootScope){
@@ -206,7 +207,7 @@
             function($scope, FormMaker, model, $compile, $rootScope){
 
                 $scope.$parent.step = 3;
-                var fm = new FormMaker.makeForm($scope, {
+                var fm = new FormMaker.makeForm($scope.$parent, {
                     fieldsDefine: model.getStructure(),
                     includeFoot: false
                 });

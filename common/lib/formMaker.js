@@ -321,9 +321,7 @@
 
                         if(undefined !== fieldDefine.value){
                             var getter = $parse(self.opts.dataName+"."+context.field);
-                            $scope.$apply(function(){
-                                getter.assign($scope.$parent, fieldDefine.value);
-                            });
+                            getter.assign($scope.$parent, fieldDefine.value);
                         }
 
                         if(html && this.opts.compile) {

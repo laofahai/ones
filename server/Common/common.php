@@ -516,28 +516,24 @@ function importSQL($sqlPath) {
 
     $model = M();
     foreach($sqls as $sql) {
-        $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
+        $sql = str_replace(array(
+            "[PREFIX]",
+            "\n"
+        ), array(
+            C("DB_PREFIX"),
+            " "
+        ), $sql);
+//        echo $sql;exit;
+        $sql = trim($sql);
+        if(!$sql) {
+            continue;
+        }
         if(false === $model->execute($sql)) {
             return $sql;
         }
     }
 
     return true;
-//    $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
-//    file_put_contents($sqlPath, $sql);
-//
-//    $command = sprintf("%smysql -h%s -u%s -p%s --default-character-set=utf8 %s < %s",
-//        C("MYSQL_BIN"),
-//        C("DB_HOST"),
-//        C("DB_USER"),
-//        C("DB_PWD"),
-//        C("DB_NAME"),
-//        $sqlPath
-//    );
-//
-//    passthru($command, $result);
-
-//    return $result;
 }
 
 /**
