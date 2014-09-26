@@ -317,7 +317,7 @@
                 isBill: true,
                 printAble: true,
                 printTitle: toLang("stockin", "", $rootScope),
-                rowsModel: "StockinEditModel",
+                rowsModel: "StockinDetailModel",
                 workflowAlias: "stockin",
                 trashAble: true,
                 filters: {
@@ -358,7 +358,7 @@
 
             return obj;
         }])
-        .service("StockinEditModel", ["$rootScope", "GoodsRes","pluginExecutor",
+        .service("StockinDetailModel", ["$rootScope", "GoodsRes","pluginExecutor",
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
                     printAble: true,
@@ -483,7 +483,7 @@
                 isBill: true,
                 printAble: true,
                 printTitle: toLang("stockout", "", $rootScope),
-                rowsModel: "StockoutEditModel",
+                rowsModel: "StockoutDetailModel",
                 workflowAlias: "stockout",
                 filters: {
                     between: {
@@ -515,7 +515,7 @@
                 }
             };
         }])
-        .service("StockoutEditModel", ["$rootScope","pluginExecutor",
+        .service("StockoutDetailModel", ["$rootScope","pluginExecutor",
             function($rootScope, plugin) {
                 var obj = {
                     isBill: true,
@@ -601,15 +601,15 @@
                 return obj;
             }])
 
-        .controller("StockinEditCtl", ["$scope", "StockinRes", "StockinEditModel", "ComView", "$routeParams",
-            function($scope, StockinRes, StockinEditModel, ComView, $routeParams) {
-                ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinEditModel);
+        .controller("StockinEditCtl", ["$scope", "StockinRes", "StockinDetailModel", "ComView", "$routeParams",
+            function($scope, StockinRes, StockinDetailModel, ComView, $routeParams) {
+                ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinDetailModel);
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
                 $scope.showWeeks = true;
 
-                ComView.displayBill($scope, StockinEditModel, StockinRes, {
+                ComView.displayBill($scope, StockinDetailModel, StockinRes, {
                     id: $routeParams.id
                 });
 
@@ -636,7 +636,7 @@
 
 
             }])
-        .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutEditModel", "ComView", "$routeParams",
+        .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutDetailModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $routeParams) {
                 ComView.makeDefaultPageAction($scope, "store/stockout", [], model);
                 $scope.workflowAble = true;
@@ -700,7 +700,7 @@
             }])
 
         //确认出库
-        .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutEditModel", "$location",
+        .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutDetailModel", "$location",
             function($scope, $routeParams, ComView, res, model, $location){
                 $scope.selectAble= false;
                 ComView.displayBill($scope, model, res, {
@@ -722,7 +722,7 @@
                 };
             }])
         //确认入库
-        .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinEditModel", "$location", "$injector",
+        .controller("WorkflowConfirmStockinCtl", ["$scope", "$routeParams", "ComView", "StockinRes", "StockinDetailModel", "$location", "$injector",
             function($scope, $routeParams, ComView, res, model, $location, $injector){
                 $scope.selectAble= false;
 
