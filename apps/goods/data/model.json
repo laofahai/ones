@@ -9,19 +9,10 @@
         "name": {},
         "pinyin": {
             "displayName": ["firstChar"],
-            "required": false
+            "required": false,
+            "onlyInEdit": true
         },
         "measure": {},
-        "price": {
-            "inputType": "number",
-            "cellFilter": "currency:'￥'",
-            "value": 0.00
-        },
-        "cost": {
-            "inputType": "number",
-            "cellFilter": "currency:'￥'",
-            "value": 0.00
-        },
         "goods_category_id": {
             "displayName": ["category"],
             "inputType": "select",
@@ -34,11 +25,23 @@
             "displayName": ["category"],
             "hideInForm": true
         },
+        "price": {
+            "inputType": "number",
+            "cellFilter": "currency:'￥'",
+            "value": 0.00
+        },
+        "cost": {
+            "inputType": "number",
+            "cellFilter": "currency:'￥'",
+            "value": 0.00
+        },
         "store_min": {
-            "inputType": "number"
+            "inputType": "number",
+            "value": 0
         },
         "store_max": {
-            "inputType": "number"
+            "inputType": "number",
+            "value": 0
         },
 
         "_property": {

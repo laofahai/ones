@@ -111,19 +111,13 @@
                         hideInForm: true,
                         displayName: i18n.category
                     },
-//                    bind_model_name: {
-//                        displayName: i18n.bindDataModel,
-//                        hideInForm:true
-//                    },
+
                     pinyin: {
                         displayName: i18n.firstChar,
-                        required: false
+                        required: false,
+                        onlyInEdit: true
                     },
-//                    bind_model: {
-//                        displayName: i18n.bindDataModel,
-//                        inputType: "select",
-//                        listable: false
-//                    },
+
                     listorder: {
                         inputType: "number",
                         value: 99

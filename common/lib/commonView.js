@@ -308,6 +308,7 @@
                                 $scope[opts.dataName] = dataFormat($scope.formConfig.fieldsDefine, defaultData);
                             });
                         }
+
                         //延时编译
                         if(!opts.lazyload) {
                             $timeout(function(){

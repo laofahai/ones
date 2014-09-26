@@ -221,8 +221,8 @@
                 }
             };
         }])
-        .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config", "$rootScope",
-            function($compile, $q, $parse, $injector, $timeout, ONESConfig, $rootScope) {
+        .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config", "$rootScope", "$parse",
+            function($compile, $q, $parse, $injector, $timeout, ONESConfig, $rootScope, $parse) {
                 var service = {};
                 service.makeField = function(scope, opts) {
                     var defaultOpts = {};
@@ -293,6 +293,9 @@
                      * @events 单个字段的事件列表，eg: ngBlur: doTextEndEdit;
                      * */
                     factory: function(context, fieldDefine, $scope, events) {
+
+                        var self = this;
+
                         var method = "_" + (fieldDefine.inputType ? fieldDefine.inputType : "text");
                         //事件绑定
                         if (events) {
@@ -300,6 +303,7 @@
                                 fieldDefine[event] = func + "($event)";
                             });
                         }
+
                         if (context.text) {
                             fieldDefine.value = context.text;
                         }
@@ -309,13 +313,19 @@
                         if (!fieldDefine.displayName) {
                             fieldDefine.displayName = toLang(context.field, "", $rootScope);
                         }
+
                         var html = false;
                         if (method in this) {
                             html = this[method](context.field, fieldDefine, $scope, context);
                         }
-                        if($scope.formData && !$scope.formData[context.field] && fieldDefine.value){
-                            $scope.formData[context.field] = fieldDefine.value;
+
+                        if(undefined !== fieldDefine.value){
+                            var getter = $parse(self.opts.dataName+"."+context.field);
+                            $scope.$apply(function(){
+                                getter.assign($scope.$parent, fieldDefine.value);
+                            });
                         }
+
                         if(html && this.opts.compile) {
                             html = $compile(html)($scope);
                         }
@@ -1319,6 +1329,7 @@
                             if(self.opts.isEdit && struct.onlyInAdd) {
                                 return false;
                             }
+
                             if(!self.opts.isEdit && struct.onlyInEdit) {
                                 return false;
                             }
@@ -1336,10 +1347,7 @@
                                 delete(struct.required);
                             }
                             self.scope.$parent[self.opts.dataName][field] = "";
-                            //默认值
-                            if(struct.value) {
-                                self.scope.$parent[self.opts.dataName][field] = struct.value;
-                            }
+
                             fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                             if (false !== fieldHTML) {
                                 if(struct.colspan) {

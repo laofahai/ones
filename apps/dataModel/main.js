@@ -190,7 +190,8 @@
                         data: {},
                         pinyin: {
                             required: false,
-                            displayName: i18n.firstChar
+                            displayName: i18n.firstChar,
+                            onlyInEdit: true
                         },
                         model_name: {
                             displayName: i18n.modelName,
