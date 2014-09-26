@@ -12,7 +12,7 @@ class InstallAction extends CommonAction {
 
     protected $writeableDirs = array(
         "/apps",
-        "/server/Conf/config.php",
+        "/server/Conf",
         "/server/Runtime",
         "/server/Data",
         "/server/Data/apps",
@@ -82,13 +82,12 @@ class InstallAction extends CommonAction {
     }
 
     private function testDB($config) {
-        $configFile = ENTRY_PATH."/Conf/config.php";
-        if(!is_writable($configFile)) {
+        if(!is_writable(ENTRY_PATH."/Conf")) {
             $this->error("configFileUnwriteable");
             return false;
         }
 
-        $configContent = file_get_contents(ENTRY_PATH."/Conf/config.php");
+        $configContent = file_get_contents(ENTRY_PATH."/Conf/config.sample.php");
         $search = array(
             "[service_api_key]",
             "[db_host]",
@@ -107,6 +106,7 @@ class InstallAction extends CommonAction {
             $config["db"]["dbpre"],
             $config["db"]["dbpwd"],
         );
+
         $configContent = str_replace($search, $replace, $configContent);
         file_put_contents(ENTRY_PATH."/Conf/config.php", $configContent);
 
@@ -114,20 +114,12 @@ class InstallAction extends CommonAction {
     }
 
     private function importDB($config) {
-        $link = $this->connectDB($config);
 
-        $sqls = file_get_contents(ENTRY_PATH."/ones.sql");
-        $sqls = explode("\n\n", $sqls);
-//        print_r($sqls);exit;
-        foreach($sqls as $sql) {
-            $sql = trim(str_replace("[PREFIX]", $config["db"]["dbpre"], $sql));
-            if(!$sql) {
-                continue;
-            }
-            if(!mysql_query($sql, $link)) {
-                $this->error($sql);return;
-            }
+        $rs = importSQL(ENTRY_PATH."/ones.sql");
+        if(true !== $rs) {
+            $this->error($rs);return;
         }
+
     }
 
     private function initApp($config) {

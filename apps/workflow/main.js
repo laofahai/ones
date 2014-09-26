@@ -13,7 +13,8 @@
     .service("Workflow.WorkflowAPI", ["$rootScope", "ones.dataApiFactory", "ComView", "$location", function($rootScope, dataAPI, ComView, $location){
         this.config = {
             subAble: true,
-            addSubAble: true
+            addSubAble: false,
+            viewSubAble: true
         };
         this.structure = {
             id: {

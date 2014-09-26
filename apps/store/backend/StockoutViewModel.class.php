@@ -15,7 +15,7 @@ class StockoutViewModel extends CommonViewModel {
     protected $workflowAlias = "stockout";
     
     protected $viewFields = array(
-        "Stockout" => array("id","bill_id","source_id","source_model","dateline","outtime","total_num","stock_manager"=>"stock_manager_id","status", "_type"=>"left"),
+        "Stockout" => array("*","stock_manager"=>"stock_manager_id","_type"=>"left"),
         "User" => array("truename"=>"stock_manager", "_on"=>"User.id=Stockout.stock_manager", "_type"=>"left")
     );
 

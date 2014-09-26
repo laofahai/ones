@@ -518,7 +518,7 @@ function importSQL($sqlPath) {
     foreach($sqls as $sql) {
         $sql = str_replace("[PREFIX]", C("DB_PREFIX"), $sql);
         if(false === $model->execute($sql)) {
-            return false;
+            return $sql;
         }
     }
 
