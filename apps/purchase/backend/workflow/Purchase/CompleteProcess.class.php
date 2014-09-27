@@ -18,29 +18,29 @@ class PurchaseCompleteProcess extends WorkflowAbstract {
         //财务
         if(isModuleEnabled("Finance")) {
             
-            $purchase = D("Purchase");
-            $thePurchase = $purchase->find($this->mainrowId);
-//            echo 123;
-            $financeModel = D("FinancePayPlan");
-            $data = array(
-                "source_model" => "Purchase",
-                "source_id" => $this->mainrowId,
-                "subject" => $thePurchase["subject"],
-                "supplier_id" => $thePurchase["supplier_id"],
-                "amount" => $thePurchase["total_price_real"],
-                "create_dateline" => CTS,
-                "status" => 0,
-                "type_id" => getTypeIdByAlias("pay", "purchase"),
-                "user_id" => getCurrentUid()
-            );
-            
-            $lastId = $financeModel->add($data);
-//            echo $lastId;exit;
-//            echo $financeModel->getLastSql();exit;
-        
-            import("@.Workflow.Workflow");
-            $workflow = new Workflow("financePay");
-            $node = $workflow->doNext($lastId, "", true);
+//            $purchase = D("Purchase");
+//            $thePurchase = $purchase->find($this->mainrowId);
+////            echo 123;
+//            $financeModel = D("FinancePayPlan");
+//            $data = array(
+//                "source_model" => "Purchase",
+//                "source_id" => $this->mainrowId,
+//                "subject" => $thePurchase["subject"],
+//                "supplier_id" => $thePurchase["supplier_id"],
+//                "amount" => $thePurchase["total_price_real"],
+//                "create_dateline" => CTS,
+//                "status" => 0,
+//                "type_id" => getTypeIdByAlias("pay", "purchase"),
+//                "user_id" => getCurrentUid()
+//            );
+//
+//            $lastId = $financeModel->add($data);
+////            echo $lastId;exit;
+////            echo $financeModel->getLastSql();exit;
+//
+//            import("@.Workflow.Workflow");
+//            $workflow = new Workflow("financePay");
+//            $node = $workflow->doNext($lastId, "", true);
 //            var_dump($node);
         }
         

@@ -24,6 +24,10 @@ class StockProductListViewModel extends ViewModel {
         "Goods.name", "factory_code_all", "GoodsCategory.name", "Stock.name", "Goods.pinyin"
     );
 
+    public $orderFields = array(
+        "factory_code_all"
+    );
+
     /**
      * @override
      *

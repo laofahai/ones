@@ -98,7 +98,7 @@
             if(!$rootScope.i18n && !ones.installing) {
                 if(!ones.caches.getItem("ones.reloading")){
                     ones.caches.setItem("ones.reloading", true, 1);
-                    window.location.reload();
+                        window.location.reload();
                     return;
                 }
 

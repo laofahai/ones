@@ -14,35 +14,35 @@ class PurchaseConfirmStockin extends WorkflowAbstract {
     
     public function run() {
         
-        $stockin = D("Stockin");
-        $map = array(
-            "source_model" => "Purchase",
-            "source_id"    => $this->mainrowId
-        );
-        $theStockin = $stockin->where($map)->find();
-        
-        $map = array(
-            "stockin_id" => $theStockin["id"]
-        );
-        $stockinDetailView = D("StockinDetailView");
-        $data = $stockinDetailView->where($map)->select();
-//        echo $stockinDetailView->getLastSql();exit;
-        $stockin = D("Stockin");
-        $stockid = $stockin->where("id=".$theStockin["id"])->getField("stock_id");
-//        var_dump($data);exit;
-        $stockProductListModel = D("StockProductList");
-        $stockProductListModel->startTrans();
-        $rs = $stockProductListModel->updateStoreList($data, $stockid);
-        
-        if($rs) {
-            $stockProductListModel->commit();
-            $this->updateStatus("Stockin", $theStockin["id"], 2);
-        } else {
-            Log::write("SQL Error:".$stockProductListModel->getLastSql(), Log::SQL);
-            $stockProductListModel->rollback();
-            return false;
-            $this->action->error(L("operate_failed"));
-        }
+//        $stockin = D("Stockin");
+//        $map = array(
+//            "source_model" => "Purchase",
+//            "source_id"    => $this->mainrowId
+//        );
+//        $theStockin = $stockin->where($map)->find();
+//
+//        $map = array(
+//            "stockin_id" => $theStockin["id"]
+//        );
+//        $stockinDetailView = D("StockinDetailView");
+//        $data = $stockinDetailView->where($map)->select();
+////        echo $stockinDetailView->getLastSql();exit;
+//        $stockin = D("Stockin");
+//        $stockid = $stockin->where("id=".$theStockin["id"])->getField("stock_id");
+////        var_dump($data);exit;
+//        $stockProductListModel = D("StockProductList");
+//        $stockProductListModel->startTrans();
+//        $rs = $stockProductListModel->updateStoreList($data, $stockid);
+//
+//        if($rs) {
+//            $stockProductListModel->commit();
+//            $this->updateStatus("Stockin", $theStockin["id"], 2);
+//        } else {
+//            Log::write("SQL Error:".$stockProductListModel->getLastSql(), Log::SQL);
+//            $stockProductListModel->rollback();
+//            return false;
+//            $this->action->error(L("operate_failed"));
+//        }
     }
     
 }

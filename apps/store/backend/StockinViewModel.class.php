@@ -22,6 +22,10 @@ class StockinViewModel extends CommonViewModel {
         "Stockin.bill_id", "Stockin.subject"
     );
 
+    public $orderFields = array(
+        "dateline", "bill_id"
+    );
+
     protected $status_lang = array(
         "not_submited", "submited_wait_for_process", "complete"
     );

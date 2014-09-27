@@ -22,6 +22,10 @@ class StockoutViewModel extends CommonViewModel {
     public $searchFields = array(
         "bill_id", "source_model", "User.truename"
     );
+
+    public $orderFields = array(
+        "dateline", "bill_id"
+    );
     
     public function getStockoutBillsByIds($ids) {
         foreach($ids as $id) {

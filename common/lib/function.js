@@ -482,11 +482,15 @@ var dataFormat = function(fieldsDefine, data) {
         switch (struct.inputType) {
             case "number":
                 if (false === isNaN(data[f])) {
-                    data[f] = Number(data[f]);
+                    data[f] = Number(data[f]) || 0;
                 }
                 break;
             default:
-                data[f] = data[f];
+                if (false === isNaN(data[f])) {
+                    data[f] = Number(data[f]) || 0;
+                } else {
+                    data[f] = data[f];
+                }
                 break;
         }
     }

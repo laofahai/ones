@@ -26,6 +26,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
         }
 
         $id = $this->mainrowId;
+
         if(!$id) {
             $this->error("params_error");
             exit;
@@ -35,45 +36,55 @@ class StockinConfirmStockin extends WorkflowAbstract {
             "stockin_id" => $id
         );
 
-        //更新POST到得数据至入库单
-        $data = $_POST["data"];
         $stockinModel = D("Stockin");
-        $stockinModel->where("id=".$this->mainrowId)->save(array(
-            "total_num" => $data["total_num"],
-            "memo" => $data["memo"]
-        ));
-        $stockinDetailModel = D("StockinDetail");
-//        print_r($data["rows"]);exit;
-        foreach($data["rows"] as $row) {
-            if(!$row["stock"]) {
-                $this->error("fillTheForm");
-                exit;
-            }
-            if($row["id"]) {
-                $stockinDetailModel->where("id=".$row["id"])->save(array(
-                    "stock_id" => $row["stock"],
-                    "memo" => $row["memo"]
-                ));
-            } else {
-                list($fc,$goodsId,$catid) = explode("_", $row["goods_id"]);
-                $row["goods_id"] = $goodsId;
-                $stockinDetailModel->add(array(
-                    "stockin_id" => $this->mainrowId,
-                    "goods_id" => $goodsId,
-                    "num" => $row["num"],
-                    "factory_code_all" => makeFactoryCode($row, $fc),
-                    "stock_id" => $row["stock"],
-                    "memo" => $row["memo"]
-                ));
-            }
-        }
 
+        $rows = $data["rows"];
+        unset($data["rows"]);
+        $stockinModel->editBill($data, $rows);
+
+        //更新POST到得数据至入库单
+//        $data = $_POST["data"];
+//        $stockinModel = D("Stockin");
+//        $stockinModel->where("id=".$this->mainrowId)->save(array(
+//            "total_num" => $data["total_num"],
+//            "memo" => $data["memo"]
+//        ));
+//        $stockinDetailModel = D("StockinDetail");
+////        print_r($data["rows"]);exit;
+//        foreach($data["rows"] as $row) {
+//            if(!$row["stock"]) {
+//                $this->error("fillTheForm");
+//                exit;
+//            }
+//            if($row["id"]) {
+//                $stockinDetailModel->where("id=".$row["id"])->save(array(
+//                    "stock_id" => $row["stock"],
+//                    "memo" => $row["memo"]
+//                ));
+//            } else {
+//                list($fc,$goodsId,$catid) = explode("_", $row["goods_id"]);
+//                $row["goods_id"] = $goodsId;
+//                $stockinDetailModel->add(array(
+//                    "stockin_id" => $this->mainrowId,
+//                    "goods_id" => $goodsId,
+//                    "num" => $row["num"],
+//                    "factory_code_all" => makeFactoryCode($row, $fc),
+//                    "stock_id" => $row["stock"],
+//                    "memo" => $row["memo"]
+//                ));
+//            }
+//        }
+
+
+
+        $stockinDetailModel = D("StockinDetail");
         $theDetails = $stockinDetailModel->where($map)->select();
 
         $theStockin = $stockinModel->find($id);
         $stockProductListModel = D("StockProductList");
         $stockProductListModel->startTrans();
         $rs = $stockProductListModel->updateStoreList($theDetails);
+
         if(true === $rs) {
             $stockProductListModel->commit();
             $data = array(
@@ -88,6 +99,8 @@ class StockinConfirmStockin extends WorkflowAbstract {
             $this->error("operate_failed");
 //            $this->action->error(L("operate_failed"));
         }
+
+
         //若外部生成，走外部下一流程
         if($theStockin["source_model"]) {
             import("@.Workflow.Workflow");

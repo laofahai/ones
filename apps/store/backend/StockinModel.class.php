@@ -27,6 +27,7 @@ class StockinModel extends CommonModel {
      * 创建新单据
      */
     public function newBill($billData, $billItems) {
+
         if(!$billItems) {
             $this->error = "params_error";
             return false;
@@ -42,9 +43,8 @@ class StockinModel extends CommonModel {
 
         $this->startTrans();
         
-        if(!$billData["bill_id"]){
-            $billData["bill_id"] = makeBillCode("RK");
-        }
+        $billData["bill_id"] = makeBillCode("RK");
+
         $billId = $this->add($billData);
         if(!$billId) {
             $this->rollback();

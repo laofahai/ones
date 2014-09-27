@@ -328,28 +328,28 @@ class Workflow {
      * 2、 最新进程listorder >= 需执行进程listorder 初步认定为已执行过，判断上一条listorder
      * 3、 如果是自动执行，则不检查 $auto 参数
      * 4、另加入判断如果当前需执行节点虽然执行过，但是也属于当前需执行节点的下一节点，同样可以执行
-     *        
+     * @param $mainRowid
+     * @param nodeId
+     * @param ignoreCheck 跳过权限检测
+     * @param auto true为自动执行
+     *             数字为检测节点类型 如：3为等待外部响应节点
      */
     public function doNext($mainRowid, $nodeId="", $ignoreCheck=false, $auto=true) {
 
         $nextNodeObj = $this->getCurrentNode($mainRowid, $nodeId, $ignoreCheck);
-        
-//        var_dump($next) ;
-//        if($this->workflowAlias == "order"){
-//            var_dump($next);exit;
-//        }
 
-//        var_dump($next);exit;
-        
         if(!$nextNodeObj) {
             return false; //@todo
         }
+
+        //$auto参数仅执行等待外部响应节点
         
         $map = array(
             "workflow_id" => $this->currentWorkflow["id"],
             "mainrow_id" => $mainRowid
         );
         $hasProcessed = false;
+
         if(false === $auto) {
             //当前为第一个节点
             if(0 == $nextNodeObj->currentNode["listorder"]) {
@@ -370,23 +370,13 @@ class Workflow {
                     } else {
                         $hasProcessed = false;
                     }
-
-//                    $map["id"] = array("LT", $tmp["id"]);
-//                    $prevProcess = $this->processModel->where($map)->order("id DESC")->find();
-//                    $prevNode = $this->nodeModel->find($prevProcess["node_id"]);
-//
-//                    if($prevNode and $prevNode["listorder"] > $nextNodeObj->currentNode["listorder"]) {
-//                        $hasProcessed = false;
-//                    } else {
-//
-//                        $thisNodeNextNodes = explode(",", $lastNode["next_node_id"]);
-//                        if(in_array($lastNode, $thisNodeNextNodes)) {
-//
-//                        }
-//
-//                        $hasProcessed = true;
-//                    }
                 }
+            }
+        }
+
+        if(is_numeric($auto)) {
+            if($nextNodeObj->currentNode["type"] !== $auto) {
+                return false;
             }
         }
         

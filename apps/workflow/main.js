@@ -72,7 +72,10 @@
                 structure: {
                     id: {primary: true},
                     name: {},
-                    type: {},
+                    type: {
+                        inputType: "select",
+                        dataSource: $rootScope.i18n.lang.workflowTypes
+                    },
                     execute_file: {},
                     listorder: {
                         value: 99
