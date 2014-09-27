@@ -456,9 +456,8 @@
                     args[1] = ones.GridScope.$eval("itemsList["+$index+"]."+itemField[1]);
                 }
 
+                args = Array.prototype.slice.call(args, 1);
 
-
-                args = Array.prototype.slice.call(args, 1)
                 args.unshift(text);
                 args.push($index);
 

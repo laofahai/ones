@@ -710,7 +710,7 @@
                                         container: "#bottomAlertContainer",
                                         autohide: 3000
                                     });
-                                    ones.caches.setItem(cacheKey, currentData, 0);
+                                    ones.caches.setItem(cacheKey, currentData, 1);
                                 }
                             }, 15000);
                         }
@@ -745,9 +745,7 @@
 
                         rs.$promise.then(function(data){
                             if(!data.error) {
-
                                 ones.caches.removeItem(cacheKey);
-
                                 var lastPage = ones.caches.getItem("lastPage");
                                 $location.url(lastPage[0] || opts.returnPage);
                             }
