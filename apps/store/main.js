@@ -603,6 +603,10 @@
 
         .controller("StockinEditCtl", ["$scope", "StockinRes", "StockinDetailModel", "ComView", "$routeParams",
             function($scope, StockinRes, StockinDetailModel, ComView, $routeParams) {
+
+                $routeParams.group = "store";
+                $routeParams.module = "stockin";
+
                 ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinDetailModel);
 
                 $scope.workflowAble = true;
@@ -638,6 +642,10 @@
             }])
         .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutDetailModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $routeParams) {
+
+                $routeParams.group = "store";
+                $routeParams.module = "stockout";
+
                 ComView.makeDefaultPageAction($scope, "store/stockout", [], model);
                 $scope.workflowAble = true;
                 $scope.selectAble = false;

@@ -92,9 +92,11 @@
             "loading": "Loading ... ",
             "nodata": "没有数据",
             "repeat_item": "已存在相同项目",
-            "root can't be deleted": "根节点不能被删除",
-            "can't find item": "不能找到所选项目",
+            "root can nott be deleted": "根节点不能被删除",
+            "can not find item": "不能找到所选项目",
             "delete_failed": "删除失败",
+            "cached data loaded": "缓存数据已载入",
+            "auto saved": "已自动保存",
             "apps": {
                 "operateSuccess": "操作成功",
                 "afterOperate": "如需查看更改，可能需要清除缓存并且刷新页面",

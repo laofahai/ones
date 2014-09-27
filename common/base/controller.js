@@ -38,13 +38,10 @@
                     switch(k) {
                         case 0:
                             ones.caches.clear(-1);
-                            break;
                         case 1:
                             ones.caches.clear(0);
-                            break;
                         case 2:
                             ones.caches.clear(1);
-                            break;
                     }
                 });
                 $http({method: "POST", url:conf.BSU+'home/clearCache.json', data:{types: $scope.cacheTypes}}).success(function(data){

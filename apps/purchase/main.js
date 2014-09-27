@@ -119,12 +119,17 @@
                     inputTime: new Date(),
                     total_amount_real: 0
                 };
+
             }
 //                $scope.formMetaData.inputTime = new Date();
+
+            $routeParams.group = "purchase";
+            $routeParams.module = "purchase";
 
             ComView.displayBill($scope, model, res, {
                 id: $routeParams.id
             });
+
             //客户选择字段定义
             $scope.customerSelectOpts = {
                 context: {

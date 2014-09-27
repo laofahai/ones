@@ -400,7 +400,7 @@
 //                            console.log(fieldDefine["ng-model"]);
                             var getter = $parse(fieldDefine["ng-model"]);
                             $scope.$apply(function(){
-                                getter.assign($scope, fieldDefine.value);
+                                getter.assign($scope, new Date(fieldDefine.value));
                             });
                         }
                         return sprintf(this.$parent.templates["fields/datetime"], {
@@ -746,10 +746,18 @@
                         var html = [], self=this;
 
                         //编辑模式下
-                        var defaultData = self.scope.$parent.formMetaData.rows || [];
-                        if(defaultData) {
+                        var defaultData = [];
+
+                        if(self.scope.$parent.formMetaData.rows && self.scope.$parent.formMetaData.rows.length) {
+                            defaultData = self.scope.$parent.formMetaData.rows;
+                        } else if(self.scope.$parent[self.opts.dataName] && self.scope.$parent[self.opts.dataName].length) {
+                            defaultData = self.scope.$parent[self.opts.dataName];
+                        }
+
+                        if(defaultData.length > 0) {
                             this.scope.$parent.formMetaData.rows = defaultData = dataFormat(fieldsDefine, defaultData);
                         }
+
                         var defaultDataLength = defaultData.length || self.opts.minRows;
                         for(var i=0;i<defaultDataLength;i++) {
                             html.push(this.makeRow(fieldsDefine, i, defaultData));

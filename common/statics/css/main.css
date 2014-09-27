@@ -205,11 +205,13 @@ commonform {
     width:20%;
 }
 
-
 .alert.top {
     position:static !important;left:0;top:0;
     margin:0;
     margin-bottom:20px;
+}
+.alert,.alert:focus {
+    box-shadow: none !important;
 }
 
 .datepicker {
@@ -572,4 +574,12 @@ th.sorting_asc,th.sorting_desc {
 
 .contextMenuDropdown.dropdown-menu:focus {
     border:1px solid red !important;
+}
+
+.bottomAlertContainer {
+    position:fixed;right:0;bottom:0;
+}
+.bottomAlertContainer .alert {
+    margin:0;padding:3px 5px;
+    margin-top:5px;
 }

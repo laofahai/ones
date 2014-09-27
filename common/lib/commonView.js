@@ -220,18 +220,34 @@
                  * 通用alert
                  * */
                 service.alert = function(alertMsg, type, title, autohide) {
+
+                    var container = "#alerts-container";
+                    var placement = "top";
+
+                    if(typeof(alertMsg) == "object") {
+                        var config = angular.copy(alertMsg);
+                        alertMsg = config.msg;
+                        type = type || config.type;
+                        title = title || config.title;
+                        autohide = autohide || config.autohide;
+                        container = config.container || container;
+                        placement = config.placement || placement;
+                    }
+
                     type = type || "warning";
-                    //                title = title || type.ucfirst()+":";
+
+
                     var erpalert = $alert({title: title,
-                        content: alertMsg,
-                        placement: 'top',
+                        content: alertMsg+" &nbsp;",
+                        placement: placement,
                         type: type,
                         show: true,
-                        container: '#alerts-container'
+                        container: container,
+                        animation: false
                     });
 
                     if(autohide !== false) {
-                        sleep = parseInt(autohide);
+                        var sleep = parseInt(autohide);
                         if(isNaN(sleep) || sleep < 3000) {
                             sleep = 3000;
                         }
@@ -599,6 +615,9 @@
                         }
                     }
 
+                    var cachedData, currentData;
+                    var cacheKey = sprintf("ones.billCache.%s.%s", $routeParams.group, $routeParams.module);
+
                     $scope.$on("commonBill.structureReady", function(){
                         /**
                          * 字段名称
@@ -637,7 +656,6 @@
 
                         $scope.billConfig = opts;
 
-                        $scope.$broadcast("commonBill.ready");
 
                         if(model.workflowAlias && opts.isEdit && $routeParams.id && isAppLoaded("workflow")) {
                             $injector.get("Workflow.WorkflowNodeAPI").api.query({
@@ -650,6 +668,54 @@
                             });
 
                         }
+
+
+                        if(!opts.isEdit && $routeParams.group && $routeParams.module && false !== model.autoSave) {
+                            cachedData = ones.caches.getItem(cacheKey);
+
+                            if(cachedData) {
+                                try {
+                                    if(cachedData.meta.inputTime) {
+                                        cachedData.meta.inputTime = new Date(cachedData.meta.inputTime);
+                                    }
+                                    if(cachedData.meta.dateline) {
+                                        cachedData.meta.dateline = new Date(cachedData.meta.dateline);
+                                    }
+                                } catch(e) {
+
+                                }
+                                $scope.formMetaData = cachedData.meta;
+                                $scope[opts.dataName] = cachedData.data;
+
+
+                                service.alert({
+                                    msg: service.toLang("cached data loaded", "messages"),
+                                    type: "success",
+                                    container: "#bottomAlertContainer",
+                                    autohide: 6000
+                                });
+                            }
+
+                            setInterval(function(){
+                                cachedData = ones.caches.getItem(cacheKey);
+                                currentData = {
+                                    meta: $scope.formMetaData,
+                                    data: $scope[opts.dataName]
+                                };
+
+                                if(cachedData != currentData) {
+                                    service.alert({
+                                        msg: service.toLang("auto saved", "messages"),
+                                        type: "success",
+                                        container: "#bottomAlertContainer",
+                                        autohide: 3000
+                                    });
+                                    ones.caches.setItem(cacheKey, currentData, 0);
+                                }
+                            }, 15000);
+                        }
+
+                        $scope.$broadcast("commonBill.ready");
 
                     });
 
@@ -679,6 +745,9 @@
 
                         rs.$promise.then(function(data){
                             if(!data.error) {
+
+                                ones.caches.removeItem(cacheKey);
+
                                 var lastPage = ones.caches.getItem("lastPage");
                                 $location.url(lastPage[0] || opts.returnPage);
                             }
