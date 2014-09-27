@@ -49,6 +49,7 @@
         "AppWorkflow": {
             "appName": "工作流模块"
         },
+        "workflowAssitFile": "工作流辅助文件目录",
         "workflowTypes": [
             {"id": 1, "name": "人为决策"},
             {"id": 2, "name": "自动处理"},

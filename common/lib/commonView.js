@@ -850,6 +850,7 @@
                         $scope.selectedActions.push({
                             label: service.toLang('viewDetail', "actions"),
                             class: "primary",
+                            icon: "eye",
                             multi: false,
                             action: function(evt, selected, theItem){
                                 $location.url(sprintf('/%(group)s/viewDetail/%(module)s/id/%(id)d', {
@@ -951,7 +952,7 @@
                                     return false;
                                 }
 
-                                $scope.confirmMsg = sprintf(toLang("confirm_delete", "", $rootScope), items.length);
+                                $scope.confirmMsg = sprintf(toLang("confirm_delete", "messages", $rootScope), items.length);
                                 $scope.doConfirm = function(){
                                     var api = $injector.get("ones.dataApiFactory").getResourceInstance({
                                         uri: $routeParams.group+"/"+$routeParams.module

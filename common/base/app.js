@@ -161,6 +161,15 @@
                     });
                 });
 
+                //窗口活动状态
+                $(window).blur(function(){
+                    ones.caches.setItem("ones.is.window.active", false, -1);
+                });
+                $(window).focus(function(){
+                    ones.caches.setItem("ones.is.window.active", true, -1);
+                });
+
+
                 //刷新NG-VIEW
                 $scope.doPageRefresh = function(){
                     $route.reload();
