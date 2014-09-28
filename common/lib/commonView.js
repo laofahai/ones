@@ -73,6 +73,15 @@
                     controller : 'ComViewPrintCtl',
                     templateUrl: "common/base/views/print.html"
                 })
+                //查看详情
+                .when('/:group/viewDetail/:module/id/:id', {
+                    controller : 'ComViewViewDetailCtl',
+                    templateUrl: "common/base/views/viewDetail.html"
+                })
+                .when('/:group/viewBillDetail/:module/id/:id', {
+                    controller : 'ComViewViewDetailCtl',
+                    templateUrl: "common/base/views/viewDetail.html"
+                })
                 .otherwise({
                     templateUrl: "common/base/views/404.html",
                     controller : "ComViewError404Ctl"
@@ -91,6 +100,28 @@
         .controller('ComViewError404Ctl', ["$scope", function($scope){
             $scope.hidePageHeader = true;
         }])
+        .controller("ComViewViewDetailCtl", ["$scope", "$rootScope", "$injector", "$routeParams", "ones.dataApiFactory", "ComView",
+            function($scope, $rootScope, $injector, $routeParams, dataAPI, ComView){
+                var group, module, res, model;
+
+                $scope.selectAble = false;
+
+                group = $routeParams.group;
+                module = $routeParams.module;
+
+                dataAPI.init(group, module);
+                model = dataAPI.model;
+                res = dataAPI.resource;
+
+                //Grid 可跳转按钮
+                try {
+                    actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+                } catch(e) {
+                    throw("unable get i18n package section:" + group + "." + module + "." + actions);
+                }
+
+                ComView.makeGridLinkActions($scope, actions, model.isBill, "", model);
+            }])
         .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", "ones.dataApiFactory", "CommonPrint",
             function($scope, $injector, $routeParams, dataAPI, printer) {
                 var group, module, res, model;
@@ -785,7 +816,8 @@
                                 return $scope.doEditSelected(theItem||$scope.gridSelected[0]);
                             },
                             class: "default",
-                            multi: false
+                            multi: false,
+                            authAction: "edit"
                         });
                         //编辑
                         $scope.doEditSelected = function(item){
@@ -818,6 +850,7 @@
                                 class: "primary",
                                 multi: false,
                                 icon: "plus",
+                                authAction: "edit",
                                 action: function(evt, selected, theItem){
                                     $location.url(sprintf('/%(group)s/addChild/%(module)s/pid/%(id)d', {
                                         group : group,
@@ -835,6 +868,7 @@
                                 class: "primary",
                                 multi: false,
                                 icon: "eye",
+                                authAction: "read",
                                 action: function(evt, selected, theItem){
                                     $location.url(sprintf('/%(group)s/viewChild/%(module)s/pid/%(id)d', {
                                         group : group,
@@ -846,16 +880,19 @@
                         }
                     }
                     //查看详情
-                    if(model.viewDetailAble) {
+                    if(false !== model.viewDetailAble) {
                         $scope.selectedActions.push({
                             label: service.toLang('viewDetail', "actions"),
                             class: "primary",
                             icon: "eye",
                             multi: false,
+                            authAction: "read",
                             action: function(evt, selected, theItem){
-                                $location.url(sprintf('/%(group)s/viewDetail/%(module)s/id/%(id)d', {
+                                var action = model.isBill ? "viewBillDetail" : "viewDetail";
+                                $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)d', {
                                     group : group,
                                     module: module,
+                                    action: action,
                                     id: Number(theItem.id||$scope.gridSelected[0].id)
                                 })+extraParams);
                             }
@@ -944,6 +981,7 @@
                         $scope.selectedActions.push({
                             label: service.toLang('delete', "actions"),
                             icon: "trash-o",
+                            authAction: "delete",
                             action: function(evt, selected, theItem){
                                 var ids = [];
                                 var items = theItem ? [theItem] : $scope.gridSelected;
@@ -996,6 +1034,7 @@
                             label: service.toLang('print', "actions"),
                             multi: true,
                             icon: "print",
+                            authAction: "read",
                             action: function(evt, selected, theItem){
                                 var ids = [];
                                 var items = theItem ? [theItem] : $scope.gridSelected;
@@ -1019,6 +1058,17 @@
                             $scope.selectedActions.push(item);
                         });
                     }
+
+                    var authedNodes = ones.caches.getItem("ones.authed.nodes");
+                    angular.forEach($scope.selectedActions, function(item, k){
+                        var authKey = sprintf("%s.%s.%s", $routeParams.group, $routeParams.module, item.authAction).toLowerCase();
+                        if(authedNodes.indexOf(authKey) < 0){
+                            delete($scope.selectedActions[k]);
+                        }
+                    });
+
+                    $scope.selectedActions = reIndex($scope.selectedActions);
+
 
                     GridView.selectedActions = $scope.selectedActions;
 

@@ -113,7 +113,6 @@
                 });
 
 
-
                 //@todo. 按状态监测，非延时监测
                 $timeout(function(){
                     $scope.formData.from_name = $scope.$parent.userInfo.truename;

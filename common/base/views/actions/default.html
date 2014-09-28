@@ -4,7 +4,7 @@
             <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
             <a class="btn btn-sm btn-light" href="" ng-click="$parent.doPageRefresh()"><i class="icon icon-refresh"></i></a>
             <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
-            <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions">{{pa.label}}</a>
+            <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions track by $index">{{pa.label}}</a>
 
         </div>
     </div>
@@ -32,7 +32,9 @@
                 <i class="icon-caret-down icon-on-right"></i>
             </button>
             <ul class="dropdown-menu dropdown-primary pull-right">
-                <li class="{{sa.class}}" ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}" ng-repeat="sa in selectedActions">
+                <li class="{{sa.class}}"
+                    ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}"
+                    ng-repeat="sa in selectedActions track by $index">
                     <a ng-click="sa.action($event,gridSelected)" ng-bind="sa.label"></a>
                 </li>
             </ul>
@@ -57,7 +59,7 @@
         <div class="actionsBtnRight btn-group" ng-show="workflowInBill.length>0">
             <button class="btn btn-sm disabled">{{i18n.lang.workflow}}:</button>
             <button class="btn btn-sm btn-{{w.btn_class||'success'}}"
-                    ng-repeat="w in workflowInBill"
+                    ng-repeat="w in workflowInBill track by $index"
                     ng-bind="w.name"
                     ng-click="doWorkflow($event, w.id)"
                     ></button>

@@ -51,6 +51,13 @@
                         self.methodsList.makeFilters(self.scope.$parent);
                     }
 
+                    /**
+                     * 搜索框自动获得焦点
+                     * */
+                    $timeout(function(){
+                        $("#gridSearchInput").focus();
+                    }, 500);
+
                 }
 
                 this.refresh = function(){

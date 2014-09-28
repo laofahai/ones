@@ -124,8 +124,9 @@
                             authNode = [tmp[0],tmp[2],action].join(".").toLowerCase();
                         }
 
+                        var authedNodes = ones.caches.getItem("ones.authed.nodes");
                         try {
-                            if($scope.$parent.authedNodes.indexOf(authNode) < 0) {
+                            if(authedNodes.indexOf(authNode) < 0) {
                                 return false;
                             }
                         } catch(e) {

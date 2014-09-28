@@ -193,28 +193,6 @@
                     plugin.callPlugin("hook.hotKey", $event);
                 };
 
-                //历史
-                var pathHistory = function(){
-                    this.back = function(){};
-                    this.forward = function() {};
-                    this.go =function() {};
-
-                    this.getHistories = function() {
-                        return ones.caches.getItem("ones.pathHistory");
-                    };
-
-                    this.setHistories = function() {
-                        var histories = this.getHistories();
-                        histories.push($location.path());
-                        ones.caches.setItem("ones.pathHistory", histories, -1);
-                    };
-
-                    this._historys = [];
-                };
-                var ph = new pathHistory();
-
-//                console.log(ph.getHistories());
-
                 $scope.isAppLoaded = function(app) {
                     return isAppLoaded(app);
                 }
@@ -297,14 +275,6 @@
                     $scope.currentPage.module = module;
                     $rootScope.currentPage = $scope.currentPage;
 
-//                    console.log($rootScope.currentPage);
-
-                    /**
-                     * 搜索框自动获得焦点
-                     * */
-                    $timeout(function(){
-                        $("#gridSearchInput").focus();
-                    }, 500);
 
                     /**
                      * 清除即时缓存
@@ -326,9 +296,12 @@
                     $scope.$broadcast("initDataLoaded", data);
                 });
 
-                $scope.$on("initDataLoaded", function(event, data) {
-                    $scope.authedNodes = data.authed;
-                });
+                if(!ones.caches.getItem("ones.authed.nodes")) {
+                    $scope.$on("initDataLoaded", function(event, data) {
+                        $rootScope.authedNodes = data.authed;
+                        ones.caches.setItem("ones.authed.nodes", data.authed, 1)
+                    });
+                }
 
                 $scope.userInfo = ones.userInfo;
 

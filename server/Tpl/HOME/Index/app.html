@@ -208,7 +208,7 @@
     ng-hide="contextMenu.items.length<=0"
     id="contextMenuDropdown"
     style="left:{{contextMenu.left}}px;top:{{contextMenu.top}}px;">
-    <li ng-repeat="act in contextMenu.items">
+    <li ng-repeat="act in contextMenu.items track by $index">
         <a tabindex="-1"
            ng-click="act.action(null,contextMenu.selectedItems,contextMenu.currentItem);hideContextMenu();">
             <i class="icon icon-{{act.icon}}"></i>
