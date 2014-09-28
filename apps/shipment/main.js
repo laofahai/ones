@@ -2,31 +2,31 @@
     angular.module("ones.shipment", [])
         .config(["$routeProvider", function($route){
             $route
-                .when('/doWorkflow/shipment/makeShipment/:nodeId/:id', {
-                    controller: "WorkflowMakeShipmentCtl",
+                .when('/doWorkflow/shipment/makeExpress/:nodeId/:id', {
+                    controller: "WorkflowMakeExpressCtl",
                     templateUrl: "common/base/views/edit.html"
                 });
         }])
-        .factory("ShipmentRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "shipment/shipment/:id.json", null,
+        .factory("ExpressRes", ["$resource", "ones.config", function($resource, cnf) {
+            return $resource(cnf.BSU + "shipment/express/:id.json", null,
                 {
                     'update': {method: 'PUT'}
                 }
             );
         }])
-        .service("ShipmentModel", ["$rootScope", function($rootScope) {
+        .service("ExpressModel", ["$rootScope", function($rootScope) {
             var i18n = $rootScope.i18n.lang;
             return {
                 printAble: true,
                 getStructure: function() {
                     return {
                         id: {primary: true},
-                        shipment_type: {
-                            field: "shipment_type_label",
+                        express_type: {
+                            field: "express_type_label",
                             inputType: "select",
                             dataSource: "HOME.TypesAPI",
                             queryParams: {
-                                type: "shipment"
+                                type: "express"
                             }
                         },
                         to_company: {
@@ -86,8 +86,8 @@
         }])
 
         //生成发货单
-        .controller("WorkflowMakeShipmentCtl", ["$scope", "StockoutRes", "RelationshipCompanyRes", "ShipmentRes", "ShipmentModel", "ComView", "$routeParams", "ones.config", "$location", "$timeout",
-            function($scope, res, cusRes, ShipmentRes, model, ComView, $routeParams, conf, $location, $timeout){
+        .controller("WorkflowMakeexpressCtl", ["$scope", "StockoutRes", "RelationshipCompanyRes", "ExpressRes", "ExpressModel", "ComView", "$routeParams", "ones.config", "$location", "$timeout",
+            function($scope, res, cusRes, ExpressRes, model, ComView, $routeParams, conf, $location, $timeout){
                 var cusId;
                 $scope.formData = $scope.formData || {};
                 res.get({id:$routeParams.id}).$promise.then(function(data){
@@ -131,11 +131,11 @@
                         ComView.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                         return;
                     }
-                    ShipmentRes.save($scope.formData, function(data){
+                    ExpressRes.save($scope.formData, function(data){
                         if(data.error) {
                             ComView.alert(data.msg);
                         } else {
-                            $location.url("/shipment/list/shipment");
+                            $location.url("/shipment/list/express");
                         }
                     });
                 };

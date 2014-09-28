@@ -1,10 +1,10 @@
 {
     "urlMap": {
         "shipment": {
-            "name": "进销存",
+            "name": "发货单",
             "modules": {
-                "Shipment": {
-                    "name": "发货单",
+                "Express": {
+                    "name": "快递单",
                     "actions": {
                         "add": "",
                         "list": "",
@@ -15,16 +15,19 @@
         },
         "doWorkflow": {
             "modules": {
-                "shipment": {
+                "express": {
                     "actions": {
-                        "makeShipment": "生成发货单"
+                        "makeExpress": "生成发货单"
                     }
                 }
             }
         }
     },
     "lang": {
-        "shipment_type" : "发货类型",
+        "navs": {
+            "express_bill": "快递单"
+        },
+        "express_type" : "快递类型",
         "freight_type" : "运费类型",
         "shipment_to_company": "收件公司",
         "shipment_to_name": "收件人",
@@ -43,10 +46,10 @@
         },
 
         "types" : {
-            "shipment": "物流方式",
+            "express": "物流方式",
             "freight" : "运费类型"
         },
 
-        "shipment.shipment": "%s发货单"
+        "shipment.express": "%s快递单"
     }
 }

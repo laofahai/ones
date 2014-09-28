@@ -5,7 +5,7 @@
     "navs": {
         "stock": {
             "childs": {
-                "shipment_paper" : "shipment/list/shipment"
+                "express_bill" : "shipment/list/express"
             }
         }
     }

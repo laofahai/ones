@@ -13,7 +13,7 @@
  * 
  * 生成发货单。收件人信息，发件人信息，产品信息，发货方式，stockout_id
  */
-class StockoutMakeShipment extends WorkflowAbstract {
+class StockoutMakeExpress extends WorkflowAbstract {
     
     private $manInfo = array(
         "Orders" => array(
@@ -32,7 +32,7 @@ class StockoutMakeShipment extends WorkflowAbstract {
         
         if(IS_POST) {
 //            print_r($_POST);exit;
-            $shipmentModel = D("Shipment");
+            $shipmentModel = D("Express");
             $shipmentModel->create();
             $lastId = $shipmentModel->add();
 //            var_dump($lastId);exit;
@@ -43,7 +43,7 @@ class StockoutMakeShipment extends WorkflowAbstract {
             }
             $stockModel = D("Stock");
             $stockModel->where("id=".$this->mainrowId)->save(array(
-                "shipment_id" => $lastId
+                "express_id" => $lastId
             ));
             
             return;
@@ -81,7 +81,7 @@ class StockoutMakeShipment extends WorkflowAbstract {
         
         $data = array(
             "type" => "redirect",
-            "location" => sprintf("/doWorkflow/shipment/makeShipment/%d/%d", $this->currentNode["id"], $this->mainrowId)
+            "location" => sprintf("/doWorkflow/shipment/makeExpress/%d/%d", $this->currentNode["id"], $this->mainrowId)
         );
         $this->response($data);
         

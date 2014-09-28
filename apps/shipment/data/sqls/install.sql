@@ -1,10 +1,10 @@
-DELETE FROM `[PREFIX]types` WHERE type = 'shipment';
-DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.Shipment.%';
+DELETE FROM `[PREFIX]types` WHERE type = 'express';
+DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.express.%';
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]shipment` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]express` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) DEFAULT '0',
-  `shipment_type` smallint(4) NOT NULL,
+  `express_type` smallint(4) NOT NULL,
   `from_name` varchar(50) NOT NULL,
   `from_company` varchar(100) NOT NULL,
   `from_address` varchar(255) NOT NULL,
@@ -19,12 +19,6 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]shipment` (
   `total_num` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `stockout_id` (`stockout_id`),
-  KEY `shipment_type` (`shipment_type`),
+  KEY `express_type` (`express_type`),
   KEY `freight_type` (`freight_type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
-INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `title`, `status`, `cond`, `category`) VALUES
-(null, 'shipment.Shipment.read', '发货单列表', 1, '', 'stock'),
-(null, 'shipment.Shipment.add', '新建发货单', 1, '', 'stock'),
-(null, 'shipment.Shipment.edit', '修改发货单', 1, '', 'stock'),
-(null, 'shipment.Shipment.forverdelete', '删除发货单', 1, '', 'stock');

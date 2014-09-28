@@ -67,7 +67,6 @@
             "stock_list": "库存列表",
             "stockin_paper": "入库单",
             "stockout_paper": "出库单",
-            "shipment_paper": "发货单",
             "stock_transfer": "库存调拨"
         },
         "modules": {

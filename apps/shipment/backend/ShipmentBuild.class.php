@@ -9,7 +9,7 @@
 class ShipmentBuild extends CommonBuildAction {
 
     protected $authNodes = array(
-        "shipment.shipment.*"
+        "shipment.express.*"
     );
 
 } 

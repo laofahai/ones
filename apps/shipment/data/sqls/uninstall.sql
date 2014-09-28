@@ -1,4 +1,4 @@
-DELETE FROM `[PREFIX]types` WHERE type = 'shipment';
-DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.Shipment.%';
+DELETE FROM `[PREFIX]types` WHERE type = 'express';
+DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.express.%';
 
-DROP TABLE `[PREFIX]shipment`;
+DROP TABLE `[PREFIX]express`;

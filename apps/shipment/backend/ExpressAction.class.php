@@ -7,14 +7,14 @@
  */
 
 /**
- * Description of ShipmentAction
+ * Description of ExpressAction
  *
  * @author nemo
  */
-class ShipmentAction extends CommonAction {
+class ExpressAction extends CommonAction {
 
-    protected $indexModel = "ShipmentView";
+    protected $indexModel = "ExpressView";
 
-    protected $readModel = "ShipmentView";
+    protected $readModel = "ExpressView";
 
 }

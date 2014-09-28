@@ -10,11 +10,11 @@
  * @Description
  * 
  */
-class ShipmentViewModel extends CommonViewModel {
+class ExpressViewModel extends CommonViewModel {
     
     protected $viewFields = array(
-        "Shipment" => array("*", "_type"=>"left"),
-        "Types" => array("name" => "shipment_type_label", "alias" => "shipmentTypeAlias", "_on"=>"Shipment.shipment_type=Types.id", "_type"=>"left")
+        "Express" => array("*", "_type"=>"left"),
+        "Types" => array("name" => "express_type_label", "alias" => "expressTypeAlias", "_on"=>"Shipment.express_type=Types.id", "_type"=>"left")
     );
 
     public $searchFields = array(

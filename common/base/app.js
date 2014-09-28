@@ -296,12 +296,10 @@
                     $scope.$broadcast("initDataLoaded", data);
                 });
 
-                if(!ones.caches.getItem("ones.authed.nodes")) {
-                    $scope.$on("initDataLoaded", function(event, data) {
-                        $rootScope.authedNodes = data.authed;
-                        ones.caches.setItem("ones.authed.nodes", data.authed, 1)
-                    });
-                }
+                $scope.$on("initDataLoaded", function(event, data) {
+                    $rootScope.authedNodes = data.authed;
+                    ones.caches.setItem("ones.authed.nodes", data.authed, 1)
+                });
 
                 $scope.userInfo = ones.userInfo;
 
