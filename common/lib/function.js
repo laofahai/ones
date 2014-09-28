@@ -251,7 +251,7 @@ function HTMLDecode(text)
  * 根据KEY返回语言包字段，优先使用当前APP的语言包
  * */
 var toLang = function(key, section, $rootScope) {
-    section = typeof(section) === "string" ? "lang']['"+section : "lang";
+    section = (section && typeof(section) === "string") ? "lang']['"+section : "lang";
     var appAlias;
     try {
         appAlias = $rootScope.currentPage.app;

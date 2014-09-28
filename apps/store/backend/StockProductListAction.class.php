@@ -14,6 +14,7 @@
 class StockProductListAction extends CommonAction {
     
     protected $indexModel = "StockProductListView";
+    protected $readModel = "StockProductListView";
 
     protected $dataModelAlias = "product";
 

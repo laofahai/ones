@@ -1,15 +1,18 @@
 <pageactions></pageactions>
-<table class="table table-bordered table-responsive">
-    <tr>
-        <th align="right">名称</th>
-        <td>123</td>
-    </tr>
-    <tr>
-        <th align="right">名称</th>
-        <td>123</td>
-    </tr>
-    <tr>
-        <th align="right">名称</th>
-        <td>123</td>
-    </tr>
-</table>
+<detail-view config="detailViewConfig">
+    <div class="row">
+        <div class="col-xs-12 profile-user-info-striped detailViewTable">
+            <div class="profile-info-row col-sm-{{columnWidth}}" ng-repeat="s in detailViewStructure">
+                <div class="profile-info-name" ng-bind="s.displayName"></div>
+                <div class="profile-info-value" ng-bind-html="detailViewData[s.field]||'&nbsp;'"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-10"></div>
+
+    <div>
+        <button class="btn btn-primary" ng-bind="i18n.lang.actions.edit" ng-click="doEditDetail()" ng-show="config.editAble"></button>
+        <button class="btn" ng-bind="i18n.lang.actions.return" onclick="history.go(-1);"></button>
+    </div>
+</detail-view>

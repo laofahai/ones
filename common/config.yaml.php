@@ -31,6 +31,7 @@
     - "vendor/jquery/select2.js"
     - "base/config.js"
     - "lib/gridView.js"
+    - "lib/detailView.js"
     - "lib/caches.js"
     - "lib/plugin.js"
     - "lib/function.js"

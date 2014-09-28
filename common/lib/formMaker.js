@@ -1345,6 +1345,7 @@
                             } else {
                                 boxHTML = self.opts.templates["commonForm/box.html"];
                             }
+
                             struct.class = "width-100";
                             struct["ng-model"] = self.opts.dataName+"."+field;
                             if(struct.required !== false) {

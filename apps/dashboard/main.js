@@ -11,9 +11,6 @@
                     templateUrl: appView("myDesktop.html", "dashboard"),
                     controller: "HomeMyDesktopCtl"
                 })
-                .otherwise({
-                    redirectTo: '/HOME/Index/dashboard'
-                })
             ;
         }])
         .factory("MyDesktopRes", ["$resource", "ones.config", function($resource, cnf){

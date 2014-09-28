@@ -583,3 +583,25 @@ th.sorting_asc,th.sorting_desc {
     margin:0;padding:3px 5px;
     margin-top:5px;
 }
+
+.detailViewTable {
+    border:none !important;
+}
+.detailViewTable .profile-info-row {
+    border:1px solid #DCEBF7;
+    border-top:none;
+    border-right:none;
+}
+.detailViewTable .profile-info-row .profile-info-value {
+    border:none;
+    margin-left:100px;
+}
+
+@media only screen and (max-width: 480px) {
+    .profile-info-value {
+        margin-left: 0px !important;
+    }
+    .profile-user-info-striped .profile-info-value {
+        margin-left: 10px;
+    }
+}

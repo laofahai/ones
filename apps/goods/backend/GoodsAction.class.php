@@ -14,6 +14,8 @@ class GoodsAction extends CommonAction {
     
     public $indexModel = "GoodsCatView";
 
+    public $readModel = "GoodsCatView";
+
     protected $dataModelAlias = "goodsBaseInfo";
     
     protected function _filter(&$map) {

@@ -50,7 +50,8 @@
                     queryParams: {
                         fieldAlias: item.field_name
                     },
-                    width: "auto"
+                    width: "auto",
+                    hideInDetail: true
                 };
 
 

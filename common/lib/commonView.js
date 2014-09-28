@@ -4,7 +4,7 @@
      * 通用视图
      *
      * */
-    angular.module("ones.commonView", ["ones.formMaker", 'mgcrea.ngStrap', 'ones.gridView'])
+    angular.module("ones.commonView", [])
     /**
      * 通用路由适配
      * 使用通用Controller
@@ -100,8 +100,8 @@
         .controller('ComViewError404Ctl', ["$scope", function($scope){
             $scope.hidePageHeader = true;
         }])
-        .controller("ComViewViewDetailCtl", ["$scope", "$rootScope", "$injector", "$routeParams", "ones.dataApiFactory", "ComView",
-            function($scope, $rootScope, $injector, $routeParams, dataAPI, ComView){
+        .controller("ComViewViewDetailCtl", ["$scope", "$rootScope", "$injector", "$routeParams", "ones.dataApiFactory", "ComView", "detailViewService",
+            function($scope, $rootScope, $injector, $routeParams, dataAPI, ComView, detailView){
                 var group, module, res, model;
 
                 $scope.selectAble = false;
@@ -120,6 +120,14 @@
                     throw("unable get i18n package section:" + group + "." + module + "." + actions);
                 }
 
+                $scope.detailViewConfig = {
+                    group: group,
+                    module: module,
+                    model: model,
+                    resource: res
+                };
+
+                ComView.makeGridSelectedActions($scope, model, res, group, module);
                 ComView.makeGridLinkActions($scope, actions, model.isBill, "", model);
             }])
         .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", "ones.dataApiFactory", "CommonPrint",

@@ -1,7 +1,8 @@
 {
     "Goods": {
         "id": {
-            "primary": true
+            "primary": true,
+            "hideInDetail": true
         },
         "factory_code": {
             "ensureunique": "GoodsRes",
@@ -22,7 +23,8 @@
             "nameField" : "prefix_name",
             "listable": false,
             "dataSource": "GoodsCategoryRes",
-            "hiddenWhen480": true
+            "hiddenWhen480": true,
+            "hiddenInDetail": true
         },
         "category_name": {
             "displayName": ["category"],

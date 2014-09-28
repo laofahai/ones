@@ -11,7 +11,9 @@
             'localytics.directives', //FOR CHOSEN
             'ui.utils',
             'ones.gridView',
-
+            "ones.formMaker",
+            'mgcrea.ngStrap',
+            'ones.detailView',
             'angularFileUpload',
 
             "ones.pluginsModule",
