@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in itemsList"
-                ng-dblclick="doGridDblClick(item)"
+                ng-dblclick="doGridDblClick(item, null, $event)"
                 ng-click="doGridClick($index, $event)"
                 ng-right-click="doContextMenu($event,item,config)">
                 <td align="center" class="hidden-480">

@@ -93,13 +93,19 @@
                         });
                     },
                     //双击事件
-                    doGridDblClick: function(item, extra){
-                        try {
-                            self.scope.$parent.doViewSelected(item);
-                        } catch(e) {
-                            try {
-                                self.scope.$parent.doEditSelected(item);
-                            } catch(e) {}
+                    doGridDblClick: function(item, extra, evt){
+
+                        var acts = {};
+                        angular.forEach(self.selectedActions, function(act) {
+                            acts[act.name] = act.action;
+                        });
+
+                        if("viewChild" in acts) {
+                            acts.viewChild(evt, self.selected, item);
+                        } else if("viewDetail" in acts) {
+                            acts.viewDetail(evt, self.selected, item);
+                        } else if("edit" in acts) {
+                            acts.edit(evt, self.selected, item);
                         }
                     },
                     //排序

@@ -790,8 +790,10 @@
                 service.makeGridSelectedActions = function($scope, model, res, group, module, extraParams){
                     //选中项操作
                     extraParams = extraParams || "";
-                    //编辑
+
                     $scope.selectedActions = [];
+                    $scope.selectedActionsLabel = [];
+
                     if($routeParams.extra) {
                         var tmp = parseParams($routeParams.extra);
                         angular.forEach(tmp, function(item, key){
@@ -807,9 +809,9 @@
 
 
                     //编辑
-//                    console.log(model.editAble);
                     if(model.editAble === undefined || model.editAble) {
                         $scope.selectedActions.push({
+                            name: "edit",
                             label: service.toLang('edit', "actions"),
                             icon: "pencil",
                             action: function(evt, selected, theItem){
@@ -846,6 +848,7 @@
                     if(model.subAble) {
                         if(false !== model.addSubAble) {
                             $scope.selectedActions.push({
+                                name: "addChild",
                                 label: service.toLang('addChild', "actions"),
                                 class: "primary",
                                 multi: false,
@@ -864,6 +867,7 @@
                         //查看子项
                         if(false !== model.viewSubAble) {
                             $scope.selectedActions.push({
+                                name: "viewChild",
                                 label: service.toLang('viewChild', "actions"),
                                 class: "primary",
                                 multi: false,
@@ -882,6 +886,7 @@
                     //查看详情
                     if(false !== model.viewDetailAble) {
                         $scope.selectedActions.push({
+                            name: "viewDetail",
                             label: service.toLang('viewDetail', "actions"),
                             class: "primary",
                             icon: "eye",
@@ -897,17 +902,6 @@
                                 })+extraParams);
                             }
                         });
-
-                        $scope.doViewSelected = function(item){
-                            if(!item.id) {
-                                return;
-                            }
-                            $location.url(sprintf('/%(group)s/viewDetail/%(module)s/id/%(id)s', {
-                                group : group,
-                                module: module,
-                                id: item.id
-                            })+extraParams);
-                        };
                     }
                     //查看数据模型
                     //工作流
@@ -979,6 +973,7 @@
                     //删除
                     if(model.deleteAble === undefined || model.deleteAble) {
                         $scope.selectedActions.push({
+                            name: "delete",
                             label: service.toLang('delete', "actions"),
                             icon: "trash-o",
                             authAction: "delete",
@@ -1031,6 +1026,7 @@
                     }
                     if(model.printAble) {
                         $scope.selectedActions.push({
+                            name: "print",
                             label: service.toLang('print', "actions"),
                             multi: true,
                             icon: "print",
