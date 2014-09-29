@@ -191,7 +191,8 @@
                     multiple: "multiple",
                     remoteDataField: "managers",
                     listable:false,
-                    dataSource: "Department.UserAPI"
+                    dataSource: "Department.UserAPI",
+                    hideInDetail:true
                 },
                 total_num: {
                     displayName: $rootScope.i18n.lang.total,

@@ -105,7 +105,8 @@
                     },
                     name: {
                         displayName: i18n.category,
-                        listable: false
+                        listable: false,
+                        hideInDetail:true
                     },
                     prefix_name: {
                         hideInForm: true,

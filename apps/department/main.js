@@ -74,7 +74,8 @@
                         nameField: "title",
                         valueField: "id",
                         listable: false,
-                        dataSource: "AuthGroupRes"
+                        dataSource: "AuthGroupRes",
+                        hideInDetail:true
                     },
                     department: {
                         field: "Department.name",
@@ -85,7 +86,8 @@
                         nameField: "prefix_name",
                         listable: false,
                         inputType: "select",
-                        dataSource: "Department.DepartmentAPI"
+                        dataSource: "Department.DepartmentAPI",
+                        hideInDetail:true
                     },
                     status: {
                         displayName: $rootScope.i18n.lang.isEnable,
@@ -185,7 +187,8 @@
                     },
                     prefix_name: {
                         hideInForm: true,
-                        displayName: toLang("name", "", $rootScope)
+                        displayName: toLang("name", "", $rootScope),
+                        hideInDetail: true
                     },
                     leader: {
                         inputType: "select",

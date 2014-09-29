@@ -4,7 +4,7 @@
         <div class="col-xs-12 profile-user-info-striped detailViewTable">
             <div class="profile-info-row col-sm-{{columnWidth}}" ng-repeat="s in detailViewStructure">
                 <div class="profile-info-name" ng-bind="s.displayName"></div>
-                <div class="profile-info-value" ng-bind-html="detailViewData[s.field]|tryDetailFilter:s"> </div>
+                <div class="profile-info-value" ng-bind-html="detailViewData|tryDetailFilter:s"> </div>
             </div>
         </div>
     </div>

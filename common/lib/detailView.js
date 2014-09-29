@@ -25,6 +25,8 @@
                     $location.url(url);
                 };
 
+                ones.detailViewScope = this.parentScope;
+
             };
 
             this.loadCommonData = function(){
@@ -96,6 +98,8 @@
         }])
         .filter("tryDetailFilter", ["$filter", function($filter){
             return function(text,obj){
+
+                text = ones.detailViewScope.$eval("detailViewData."+obj.field);
 
                 if(!obj.cellFilter) {
                     return text;
