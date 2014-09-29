@@ -94,6 +94,25 @@
                 }
             };
         }])
+        .filter("tryDetailFilter", ["$filter", function($filter){
+            return function(text,obj){
+
+                if(!obj.cellFilter) {
+                    return text;
+                }
+
+                var args = obj.cellFilter.replace(/'/ig, "").split(":")
+
+                var filter = args[0];
+
+                args = Array.prototype.slice.call(args, 1);
+
+                args.unshift(text);
+
+                return $filter(filter).apply(null, args);
+
+            };
+        }])
     ;
 
 })();

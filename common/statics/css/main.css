@@ -595,6 +595,7 @@ th.sorting_asc,th.sorting_desc {
 .detailViewTable .profile-info-row .profile-info-value {
     border:none;
     margin-left:100px;
+    min-height:31px;
 }
 
 @media only screen and (max-width: 480px) {

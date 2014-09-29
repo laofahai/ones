@@ -16,7 +16,7 @@
                     },
                     type: {
                         inputType: "select",
-                        dataSource: []
+                        cellFilter: "lang:'types'"
                     },
                     alias: {
                         required: false
@@ -29,15 +29,13 @@
                 },
                 getStructure : function() {
                     var self = this;
-                    if(this.structure.type.dataSource.length < 1) {
-                        angular.forEach($rootScope.i18n.lang.types, function(item, k){
-                            self.structure.type.dataSource.push({
-                                id: k,
-                                name: item
-                            });
+                    self.structure.type.dataSource = [];
+                    angular.forEach($rootScope.i18n.lang.types, function(item, k){
+                        self.structure.type.dataSource.push({
+                            id: k,
+                            name: item
                         });
-                    }
-
+                    });
 
                     return this.structure;
                 }
