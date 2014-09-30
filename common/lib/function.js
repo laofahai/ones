@@ -469,6 +469,11 @@ String.prototype.ucfirst = function() {
  * 格式化表单中得数据，比如input number之类的
  * */
 var dataFormat = function(fieldsDefine, data) {
+
+    if(!data) {
+        return data;
+    }
+
     if (data instanceof Array) {
         for (var i = 0; i < data.length; i++) {
             data[i] = dataFormat(fieldsDefine, data[i]);
@@ -485,11 +490,11 @@ var dataFormat = function(fieldsDefine, data) {
                 }
                 break;
             default:
-                if (false === isNaN(data[f])) {
-                    data[f] = Number(data[f]) || 0;
-                } else {
-                    data[f] = data[f];
-                }
+//                if (false === isNaN(data[f])) {
+//                    data[f] = Number(data[f]) || 0;
+//                } else {
+//                    data[f] = data[f];
+//                }
                 break;
         }
     }

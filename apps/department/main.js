@@ -68,7 +68,8 @@
                         field: "usergroup",
                         hideInForm: true
                     },
-                    usergroup: {
+                    group_ids: {
+                        displayName: toLang("usergroup", "", $rootScope),
                         inputType: "select",
                         multiple: "multiple",
                         nameField: "title",

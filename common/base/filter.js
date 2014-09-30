@@ -79,6 +79,9 @@
         }])
         .filter("toError", ["$rootScope", function($rootScope){
             return function(field) {
+                if(!field) {
+                    return;
+                }
 
                 var errors = field.$error;
                 if(!errors) {

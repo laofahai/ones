@@ -61,43 +61,55 @@
 
         .service("OrdersModel", ["$rootScope", function($rootScope){
             var obj = {
-                isBill: true,
-                workflowAlias: "orders",
-                printAble: true,
-                rowsModel: "OrdersEditModel"
+                config: {
+                    relateMoney: true,
+                    isBill: true,
+                    workflowAlias: "orders",
+                    printAble: true,
+                    rowsModel: "OrdersEditModel"
+                }
             };
             obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
                 return {
                     bill_id: {
-                        displayName: i18n.billId
-                    },
-                    sale_type_label: {
-                        displayName: i18n.type,
-                        hideInForm:true
+                        displayName: i18n.billId,
+                        inputType: "static",
+                        onlyInEdit: true
                     },
                     sale_type: {
                         displayName: i18n.type,
-                        listable: false
+                        inputType: "select",
+                        dataSource: "HOME.TypesAPI",
+                        queryParams: {
+                            type: "sale"
+                        }
                     },
                     customer: {
                         hideInForm: true
                     },
                     customer_id: {
-                        listable: false
+                        displayName: i18n.customer,
+                        listable: false,
+                        inputType: "select3",
+                        dataSource: "RelationshipCompanyRes"
                     },
                     total_num: {
-                        displayName: i18n.totalNum
+                        displayName: i18n.totalNum,
+                        hideInForm: true
                     },
                     total_amount_real: {
                         cellFilter: "currency:'￥'"
                     },
                     dateline: {
-                        cellFilter: "dateFormat:0"
+                        cellFilter: "dateFormat:0",
+                        inputType: "datetime",
+                        value: new Date()
                     },
                     status_text: {
                         displayName: i18n.status,
-                        field: "processes.status_text"
+                        field: "processes.status_text",
+                        hideInForm: true
                     },
                     sponsor: {}
                 };
@@ -108,8 +120,10 @@
         .service("OrdersEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
-                    relateMoney: true,
-                    workflowAlias: "orders"
+                    config: {
+                        relateMoney: true,
+                        workflowAlias: "orders"
+                    }
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -172,8 +186,11 @@
             }])
         .service("ReturnsModel", ["$rootScope", function($rootScope){
             return {
-                isBill: true,
-                workflowAlias: "returns",
+                config: {
+                    relateMoney: true,
+                    isBill: true,
+                    workflowAlias: "returns"
+                },
                 getStructure: function(){
                     return {
                         bill_id: {},
@@ -254,8 +271,8 @@
                 return obj;
             }])
 
-        .controller("OrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
-            function($scope, OrdersRes, GoodsRes, OrdersEditModel, ComView, RelationshipCompanyRes, $routeParams) {
+        .controller("OrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+            function($scope, OrdersRes, GoodsRes, OrdersModel, ComView, RelationshipCompanyRes, $routeParams) {
 
                 $routeParams.group = "sale";
                 $routeParams.module = "orders";
@@ -265,17 +282,14 @@
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
+
                 if(!$scope.formMetaData) {
                     $scope.formMetaData = {
                         inputTime: new Date(),
                         total_amount_real: 0
                     };
                 }
-//                $scope.formMetaData.inputTime = new Date();
 
-                ComView.displayBill($scope, OrdersEditModel, OrdersRes, {
-                    id: $routeParams.id
-                });
                 //客户选择字段定义
                 $scope.customerSelectOpts = {
                     context: {
@@ -305,6 +319,9 @@
 
                 //客户ID变动时 更新当前的折扣率
                 $scope.$watch('formMetaData.customer_id', function(){
+                    if(!$scope.billData) {
+                        return;
+                    }
                     if($scope.formMetaData.customer_id) {
                         RelationshipCompanyRes.get({
                             id: $scope.formMetaData.customer_id
@@ -315,19 +332,22 @@
                                 name: data.name,
                                 discount: parseInt(data.discount)
                             };
-                            angular.forEach($scope.formData, function(item, k) {
-                                if(!item.goods_id || item.discount) {
+                            angular.forEach($scope.billData, function(item, k) {
+                                if(!item.goods_id) {
                                     return;
                                 }
-                                $scope.formData[k].discount = parseInt(data.discount);
-//                                console.log(data.discount);
-//                                console.log(item);
-                                $scope.recountTotalAmount(k);
+                                $scope.billData[k].discount = parseInt(data.discount);
+                                $scope.countRowAmount(k);
                             });
                         });
                     }
                 });
                 $scope.maxDate = new Date();
+
+                $scope.billConfig = {
+                    model: OrdersModel,
+                    res: OrdersRes
+                };
 //                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
 //                $scope.format = $scope.formats[0];
 

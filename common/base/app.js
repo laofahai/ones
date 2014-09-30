@@ -212,8 +212,6 @@
 
                     $('body,html').animate({scrollTop:0},300);
 
-//                    var lastPage = ones.caches.getItem("pageHistory");
-
                     lastPage[0] = lastPage[1];
                     lastPage[1] = $location.path();
                     ones.caches.setItem("lastPage", lastPage, -1);
@@ -300,7 +298,7 @@
 
                 $scope.$on("initDataLoaded", function(event, data) {
                     $rootScope.authedNodes = data.authed;
-                    ones.caches.setItem("ones.authed.nodes", data.authed, 1)
+                    ones.caches.setItem("ones.authed.nodes", data.authed, 1);
                 });
 
                 $scope.userInfo = ones.userInfo;

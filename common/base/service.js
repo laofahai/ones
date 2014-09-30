@@ -74,9 +74,12 @@
         }])
         .service("HOME.AppsAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, res){
             return {
-                editAble: false,
-                deleteAble: false,
-                viewDetailAble: true,
+
+                config: {
+                    editAble: false,
+                    deleteAble: false,
+                    viewDetailAble: true
+                },
 
                 api: res.getResourceInstance({
                     uri: "home/apps",

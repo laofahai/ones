@@ -66,7 +66,8 @@
             "fill_the_form": "请填写下面的表单",
             "operate_options": "操作选项",
             "appDetail": "应用详情",
-            "uploader": "文件上传"
+            "uploader": "文件上传",
+            "baseInfo": "基本信息"
         },
         "messages": {
             "cacheCleared": "缓存已成功清除",

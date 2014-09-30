@@ -64,7 +64,7 @@
 
                 };
 
-                var columns = self.config.model.columns || 1;
+                var columns = self.config.model.columns || 3;
                 columns = columns > 4 ? 4 : columns;
                 self.parentScope.columnWidth = parseInt(12/columns);
                 var field = self.config.model.getStructure();

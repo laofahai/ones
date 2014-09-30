@@ -72,7 +72,6 @@ commonform {
 }
 .billHeader {
     padding:10px 0;
-    margin-bottom:10px;
 }
 .billHeader label,.billHeader input,.billHeader span {
     font-size:12px;
@@ -80,6 +79,20 @@ commonform {
 .billHeader label,.billHeader span {
     height:30px;line-height:30px;
     margin:0;
+}
+.billHeader commonform{
+    margin:0 !important;
+    padding:0;
+}
+.billHeader .form-group {
+    min-height:0;
+    margin:0;
+}
+.billHeader .form-group label {
+    padding-top:1px;
+}
+.billHeader .help-block {
+    margin:0;padding:0;
 }
 
 .billBody table {
@@ -586,23 +599,13 @@ th.sorting_asc,th.sorting_desc {
 
 .detailViewTable {
     border:none !important;
+    margin-top:30px;
 }
-.detailViewTable .profile-info-row {
-    border:1px solid #DCEBF7;
-    border-top:none;
-    border-right:none;
+.detailViewTable .control-label {
+    border-right:1px solid #ddd;
+    padding-right:10px !important;
+    color:#666;
 }
-.detailViewTable .profile-info-row .profile-info-value {
-    border:none;
-    margin-left:100px;
-    min-height:31px;
-}
-
-@media only screen and (max-width: 480px) {
-    .profile-info-value {
-        margin-left: 0px !important;
-    }
-    .profile-user-info-striped .profile-info-value {
-        margin-left: 10px;
-    }
+.dvt-info {
+    padding:5px 10px;
 }

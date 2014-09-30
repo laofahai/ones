@@ -1,49 +1,147 @@
 (function(){
     'use struct';
     angular.module("ones.formMaker", ["ones.select3Module"])
-        .directive("commonform", ["$compile", "FormMaker", function($compile, FormMaker) {
-            return {
-                restrict: "E",
-                scope: {
-                    config: "=",
-                    data: "="
-                },
-                replace: true,
-                transclusion: true,
-                compile: function(element, attrs, transclude) {
-                    return {
-                        pre: function($scope, iElement, iAttrs, controller) {
-                            $scope.$on("commonForm.ready", function() {
-                                var fm = new FormMaker.makeForm($scope);
-                                var html = fm.makeHTML();
-                                iElement.append($compile(html)($scope.$parent));
-                                setTimeout(function(){
-                                    var ele = iElement.find("input").eq(0);
-                                    $(ele).trigger("click").focus();
-                                }, 200);
-                            });
-                        }
-                    };
-                }
-            };
-        }])
-        .directive("commongrid", ["$compile", function($compile) {
-            return {
-                restrict: "E",
-                replace: true,
-                transclusion: true,
-                compile: function(element, attrs, transclude) {
-                    return {
-                        pre: function($scope, iElement, iAttrs, controller) {
-                            $scope.$on("commonGrid.ready", function() {
-                                var html = '<div class="gridStyle" ng-grid="gridOptions"></div>';
-                                iElement.append($compile(html)($scope));
-                            });
-                        }
-                    };
-                }
-            };
-        }])
+        .directive("commonform", ["$compile", "FormMaker", "$routeParams", "ComView", "$timeout", "$location",
+            function($compile, FormMaker, $routeParams, ComView, $timeout, $location) {
+                return {
+                    restrict: "E",
+                    scope: {
+                        config: "=",
+                        data: "="
+                    },
+                    replace: true,
+                    transclusion: true,
+                    compile: function(element, attrs, transclude) {
+                        return {
+                            pre: function($scope, iElement, iAttrs, controller) {
+
+                                var parentScope = $scope.$parent;
+                                var opts = parentScope.$eval(iAttrs.config);
+
+                                var defaultOpts = {
+                                    name: "form", //表单名称
+                                    id: null, //如为编辑，需传递此参数
+                                    dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
+                                    dataName: "formData", //数据绑定到$scope的名字
+                                    columns: 2,
+                                    returnPage: sprintf("/%(group)s/list/%(module)s", {
+                                        group: $routeParams.group,
+                                        module: $routeParams.module
+                                    }) //表单提交之后的返回页面地址
+                                };
+
+                                opts = $.extend(defaultOpts, opts);
+                                opts = $.extend(opts, opts.opts);
+
+                                if(opts.id || $routeParams.id) {
+                                    opts.isEdit = true;
+                                    opts.id = $routeParams.id;
+                                }
+
+                                var doDefine = function(fd) {
+                                    opts.fieldsDefine = fd;
+                                    //编辑
+                                    if (opts.id || opts.isEdit) {
+                                        //
+                                        var tmpParams = opts.queryParams || {};
+                                        if(opts.id) {
+                                            tmpParams.id = opts.id;
+                                        }
+
+                                        var promise = getDataApiPromise(opts.resource, "get", tmpParams)
+
+                                        promise.then(function(defaultData) {
+                                            parentScope[opts.dataName] = dataFormat(opts.fieldsDefine, defaultData);
+                                        });
+                                    }
+
+                                    //延时编译
+                                    if(!opts.lazyload) {
+                                        $timeout(function(){
+                                            $scope.$broadcast("commonForm.ready");
+                                        });
+                                    }
+                                };
+
+                                /**
+                                 * 自动获取字段
+                                 * */
+                                opts.model.config = opts.model.config || {};
+                                opts.columns = opts.model.config.columns || opts.columns;
+                                opts.formActions = undefined === opts.model.config.formActions ? true : false;
+                                var field = opts.model.getStructure();
+                                if("then" in field && typeof(field.then) === "function") { //需要获取异步数据
+                                    field.then(function(data){
+                                        doDefine(data);
+                                    }, function(msg){
+                                        ComView.alert(msg);
+                                    });
+                                } else {
+                                    doDefine(field);
+                                }
+
+                                var doFormValidate = function(name){
+                                    name = name || opts.name;
+                                    if (false === parentScope[name].$valid) {
+                                        if(parentScope[name].$error) {
+                                            ComView.alert(ComView.toLang("fillTheForm", "messages"), "danger");
+                                        } else {
+                                            ComView.alert(ComView.toLang("fillTheForm", "messages"), "danger");
+                                        }
+                                        return false;
+                                    }
+                                    return true;
+                                }
+
+                                //提交表单
+                                parentScope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
+                                    //                    console.log("submit");
+
+                                    if(!doFormValidate()) {
+                                        return;
+                                    }
+                                    //编辑
+                                    var getParams = {};
+                                    var tmp = ['group', 'module', 'action'];
+                                    for (var k in $routeParams) {
+                                        if(tmp.indexOf(k) >= 0) {
+                                            continue;
+                                        }
+                                        getParams[k] = $routeParams[k];
+                                    }
+                                    var callback = function(data){
+                                        if(data.error) {
+                                            ComView.alert(data.msg);
+                                        } else {
+                                            var lastPage = ones.caches.getItem("lastPage");
+                                            $location.url(lastPage[0] || opts.returnPage);
+                                        }
+                                    };
+                                    if (opts.id) {
+                                        getParams.id = opts.id;
+                                        getDataApiPromise(opts.resource, "update", getParams, parentScope[opts.dataName]).then(callback);
+                                        //新增
+                                    } else {
+                                        var params = $.extend(getParams, parentScope[opts.dataName]);
+                                        getDataApiPromise(opts.resource, "save", params).then(callback);
+                                    }
+                                };
+
+                                $scope.$on("commonForm.ready", function() {
+                                    var fm = new FormMaker.makeForm($scope, opts);
+                                    var html = fm.makeHTML();
+                                    iElement.append($compile(html)($scope.$parent));
+                                    setTimeout(function(){
+                                        var ele = iElement.find("input").eq(0);
+                                        $(ele).trigger("click").focus();
+                                    }, 200);
+                                });
+                            }
+                        };
+                    }
+                };
+            }])
+
         .directive("aceupload", ["$rootScope", function($rootScope){
             return {
                 restrict: "E",
@@ -107,50 +205,7 @@
                             c.$setValidity('unique', false);
                         });
 
-
-//                        $http({
-//                            method: 'POST',
-//                            url: '/api/check/' + attrs.ensureUnique,
-//                            data: {'field': attrs.ensureUnique}
-//                        }).success(function(data, status, headers, cfg) {
-//                            c.$setValidity('unique', data.isUnique);
-//                        }).error(function(data, status, headers, cfg) {
-//                            c.$setValidity('unique', false);
-//                        });
                     });
-//                },
-//                link: function(scope, element, iattrs, transclude) {
-//                    return {
-//                        pre: function($scope, iElement, attrs, c) {
-//                            var res = $injector.get(attrs.ensureunique);
-//                            $scope.$watch(attrs.ngModel, function(newVal, oldVal) {
-//                                var queryParams = {
-//                                    id: 0,
-//                                    excludeId:  $injector.get("$routeParams").id
-//                                };
-////                                if(!newVal) {
-////                                    c.$setValidity('unique', true);
-////                                    return;
-////                                }
-//                                queryParams[attrs.name] = $scope.$eval(attrs.ngModel);
-//                                var promise = getDataApiPromise(res, "get", queryParams)
-//                                promise.then(function(data){
-//                                    if(data[attrs.name]) {
-//                                        c.$setValidity('unique', false);
-//                                    } else {
-//                                        c.$setValidity('unique', true);
-//                                    }
-//
-//                                }, function(){
-//                                    c.$setValidity('unique', false);
-//                                });
-//
-////                                if(!$scope.$$phase) {
-////                                    $scope.$digest();
-////                                }
-//                            });
-//                        }
-//                    };
                 }
             };
         }])
@@ -175,52 +230,208 @@
             };
         }])
 
-        .directive("bill", ["$compile", "FormMaker", "$timeout", function($compile, FormMaker, $timeout) {
-            return {
-                restrict: "E",
-                replace: true,
-                scope: {
-                    config: "="
-                },
-                transclusion: true,
-                compile: function(element, attrs, transclude) {
-                    return {
-                        pre: function($scope, iElement, iAttrs, controller) {
-                            $scope.$on("commonBill.ready", function(){
-                                if ($scope.$parent.billConfig.isEdit) {
-                                    $scope.$on("bill.dataLoaded", function(evt, data) {
-                                        timeToFormat = [
-                                            "inputTime",
-                                            "input_time",
-                                            "dateline",
-                                            "start_time",
-                                            "end_time"
-                                        ];
-                                        angular.forEach(data, function(item, k){
-                                            for(var i=0;i<timeToFormat.length;i++) {
-                                                if(k === timeToFormat[i]) {
-                                                    if(String(item).length <= 10) {
-                                                        item*=1000;
-                                                    }
-                                                    data[k] = new Date(item);
-                                                }
-                                            }
-                                        });
-                                        $scope.$parent.formMetaData = data;
-                                        var b = new FormMaker.makeBill($scope);
+        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector",
+            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector) {
+                return {
+                    restrict: "E",
+                    replace: true,
+                    scope: {
+                        config: "="
+                    },
+                    transclusion: true,
+                    compile: function(element, attrs, transclude) {
+                        return {
+                            pre: function($scope, iElement, iAttrs, controller) {
 
-                                        iElement.append($compile(b.makeHTML())($scope.$parent));
+                                var parentScope = $scope.$parent;
+                                var config = parentScope.$eval(iAttrs.config);
+
+                                config = $.extend(config, config.model.config||{});
+
+                                config.dataName = config.dataName || "billData";
+
+                                parentScope.selectAble = false;
+
+                                var rowsModel = $injector.get(config.model.config.rowsModel);
+                                var structure = rowsModel.getStructure(true);
+
+                                if("then" in structure && typeof(structure.then) == "function") {
+                                    structure.then(function(data){
+                                        structure = data;
+                                        $timeout(function(){
+                                            doWhenStructureReady(structure);
+                                        });
+
                                     });
                                 } else {
-                                    var b = new FormMaker.makeBill($scope);
-                                    iElement.append($compile(b.makeHTML())($scope.$parent));
+                                    $timeout(function(){
+                                        doWhenStructureReady(structure);
+                                    });
                                 }
-                            });
-                        }
-                    };
-                }
-            };
-        }])
+
+                                var cachedData, currentData;
+                                var cacheKey = sprintf("ones.billCache.%s.%s", $routeParams.group, $routeParams.module);
+
+                                var doWhenStructureReady = function(fieldsDefine){
+
+                                    config.fieldsDefine = fieldsDefine;
+
+                                    /**
+                                     * 字段名称
+                                     * */
+                                    for (var f in fieldsDefine) {
+                                        if(!fieldsDefine[f].field) {
+                                            fieldsDefine[f].field = f;
+                                        }
+                                        if(!fieldsDefine[f].displayName) {
+                                            fieldsDefine[f].displayName = ComView.toLang(f);
+                                        }
+                                    }
+
+
+                                    if($routeParams.id) {
+                                        config.isEdit = true;
+                                        var queryExtraParams = {id: $routeParams.id, includeRows: true};
+                                        resource.get(queryExtraParams).$promise.then(function(data){
+                                            $scope.$broadcast("bill.dataLoaded", data);
+                                        });
+                                    }
+
+
+                                    if(config.workflowAlias && config.isEdit && $routeParams.id && isAppLoaded("workflow")) {
+                                        $injector.get("Workflow.WorkflowNodeAPI").api.query({
+                                            workflow_alias: model.workflowAlias,
+                                            mainrow_id: $routeParams.id,
+                                            filterFields: ["id", "name"]
+                                        }).$promise.then(function(data){
+                                            $scope.workflowInBill = data;
+                                            $scope.mainrow_id = $routeParams.id;
+                                        });
+                                    }
+
+
+                                    if(!config.isEdit && $routeParams.group && $routeParams.module && false !== config.autoSave) {
+                                        cachedData = ones.caches.getItem(cacheKey);
+
+                                        if(cachedData) {
+                                            try {
+                                                if(cachedData.meta.inputTime) {
+                                                    cachedData.meta.inputTime = new Date(cachedData.meta.inputTime);
+                                                }
+                                                if(cachedData.meta.dateline) {
+                                                    cachedData.meta.dateline = new Date(cachedData.meta.dateline);
+                                                }
+                                            } catch(e) {
+
+                                            }
+                                            parentScope.formMetaData = cachedData.meta;
+                                            parentScope[config.dataName] = cachedData.data;
+
+
+                                            ComView.alert({
+                                                msg: ComView.toLang("cached data loaded", "messages"),
+                                                type: "success",
+                                                container: "#bottomAlertContainer",
+                                                autohide: 6000
+                                            });
+                                        }
+
+                                        //自动保存数据
+                                        var t = setInterval(function(){
+                                            cachedData = ones.caches.getItem(cacheKey);
+                                            currentData = {
+                                                meta: parentScope.formMetaData,
+                                                data: parentScope[config.dataName]
+                                            };
+
+                                            if(cachedData != currentData) {
+                                                ComView.alert({
+                                                    msg: ComView.toLang("auto saved", "messages"),
+                                                    type: "success",
+                                                    container: "#bottomAlertContainer",
+                                                    autohide: 3000
+                                                });
+                                                ones.caches.setItem(cacheKey, currentData, 1);
+                                            }
+                                        }, 15000);
+
+                                        $scope.$on("$locationChangeStart", function(){
+                                            clearInterval(t);
+                                        });
+                                    }
+
+                                    $scope.$broadcast("commonBill.ready");
+                                };
+
+
+                                //默认单据提交方法，可自动判断是否编辑/新建
+                                parentScope.doSubmit = config.doSubmit ? config.doSubmit : function() {
+                                    if(!config.returnPage) {
+                                        var tmp = $location.$$url.split("/").slice(1,4);
+                                        tmp[1] = "list";
+                                        config.returnPage = "/"+tmp.join("/");
+                                    }
+                                    var data = $.extend(parentScope.formMetaData, {rows: parentScope[config.dataName]});
+                                    var getParams = {};
+                                    for (var k in $routeParams) {
+                                        getParams[k] = $routeParams[k];
+                                    }
+
+                                    var rs ;
+
+                                    if (config.isEdit) {
+                                        getParams.id = $routeParams.id;
+                                        rs = resource.update(getParams, data);
+                                    } else {
+                                        rs = resource.save(getParams, data);
+                                    }
+
+                                    rs.$promise.then(function(data){
+                                        if(!data.error) {
+                                            ones.caches.removeItem(cacheKey);
+                                            var lastPage = ones.caches.getItem("lastPage");
+                                            $location.url(lastPage[0] || config.returnPage);
+                                        }
+                                    });
+                                };
+
+
+                                $scope.$on("commonBill.ready", function(){
+                                    if (config.isEdit) {
+                                        $scope.$on("bill.dataLoaded", function(evt, data) {
+                                            var timeToFormat = [
+                                                "inputTime",
+                                                "input_time",
+                                                "dateline",
+                                                "start_time",
+                                                "end_time"
+                                            ];
+                                            angular.forEach(data, function(item, k){
+                                                for(var i=0;i<timeToFormat.length;i++) {
+                                                    if(k === timeToFormat[i]) {
+                                                        if(String(item).length <= 10) {
+                                                            item*=1000;
+                                                        }
+                                                        data[k] = new Date(item);
+                                                    }
+                                                }
+                                            });
+                                            parentScope.formMetaData = data;
+                                            var b = new FormMaker.makeBill($scope, config);
+
+                                            iElement.append($compile(b.makeHTML())(parentScope));
+                                        });
+                                    } else {
+                                        var b = new FormMaker.makeBill($scope, config);
+                                        iElement.append($compile(b.makeHTML())(parentScope));
+                                    }
+                                });
+
+                            }
+                        };
+                    }
+                };
+            }])
         .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config", "$rootScope", "$parse",
             function($compile, $q, $parse, $injector, $timeout, ONESConfig, $rootScope, $parse) {
                 var service = {};
@@ -253,10 +464,6 @@
                                     <input type="datetime-local" ng-model="%(model)s" %(attrs)s /> \
                                 <i class="icon-calendar gray"></i> \
                             </span>',
-//                "fields/select2": '<select ngyn-select2 %(attrs)s '+
-//                        'ng-options="%(key)s.value as %(key)s.name for %(key)s in %(data)s" '+
-//                        'search_contains="true" '+
-//                        'ui-select><option><option></select>',
                         'fields/typeahead': '<input type="text" ' +
                             'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                             'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
@@ -265,11 +472,6 @@
                         'fields/file': '<div class="fileUploadBtn btn btn-primary btn-minier" ng-click="showUploadModal()" ng-bind="i18n.lang.actions.upload"></div>' +
                             '<div ng-bind="%(model)s"></div>' +
                             '<input type="hidden" ng-model="%(model)s" />'
-//                'fields/file': '<div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class" \
-//                    ng-show="dropSupported">drop files here</div> \
-//                    <div ng-file-drop-available="dropSupported=true" \
-//                    ng-show="!dropSupported">HTML5 Drop File is not supported!</div> \
-//                    <button ng-click="upload.abort()">Cancel Upload</button>'
                     };
                     this.maker = new service.fieldsMakerFactory(this, this.opts);
                 };
@@ -316,7 +518,7 @@
 
                         var html = false;
                         if (method in this) {
-                            html = this[method](context.field, fieldDefine, $scope, context);
+                            html = this[method](context.field, fieldDefine, $scope, context, self);
                         }
 
                         if(undefined !== fieldDefine.value){
@@ -461,7 +663,7 @@
                         return "";
                         return sprintf(this.$parent.templates["fields/static"], fieldDefine["ng-model"]);
                     },
-                    _craft: function(name, fieldDefine, $scope, context) {
+                    _craft: function(name, fieldDefine, $scope, context, factory) {
                         context.td.html("");
                         var res = $injector.get("GoodsCraftRes");
                         var queryParams = {};
@@ -476,7 +678,7 @@
 
                         var goods_id = queryParams["goods_id"].split("_");
                         goods_id = goods_id[1];
-                        $scope.$parent.formData[context.trid].craft = $scope.$parent.i18n.lang.undefined;
+                        $scope.$parent[factory.dataName][context.trid].craft = $scope.$parent.i18n.lang.undefined;
                         var crafts = [];
                         res.query({
                             goods_id: goods_id,
@@ -486,7 +688,7 @@
                                     crafts.push(item.name);
                                 });
                                 if(crafts.length) {
-                                    $scope.$parent.formData[context.trid].craft = crafts.join(">");
+                                    $scope.$parent[factory.dataName][context.trid].craft = crafts.join(">");
                                 }
                             });
 
@@ -672,7 +874,7 @@
                     }
                 };
 
-                service.makeBill = function($scope){
+                service.makeBill = function($scope, config){
                     var defaultOpts = {
                         minRows: 9,
                         dataName: "formData",
@@ -684,7 +886,7 @@
                     this.scope = $scope;
                     this.compile = $compile;
 
-                    this.opts = $.extend(defaultOpts, $scope.$parent.billConfig);
+                    this.opts = $.extend(defaultOpts, config);
 
 
                     this.scope.$parent[this.opts.dataName] = this.scope.$parent[this.opts.dataName] || [];
@@ -762,24 +964,25 @@
                         for(var i=0;i<defaultDataLength;i++) {
                             html.push(this.makeRow(fieldsDefine, i, defaultData));
                         }
+
                         return html.join("");
 
-                        if(this.opts.isEdit) {
-                            this.scope.$on("bill.dataLoaded", function(evt, data){
-                                self.opts.defaultData = data.rows;
-                                delete(data.rows);
-                                self.scope.$parent.formMetaData = data;
-                                for(var i=0;i<self.opts.defaultData.length;i++) {
-                                    html.push(self.makeRow(fieldsDefine, i, self.opts.defaultData));
-                                }
-                                return html.join("");
-                            });
-                        } else {
-                            for(var i=0;i<this.opts.minRows;i++) {
-                                html.push(this.makeRow(fieldsDefine, i));
-                            }
-                            return html.join("");
-                        }
+//                        if(this.opts.isEdit) {
+//                            this.scope.$on("bill.dataLoaded", function(evt, data){
+//                                self.opts.defaultData = data.rows;
+//                                delete(data.rows);
+//                                self.scope.$parent.formMetaData = data;
+//                                for(var i=0;i<self.opts.defaultData.length;i++) {
+//                                    html.push(self.makeRow(fieldsDefine, i, self.opts.defaultData));
+//                                }
+//                                return html.join("");
+//                            });
+//                        } else {
+//                            for(var i=0;i<this.opts.minRows;i++) {
+//                                html.push(this.makeRow(fieldsDefine, i));
+//                            }
+//                            return html.join("");
+//                        }
                     },
                     makeFoot: function(fieldsDefine){
                         var html = ['<td colspan="2" align="center">'+this.scope.$parent.i18n.lang.total+'</td>'];
@@ -990,7 +1193,7 @@
                             tr.remove();
                             self.reIndexTr();
 
-                            console.log(parentScope[self.opts.dataName]);
+//                            console.log(parentScope[self.opts.dataName]);
 
                             recountTotalAmount();
                             recountTotalAble();
@@ -1083,18 +1286,19 @@
                         };
 
                         var countRowAmount = parentScope.countRowAmount = function(index){
-                            var price =  parentScope.formData[index].unit_price
-                            var num = parentScope.formData[index].num;
-                            var discount = parentScope.formData[index].discount;
+                            var price =  parentScope[self.opts.dataName][index].unit_price
+                            var num = parentScope[self.opts.dataName][index].num;
+                            var discount = parentScope[self.opts.dataName][index].discount;
                             //计算折扣
                             if(discount === undefined || parseInt(discount) === 0) {
                                 discount = 100;
                             };
-                            parentScope.formData[index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                            parentScope[self.opts.dataName][index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                            recountTotalAmount();
                         };
                         var recountTotalAmount = parentScope.recountTotalAmount = function() {
                             var totalAmount = 0;
-                            angular.forEach(parentScope.formData, function(row){
+                            angular.forEach(parentScope[self.opts.dataName], function(row){
                                 if(!row || !row.amount) {
                                     return;
                                 }
@@ -1134,24 +1338,24 @@
                         parentScope.onNumNumberBlur = function(event){
                             var context = getInputContext(event.target);
 
-                            if(!parentScope.formData[context.trid].discount && parentScope.formMetaData.customerInfo) {
-                                parentScope.formData[context.trid].discount = parentScope.formMetaData.customerInfo.discount;
+                            if(!parentScope[self.opts.dataName][context.trid].discount && parentScope.formMetaData.customerInfo) {
+                                parentScope[self.opts.dataName][context.trid].discount = parentScope.formMetaData.customerInfo.discount;
                             }
                             var totalNum = 0;
-                            angular.forEach(parentScope.formData, function(item){
+                            angular.forEach(parentScope[self.opts.dataName], function(item){
                                 if(!item || !item.num) {
                                     return;
                                 }
                                 totalNum += Number(item.num);
                             });
                             parentScope.formMetaData.total_num = totalNum;
-                            if(parentScope.formData[context.trid] && parentScope.formData[context.trid].goods_id) {
-                                if(!parentScope.formData[context.trid].unit_price){
-                                    var gid = parentScope.formData[context.trid].goods_id.split("_");
+                            if(parentScope[self.opts.dataName][context.trid] && parentScope[self.opts.dataName][context.trid].goods_id) {
+                                if(!parentScope[self.opts.dataName][context.trid].unit_price){
+                                    var gid = parentScope[self.opts.dataName][context.trid].goods_id.split("_");
                                     var goods = $injector.get("GoodsRes").get({
                                         id: gid[1]
                                     }).$promise.then(function(data){
-                                            parentScope.formData[context.trid].unit_price = Number(data.price);
+                                            parentScope[self.opts.dataName][context.trid].unit_price = Number(data.price);
                                             parentScope.countRowAmount(context.trid);
                                             parentScope.recountTotalAmount();
                                         });
@@ -1167,7 +1371,7 @@
                          * */
                         if(self.opts.relateMoney) {
                             //实收金额
-                            parentScope.$watch('formMetaData.total_amount', function(){
+                            parentScope.$watch('formMetaData.total_amount', function(newVal, oldVal){
                                 parentScope.formMetaData.total_amount_real = parentScope.formMetaData.total_amount;
                             });
 
@@ -1245,9 +1449,7 @@
                 service.makeForm = function($scope, config) {
                     this.scope = $scope;
                     config = config || {};
-                    if(isEmptyObject(config)) {
-                        config = $scope.$eval("$parent.formConfig");
-                    }
+
                     if (!config.fieldsDefine) {
                         return false;
                     }
@@ -1292,7 +1494,8 @@
                         dataName: "formData"
                     };
 
-                    this.opts = $.extend(true, defaultOpts, config);
+                    this.opts = $.extend(defaultOpts, config);
+
 
                     this.opts.dataName = this.opts.dataName ? this.opts.dataName : this.opts.name+"Data";
 

@@ -82,11 +82,11 @@
                     controller : 'ComViewViewDetailCtl',
                     templateUrl: "common/base/views/viewDetail.html"
                 })
-                .otherwise({
-                    templateUrl: "common/base/views/404.html",
-                    controller : "ComViewError404Ctl"
+                //单据
+                .when('/:group/addBill/:module', {
+                    controller : 'ComViewEditBillCtl',
+                    templateUrl: "common/base/views/billEdit.html"
                 })
-                //子项列表
             ;
         }])
         .value('ComViewConfig', {
@@ -100,6 +100,48 @@
         .controller('ComViewError404Ctl', ["$scope", function($scope){
             $scope.hidePageHeader = true;
         }])
+        .controller("ComViewEditBillCtl", ["$scope", "ComView", "$rootScope", "$injector", "ones.dataApiFactory", "$routeParams",
+            function($scope, ComView, $rootScope, $injector, dataAPI, $routeParams){
+                var group, module, res, model, rowsModel;
+
+
+
+                group = $routeParams.group;
+                module = $routeParams.module;
+
+                dataAPI.init(group, module);
+                model = dataAPI.model;
+                res = dataAPI.resource;
+
+                $scope.billConfig = {
+                    model: model,
+                    resource: res
+                };
+
+
+                var queryExtraParams = {};
+                if($routeParams.extra) {
+                    queryExtraParams = parseParams($routeParams.extra);
+                    $routeParams = $.extend($routeParams, queryExtraParams);
+                }
+
+                var opts = {
+                    id: $routeParams.id,
+                    queryParams: queryExtraParams,
+                    includeFoot: false,
+                    dataName: "formMetaData"
+                };
+                if(model.returnPage) {
+                    opts.returnPage = model.returnPage;
+                }
+
+                $scope.formConfig = {
+                    model: model,
+                    resource: res,
+                    opts: opts
+                };
+
+            }])
         .controller("ComViewViewDetailCtl", ["$scope", "$rootScope", "$injector", "$routeParams", "ones.dataApiFactory", "ComView", "detailViewService",
             function($scope, $rootScope, $injector, $routeParams, dataAPI, ComView, detailView){
                 var group, module, res, model;
@@ -240,6 +282,12 @@
                     opts.returnPage = model.returnPage;
                 }
 
+                $scope.formConfig = {
+                    model: model,
+                    resource: res,
+                    opts: opts
+                };
+
                 ComView.displayForm($scope, model, res, opts);
             }])
         .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout", "GridView", "$route",
@@ -318,152 +366,7 @@
                     $location.url(url);
                 }
 
-                service.displayForm = function($scope, fieldsDefine, resource, opts, remote){
-                    //                console.log(arguments);
-                    $scope.formConfig = {};
-                    var defaultOpts = {
-                        name: "form", //表单名称
-                        id: null, //如为编辑，需传递此参数
-                        dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
-                        dataName: "formData", //数据绑定到$scope的名字
-                        columns: null,
-                        returnPage: sprintf("/%(group)s/list/%(module)s", {
-                            group: $routeParams.group,
-                            module: $routeParams.module
-                        }) //表单提交之后的返回页面地址
-                    };
-                    opts = $.extend(defaultOpts, opts);
-                    if(opts.id) {
-                        opts.isEdit = true;
-                    }
-//                    opts.dataName = opts.name + "Data";
-                    $scope.formConfig = opts;
-//                    $scope.formConfig.name = opts.name;
-//                    $scope.formConfig.dataName = opts.dataName;
-//                    $scope.formConfig.isEdit = opts.isEdit;
-
-                    var doDefine = function(fd) {
-                        $scope.formConfig.fieldsDefine = fd;
-                        //编辑
-                        if (opts.id || opts.isEdit) {
-                            //
-                            var tmpParams = opts.queryParams || {};
-                            if(opts.id) {
-                                tmpParams.id = opts.id;
-                            }
-
-                            var promise = getDataApiPromise(resource, "get", tmpParams)
-//                            if(typeof(resource.get) === undefined) {
-//                                promise = resource.api.get(tmpParams).$promise;
-//                            } else {
-//                                promise = resource.get(tmpParams).$promise;
-//                            }
-
-                            promise.then(function(defaultData) {
-                                $scope[opts.dataName] = dataFormat($scope.formConfig.fieldsDefine, defaultData);
-                            });
-                        }
-
-                        //延时编译
-                        if(!opts.lazyload) {
-                            $timeout(function(){
-                                $scope.$broadcast("commonForm.ready");
-                            });
-                        }
-                    };
-
-                    /**
-                     * 自动获取字段
-                     * */
-                    if(typeof(fieldsDefine) === "object" && "getStructure" in fieldsDefine && typeof(fieldsDefine.getStructure) === "function") {
-                        var model = fieldsDefine;
-                        $scope.formConfig.columns = model.columns || 1;
-                        $scope.formConfig.formActions = undefined === model.formActions ? true : false;
-                        var field = model.getStructure();
-                        if(remote || ("then" in field && typeof(field.then) === "function")) { //需要获取异步数据
-                            field.then(function(data){
-                                fieldsDefine = data;
-                                doDefine(data);
-                            }, function(msg){
-                                service.alert(msg);
-                            });
-                        } else {
-                            doDefine(field);
-                        }
-
-                    } else {
-                        doDefine(fieldsDefine);
-                    }
-
-                    $scope.doFormValidate = function(name){
-                        name = name || opts.name;
-                        if (false === $scope[name].$valid) {
-                            if($scope[name].$error) {
-                                service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
-                            } else {
-                                service.alert($scope.i18n.lang.messages.fillTheForm, "danger");
-                            }
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    //提交表单
-                    $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
-                        //                    console.log("submit");
-
-                        if(!$scope.doFormValidate()) {
-                            return;
-                        }
-                        //编辑
-                        var getParams = {};
-                        var tmp = ['group', 'module', 'action'];
-                        for (var k in $routeParams) {
-                            if(tmp.indexOf(k) >= 0) {
-                                continue;
-                            }
-                            getParams[k] = $routeParams[k];
-                        }
-                        var callback = function(data){
-                            if(data.error) {
-                                service.alert(data.msg);
-                            } else {
-                                var lastPage = ones.caches.getItem("lastPage");
-                                $location.url(lastPage[0] || opts.returnPage);
-                            }
-                        };
-                        if (opts.id) {
-                            getParams.id = opts.id;
-                            getDataApiPromise(resource, "update", getParams, $scope[opts.dataName]).then(callback);
-//                            try {
-//                                //首先尝试使用dataAPI.method
-//                                //dataSource为resource对象时或者dataAPI.method时
-//                                resource.update(getParams, $scope[opts.dataName], callback);
-//                            } catch(e) {
-//                                //尝试使用dataAPI.api.method
-//                                resource.api.update(getParams, $scope[opts.dataName], callback);
-////                                resource.update(getParams, $scope[opts.dataName], callback);
-//                            }
-//                            return promise;
-//                            getDataApiPromise(resource, "update", getParams).then(callback);
-//                            if(typeof(resource.update) == "undefined") {
-//                                resource.api.update(getParams, $scope[opts.dataName], callback);
-//                            } else {
-//                                resource.update(getParams, $scope[opts.dataName], callback);
-//                            }
-                            //新增
-                        } else {
-                            var params = $.extend(getParams, $scope[opts.dataName]);
-                            getDataApiPromise(resource, "save", params).then(callback);
-//
-//                            if(typeof(resource.save) == "undefined") {
-//                                resource.api.save(params, $scope[opts.dataName], callback);
-//                            } else {
-//                                resource.save(params, $scope[opts.dataName], callback);
-//                            }
-                        }
-                    };
-                };
+                service.displayForm = function($scope, fieldsDefine, resource, opts, remote){};
 
                 service.displayGrid = function($scope, fieldsDefine, resource, opts){
                     $scope.totalServerItems = 0;
@@ -595,205 +498,7 @@
 
                 };
 
-
-                service.displayBill = function($scope, fieldsDefine, resource, opts) {
-
-                    var defaultOpt = {
-                        dataName: "formData",
-                        queryExtraParams: {}
-                    };
-
-                    $scope.selectAble = false;
-
-                    //直接传入MODEL
-                    if(typeof(fieldsDefine) == "object" &&
-                        "getStructure" in fieldsDefine &&
-                        typeof(fieldsDefine.getStructure) == "function") {
-
-                        var model = fieldsDefine;
-                        fieldsDefine = model.getStructure(true);
-                        opts.relateMoney = model.relateMoney || false;
-
-                        //单据即时保存
-                        if(model.autoSaving) {}
-
-                        if("then" in fieldsDefine && typeof(fieldsDefine.then) == "function") {
-                            fieldsDefine.then(function(data){
-                                fieldsDefine = data;
-                                $timeout(function(){
-                                    $scope.$broadcast("commonBill.structureReady");
-                                });
-
-                            });
-                        } else {
-                            $timeout(function(){
-                                $scope.$broadcast("commonBill.structureReady");
-                            });
-                        }
-
-                        //工作流按钮
-                        if(model.workflowAlias && $routeParams.id) {
-                            $injector.get("Workflow.WorkflowNodeAPI").api.query({
-                                workflow_alias: model.workflowAlias,
-                                mainrow_id: $routeParams.id,
-                                filterFields: ["id", "name"]
-                            }).$promise.then(function(data){
-                                $scope.mainrow_id = $routeParams.id;
-                                $scope.billWorkflowActions = data;
-                            });
-
-                            $scope.doWorkflow = function(event, node_id){
-                                var mainrow_id = $scope.mainrow_id;
-                                var workflowAPI = $injector.get("Workflow.WorkflowAPI");
-                                if(mainrow_id) {
-                                    workflowAPI.doWorkflow(resource, node_id, mainrow_id);
-                                    $route.reload();
-                                }
-                            };
-
-                        }
-                    }
-
-                    var cachedData, currentData;
-                    var cacheKey = sprintf("ones.billCache.%s.%s", $routeParams.group, $routeParams.module);
-
-                    $scope.$on("commonBill.structureReady", function(){
-                        /**
-                         * 字段名称
-                         * */
-                        for (var f in fieldsDefine) {
-                            if(!fieldsDefine[f].field) {
-                                fieldsDefine[f].field = f;
-                            }
-                            if(!fieldsDefine[f].displayName) {
-                                fieldsDefine[f].displayName = service.toLang(f);
-                            }
-                        }
-
-                        opts = $.extend(defaultOpt, opts);
-
-                        opts.fieldsDefine = fieldsDefine;
-                        if(model.config) {
-                            opts = $.extend(opts, model.config);
-                            angular.forEach(model.config, function(item, k){
-                                model[k] = item;
-                            });
-                        } else {
-                            angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
-                                opts[conf] = model[conf];
-                            });
-                        }
-
-
-                        if($routeParams.id) {
-                            opts.isEdit = true;
-                            var queryExtraParams = $.extend(defaultOpt.queryExtraParams, {id: $routeParams.id, includeRows: true});
-                            resource.get(queryExtraParams).$promise.then(function(data){
-                                $scope.$broadcast("bill.dataLoaded", data);
-                            });
-                        }
-
-                        $scope.billConfig = opts;
-
-
-                        if(model.workflowAlias && opts.isEdit && $routeParams.id && isAppLoaded("workflow")) {
-                            $injector.get("Workflow.WorkflowNodeAPI").api.query({
-                                workflow_alias: model.workflowAlias,
-                                mainrow_id: $routeParams.id,
-                                filterFields: ["id", "name"]
-                            }).$promise.then(function(data){
-                                $scope.workflowInBill = data;
-                                $scope.mainrow_id = $routeParams.id;
-                            });
-
-                        }
-
-
-                        if(!opts.isEdit && $routeParams.group && $routeParams.module && false !== model.autoSave) {
-                            cachedData = ones.caches.getItem(cacheKey);
-
-                            if(cachedData) {
-                                try {
-                                    if(cachedData.meta.inputTime) {
-                                        cachedData.meta.inputTime = new Date(cachedData.meta.inputTime);
-                                    }
-                                    if(cachedData.meta.dateline) {
-                                        cachedData.meta.dateline = new Date(cachedData.meta.dateline);
-                                    }
-                                } catch(e) {
-
-                                }
-                                $scope.formMetaData = cachedData.meta;
-                                $scope[opts.dataName] = cachedData.data;
-
-
-                                service.alert({
-                                    msg: service.toLang("cached data loaded", "messages"),
-                                    type: "success",
-                                    container: "#bottomAlertContainer",
-                                    autohide: 6000
-                                });
-                            }
-
-                            setInterval(function(){
-                                cachedData = ones.caches.getItem(cacheKey);
-                                currentData = {
-                                    meta: $scope.formMetaData,
-                                    data: $scope[opts.dataName]
-                                };
-
-                                if(cachedData != currentData) {
-                                    service.alert({
-                                        msg: service.toLang("auto saved", "messages"),
-                                        type: "success",
-                                        container: "#bottomAlertContainer",
-                                        autohide: 3000
-                                    });
-                                    ones.caches.setItem(cacheKey, currentData, 1);
-                                }
-                            }, 15000);
-                        }
-
-                        $scope.$broadcast("commonBill.ready");
-
-                    });
-
-
-
-                    //默认单据提交方法，可自动判断是否编辑/新建
-                    $scope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
-                        if(!opts.returnPage) {
-                            var tmp = $location.$$url.split("/").slice(1,4);
-                            tmp[1] = "list";
-                            opts.returnPage = "/"+tmp.join("/");
-                        }
-                        var data = $.extend($scope.formMetaData, {rows: $scope[opts.dataName]});
-                        var getParams = {};
-                        for (var k in $routeParams) {
-                            getParams[k] = $routeParams[k];
-                        }
-
-                        var rs ;
-
-                        if (opts.id) {
-                            getParams.id = opts.id;
-                            rs = resource.update(getParams, data);
-                        } else {
-                            rs = resource.save(getParams, data);
-                        }
-
-                        rs.$promise.then(function(data){
-                            if(!data.error) {
-                                ones.caches.removeItem(cacheKey);
-                                var lastPage = ones.caches.getItem("lastPage");
-                                $location.url(lastPage[0] || opts.returnPage);
-                            }
-                        });
-
-
-
-                    };
-                };
+                service.displayBill = function($scope, fieldsDefine, resource, opts) {};
 
                 service.makeGridSelectedActions = function($scope, model, res, group, module, extraParams){
                     //选中项操作

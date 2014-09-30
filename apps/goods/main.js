@@ -11,7 +11,7 @@
         .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal", "pluginExecutor",
             function($rootScope, GoodsCategoryRes, $q, $location, $modal, plugin) {
                 var obj = {};
-                obj.columns = 2;
+                obj.columns = 3;
                 obj.trashAble = true;
                 obj.extraSelectActions = [
                     {

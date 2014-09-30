@@ -1,17 +1,18 @@
 <pageactions></pageactions>
 <detail-view config="detailViewConfig">
-    <div class="row">
-        <div class="col-xs-12 profile-user-info-striped detailViewTable">
-            <div class="profile-info-row col-sm-{{columnWidth}}" ng-repeat="s in detailViewStructure">
-                <div class="profile-info-name" ng-bind="s.displayName"></div>
-                <div class="profile-info-value" ng-bind-html="detailViewData|tryDetailFilter:s"> </div>
+    <widgetbox wtitle="baseInfo">
+            <div class="row form-horizontal">
+                <div class="col-xs-12 detailViewTable">
+                    <div class="form-group col-sm-{{columnWidth}}" ng-repeat="s in detailViewStructure">
+                        <label class="col-sm-3 control-label no-padding-right" ng-bind="s.displayName"></label>
+                        <div class="col-sm-8 dvt-info blue" ng-bind-html="detailViewData|tryDetailFilter:s"> </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="space-10"></div>
-
-    <div>
+            <div class="space-10"></div>
+    </widgetbox>
+    <div class="form-actions center">
         <button class="btn btn-primary" ng-bind="i18n.lang.actions.edit" ng-click="doEditDetail()" ng-show="config.editAble"></button>
         <button class="btn" ng-bind="i18n.lang.actions.return" onclick="history.go(-1);"></button>
     </div>
