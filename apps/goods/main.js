@@ -10,9 +10,12 @@
         }])
         .service("GoodsModel", ["$rootScope", "GoodsCategoryRes", "$q", "$location", "$modal", "pluginExecutor",
             function($rootScope, GoodsCategoryRes, $q, $location, $modal, plugin) {
-                var obj = {};
-                obj.columns = 3;
-                obj.trashAble = true;
+                var obj = {
+                    config: {
+                        column: 3,
+                        trashAble: true
+                    }
+                };
                 obj.extraSelectActions = [
                     {
                         label: toLang("viewCraft", "actions", $rootScope),
@@ -65,37 +68,39 @@
             }])
         .service("GoodsCategoryModel", ["$rootScope","$q","DataModelRes",function($rootScope,$q,DataModelRes) {
             var obj = {
-                subAble: true,
-                addSubAble: true,
-                viewSubAble: false,
-                multiSelect: false,
-                extraSelectActions: [
-                    {
-                        label: toLang("viewDataModel", "actions", $rootScope),
-                        icon: "eye",
-                        action: function($event, selectedItems, item){
-                            var scope = this.scope;
-                            var injector = this.injector;
-                            var location = injector.get("$location");
-                            var routeParams = injector.get("$routeParams");
+                config: {
+                    subAble: true,
+                    addSubAble: true,
+                    viewSubAble: false,
+                    multiSelect: false,
+                    extraSelectActions: [
+                        {
+                            label: toLang("viewDataModel", "actions", $rootScope),
+                            icon: "eye",
+                            action: function($event, selectedItems, item){
+                                var scope = this.scope;
+                                var injector = this.injector;
+                                var location = injector.get("$location");
+                                var routeParams = injector.get("$routeParams");
 
-                            if(!selectedItems.length && !item) {
-                                return;
-                            }
-
-                            injector.get("DataModelRes").get({
-                                id:0,
-                                alias: "product"
-                            }).$promise.then(function(data){
-                                if(!data.id) {
+                                if(!selectedItems.length && !item) {
                                     return;
                                 }
-                                location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+(item.id||selectedItems[0].id));
-                            });
 
+                                injector.get("DataModelRes").get({
+                                    id:0,
+                                    alias: "product"
+                                }).$promise.then(function(data){
+                                        if(!data.id) {
+                                            return;
+                                        }
+                                        location.url("/dataModel/list/DataModelData/modelId/"+data.id+"/source_id/"+(item.id||selectedItems[0].id));
+                                    });
+
+                            }
                         }
-                    }
-                ]
+                    ]
+                }
             };
             obj.getStructure = function(structOnly) {
                 var i18n = $rootScope.i18n.lang;

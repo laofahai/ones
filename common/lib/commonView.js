@@ -154,6 +154,7 @@
                 dataAPI.init(group, module);
                 model = dataAPI.model;
                 res = dataAPI.resource;
+                model.config = model.config || {};
 
                 //Grid 可跳转按钮
                 try {
@@ -170,7 +171,7 @@
                 };
 
                 ComView.makeGridSelectedActions($scope, model, res, group, module);
-                ComView.makeGridLinkActions($scope, actions, model.isBill, "", model);
+                ComView.makeGridLinkActions($scope, actions, model.config.isBill, "", model);
             }])
         .controller('ComViewPrintCtl', ["$scope", "$injector", "$routeParams", "ones.dataApiFactory", "CommonPrint",
             function($scope, $injector, $routeParams, dataAPI, printer) {
@@ -182,6 +183,7 @@
                 dataAPI.init(group, module);
                 model = dataAPI.model;
                 res = dataAPI.resource;
+                model.config = model.config || {};
 
                 $scope.printFooterTemplate = appView(sprintf("%s/printDetail.html", module), group.toLowerCase());
 
@@ -212,6 +214,8 @@
                 model = dataAPI.model;
                 res = dataAPI.resource;
 
+                model.config = model.config || {};
+
                 var opts = {
                     queryExtraParams: {}
                 };
@@ -238,7 +242,7 @@
                     throw("unable get i18n package section:" + group + "." + module + "." + actions);
                 }
 
-                ComView.makeGridLinkActions($scope, actions, model.isBill, extra, model);
+                ComView.makeGridLinkActions($scope, actions, model.config.isBill, extra, model);
                 ComView.makeGridSelectedActions($scope, model, res, group, module);
 
                 ComView.displayGrid($scope, model, res, opts);
@@ -256,9 +260,11 @@
                 group = $routeParams.group;
                 module = $routeParams.module;
 
+
                 dataAPI.init(group, module);
                 model = dataAPI.model;
                 res = dataAPI.resource;
+                model.config = model.config || {};
 
 //                res = $injector.get(module.ucfirst()+"Res");
 //                model = $injector.get(module.ucfirst()+"Model");
@@ -269,7 +275,7 @@
                 } catch(e) {
                     throw("unable get i18n package section:" + group + "." + module + "." + actions);
                 }
-                ComView.makeGridLinkActions($scope, actions, model.isBill, $routeParams.extra, model);
+                ComView.makeGridLinkActions($scope, actions, model.config.isBill, $routeParams.extra, model);
 
                 //           console.log($routeParams);
                 $scope.selectAble = false;
@@ -288,7 +294,6 @@
                     opts: opts
                 };
 
-                ComView.displayForm($scope, model, res, opts);
             }])
         .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout", "GridView", "$route",
             function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout, GridView, $route){
@@ -424,15 +429,12 @@
                         && typeof(fieldsDefine.getStructure) === "function") {
                         var model = fieldsDefine;
 
-                        if(model.filters) {
-                            opts.filters = model.filters;
-                        }
-
                         if(!model.config) {
                             model.config = {};
-                            angular.forEach(ones.BaseConf.modelConfigFields, function(conf){
-                                model.config[conf] = model[conf];
-                            });
+                        }
+
+                        if(model.config.filters) {
+                            opts.filters = model.config.filters;
                         }
 
                         opts = $.extend(opts, model.config);
@@ -507,6 +509,8 @@
                     $scope.selectedActions = [];
                     $scope.selectedActionsLabel = [];
 
+                    model.config = model.config || {};
+
                     if($routeParams.extra) {
                         var tmp = parseParams($routeParams.extra);
                         angular.forEach(tmp, function(item, key){
@@ -514,15 +518,9 @@
                         });
                     }
 
-                    if(model.config) {
-                        angular.forEach(model.config, function(v, k){
-                            model[k] = v;
-                        });
-                    }
-
 
                     //编辑
-                    if(model.editAble === undefined || model.editAble) {
+                    if(model.config.editAble === undefined || model.config.editAble) {
                         $scope.selectedActions.push({
                             name: "edit",
                             label: service.toLang('edit', "actions"),
@@ -539,13 +537,13 @@
                             if(!item.id) {
                                 return;
                             }
-                            if(model.editAble === false) {
+                            if(model.config.editAble === false) {
                                 return false;
                             }
 //                            console.log(model);return;
                             var action = "edit";
                             //如果是单据形式的
-                            if(model.isBill) {
+                            if(model.config.isBill) {
                                 action = "editBill";
                             }
                             $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)s', {
@@ -558,8 +556,8 @@
                     }
 
                     //增加/查看 子项
-                    if(model.subAble) {
-                        if(false !== model.addSubAble) {
+                    if(model.config.subAble) {
+                        if(false !== model.config.addSubAble) {
                             $scope.selectedActions.push({
                                 name: "addChild",
                                 label: service.toLang('addChild', "actions"),
@@ -578,7 +576,7 @@
                         }
 
                         //查看子项
-                        if(false !== model.viewSubAble) {
+                        if(false !== model.config.viewSubAble) {
                             $scope.selectedActions.push({
                                 name: "viewChild",
                                 label: service.toLang('viewChild', "actions"),
@@ -597,7 +595,7 @@
                         }
                     }
                     //查看详情
-                    if(false !== model.viewDetailAble) {
+                    if(false !== model.config.viewDetailAble) {
                         $scope.selectedActions.push({
                             name: "viewDetail",
                             label: service.toLang('viewDetail', "actions"),
@@ -606,7 +604,7 @@
                             multi: false,
                             authAction: "read",
                             action: function(evt, selected, theItem){
-                                var action = model.isBill ? "viewBillDetail" : "viewDetail";
+                                var action = model.config.isBill ? "viewBillDetail" : "viewDetail";
                                 $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)d', {
                                     group : group,
                                     module: module,
@@ -618,12 +616,12 @@
                     }
                     //查看数据模型
                     //工作流
-                    if(model.workflowAlias && isAppLoaded("workflow")) {
+                    if(model.config.workflowAlias && isAppLoaded("workflow")) {
                         $scope.workflowAble = true;
-                        $scope.workflowAlias = model.workflowAlias;
+                        $scope.workflowAlias = model.config.workflowAlias;
                         var workflowNodeRes = $injector.get("Workflow.WorkflowNodeAPI").api;
                         workflowNodeRes.query({
-                            workflow_alias: model.workflowAlias,
+                            workflow_alias: model.config.workflowAlias,
                             only_active: true
                         }).$promise.then(function(data){
                             $scope.workflowActionList = data;
@@ -684,7 +682,7 @@
                         };
                     }
                     //删除
-                    if(model.deleteAble === undefined || model.deleteAble) {
+                    if(model.config.deleteAble === undefined || model.config.deleteAble) {
                         $scope.selectedActions.push({
                             name: "delete",
                             label: service.toLang('delete', "actions"),
@@ -694,7 +692,7 @@
                                 var ids = [];
                                 var items = theItem ? [theItem] : $scope.gridSelected;
 
-                                if(model.deleteAble === false) {
+                                if(model.config.deleteAble === false) {
                                     return false;
                                 }
 
@@ -737,7 +735,7 @@
                             multi: true
                         });
                     }
-                    if(model.printAble) {
+                    if(model.config.printAble) {
                         $scope.selectedActions.push({
                             name: "print",
                             label: service.toLang('print', "actions"),
@@ -760,8 +758,8 @@
                     }
 
                     //其他扩展操作，在model中定义
-                    if(model.extraSelectActions) {
-                        angular.forEach(model.extraSelectActions, function(item){
+                    if(model.config.extraSelectActions) {
+                        angular.forEach(model.config.extraSelectActions, function(item){
                             item.scope = $scope;
                             item.injector = $injector;
                             $scope.selectedActions.push(item);
@@ -816,8 +814,10 @@
                         });
                     });
 
+                    model.config = model.config || {};
+
                     //打印按钮
-                    if(!$scope.selectAble && model && model.printAble) {
+                    if(!$scope.selectAble && model && model.config.printAble) {
                         $scope.pageActions.push({
                             label: $scope.i18n.lang.actions.print,
                             class: "success",
@@ -838,9 +838,10 @@
 
                     var cssClass = ["default", "primary", "success"];
                     $scope.pageActions = [];
+
                     for(var i=0;i<actions.length;i++) {
 
-                        if(model && model.isBill && actions[i] == "add") {
+                        if(model && model.config.isBill && actions[i] == "add") {
                             actions[i] = "addBill";
                         }
 
@@ -852,7 +853,7 @@
                     }
 
                     //打印按钮
-                    if(model && model.printAble) {
+                    if(model && model.config.printAble) {
                         $scope.pageActions.push({
                             label: $scope.i18n.lang.actions.print,
                             class: "success",

@@ -4,6 +4,9 @@
 
         .service("HOME.TypesAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, res){
             return  {
+                config: {
+                    columns: 1
+                },
                 api: res.getResourceInstance({
                     uri: "home/types",
                     extraMethod: {
@@ -43,6 +46,9 @@
         }])
         .service("HOME.ConfigAPI", ["$rootScope", "ones.dataApiFactory", function($rootScope, res){
             return {
+                config: {
+                    columns: 1
+                },
                 api: res.getResourceInstance({
                     uri: "home/config",
                     extraMethod: {

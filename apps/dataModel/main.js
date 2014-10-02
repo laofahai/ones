@@ -108,9 +108,12 @@
         }])
         .service("DataModelModel", function() {
             var obj = {
-                subAble: true,
-                addSubAble: false,
-                subTpl: '/%(group)s/%(action)s/'
+                config: {
+                    subAble: true,
+                    addSubAble: false,
+                    viewSubAble: true,
+                    subTpl: '/%(group)s/%(action)s/'
+                }
             };
             obj.getStructure = function(){
                 return {
@@ -129,7 +132,10 @@
         })
         .service("DataModelFieldsModel", ["$rootScope", "$routeParams", function($rootScope, $routeParams) {
             var obj = {
-                returnPage: sprintf("/dataModel/viewChild/dataModel/pid/"+$routeParams.pid)
+                config: {
+                    returnPage: sprintf("/dataModel/viewChild/dataModel/pid/"+$routeParams.pid),
+                    columns: 1
+                }
             };
             obj.getStructure = function(){
                 var i18n = $rootScope.i18n.lang;
@@ -235,12 +241,12 @@
                 };
                 return obj;
             }])
-        .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "ComView", "$routeParams",
-            function($scope, res, model, ComView, $routeParams) {
+        .controller("DataModelFieldsCtl", ["$scope", "DataModelFieldsRes", "DataModelFieldsModel", "ComView", "$routeParams", "DataModelModel",
+            function($scope, res, model, ComView, $routeParams, dataModelModel) {
                 $routeParams.group = "dataModel";
                 $routeParams.module = "DataModelFields";
                 var actions = $scope.$parent.i18n.urlMap.dataModel.modules.DataModelFields.actions;
-                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
+                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid, dataModelModel);
                 ComView.makeGridSelectedActions($scope, model, res, "dataModel", "DataModelFields", "/pid/"+$routeParams.pid);
                 ComView.displayGrid($scope,model,res, {
                     queryExtraParams: {

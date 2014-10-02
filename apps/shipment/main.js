@@ -17,7 +17,9 @@
         .service("ExpressModel", ["$rootScope", function($rootScope) {
             var i18n = $rootScope.i18n.lang;
             return {
-                printAble: true,
+                config: {
+                    printAble: true
+                },
                 getStructure: function() {
                     return {
                         id: {primary: true},
@@ -123,7 +125,10 @@
 
 
                 $scope.selectAble = false;
-                ComView.displayForm($scope, model, res);
+                $scope.formConfig = {
+                    model: model,
+                    resource: res
+                };
 
                 //重写doSubmit()方法
                 $scope.doSubmit = function(){

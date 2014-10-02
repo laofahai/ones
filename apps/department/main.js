@@ -176,9 +176,11 @@
         }])
         .service("Department.DepartmentAPI", ["$rootScope", "ones.dataApiFactory", "$q", function($rootScope, dataAPI, $q){
             return {
-                subAble: true,
-                viewSubAble: false,
-                multiSelect: false,
+                config: {
+                    subAble: true,
+                    viewSubAble: false,
+                    multiSelect: false
+                },
                 structure: {
                     id : {
                         primary: true
@@ -235,8 +237,10 @@
         }])
         .factory("AuthGroupModel", ["$rootScope", function($rootScope){
             return {
-                subAble: true,
-                addSubAble: false,
+                config: {
+                    subAble: true,
+                    addSubAble: false
+                },
                 getStructure: function(){
                     var i18n = $rootScope.i18n.lang;
                     return {

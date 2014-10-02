@@ -107,38 +107,39 @@
 
         .service("DoCraftModel", ["$rootScope", "$injector", "pluginExecutor", function($rootScope, $injector, plugin) {
             return {
-                editAble: false,
-                deleteAble: false,
-                extraSelectActions: [
-                    {
-                        label: toLang("doCraft", "actions", $rootScope),
-                        icon: "level-down",
+                config: {
+                    editAble: false,
+                    deleteAble: false,
+                    extraSelectActions: [
+                        {
+                            label: toLang("doCraft", "actions", $rootScope),
+                            icon: "level-down",
+                            action: function($event, selectedItems){
+                                var scope = this.scope;
+                                var injector = this.injector;
+                                var res = injector.get("DoCraftRes");
 
-                        action: function($event, selectedItems){
-                            var scope = this.scope;
-                            var injector = this.injector;
-                            var res = injector.get("DoCraftRes");
+                                if(selectedItems.length <= 0) {
+                                    return;
+                                }
+                                var ids = [];
+                                angular.forEach(selectedItems, function(item){
+                                    ids.push(item.id);
+                                });
 
-                            if(selectedItems.length <= 0) {
-                                return;
-                            }
-                            var ids = [];
-                            angular.forEach(selectedItems, function(item){
-                                ids.push(item.id);
-                            });
-
-                            res.update({
-                                id: ids.join(),
-                                workflow: true
-                            }, {}, function(){
-                                //刷新当前页面
-                                var $location = $injector.get("$location");
+                                res.update({
+                                    id: ids.join(),
+                                    workflow: true
+                                }, {}, function(){
+                                    //刷新当前页面
+                                    var $location = $injector.get("$location");
 //                                console.log($location.url());
-                                $injector.get("ComView").redirectTo($location.url());
-                            });
+                                    $injector.get("ComView").redirectTo($location.url());
+                                });
+                            }
                         }
-                    }
-                ],
+                    ]
+                },
                 getStructure: function() {
                     var structure = {
                         id: {
@@ -181,8 +182,10 @@
 
         .service("ProducePlanModel", ["$rootScope", function($rootScope){
             return {
-                isBill: true,
-                workflowAlias: "produce",
+                config: {
+                    isBill: true,
+                    workflowAlias: "produce"
+                },
                 getStructure: function(){
                     return {
                         id: {primary: true, width:50},
@@ -209,8 +212,10 @@
         }])
         .service("ProducePlanDetailEditModel", ["$rootScope", "GoodsRes", "pluginExecutor", function($rootScope, GoodsRes, plugin){
             return {
-                isBill: true,
-                selectAble: false,
+                config: {
+                    isBill: true,
+                    selectAble: false
+                },
                 getStructure: function() {
                     var i18n = $rootScope.i18n.lang;
                     var s = {
@@ -256,8 +261,10 @@
         }])
         .service("ProduceBomsModel", ["$rootScope", "GoodsRes", "pluginExecutor", function($rootScope,GoodsRes,plugin){
             return {
-                isBill: true,
-                workflowAlias: "produce",
+                config: {
+                    isBill: true,
+                    workflowAlias: "produce"
+                },
                 getStructure: function(){
                     var s = {
                         plan_id: {
@@ -291,61 +298,63 @@
         }])
         .service("ProducePlanDetailModel", ["$rootScope", "pluginExecutor", "ComView", function($rootScope, plugin, ComView) {
             return {
-                editAble: false,
-                deleteAble: false,
-                extraSelectActions: [
-                    {
-                        label: $rootScope.i18n.lang.actions.doCraft,
-                        icon: "level-down",
-                        action: function($event, selectedItems, theItem){
-                            var scope = this.scope;
-                            var injector = this.injector;
-                            var res = injector.get("DoCraftRes");
-                            var conf = injector.get("ones.config");
-                            var $location = injector.get("$location");
+                config: {
+                    editAble: false,
+                    deleteAble: false,
+                    extraSelectActions: [
+                        {
+                            label: $rootScope.i18n.lang.actions.doCraft,
+                            icon: "level-down",
+                            action: function($event, selectedItems, theItem){
+                                var scope = this.scope;
+                                var injector = this.injector;
+                                var res = injector.get("DoCraftRes");
+                                var conf = injector.get("ones.config");
+                                var $location = injector.get("$location");
 
-                            if(selectedItems.length <= 0 && !theItem) {
-                                return;
+                                if(selectedItems.length <= 0 && !theItem) {
+                                    return;
+                                }
+                                var ids = [];
+                                angular.forEach(selectedItems, function(item){
+                                    ids.push(item.id);
+                                });
+
+                                res.update({
+                                    id: theItem.id || ids.join(),
+                                    workflow: true
+                                }, {}, function(data){
+                                    if(data.error) {
+                                        ComView.alert(toLang(data.msg, "messages", $rootScope), "danger");
+                                    } else {
+                                        scope.$broadcast("gridData.changed", true);
+                                    }
+
+                                });
                             }
-                            var ids = [];
-                            angular.forEach(selectedItems, function(item){
-                                ids.push(item.id);
-                            });
+                        },
+                        {
+                            label: $rootScope.i18n.lang.actions.viewCraft,
+                            icon: "eye",
+                            action: function($event, selectedItems, theItem){
+                                var scope = this.scope;
+                                var injector = this.injector;
+                                var res = injector.get("DoCraftRes");
+                                var ComView = injector.get("ComView");
 
-                            res.update({
-                                id: theItem.id || ids.join(),
-                                workflow: true
-                            }, {}, function(data){
-                                if(data.error) {
-                                    ComView.alert(toLang(data.msg, "messages", $rootScope), "danger");
-                                } else {
-                                    scope.$broadcast("gridData.changed", true);
+                                if(selectedItems.length !== 1 && !theItem) {
+                                    return;
                                 }
 
-                            });
-                        }
-                    },
-                    {
-                        label: $rootScope.i18n.lang.actions.viewCraft,
-                        icon: "eye",
-                        action: function($event, selectedItems, theItem){
-                            var scope = this.scope;
-                            var injector = this.injector;
-                            var res = injector.get("DoCraftRes");
-                            var ComView = injector.get("ComView");
-
-                            if(selectedItems.length !== 1 && !theItem) {
-                                return;
+                                res.get({
+                                    id: theItem.id || selectedItems[0].id
+                                }).$promise.then(function(data){
+                                        ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
+                                    });
                             }
-
-                            res.get({
-                                id: theItem.id || selectedItems[0].id
-                            }).$promise.then(function(data){
-                                ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
-                            });
                         }
-                    }
-                ],
+                    ]
+                },
                 getStructure: function() {
                     var structure = {
                         id: {
@@ -389,9 +398,11 @@
         .service("ProductTplModel", ["$rootScope", "pluginExecutor",
             function($rootScope, plugin){
                 return {
-                    subAble: true,
-                    addSubAble: false,
-                    viewSubAble : true,
+                    config: {
+                        subAble: true,
+                        addSubAble: false,
+                        viewSubAble : true
+                    },
                     getStructure: function(structOnly) {
                         var structure = {
                             id: {primary:true},
@@ -423,35 +434,12 @@
                     }
                 };
             }])
-//        .service('ProductTplEditModel', ["$rootScope",
-//            function($rootScope){
-//                return {
-//                    getStructure: function(){
-//                        return {
-//                            factory_code_all: {
-//                                hideInForm:true
-//                            },
-//                            goods_name: {
-//                                hideInForm:true
-//                            },
-//                            goods_id: {
-//                                displayName: $rootScope.i18n.lang.goods,
-//                                listable: false,
-//                                dataSource: "GoodsRes"
-//                            },
-//                            num: {},
-//                            stock_id: {
-//                                displayName: $rootScope.i18n.lang.stock,
-//                                inputType: "select",
-//                                dataSource: "StockRes"
-//                            }
-//                        };
-//                    }
-//                };
-//            }])
         .service('ProductTplDetailModel', ["$rootScope", "pluginExecutor",
             function($rootScope, plugin){
                 return {
+                    config: {
+                        rowsModel: "ProductTplDetailModel"
+                    },
                     getStructure: function() {
                         var i18n = $rootScope.i18n.lang;
                         var s = {
@@ -531,9 +519,10 @@
                     }
                 };
 
-                comView.displayBill($scope, model, res, {
-                    id: $routeParams.id
-                });
+                $scope.billConfig = {
+                    model: model,
+                    resource: res
+                };
 
             }])
 
@@ -548,6 +537,17 @@
                     module: "/produce/productTplDetail",
                     editExtraParams: "/pid/"+$routeParams.pid
                 });
+
+                $scope.config = {
+                    model: model,
+                    resource: res,
+                    opts: {
+                        id: $routeParams.pid,
+                            module: "/produce/productTplDetail",
+                        editExtraParams: "/pid/"+$routeParams.pid
+                    }
+                };
+
             }])
 
         //生成生产计划物料清单

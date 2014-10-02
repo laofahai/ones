@@ -11,10 +11,10 @@
 
                 this.parentScope.config = {
                     editAble: false === this.config.model.editAble ? false : true,
-                    isBill: this.config.model.isBill ? true : false
+                    isBill: this.config.model.config.isBill ? true : false
                 };
 
-                if(self.config.model.isBill) {
+                if(self.config.model.config.isBill) {
                     this.loadBillData();
                 } else {
                     this.loadCommonData();
@@ -64,7 +64,7 @@
 
                 };
 
-                var columns = self.config.model.columns || 3;
+                var columns = self.config.model.config.columns || 3;
                 columns = columns > 4 ? 4 : columns;
                 self.parentScope.columnWidth = parseInt(12/columns);
                 var field = self.config.model.getStructure();

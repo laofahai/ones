@@ -230,8 +230,8 @@
             };
         }])
 
-        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector",
-            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector) {
+        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector", "$location",
+            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector, $location) {
                 return {
                     restrict: "E",
                     replace: true,
@@ -248,11 +248,13 @@
 
                                 config = $.extend(config, config.model.config||{});
 
+                                config = $.extend(config, config.opts);
+
                                 config.dataName = config.dataName || "billData";
 
                                 parentScope.selectAble = false;
 
-                                var rowsModel = $injector.get(config.model.config.rowsModel);
+                                var rowsModel = config.model.config.rowsModel ? $injector.get(config.model.config.rowsModel) : config.model;
                                 var structure = rowsModel.getStructure(true);
 
                                 if("then" in structure && typeof(structure.then) == "function") {
@@ -292,15 +294,15 @@
                                     if($routeParams.id) {
                                         config.isEdit = true;
                                         var queryExtraParams = {id: $routeParams.id, includeRows: true};
-                                        resource.get(queryExtraParams).$promise.then(function(data){
+                                        config.resource.get(queryExtraParams).$promise.then(function(data){
                                             $scope.$broadcast("bill.dataLoaded", data);
                                         });
                                     }
 
 
-                                    if(config.workflowAlias && config.isEdit && $routeParams.id && isAppLoaded("workflow")) {
+                                    if(config.model.config.workflowAlias && config.isEdit && $routeParams.id && isAppLoaded("workflow")) {
                                         $injector.get("Workflow.WorkflowNodeAPI").api.query({
-                                            workflow_alias: model.workflowAlias,
+                                            workflow_alias: config.model.config.workflowAlias,
                                             mainrow_id: $routeParams.id,
                                             filterFields: ["id", "name"]
                                         }).$promise.then(function(data){
@@ -381,9 +383,9 @@
 
                                     if (config.isEdit) {
                                         getParams.id = $routeParams.id;
-                                        rs = resource.update(getParams, data);
+                                        rs = config.resource.update(getParams, data);
                                     } else {
-                                        rs = resource.save(getParams, data);
+                                        rs = config.resource.save(getParams, data);
                                     }
 
                                     rs.$promise.then(function(data){

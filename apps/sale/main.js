@@ -189,7 +189,8 @@
                 config: {
                     relateMoney: true,
                     isBill: true,
-                    workflowAlias: "returns"
+                    workflowAlias: "returns",
+                    rowsModel: "ReturnsEditModel"
                 },
                 getStructure: function(){
                     return {
@@ -216,9 +217,11 @@
         .service("ReturnsEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
-                    relateMoney: true,
-                    workflowAlias: "returns",
-                    isBill: true
+                    config: {
+                        relateMoney: true,
+                        workflowAlias: "returns",
+                        isBill: true
+                    }
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -352,13 +355,13 @@
 //                $scope.format = $scope.formats[0];
 
             }])
-        .controller("ReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsEditModel", "ComView", "RelationshipCompanyRes", "$routeParams",
-            function($scope, OrdersRes, GoodsRes, ReturnsEditModel, ComView, RelationshipCompanyRes, $routeParams) {
+        .controller("ReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsModel", "ComView", "RelationshipCompanyRes", "$routeParams",
+            function($scope, ReturnsRes, GoodsRes, ReturnsModel, ComView, RelationshipCompanyRes, $routeParams) {
 
                 $routeParams.group = "sale";
                 $routeParams.module = "returns";
 
-                ComView.makeDefaultPageAction($scope, "sale/returns", [], ReturnsEditModel);
+                ComView.makeDefaultPageAction($scope, "sale/returns");
 
                 $scope.workflowAble = true;
                 if(!$scope.formMetaData) {
@@ -367,11 +370,12 @@
                         total_amount_real: 0
                     };
                 }
-//                $scope.formMetaData.inputTime = new Date();
 
-                ComView.displayBill($scope, ReturnsEditModel, OrdersRes, {
-                    id: $routeParams.id
-                });
+                $scope.config = {
+                    model: ReturnsModel,
+                    res: ReturnsRes
+                };
+
                 //客户选择字段定义
                 $scope.customerSelectOpts = {
                     context: {

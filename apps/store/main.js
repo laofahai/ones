@@ -315,20 +315,22 @@
             var endTime = new Date();
             startTime.setMonth(startTime.getMonth()-1);
             var obj = {
-                isBill: true,
-                printAble: true,
-                printTitle: toLang("stockin", "", $rootScope),
-                rowsModel: "StockinDetailModel",
-                workflowAlias: "stockin",
-                trashAble: true,
-                filters: {
-                    between: {
-                        field: "dateline",
-                        defaultData: [startTime, endTime],
-                        inputType: "datetime"
-                    },
-                    workflow: "stockin"
-                }
+                config: {
+                    isBill: true,
+                    printAble: true,
+                    printTitle: toLang("stockin", "", $rootScope),
+                    rowsModel: "StockinDetailModel",
+                    workflowAlias: "stockin",
+                    trashAble: true,
+                    filters: {
+                        between: {
+                            field: "dateline",
+                            defaultData: [startTime, endTime],
+                            inputType: "datetime"
+                        },
+                        workflow: "stockin"
+                    }
+                },
             };
             obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -362,9 +364,11 @@
         .service("StockinDetailModel", ["$rootScope", "GoodsRes","pluginExecutor",
             function($rootScope, GoodsRes, plugin) {
                 var obj = {
-                    printAble: true,
-                    isBill:true,
-                    workflowAlias: "stockin"
+                    config: {
+                        printAble: true,
+                        isBill:true,
+                        workflowAlias: "stockin"
+                    }
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -481,16 +485,18 @@
             var endTime = new Date();
             startTime.setMonth(startTime.getMonth()-1);
             return {
-                isBill: true,
-                printAble: true,
-                printTitle: toLang("stockout", "", $rootScope),
-                rowsModel: "StockoutDetailModel",
-                workflowAlias: "stockout",
-                filters: {
-                    between: {
-                        field: "dateline",
-                        defaultData: [startTime, endTime],
-                        inputType: "datetime"
+                config: {
+                    isBill: true,
+                    printAble: true,
+                    printTitle: toLang("stockout", "", $rootScope),
+                    rowsModel: "StockoutDetailModel",
+                    workflowAlias: "stockout",
+                    filters: {
+                        between: {
+                            field: "dateline",
+                            defaultData: [startTime, endTime],
+                            inputType: "datetime"
+                        }
                     }
                 },
                 getStructure: function(){
@@ -519,9 +525,11 @@
         .service("StockoutDetailModel", ["$rootScope","pluginExecutor",
             function($rootScope, plugin) {
                 var obj = {
-                    isBill: true,
-                    printAble: true,
-                    workflowAlias: "stockout"
+                    config: {
+                        isBill: true,
+                        printAble: true,
+                        workflowAlias: "stockout"
+                    }
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
@@ -602,21 +610,22 @@
                 return obj;
             }])
 
-        .controller("StockinEditCtl", ["$scope", "StockinRes", "StockinDetailModel", "ComView", "$routeParams",
-            function($scope, StockinRes, StockinDetailModel, ComView, $routeParams) {
+        .controller("StockinEditCtl", ["$scope", "StockinRes", "StockinModel", "ComView", "$routeParams",
+            function($scope, StockinRes, StockinModel, ComView, $routeParams) {
 
                 $routeParams.group = "store";
                 $routeParams.module = "stockin";
 
-                ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinDetailModel);
+                ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinModel);
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
                 $scope.showWeeks = true;
 
-                ComView.displayBill($scope, StockinDetailModel, StockinRes, {
-                    id: $routeParams.id
-                });
+                $scope.config = {
+                    model: StockinModel,
+                    resource: StockinRes
+                };
 
                 //入库类型字段定义
                 $scope.typeSelectOpts = {
@@ -641,7 +650,7 @@
 
 
             }])
-        .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutDetailModel", "ComView", "$routeParams",
+        .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutModel", "ComView", "$routeParams",
             function($scope, res, model, ComView, $routeParams) {
 
                 $routeParams.group = "store";
@@ -651,9 +660,10 @@
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
 
-                ComView.displayBill($scope, model, res, {
-                    id: $routeParams.id
-                });
+                $scope.config = {
+                    model: model,
+                    resource: res
+                };
 
                 //出库类型字段定义
                 $scope.typeSelectOpts = {
@@ -687,7 +697,9 @@
                     }
                 ];
                 $scope.selectAble = false;
-                ComView.displayForm($scope, StockProductExportModel);
+                $scope.formConfig = {
+                    model: StockProductExportModel
+                };
 
                 $scope.doSubmit = function(){
 //                    console.log($scope);return;

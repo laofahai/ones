@@ -73,9 +73,11 @@
         }])
         .service("RelationshipCompanyModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             return {
-                columns: 2,
-                formActions: false,
-                isBill: true,
+                config: {
+                    columns: 2,
+                    formActions: false,
+                    isBill: true
+                },
                 getStructure: function(){
                     var structure = {
                         id: {

@@ -33,8 +33,10 @@
 
         .service("FinanceRecordModel", ["$rootScope", function(){
             return {
-                editAble: false,
-                addAble: false,
+                config: {
+                    editAble: false,
+                    addAble: false
+                },
                 getStructure: function(){
                     return {
                         id: {
@@ -75,7 +77,10 @@
         }])
         .service("FinancePayPlanModel", ["$rootScope", function($rootScope){
             return {
-                workflowAlias: "financePay",
+                config: {
+                    workflowAlias: "financePay"
+                },
+
                 getStructure: function(){
                     return {
                         id: {primary: true},
@@ -128,7 +133,9 @@
         }])
         .service("FinanceReceivePlanModel", ["$rootScope", "FinanceAccountRes", function($rootScope, FinanceAccountRes){
             return {
-                workflowAlias: "financeReceive",
+                config: {
+                    workflowAlias: "financeReceive"
+                },
                 getStructure: function(){
                     return {
                         id: {primary: true},

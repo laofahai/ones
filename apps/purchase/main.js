@@ -17,8 +17,11 @@
 
     .service("PurchaseModel", ["$rootScope", function($rootScope){
         return {
-            isBill: true,
-            workflowAlias: "purchase",
+            config: {
+                isBill: true,
+                workflowAlias: "purchase",
+                rowsModel: "PurchaseEditModel"
+            },
             getStructure: function(){
                 return {
                     bill_id: {
@@ -55,9 +58,11 @@
     .service("PurchaseEditModel", ["$rootScope", "GoodsRes", "pluginExecutor",
         function($rootScope, GoodsRes, plugin){
             return {
-                isBill: true,
-                relateMoney: true,
-                workflowAlias: "purchase",
+                config: {
+                    isBill: true,
+                    relateMoney: true,
+                    workflowAlias: "purchase"
+                },
                 getStructure: function(){
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
@@ -109,7 +114,7 @@
             };
         }])
 
-    .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseEditModel", "ComView", "$routeParams",
+    .controller("JXCPurchaseEditCtl", ["$scope", "PurchaseRes", "GoodsRes", "PurchaseModel", "ComView", "$routeParams",
         function($scope, res, GoodsRes, model, ComView, $routeParams) {
 
             $scope.workflowAble = true;
@@ -126,9 +131,10 @@
             $routeParams.group = "purchase";
             $routeParams.module = "purchase";
 
-            ComView.displayBill($scope, model, res, {
-                id: $routeParams.id
-            });
+            $scope.config = {
+                model: model,
+                resource: res
+            };
 
             //客户选择字段定义
             $scope.customerSelectOpts = {
