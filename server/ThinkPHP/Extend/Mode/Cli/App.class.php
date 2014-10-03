@@ -27,24 +27,53 @@ class App {
                 $params = explode($depr,trim($path,$depr));
             }
             // 取得模块和操作名称
-            define('MODULE_NAME',   !empty($params)?array_shift($params):C('DEFAULT_MODULE'));
-            define('ACTION_NAME',  !empty($params)?array_shift($params):C('DEFAULT_ACTION'));
+            if(C('APP_GROUP_LIST')) {
+                define('GROUP_NAME',   !empty($params)?array_shift($params):C('DEFAULT_GROUP'));
+                define('MODULE_NAME',  !empty($params)?array_shift($params):C('DEFAULT_MODULE'));
+                define('ACTION_NAME',  !empty($params)?array_shift($params):C('DEFAULT_ACTION'));
+            }
+            else{
+                define('MODULE_NAME',  !empty($params)?array_shift($params):C('DEFAULT_MODULE'));
+                define('ACTION_NAME',  !empty($params)?array_shift($params):C('DEFAULT_ACTION'));
+            }
             if(count($params)>1) {
                 // 解析剩余参数 并采用GET方式获取
                 preg_replace('@(\w+),([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', implode(',',$params));
             }
         }else{// 默认URL模式 采用 index.php module action id 4
-            // 取得模块和操作名称
-            define('MODULE_NAME',   isset($_SERVER['argv'][1])?$_SERVER['argv'][1]:C('DEFAULT_MODULE'));
-            define('ACTION_NAME',    isset($_SERVER['argv'][2])?$_SERVER['argv'][2]:C('DEFAULT_ACTION'));
+
+            if(C('APP_GROUP_LIST')) {
+                define('GROUP_NAME',   isset($_SERVER['argv'][1])?$_SERVER['argv'][1]:C('DEFAULT_GROUP'));
+                define('MODULE_NAME',   isset($_SERVER['argv'][2])?$_SERVER['argv'][2]:C('DEFAULT_MODULE'));
+                define('ACTION_NAME',    isset($_SERVER['argv'][3])?$_SERVER['argv'][3]:C('DEFAULT_ACTION'));
+                if($_SERVER['argc'] > 4) {
+                    // 解析剩余参数 并采用GET方式获取
+                    preg_replace('@(\w+),([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', implode(',',array_slice($_SERVER['argv'],4)));
+                }
+            }
+            else{
+                define('MODULE_NAME',   isset($_SERVER['argv'][1])?$_SERVER['argv'][1]:C('DEFAULT_MODULE'));
+                define('ACTION_NAME',    isset($_SERVER['argv'][2])?$_SERVER['argv'][2]:C('DEFAULT_ACTION'));
+                if($_SERVER['argc'] > 3) {
+                    // 解析剩余参数 并采用GET方式获取
+                    preg_replace('@(\w+),([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', implode(',',array_slice($_SERVER['argv'],3)));
+                }
+            }
+
             if($_SERVER['argc']>3) {
                 // 解析剩余参数 并采用GET方式获取
                 preg_replace('@(\w+),([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', implode(',',array_slice($_SERVER['argv'],3)));
             }
         }
 
+
         // 执行操作
-        $module  =  A(MODULE_NAME);
+        if(C('APP_GROUP_LIST')) {
+            $module  =  A(GROUP_NAME."/".MODULE_NAME);
+        }
+        else{
+            $module  =  A(MODULE_NAME);
+        }
         if(!$module) {
             // 是否定义Empty模块
             $module = A("Empty");

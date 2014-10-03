@@ -16,6 +16,7 @@
  * @subpackage  Core
  * @author    liu21st <liu21st@gmail.com>
  */
+return;
 class Log {
 
     // 日志级别 从上到下，由低到高

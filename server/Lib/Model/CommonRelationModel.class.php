@@ -34,7 +34,6 @@ class CommonRelationModel extends RelationModel {
         } else {
             $model = $model->relation(true);
             $rs = $model->where($condition)->delete();
-            echo $model->getLastSql();exit;
         }
         return $rs;
         

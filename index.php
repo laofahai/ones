@@ -4,7 +4,7 @@ error_reporting(E_ALL^E_NOTICE);
 
 header("Access-Control-Allow-Origin: *");
 
-session_cache_limiter('private');
+//session_cache_limiter('private');
 session_cache_expire(30);
 
 /**

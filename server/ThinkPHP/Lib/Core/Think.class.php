@@ -105,7 +105,10 @@ class Think {
         foreach ($list as $file){
             if(is_file($file))  {
                 require_cache($file);
-                if(!APP_DEBUG)   $compile .= compile($file);
+
+                if(!APP_DEBUG) {
+                    $compile .= compile($file);
+                }
             }
         }
 

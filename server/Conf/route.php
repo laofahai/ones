@@ -109,6 +109,8 @@ if($ext == "json") {
             break;
         }
     }
+
+
     if(!$hasRule) {
         $urlRoutes = array_merge($urlRoutes, routeMaker($k, $action));
     }
@@ -119,6 +121,8 @@ if($ext == "json") {
     $_GET["id"] = $id;
     define("CURRENT_APP", strtolower($group));
 }
+
+//print_r(routeMaker($k, $action));exit;
 
 unset($null, $tmp, $groupMap, $k, $action, $hasRule, $ext);
 //print_r($urlRoutes);

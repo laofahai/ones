@@ -58,7 +58,9 @@ class GoodsAction extends CommonAction {
         switch($this->_method) {
             case "post":
             case "put":
-                $_POST["pinyin"] = Pinyin($_POST["name"]);
+                if(!$_POST["pinyin"]) {
+                    $_POST["pinyin"] = Pinyin($_POST["name"]);
+                }
                 break;
         }
     }

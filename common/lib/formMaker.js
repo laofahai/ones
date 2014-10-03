@@ -94,7 +94,7 @@
                                 }
 
                                 //提交表单
-                                parentScope.doSubmit = opts.doSubmit ? opts.doSubmit : function() {
+                                parentScope.doSubmit = parentScope.doFormSubmit = opts.doSubmit ? opts.doSubmit : function() {
                                     //                    console.log("submit");
 
                                     if(!doFormValidate()) {
@@ -367,7 +367,7 @@
 
 
                                 //默认单据提交方法，可自动判断是否编辑/新建
-                                parentScope.doSubmit = config.doSubmit ? config.doSubmit : function() {
+                                parentScope.doSubmit = parentScope.doBillSubmit = config.doSubmit ? config.doSubmit : function() {
                                     if(!config.returnPage) {
                                         var tmp = $location.$$url.split("/").slice(1,4);
                                         tmp[1] = "list";
@@ -380,6 +380,8 @@
                                     }
 
                                     var rs ;
+
+                                    console.log(data);
 
                                     if (config.isEdit) {
                                         getParams.id = $routeParams.id;
@@ -1426,7 +1428,6 @@
                     },
                     setData: function(element, data, isBlur) {
                         var context = getInputContext(element);
-//                context.label.html(data);
                         context.td.find(".editAble").addClass("hide");
                         this.scope.$parent.billEndEdit(context.td, isBlur);
                     },
@@ -1513,7 +1514,7 @@
                             && !$(event.target).hasClass("select3Input")) {
                             event.preventDefault();
                             event.stopPropagation();
-                            $scope.$parent.doSubmit();
+                            $scope.$parent.doFormSubmit();
                         }
                     };
 

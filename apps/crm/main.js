@@ -76,7 +76,8 @@
                 config: {
                     columns: 2,
                     formActions: false,
-                    isBill: true
+                    isBill: true,
+                    rowsModel: "RelationshipCompanyLinkmanModel"
                 },
                 getStructure: function(){
                     var structure = {
@@ -166,23 +167,19 @@
             function($scope, ComView, RelationshipCompanyModel, res, RelationshipCompanyLinkmanModel, $routeParams){
                 $scope.selectAble = false;
 
-                ComView.displayForm($scope, RelationshipCompanyModel, res, {
-                    dataName: "baseInfo",
-                    name: "baseInfoForm",
-                    id: $routeParams.id
-                });
+                $scope.billConfig = {
+                    model: RelationshipCompanyModel,
+                    resource: res
+                };
 
-                ComView.displayBill($scope, RelationshipCompanyLinkmanModel, res, {
-                    minRows: 4,
-                    id: $routeParams.id
-                });
+                $scope.formConfig = {
+                    model: RelationshipCompanyModel,
+                    resource: res
+                };
 
                 $scope.doComplexSubmit = function() {
-                    if(!$scope.doFormValidate("baseInfoForm")) {
-                        return false;
-                    }
-                    $scope.formMetaData = $scope.baseInfo;
-                    $scope.doSubmit();
+                    $scope.formMetaData = $scope.formData;
+                    $scope.doBillSubmit();
                 };
             }])
     ;

@@ -7,6 +7,7 @@
  */
 
 return  array(
+    'LOG_PATH' => ENTRY_PATH."/Data/logs/",
     'LOG_RECORD'			=>	true,  // 进行日志记录
     'LOG_EXCEPTION_RECORD'  => 	true,    // 是否记录异常信息日志
     'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,WARN,DEBUG,SQL', // 只记录EMERG ALERT CRIT ERR 错误

@@ -31,12 +31,15 @@ class RelationshipCompanyAction extends CommonAction {
 
         $tmp["baseInfo"] = array(
             "name" => $_POST["name"],
-            "pinyin" => Pinyin($_POST["name"]),
             "group_id" => $_POST["group_id"],
             "discount" => $_POST["discount"],
             "address"  => $_POST["address"],
             "memo"     => $_POST["memo"]
         );
+
+        if(!$_POST["pinyin"]) {
+            $tmp["pinyin"] = Pinyin($_POST["name"]);
+        }
 
         if(!$_GET["id"]) {
             $tmp["baseInfo"]["user_id"] = getCurrentUid();
@@ -60,9 +63,7 @@ class RelationshipCompanyAction extends CommonAction {
             }
             $_POST["extraInfo"][$k] = $v;
         }
-//        print_R($_POST["extraInfo"]);
-//        echo 123;
-//exit;
+
         $_POST["rows"] = $tmp["rows"];
         $_POST["baseInfo"] = $tmp["baseInfo"];
     }
