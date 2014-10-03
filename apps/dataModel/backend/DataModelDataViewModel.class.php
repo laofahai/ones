@@ -16,7 +16,7 @@ class DataModelDataViewModel extends CommonViewModel {
     protected $viewFields = array(
         "DataModelData" => array("*", "_type"=>"left"),
         "DataModel" => array("name" => "model_name",  "_on"=>"DataModel.id=DataModelData.model_id", "_type"=>"left"),
-        "DataModelFields" => array("display_name", "field_name ", "_on"=>"DataModelData.field_id=DataModelFields.id", "_type"=>"left")
+        "DataModelFields" => array("display_name", "field_name ", "extra_data", "_on"=>"DataModelData.field_id=DataModelFields.id", "_type"=>"left")
     );
 
     /**
@@ -25,7 +25,7 @@ class DataModelDataViewModel extends CommonViewModel {
      * @param $modelDataIds 所有包含的模型ID
      * @param $modelAlias
      */
-    public function assignModelData($sourceData, $modelDataIds = false, $bindToLabel = true) {
+    public function assignModelData($sourceData, $modelDataIds = false) {
 
         $modelData = array();
 
@@ -84,13 +84,13 @@ class DataModelDataViewModel extends CommonViewModel {
             }
         }
 
-
         foreach($sourceData as $k=>$v) {
             if(!$v["modelIds"]) {
                 continue;
             }
             foreach($v["modelIds"] as $mid) {
-                if($bindToLabel) {
+                $fieldConf = explode("\n", $modelData[$mid]["extra_data"]);
+                if(in_array("bindToLabel::true", $fieldConf)) {
                     $sourceData[$k][$modelData[$mid]["field_name"]] = $mid;
                     $sourceData[$k][$modelData[$mid]["field_name"]."_label"] = $modelData[$mid]["data"];
                 } else {

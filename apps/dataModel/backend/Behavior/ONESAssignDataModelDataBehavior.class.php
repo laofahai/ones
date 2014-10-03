@@ -26,7 +26,9 @@ class ONESAssignDataModelDataBehavior extends Behavior {
     public function run(&$params) {
         list($rows, $modelIds, $single, $bindToLabel) = $params;
 
-        $bindToLabel = false === $bindToLabel ? false : true;
+//        print_r($params);exit;
+
+//        $bindToLabel = false === $bindToLabel ? false : true;
 
 //        if($single) {
 //            $rows = $rows[0];
