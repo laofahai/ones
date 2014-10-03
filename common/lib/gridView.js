@@ -458,7 +458,14 @@
 
                 var item = ones.GridScope.$eval("itemsList["+$index+"]");
 //                console.log("itemsList["+$index+"]");return;
-                filter = filter.replace(/\+id/ig, item.id);
+//                filter = filter.replace(/\+(\w+)/ig, item["$1"]);
+                var filterParams = filter.match(/\+\w+/);
+                if(filterParams) {
+                    angular.forEach(filterParams, function(p){
+                        filter = filter.replace(p, item[p.replace("+", "")]);
+                    });
+                }
+
                 filter = filter.replace(/'/g, "");
 
                 args = filter.split(":");

@@ -28,7 +28,7 @@
                         cellFilter: "toLink:#/purchase/editBill/purchase/id/+id"
                     },
                     purchase_type: {
-                        listable: false
+                        listAble: false
                     },
                     purchase_type_label: {
                         displayName: $rootScope.i18n.lang.type

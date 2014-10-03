@@ -110,7 +110,7 @@
                     },
                     name: {
                         displayName: i18n.category,
-                        listable: false,
+                        listAble: false,
                         hideInDetail:true
                     },
                     prefix_name: {

@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
   `name` varchar(15) NOT NULL,
   `alias` varchar(50) NOT NULL,
   `type` varchar(20) NOT NULL,
-  `listable` smallint(1) NOT NULL DEFAULT '1',
+  `listAble` smallint(1) NOT NULL DEFAULT '1',
   `deleted` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
 
 
 
-INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listable`, `deleted`) VALUES
+INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listAble`, `deleted`) VALUES
   (1, '产品基础信息模型', 'goodsBaseInfo', 'product', 1, 0),
   (2, '产品扩展属性模型', 'product', 'product', 1, 0),
   (3, '往来单位基本信息扩展模型', 'crmBaseInfo', 'crm', 1, 0),

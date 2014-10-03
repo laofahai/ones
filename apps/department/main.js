@@ -56,7 +56,7 @@
                     },
                     password: {
                         inputType: "password",
-                        listable: false,
+                        listAble: false,
                         required: false
                     },
                     truename: {},
@@ -74,7 +74,7 @@
                         multiple: "multiple",
                         nameField: "title",
                         valueField: "id",
-                        listable: false,
+                        listAble: false,
                         dataSource: "AuthGroupRes",
                         hideInDetail:true
                     },
@@ -85,7 +85,7 @@
                     department_id: {
                         displayName: $rootScope.i18n.lang.department,
                         nameField: "prefix_name",
-                        listable: false,
+                        listAble: false,
                         inputType: "select",
                         dataSource: "Department.DepartmentAPI",
                         hideInDetail:true
@@ -186,7 +186,7 @@
                         primary: true
                     },
                     name: {
-                        listable: false
+                        listAble: false
                     },
                     prefix_name: {
                         hideInForm: true,

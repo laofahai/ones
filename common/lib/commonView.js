@@ -482,7 +482,7 @@
                         var tmp = columnDefs;
                         columnDefs = [];
                         for(var $i=0;$i<tmp.length;$i++) {
-                            if(tmp[$i].listable !== false) {
+                            if(tmp[$i].listAble !== false) {
                                 columnDefs.push(tmp[$i]);
                             }
                         }
@@ -827,6 +827,13 @@
                                 module: $routeParams.module,
                                 id: $routeParams.id
                             })
+                        });
+                    }
+
+                    //扩展操作
+                    if(model.config.extraPageActions) {
+                        angular.forEach(model.config.extraPageActions, function(act){
+                            $scope.pageActions.push(act);
                         });
                     }
                 };

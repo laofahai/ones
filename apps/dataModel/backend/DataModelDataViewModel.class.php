@@ -29,7 +29,8 @@ class DataModelDataViewModel extends CommonViewModel {
 
         $modelData = array();
 
-        if(!$modelDataIds) {
+        //无model data id时
+        if(!$modelDataIds or $modelDataIds === "product") {
             $modelDataIds = array();
             foreach($sourceData as $k=>$v) {
                 if($v["factory_code_all"]) {
@@ -39,13 +40,14 @@ class DataModelDataViewModel extends CommonViewModel {
                     $sourceData[$k]["modelIds"] = $tmp;
                 }
             }
+        //model data id为product modelAlias时
         } else if(!is_array($modelDataIds)) {
             // $modelDataIds为模型alias
             $dataModelObject = D("DataModel");
             $theDataModel = $dataModelObject->getByAlias($modelDataIds);
 
             foreach($sourceData as $v) {
-                $sourceIds[] = $v["id"];
+                $sourceIds[$v["id"]] = $v["id"];
             }
 
             $tmp  = $this->where(array(

@@ -23,7 +23,7 @@
             "inputType": "select",
             "valueField": "id",
             "nameField" : "prefix_name",
-            "listable": false,
+            "listAble": false,
             "dataSource": "GoodsCategoryRes",
             "hiddenWhen480": true,
             "hiddenInDetail": true

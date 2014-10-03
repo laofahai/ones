@@ -315,12 +315,14 @@ class CommonAction extends RestAction {
         $params = array(
             $map, $model, $this
         );
+
         tag("external_condition_check", $params);
 
         $total = false;
         if($_GET["onlyCount"]) {
             $total = $model->where($map)->count();
-            $this->response(array(array("count"=>$total)));return;
+            $this->response(array(array("count"=>$total)));
+            return;
         } else {
 
             if($this->relation && method_exists($model, "relation")) {
@@ -363,8 +365,6 @@ class CommonAction extends RestAction {
             }
         }
 
-//        echo $model->getLastSql();exit;
-//        print_r($list);exit;
         $list = reIndex($list);
         //包含总数
         if($_GET["_ic"] && $returnIncludeCount) {

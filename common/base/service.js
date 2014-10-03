@@ -97,10 +97,10 @@
                 structure: {
                     name: {},
                     alias: {
-                        listable: false
+                        listAble: false
                     },
                     version: {
-                        listable: false
+                        listAble: false
                     },
                     author: {},
                     description: {},

@@ -230,13 +230,13 @@
                             callback: function(tr) {
                                 tr.find("[data-bind-model='craft'] label").trigger("click");
                             },
-                            listable: false
+                            listAble: false
                         },
                         craft: {
                             editAbleRequire: "goods_id",
                             queryWithExistsData: ["goods_id"],
                             inputType: "craft",
-                            listable: false
+                            listAble: false
                         },
 
                         num: {
@@ -244,7 +244,7 @@
                             totalAble: true
                         },
                         memo: {
-                            listable: false
+                            listAble: false
                         }
                     };
 
@@ -414,7 +414,7 @@
                             },
                             goods_id: {
                                 displayName: $rootScope.i18n.lang.goods,
-                                listable: false,
+                                listAble: false,
                                 inputType: "select3",
                                 dataSource: "GoodsRes"
                             },

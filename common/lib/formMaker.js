@@ -315,6 +315,7 @@
                                     }
 
 
+                                    //自动保存
                                     if(!config.isEdit && $routeParams.group && $routeParams.module && false !== config.autoSave) {
                                         cachedData = ones.caches.getItem(cacheKey);
 
@@ -549,7 +550,7 @@
                         var k, v, html = [];
                         var bl = [
                             "inputType",
-                            "listable",
+                            "listAble",
                             "displayName",
                             "nameField",
                             "valueField",

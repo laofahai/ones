@@ -91,7 +91,7 @@
                         multiple: "multiple"
                     },
                     executor_group: {
-                        listable: false,
+                        listAble: false,
                         required: false,
                         dataSource: "AuthGroupRes",
                         inputType: "select",
@@ -99,14 +99,14 @@
                         nameField: "title"
                     },
                     executor_department: {
-                        listable: false,
+                        listAble: false,
                         required: false,
                         dataSource: "Department.DepartmentAPI",
                         inputType: "select",
                         multiple: "multiple"
                     },
                     executor_user: {
-                        listable: false,
+                        listAble: false,
                         required: false,
                         dataSource: "Department.UserAPI",
                         inputType: "select",
@@ -114,11 +114,11 @@
                         nameField: "truename"
                     },
                     cond: {
-                        listable: false,
+                        listAble: false,
                         required: false
                     },
                     is_default: {
-                        listable: false,
+                        listAble: false,
                         inputType: "select",
                         dataSource: [
                             {id: 1, name: $rootScope.i18n.lang.yes},
@@ -126,7 +126,7 @@
                         ]
                     },
                     remind: {
-                        listable: false
+                        listAble: false
                     },
                     status_text: {},
                     memo: {
@@ -144,7 +144,7 @@
                                 struct.workflow_id = {
                                     value: extraParams[1],
                                     inputType: "hidden",
-                                    listable: false
+                                    listAble: false
                                 };
                                 queryParams.pid = extraParams[1];
                             }

@@ -39,6 +39,10 @@
                         "add": "新增出库单",
                         "trash": "出库单回收站"
                     }
+                },
+                "StockoutDetail": {
+                    "name": "出库单详情",
+                    "actions": {}
                 }
             }
         },

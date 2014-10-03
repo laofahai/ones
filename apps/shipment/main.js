@@ -39,26 +39,26 @@
                         },
                         to_phone: {
                             displayName: i18n.shipment_to_phone,
-                            listable:false
+                            listAble:false
                         },
                         to_address: {
                             displayName: i18n.shipment_to_address
                         },
                         from_company: {
                             displayName: i18n.shipment_from_company,
-                            listable:false
+                            listAble:false
                         },
                         from_name: {
                             displayName: i18n.shipment_from_name,
-                            listable:false
+                            listAble:false
                         },
                         from_phone: {
                             displayName: i18n.shipment_from_phone,
-                            listable:false
+                            listAble:false
                         },
                         from_address: {
                             displayName: i18n.shipment_from_address,
-                            listable:false
+                            listAble:false
                         },
                         freight_type: {
                             field: "freight_type_label",
@@ -68,12 +68,12 @@
                                 type: "freight"
                             },
                             required: false,
-                            listable:false
+                            listAble:false
                         },
                         freight: {
                             inputType: "number",
                             required: false,
-                            listable:false
+                            listAble:false
                         },
                         weight: {
                             required: false

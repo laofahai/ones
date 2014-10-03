@@ -90,7 +90,7 @@
                     },
                     customer_id: {
                         displayName: i18n.customer,
-                        listable: false,
+                        listAble: false,
                         inputType: "select3",
                         dataSource: "RelationshipCompanyRes"
                     },

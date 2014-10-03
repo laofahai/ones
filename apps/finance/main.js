@@ -125,7 +125,7 @@
                         },
                         memo: {
                             required: false,
-                            listable: false
+                            listAble: false
                         }
                     };
                 }
@@ -167,7 +167,7 @@
                             dataSource: FinanceAccountRes,
                             nameField: "name",
                             valueField: "id",
-                            listable: false
+                            listAble: false
                         },
                         amount: {
                             inputType: "number"
@@ -186,7 +186,7 @@
                         },
                         memo: {
                             required: false,
-                            listable: false
+                            listAble: false
                         }
                     };
                 }

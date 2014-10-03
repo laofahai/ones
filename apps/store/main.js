@@ -190,7 +190,7 @@
                     inputType: "select",
                     multiple: "multiple",
                     remoteDataField: "managers",
-                    listable:false,
+                    listAble:false,
                     dataSource: "Department.UserAPI",
                     hideInDetail:true
                 },
@@ -386,7 +386,7 @@
                             printAble: true,
                             billAble: false,
                             hideInForm:true,
-                            listable: false
+                            listAble: false
                         },
                         goods_id: {
                             displayName: i18n.goods,
@@ -497,7 +497,14 @@
                             defaultData: [startTime, endTime],
                             inputType: "datetime"
                         }
-                    }
+                    },
+                    extraPageActions: [
+                        {
+                            label: toLang("viewDetail", "actions", $rootScope),
+                            class: "primary",
+                            href : "/store/list/stockoutDetail"
+                        }
+                    ]
                 },
                 getStructure: function(){
                     return {
@@ -522,21 +529,32 @@
                 }
             };
         }])
-        .service("StockoutDetailModel", ["$rootScope","pluginExecutor",
-            function($rootScope, plugin) {
+        .service("StockoutDetailModel", ["$rootScope","pluginExecutor", "ones.dataApiFactory",
+            function($rootScope, plugin, dataAPI) {
                 var obj = {
                     config: {
                         isBill: true,
                         printAble: true,
+                        editAble: false,
+                        deleteAble: false,
                         workflowAlias: "stockout"
-                    }
+                    },
+                    api: dataAPI.getResourceInstance({
+                        "uri" : "store/stockoutDetail"
+                    })
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;
                     var fields = {
                         id : {
                             primary: true,
-                            billAble: false
+                            billAble: false,
+                            listAble: false
+                        },
+                        bill_id : {
+                            hideInForm: true,
+                            billAble: false,
+                            cellFilter: "toLink:#/store/editBill/stockout/id/+stockout_id"
                         },
                         factory_code_all: {
                             billAble:false,
@@ -547,7 +565,7 @@
                             printAble: true,
                             billAble: false,
                             hideInForm:true,
-                            listable: false
+                            listAble: true
                         },
                         goods_id: {
                             displayName: i18n.goods,
@@ -569,18 +587,26 @@
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true,
-                            printAble: true
+                            printAble: true,
+                            listAble: false
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
+                        },
+                        stock_name: {
+                            displayName: toLang("stock", "", $rootScope),
+                            hideInForm:true,
+                            billAble: false
                         },
                         store_num: {
                             displayName: i18n.storeNum,
                             editAble:false,
-                            min: -9999
+                            min: -9999,
+                            listAble: false
                         },
                         total_num: {
                             inputType: "static",
                             onlyInEdit: true,
-                            printAble: true
+                            printAble: true,
+                            listAble: false
                         },
                         num: {
                             inputType: "number",
@@ -589,6 +615,11 @@
                         outed: {
                             inputType: "static",
                             onlyInEdit: true
+                        },
+                        outtime: {
+                            hideInForm: true,
+                            billAble: false,
+                            cellFilter: "dateFormat:0"
                         },
                         memo: {
                             printAble: true

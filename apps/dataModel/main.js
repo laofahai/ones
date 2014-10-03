@@ -67,12 +67,12 @@
                 //显示绑定到_label字段
                 if(defaultConfigure.bindToLabel) {
                     var labelConfigure = $.extend({}, defaultConfigure);
-                    labelConfigure.listable = extraConfigure.listable === undefined ? true : extraConfigure.listable;
+                    labelConfigure.listAble = extraConfigure.listAble === undefined ? true : extraConfigure.listAble;
                     labelConfigure.hideInForm = true;
                     labelConfigure.billAble = false;
                     result[item.field_name+"_label"] = labelConfigure;
 //                     console.log(labelConfigure);
-                    defaultConfigure.listable = false;
+                    defaultConfigure.listAble = false;
                 }
 
                 result[item.field_name] = defaultConfigure;
@@ -164,7 +164,7 @@
                         required: false,
                         style: "height:120px;",
                         helpText: toLang("dataModel_extraConfig_tip", null, $rootScope),
-                        listable: false
+                        listAble: false
                     }
                 };
 
@@ -191,7 +191,7 @@
                             displayName: "ID"
                         },
                         model_id: {
-                            listable: false,
+                            listAble: false,
                             inputType: "hidden"
                         },
                         data: {},
@@ -210,7 +210,7 @@
                         },
                         field_id: {
                             displayName: i18n.field,
-                            listable: false,
+                            listAble: false,
                             inputType: "select",
                             nameField: "display_name",
                             dataSource: "DataModelFieldsRes",
