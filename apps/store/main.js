@@ -724,22 +724,29 @@
         .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutDetailModel", "$location",
             function($scope, $routeParams, ComView, res, model, $location){
                 $scope.selectAble= false;
-                ComView.displayBill($scope, model, res, {
-                    id: $routeParams.id,
-                    queryExtraParams: {includeSource: true, workflowing: true}
-                });
-                $scope.doSubmit = function() {
-                    $scope.formMetaData.rows = $scope.formData;
-                    res.doPostWorkflow({
-                        workflow: true,
-                        node_id: $routeParams.nodeId,
-                        id: $routeParams.id,
-                        donext: true,
-                        data: $scope.formMetaData
-                    }).$promise.then(function(data){
+//                ComView.displayBill($scope, model, res, {
+//                    id: $routeParams.id,
+//                    queryExtraParams: {includeSource: true, workflowing: true}
+//                });
+                $scope.config = {
+                    model:model,
+                    resource:res,
+                    opts: {
+                        queryExtraParams: {includeSource: true, workflowing: true}
+                    },
+                    doSubmit: function(){
+                        $scope.formMetaData.rows = $scope.formData;
+                        res.doPostWorkflow({
+                            workflow: true,
+                            node_id: $routeParams.nodeId,
+                            id: $routeParams.id,
+                            donext: true,
+                            data: $scope.formMetaData
+                        }).$promise.then(function(data){
 //                    console.log(data);return;
-                        $location.url("/store/list/stockout");
-                    });
+                            $location.url("/store/list/stockout");
+                        });
+                    }
                 };
             }])
         //确认入库
@@ -747,23 +754,25 @@
             function($scope, $routeParams, ComView, res, model, $location, $injector){
                 $scope.selectAble= false;
 
-                ComView.displayBill($scope, model, res, {
-                    id: $routeParams.id,
-                    queryExtraParams: {includeSource: true, workflowing: true}
-                });
-
-                $scope.doSubmit = function() {
-                    $scope.formMetaData.rows = $scope.formData;
-                    var data = {
-                        workflow: true,
-                        node_id: $routeParams.nodeId,
-                        id: $routeParams.id,
-                        donext: true,
-                        data: $scope.formMetaData
-                    };
-                    res.doPostWorkflow(data).$promise.then(function(data){
-                        $location.url("/store/list/stockin");
-                    });
+                $scope.config = {
+                    model:model,
+                    resource:res,
+                    opts: {
+                        queryExtraParams: {includeSource: true, workflowing: true}
+                    },
+                    doSubmit: function(){
+                        $scope.formMetaData.rows = $scope.formData;
+                        var data = {
+                            workflow: true,
+                            node_id: $routeParams.nodeId,
+                            id: $routeParams.id,
+                            donext: true,
+                            data: $scope.formMetaData
+                        };
+                        res.doPostWorkflow(data).$promise.then(function(data){
+                            $location.url("/store/list/stockin");
+                        });
+                    }
                 };
             }])
 
@@ -786,6 +795,7 @@
                 $scope.items = data;
             });
         }])
+
         .controller("DashboardNeedStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
             res.query({
                 latest: true,

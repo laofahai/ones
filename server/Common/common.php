@@ -469,8 +469,14 @@ EOF;
 /**
  * 生成单据编号
  */
-function makeBillCode($prefix=""){
-    return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
+function makeBillCode($prefix){
+    $str = "QWERTYUIOPASDFGHJKLZXCVBNM";
+    return substr($prefix,0,2).$str[intval(date('Y'))-2014].
+    strtoupper(dechex(date('mdH'))).
+    substr(microtime(),2,5).sprintf('%02d',rand(100,999));
+
+
+//    return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
 }
 
 function finalTrim($str) {

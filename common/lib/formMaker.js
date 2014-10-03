@@ -94,38 +94,41 @@
                                 }
 
                                 //提交表单
-                                parentScope.doSubmit = parentScope.doFormSubmit = opts.doSubmit ? opts.doSubmit : function() {
-                                    //                    console.log("submit");
+                                if(typeof(parentScope.doSubmit) !== "function") {
+                                    parentScope.doSubmit = parentScope.doFormSubmit = (opts.doSubmit ? opts.doSubmit : function() {
+                                        //                    console.log("submit");
 
-                                    if(!doFormValidate()) {
-                                        return;
-                                    }
-                                    //编辑
-                                    var getParams = {};
-                                    var tmp = ['group', 'module', 'action'];
-                                    for (var k in $routeParams) {
-                                        if(tmp.indexOf(k) >= 0) {
-                                            continue;
+                                        if(!doFormValidate()) {
+                                            return;
                                         }
-                                        getParams[k] = $routeParams[k];
-                                    }
-                                    var callback = function(data){
-                                        if(data.error) {
-                                            ComView.alert(data.msg);
+                                        //编辑
+                                        var getParams = {};
+                                        var tmp = ['group', 'module', 'action'];
+                                        for (var k in $routeParams) {
+                                            if(tmp.indexOf(k) >= 0) {
+                                                continue;
+                                            }
+                                            getParams[k] = $routeParams[k];
+                                        }
+                                        var callback = function(data){
+                                            if(data.error) {
+                                                ComView.alert(data.msg);
+                                            } else {
+                                                var lastPage = ones.caches.getItem("lastPage");
+                                                $location.url(lastPage[0] || opts.returnPage);
+                                            }
+                                        };
+                                        if (opts.id) {
+                                            getParams.id = opts.id;
+                                            getDataApiPromise(opts.resource, "update", getParams, parentScope[opts.dataName]).then(callback);
+                                            //新增
                                         } else {
-                                            var lastPage = ones.caches.getItem("lastPage");
-                                            $location.url(lastPage[0] || opts.returnPage);
+                                            var params = $.extend(getParams, parentScope[opts.dataName]);
+                                            getDataApiPromise(opts.resource, "save", params).then(callback);
                                         }
-                                    };
-                                    if (opts.id) {
-                                        getParams.id = opts.id;
-                                        getDataApiPromise(opts.resource, "update", getParams, parentScope[opts.dataName]).then(callback);
-                                        //新增
-                                    } else {
-                                        var params = $.extend(getParams, parentScope[opts.dataName]);
-                                        getDataApiPromise(opts.resource, "save", params).then(callback);
-                                    }
-                                };
+                                    });
+                                }
+
 
                                 $scope.$on("commonForm.ready", function() {
                                     var fm = new FormMaker.makeForm($scope, opts);
@@ -367,37 +370,39 @@
 
 
                                 //默认单据提交方法，可自动判断是否编辑/新建
-                                parentScope.doSubmit = parentScope.doBillSubmit = config.doSubmit ? config.doSubmit : function() {
-                                    if(!config.returnPage) {
-                                        var tmp = $location.$$url.split("/").slice(1,4);
-                                        tmp[1] = "list";
-                                        config.returnPage = "/"+tmp.join("/");
-                                    }
-                                    var data = $.extend(parentScope.formMetaData, {rows: parentScope[config.dataName]});
-                                    var getParams = {};
-                                    for (var k in $routeParams) {
-                                        getParams[k] = $routeParams[k];
-                                    }
-
-                                    var rs ;
-
-                                    console.log(data);
-
-                                    if (config.isEdit) {
-                                        getParams.id = $routeParams.id;
-                                        rs = config.resource.update(getParams, data);
-                                    } else {
-                                        rs = config.resource.save(getParams, data);
-                                    }
-
-                                    rs.$promise.then(function(data){
-                                        if(!data.error) {
-                                            ones.caches.removeItem(cacheKey);
-                                            var lastPage = ones.caches.getItem("lastPage");
-                                            $location.url(lastPage[0] || config.returnPage);
+                                if(config.doSubmit) {}
+                                if(typeof(parentScope.doSubmit !== "function")) {
+                                    parentScope.doSubmit = parentScope.doBillSubmit = (config.doSubmit ? config.doSubmit : function() {
+                                        if(!config.returnPage) {
+                                            var tmp = $location.$$url.split("/").slice(1,4);
+                                            tmp[1] = "list";
+                                            config.returnPage = "/"+tmp.join("/");
                                         }
+                                        var data = $.extend(parentScope.formMetaData, {rows: parentScope[config.dataName]});
+                                        var getParams = {};
+                                        for (var k in $routeParams) {
+                                            getParams[k] = $routeParams[k];
+                                        }
+
+                                        var rs ;
+
+                                        if (config.isEdit) {
+                                            getParams.id = $routeParams.id;
+                                            rs = config.resource.update(getParams, data);
+                                        } else {
+                                            rs = config.resource.save(getParams, data);
+                                        }
+
+                                        rs.$promise.then(function(data){
+                                            if(!data.error) {
+                                                ones.caches.removeItem(cacheKey);
+                                                var lastPage = ones.caches.getItem("lastPage");
+                                                $location.url(lastPage[0] || config.returnPage);
+                                            }
+                                        });
                                     });
-                                };
+                                }
+
 
 
                                 $scope.$on("commonBill.ready", function(){
