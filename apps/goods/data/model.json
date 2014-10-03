@@ -8,7 +8,9 @@
             "ensureunique": "GoodsRes",
             "hiddenWhen480": true
         },
-        "name": {},
+        "name": {
+            "ensureunique": "GoodsRes"
+        },
         "pinyin": {
             "displayName": ["firstChar"],
             "required": false,
