@@ -19,15 +19,15 @@ class GoodsAction extends CommonAction {
     protected $dataModelAlias = "goodsBaseInfo";
     
     protected function _filter(&$map) {
-        $typeahead = strtoupper(trim(strip_tags($_GET["typeahead"])));
-        if($typeahead) {
-            $where["name"] = array("LIKE", "%{$typeahead}%");
-            $where["factory_code"] = array("LIKE", "{$typeahead}%");
-            $where["pinyin"] = array("LIKE", "%{$typeahead}%");
-            $where["_logic"] = "OR";
-            $map["_complex"] = $where;
-            $map["deleted"] = 0;
-        }
+//        $typeahead = strtoupper(trim(strip_tags($_GET["typeahead"])));
+//        if($typeahead) {
+//            $where["name"] = array("LIKE", "%{$typeahead}%");
+//            $where["factory_code"] = array("LIKE", "{$typeahead}%");
+//            $where["pinyin"] = array("LIKE", "%{$typeahead}%");
+//            $where["_logic"] = "OR";
+//            $map["_complex"] = $where;
+//            $map["deleted"] = 0;
+//        }
         
         if($_GET["factory_code"]) {
             $map["factory_code"] = trim($_GET["factory_code"]);

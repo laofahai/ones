@@ -13,11 +13,11 @@
  */
 class StockAction extends CommonAction {
     
-    protected function _filter(&$map) {
-        if($_GET["typeahead"]) {
-            $map["_string"] = str_replace("__", $_GET["typeahead"], "name like '%__%' OR pinyin like '%__%'");
-        }
-    }
+//    protected function _filter(&$map) {
+//        if($_GET["typeahead"]) {
+//            $map["_string"] = str_replace("__", $_GET["typeahead"], "name like '%__%' OR pinyin like '%__%'");
+//        }
+//    }
     
     public function pretreatment() {
         switch($this->_method) {

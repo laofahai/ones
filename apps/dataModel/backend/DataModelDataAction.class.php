@@ -24,9 +24,9 @@ class DataModelDataAction extends CommonAction {
         if($_GET['fieldAlias']) {
             $map["DataModelFields.field_name"] = $_GET['fieldAlias'];
         }
-        if($_GET["typeahead"]) {
-            $map["DataModelData.data|DataModelData.pinyin"] = array("LIKE", "{$_GET["typeahead"]}%");
-        }
+//        if($_GET["typeahead"]) {
+//            $map["DataModelData.data|DataModelData.pinyin"] = array("LIKE", "{$_GET["typeahead"]}%");
+//        }
         if($_GET["source_id"]) {
             $map["DataModelData.source_id"] = abs(intval($_GET["source_id"]));
         }
