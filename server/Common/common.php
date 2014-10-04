@@ -429,6 +429,7 @@ function DBBackup($options=array()) {
                     C("DB_PWD"),
                     $savename
                 );
+//    echo $command;exit;
     exec($command);
     if(in_array("zip", $options)) {
         sleep(2);
@@ -474,13 +475,9 @@ function makeBillCode($prefix){
     return substr($prefix,0,2).$str[intval(date('Y'))-2014].
     strtoupper(dechex(date('mdH'))).
     substr(microtime(),2,5).sprintf('%02d',rand(100,999));
-
-
-//    return sprintf("%s%s%d", $prefix, date("ymdHis"), rand(0,9));
 }
 
 function finalTrim($str) {
-//    var_dump(strip_whitespace($str));exit;
     $str = str_replace(
         array("    ", "\n", " :", ": ", " ,",", "),
         array("", "", ":", ":", ",", ","),
