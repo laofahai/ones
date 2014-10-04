@@ -403,8 +403,8 @@ class CommonAction extends RestAction {
             $map["id"] = array("NEQ", $_GET["excludeId"]);
         }
 
-        if($_GET["_kw"]) {
-            $kw = $_GET["_kw"];
+        if($_GET["_kw"] or $_GET["typeahead"]) {
+            $kw = $_GET["_kw"] ? $_GET["_kw"] : $_GET["typeahead"];
 
             if($model->searchFields) {
                 foreach($model->searchFields as $k => $sf) {

@@ -17,14 +17,6 @@ class RelationshipCompanyAction extends CommonAction {
 
     protected $indexModel = "RelationshipCompanyView";
     
-    public function _filter(&$map) {
-        if($_GET["typeahead"]) {
-            $this->relation = false;
-            $map["_string"] = str_replace("__", strtoupper($_GET["typeahead"]), "name LIKE '%__%' OR pinyin LIKE '%__%'");
-        }
-        
-        $map["deleted"] = 0;
-    }
 
     /*
      *
@@ -95,7 +87,7 @@ class RelationshipCompanyAction extends CommonAction {
         $this->pretreatment();
 
         $model = D("RelationshipCompany");
-        $rs = $model->editCompany($_POST, $_POST["rows"], $_GET["id"]);
+        $rs = $model->editCompany($_POST["baseInfo"], $_POST["rows"], $_GET["id"]);
 
         if(!$rs) {
             $this->response($model->getError());

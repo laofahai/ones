@@ -329,8 +329,15 @@
                             inputType: "datetime"
                         },
                         workflow: "stockin"
-                    }
-                },
+                    },
+                    extraPageActions: [
+                        {
+                            label: toLang("viewDetail", "actions", $rootScope),
+                            class: "primary",
+                            href : "/store/list/stockinDetail"
+                        }
+                    ]
+                }
             };
             obj.getStructure= function() {
                 var i18n = $rootScope.i18n.lang;
@@ -361,14 +368,17 @@
 
             return obj;
         }])
-        .service("StockinDetailModel", ["$rootScope", "GoodsRes","pluginExecutor",
-            function($rootScope, GoodsRes, plugin) {
+        .service("StockinDetailModel", ["$rootScope", "GoodsRes","pluginExecutor", "ones.dataApiFactory",
+            function($rootScope, GoodsRes, plugin, dataAPI) {
                 var obj = {
                     config: {
                         printAble: true,
                         isBill:true,
                         workflowAlias: "stockin"
-                    }
+                    },
+                    api: dataAPI.getResourceInstance({
+                        "uri" : "store/stockinDetail"
+                    })
                 };
                 obj.getStructure = function() {
                     var i18n = $rootScope.i18n.lang;

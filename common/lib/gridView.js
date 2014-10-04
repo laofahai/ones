@@ -267,13 +267,13 @@
                     //过滤器
                     makeFilters: function($scope, filters){
 
-                        $scope.showFilters = true
-
                         filters = filters || self.options.filters;
 
                         if(!filters) {
                              return;
                         }
+
+                        $scope.showFilters = true
 
                         var FieldsDefine = {};
                         angular.forEach(filters, function(item, type){

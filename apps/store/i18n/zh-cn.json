@@ -24,6 +24,10 @@
                         "trash": "入库单回收站"
                     }
                 },
+                "StockinDetail": {
+                    "name": "入库单详情",
+                    "actions": {}
+                },
                 "StockProductList": {
                     "name": "库存管理",
                     "actions": {

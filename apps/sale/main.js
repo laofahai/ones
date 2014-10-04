@@ -302,7 +302,10 @@
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
                         "ng-model": "formMetaData.customer_id",
-                        dataSource: RelationshipCompanyRes
+                        dataSource: RelationshipCompanyRes,
+                        dynamicAddOpts: {
+                            model: "RelationshipCompanyModel"
+                        }
                     }
                 };
                 //销售类型字段定义

@@ -15,7 +15,9 @@ class RelationshipCompanyViewModel extends CommonViewModel {
     );
 
     public $searchFields = array(
-        "name", "pinyin", "address"
+        "RelationshipCompany.name",
+        "RelationshipCompany.pinyin",
+        "RelationshipCompany.address"
     );
 
 } 

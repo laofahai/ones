@@ -23,6 +23,14 @@ class DataModelFieldsAction extends CommonAction {
         if(isset($_GET["modelId"])) {
             $map["model_id"] = abs(intval($_GET["modelId"]));
         }
+
+        if($_GET["modelAlias"]) {
+            $dataModel = D("DataModel")->getByAlias($_GET["modelAlias"]);
+            if($dataModel) {
+                $map["model_id"] = $dataModel["id"];
+            }
+        }
+
     }
 
     protected function _order(&$order) {
@@ -34,20 +42,6 @@ class DataModelFieldsAction extends CommonAction {
         if(!$_POST["model_id"]) {
             $_POST["model_id"] = $_REQUEST["pid"];
         }
-    }
-
-    public function index() {
-        if(!$_GET["modelAlias"]) {
-            return parent::index();
-        }
-
-        $dataModel = D("DataModel")->getByAlias($_GET["modelAlias"]);
-        if(!$dataModel) {
-            return;
-        }
-
-        $data = D("DataModelFields")->where("model_id=".$dataModel["id"])->order("listorder DESC")->select();
-        $this->response($data);
     }
     
     
