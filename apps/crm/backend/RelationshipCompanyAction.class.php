@@ -14,6 +14,8 @@
 class RelationshipCompanyAction extends CommonAction {
     
     protected $relation = true;
+
+    protected $indexModel = "RelationshipCompanyView";
     
     public function _filter(&$map) {
         if($_GET["typeahead"]) {
@@ -29,21 +31,13 @@ class RelationshipCompanyAction extends CommonAction {
      * **/
     protected function pretreatment() {
 
-        $tmp["baseInfo"] = array(
-            "name" => $_POST["name"],
-            "group_id" => $_POST["group_id"],
-            "discount" => $_POST["discount"],
-            "address"  => $_POST["address"],
-            "memo"     => $_POST["memo"]
-        );
-
         if(!$_POST["pinyin"]) {
-            $tmp["pinyin"] = Pinyin($_POST["name"]);
+            $_POST["pinyin"] = Pinyin($_POST["name"]);
         }
 
         if(!$_GET["id"]) {
-            $tmp["baseInfo"]["user_id"] = getCurrentUid();
-            $tmp["baseInfo"]["dateline"] = CTS;
+            $_POST["user_id"] = getCurrentUid();
+            $_POST["dateline"] = CTS;
         }
 
         $tmp["rows"] = array();
@@ -56,16 +50,8 @@ class RelationshipCompanyAction extends CommonAction {
             }
         }
 
-        $_POST["extraInfo"] = $tmp["baseInfo"];
-        foreach($_POST as $k=>$v) {
-            if($k == "rows" or $k == "extraInfo" or array_key_exists($k, $tmp["baseInfo"])) {
-                continue;
-            }
-            $_POST["extraInfo"][$k] = $v;
-        }
-
         $_POST["rows"] = $tmp["rows"];
-        $_POST["baseInfo"] = $tmp["baseInfo"];
+
     }
 
     public function index() {
@@ -74,10 +60,12 @@ class RelationshipCompanyAction extends CommonAction {
     }
     
     public function insert() {
+
         $this->pretreatment();
 
         $model = D("RelationshipCompany");
-        $id = $model->newCompany($_POST["baseInfo"], $_POST["rows"]);
+
+        $id = $model->newCompany($_POST, $_POST["rows"]);
 
         if(!$id) {
             $this->response($model->getError());
@@ -107,7 +95,7 @@ class RelationshipCompanyAction extends CommonAction {
         $this->pretreatment();
 
         $model = D("RelationshipCompany");
-        $rs = $model->editCompany($_POST["baseInfo"], $_POST["rows"], $_GET["id"]);
+        $rs = $model->editCompany($_POST, $_POST["rows"], $_GET["id"]);
 
         if(!$rs) {
             $this->response($model->getError());

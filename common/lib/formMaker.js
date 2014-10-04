@@ -371,8 +371,7 @@
 
 
                                 //默认单据提交方法，可自动判断是否编辑/新建
-                                if(config.doSubmit) {}
-                                if(typeof(parentScope.doSubmit !== "function")) {
+                                if(typeof(parentScope.doBillSubmit !== "function")) {
                                     parentScope.doSubmit = parentScope.doBillSubmit = (config.doSubmit ? config.doSubmit : function() {
                                         if(!config.returnPage) {
                                             var tmp = $location.$$url.split("/").slice(1,4);
@@ -387,6 +386,7 @@
 
                                         var rs ;
 
+//                                        console.log(data);return;
                                         if (config.isEdit) {
                                             getParams.id = $routeParams.id;
                                             rs = config.resource.update(getParams, data);
@@ -398,13 +398,12 @@
                                             if(!data.error) {
                                                 ones.caches.removeItem(cacheKey);
                                                 var lastPage = ones.caches.getItem("lastPage");
+
                                                 $location.url(lastPage[0] || config.returnPage);
                                             }
                                         });
                                     });
                                 }
-
-
 
                                 $scope.$on("commonBill.ready", function(){
                                     if (config.isEdit) {

@@ -32,6 +32,4 @@ define("APP_NAME", "ONES");
 define("APP_DEBUG", true);
 define("APP_PATH", "./server/");
 
-//echo file_get_contents("apps/store/i18n/zh-cn.json");
-
 require './server/ThinkPHP/ThinkPHP.php';

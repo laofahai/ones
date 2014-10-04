@@ -26,14 +26,6 @@ class UserRelationModel extends RelationModel {
         "Department" => BELONGS_TO
     );
     
-    protected $status_lang = array(
-        "blocked", "normal"
-    );
-    
-    protected $status_class = array(
-        "", "success"
-    );
-
     public $searchFields = array(
         "username", "truename", "email", "phone"
     );

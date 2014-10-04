@@ -58,8 +58,7 @@ class AuthGroupRuleAction extends CommonAction {
      * @todo php://input 无法获取PUT数据
      */
     public function update() {
-        $putData = I("put.");
-        $putData = $putData ? $putData : $_POST;
+        $putData = $_POST;
         
         $gid = abs(intval($_GET["id"]));
 

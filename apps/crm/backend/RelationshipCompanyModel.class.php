@@ -11,31 +11,7 @@
  *
  * @author 志鹏
  */
-class RelationshipCompanyModel extends CommonRelationModel {
-    
-    protected $_link = array(
-        "User" => BELONGS_TO,
-        "RelationshipCompanyGroup" => array(
-            'mapping_type'=>BELONGS_TO,
-            "foreign_key" => "group_id",
-            "mapping_name" => "Group"
-        ),
-        "RelationshipCompanyLinkman" => array(
-            'mapping_type'=> HAS_MANY,
-            'class_name'=> 'RelationshipCompanyLinkman',
-            'foreign_key'=> 'relationship_company_id',
-            'mapping_name'=> 'Linkman',
-            'mapping_order'=> 'is_primary DESC, id ASC',
-       ),
-    );
-
-    public $searchFields = array(
-        "name", "pinyin", "address"
-    );
-    
-    protected $status_lang = array(
-        "private", "public"
-    );
+class RelationshipCompanyModel extends CommonModel {
     
 //    public function select($options=array()) {
 //        $data = parent::select($options);
@@ -60,6 +36,7 @@ class RelationshipCompanyModel extends CommonRelationModel {
 
 
     public function newCompany($baseInfo, $contacts) {
+
         $this->startTrans();
         $id = $this->add($baseInfo);
         if(!$id) {
@@ -72,7 +49,7 @@ class RelationshipCompanyModel extends CommonRelationModel {
 
         $params = array(
             "crmBaseInfo",
-            $_POST["extraInfo"]
+            $baseInfo
         );
 
         tag("insert_dataModel_data", $params);
@@ -96,8 +73,6 @@ class RelationshipCompanyModel extends CommonRelationModel {
 
         }
 
-
-
         $this->commit();
 
         return $id;
@@ -120,10 +95,8 @@ class RelationshipCompanyModel extends CommonRelationModel {
         $_POST["id"] = $id;
         $params = array(
             "crmBaseInfo",
-            $_POST
+            $baseInfo
         );
-
-//        print_r($_POST);
 
         tag("insert_dataModel_data", $params);
 

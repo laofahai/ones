@@ -26,6 +26,7 @@ class ONESInsertDataModelDataBehavior extends Behavior {
         $dataModel = $modelObject->getByAlias($bindModelAlias);
 
         if(!$dataModel) {
+            Log::write("try to insert model data but dataModel not found: ".$bindModelAlias);
             return false;
         }
 

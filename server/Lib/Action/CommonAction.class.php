@@ -36,10 +36,12 @@ class CommonAction extends RestAction {
 
         parent::__construct();
 
-        if(!$_POST) {
-            $_POST = array_merge((array)$_POST, json_decode(file_get_contents('php://input'), true));
+
+        if(in_array($this->_method, array("post", "put")) && !$_POST) {
+            $tmp = file_get_contents("php://input");
+            $_POST = json_decode($tmp, true);
         }
-        
+
         import("@.ORG.Auth");
 //        session(array());
         //判断来路
@@ -253,7 +255,7 @@ class CommonAction extends RestAction {
         $this->response(array(
             "error" => 1,
             "msg"   => $msg
-        ));
+        ));exit;
     }
     protected function httpError($code, $msg=null) {
         echo $msg;
@@ -820,6 +822,5 @@ class CommonAction extends RestAction {
         }
         $xls->export($filename);
     }
-
 }
 

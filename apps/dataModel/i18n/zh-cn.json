@@ -56,7 +56,7 @@
         "bindDataModel": "绑定数据模型",
         "model_name": "模型名称",
         "extra_configure": "扩展配置",
-        "dataModel_extraConfig_tip": "格式为“name:value”，每行一个，具体参数请参见<a href='http://project.ng-erp.com/projects/ones/wiki/DataModel_%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B#数据模型字段扩展配置' target='_blank'>ONES WIKI</a>",
+        "dataModel_extraConfig_tip": "格式为“name::value”，每行一个，具体参数请参见<a href='http://project.ng-erp.com/projects/ones/wiki/DataModel_%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B#数据模型字段扩展配置' target='_blank'>ONES WIKI</a>",
 
         "datamodel.datamodel" : "%s数据模型",
         "datamodel.datamodelfields": "%s数据模型字段",

@@ -86,7 +86,7 @@
                         },
                         name: {},
                         group_id: {
-                            field: "Group.name",
+                            field: "group_name",
                             dataSource: "RelationshipCompanyGroupRes",
                             inputType: "select",
                             displayName: $rootScope.i18n.lang.group
@@ -97,8 +97,7 @@
                             value: 100
                         },
                         owner: {
-                            hideInForm: true,
-                            field: "User.truename"
+                            hideInForm: true
                         },
                         address: {
                             required: false
@@ -179,6 +178,9 @@
 
                 $scope.doComplexSubmit = function() {
                     $scope.formMetaData = $scope.formData;
+//
+//                    console.log($scope);
+//                    return;
                     $scope.doBillSubmit();
                 };
             }])
