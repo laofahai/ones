@@ -207,6 +207,9 @@ abstract class RestAction {
         if(C('LOG_RECORD')) Log::save();
         $type = $type ? $type : "json";
         $this->sendHttpStatus($code);
+        if(!is_array($data)) {
+            return;
+        }
         echo json_encode($data);
 //        echo $this->encodeData($data,strtolower($type));
     }
