@@ -387,16 +387,8 @@
                     //默认选项
                     var defaults = {
                         data: 'itemsList',
-                        enablePaging: true,
-                        showFooter: true,
-                        showFilter: true,
-                        showColumnMenu: true,
-                        showSelectionCheckbox: true,
-                        //                        selectWithCheckboxOnly: true,
-                        rowHeight: 40,
+
                         multiSelect: true,
-                        headerRowHeight: 40,
-                        enableColumnResize: true,
                         selectedItems: $scope.gridSelected,
                         pagingOptions: $scope.pagingOptions,
                         filterOptions: $scope.filterOptions,
@@ -404,13 +396,7 @@
                         //                    showGroupPanel: true,
                         sortInfo: $scope.sortInfo,
                         totalServerItems: "totalServerItems",
-                        useExternalSorting: true,
-                        //                        selectedItems: "gridSelected",
-                        //            enablePinning: true,
-                        //                        checkboxCellTemplate: '<div class="ngSelectionCell"><input tabindex="-1" class="ngSelectionCheckbox" type="checkbox" ng-checked="row.selected" /></div>',
-                        i18n: "zh-cn",
-                        plugins: [ngGridDoubleClick],
-                        //extra
+
                         module: $location.$$url.split("/").splice(0, 3).join("/"),
                         subModule: "",
                         queryExtraParams: {}, //get 参数

@@ -531,7 +531,6 @@
                 $scope.formMetaData = {};
                 $scope.selectAble = false;
                 $routeParams.id = $routeParams.pid;
-                console.log(model);
                 ComView.displayBill($scope, model, res, {
                     id: $routeParams.pid,
                     module: "/produce/productTplDetail",
