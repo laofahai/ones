@@ -239,8 +239,8 @@
             };
         }])
 
-        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector", "$location",
-            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector, $location) {
+        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector", "$location", "$route",
+            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector, $location, $route) {
                 return {
                     restrict: "E",
                     replace: true,
@@ -346,7 +346,21 @@
                                                 container: "#bottomAlertContainer",
                                                 autohide: 6000
                                             });
+
                                         }
+
+                                        parentScope.showClearAutoSaved = true;
+
+                                        parentScope.doClearCachedData = function(){
+                                            ones.caches.removeItem(cacheKey);
+                                            ComView.alert({
+                                                msg: ComView.toLang("cached data cleared", "messages"),
+                                                type: "danger",
+                                                container: "#bottomAlertContainer",
+                                                autohide: 3000
+                                            });
+                                            $route.reload();
+                                        };
 
                                         //自动保存数据
                                         var t = setInterval(function(){
@@ -390,7 +404,7 @@
                                             getParams[k] = $routeParams[k];
                                         }
 
-                                        var rs ;
+                                        var rs;
 
                                         if (config.isEdit) {
                                             getParams.id = $routeParams.id;
@@ -937,6 +951,7 @@
                 service.makeBill.prototype = {
                     makeHTML: function() {
                         this.bindEvents(this.scope);
+                        console.log(123);
                         return sprintf(this.opts.templates["bills/box.html"], {
                             headHTML : this.makeHead(this.opts.fieldsDefine),
                             bodyHTML : this.makeBody(this.opts.fieldsDefine),
@@ -1039,6 +1054,7 @@
                         var self = this;
                         var html = [this.opts.templates['bills/fields/rowHead.html']];
                         defaultData = defaultData || [];
+
                         defaultData = dataFormat(fieldsDefine, defaultData);
                         this.scope.$parent[this.opts.dataName][i] = defaultData[i] || {};
                         this.fieldsDefine = fieldsDefine;
@@ -1199,7 +1215,7 @@
                             if(true === isTbody) {
                                 $("#billTable tbody").append(html);
                             } else {
-                                $(element).parent().parent().parent().before(html);
+                                $(element).parent().parent().parent().after(html);
                             }
                             self.reIndexTr();
                         };
@@ -1399,6 +1415,8 @@
                             parentScope.onUnit_priceNumberBlur = function(event){
                                 var context = getInputContext(event.target);
                                 countRowAmount(context.trid);
+                                var ele = $(event.target);
+                                self.setNumberData(ele, ele.val(), true);
                                 recountTotalAmount();
                             };
                             //折扣
@@ -1406,10 +1424,12 @@
                                 var context = getInputContext(event.target);
                                 countRowAmount(context.trid);
                                 recountTotalAmount();
+
+                                var ele = $(event.target);
+                                self.setNumberData(ele, ele.val(), true);
                             };
                             //行内总价
                             parentScope.onTotal_amountNumberBlur = function(event){
-                                var context = getInputContext(event.target);
                                 recountTotalAmount();
                             };
                         }

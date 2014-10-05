@@ -136,7 +136,7 @@
                             displayName: i18n.goods,
                             labelField: true,
                             inputType: "select3",
-                            dataSource: GoodsRes,
+                            dataSource: "GoodsRes",
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
@@ -352,7 +352,7 @@
 
                 $scope.billConfig = {
                     model: OrdersModel,
-                    res: OrdersRes
+                    resource: OrdersRes
                 };
 //                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
 //                $scope.format = $scope.formats[0];
@@ -376,7 +376,7 @@
 
                 $scope.config = {
                     model: ReturnsModel,
-                    res: ReturnsRes
+                    resource: ReturnsRes
                 };
 
                 //客户选择字段定义

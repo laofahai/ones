@@ -484,11 +484,14 @@ var dataFormat = function(fieldsDefine, data) {
     for (var f in fieldsDefine) {
         var struct = fieldsDefine[f];
 
+        if(data[f] === undefined) {
+            continue;
+        }
+
         switch (struct.inputType) {
             case "text":
             case "":
             case undefined:
-
                 break;
             case "select":
                 if(!struct.multiple) {

@@ -97,6 +97,7 @@
             "can not find item": "不能找到所选项目",
             "delete_failed": "删除失败",
             "cached data loaded": "缓存数据已载入",
+            "cached data cleared": "缓存数据已清除",
             "auto saved": "已自动保存",
             "confirm_delete": "确定要删除这 %d 项吗？",
             "apps": {

@@ -20,7 +20,8 @@
             config: {
                 isBill: true,
                 workflowAlias: "purchase",
-                rowsModel: "PurchaseEditModel"
+                rowsModel: "PurchaseEditModel",
+                relateMoney: true
             },
             getStructure: function(){
                 return {
@@ -126,7 +127,6 @@
                 };
 
             }
-//                $scope.formMetaData.inputTime = new Date();
 
             $routeParams.group = "purchase";
             $routeParams.module = "purchase";

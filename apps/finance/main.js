@@ -48,7 +48,9 @@
                         },
                         account: {},
                         record_type: {},
-                        amount: {},
+                        amount: {
+                            cellFilter: "currency:'￥'"
+                        },
                         dateline: {
                             cellFilter: "dateFormat:0"
                         },
@@ -66,7 +68,8 @@
                         id: {primary: true},
                         name: {},
                         balance: {
-                            inputType: "number"
+                            inputType: "number",
+                            cellFilter: "currency:'￥'"
                         },
                         listorder: {
                             value: 99

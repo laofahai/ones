@@ -314,7 +314,7 @@
                 service.alert = function(alertMsg, type, title, autohide) {
 
                     var container = "#alerts-container";
-                    var placement = "top";
+                    var placement = "bottom";
 
                     if(typeof(alertMsg) == "object") {
                         var config = angular.copy(alertMsg);
@@ -327,7 +327,6 @@
                     }
 
                     type = type || "warning";
-
 
                     var erpalert = $alert({title: title,
                         content: alertMsg+" &nbsp;",
@@ -799,6 +798,10 @@
                             })+extraParams
                         });
                     });
+
+                    if(!model) {
+                        return;
+                    }
 
                     model.config = model.config || {};
 

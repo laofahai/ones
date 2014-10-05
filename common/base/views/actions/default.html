@@ -64,6 +64,11 @@
                     ng-click="doWorkflow($event, w.id)"
                     ></button>
         </div>
+        <div class="actionsBtnRight" ng-show="showClearAutoSaved">
+            <button class="btn btn-sm btn-danger" ng-click="doClearCachedData()">
+                <i class="icon icon-trash-o"></i>
+            </button>
+        </div>
 
     </div>
 

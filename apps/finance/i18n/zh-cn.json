@@ -5,9 +5,8 @@
                 "modules": {
                 "FinanceRecord": {
                     "name": "财务收支记录",
-                        "actions": {
-                        "list": "",
-                            "add": ""
+                    "actions": {
+                        "list": ""
                     }
                 },
                 "FinanceAccount": {
