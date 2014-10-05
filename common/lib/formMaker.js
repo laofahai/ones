@@ -72,12 +72,12 @@
                                 var field = opts.model.getStructure();
                                 if("then" in field && typeof(field.then) === "function") { //需要获取异步数据
                                     field.then(function(data){
-                                        doDefine(data);
+                                        doDefine(angular.copy(data));
                                     }, function(msg){
                                         ComView.alert(msg);
                                     });
                                 } else {
-                                    doDefine(field);
+                                    doDefine(angular.copy(field));
                                 }
 
                                 var doFormValidate = function(name){
@@ -115,7 +115,13 @@
                                                 ComView.alert(data.msg);
                                             } else {
                                                 var lastPage = ones.caches.getItem("lastPage");
-                                                $location.url(lastPage[0] || opts.returnPage);
+                                                var returnPage = opts.returnPage;
+                                                if(lastPage[0]) {
+                                                    lastPage = lastPage[0].split("/");
+                                                    returnPage = lastPage[1]+"/list/"+lastPage[3];
+                                                }
+
+                                                $location.url(returnPage);
                                             }
                                         };
                                         if (opts.id) {
@@ -262,7 +268,7 @@
 
                                 if("then" in structure && typeof(structure.then) == "function") {
                                     structure.then(function(data){
-                                        structure = data;
+                                        structure = angular.copy(data);
                                         $timeout(function(){
                                             doWhenStructureReady(structure);
                                         });
@@ -270,7 +276,7 @@
                                     });
                                 } else {
                                     $timeout(function(){
-                                        doWhenStructureReady(structure);
+                                        doWhenStructureReady(angular.copy(structure));
                                     });
                                 }
 
@@ -386,7 +392,6 @@
 
                                         var rs ;
 
-//                                        console.log(data);return;
                                         if (config.isEdit) {
                                             getParams.id = $routeParams.id;
                                             rs = config.resource.update(getParams, data);
@@ -397,9 +402,15 @@
                                         rs.$promise.then(function(data){
                                             if(!data.error) {
                                                 ones.caches.removeItem(cacheKey);
-                                                var lastPage = ones.caches.getItem("lastPage");
 
-                                                $location.url(lastPage[0] || config.returnPage);
+                                                var lastPage = ones.caches.getItem("lastPage");
+                                                var returnPage = config.returnPage;
+                                                if(lastPage[0]) {
+                                                    lastPage = lastPage[0].split("/");
+                                                    returnPage = lastPage[1]+"/list/"+lastPage[3];
+                                                }
+
+                                                $location.url(returnPage);
                                             }
                                         });
                                     });
@@ -1564,6 +1575,7 @@
                             } else {
                                 delete(struct.required);
                             }
+
                             self.scope.$parent[self.opts.dataName][field] = "";
 
                             fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);

@@ -595,7 +595,7 @@
                         }
                     }
                     //查看详情
-                    if(false !== model.config.viewDetailAble) {
+                    if(model.config.viewDetailAble) {
                         $scope.selectedActions.push({
                             name: "viewDetail",
                             label: service.toLang('viewDetail', "actions"),

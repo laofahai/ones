@@ -83,7 +83,7 @@
                         hideInForm: true
                     },
                     department_id: {
-                        displayName: $rootScope.i18n.lang.department,
+                        displayName: toLang("department", "", $rootScope),
                         nameField: "prefix_name",
                         listAble: false,
                         inputType: "select",
