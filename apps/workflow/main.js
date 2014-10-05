@@ -122,7 +122,7 @@
                         inputType: "select",
                         dataSource: [
                             {id: 1, name: $rootScope.i18n.lang.yes},
-                            {id: -1, name: $rootScope.i18n.lang.no}
+                            {id: 0, name: $rootScope.i18n.lang.no}
                         ]
                     },
                     remind: {
@@ -173,7 +173,7 @@
 
                 var actions = $scope.$parent.i18n.urlMap.workflow.modules.WorkflowNode.actions;
 
-                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid);
+                ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid, dataAPI.model);
                 ComView.makeGridSelectedActions($scope, dataAPI.model, dataAPI.resource, "workflow", "WorkflowNode");
                 ComView.displayGrid($scope,dataAPI.model,dataAPI.resource, {
                     queryExtraParams: {

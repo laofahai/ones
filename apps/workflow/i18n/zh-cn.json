@@ -41,9 +41,9 @@
         "next_node_id": "下一流程节点",
         "execute_type": "执行类型",
         "status_text" : "状态文本",
-        "executor_group": "执行组",
-        "executor_department": "执行部门",
-        "executor_user": "执行人",
+        "executor_group": "可执行组",
+        "executor_department": "可执行部门",
+        "executor_user": "可执行人",
         "execute_file": "执行文件",
         "is_default": "是否默认",
         "AppWorkflow": {

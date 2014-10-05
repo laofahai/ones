@@ -483,21 +483,31 @@ var dataFormat = function(fieldsDefine, data) {
     }
     for (var f in fieldsDefine) {
         var struct = fieldsDefine[f];
+
         switch (struct.inputType) {
+            case "text":
+            case "":
+            case undefined:
+
+                break;
+            case "select":
+                if(!struct.multiple) {
+                    if (/^\d+$/.test(data[f])) {
+                        data[f] = Number(data[f]) || 0;
+                    }
+                }
+                break;
             case "number":
-                if (false === isNaN(data[f])) {
+                data[f] = Number(data[f]) || 0;
+                break;
+            default:
+                if (/^\d+$/.test(data[f])) {
                     data[f] = Number(data[f]) || 0;
                 }
                 break;
-            default:
-//                if (false === isNaN(data[f])) {
-//                    data[f] = Number(data[f]) || 0;
-//                } else {
-//                    data[f] = data[f];
-//                }
-                break;
         }
     }
+
     return data;
 };
 

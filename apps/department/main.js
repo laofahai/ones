@@ -152,23 +152,8 @@
                         name: {},
                         title: {
                             field: "name",
-                            cellFilter: "toAuthNodeName"
-                        },
-                        category: {
-                            inputType: "select",
-                            dataSource: [
-                                {id: "all", name: "公用模块"},
-                                {id: "basedata", name: "基础数据"},
-                                {id: "crm", name: "客户管理"},
-                                {id: "finance", name: "基本财务模块"},
-                                {id: "accounting", name: "高级财务模块"},
-                                {id: "produce", name: "生产管理"},
-                                {id: "sale", name: "销售模块"},
-                                {id: "department", name: "组织机构管理"},
-                                {id: "set", name: "设置模块"},
-                                {id: "statistics", name: "统计模块"},
-                                {id: "stock", name: "仓储模块"}
-                            ]
+                            cellFilter: "toAuthNodeName",
+                            hideInForm: true
                         }
                     };
                 }
