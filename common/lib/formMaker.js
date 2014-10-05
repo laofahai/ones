@@ -951,7 +951,6 @@
                 service.makeBill.prototype = {
                     makeHTML: function() {
                         this.bindEvents(this.scope);
-                        console.log(123);
                         return sprintf(this.opts.templates["bills/box.html"], {
                             headHTML : this.makeHead(this.opts.fieldsDefine),
                             bodyHTML : this.makeBody(this.opts.fieldsDefine),

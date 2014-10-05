@@ -67,7 +67,7 @@
                     $scope.activeSubNav = pid;
                 };
                 $scope.goPage = function(url) {
-                    if(undefined === url) {
+                    if(undefined === url || !$.trim(url)) {
                         return;
                     }
                     $location.url("/"+url);
