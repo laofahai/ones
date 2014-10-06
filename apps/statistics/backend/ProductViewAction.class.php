@@ -54,7 +54,7 @@ class ProductViewAction extends CommonAction{
         }
 
         //销售
-        if(in_array("sale", $appConf["requirements"]) && isAppLoaded("sale")) {
+        if(isAppLoaded("sale")) {
             $orderMap = array(
                 "OrdersDetail.factory_code_all" => array("IN", implode(",", $factoryCodes)),
                 "Orders.dateline" => array("BETWEEN", array($dateStart, $dateEnd)),
@@ -73,7 +73,7 @@ class ProductViewAction extends CommonAction{
 
 
         //生产
-        if(in_array("produce", $appConf["requirements"]) && isAppLoaded("produce")) {
+        if(isAppLoaded("produce")) {
             $produceMap = array(
                 "ProducePlan.end_time" => array("BETWEEN", array($dateStart, $dateEnd)),
                 "ProducePlan.status" => array("EGT", 4),
@@ -89,7 +89,7 @@ class ProductViewAction extends CommonAction{
         }
 
         //采购
-        if(in_array("purchase", $appConf["requirements"]) && isAppLoaded("purchase")) {
+        if(isAppLoaded("purchase")) {
             $purchaseModel = D("PurchaseDetailView");
             $purchaseMap = array(
                 "Purchase.dateline" => array("BETWEEN", array($dateStart, $dateEnd)),

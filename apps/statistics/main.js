@@ -15,7 +15,7 @@
             return $resource(cnf.BSU+"statistics/sale/:id.json");
         }])
 
-        .service("ProductViewModel", ["$rootScope", function($rootScope){
+        .service("ProductViewModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             var startTime = new Date();
             var endTime = new Date();
             startTime.setMonth(startTime.getMonth()-1);
@@ -27,30 +27,36 @@
                         inputType: "datetime"
                     }
                 },
+                structure: {
+                    factory_code_all: {},
+                    goods_name: {},
+                    measure: {},
+                    store_num: {
+                        displayName: $rootScope.i18n.lang.storeNum
+                    }
+                },
                 getStructure: function() {
-                    return {
-                        factory_code_all: {},
-                        goods_name: {},
-                        measure: {},
-                        standard: {
-                            field: "standard_label"
-                        },
-                        version: {
-                            field: "version_label"
-                        },
-                        sale_num: {},
-                        sale_amount: {
-                            cellFilter: "currency:'￥'"
-                        },
-                        purchase_num: {},
-                        purchase_amount: {},
-                        produce: {
-                            field: "produce_num"
-                        },
-                        store_num: {
-                            displayName: $rootScope.i18n.lang.storeNum
-                        }
-                    };
+
+                    if(isAppLoaded("sale")) {
+                        this.structure.sale_num = {};
+                        this.structure.sale_amount = {cellFilter: "currency:'￥'"};
+                    }
+
+                    if(isAppLoaded("purchase")) {
+                        this.structure.purchase_num = {};
+                        this.structure.purchase_amount = {cellFilter: "currency:'￥'"};
+                    }
+
+                    if(isAppLoaded("produce")) {
+                        this.structure.produce = {field: "produce_num"};
+                    }
+
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: this.structure,
+                        alias: "product",
+                        after: "goods_name"
+                    });
+                    return ones.pluginScope.get("defer").promise;
                 }
             };
         }])

@@ -395,8 +395,7 @@
                         goods_name: {
                             printAble: true,
                             billAble: false,
-                            hideInForm:true,
-                            listAble: false
+                            hideInForm:true
                         },
                         goods_id: {
                             displayName: i18n.goods,
@@ -418,13 +417,15 @@
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true,
-                            printAble: true
+                            printAble: true,
+                            field: "stock_name"
 //                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
                         },
                         store_num: {
                             displayName: i18n.storeNum,
                             editAble:false,
-                            min: -9999
+                            min: -9999,
+                            listAble: false
                         },
                         num: {
                             inputType: "number",
@@ -748,15 +749,11 @@
                     var params = {};
                     if($scope.formData.stock) {
                         params.stock = $scope.formData.stock;
-//                        url+= "/stock/"+$scope.formData.stock.join('_');
                     }
                     params.category = $scope.formData.category;
-//                    url+= "/category/"+$scope.formData.category.join('_');
-//                    url+= "/warningonly/"+$scope.formData.stockWarningOnly;
                     params.warningonly = $scope.formData.stockWarningOnly;
 
                     url = sprintf(url, base64encode(angular.toJson(params)));
-//                    console.log(url);return;
                     window.open(url);
                 };
             }])
