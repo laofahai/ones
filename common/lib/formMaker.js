@@ -239,8 +239,8 @@
             };
         }])
 
-        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector", "$location", "$route",
-            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector, $location, $route) {
+        .directive("bill", ["$compile", "FormMaker", "$timeout", "$routeParams", "ComView", "$injector", "$location", "$route", "$interval",
+            function($compile, FormMaker, $timeout, $routeParams, ComView, $injector, $location, $route, $interval) {
                 return {
                     restrict: "E",
                     replace: true,
@@ -328,17 +328,14 @@
                                         if(cachedData) {
                                             try {
                                                 if(cachedData.meta.inputTime) {
-                                                    cachedData.meta.inputTime = new Date(cachedData.meta.inputTime);
+                                                    cachedData.meta.inputTime = parentScope.formMetaData.inputTime;
                                                 }
                                                 if(cachedData.meta.dateline) {
-                                                    cachedData.meta.dateline = new Date(cachedData.meta.dateline);
+                                                    cachedData.meta.dateline = parentScope.formMetaData.dateline;
                                                 }
-                                            } catch(e) {
-
-                                            }
+                                            } catch(e) { }
                                             parentScope.formMetaData = cachedData.meta;
                                             parentScope[config.dataName] = cachedData.data;
-
 
                                             ComView.alert({
                                                 msg: ComView.toLang("cached data loaded", "messages"),
@@ -362,8 +359,8 @@
                                             $route.reload();
                                         };
 
-                                        //自动保存数据
-                                        var t = setInterval(function(){
+
+                                        var t = $interval(function(){
                                             cachedData = ones.caches.getItem(cacheKey);
                                             currentData = {
                                                 meta: parentScope.formMetaData,
@@ -381,8 +378,12 @@
                                             }
                                         }, 15000);
 
+                                        $scope.$on('$destroy', function() {
+                                            $interval.cancel(t);
+                                        });
+
                                         $scope.$on("$locationChangeStart", function(){
-                                            clearInterval(t);
+                                            $interval.cancel(t);
                                         });
                                     }
 

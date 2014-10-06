@@ -14,7 +14,7 @@
                 }
             );
         }])
-        .service("ExpressModel", ["$rootScope", function($rootScope) {
+        .service("ExpressModel", ["$rootScope", "ones.config", function($rootScope, conf) {
             var i18n = $rootScope.i18n.lang;
             return {
                 config: {
@@ -30,35 +30,6 @@
                             queryParams: {
                                 type: "express"
                             }
-                        },
-                        to_company: {
-                            displayName: i18n.shipment_to_company
-                        },
-                        to_name: {
-                            displayName: i18n.shipment_to_name
-                        },
-                        to_phone: {
-                            displayName: i18n.shipment_to_phone,
-                            listAble:false
-                        },
-                        to_address: {
-                            displayName: i18n.shipment_to_address
-                        },
-                        from_company: {
-                            displayName: i18n.shipment_from_company,
-                            listAble:false
-                        },
-                        from_name: {
-                            displayName: i18n.shipment_from_name,
-                            listAble:false
-                        },
-                        from_phone: {
-                            displayName: i18n.shipment_from_phone,
-                            listAble:false
-                        },
-                        from_address: {
-                            displayName: i18n.shipment_from_address,
-                            listAble:false
                         },
                         freight_type: {
                             field: "freight_type_label",
@@ -78,6 +49,41 @@
                         weight: {
                             required: false
                         },
+                        to_company: {
+                            displayName: i18n.shipment_to_company
+                        },
+                        to_name: {
+                            displayName: i18n.shipment_to_name
+                        },
+                        to_phone: {
+                            displayName: i18n.shipment_to_phone,
+                            listAble:false
+                        },
+                        to_address: {
+                            displayName: i18n.shipment_to_address
+                        },
+                        from_company: {
+                            displayName: i18n.shipment_from_company,
+                            listAble:false,
+                            value: conf.company_name
+                        },
+                        from_name: {
+                            displayName: i18n.shipment_from_name,
+                            listAble:false,
+                            value: ones.userInfo.truename
+                        },
+                        from_phone: {
+                            displayName: i18n.shipment_from_phone,
+                            listAble:false,
+                            value: ones.userInfo.phone || conf.company_phone
+                        },
+                        from_address: {
+                            displayName: i18n.shipment_from_address,
+                            listAble:false,
+                            value: conf.company_address
+                        },
+
+
                         total_num: {
                             displayName: i18n.totalNum,
                             required: false
@@ -106,18 +112,17 @@
                         cusRes.get({
                             id: cusId
                         }).$promise.then(function(data){
-                                $scope.formData.to_company = data.name;
-                                $scope.formData.to_name = data.Linkman[0].contact;
-                                $scope.formData.to_address = data.address;
-                                $scope.formData.to_phone = data.Linkman[0].mobile || data.linkman[0].tel;
-                            });
+                            $scope.formData.to_company = data.name;
+                            $scope.formData.to_name = data.Linkman[0].contact;
+                            $scope.formData.to_address = data.address;
+                            $scope.formData.to_phone = data.Linkman[0].mobile || data.linkman[0].tel;
+                        });
                     }
                 });
 
-
                 //@todo. 按状态监测，非延时监测
                 $timeout(function(){
-                    $scope.formData.from_name = $scope.$parent.userInfo.truename;
+                    $scope.formData.from_name = ones.userInfo.truename;
                     $scope.formData.from_company = conf.company_name;
                     $scope.formData.from_address = conf.company_address;
                     $scope.formData.from_phone   = conf.company_phone;

@@ -1,8 +1,8 @@
 (function(){
 
     angular.module("ones.select3Module", [])
-        .service("select3Field", ["$timeout", "$compile", "$parse", "$injector", "$rootScope", "FormMaker", "ComView",
-            function($timeout, $compile, $parse, $injector, $rootScope, FormMaker, ComView){
+        .service("select3Field", ["$timeout", "$compile", "$parse", "$injector", "$rootScope", "FormMaker", "ComView", "$routeParams",
+            function($timeout, $compile, $parse, $injector, $rootScope, FormMaker, ComView, $routeParams){
 
                 var self = this;
 
@@ -341,7 +341,7 @@
                                     modal.hide();
                                 };
 
-                                postParams = $.extend(parentScope[formDataName], fieldDefine.dynamicAddOpts.postParams);
+                                var postParams = $.extend(parentScope[formDataName], fieldDefine.dynamicAddOpts.postParams);
 
                                 //命名歧义。。 应该是包含行内已有的某条数据
                                 if(fieldDefine.dynamicAddOpts.postWithExtraData) {
@@ -356,16 +356,14 @@
 
                                 getDataApiPromise(fieldDefine.dataSource, "save", postParams).then(callback);
 
-//                                try {
-//                                    fieldDefine.dataSource.save(parentScope.dynamicEditFormData, callback);
-//                                } catch(e) {
-//                                    fieldDefine.dataSource.api.save(parentScope.dynamicEditFormData, callback);
-//                                }
-
                             };
 
                         }
 
+                        //模型字段增加$routeParams.model_alias
+                        if(fieldDefine.dynamicAddOpts.postParams && fieldDefine.dynamicAddOpts.postParams.modelAlias) {
+                            $routeParams.modelAlias = fieldDefine.dynamicAddOpts.postParams.modelAlias;
+                        }
                         var structure = $injector.get(fieldDefine.dynamicAddOpts.model).getStructure();
                         if("then" in structure && typeof structure.then == "function") {
                             structure.then(function(struct){

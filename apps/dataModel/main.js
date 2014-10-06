@@ -183,61 +183,48 @@
         .service("DataModelDataModel", ["$rootScope", "$q", "DataModelFieldsRes", "$routeParams",
             function($rootScope, $q, DataModelFieldsRes, $routeParams) {
                 var obj = {};
-                obj.getStructure = function(structOnly){
-                    var i18n = $rootScope.i18n.lang;
-                    var struct = {
-                        id: {
-                            primary: true,
-                            displayName: "ID"
-                        },
-                        model_id: {
-                            listAble: false,
-                            inputType: "hidden"
-                        },
-                        data: {},
-                        pinyin: {
-                            required: false,
-                            displayName: i18n.firstChar,
-                            onlyInEdit: true
-                        },
-                        model_name: {
-                            displayName: i18n.modelName,
-                            hideInForm: true
-                        },
-                        display_name: {
-                            displayName: i18n.displayName,
-                            hideInForm: true
-                        },
-                        field_id: {
-                            displayName: i18n.field,
-                            listAble: false,
-                            inputType: "select",
-                            nameField: "display_name",
-                            dataSource: "DataModelFieldsRes",
-                            queryParams: {
-                                modelId: $routeParams.modelId
-                            }
+                var i18n = $rootScope.i18n.lang;
+                obj.structure = {
+                    id: {
+                        primary: true,
+                        displayName: "ID"
+                    },
+                    model_id: {
+                        listAble: false,
+                        inputType: "hidden"
+                    },
+                    data: {},
+                    pinyin: {
+                        required: false,
+                        displayName: i18n.firstChar,
+                        onlyInEdit: true
+                    },
+                    model_name: {
+                        displayName: i18n.modelName,
+                        hideInForm: true
+                    },
+                    display_name: {
+                        displayName: i18n.displayName,
+                        hideInForm: true
+                    },
+                    field_id: {
+                        displayName: i18n.field,
+                        listAble: false,
+                        inputType: "select",
+                        nameField: "display_name",
+                        dataSource: "DataModelFieldsRes",
+                        queryParams: {
+                            modelId: $routeParams.modelId
                         }
-                    };
+                    }
+                };
+                obj.getStructure = function(structOnly){
 
-                    return struct;
+                    if($routeParams.modelAlias) {
+                        this.structure.field_id.queryParams.modelAlias = $routeParams.modelAlias;
+                    }
 
-//                    if(structOnly) {
-//                        return struct;
-//                    } else {
-//                        var defer = $q.defer();
-//                        var params = {
-//                            modelId:$routeParams.modelId
-//                        };
-//                        //                        console.log($routeParams);
-//                        DataModelFieldsRes.query(params, function(data){
-//                            data = filterDataFields(data, ["id", "display_name"]);
-//                            struct.field_id.dataSource = data;
-//                            console.log(struct);
-//                            defer.resolve(struct);
-//                        });
-//                        return defer.promise;
-//                    }
+                    return this.structure;
                 };
                 return obj;
             }])

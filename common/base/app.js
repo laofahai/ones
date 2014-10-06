@@ -174,6 +174,7 @@
 
                 //刷新NG-VIEW
                 $scope.doPageRefresh = function(){
+                    $scope.$broadcast("$locationChangeStart");
                     $route.reload();
                 };
 

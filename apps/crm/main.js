@@ -63,7 +63,6 @@
                         name: {},
                         discount: {
                             inputType: "number",
-                            max: 100,
                             min: 1,
                             value: 100
                         }
