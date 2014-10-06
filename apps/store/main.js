@@ -765,10 +765,7 @@
         .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutDetailModel", "$location",
             function($scope, $routeParams, ComView, res, model, $location){
                 $scope.selectAble= false;
-//                ComView.displayBill($scope, model, res, {
-//                    id: $routeParams.id,
-//                    queryExtraParams: {includeSource: true, workflowing: true}
-//                });
+
                 $scope.config = {
                     model:model,
                     resource:res,
@@ -776,7 +773,7 @@
                         queryExtraParams: {includeSource: true, workflowing: true}
                     },
                     doSubmit: function(){
-                        $scope.formMetaData.rows = $scope.formData;
+                        $scope.formMetaData.rows = $scope.billData;
                         res.doPostWorkflow({
                             workflow: true,
                             node_id: $routeParams.nodeId,
@@ -802,7 +799,7 @@
                         queryExtraParams: {includeSource: true, workflowing: true}
                     },
                     doSubmit: function(){
-                        $scope.formMetaData.rows = $scope.formData;
+                        $scope.formMetaData.rows = $scope.billData;
                         var data = {
                             workflow: true,
                             node_id: $routeParams.nodeId,

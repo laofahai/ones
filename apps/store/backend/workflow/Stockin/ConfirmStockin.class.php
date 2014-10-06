@@ -85,6 +85,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
         $stockProductListModel->startTrans();
         $rs = $stockProductListModel->updateStoreList($theDetails);
 
+
         if(true === $rs) {
             $stockProductListModel->commit();
             $data = array(

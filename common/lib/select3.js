@@ -110,8 +110,18 @@
 
                     parentScope.doSelect3Blur = function($event) {
                         self.focusing = false;
+
+                        var valueModel = $($event.target).next().attr("ng-model");
+                        var labelModel = $($event.target).attr("ng-model");
+
                         $timeout(function(){
                             parentScope.hideSelect3Options();
+
+                            if(!parentScope.$eval(valueModel)) {
+                                var getter = $parse(labelModel);
+                                getter.assign(parentScope, undefined);
+                            }
+
                         }, 150);
                     };
 

@@ -56,6 +56,10 @@ class StockProductListAction extends CommonAction {
 
             $map["factory_code_all"] = $fca;
 
+            if(!$_GET["stock_id"]) {
+                return;
+            }
+
 //            print_r($fca);exit;
 
             $model = D("StockProductList");
