@@ -349,9 +349,8 @@
                     source_model: {
                         cellFilter: "lang"
                     },
-                    total_num: {
-                        displayName: i18n.totalNum
-                    },
+                    total_num: {},
+                    ined_num: {},
                     dateline: {
                         cellFilter: "dateFormat:0"
                     },
@@ -417,9 +416,7 @@
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true,
-                            printAble: true,
-                            field: "stock_name"
-//                            "ui-event": '{mousedown: onStockBlur(window.this, $event, this), keydown:  onStockBlur(window.this, $event, this)}'
+                            printAble: true
                         },
                         store_num: {
                             displayName: i18n.storeNum,
@@ -427,10 +424,22 @@
                             min: -9999,
                             listAble: false
                         },
+                        total_num: {
+                            inputType: "static",
+                            onlyInEdit: true,
+                            printAble: true,
+                            listAble: false,
+                            totalAble: true
+                        },
                         num: {
                             inputType: "number",
                             totalAble: true,
-                            printAble: true
+                            displayName: toLang("this_time_in_stock", "", $rootScope)
+                        },
+                        ined: {
+                            inputType: "static",
+                            onlyInEdit: true,
+                            totalAble: true
                         },
                         memo: {
                             printAble: true
@@ -524,6 +533,7 @@
                             cellFilter: "lang"
                         },
                         total_num: {},
+                        outed_num: {},
                         stock_manager: {},
                         dateline: {
                             cellFilter: "dateFormat:0"
@@ -617,15 +627,18 @@
                             inputType: "static",
                             onlyInEdit: true,
                             printAble: true,
-                            listAble: false
+                            listAble: false,
+                            totalAble: true
                         },
                         num: {
                             inputType: "number",
-                            totalAble: true
+                            totalAble: true,
+                            displayName: toLang("this_time_out_stock", "", $rootScope)
                         },
                         outed: {
                             inputType: "static",
-                            onlyInEdit: true
+                            onlyInEdit: true,
+                            totalAble: true
                         },
                         outtime: {
                             hideInForm: true,

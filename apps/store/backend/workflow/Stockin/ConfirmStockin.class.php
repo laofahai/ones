@@ -16,98 +16,161 @@ class StockinConfirmStockin extends WorkflowAbstract {
      * @todo 更新仓库总量
      */
     public function run() {
-        //显示确认页面
-        if(!$_POST["donext"]) {
-            $data = array(
-                "type" => "redirect",
-                "location" => sprintf("/doWorkflow/Stockin/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
-            );
+
+        //判定是否已完全入库
+        $stockin = D("Stockin");
+        $theStockin = $stockin->find($this->mainrowId);
+
+        if(!$_REQUEST["donext"]) {
+            if($theStockin["ined_num"] >= $theStockin["total_num"]) {
+                $data = array(
+                    "type" => "message",
+                    "error"=> "true",
+                    "msg"  => "all_have_ined_stock"
+                );
+            } else {
+                $data = array(
+                    "type" => "redirect",
+                    "location" => sprintf("/doWorkflow/Stockin/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
+                );
+            }
+
+
             $this->response($data);
         }
 
-        $id = $this->mainrowId;
+        $data = $_POST["data"];
+        $dm = D("StockinDetail");
+        $storeProduct = D("StockProductList");
 
-        if(!$id) {
-            $this->error("params_error");
-            exit;
+        $stockin->startTrans();
+
+        $totalIned = 0;
+
+        $dataModel = D("DataModel")->getByAlias("product");
+        $tmp = D("DataModelFields")->where(array(
+            "model_id" => $dataModel["id"],
+            "deleted"  => 0
+        ))->select();
+        $dataModelFields = array();
+
+        foreach($tmp as $field) {
+            $dataModelFields[] = $field["field_name"];
         }
-        
-        $map = array(
-            "stockin_id" => $id
-        );
 
-        $stockinModel = D("Stockin");
+        $logs = array();
+        $storeInfo = array();
 
-        $rows = $data["rows"];
-        unset($data["rows"]);
-        $stockinModel->editBill($data, $rows);
+        foreach($data["rows"] as $v) {
 
-        //更新POST到得数据至入库单
-//        $data = $_POST["data"];
-//        $stockinModel = D("Stockin");
-//        $stockinModel->where("id=".$this->mainrowId)->save(array(
-//            "total_num" => $data["total_num"],
-//            "memo" => $data["memo"]
-//        ));
-//        $stockinDetailModel = D("StockinDetail");
-////        print_r($data["rows"]);exit;
-//        foreach($data["rows"] as $row) {
-//            if(!$row["stock"]) {
-//                $this->error("fillTheForm");
-//                exit;
-//            }
-//            if($row["id"]) {
-//                $stockinDetailModel->where("id=".$row["id"])->save(array(
-//                    "stock_id" => $row["stock"],
-//                    "memo" => $row["memo"]
-//                ));
-//            } else {
-//                list($fc,$goodsId,$catid) = explode("_", $row["goods_id"]);
-//                $row["goods_id"] = $goodsId;
-//                $stockinDetailModel->add(array(
-//                    "stockin_id" => $this->mainrowId,
-//                    "goods_id" => $goodsId,
-//                    "num" => $row["num"],
-//                    "factory_code_all" => makeFactoryCode($row, $fc),
-//                    "stock_id" => $row["stock"],
-//                    "memo" => $row["memo"]
-//                ));
-//            }
-//        }
+            list(,$goods_id,) = explode("_", $v['goods_id']);
 
+            if(!$v or !$v["id"]) {
+                continue;
+            }
 
+            //未选择入库仓库
+            if(!$v["stock"]) {
+                $stockin->rollback();
+                $this->error("select_stock");
+                return "error";
+            }
 
-        $stockinDetailModel = D("StockinDetail");
-        $theDetails = $stockinDetailModel->where($map)->select();
+            //本次入库总数量
+            $totalIned += $v["num"];
 
-        $theStockin = $stockinModel->find($id);
-        $stockProductListModel = D("StockProductList");
-        $stockProductListModel->startTrans();
-        $rs = $stockProductListModel->updateStoreList($theDetails);
+            //更新本行入库数量
+            $dm->where("id=".$v["id"])->setInc("ined", $v["num"]);
 
+            //入库日志(工作流MEMO)
+            //dataModel
+            $modelData = "";
+            foreach($dataModelFields as $f) {
+                $modelData.="/".$v[$f."_label"];
+            }
+            $tmp = sprintf("%s%s: %s (%s)", $v["goods_name"], $modelData, $v["num"], $v["stock_label"]);
+            array_push($logs, $tmp);
 
-        if(true === $rs) {
-            $stockProductListModel->commit();
-            $data = array(
-                "status" => 2,
-                "stock_manager" => getCurrentUid()
+            $storeInfo[] = array(
+                "factory_code_all" => $v["factory_code_all"],
+                "stock_id" => $v["stock"],
+                "num" => $v["num"],
+                "goods_id" => $goods_id
             );
-            $stockinModel->where("id=".$id)->save($data);
-//            $this->updateStatus("Stockin", $id, 2);
+        }
+
+        //增加库存
+        $storeProduct->updateStoreList($storeInfo);
+
+        //更新入库单信息
+        $theStockin = $stockin->find($this->mainrowId);
+        if($theStockin["status"] == 1) {
+            $stockin->where("id=".$this->mainrowId)->setInc("ined_num", $totalIned);
         } else {
-//            print_r($theDetails);
-            $stockProductListModel->rollback();
-            $this->error("operate_failed");
-//            $this->action->error(L("operate_failed"));
+            //第一次出库
+            $stockin->where("id=".$this->mainrowId)->save(array(
+                "memo"   => $data["memo"],
+                "status" => 1,
+                "ined_num"   => $totalIned,
+                "stock_manager" => getCurrentUid()
+            ));
         }
 
+        //本次出库日志
+        $this->context['memo'] = implode("\n", $logs);
 
-        //若外部生成，走外部下一流程
-        if($theStockin["source_model"]) {
-            import("@.Workflow.Workflow");
-            $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
-            $node = $workflow->doNext($theStockin["source_id"], "", true, true);
-        }
+
+        $stockin->commit();
+
+
+
+//        if(!$id) {
+//            $this->error("params_error");
+//            exit;
+//        }
+//
+//        $map = array(
+//            "stockin_id" => $id
+//        );
+//
+//        $stockinModel = D("Stockin");
+//
+//        $rows = $data["rows"];
+//        $data["status"] = 1;
+//        unset($data["rows"]);
+//        $stockinModel->editBill($data, $rows);
+//
+//
+//        $stockinDetailModel = D("StockinDetail");
+//        $theDetails = $stockinDetailModel->where($map)->select();
+//
+//        $theStockin = $stockinModel->find($id);
+//
+//        //更新库存清单
+//        $stockProductListModel = D("StockProductList");
+//        $stockProductListModel->startTrans();
+//        $rs = $stockProductListModel->updateStoreList($theDetails);
+//
+//
+//        if(true === $rs) {
+//            $stockProductListModel->commit();
+//            $data = array(
+//                "status" => 2,
+//                "stock_manager" => getCurrentUid()
+//            );
+//            $stockinModel->where("id=".$id)->save($data);
+//        } else {
+//            $stockProductListModel->rollback();
+//            $this->error("operate_failed");
+//        }
+//
+//
+//        //若外部生成，走外部下一流程
+//        if($theStockin["source_model"]) {
+//            import("@.Workflow.Workflow");
+//            $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
+//            $node = $workflow->doNext($theStockin["source_id"], "", true, 3);
+//        }
     }
     
     public function checkStockManger($condition) {

@@ -23,7 +23,7 @@ class StockoutComplete extends WorkflowAbstract {
         if($this->context["sourceModel"]) {
             $sourceNode = $this->getNodeByAlias($this->context["sourceModel"], "Complete");
             $workflow = new Workflow($this->context["sourceWorkflow"], $this->context);
-            $rs = $workflow->doNext($theStockout["source_id"], $sourceNode["id"], true);
+            $workflow->doNext($theStockout["source_id"], $sourceNode["id"], true, 3);
         }
     }
     

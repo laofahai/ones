@@ -88,7 +88,8 @@
             "needStockin" : "待处理入库单"
         },
         "messages": {
-            "all_have_outed_stock": "所有产品均已出库"
+            "all_have_outed_stock": "所有产品均已出库",
+            "all_have_ined_stock" : "所有产品均已入库"
         },
         "stock": "仓库",
         "outStockTime": "出库时间",
@@ -117,7 +118,11 @@
         "store.stockwarning.read": "库存警告",
         "store.stockproductlist": "%s库存清单",
 
+        "ined": "已入库",
+        "ined_num": "已入库数量",
         "outed": "已出库",
-        "outed_num": "已出库数量"
+        "outed_num": "已出库数量",
+        "this_time_in_stock": "本次入库数量",
+        "this_time_out_stock": "本次出库数量"
     }
 }

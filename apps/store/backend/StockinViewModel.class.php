@@ -49,6 +49,7 @@ class StockinViewModel extends CommonViewModel {
                 $data[$k]["stock_manager_name"] = "";
             }
             $data[$k]["sponsor"] = toTruename($v["user_id"]);
+
             $ids[] = $v["id"];
         }
 

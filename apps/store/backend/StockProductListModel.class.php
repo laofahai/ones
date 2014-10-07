@@ -31,11 +31,12 @@ class StockProductListModel extends Model {
         $map = array(
             "factory_code_all" => array("IN", implode(",", $fca)),
         );
-        $tmp = $this->where($map)->select();
+        $tmp = $this->field("factory_code_all,stock_id,num,unit_price,cost")->where($map)->select();
+        $exists = array();
         foreach($tmp as $t) {
-            $old[$t["factory_code_all"]."-".$t["stock_id"]]["num"] = $t["num"];
-            $old[$t["factory_code_all"]."-".$t["stock_id"]]["price"] = $t["unit_price"];
-            $old[$t["factory_code_all"]."-".$t["stock_id"]]["cost"] = $t["cost"];
+            $exists[$t["factory_code_all"]."-".$t["stock_id"]]["num"] = $t["num"];
+            $exists[$t["factory_code_all"]."-".$t["stock_id"]]["price"] = $t["unit_price"];
+            $exists[$t["factory_code_all"]."-".$t["stock_id"]]["cost"] = $t["cost"];
         }
 
         //商品数据
@@ -46,7 +47,7 @@ class StockProductListModel extends Model {
         foreach($tmp as $v) {
             $goodsInfo[$v["id"]] = $v;
         }
-        
+
         /**
          * 数据预处理，合并相同项目
          */
@@ -60,19 +61,11 @@ class StockProductListModel extends Model {
         }
         
         foreach($cleanData as $k=>$v) {
-//            $tmp = $this->where("factory_code_all='{$v["factory_code_all"]}'")->find();
-//            //已存在记录，update
-//            if($tmp) {
-//                $rs = $this->where("factory_code_all='{$v["factory_code_all"]}'")->setInc("num", $v["num"]);
-//            } else {
-//                
-//            }
-//            print_r($v);exit;
             //已存在记录
-            if(array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $old)) {
-                $num = $v["num"]+$old[$v["factory_code_all"]."-".$v["stock_id"]]["num"];
-                $unitPrice = $old[$v["factory_code_all"]."-".$v["stock_id"]]["price"];
-                $cost = $old[$v["factory_code_all"]."-".$v["stock_id"]]["cost"];
+            if(array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $exists)) {
+                $num = $v["num"]+$exists[$v["factory_code_all"]."-".$v["stock_id"]]["num"];
+                $unitPrice = $exists[$v["factory_code_all"]."-".$v["stock_id"]]["price"];
+                $cost = $exists[$v["factory_code_all"]."-".$v["stock_id"]]["cost"];
             } else {
                 $num = $v["num"];
                 $unitPrice = $v["price"] ? $v["price"] : $goodsInfo[$v["goods_id"]]["price"];
@@ -80,7 +73,7 @@ class StockProductListModel extends Model {
             }
             
             $cost = $cost ? $cost : 0.00;
-//            print_r($v);
+
             $saveData = array(
                 "factory_code_all" => $v["factory_code_all"],
                 "goods_id" => $v["goods_id"],
@@ -92,14 +85,12 @@ class StockProductListModel extends Model {
                 "cost" => $cost ? $cost : 0
             );
             $rs = $this->add($saveData, array(), true);
-//            echo $this->getLastSql();exit;
-//            echo 123;exit;
+
             if(!$rs) {
-//                return $this->getLastSql();
+                Log::write($this->getLastSql(), Log::SQL);
                 return false;
             }
             
-//            exit;
         }
 
         return true;

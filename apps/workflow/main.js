@@ -122,7 +122,7 @@
                         inputType: "select",
                         dataSource: [
                             {id: 1, name: $rootScope.i18n.lang.yes},
-                            {id: 0, name: $rootScope.i18n.lang.no}
+                            {id: -1, name: $rootScope.i18n.lang.no}
                         ]
                     },
                     remind: {
@@ -141,7 +141,7 @@
                         if($route.extra) {
                             var extraParams = $route.extra.split("/");
                             if(extraParams[0] === "pid") {
-                                struct.workflow_id = {
+                                self.structure.workflow_id = {
                                     value: extraParams[1],
                                     inputType: "hidden",
                                     listAble: false

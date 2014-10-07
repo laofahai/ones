@@ -92,15 +92,25 @@ abstract class WorkflowAbstract implements WorkflowInterface {
             "msg"   => $msg
         ));
     }
-    
+
+    /*
+     * 节点扩展权限检测
+     * @param array $condition
+     * $condition = array(
+     *  method  => someMethodCheck, //$someNodeObj->someMethodCheck
+     *  function=> someFunction // someFunction(),
+     *  uid => array() or id
+     * );
+     * 可在节点处理类中灵活实现对当前数据进程的权限判断
+     * 场景eg: 销售订单5000元以上需要某高级人员权限审核
+     * **/
     public function checkPermission($condition) {
         if(!$condition) {
             return true;
         }
-        $condition = explode("&", $condition);
-        foreach($condition as $tmp) {
-            list($var, $cond) = explode("=", $tmp);
-            switch($var) {
+
+        foreach($condition as $type=>$cond) {
+            switch($type) {
                 case "method":
                     if(method_exists($this, $cond)) {
                         return $this->$cond();
@@ -108,17 +118,15 @@ abstract class WorkflowAbstract implements WorkflowInterface {
                     break;
                 case "function":
                     if(function_exists($cond)) {
-                        return $cond();
+                        return $cond($this->mainrowId);
                     }
                     break;
                 case "uid":
-                    list($checkType, $uids) = explode("|", $uids);
-                    switch($checkType) {
-                        case "IN":
-                            return inExplodeArray(getCurrentUid(), $uids);
-                            break;
-                        default:
-                            return getCurrentUid() == $uids;
+                    $uid = getCurrentUid();
+                    if(is_array($cond)) {
+                        return in_array($uid, $cond);
+                    } else {
+                        return $uid == $cond;
                     }
                     break;
             }

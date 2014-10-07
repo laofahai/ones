@@ -107,7 +107,6 @@ class StockoutConfirmStockout extends WorkflowAbstract {
             ));
         }
 
-//        echo $totalOuted;exit;
 
         //更新出库单信息
         $theStockout = $stockout->find($this->mainrowId);

@@ -413,16 +413,13 @@ class Workflow {
     public function afterRun($mainrowId, $nodeId, $context="", $next="") {
         
         $context ? $context : $this->context;
-//        echo 2;
-//        echo serialize($context);
-//        print_r($context);exit;
-        
+
         $map = array(
             "mainrow_id" => $mainrowId,
             "workflow_id"=> $this->currentWorkflow["id"]
         );
         $prevProcess = $this->processModel->where($map)->order("id DESC")->limit(1)->find();
-//        echo $this->processModel->getLastSql();exit;
+
         if($prevProcess) {
             $data = array(
                 "id" => $prevProcess["id"],
@@ -430,7 +427,6 @@ class Workflow {
                 "end_time" => CTS
             );
             $this->processModel->save($data);
-//            echo $this->processModel->getLastSql();exit;
         }
         $memo = $context["memo"] ? $context["memo"] : ($next->memo ? $next->memo : "");
         unset($context["memo"]);
@@ -455,13 +451,11 @@ class Workflow {
         $curNode = $this->nodeModel->find($nodeId);
         //如果有多个动作，默认执行第一个动作（分支，条件判断等）
         //此处应为递归操作
-        
         if($curNode["next_node_id"]) {
             if(false === strpos($curNode["next_node_id"], ",")) {
                 $map = array(
                     "id" => $curNode["next_node_id"],
                 );
-//                print_r($curNode);
             } else {
                 $map = array(
                     "id" => array("IN", $curNode["next_node_id"]),
@@ -469,33 +463,10 @@ class Workflow {
                 );
             }
             $nextNode = $this->nodeModel->where($map)->find();
-//            print_r($curNode);
-//            echo $this->nodeModel->getLastSql();
-//            print_r($nextNode);exit;
             if($nextNode) {
                 switch($nextNode["type"]) {
                     case "2":
                         $this->doNext($mainrowId, $nextNode["id"], true);
-                        //判断条件：如果是之后流程驳回，则不自动进行
-                        //1、存在排序>当前节点的了流程 2、有memo？
-//                        $map = array(
-//                            "workflow_id" => $this->currentWorkflow["id"],
-//                            "mainrow_id" => $mainrowId,
-//                            "listorder" => array("GT", $nextNode["listorder"]),
-//                        );
-//                        $processViewModel = D("WorkflowProcessView");
-//                        $rs = $processViewModel->where($map)->select();
-//                        print_r($nextNode);exit;
-//                        echo $processViewModel->getLastSql();
-//                        var_dump($rs);exit;
-//                        if(!$rs) {
-//                            echo $mainrowId;exit;
-//                            echo $nextNode["id"];
-//                            $next = $this->getCurrentNode($mainrowId, $nextNode["id"], true);
-////                            var_dump($next);exit;
-//                            $next->run();
-//                            $this->afterRun($mainrowId, $nextNode["id"]);
-//                        }
                         break;
                     default:
                         return;
@@ -518,9 +489,7 @@ class Workflow {
         $workflows = $workflowModel->where(array(
             "workflow_file" => array("IN", implode(",", $models))
         ))->select();
-//        print_r($relationModels);
-//        echo $workflowModel->getLastSql();exit;
-//        print_r($workflows);exit;
+
         foreach($workflows as $v) {
             $theWorkflows[$v["workflow_file"]] = $v["id"];
         }
@@ -532,8 +501,7 @@ class Workflow {
                 "WorkflowProcess.mainrow_id"  => $id,
             )
         );
-//        echo $workflowModel->getLastSql();
-//        print_r($theWorkflows);exit;
+
         /*
          * 相关工作流程
          * **/
@@ -557,8 +525,7 @@ class Workflow {
                 }
             }
         }
-        
-//        print_r($where);exit;
+
         
         $processViewModel = D("WorkflowProcessView");
         
@@ -567,7 +534,7 @@ class Workflow {
         );
 
         $processes = $processViewModel->where($map)->order("start_time ASC")->select();
-//        echo $processViewModel->getLastSql();exit;
+
         return $processes;
 
     }
@@ -580,28 +547,25 @@ class Workflow {
      * u: user
      */
     public function checkExecutorPermission($rules) {
-//        print_r($_SESSION);exit;
-//        return true;
-//        echo $rules;exit;
         $rules = explode("|", $rules);
         $user = $_SESSION["user"];
         foreach($rules as $item) {
             list($k, $rule) = explode(":", $item);
             $ids = explode(",", $rule);
             switch($k) {
-                case "g":
+                case "g": //group
                     foreach($ids as $g) {
                         if(in_array($g, $user["group_ids"])) {
                             return true;
                         }
                     }
                     break;
-                case "d":
+                case "d": //department
                     if(in_array($user["Department"]["id"], $ids)) {
                         return true;
                     }
                     break;
-                case "u":
+                case "u": //user
                     if(in_array($user["id"], $ids)) {
                         return true;
                     }
@@ -619,12 +583,12 @@ class Workflow {
         $file = sprintf("@.Workflow.%s.%s", $this->currentWorkflow["workflow_file"], $node["execute_file"]);
         import("@.Workflow.WorkflowInterface");
         import("@.Workflow.WorkflowAbstract");
-        $rs = import($file);
+        import($file);
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
         if(!$className or !class_exists($className)) {
             return true;
         }
-//        print_r($node);exit;
+
         $node["context"] = unserialize($node["context"]);
         $obj = new $className($mainrowId);
         $rs = $obj->checkPermission($node["condition"]);

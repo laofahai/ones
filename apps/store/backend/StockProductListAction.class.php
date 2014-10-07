@@ -33,9 +33,9 @@ class StockProductListAction extends CommonAction {
         $data = parent::index(true);
 
         foreach($data[1] as $k=>$v) {
-            if($v["num"] <= $v["store_min"]) {
+            if($v["store_min"] > 0 && $v["num"] <= $v["store_min"]) {
                 $data[1][$k]["colorize"] = "red";
-            } else if($v["num"] >= $v["store_max"]) {
+            } else if($v["store_max"] > 0 && $v["num"] >= $v["store_max"]) {
                 $data[1][$k]["colorize"] = "green";
             }
         }
