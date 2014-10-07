@@ -346,10 +346,12 @@
                                 //命名歧义。。 应该是包含行内已有的某条数据
                                 if(fieldDefine.dynamicAddOpts.postWithExtraData) {
                                     angular.forEach(fieldDefine.dynamicAddOpts.postWithExtraData, function(field){
-                                        var tmp = parentScope[self.currentConfig.dataName][self.currentConfig["data-row-index"]][field];
-                                        if(tmp !== undefined) {
-                                            postParams[field] = tmp;
-                                        }
+                                        try {
+                                            var tmp = parentScope[self.currentConfig.dataName][self.currentConfig["data-row-index"]][field];
+                                            if(tmp !== undefined) {
+                                                postParams[field] = tmp;
+                                            }
+                                        } catch(e) {}
                                     });
 //                                    console.log(postParams);
                                 }

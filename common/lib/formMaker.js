@@ -713,7 +713,7 @@
 
                         var goods_id = queryParams["goods_id"].split("_");
                         goods_id = goods_id[1];
-                        $scope.$parent[factory.dataName][context.trid].craft = $scope.$parent.i18n.lang.undefined;
+                        $scope.$parent[factory.opts.dataName][context.trid].craft = $scope.$parent.i18n.lang.undefined;
                         var crafts = [];
                         res.query({
                             goods_id: goods_id,
@@ -723,7 +723,7 @@
                                     crafts.push(item.name);
                                 });
                                 if(crafts.length) {
-                                    $scope.$parent[factory.dataName][context.trid].craft = crafts.join(">");
+                                    $scope.$parent[factory.opts.dataName][context.trid].craft = crafts.join(">");
                                 }
                             });
 

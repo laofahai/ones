@@ -193,10 +193,10 @@
                             displayName: $rootScope.i18n.lang.type
                         },
                         start_time: {
-                            cellFilter: "dateFormat:0"
+                            cellFilter: "dateFormat:1"
                         },
                         end_time: {
-                            cellFilter: "dateFormat:0"
+                            cellFilter: "dateFormat:1"
                         },
                         create_time: {
                             cellFilter: "dateFormat:0"
@@ -519,7 +519,7 @@
                     }
                 };
 
-                $scope.billConfig = {
+                $scope.config = {
                     model: model,
                     resource: res
                 };
@@ -531,18 +531,14 @@
                 $scope.formMetaData = {};
                 $scope.selectAble = false;
                 $routeParams.id = $routeParams.pid;
-                ComView.displayBill($scope, model, res, {
-                    id: $routeParams.pid,
-                    module: "/produce/productTplDetail",
-                    editExtraParams: "/pid/"+$routeParams.pid
-                });
+
 
                 $scope.config = {
                     model: model,
                     resource: res,
                     opts: {
                         id: $routeParams.pid,
-                            module: "/produce/productTplDetail",
+                        module: "/produce/productTplDetail",
                         editExtraParams: "/pid/"+$routeParams.pid
                     }
                 };
@@ -556,10 +552,12 @@
 
                 ComView.makeGridSelectedActions($scope, model, res, "Produce", "ProducePlan");
 
-                ComView.displayBill($scope, model, res, {
-                    id: $routeParams.id,
-                    queryExtraParams: {workflowing: true}
-                });
+                $scope.config = {
+                    model: model,
+                    resource: res,
+                    opts: {queryExtraParams:{workflowing: true}}
+                };
+
 
                 $scope.doSubmit = function() {
                     $scope.formMetaData.rows = $scope.formData;
@@ -570,8 +568,8 @@
                         donext: true,
                         data: $scope.formMetaData
                     }).$promise.then(function(data){
-                            $location.url("/produce/list/producePlan");
-                        });
+                        $location.url("/produce/list/producePlan");
+                    });
                 };
             }])
         /**
