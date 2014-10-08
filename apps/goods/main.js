@@ -132,16 +132,6 @@
 
                 return struct;
 
-//                if(structOnly) {
-//                    return struct;
-//                } else {
-//                    var defer = $q.defer();
-//                    DataModelRes.query(function(data){
-//                        struct.bind_model.dataSource = data;
-//                        defer.resolve(struct);
-//                    });
-//                    return defer.promise;
-//                }
             };
             return obj;
         }])

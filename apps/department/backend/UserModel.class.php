@@ -24,6 +24,71 @@ class UserModel extends CommonModel {
         }
         return $data;
     }
+
+    /*
+     * 用户是否对某部门有负责权限
+     * 主要检测子部门
+     * **/
+    public function canLeader($departmentId, $uid=null) {
+        $uid = $uid ? $uid : getCurrentUid();
+
+        $departments = D("Department")->getNodePath($departmentId);
+
+        $departments = array_reverse($departments);
+
+        $isLeader = false;
+        foreach($departments as $dep) {
+            $leader = explode(",", $dep["leader"]);
+            if($leader && in_array($uid, $leader)) {
+                $isLeader = true;
+                break;
+            }
+        }
+
+        return $isLeader;
+    }
+
+    public function getLeadedUsers($onlyId=true, $uid=null) {
+
+        $map = array(
+            "department_id" => array("IN", $this->getLeadedDepartments(true, $uid))
+        );
+        $leadedUsers = $this->where($map)->select();
+
+        if(!$onlyId) {
+            return $leadedUsers;
+        }
+
+        return getArrayField($leadedUsers);
+
+    }
+
+    public function getLeadedDepartments($onlyId=true, $uid=null) {
+        $uid = $uid || getCurrentUid();
+
+        $model = D("Department");
+
+        //获取用户所在部门的所有子集部门(包含当前部门)
+        $tmp = $model->getTree($_SESSION["user"]["Department"]["id"]);
+
+        $leaded = array();
+        foreach($tmp as $dep) {
+            if(inExplodeArray($uid, $dep["leader"])) {
+                $leaded[] = $dep["id"];
+            }
+        }
+
+        $departments = array();
+        foreach($leaded as $lead) {
+            $departments = array_merge($departments, (array)$model->getTree($lead));
+        }
+
+        if(!$onlyId) {
+            return $departments;
+        }
+
+        return getArrayField($departments);
+    }
     
 }
 

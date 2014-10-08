@@ -16,11 +16,7 @@ class RelationshipCompanyAction extends CommonAction {
     protected $relation = true;
 
     protected $indexModel = "RelationshipCompanyView";
-    
 
-    /*
-     *
-     * **/
     protected function pretreatment() {
 
         if(!$_POST["pinyin"]) {
@@ -61,24 +57,6 @@ class RelationshipCompanyAction extends CommonAction {
 
         if(!$id) {
             $this->response($model->getError());
-        } else {
-//            $_POST["extraInfo"]["id"] = $id;
-//            $params = array(
-//                "crmBaseInfo",
-//                $_POST["extraInfo"]
-//            );
-//
-////            print_r($_POST["extraInfo"]);
-//
-//            tag("insert_dataModel_data", $params);
-
-//            foreach($_POST["rows"] as $row) {
-//                $params = array(
-//                    "crmContact",
-//                    $row
-//                );
-//                tag("insert_dataModel_data", $params);
-//            }
         }
     }
 
@@ -118,14 +96,13 @@ class RelationshipCompanyAction extends CommonAction {
 
         $this->response($data);
     }
-    
-//    public function index() {
-//        $data = parent::index(true);
-//        foreach($data as $k=>$v) {
-////            $data[$k]["name"] = $_REQUEST["typeahead"] ? $v["name"].sprintf('<span>%s</span>', $v["pinyin"]) : $v["name"];
-//        }
-//        
-//        $this->response($data);
-//    }
+
+    final protected function _extend_rows_permission_index($map, $order) {
+        return "ONLY_LEADED_DEPARTMENT";
+    }
+
+    final protected function _extend_rows_permission_read($id) {
+        return "ONLY_LEADED_DEPARTMENT";
+    }
     
 }

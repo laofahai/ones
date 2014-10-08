@@ -19,23 +19,27 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
   `subject` varchar(255) DEFAULT NULL,
   `dateline` varchar(12) NOT NULL,
   `total_num` decimal(11,2) NOT NULL,
+  `ined_num` decimal(10,2) NOT NULL,
   `user_id` int(11) NOT NULL,
   `stock_manager` int(11) NOT NULL,
   `status` smallint(1) NOT NULL DEFAULT '0',
   `source_model` varchar(50) DEFAULT NULL,
   `source_id` int(11) DEFAULT NULL,
   `memo` varchar(255) DEFAULT NULL,
+  `deleted` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `bill_id` (`bill_id`),
   KEY `type_id` (`type_id`,`dateline`,`user_id`,`stock_manager`,`source_model`,`source_id`),
-  KEY `status` (`status`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+  KEY `status` (`status`),
+  KEY `deleted` (`deleted`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockin_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
   `num` decimal(10,2) NOT NULL,
+  `ined` decimal(10,2) NOT NULL,
   `factory_code_all` varchar(40) NOT NULL,
   `stock_id` smallint(5) DEFAULT NULL,
   `memo` varchar(255) DEFAULT NULL,
@@ -43,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   KEY `stockin_id` (`stockin_id`,`goods_id`),
   KEY `factory_code_all` (`factory_code_all`),
   KEY `stock_id` (`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -61,7 +65,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   KEY `source_id` (`source_id`,`dateline`,`outtime`,`stock_manager`),
   KEY `status` (`status`),
   KEY `source_model` (`source_model`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -75,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   PRIMARY KEY (`id`),
   KEY `stockout_id` (`stockout_id`),
   KEY `factory_code_all` (`factory_code_all`,`goods_id`,`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stock_product_list` (

@@ -213,7 +213,7 @@ class CommonTreeModel extends CommonModel {
         return $items;
     }
     
-    public function getTreeArray($pid, $perlimit=20) {
+    public function getTreeArray($pid) {
         $parent = $this->find($pid);
         $childs = $this->where(array(
             "parentid" => $pid,
@@ -260,5 +260,5 @@ class CommonTreeModel extends CommonModel {
         );
         return $this->where($map)->order("lft ASC")->select();
     }
-    
+
 }

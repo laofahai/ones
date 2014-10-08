@@ -49,22 +49,9 @@ class DepartmentAction extends NetestCategoryAction {
             $uid = $this->user["id"];
         }
 
-        $model = D("Department");
-        $departments = $model->getNodePath($departmentId);
+        $model = D("User");
 
-        $departments = array_reverse($departments);
-
-        $isLeader = false;
-        foreach($departments as $dep) {
-            $leader = explode(",", $dep["leader"]);
-            if($leader && in_array($uid, $leader)) {
-                $isLeader = true;
-                break;
-            }
-        }
-
-        $this->response(array("isLeader"=> $isLeader));
-
+        $this->response(array("isLeader"=> $model->canLeader($departmentId, $uid)));
 
     }
 

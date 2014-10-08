@@ -27,8 +27,12 @@ class CommonAction extends RestAction {
 
     protected $breakAction = false;
 
+    //扩展权限检测
+    protected $_extend_permission_check_methods = array();
+
     public function __construct() {
 
+        //检测是否安装
         if(!$_REQUEST["installing"] && !is_file(ENTRY_PATH."/Data/install.lock")) {
             header("Location:install.html");
             return;
@@ -36,14 +40,14 @@ class CommonAction extends RestAction {
 
         parent::__construct();
 
-
+        //修正POST不能正确获取数据问题
         if(in_array($this->_method, array("post", "put")) && !$_POST) {
             $tmp = file_get_contents("php://input");
             $_POST = json_decode($tmp, true);
         }
 
         import("@.ORG.Auth");
-//        session(array());
+
         //判断来路
         if ($_SERVER["HTTP_SESSIONHASH"]) {
 
@@ -59,11 +63,15 @@ class CommonAction extends RestAction {
             session_id($_SERVER["HTTP_SESSIONHASH"]);
             session_start();
         }
+
         $this->user = $_SESSION["user"];
+
+        //修正session问题
         $_REQUEST = array_merge((array)$_COOKIE, (array)$_GET, (array)$_POST);
 
         $appConfCombined = $this->getAppConfig();
 
+        //缓存数据
         F("appConfCombined", $appConfCombined);
         F("appConf", $this->appsConf);
         F("loadedApp", $this->loadedApp);
@@ -78,9 +86,11 @@ class CommonAction extends RestAction {
         }
         C("APP_AUTOLOAD_PATH", C("APP_AUTOLOAD_PATH").",". implode(",", $autoloadPath));
 
+        //CURD权限检测
         $this->checkPermission();
 
         tag("action_end_init");
+
     }
 
     /*
@@ -123,12 +133,12 @@ class CommonAction extends RestAction {
                     continue;
                 }
                 $appDir = $appDirs.DS.$file.DS;
-//                echo $appDir."\n";
+
                 if(!is_dir($appDir) or !is_file($appDir."config.json") or in_array($file, $blacklist)) {
                     continue;
                 }
                 $tmpConf = json_decode(file_get_contents($appDir."config.json"), true);
-//                var_dump($tmpConf);
+
                 if($tmpConf) {
                     if($tmpConf["navs"]) {
                         $appConf["navs"] = $navs = array_merge_recursive($navs, $tmpConf["navs"]);
@@ -170,6 +180,7 @@ class CommonAction extends RestAction {
             case "update":
             case "edit":
                 $action = "edit";
+                break;
             case "Index":
             case "index":
             case "read":
@@ -181,17 +192,13 @@ class CommonAction extends RestAction {
         if($this->singleAction) {
             $action = "read";
         }
-        
-//        $action = ACTION_NAME == "insert" ? "add" : $action;
-//        $action = ACTION_NAME == "update" ? "edit" : $action;
-//        $action = ACTION_NAME == "index" ? "read" : $action;
+
         
         return $action;
     }
     
     protected function loginRequired() {
-//        var_dump($_SESSION);
-//        var_dump($this->isLogin());exit;
+
         $current = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         $current = strtolower($current);
         if (!$this->isLogin() and 
@@ -220,12 +227,12 @@ class CommonAction extends RestAction {
         
         import('ORG.Util.Auth');//加载类库
         $auth = new Auth();
-//        $rule = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $action);
+
         $action = $this->getActionName();
         if($action == "doWorkflow" or $_POST["workflow"] or $_GET["workflow"]) {
             return true;
         }
-//        echo sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, ACTION_NAME);exit;
+
         $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         $rule = strtolower($rule);
         if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
@@ -240,7 +247,6 @@ class CommonAction extends RestAction {
             if(!$rs) {
                 Log::write(sprintf("%s try to do: %s, but permission denied.", $this->user["username"], $rule));
                 $this->httpError(403, $rule);
-//                $this->error("Permission Denied:".$rule);
                 exit;
             }
             
@@ -278,121 +284,9 @@ class CommonAction extends RestAction {
         }
     }
 
-    /**
-     * 
-     * 通用REST列表返回 
-     **/
-    public function index($return=false, $returnIncludeCount=true) {
-
-        $this->_external_action();
-        if($this->breakAction) {
-            return;
-        }
-
-        if(method_exists($this, "_before_index")){
-            $this->_before_index();
-        }
-
-        $name = $this->indexModel ? $this->indexModel : $this->getActionName();
-
-        $model = D($name);
-
-        /**
-         * 查看是否在fields列表中
-         */
-//        var_dump($model->getDbFields());
-        
-        if (empty($model)) {
-            $this->error(L("Server error"));
-        }
-
-        $limit = $this->beforeLimit();
-        $map = $this->beforeFilter($model);
-        $order = $this->beforeOrder($model);
-
-        $this->_filter($map);
-        $this->_order($order);
-
-        //扩展查询条件
-        $params = array(
-            $map, $model, $this
-        );
-
-        tag("external_condition_check", $params);
-
-        $total = false;
-        if($_GET["onlyCount"]) {
-            $total = $model->where($map)->count();
-            $this->response(array(array("count"=>$total)));
-            return;
-        } else {
-
-            if($this->relation && method_exists($model, "relation")) {
-                $model = $model->relation(true);
-            }
-
-            $model = $model->where($map)->order($order);
-
-            //AutoComplete字段默认只取10条
-            if(isset($_GET["typeahead"])) {
-                $limit = 10;
-            }
-            if(isset($_GET["limit"])) {
-                $limit = abs(intval($_GET["limit"]));
-            }
-
-            if($limit) {
-                $model = $model->limit($limit);
-            }
-
-            if($order) {
-                $model = $model->order($order);
-            }
-
-            $list = $model->select();
-
-            $this->queryMeta = array(
-                "map" => $map,
-                "limit" => $limit,
-                "order" => $order
-            );
-
-            if($this->dataModelAlias) {
-                $params = array(
-                    $list, $this->dataModelAlias, false, true
-                );
-
-                tag("assign_dataModel_data", $params);
-                $list = $params[0];
-            }
-        }
-
-        $list = reIndex($list);
-        //包含总数
-        if($_GET["_ic"] && $returnIncludeCount) {
-            $total = $model->where($map)->count();
-            $totalPages = ceil($total/$_GET["_ps"]);
-            if(!$totalPages) {
-                $totalPages = 1;
-            }
-
-            $returnData = array(
-                array("count" => $total, "totalPages"=>$totalPages),
-                reIndex($list),
-            );
-
-            if($return) {
-                return $returnData;
-            }
-
-            $this->response($returnData);
-        } else {
-            if($return) {
-                return reIndex($list);
-            }
-            $this->response($list);
-        }
-    }
+    protected function _extend_rows_permission_index(&$map) {}
+    protected function _extend_rows_permission_read() {}
+    protected function _extend_rows_permission_update() {}
 
     public function beforeFilter($model) {
         //搜索
@@ -422,7 +316,6 @@ class CommonAction extends RestAction {
                 }
             }
 
-//            print_r($where);exit;
             if(count($where) > 1) {
                 $where["_logic"] = "OR";
                 $map["_complex"] = $where;
@@ -487,7 +380,134 @@ class CommonAction extends RestAction {
         }
         return $limit;
     }
-    
+
+    /**
+     * 
+     * 通用REST列表返回 
+     **/
+    public function index($return=false, $returnIncludeCount=true) {
+
+        $this->_external_action();
+
+        if($this->breakAction) {
+            return;
+        }
+
+        if(method_exists($this, "_before_index")){
+            $this->_before_index();
+        }
+
+        $name = $this->indexModel ? $this->indexModel : $this->getActionName();
+
+        $model = D($name);
+
+        /**
+         * 查看是否在fields列表中
+         */
+        
+        if (empty($model)) {
+            $this->error(L("Server error"));
+        }
+
+        $limit = $this->beforeLimit();
+        $map = $this->beforeFilter($model);
+        $order = $this->beforeOrder($model);
+
+        $this->_filter($map);
+        $this->_order($order);
+
+        $extendPermissionCheck = call_user_func_array(
+            array($this, "_extend_rows_permission_index"),
+            array(&$map)
+        );
+
+        //仅自己的和自己领导的部门下属的
+        if("ONLY_LEADED_DEPARTMENT" === $extendPermissionCheck) {
+            $user = D("User");
+            $users = $user->getLeadedUsers();
+
+            if(!$users) {
+                $users = array(getCurrentUid());
+            }
+
+            $map["user_id"] = array("IN", $users);
+        }
+
+        if($_GET["onlyCount"]) {
+            $total = $model->where($map)->count();
+            $this->response(array(array("count"=>$total)));
+            return;
+        } else {
+
+            if($this->relation && method_exists($model, "relation")) {
+                $model = $model->relation(true);
+            }
+
+            $model = $model->where($map)->order($order);
+
+            //AutoComplete字段默认只取10条
+            if(isset($_GET["typeahead"])) {
+                $limit = 10;
+            }
+            if(isset($_GET["limit"])) {
+                $limit = abs(intval($_GET["limit"]));
+            }
+
+            if($limit) {
+                $model = $model->limit($limit);
+            }
+
+            if($order) {
+                $model = $model->order($order);
+            }
+
+            $list = $model->select();
+
+            $this->queryMeta = array(
+                "map" => $map,
+                "limit" => $limit,
+                "order" => $order
+            );
+
+            //绑定模型数据
+            if($this->dataModelAlias) {
+                $params = array(
+                    $list, $this->dataModelAlias, false, true
+                );
+
+                tag("assign_dataModel_data", $params);
+                $list = $params[0];
+            }
+        }
+
+        $list = reIndex($list);
+        //包含总数
+        if($_GET["_ic"] && $returnIncludeCount) {
+            $total = $model->where($map)->count();
+            $totalPages = ceil($total/$_GET["_ps"]);
+            if(!$totalPages) {
+                $totalPages = 1;
+            }
+
+            $returnData = array(
+                array("count" => $total, "totalPages"=>$totalPages),
+                reIndex($list),
+            );
+
+            if($return) {
+                return $returnData;
+            }
+
+            $this->response($returnData);
+        } else {
+            if($return) {
+                return reIndex($list);
+            }
+            $this->response($list);
+        }
+    }
+
+
     /**
      * 通用REST GET方法
      */
@@ -501,6 +521,8 @@ class CommonAction extends RestAction {
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }
+
+        $id = $_GET["id"];
         
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);
@@ -510,8 +532,6 @@ class CommonAction extends RestAction {
         if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
-        
-        $id = $_GET["id"];
 
         if($id) {
             $map["id"] = array("IN", explode(",", $id));
@@ -525,7 +545,33 @@ class CommonAction extends RestAction {
         }
         $this->_filter($map);
 
+        $extendPermissionCheck = call_user_func_array(
+            array($this, "_extend_rows_permission_read"),
+            array($id, &$map)
+        );
+
+        //仅自己的和自己领导的部门下属的
+        if("ONLY_LEADED_DEPARTMENT" === $extendPermissionCheck) {
+            $user = D("User");
+            $users = $user->getLeadedUsers();
+
+            if(!$users) {
+                $users = array(getCurrentUid());
+            }
+
+            $map["user_id"] = array("IN", $users);
+        }
+
         $tmp = $model->where($map)->select();
+
+        if(($extendPermissionCheck && !$tmp) or false === $extendPermissionCheck) {
+            $this->error("need_authorize");
+            return;
+        }
+
+        if(!$tmp) {
+            return;
+        }
 
         $item = array();
 
@@ -667,12 +713,9 @@ class CommonAction extends RestAction {
     public function delete($return = false) {
 
         $name = $this->deleteModel ? $this->deleteModel : $this->getActionName();
-//        echo $name;exit;
         $model = D($name);
-//        var_dump($model);exit;
         $pk = $model->getPk();
         $id = $_REQUEST [$pk];
-//        echo $id;exit;
         if(method_exists($model, "doDelete")) {
             $rs = $model->doDelete($id);
         } else {
@@ -695,57 +738,18 @@ class CommonAction extends RestAction {
         if($return) {
             return $rs;
         }
-//        
-//        return;
-//        if (!empty($model)) {
-//            
-//            if($this->relation) {
-//                $model = $model->relation(true);
-//            }
-//            
-//            if (isset($id)) {
-//                $condition = array($pk => array('in', $id));
-//                var_dump($model->fields);exit;
-//                if(in_array("deleted", $model->fields)) {
-////                    echo 123;exit;
-//                    $rs = $model->where($condition)->save(array("deleted"=>1));
-//                } else {
-////                    echo 222;exit;
-//                    $rs = $model->where($condition)->delete();
-//                }
-//                
-//                if($return) {
-//                    return $rs;
-//                }
-////                try {
-////                    $rs = $model->where($condition)->save(array("deleted"=>1));
-////                } catch(Exception $e) {
-////                    $rs = $model->where($condition)->delete();
-////                }
-//            } else {
-//                $this->httpError(500);
-//            }
-//        }
     }
     
-    public function foreverDelete() {
-        
-    }
+    public function foreverDelete() {}
     
     /**
      * 执行工作流节点
      */
     protected function doWorkflow() {
-//        $_REQUEST = $_REQUEST ? $_REQUEST : $_POST;
         $mainRowid = $_GET["id"] ? abs(intval($_GET['id'])) : abs(intval($_POST['id']));
 
-
         $nodeId = $_GET["node_id"] ? abs(intval($_GET["node_id"])) : abs(intval($_POST["node_id"]));
-//        $nodeId = abs(intval($_REQUEST["node_id"]));
-//        print_r($_POST);
-//        print_r($_REQUEST);
-//        $this->error(123);exit;
-//        var_dump($_REQUEST);exit;
+
         if(!$this->workflowAlias or !$mainRowid or !$nodeId) {
             Log::write("workflow error: something is wrong : {$this->workflowAlias},{$mainRowid},{$nodeId}");
             $this->error("not_allowed1");return;
@@ -772,15 +776,8 @@ class CommonAction extends RestAction {
     
     /**
      * 对数据进行预处理
-     * 
      */
-    protected function pretreatment() {
-//        switch($this->_method) {
-//            case "put":
-//                $_POST = I("put.");
-//                break;
-//        }
-    }
+    protected function pretreatment() {}
     
     /**
      * 执行导出excel

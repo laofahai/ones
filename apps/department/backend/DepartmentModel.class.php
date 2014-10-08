@@ -11,7 +11,8 @@
  * 
  */
 class DepartmentModel extends CommonTreeModel {
-    //put your code here
+
+
+
 }
 
-?>

@@ -217,6 +217,15 @@ function inExplodeArray($id, $ids, $split=",") {
     return in_array($id, explode($split, $ids));
 }
 
+function getArrayField($array, $field="id") {
+    $return = array();
+    foreach($array as $a) {
+        $return[] = $a[$field];
+    }
+
+    return $return;
+}
+
 function getCurrentUid() {
     return $_SESSION["user"]["id"];
 }
