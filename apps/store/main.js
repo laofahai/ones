@@ -756,7 +756,7 @@
                     model: StockProductExportModel
                 };
 
-                $scope.doSubmit = function(){
+                $scope.doFormSubmit = function(){
 //                    console.log($scope);return;
                     var url = cnf.BSU+'store/stockProductList/export/%s.json';
                     var params = {};

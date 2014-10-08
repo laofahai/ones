@@ -71,6 +71,15 @@
                 return str + (CJK ? "：" : ":");
             };
         })
+        //label 包围
+        .filter("labelAble", function(){
+            return function(str, cls) {
+                if(!str || str === undefined) {
+                    return "";
+                }
+                return sprintf('<label class="label label-%s">%s</label>', cls, str);
+            }
+        })
         //.filter("append|prepend")
         .filter("lang", ["$injector", function($injector){
             return function(str, section) {

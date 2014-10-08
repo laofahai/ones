@@ -44,8 +44,5 @@ class ProduceBomsAction extends CommonAction {
         $this->response($data);
     }
     
-    public function update() {
-        print_r($_POST);exit;
-    }
-    
+
 }

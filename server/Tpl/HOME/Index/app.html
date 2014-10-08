@@ -206,12 +206,14 @@
 
 <div class="bottomAlertContainer" id="bottomAlertContainer"></div>
 
-<ul class="dropdown-menu contextMenuDropdown"
+<ul class="ui-menu ui-widget ui-widget-content ui-corner-all contextMenuDropdown"
+    role="menu"
     ng-hide="contextMenu.items.length<=0"
     id="contextMenuDropdown"
-    style="left:{{contextMenu.left}}px;top:{{contextMenu.top}}px;">
-    <li ng-repeat="act in contextMenu.items track by $index">
+    style="left:{{contextMenu.left||-9999}}px;top:{{contextMenu.top||-9999}}px;">
+    <li ng-repeat="act in contextMenu.items track by $index" class="ui-menu-item" role="presentation">
         <a tabindex="-1"
+           class="ui-corner-all"
            ng-click="act.action(null,contextMenu.selectedItems,contextMenu.currentItem);hideContextMenu();">
             <i class="icon icon-{{act.icon}}"></i>
             <span ng-bind="act.label"></span>

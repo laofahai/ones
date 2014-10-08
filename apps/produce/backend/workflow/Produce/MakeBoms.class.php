@@ -26,6 +26,7 @@ class ProduceMakeBoms extends WorkflowAbstract {
         
         //执行下一步
         if($_REQUEST["donext"]) {
+
             //@todo 数据完整性检查
             //清除当前的数据
             $bomModel->startTrans();
@@ -46,6 +47,7 @@ class ProduceMakeBoms extends WorkflowAbstract {
                 if(!$bomModel->add($data)) {
                     Log::write("SQL Error:".$bomModel->getLastSql(), Log::SQL);
                     $bomModel->rollback();
+                    $this->error("params_error");return;
                 }
             }
             //status 标识BOM单已保存
@@ -69,12 +71,11 @@ class ProduceMakeBoms extends WorkflowAbstract {
         }
         
         $details = $detailModel->where("plan_id=".$this->mainrowId)->select();
-//        echo $detailModel->getLastSql();
+
         if(!$details) {
             return false;
         }
         
-//        print_r($details);
         /**
          * 生产计划详情
          */
@@ -83,14 +84,10 @@ class ProduceMakeBoms extends WorkflowAbstract {
             $products[$row["factory_code_all"]] = $row;
         }
         
-//        $fcas[] = $fcas[0];
-        
         $tpls = $tplModel->where(array(
             "factory_code_all" => array("IN", sprintf("%s", implode(",", $fcas)))
         ))->select();
-//        echo $tplModel->getLastSql();exit;
-//        print_r($tpls);
-//      
+
         if(!$tpls) {
             $this->response($this->returnData);
         }
@@ -111,10 +108,9 @@ class ProduceMakeBoms extends WorkflowAbstract {
          */
         foreach($boms as $k=>$bom) {
             $theBoms[$theTpls[$bom["tpl_id"]]["factory_code_all"]][] = $bom;
-//            $boms[$k]["num"] = $bom["num"] * $products[$bom["factory_code_all"]]["num"];
         }
-        
-        
+
+
         /**
          * @ $k => 原厂编码
          * 所需物料数量 = 预定义物料数量 * 所需成品数量

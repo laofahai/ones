@@ -224,11 +224,13 @@
         .controller("WorkflowFinanceReceiveConfirmCtl", ["$scope", "ComView", "ConfirmReceiveModel", "FinanceReceivePlanRes", "$routeParams", "$location",
             function($scope, ComView, model, res, $routeParams, $location){
                 $scope.selectAble = false;
-                ComView.displayForm($scope, model, res, {
-                    id: $routeParams.id
-                });
 
-                $scope.doSubmit = function(){
+                $scope.config = {
+                    model:model,
+                    resource: res
+                };
+
+                $scope.doFormSubmit = function(){
                     var params = $.extend({
                         workflow: true,
                         node_id: $routeParams.nodeId,

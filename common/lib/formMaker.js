@@ -94,7 +94,7 @@
                                 }
 
                                 //提交表单
-                                if(typeof(parentScope.doSubmit) !== "function") {
+                                if(typeof(parentScope.doFormSubmit) !== "function") {
                                     parentScope.doSubmit = parentScope.doFormSubmit = (opts.doSubmit ? opts.doSubmit : function() {
                                         //                    console.log("submit");
 
@@ -133,6 +133,8 @@
                                             getDataApiPromise(opts.resource, "save", params).then(callback);
                                         }
                                     });
+                                } else {
+                                    parent.doSubmit = parentScope.doFormSubmit;
                                 }
 
 
@@ -392,7 +394,8 @@
 
 
                                 //默认单据提交方法，可自动判断是否编辑/新建
-                                if(typeof(parentScope.doBillSubmit !== "function")) {
+
+                                if(typeof(parentScope.doBillSubmit) !== "function") {
                                     parentScope.doSubmit = parentScope.doBillSubmit = (config.doSubmit ? config.doSubmit : function() {
                                         if(!config.returnPage) {
                                             var tmp = $location.$$url.split("/").slice(1,4);
@@ -429,6 +432,8 @@
                                             }
                                         });
                                     });
+                                } else {
+                                    parentScope.doSubmit = parentScope.doBillSubmit;
                                 }
 
                                 $scope.$on("commonBill.ready", function(){

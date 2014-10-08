@@ -136,7 +136,7 @@
                 };
 
                 //重写doSubmit()方法
-                $scope.doSubmit = function(){
+                $scope.doFormSubmit = function(){
                     if (!$scope.form.$valid) {
                         ComView.alert($scope.i18n.lang.messages.fillTheForm, "danger");
                         return;

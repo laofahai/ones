@@ -68,7 +68,7 @@
                     }
                 });
             });
-            $scope.doSubmit = function() {
+            $scope.doFormSubmit = function() {
                 res.save($scope.blocks);
                 $location.url("/");
             };

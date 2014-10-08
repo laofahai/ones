@@ -580,6 +580,20 @@ th.sorting_asc,th.sorting_desc {
     padding-left:0;
 }
 
+.contextMenuDropdown {
+    position:absolute;
+    margin:0;
+    z-index:9;
+}
+.contextMenuDropdown li {
+    list-style:none;
+}
+.contextMenuDropdown a {
+    display:block;
+}
+.contextMenuDropdown a:hover {
+    text-decoration: none;
+}
 .contextMenuDropdown.dropdown-menu {
     display:block;
     min-width:0;

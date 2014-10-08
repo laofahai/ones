@@ -105,7 +105,7 @@
             };
         }])
 
-        .service("DoCraftModel", ["$rootScope", "$injector", "pluginExecutor", function($rootScope, $injector, plugin) {
+        .service("DoCraftModel", ["$rootScope", "$injector", "pluginExecutor", "$route", function($rootScope, $injector, plugin, $route) {
             return {
                 config: {
                     editAble: false,
@@ -114,27 +114,33 @@
                         {
                             label: toLang("doCraft", "actions", $rootScope),
                             icon: "level-down",
-                            action: function($event, selectedItems){
+                            authAction: "read",
+                            action: function($event, selectedItems, item){
                                 var scope = this.scope;
                                 var injector = this.injector;
                                 var res = injector.get("DoCraftRes");
 
-                                if(selectedItems.length <= 0) {
+                                var ids = [];
+                                if(selectedItems) {
+                                    angular.forEach(selectedItems, function(it){
+                                        ids.push(it.id);
+                                    });
+                                }
+
+                                if(item) {
+                                    ids.push(item.id);
+                                }
+
+                                if(!ids) {
                                     return;
                                 }
-                                var ids = [];
-                                angular.forEach(selectedItems, function(item){
-                                    ids.push(item.id);
-                                });
 
                                 res.update({
                                     id: ids.join(),
                                     workflow: true
                                 }, {}, function(){
                                     //刷新当前页面
-                                    var $location = $injector.get("$location");
-//                                console.log($location.url());
-                                    $injector.get("ComView").redirectTo($location.url());
+                                    $route.reload();
                                 });
                             }
                         }
@@ -154,25 +160,28 @@
                         product: {
                             field: "goods_name"
                         },
+                        num: {},
                         current_craft: {
                             field: "processes.craft_name",
-                            displayName: $rootScope.i18n.lang.current_craft
+                            displayName: $rootScope.i18n.lang.current_craft,
+                            cellFilter: "labelAble:'success arrowed-right'"
                         },
                         start_time: {
                             cellFilter: "dateFormat:0"
                         },
                         next_craft: {
                             field: "processes.next_craft_name",
-                            displayName: $rootScope.i18n.lang.next_craft
-                        },
-                        num: {}
+                            displayName: $rootScope.i18n.lang.next_craft,
+                            cellFilter: "labelAble:'primary arrowed-right'"
+                        }
                     };
 
                     plugin.callPlugin("bind_dataModel_to_structure", {
                         structure: structure,
                         alias: "product",
                         require: ["goods_id"],
-                        queryExtra: ["goods_id"]
+                        queryExtra: ["goods_id"],
+                        after: "product"
                     });
 
                     return ones.pluginScope.get("defer").promise;
@@ -371,7 +380,8 @@
                         },
                         current_craft: {
                             field: "processes.craft_name",
-                            displayName: $rootScope.i18n.lang.current_craft
+                            displayName: $rootScope.i18n.lang.current_craft,
+                            cellFilter: "labelAble:'success arrowed'"
                         },
                         start_time: {
                             cellFilter: "dateFormat:0"
@@ -558,9 +568,8 @@
                     opts: {queryExtraParams:{workflowing: true}}
                 };
 
-
-                $scope.doSubmit = function() {
-                    $scope.formMetaData.rows = $scope.formData;
+                $scope.doBillSubmit = function() {
+                    $scope.formMetaData.rows = $scope.billData;
                     res.doPostWorkflow({
                         workflow: true,
                         node_id: $routeParams.nodeId,
@@ -578,6 +587,9 @@
          * */
         .controller("WorkflowDoCraftCtl", ["$scope", "ComView", "DoCraftRes", "DoCraftModel", "$routeParams",
             function($scope, ComView, res, model, $routeParams){
+
+                $routeParams.group = "produce";
+                $routeParams.module = "producePlan"
 
                 /**
                  * 扩展选择操作选项
@@ -597,13 +609,18 @@
         .controller("WorkflowProduceMakeStockinCtl", ["$scope", "ProducePlanRes", "ProducePlanDetailEditModel", "ComView", "$routeParams", "$location",
             function($scope, res, model, ComView, $routeParams, $location){
                 $scope.selectAble = false;
-                ComView.displayBill($scope, model, res, {
-                    plan_id: $routeParams.id,
-                    queryExtraParams: {workflowing: true}
-                });
 
-                $scope.doSubmit = function(){
-                    $scope.formMetaData.rows = $scope.formData;
+                $scope.config = {
+                    model: model,
+                    resource: res,
+                    opts: {
+                        plan_id: $routeParams.id,
+                        queryExtraParams: {workflowing: true}
+                    }
+                };
+
+                $scope.doBillSubmit = function(){
+                    $scope.formMetaData.rows = $scope.billData;
                     res.doPostWorkflow({
                         workflow: true,
                         node_id: $routeParams.nodeId,
@@ -611,8 +628,8 @@
                         donext: true,
                         data: $scope.formMetaData
                     }).$promise.then(function(data){
-                            $location.url("/produce/list/producePlan");
-                        });
+                        $location.url("/produce/list/producePlan");
+                    });
                 };
             }])
 
