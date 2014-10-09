@@ -8,7 +8,8 @@
             'ngAnimate',
             "ones.configModule",
             "ones.common.filters",
-            "ones.commonView"
+            "ones.commonView",
+            "ones.formMaker"
         ])
         .config(["$routeProvider", function($route){
             $route
@@ -69,7 +70,8 @@
                             displayName: $rootScope.installLang.dbuser
                         },
                         dbpwd: {
-                            displayName: $rootScope.installLang.dbpwd
+                            displayName: $rootScope.installLang.dbpwd,
+                            required: false
                         }
                     };
                 }

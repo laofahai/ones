@@ -70,6 +70,9 @@
                     if(undefined === url || !$.trim(url)) {
                         return;
                     }
+                    if(url === "DASHBOARD") {
+                        url = "";
+                    }
                     $location.url("/"+url);
                 };
             });

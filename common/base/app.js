@@ -12,7 +12,6 @@
             'ui.utils',
             'ones.gridView',
             "ones.formMaker",
-            'mgcrea.ngStrap',
             'ones.detailView',
             'angularFileUpload',
 

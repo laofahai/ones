@@ -295,8 +295,8 @@
                 };
 
             }])
-        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "$alert", "$aside", "ComViewConfig", "$injector", "ones.config", "$timeout", "GridView", "$route",
-            function($location, $rootScope, $routeParams, $q, $alert, $aside, ComViewConfig, $injector, conf, $timeout, GridView, $route){
+        .service("ComView",["$location", "$rootScope", "$routeParams", "$q", "ComViewConfig", "$injector", "ones.config", "$timeout", "$route",
+            function($location, $rootScope, $routeParams, $q, ComViewConfig, $injector, conf, $timeout, $route){
                 var service = {};
 
                 /**
@@ -312,6 +312,8 @@
                  * 通用alert
                  * */
                 service.alert = function(alertMsg, type, title, autohide) {
+
+                    var $alert = $injector.get("$alert");
 
                     var container = "#alerts-container";
                     var placement = "bottom";
@@ -352,6 +354,7 @@
                  * 通用aslide
                  * */
                 service.aside = function(title, content, template){
+                    var $aside = $injector.get("$aside");
                     template = template || "views/common/asides/default.html";
                     $rootScope.asideContent = {
                         title: title,
@@ -609,8 +612,8 @@
                             workflow_alias: model.config.workflowAlias,
                             only_active: true
                         }).$promise.then(function(data){
-                            $scope.workflowActionList = data;
-                        });
+                                $scope.workflowActionList = data;
+                            });
 
                         $scope.doWorkflow = function(event, node_id, mainrow_id){
                             var workflowAPI = $injector.get("Workflow.WorkflowAPI");
@@ -701,20 +704,7 @@
                                     title: toLang("confirm", "actions", $rootScope),
                                     template: "common/base/views/confirm.html"
                                 });
-//
-//
-//                                angular.forEach(items, function(item){
-//                                    ids.push(item.id);
-//                                });
-//                                if (!confirm(sprintf(service.toLang('confirm_delete'), $scope.gridSelected.length))) {
-//                                    return false;
-//                                }
-//                                res.delete({id: ids.join()}, function(data) {
-//                                    $scope.$broadcast("gridData.changed", true);
-//                                });
-//
-//                                $scope.gridOptions.selectedItems = [];
-//                                $scope.gridSelected = [];
+
                             },
                             class: "danger",
                             multi: true
@@ -751,7 +741,7 @@
                         });
                     }
 
-                    var authedNodes = ones.caches.getItem("ones.authed.nodes");
+                    var authedNodes = ones.caches.getItem("ones.authed.nodes") || [];
                     angular.forEach($scope.selectedActions, function(item, k){
                         var authKey = sprintf("%s.%s.%s", $routeParams.group, $routeParams.module, item.authAction).toLowerCase();
                         if(authedNodes.indexOf(authKey) < 0){
@@ -762,7 +752,7 @@
                     $scope.selectedActions = reIndex($scope.selectedActions);
 
 
-                    GridView.selectedActions = $scope.selectedActions;
+                    $injector.get("GridView").selectedActions = $scope.selectedActions;
 
                 };
                 service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){

@@ -12,7 +12,7 @@ class InstallAction extends CommonAction {
 
     protected $writeableDirs = array(
         "/apps",
-        "/server/Conf/config.php",
+        "/server/Conf",
         "/server/Runtime",
         "/server/Data",
         "/server/Data/apps",
@@ -132,9 +132,24 @@ class InstallAction extends CommonAction {
         $data["department_id"] = 0;
         $uid = $model->add($data);
 
+        $m = M();
         $sql = "INSERT INTO `%sauth_group_access`(uid, group_id)VALUES(%d, 1)";
         $sql = sprintf($sql, $config["db"]["dbpre"], $uid);
-        $model->execute($sql);
+        $m->execute($sql);
+
+        $authNodesModel = D("AuthRule");
+        $nodeIds = $authNodesModel->field("id")->select();
+        $nodeIds = getArrayField($nodeIds, "id");
+
+        $authedRule = D("AuthGroupRule");
+        foreach($nodeIds as $node) {
+            $authedRule->add(array(
+                "group_id" => 1,
+                "rule_id"  => $node,
+                "flag"     => 0
+            ));
+        }
+
     }
 
     /*
