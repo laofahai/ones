@@ -91,7 +91,7 @@
                         hideInDetail:true
                     },
                     status: {
-                        displayName: $rootScope.i18n.lang.isEnable,
+                        displayName: toLang("isEnable", "", $rootScope),
                         inputType: "select",
                         dataSource: [
                             {id: 1, name: $rootScope.i18n.lang.yes},

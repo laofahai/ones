@@ -119,7 +119,7 @@
         .filter("toLink", [function(){
             return function(text, link, target) {
                 target = target || "_self";
-                return sprintf('<a href="%s" target="%s">%s</a>', link, target, text);
+                return sprintf('<a ng-click="$root.goPage(\'%s\')" target="%s">%s</a>', link, target, text);
             };
         }])
         .filter("toAuthNodeName", ["$rootScope", function($rootScope){

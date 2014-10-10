@@ -74,8 +74,11 @@
                 };
             }];
 
-//            $locationProvider.html5Mode(true);
-//            $locationProvider.hashPrefix('!');
+            if(ones.useHTML5) {
+                $locationProvider.html5Mode(true);
+            }
+
+            $locationProvider.hashPrefix('!');
 
             $httpProvider.interceptors.push(reqInterceptor);
         }])
@@ -96,6 +99,16 @@
                         });
                     }
                 }, 2000);
+
+                $rootScope.goPage = function(url) {
+                    if(undefined === url || !$.trim(url)) {
+                        return;
+                    }
+                    if(url === "DASHBOARD") {
+                        url = "";
+                    }
+                    $location.url(url[0] == "/" ? url : "/"+url);
+                };
 
                 //左侧是否展开
                 var expand = ones.caches.getItem("ones.sidebar.expand");

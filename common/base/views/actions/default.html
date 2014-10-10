@@ -4,7 +4,7 @@
             <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
             <a class="btn btn-sm btn-light" href="" ng-click="$parent.doPageRefresh()"><i class="icon icon-refresh"></i></a>
             <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
-            <a class="btn btn-sm btn-{{pa.class}}" ng-href="#{{pa.href}}" ng-repeat="pa in pageActions track by $index">{{pa.label}}</a>
+            <a class="btn btn-sm btn-{{pa.class}}" ng-click="$root.goPage(pa.href)" ng-repeat="pa in pageActions track by $index">{{pa.label}}</a>
 
         </div>
     </div>

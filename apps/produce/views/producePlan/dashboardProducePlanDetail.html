@@ -3,7 +3,7 @@
         <div class="widget-header widget-header-flat">
             <h4 class="lighter">
                 <i class="icon-signin"></i>
-                <a href="#/produce/list/producePlan" ng-bind="i18n.lang.widgetTitles.produceInProcess"></a>
+                <a ng-click="$root.goPage('produce/list/producePlan')" ng-bind="i18n.lang.widgetTitles.produceInProcess"></a>
             </h4>
             <div class="widget-toolbar">
                 <a data-action="collapse">
@@ -42,7 +42,7 @@
                         <tbody>
                             <tr ng-repeat="item in items">
                                 <td>
-                                    <a ng-href="#/produce/editBill/producePlan/id/{{item.plan_id}}">{{item.plan_id|idFormat}}</a>
+                                    <a ng-click="$root.goPage('produce/editBill/producePlan/id/'+item.plan_id)">{{item.plan_id|idFormat}}</a>
                                 </td>
                                 <td ng-bind="item.goods_name"></td>
                                 <td ng-bind="item.standard_label"></td>

@@ -575,7 +575,7 @@
                         bill_id : {
                             hideInForm: true,
                             billAble: false,
-                            cellFilter: "toLink:#/store/editBill/stockout/id/+stockout_id"
+                            cellFilter: "toLink:store/editBill/stockout/id/+stockout_id"
                         },
                         factory_code_all: {
                             billAble:false,

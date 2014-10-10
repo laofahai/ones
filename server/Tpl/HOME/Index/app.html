@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
     <link rel="stylesheet" href="common/statics/css/main.css">
     <link rel="stylesheet" href="{:U('FrontendRuntime/index?action=getCss')}" />
+    <base href="{$APP_PATH}" />
 </head>
 <body ng-app="ones" ng-controller="MainCtl" ng-keydown="doMainKeyDown($event)">
 <div class="initCover" id="initCover">
@@ -107,20 +108,20 @@
 
             <ul id="nav-list" class="nav nav-list" ng-controller="CommonSidebarCtl">
                 <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
-                    <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);goPage(nav.url)">
+                    <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);$root.goPage(nav.url)">
                         <i class="icon-{{nav.icon}}"></i>
                         <span class="menu-text" ng-bind="i18n.lang.navs[nav.label]||nav.label"></span>
                         <b class="arrow icon-angle-down" ng-show="{{nav.childs.length}}"></b>
                     </a>
                     <ul class="submenu">
                         <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
-                            <a ng-click="checkSubActiveNav(nc.id, nav.id);goPage(nc.url)">
+                            <a ng-click="checkSubActiveNav(nc.id, nav.id);$root.goPage(nc.url)">
                                 <i class="icon-angle-double-right"></i>
                                 <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]||nc.label"></span>
                             </a>
                             <ul class="submenu">
                                 <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
-                                    <a ng-click="checkThirdActiveNav(nct.id, nc.id);goPage(nct.url)">
+                                    <a ng-click="checkThirdActiveNav(nct.id, nc.id);$root.goPage(nct.url)">
                                         <i class="icon-angle-double-right"></i>
                                         <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]||nct.label"></span>
                                     </a>
@@ -228,6 +229,9 @@
         },
         userInfo: {$userInfo}
     };
+    <if condition="DBC('site.html5.mode')">
+        ones.useHTML5 = {:DBC('site.html5.mode')};
+    </if>
 </script>
 <foreach name="javascripts" item="js">
     <script src="{$js}<if condition="$isDebug">?r={:rand(0,99999)}</if>"></script>

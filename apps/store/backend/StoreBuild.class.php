@@ -28,8 +28,16 @@ class StoreBuild extends CommonBuildAction {
                     "type" => 1,
                     "listorder" => 1,
                     "prev_node_id" => "StartProcess",
+                    "next_node_id" => "ConfirmStockin",
+                    "status_text" => "正在入库"
+                ),
+                "CompleteProcess" => array(
+                    "name" => "完成入库",
+                    "type" => 1,
+                    "listorder" => 2,
+                    "prev_node_id" => "ConfirmStockin",
                     "next_node_id" => 0,
-                    "status_text" => "已入库"
+                    "status_text" => "已入库完成"
                 )
             )
         ),

@@ -277,7 +277,10 @@ class Workflow {
         
         if(false === $ignoreCheck) {
             if(!$this->checkExecutorPermission($node["executor"])) {
-                throw_exception(L("workflow_permission_denied"));
+                echo json_encode(array(
+                    "error" => 1,
+                    "msg"   => "workflow_permission_denied"
+                ));
                 return false;
             }
         }

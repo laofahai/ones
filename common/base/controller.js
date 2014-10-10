@@ -66,15 +66,7 @@
                     $scope.activeThirdNav = id;
                     $scope.activeSubNav = pid;
                 };
-                $scope.goPage = function(url) {
-                    if(undefined === url || !$.trim(url)) {
-                        return;
-                    }
-                    if(url === "DASHBOARD") {
-                        url = "";
-                    }
-                    $location.url("/"+url);
-                };
+
             });
         }])
 
