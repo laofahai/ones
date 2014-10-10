@@ -554,6 +554,7 @@
                                 icon: "plus",
                                 authAction: "edit",
                                 action: function(evt, selected, theItem){
+                                    theItem = theItem || {};
                                     $location.url(sprintf('/%(group)s/addChild/%(module)s/pid/%(id)d', {
                                         group : group,
                                         module: module,
@@ -573,6 +574,7 @@
                                 icon: "eye",
                                 authAction: "read",
                                 action: function(evt, selected, theItem){
+                                    theItem = theItem || {};
                                     $location.url(sprintf('/%(group)s/viewChild/%(module)s/pid/%(id)d', {
                                         group : group,
                                         module: module,
@@ -592,6 +594,7 @@
                             multi: false,
                             authAction: "read",
                             action: function(evt, selected, theItem){
+                                theItem = theItem || {};
                                 var action = model.config.isBill ? "viewBillDetail" : "viewDetail";
                                 $location.url(sprintf('/%(group)s/%(action)s/%(module)s/id/%(id)d', {
                                     group : group,

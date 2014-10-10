@@ -58,9 +58,9 @@ class UserAction extends CommonAction {
     }
 
     private function updateUserGroup($id=null) {
-        if($_POST["usergroup"]) {
+        if($_POST["group_ids"]) {
             $id = $_POST["id"] ? $_POST["id"] : $id;
-            $usergroup = is_array($_POST["usergroup"]) ? $_POST["usergroup"] : explode(",", $_POST["usergroup"]);
+            $usergroup = is_array($_POST["group_ids"]) ? $_POST["group_ids"] : explode(",", $_POST["group_ids"]);
             $model = D("AuthGroupAccess");
             $model->where("uid=".$id)->delete();
             foreach($usergroup as $g) {
@@ -71,16 +71,6 @@ class UserAction extends CommonAction {
 
                 $model->add($data);
             }
-        }
-
-        if($id == $this->user["id"]) {
-            /**
-             * 更新SESSION
-             */
-            $user = D("UserRelation");
-            $theUser = $user->getFullUserInfo($_REQUEST["id"]);
-            unset($theUser["id"]);
-            $_SESSION["user"] = $theUser;
         }
     }
     

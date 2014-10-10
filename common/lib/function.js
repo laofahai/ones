@@ -495,9 +495,11 @@ var dataFormat = function(fieldsDefine, data) {
                 break;
             case "select":
                 if(!struct.multiple) {
-                    if (/^\d+$/.test(data[f])) {
-                        data[f] = Number(data[f]) || 0;
-                    }
+//                    if (/^\d+$/.test(data[f])) {
+//                        data[f] = Number(data[f]) || 0;
+//                    }
+
+//                    console.log(typeof(data[f]), data[f]);
                 }
                 break;
             case "number":
