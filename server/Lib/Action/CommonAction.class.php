@@ -563,7 +563,9 @@ class CommonAction extends RestAction {
         }
 
         $tmp = $model->where($map)->select();
+//        echo $model->getLastSql();exit;
 
+        //扩展权限检测
         if(($extendPermissionCheck && !$tmp) or false === $extendPermissionCheck) {
             $this->error("need_authorize");
             return;

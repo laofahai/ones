@@ -167,7 +167,10 @@
 
                 $scope.billConfig = {
                     model: RelationshipCompanyModel,
-                    resource: res
+                    resource: res,
+                    opts: {
+                        minRows: 4
+                    }
                 };
 
                 $scope.formConfig = {

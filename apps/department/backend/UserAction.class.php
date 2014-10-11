@@ -75,6 +75,10 @@ class UserAction extends CommonAction {
     }
     
     public function read() {
+        if("0" === $_GET["id"] && (!$_GET["email"] && !$_GET["username"])) {
+            return;
+        }
+
         $item = parent::read(true);
         unset($item["password"]);
         $this->response($item);
