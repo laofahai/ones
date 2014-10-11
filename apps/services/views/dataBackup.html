@@ -2,19 +2,19 @@
     <div class="col-lg-8">
         <label>
             <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="options.send_email" />
-            <span class="lbl" ng-bind="i18n.lang.send_to_mailbox">  </span>
+            <span class="lbl" ng-bind="'lang.send_to_mailbox'|lang">  </span>
         </label>
         <label>
             <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="options.packit" />
-            <span class="lbl" ng-bind="i18n.lang.packit">  </span>
+            <span class="lbl" ng-bind="'lang.packit'|lang">  </span>
         </label>
         <label>
             <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="options.autodelete" />
-            <span class="lbl" ng-bind="i18n.lang.autodelete">  </span>
+            <span class="lbl" ng-bind="'lang.autodelete'|lang">  </span>
         </label>
     </div>
     <div class="col-lg-8">
-        <button ng-click="doSubmit();" class="btn btn-primary" ng-bind="i18n.lang.actions.submit"></button>
+        <button ng-click="doSubmit();" class="btn btn-primary" ng-bind="'lang.actions.submit'|lang"></button>
     </div>
 </div>
 <hr class="hr-10 hr-dotted" />

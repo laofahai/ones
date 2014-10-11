@@ -22,7 +22,7 @@
 
         <div class="profile-user-info profile-user-info-striped">
             <div class="profile-info-row">
-                <div class="profile-info-name" ng-bind="i18n.lang.username"></div>
+                <div class="profile-info-name" ng-bind="'lang.username'|lang"></div>
 
                 <div class="profile-info-value">
                     <span id="username" ng-bind="$parent.userInfo.username"></span>
@@ -30,26 +30,26 @@
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name" ng-bind="i18n.lang.email"></div>
+                <div class="profile-info-name" ng-bind="'lang.email'|lang"></div>
 
                 <div class="profile-info-value" ng-bind="$parent.userInfo.email"></div>
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name" ng-bind="i18n.lang.phone"></div>
+                <div class="profile-info-name" ng-bind="'lang.phone'|lang"></div>
 
                 <div class="profile-info-value" ng-bind="$parent.userInfo.phone"></div>
             </div>
 
             <div class="profile-info-row">
-                <div class="profile-info-name" ng-bind="i18n.lang.department"></div>
+                <div class="profile-info-name" ng-bind="'lang.department'|lang"></div>
                 <div class="profile-info-value">
                     <span ng-bind="$parent.userInfo.Department.path"></span>
                 </div>
             </div>
             <div class="profile-info-row">
                 <div class="profile-info-value">
-                    <span class="editable editable-click" id="signup" ng-click="showProfileEdit();" ng-bind="i18n.lang.actions.edit"></span>
+                    <span class="editable editable-click" id="signup" ng-click="showProfileEdit();" ng-bind="'lang.actions.edit'|lang"></span>
                 </div>
             </div>
         </div>

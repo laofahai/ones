@@ -13,7 +13,7 @@
                     <label>
                         <input type="checkbox" class="ace" ng-click="toggleThisLine($event)" />
                         <span class="lbl"></span>
-                        <div ng-bind="i18n.lang['App'+itemList[0].category.ucfirst()].appName || itemList[0].category"></div>
+                        <div ng-bind="'lang['App'+itemList[0].category.ucfirst()].appName || itemList[0].category'|lang"></div>
                     </label>
                 </div>
             </td>
@@ -31,7 +31,7 @@
         <tr>
             <td> </td>
             <td colspan="2">
-                <button class="btn btn-primary" ng-bind="i18n.lang.actions.save" ng-click="doSubmit()"></button>
+                <button class="btn btn-primary" ng-bind="'lang.actions.save" ng-click="doSubmit()'|lang"></button>
             </td>
         </tr>
     </tfoot>

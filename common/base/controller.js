@@ -106,21 +106,21 @@
                 $scope.uninstallConfirmed = function() {
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(
-                        $rootScope.i18n.lang.messages.apps.uninstalling
+                        l('lang.messages.apps.uninstalling')
                     );
                     appModel.api.delete({
                         id: $scope.appInfo.alias
                     }).$promise.then(function(data){
                         if(data.error) {
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.messages.apps.uninstall_failed + ": " + data.msg
+                                l('lang.messages.apps.uninstall_failed') + ": " + data.msg
                             );
                         }
                         $scope.consoleMessages.push(
-                            $rootScope.i18n.lang.messages.apps.uninstall_success
+                            l('lang.messages.apps.uninstall_success')
                         );
                         $scope.consoleMessages.push(
-                            $rootScope.i18n.lang.messages.apps.afterOperate
+                            l('lang.messages.apps.afterOperate')
                         );
                         $scope.appInfo = data;
                     });
@@ -131,7 +131,7 @@
                 $scope.doAppInstall = function() {
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(
-                        $rootScope.i18n.lang.messages.apps.installing
+                        l('lang.messages.apps.installing')
                     );
                     var params = {
                         alias: $scope.appInfo.alias
@@ -141,24 +141,24 @@
                         if(data.type == "requirements") {
                             $scope.consoleClass = "danger";
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.requirementsApp + ": " + data.requirements
+                                l("lang.requirementsApp") + ": " + data.requirements
                             );
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.messages.apps.requirements
+                                l("lang.messages.apps.requirements")
                             );
                             return;
                         }
 
                         if(data.error) {
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.messages.apps.install_failed + ": " + data.msg
+                                l("lang.messages.apps.install_failed") + ": " + data.msg
                             );
                         } else {
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.messages.apps.install_success
+                                l("lang.messages.apps.install_success")
                             );
                             $scope.consoleMessages.push(
-                                $rootScope.i18n.lang.messages.apps.afterOperate
+                                l("lang.messages.apps.afterOperate")
                             );
                             $scope.appInfo = data;
                         }
@@ -174,9 +174,9 @@
                     appModel.api.update({id: $scope.appInfo.id}, params, function(data){
                         if(!data.error) {
                             $timeout(function(){
-                                $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.operateSuccess);
+                                $scope.consoleMessages.push(l("lang.messages.apps.operateSuccess"));
                                 $scope.appInfo = data;
-                                $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.afterOperate);
+                                $scope.consoleMessages.push(l("lang.messages.apps.afterOperate"));
                             }, 100);
 
                         }
@@ -200,7 +200,7 @@
                 $scope.doAppUpgrade = function() {
                     $scope.consoleMessages = [];
                     $scope.consoleMessages.push(
-                        $rootScope.i18n.lang.messages.apps.upgrading
+                        l('lang.messages.apps.upgrading')
                     );
                     appModel.api.update({
                         id: $scope.appInfo.id,
@@ -208,9 +208,9 @@
                         upgrade: true
                     }, {}, function(data){
                         $scope.consoleMessages.push(
-                            $rootScope.i18n.lang.messages.apps.upgradeSuccess
+                            l('lang.messages.apps.upgradeSuccess')
                         );
-                        $scope.consoleMessages.push($rootScope.i18n.lang.messages.apps.afterOperate);
+                        $scope.consoleMessages.push(l('lang.messages.apps.afterOperate'));
                         $scope.appInfo = data;
                     });
                 }

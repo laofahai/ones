@@ -13,7 +13,7 @@
             <div class="space-10"></div>
     </widgetbox>
     <div class="form-actions center">
-        <button class="btn btn-primary" ng-bind="i18n.lang.actions.edit" ng-click="doEditDetail()" ng-show="config.editAble"></button>
-        <button class="btn" ng-bind="i18n.lang.actions.return" onclick="history.go(-1);"></button>
+        <button class="btn btn-primary" ng-bind="'lang.actions.edit'|lang" ng-click="doEditDetail()" ng-show="config.editAble"></button>
+        <button class="btn" ng-bind="'lang.actions.return'|lang" onclick="history.go(-1);"></button>
     </div>
 </detail-view>

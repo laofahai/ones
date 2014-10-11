@@ -33,7 +33,7 @@
                 getStructure : function() {
                     var self = this;
                     self.structure.type.dataSource = [];
-                    angular.forEach($rootScope.i18n.lang.types, function(item, k){
+                    angular.forEach(l("lang.types"), function(item, k){
                         self.structure.type.dataSource.push({
                             id: k,
                             name: item
@@ -106,7 +106,7 @@
                     description: {},
                     status_text: {
                         cellFilter: "lang",
-                        displayName: toLang("status", "", $rootScope)
+                        displayName: l("status")
                     }
                 },
 

@@ -121,7 +121,7 @@
                 //有需要的APP未能加载
                 if(ones.unfoundApp) {
                     ComView.alert(
-                        sprintf($rootScope.i18n.lang.messages.unfoundApp, ones.unfoundApp.join()),
+                        sprintf(l(lang.messages.unfoundApp), ones.unfoundApp.join()),
                         "danger",
                         "!",
                         false);
@@ -260,7 +260,7 @@
                     $scope.currentPage = {
                         lang: {}
                     };
-                    var urlmap = $rootScope.i18n.urlMap;
+                    var urlmap = l("urlMap");
                     if (urlmap[app]) {
                         $scope.currentPage.lang.app = urlmap[app].name;
                         if (urlmap[app].modules[module]) {
@@ -274,7 +274,7 @@
                             }
                             if (!$scope.currentPage.lang.action) {
                                 $scope.currentPage.lang.action = urlmap[app].modules[module].name;
-                                $scope.currentPage.lang.actionDesc = $rootScope.i18n.lang.actions[action];
+                                $scope.currentPage.lang.actionDesc = l("lang.actions."+action);;
                             }
                         }
                     }
@@ -293,7 +293,7 @@
                      * 清除即时缓存
                      * */
                      ones.caches.clear(-1);
-                  }
+                 }
 
                 doWhenLocationChanged();
 

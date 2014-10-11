@@ -3,7 +3,7 @@
         <div class="widget-header widget-header-flat">
             <h4 class="lighter">
                 <i class="icon-signin"></i>
-                <a ng-click="$root.goPage('produce/list/producePlan')" ng-bind="i18n.lang.widgetTitles.produceInProcess"></a>
+                <a ng-click="$root.goPage('produce/list/producePlan')" ng-bind="'lang.widgetTitles.produceInProcess'|lang"></a>
             </h4>
             <div class="widget-toolbar">
                 <a data-action="collapse">
@@ -18,23 +18,23 @@
                         <thead class="thin-border-bottom">
                             <tr>
                                 <th>
-                                    <span ng-bind="i18n.lang.plan_id"></span>
+                                    <span ng-bind="'lang.plan_id'|lang"></span>
                                 </th>
 
                                 <th>
-                                    <span ng-bind="i18n.lang.goods_name"></span>
+                                    <span ng-bind="'lang.goods_name'|lang"></span>
                                 </th>
                                 <th>
-                                    <span ng-bind="i18n.lang.standard"></span>
+                                    <span ng-bind="'lang.standard'|lang"></span>
                                 </th>
                                 <th>
-                                    <span ng-bind="i18n.lang.version"></span>
+                                    <span ng-bind="'lang.version'|lang"></span>
                                 </th>
                                 <th class="hidden-480">
-                                    <span ng-bind="i18n.lang.num"></span>
+                                    <span ng-bind="'lang.num'|lang"></span>
                                 </th>
                                 <th class="hidden-480">
-                                    <span ng-bind="i18n.lang.end_time"></span>
+                                    <span ng-bind="'lang.end_time'|lang"></span>
                                 </th>
                             </tr>
                         </thead>

@@ -70,7 +70,7 @@
                 }
             };
             obj.getStructure= function() {
-                var i18n = $rootScope.i18n.lang;
+                var i18n = l('lang');
                 return {
                     bill_id: {
                         displayName: i18n.billId,
@@ -126,7 +126,7 @@
                     }
                 };
                 obj.getStructure = function() {
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('lang');
                     var fields = {
                         id : {
                             primary: true,
@@ -196,7 +196,7 @@
                     return {
                         bill_id: {},
                         returns_type_label: {
-                            displayName: $rootScope.i18n.lang.type
+                            displayName: l('lang.type')
                         },
                         saler: {},
                         customer: {},
@@ -207,7 +207,7 @@
                             cellFilter: "dateFormat:0"
                         },
                         status_text: {
-                            displayName: $rootScope.i18n.lang.status,
+                            displayName: l('lang.status'),
                             field: "processes.status_text"
                         }
                     };
@@ -224,7 +224,7 @@
                     }
                 };
                 obj.getStructure = function() {
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('lang');
                     var fields = {
                         id : {
                             primary: true,

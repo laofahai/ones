@@ -195,7 +195,7 @@
                     hideInDetail:true
                 },
                 total_num: {
-                    displayName: $rootScope.i18n.lang.total,
+                    displayName: l('lang.total'),
                     hideInForm: true
                 }
             };
@@ -276,7 +276,7 @@
             function($rootScope, GoodsCategoryRes, $q) {
                 var service = {
                     getStructure : function() {
-                        var i18n = $rootScope.i18n.lang;
+                        var i18n = l('lang');
                         var struct = {
                             stock: {
                                 inputType: "select",
@@ -340,7 +340,7 @@
                 }
             };
             obj.getStructure= function() {
-                var i18n = $rootScope.i18n.lang;
+                var i18n = l("lang");
                 return {
                     bill_id: {
                         displayName: i18n.billId
@@ -380,7 +380,7 @@
                     })
                 };
                 obj.getStructure = function() {
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('lang');
                     var fields = {
                         id : {
                             primary: true,
@@ -434,7 +434,7 @@
                         num: {
                             inputType: "number",
                             totalAble: true,
-                            displayName: toLang("this_time_in_stock", "", $rootScope)
+                            displayName: l("this_time_in_stock")
                         },
                         ined: {
                             inputType: "static",
@@ -471,17 +471,17 @@
             });
             this.structure = {
                 factory_code_all: {
-                    displayName: $rootScope.i18n.lang.factoryCodeAll
+                    displayName: toLang("factoryCodeAll", "", $rootScope)
                 },
                 goods_name: {
-                    displayName: $rootScope.i18n.lang.name
+                    displayName: toLang("name", $rootScope)
                 },
                 measure: {},
                 category_name: {
-                    displayName: $rootScope.i18n.lang.category
+                    displayName: toLang("category", $rootScope)
                 },
                 stock_name: {
-                    displayName: $rootScope.i18n.lang.stock
+                    displayName: toLang("stock", $rootScope)
                 },
                 num: {
                     cellFilter:"colorize:item.colorize"
@@ -539,11 +539,11 @@
                             cellFilter: "dateFormat:0"
                         },
                         status_text: {
-                            displayName: $rootScope.i18n.lang.status,
+                            displayName: l('lang.status'),
                             field: "processes.status_text"
                         },
                         outtime: {
-                            displayName: $rootScope.i18n.lang.outStockTime,
+                            displayName: l('lang.outStockTime'),
                             cellFilter: "dateFormat:0"
                         }
                     };
@@ -565,7 +565,7 @@
                     })
                 };
                 obj.getStructure = function() {
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('lang');
                     var fields = {
                         id : {
                             primary: true,

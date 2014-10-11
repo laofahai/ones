@@ -90,7 +90,7 @@
                         subject: {},
                         type_id: {
                             field: "type",
-                            displayName: $rootScope.i18n.lang.type,
+                            displayName: l('lang.type'),
                             inputType: "select",
                             dataSource: "HOME.TypesAPI",
                             queryParams: {
@@ -105,7 +105,7 @@
                         },
                         account_id: {
                             field: "account_name",
-                            displayName: $rootScope.i18n.lang.account,
+                            displayName: l('lang.account'),
                             inputType: "select",
                             dataSource: "FinanceAccountRes",
                             nameField: "name",
@@ -144,7 +144,7 @@
                         id: {primary: true},
                         type_id: {
                             field: "type",
-                            displayName: $rootScope.i18n.lang.type,
+                            displayName: l('lang.type'),
                             inputType: "select",
                             dataSource: "HOME.TypesAPI",
                             queryParams: {
@@ -165,7 +165,7 @@
                         },
                         account_id: {
                             field: "account_name",
-                            displayName: $rootScope.i18n.lang.account,
+                            displayName: l('lang.account'),
                             inputType: "select",
                             dataSource: FinanceAccountRes,
                             nameField: "name",
@@ -204,7 +204,7 @@
                             inputType: "number"
                         },
                         account_id: {
-                            displayName: $rootScope.i18n.lang.account,
+                            displayName: l('lang.account'),
                             inputType: "select",
                             dataSource: res,
                             nameField: "name",

@@ -163,7 +163,7 @@
                         num: {},
                         current_craft: {
                             field: "processes.craft_name",
-                            displayName: $rootScope.i18n.lang.current_craft,
+                            displayName: l('lang.next_craft'),
                             cellFilter: "labelAble:'success arrowed-right'"
                         },
                         start_time: {
@@ -171,7 +171,7 @@
                         },
                         next_craft: {
                             field: "processes.next_craft_name",
-                            displayName: $rootScope.i18n.lang.next_craft,
+                            displayName: l('lang.next_craft'),
                             cellFilter: "labelAble:'primary arrowed-right'"
                         }
                     };
@@ -199,7 +199,7 @@
                     return {
                         id: {primary: true, width:50},
                         type_label: {
-                            displayName: $rootScope.i18n.lang.type
+                            displayName: l('lang.type')
                         },
                         start_time: {
                             cellFilter: "dateFormat:1"
@@ -211,7 +211,7 @@
                             cellFilter: "dateFormat:0"
                         },
                         status_text: {
-                            displayName: $rootScope.i18n.lang.status,
+                            displayName: l('lang.status'),
                             field: "processes.status_text"
                         },
                         memo: {}
@@ -226,7 +226,7 @@
                     selectAble: false
                 },
                 getStructure: function() {
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('lang');
                     var s = {
                         goods_id: {
                             displayName: i18n.product,
@@ -280,7 +280,7 @@
                             editAble: false
                         },
                         goods_id: {
-                            displayName: $rootScope.i18n.lang.goods,
+                            displayName: l('lang.goods'),
                             labelField: true,
                             inputType: "select3",
                             dataSource: GoodsRes,
@@ -312,7 +312,7 @@
                     deleteAble: false,
                     extraSelectActions: [
                         {
-                            label: $rootScope.i18n.lang.actions.doCraft,
+                            label: l('lang.actions.doCraft'),
                             icon: "level-down",
                             action: function($event, selectedItems, theItem){
                                 var scope = this.scope;
@@ -343,7 +343,7 @@
                             }
                         },
                         {
-                            label: $rootScope.i18n.lang.actions.viewCraft,
+                            label: l('lang.actions.viewCraft'),
                             icon: "eye",
                             action: function($event, selectedItems, theItem){
                                 var scope = this.scope;
@@ -380,7 +380,7 @@
                         },
                         current_craft: {
                             field: "processes.craft_name",
-                            displayName: $rootScope.i18n.lang.current_craft,
+                            displayName: l('lang.current_craft'),
                             cellFilter: "labelAble:'success arrowed'"
                         },
                         start_time: {
@@ -423,7 +423,7 @@
                                 hideInForm: true
                             },
                             goods_id: {
-                                displayName: $rootScope.i18n.lang.goods,
+                                displayName: l('lang.goods'),
                                 listAble: false,
                                 inputType: "select3",
                                 dataSource: "GoodsRes"
@@ -451,7 +451,7 @@
                         rowsModel: "ProductTplDetailModel"
                     },
                     getStructure: function() {
-                        var i18n = $rootScope.i18n.lang;
+                        var i18n = l('lang');
                         var s = {
                             goods_id: {
                                 displayName: i18n.goods,

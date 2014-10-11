@@ -5,10 +5,10 @@
                 <tr>
                     <th></th>
                     <th>
-                        <span ng-bind="i18n.lang.name"></span>
+                        <span ng-bind="'lang.name'|lang"></span>
                     </th>
                     <th class="hidden-480">
-                        <span ng-bind="i18n.lang.listorder"></span>
+                        <span ng-bind="'lang.listorder'|lang"></span>
                     </th>
                 </tr>
             </thead>
@@ -26,7 +26,7 @@
             </tbody>
         </table>
         <div class="center">
-            <button class="btn btn-primary btn-sm" ng-click="doSubmit();" ng-bind="i18n.lang.actions.submit"></button>
+            <button class="btn btn-primary btn-sm" ng-click="doSubmit();" ng-bind="'lang.actions.submit'|lang"></button>
         </div>
     </div>
 </div>

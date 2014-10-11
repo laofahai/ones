@@ -3,12 +3,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <h4 class="modal-title" ng-bind="i18n.lang.messages.apps.confirmAgain"></h4>
+                <h4 class="modal-title" ng-bind="'lang.messages.apps.confirmAgain'|lang"></h4>
             </div>
-            <div class="modal-body red" ng-bind="i18n.lang.messages.apps.appUninstallTip"></div>
+            <div class="modal-body red" ng-bind="'lang.messages.apps.appUninstallTi'|langp"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" ng-click="uninstallConfirmed();$hide()" ng-bind="i18n.lang.actions.confirm"></button>
-                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="i18n.lang.actions.cancel"></button>
+                <button type="button" class="btn btn-danger" ng-click="uninstallConfirmed();$hide()" ng-bind="'lang.actions.confirm'|lang"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="'lang.actions.cancel'|lang"></button>
             </div>
         </div>
     </div>

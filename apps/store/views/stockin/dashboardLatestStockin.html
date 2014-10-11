@@ -3,7 +3,7 @@
         <div class="widget-header widget-header-flat">
             <h4 class="lighter">
                 <i class="icon-signin"></i>
-                <a ng-click="$root.goPage('store/list/stockin')" ng-bind="i18n.lang.widgetTitles.latestStockin"></a>
+                <a ng-click="$root.goPage('store/list/stockin')" ng-bind="'lang.widgetTitles.latestStockin'|lang"></a>
             </h4>
             <div class="widget-toolbar">
                 <a data-action="collapse">
@@ -19,21 +19,21 @@
                             <tr>
                                 <th>
                                     <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.bill_id"></span>
+                                    <span ng-bind="'lang.bill_id'|lang"></span>
                                 </th>
 
                                 <th>
                                     <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.subject"></span>
+                                    <span ng-bind="'lang.subject'|lang"></span>
                                 </th>
 
                                 <th class="hidden-480">
                                     <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.num"></span>
+                                    <span ng-bind="'lang.num'|lang"></span>
                                 </th>
                                 <th class="hidden-480">
                                     <i class="icon-caret-right blue"></i>
-                                    <span ng-bind="i18n.lang.status"></span>
+                                    <span ng-bind="'lang.status'|lang"></span>
                                 </th>
                             </tr>
                         </thead>
@@ -41,7 +41,7 @@
                         <tbody>
                             <tr ng-repeat="item in items">
                                 <td>
-                                    <a ng-href="#/store/editBill/stockin/id/{{item.id}}">{{item.bill_id}}</a>
+                                    <a ng-click="$root.goPage('store/editBill/stockin/id/'+item.id)">{{item.bill_id}}</a>
                                 </td>
                                 <td ng-bind="item.subject"></td>
                                 <td ng-bind="item.total_num"></td>

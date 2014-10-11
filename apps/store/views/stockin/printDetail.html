@@ -2,14 +2,14 @@
     <td colspan="{{rowsStructure.length}}">
         <div class="printAbleBillHead row">
             <div class="col-xs-4">
-                <span ng-bind="i18n.lang.bill_id|colon"></span>
+                <span ng-bind="'lang.bill_id|colon'|lang"></span>
                 <span ng-bind="bill.bill_id"></span>
             </div>
             <div class="col-xs-4">
                 <span ng-bind="bill.dateline|dateFormat"></span>
             </div>
             <div class="col-xs-4 text-right">
-                <span ng-bind="i18n.lang.stock_manager|colon"></span>
+                <span ng-bind="'lang.stock_manager|colon'|lang"></span>
                 <span ng-bind="bill.stock_manager"></span>
             </div>
         </div>

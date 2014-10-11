@@ -5,10 +5,10 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th ng-bind="i18n.lang.updateVersion"></th>
-                    <th ng-bind="i18n.lang.dateline"></th>
-                    <!--<th ng-bind="i18n.lang.memo"></th>-->
-                    <th ng-bind="i18n.lang.operation"></th>
+                    <th ng-bind="'lang.updateVersion'|lang"></th>
+                    <th ng-bind="'lang.dateline'|lang"></th>
+                    <!--<th ng-bind="'lang.memo'|lang"></th>-->
+                    <th ng-bind="'lang.operation'|lang"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -17,14 +17,14 @@
                     <td ng-bind="u.dateline|dateFormat"></td>
                     <!--<td ng-bind="u.memo"></td>-->
                     <td>
-                        <a ng-click="doDownload(u.id)" ng-bind="i18n.lang.download" ng-show="!u.downloaded"></a>
-                        <span ng-bind="i18n.lang.downloaded" ng-show="u.downloaded"></span>
-                        <a ng-click="doUpdate(u.id)" ng-bind="i18n.lang.update" ng-show="u.downloaded"></a>
-                        <a ng-click="showUpdateLog(u.memo)" ng-bind="i18n.lang.updateLog"></a>
+                        <a ng-click="doDownload(u.id)" ng-bind="'lang.download" ng-show="!u.downloaded'|lang"></a>
+                        <span ng-bind="'lang.downloaded" ng-show="u.downloaded'|lang"></span>
+                        <a ng-click="doUpdate(u.id)" ng-bind="'lang.update" ng-show="u.downloaded'|lang"></a>
+                        <a ng-click="showUpdateLog(u.memo)" ng-bind="'lang.updateLog'|lang"></a>
                     </td>
                 </tr>
                 <tr ng-show="noNewVersion">
-                    <td colspan="4" align="center" ng-bind="i18n.lang.messages.systemUpdateNoNewVersion"></td>
+                    <td colspan="4" align="center" ng-bind="'lang.messages.systemUpdateNoNewVersion'|lang"></td>
                 </tr>
                 </tbody>
             </table>

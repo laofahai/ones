@@ -32,7 +32,7 @@
                     goods_name: {},
                     measure: {},
                     store_num: {
-                        displayName: $rootScope.i18n.lang.storeNum
+                        displayName: l('lang.storeNum')
                     }
                 },
                 getStructure: function() {
@@ -81,11 +81,11 @@
                     select: {
                         field: "timeStep",
                         inputType: "select",
-                        displayName: $rootScope.i18n.lang.showType,
+                        displayName: l('lang.showType'),
                         dataSource: [
-                            {id: "day", name: $rootScope.i18n.lang.show_by_day},
-                            {id: "month", name: $rootScope.i18n.lang.show_by_month},
-                            {id: "year", name: $rootScope.i18n.lang.show_by_year}
+                            {id: "day", name: l('lang.show_by_day}')},
+                            {id: "month", name: l('lang.show_by_month}')},
+                            {id: "year", name: l('lang.show_by_year}')}
                         ]
                     }
                 };

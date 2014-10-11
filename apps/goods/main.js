@@ -103,7 +103,7 @@
                 }
             };
             obj.getStructure = function(structOnly) {
-                var i18n = $rootScope.i18n.lang;
+                var i18n = l('lang');
                 var struct = {
                     id : {
                         primary: true

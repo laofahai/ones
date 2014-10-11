@@ -15,7 +15,7 @@
             );
         }])
         .service("ExpressModel", ["$rootScope", "ones.config", function($rootScope, conf) {
-            var i18n = $rootScope.i18n.lang;
+            var i18n = l('lang');
             return {
                 config: {
                     printAble: true

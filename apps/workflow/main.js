@@ -74,7 +74,7 @@
                     name: {},
                     type: {
                         inputType: "select",
-                        dataSource: $rootScope.i18n.lang.workflowTypes
+                        dataSource: l('lang.workflowTypes')
                     },
                     execute_file: {},
                     listorder: {
@@ -121,8 +121,8 @@
                         listAble: false,
                         inputType: "select",
                         dataSource: [
-                            {id: 1, name: $rootScope.i18n.lang.yes},
-                            {id: -1, name: $rootScope.i18n.lang.no}
+                            {id: 1, name: l("lang.yes")},
+                            {id: -1, name: l("lang.no")}
                         ]
                     },
                     remind: {

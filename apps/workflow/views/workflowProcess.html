@@ -3,7 +3,7 @@
         <div class="aside-content">
             <div class="aside-header">
                 <button type="button" class="close" ng-click="$hide()">×</button>
-                <h4 class="aside-title ng-binding" ng-bind="i18n.lang.actions.viewWorkflowProcess"></h4>
+                <h4 class="aside-title ng-binding" ng-bind="'lang.actions.viewWorkflowProcess'|lang"></h4>
             </div>
             <div class="aside-body ng-binding">
                 <h5 class="bolder" ng-bind="asideContent.title.bill_id"></h5>
@@ -23,7 +23,7 @@
                 </dl>
             </div>
             <div class="aside-footer">
-                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="i18n.lang.actions.close"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="'lang.actions.close'|lang"></button>
             </div>
         </div>
     </div>

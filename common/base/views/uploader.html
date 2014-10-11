@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
-                <h4 class="modal-title" ng-bind="i18n.lang.widgetTitles.uploader"></h4>
+                <h4 class="modal-title" ng-bind="'lang.widgetTitles.uploader'|lang"></h4>
             </div>
             <div class="modal-body">
                     <div class="row">
@@ -26,18 +26,18 @@
 
                         <div class="col-md-9">
                             <p>
-                                {{i18n.lang.queue_length}}: {{ uploader.queue.length }}
-                                {{i18n.lang.queue_limit}}: {{uploaderQueueLimit}}
+                                {{'lang.queue_length'|lang}}: {{ uploader.queue.length }}
+                                {{'lang.queue_limit'|lang}}: {{uploaderQueueLimit}}
                             </p>
 
                             <table class="table uploaderTable">
                                 <thead>
                                 <tr>
-                                    <th ng-bind="i18n.lang.name">Name</th>
-                                    <th ng-show="uploader.isHTML5" ng-bind="i18n.lang.size"></th>
-                                    <th ng-show="uploader.isHTML5" ng-bind="i18n.lang.progress"></th>
-                                    <th ng-bind="i18n.lang.status"></th>
-                                    <th ng-bind="i18n.lang.operation"></th>
+                                    <th ng-bind="'lang.name'|lang">Name</th>
+                                    <th ng-show="uploader.isHTML5" ng-bind="'lang.size'|lang"></th>
+                                    <th ng-show="uploader.isHTML5" ng-bind="'lang.progress'|lang"></th>
+                                    <th ng-bind="'lang.status'|lang"></th>
+                                    <th ng-bind="'lang.operation'|lang"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -61,13 +61,13 @@
                                     </td>
                                     <td nowrap>
                                         <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                            <span class="glyphicon glyphicon-upload"></span> <span ng-bind="i18n.lang.actions.upload"></span>
+                                            <span class="glyphicon glyphicon-upload"></span> <span ng-bind="'lang.actions.upload'|lang"></span>
                                         </button>
                                         <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
-                                            <span class="glyphicon glyphicon-ban-circle"></span> <span ng-bind="i18n.lang.actions.cancel"></span>
+                                            <span class="glyphicon glyphicon-ban-circle"></span> <span ng-bind="'lang.actions.cancel'|lang"></span>
                                         </button>
                                         <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                            <span class="glyphicon glyphicon-trash"></span> <span ng-bind="i18n.lang.actions.remove"></span>
+                                            <span class="glyphicon glyphicon-trash"></span> <span ng-bind="'lang.actions.remove'|lang"></span>
                                         </button>
                                     </td>
                                 </tr>
@@ -76,7 +76,7 @@
 
                             <div>
                                 <div>
-                                    {{i18n.lang.upload_queue_progress}}:
+                                    {{'lang.upload_queue_progress}}:
                                     <div class="progress" style="">
                                         <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
                                     </div>
@@ -91,14 +91,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
-                    <span class="glyphicon glyphicon-upload"></span> <span ng-bind="i18n.lang.actions.upload_all"></span>
+                    <span class="glyphicon glyphicon-upload"></span> <span ng-bind="'lang.actions.upload_all'|lang"></span>
                 </button>
-                <button type="button" class="btn btn-primary btn-s" ng-bind="i18n.lang.actions.complete"></button>
+                <button type="button" class="btn btn-primary btn-s" ng-bind="'lang.actions.complete'|lang"></button>
                 <!--<button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">-->
-                    <!--<span class="glyphicon glyphicon-ban-circle"></span> <span ng-bind="i18n.lang.actions.cancel_all"></span>-->
+                    <!--<span class="glyphicon glyphicon-ban-circle"></span> <span ng-bind="'lang.actions.cancel_all'|lang"></span>-->
                 <!--</button>-->
                 <!--<button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">-->
-                    <!--<span class="glyphicon glyphicon-trash"></span> <span ng-bind="i18n.lang.actions.remove_all"></span>-->
+                    <!--<span class="glyphicon glyphicon-trash"></span> <span ng-bind="'lang.actions.remove_all'|lang"></span>-->
                 <!--</button>-->
             </div>
         </div>

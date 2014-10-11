@@ -158,7 +158,8 @@
 
                 //Grid 可跳转按钮
                 try {
-                    actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+                    var key = sprintf("urlMap.%s.modules.%s.actions", group, module.ucfirst());
+                    actions = l(key);
                 } catch(e) {
                     throw("unable get i18n package section:" + group + "." + module + "." + actions);
                 }
@@ -237,7 +238,8 @@
 
                 //Grid 可跳转按钮
                 try {
-                    actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+                    var key = sprintf("urlMap.%s.modules.%s.actions", group, module.ucfirst());
+                    actions = l(key);
                 } catch(e) {
                     throw("unable get i18n package section:" + group + "." + module + "." + actions);
                 }
@@ -271,7 +273,8 @@
                 //            console.log($scope);console.log(res);
                 //可跳转按钮
                 try {
-                    actions = $rootScope.i18n.urlMap[group].modules[module.ucfirst()].actions;
+                    var key = sprintf("urlMap.%s.modules.%s.actions", group, module.ucfirst());
+                    actions = l(key);
                 } catch(e) {
                     throw("unable get i18n package section:" + group + "." + module + "." + actions);
                 }
@@ -760,7 +763,6 @@
                 };
                 service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){
                     //可跳转按钮
-                    //                actions = $rootScope.i18n.urlMap[group].modules[module].actions;
                     extraParams = extraParams ? "/"+extraParams : "";
                     var available = ["add", "list", "listAll", "export", "print", "trash"];
                     var actEnabled;
@@ -801,7 +803,7 @@
                     //打印按钮
                     if(!$scope.selectAble && model && model.config.printAble) {
                         $scope.pageActions.push({
-                            label: $scope.i18n.lang.actions.print,
+                            label: l('lang.actions.print'),
                             class: "success",
                             icon : "print",
                             href : sprintf("/%(group)s/print/%(module)s/id/%(id)s", {
@@ -835,7 +837,7 @@
                         }
 
                         $scope.pageActions.push({
-                            label: $scope.i18n.lang.actions[actions[i]],
+                            label: l('lang.actions.'+actions[i]),
                             class: cssClass[i],
                             href : module.replace("/", sprintf('/%s/', actions[i]))
                         });
@@ -844,7 +846,7 @@
                     //打印按钮
                     if(model && model.config.printAble) {
                         $scope.pageActions.push({
-                            label: $scope.i18n.lang.actions.print,
+                            label: l('lang.actions.print'),
                             class: "success",
                             icon : "print",
                             href : module.replace("/", "/print/")+"/id/"+$routeParams.id

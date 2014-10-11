@@ -250,38 +250,80 @@ function HTMLDecode(text)
 /**
  * 根据KEY返回语言包字段，优先使用当前APP的语言包
  * */
-var toLang = function(key, section, $rootScope) {
-    section = (section && typeof(section) === "string") ? "lang']['"+section : "lang";
-    var appAlias;
-    try {
-        appAlias = $rootScope.currentPage.app;
-    } catch(e) {
-        appAlias = "HOME";
+var toLang = function(key, section) {
+
+    if(section && typeof(section) === "string") {
+        key = "lang."+section+"."+key;
+    } else if("lang" !== key.split(".")[0]) {
+        key = "lang."+key;
     }
-    var langStr = "";
-    var appSection = "App"+appAlias.ucfirst();
-    var lang;
 
-    langStr = sprintf("i18n['%s']['%s']['%s']", section, appSection, key);
+    return l(key);
 
-    try {
-        lang = $rootScope.$eval(langStr);
-        if(lang === undefined) {
-            langStr = sprintf("i18n['%s']['%s']", section, key);
-            lang = $rootScope.$eval(langStr);
+//    section = (section && typeof(section) === "string") ? "lang']['"+section : "lang";
+//    var appAlias;
+//    try {
+//        appAlias = $rootScope.currentPage.app;
+//    } catch(e) {
+//        appAlias = "HOME";
+//    }
+//    var langStr = "";
+//    var appSection = "App"+appAlias.ucfirst();
+//    var lang;
+//
+//    langStr = sprintf("i18n['%s']['%s']['%s']", section, appSection, key);
+//
+//    try {
+//        lang = $rootScope.$eval(langStr);
+//        if(lang === undefined) {
+//            langStr = sprintf("i18n['%s']['%s']", section, key);
+//            lang = $rootScope.$eval(langStr);
+//        }
+//    } catch(e) {
+//        return key;
+//    }
+//
+//
+//    //通过递归合并的数组元素会追加成为新数组，返回最后一个元素
+//    if(angular.isArray(lang)) {
+//        return lang.pop();
+//    } else {
+////        console.log(langStr);
+//        return lang === undefined ? key : lang;
+//    }
+}
+
+/**
+ * 获取语言包，返回可以是数组或者字符串
+ * 获取方式: lang.actions.add
+ * */
+function l(k, langObject) {
+    if(!langObject) {
+        if(!ones.i18n || isEmptyObject(ones.i18n)) {
+            ones.i18n = ones.getItem("ones.i18n");
         }
-    } catch(e) {
-        return key;
+        if(!ones.i18n || isEmptyObject(ones.i18n)) {
+            throw "can't load i18n package.";
+            return;
+        }
+        langObject = ones.i18n;
+    }
+
+    var key = k.split(".");
+    var rootKey = ["urlMap", "lang"];
+
+    if(key.length === 1) {
+        return langObject[k];
+    }
+
+    var curKey = key.shift();
+    if(typeof(langObject[curKey]) === "string") {
+        return langObject[curKey];
     }
 
 
-    //通过递归合并的数组元素会追加成为新数组，返回最后一个元素
-    if(angular.isArray(lang)) {
-        return lang.pop();
-    } else {
-//        console.log(langStr);
-        return lang === undefined ? key : lang;
-    }
+
+    return l(key.join("."), langObject[curKey]);
 }
 
 //判断资源对象是否是数据API
@@ -360,8 +402,8 @@ var toLower = function(str) {
 var getAuthNodeName = function(node, $rootScope) {
 
     var source = node;
-    if($rootScope.i18n.lang[node]) {
-        return $rootScope.i18n.lang[node];
+    if(l("lang."+node)) {
+        return l("lang."+node);
     }
 
     node = node.split(".");
@@ -370,8 +412,8 @@ var getAuthNodeName = function(node, $rootScope) {
 
     node = sprintf("%s.%s", node[0], node[1]);
 
-    if($rootScope.i18n.lang[node]) {
-        return sprintf($rootScope.i18n.lang[node], $rootScope.i18n.lang.actions[action]);
+    if(l("lang."+node)) {
+        return sprintf(l("lang."+node), l("lang.actions."+action));
     }
 
     return source;

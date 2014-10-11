@@ -42,23 +42,23 @@
                     </a>
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li>
-                            <a href="#/department/Profile">
+                            <a ng-click="$root.goPage('department/Profile')">
                                 <i class="icon-user"></i>
-                                <span ng-bind="i18n.lang.myprofile"></span>
+                                <span ng-bind="'lang.myprofile'|lang"></span>
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#/dashboard/list/myDesktop">
+                            <a ng-click="$root.goPage('dashboard/list/myDesktop')">
                                 <i class="icon-desktop"></i>
-                                <span ng-bind="i18n.lang.my_desktop"></span>
+                                <span ng-bind="'lang.my_desktop'|lang"></span>
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#/department/Logout">
+                            <a ng-click="$root.goPage('department/Logout')">
                                 <i class="icon-power-off"></i>
-                                <span ng-bind="i18n.lang.logout"></span>
+                                <span ng-bind="'lang.logout'|lang"></span>
                             </a>
                         </li>
                     </ul>
@@ -78,7 +78,7 @@
         <div class="sidebar" id="sidebar" ng-class="{'menu-min':expand!==true}">
             <div class="sidebar-shortcuts" id="sidebar-shortcuts">
                 <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                    <a class="btn btn-success" href="#/HOME/list/apps">
+                    <a class="btn btn-success" ng-click="$root.goPage('HOME/list/apps')">
                         <i class="icon icon-cloud"></i>
                     </a>
 
@@ -110,20 +110,20 @@
                 <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
                     <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);$root.goPage(nav.url)">
                         <i class="icon-{{nav.icon}}"></i>
-                        <span class="menu-text" ng-bind="i18n.lang.navs[nav.label]||nav.label"></span>
+                        <span class="menu-text" ng-bind="'lang.navs.'+nav.label|lang"></span>
                         <b class="arrow icon-angle-down" ng-show="{{nav.childs.length}}"></b>
                     </a>
                     <ul class="submenu">
                         <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
                             <a ng-click="checkSubActiveNav(nc.id, nav.id);$root.goPage(nc.url)">
                                 <i class="icon-angle-double-right"></i>
-                                <span class="menu-text" ng-bind="i18n.lang.navs[nc.label]||nc.label"></span>
+                                <span class="menu-text" ng-bind="'lang.navs.'+nc.label|lang"></span>
                             </a>
                             <ul class="submenu">
                                 <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
                                     <a ng-click="checkThirdActiveNav(nct.id, nc.id);$root.goPage(nct.url)">
                                         <i class="icon-angle-double-right"></i>
-                                        <span class="menu-text" ng-bind="i18n.lang.navs[nct.label]||nct.label"></span>
+                                        <span class="menu-text" ng-bind="'lang.navs.'+nct.label|lang"></span>
                                     </a>
                                 </li>
                             </ul>
@@ -142,10 +142,10 @@
                 <ul class="breadcrumb">
                     <li>
                         <i class="icon-home home-icon"></i>
-                        <a href="#/" ng-bind="i18n.lang.dashboard"></a>
+                        <a ng-click="$root.goPage('DASHBOARD')" ng-bind="'lang.dashboard'|lang"></a>
                     </li>
                     <li ng-bind="currentPage.lang.app"></li>
-                    <li class="active" ng-bind="currentPage.lang.module"></li>
+                    <li class="active" ng-bind="currentPage.lang.module" ng-show="currentPage.lang.module"></li>
                 </ul><!-- .breadcrumb -->
 
                 <div class="nav-search" ng-controller="multiSearchCtl">
@@ -165,13 +165,13 @@
 
                     <ul class="typeahead dropdown-menu" ng-show="results.length>0">
                         <li ng-repeat="p in results track by $index" ng-show="p.datas.length>0">
-                            <a ng-href="#/{{p.subject.link}}">
+                            <a ng-click="$root.goPage(p.subject.link)">
                                 <span ng-bind="p.subject.title|lang"></span>
                                 <i class="icon icon-level-down"></i>
                             </a>
                             <ul>
                                 <li ng-repeat="row in p.datas track by $index" ng-class="{active:row.index===selectedIndex}">
-                                    <a ng-href="#/{{row.link}}" ng-bind="row.label"></a>
+                                    <a ng-click="$root.goPage(row.link)" ng-bind="row.label"></a>
                                 </li>
                             </ul>
                         </li>

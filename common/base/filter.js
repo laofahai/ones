@@ -82,8 +82,11 @@
         })
         //.filter("append|prepend")
         .filter("lang", ["$injector", function($injector){
-            return function(str, section) {
-                return toLang(str, section, $injector.get("$rootScope"));
+            return function(str, section, def) {
+                if(!str) {
+                    return;
+                }
+                return toLang(str, section) || (def ? def : str);
             };
         }])
         .filter("toError", ["$rootScope", function($rootScope){
@@ -99,7 +102,7 @@
 
                 var tips = [];
                 try {
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('lang');
                     angular.forEach(errors, function(err, k){
                         if(!err || k === "false") {
                             return;

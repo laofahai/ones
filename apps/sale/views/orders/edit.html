@@ -4,7 +4,7 @@
         <div class="billHeader">
             <div class="row">
                 <div class="col-sm-3" id="abc">
-                    <label ng-bind="i18n.lang.customer"></label>:
+                    <label ng-bind="'lang.customer'|lang"></label>:
                     <inputfield config="customerSelectOpts"></inputfield>
                 </div>
                 <div class="col-sm-4">
@@ -28,17 +28,17 @@
         </div>
         <div class="billFooter clearfix">
             <div class="row form-group">
-                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.total_price_real"></label>
+                <label class="col-sm-1 text-right bolder" ng-bind="'lang.total_price_real'|lang"></label>
                 <div class="col-sm-2">
                     <input type="text" ng-model="formMetaData.total_amount_real" class="input-medium text-right" />
                 </div>
                 <label class="col-sm-1" ng-bind="formMetaData.total_amount_real|currency:'￥'"></label>
-                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.rmbToBig"></label>
+                <label class="col-sm-1 text-right bolder" ng-bind="'lang.rmbToBig'|lang"></label>
                 <label class="col-sm-4" ng-bind="formMetaData.total_amount_real|rmbToBig"></label>
 
             </div>
             <div class="row form-group">
-                <label class="col-sm-1 text-right bolder" ng-bind="i18n.lang.memo"></label>
+                <label class="col-sm-1 text-right bolder" ng-bind="'lang.memo'|lang"></label>
                 <div class="col-sm-11">
                     <input type="text" ng-model="formMetaData.memo" class="width-100" />
                 </div>

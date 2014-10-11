@@ -94,8 +94,8 @@
                         displayName: toLang("isEnable", "", $rootScope),
                         inputType: "select",
                         dataSource: [
-                            {id: 1, name: $rootScope.i18n.lang.yes},
-                            {id: -1, name: $rootScope.i18n.lang.no}
+                            {id: 1, name: toLang("yes", "", $rootScope)},
+                            {id: -1, name: toLang("no", "", $rootScope)}
                         ],
                         cellFilter: "toYesOrNo"
                     }
@@ -227,7 +227,7 @@
                     addSubAble: false
                 },
                 getStructure: function(){
-                    var i18n = $rootScope.i18n.lang;
+                    var i18n = l('i18n.lang');
                     return {
                         id : {
                             primary: true
@@ -283,7 +283,7 @@
 
             var modal = $modal({
                 scope: $scope,
-                title: $scope.$parent.i18n.lang.widgetTitles.editMyProfile,
+                title: l('lang.widgetTitles.editMyProfile'),
                 contentTemplate: appView('profileEdit.html', 'department'),
                 show: false
             });

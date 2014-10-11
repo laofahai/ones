@@ -167,8 +167,8 @@
                             var config = $scope.$parent.$eval(iAttrs.config) || {};
                             iElement.append(sprintf('<input type="file" %s />', config.multiple || ""));
                             var conf = {
-                                btn_choose: $rootScope.i18n.lang.messages.drag_or_chose_file,
-                                btn_change: $rootScope.i18n.lang.messages.drag_or_chose_file,
+                                btn_choose: l("lang.messages.drag_or_chose_file"),
+                                btn_change: l("lang.messages.drag_or_chose_file"),
                                 droppable: true,
                                 onchange:null,
                                 whitelist:'gif|png|jpg|jpeg',
@@ -509,7 +509,7 @@
                             'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                             'data-html="true" bs-typeahead />',
                         'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>',
-                        'fields/file': '<div class="fileUploadBtn btn btn-primary btn-minier" ng-click="showUploadModal()" ng-bind="i18n.lang.actions.upload"></div>' +
+                        'fields/file': '<div class="fileUploadBtn btn btn-primary btn-minier" ng-click="showUploadModal()" ng-bind="\'lang.actions.upload\'|lang"></div>' +
                             '<div ng-bind="%(model)s"></div>' +
                             '<input type="hidden" ng-model="%(model)s" />'
                     };
@@ -718,7 +718,7 @@
 
                         var goods_id = queryParams["goods_id"].split("_");
                         goods_id = goods_id[1];
-                        $scope.$parent[factory.opts.dataName][context.trid].craft = $scope.$parent.i18n.lang.undefined;
+                        $scope.$parent[factory.opts.dataName][context.trid].craft = l('lang.undefined');
                         var crafts = [];
                         res.query({
                             goods_id: goods_id,
@@ -753,8 +753,8 @@
                         var self = this;
                         fieldDefine.chosen = "chosen";
                         fieldDefine.remoteDataField = fieldDefine.remoteDataField || name;
-                        fieldDefine["data-placeholder"]= $scope.$parent.i18n.lang.messages.chosen_select_text;
-                        fieldDefine["no-results-text"]= $scope.$parent.i18n.lang.messages.chosen_no_result_text;
+                        fieldDefine["data-placeholder"]= l('lang.messages.chosen_select_text');
+                        fieldDefine["no-results-text"]= l('lang.messages.chosen_no_result_text');
                         if (fieldDefine.dataSource instanceof Array) {
                             for (var item in fieldDefine.dataSource) {
                                 if (!item || !fieldDefine.dataSource[item][valueField]) {
@@ -1025,7 +1025,7 @@
 //                        }
                     },
                     makeFoot: function(fieldsDefine){
-                        var html = ['<td colspan="2" align="center">'+this.scope.$parent.i18n.lang.total+'</td>'];
+                        var html = ['<td colspan="2" align="center">'+l('lang.total')+'</td>'];
                         var hasTotalAble = false;
                         var self = this;
                         angular.forEach(fieldsDefine, function(item, field){
@@ -1642,9 +1642,9 @@
                         }
                         return sprintf(this.opts.templates["commonForm/footer.html"], {
                             action: this.opts.submitAction,
-                            langsubmit: "i18n.lang.actions.submit",
-                            langreset: "i18n.lang.actions.reset",
-                            langreturn: "i18n.lang.actions.return"
+                            langsubmit: "'lang.actions.submit'|lang",
+                            langreset: "'lang.actions.reset'|lang",
+                            langreturn: "'lang.actions.return'|lang"
                         });
                     }
 

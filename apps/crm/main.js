@@ -88,7 +88,7 @@
                             field: "group_name",
                             dataSource: "RelationshipCompanyGroupRes",
                             inputType: "select",
-                            displayName: $rootScope.i18n.lang.group
+                            displayName: l('lang.group')
                         },
                         discount: {
                             inputType: "number",

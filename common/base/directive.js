@@ -18,7 +18,7 @@
                         '<div class="widget-header widget-header-flat"><h5>%(title)s</h5></div>' +
                         '<div class="widget-body"><div class="widget-main no-padding">%(inner)s</div></div>' +
                         '</div>';
-                    var titles = $rootScope.i18n.lang.widgetTitles;
+                    var titles = l('lang.widgetTitles');
                     element.html(sprintf(template, {
                         title: (attrs.wtitle in titles) ? titles[attrs.wtitle] : attrs.wtitle,
                         inner: element.html(),

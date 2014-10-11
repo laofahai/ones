@@ -4,7 +4,7 @@
         <div class="billHeader">
             <div class="row">
                 <div class="col-sm-3">
-                    <label ng-bind="i18n.lang.customer">: </label>
+                    <label ng-bind="'lang.customer'|lang">: </label>
                     <input type="text" ng-model="formMetaData.source.customer" readonly />
                 </div>
                 <div class="col-sm-4">
@@ -26,19 +26,19 @@
         </div>
         <div class="billFooter clearfix">
             <div class="row form-group">
-                <label class="col-sm-1 text-right" ng-bind="i18n.lang.memo"></label>
+                <label class="col-sm-1 text-right" ng-bind="'lang.memo'|lang"></label>
                 <div class="col-sm-11">
                     <input type="text" ng-model="formMetaData.memo" class="width-100" />
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-1 text-right" ng-bind="i18n.lang.sponsor"></div>
+                <div class="col-sm-1 text-right" ng-bind="'lang.sponsor'|lang"></div>
                 <div class="col-sm-8">
                     <span ng-bind="$parent.userInfo.truename"></span>
                 </div>
                 <div class="col-sm-3 text-right">
-                    <button type="button" class="btn btn-sm btn-primary" ng-click="doSubmit();" ng-bind="i18n.lang.actions.submit"></button>
-                    <button type="button" class="btn btn-sm" onclick="history.go(-1);" ng-bind="i18n.lang.actions.return"></button>
+                    <button type="button" class="btn btn-sm btn-primary" ng-click="doSubmit();" ng-bind="'lang.actions.submit'|lang"></button>
+                    <button type="button" class="btn btn-sm" onclick="history.go(-1);" ng-bind="'lang.actions.return'|lang"></button>
                 </div>
             </div>
         </div>

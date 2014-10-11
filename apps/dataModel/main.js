@@ -138,7 +138,7 @@
                 }
             };
             obj.getStructure = function(){
-                var i18n = $rootScope.i18n.lang;
+                var i18n = l('lang');
                 var structure = {
                     id: {
                         primary: true,
@@ -183,7 +183,7 @@
         .service("DataModelDataModel", ["$rootScope", "$q", "DataModelFieldsRes", "$routeParams",
             function($rootScope, $q, DataModelFieldsRes, $routeParams) {
                 var obj = {};
-                var i18n = $rootScope.i18n.lang;
+                var i18n = l('lang');
                 obj.structure = {
                     id: {
                         primary: true,

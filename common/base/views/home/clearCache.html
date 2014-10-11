@@ -2,15 +2,15 @@
     <div class="col-lg-8">
         <label>
             <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="cacheTypes[1]" />
-            <span class="lbl" ng-bind="i18n.lang.cache_temp">  </span>
+            <span class="lbl" ng-bind="'lang.cache_temp'|lang">  </span>
         </label>
         <label>
             <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="cacheTypes[2]" />
-            <span class="lbl" ng-bind="i18n.lang.cache_log">  </span>
+            <span class="lbl" ng-bind="'lang.cache_log'|lang">  </span>
         </label>
         <label>
             <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="cacheTypes[3]" />
-            <span class="lbl" ng-bind="i18n.lang.cache_data">  </span>
+            <span class="lbl" ng-bind="'lang.cache_data'|lang">  </span>
         </label>
     </div>
     <div class="space-20"></div>
@@ -18,24 +18,24 @@
         <p>
             <label>
                 <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="frontCache[0]" />
-                <span class="lbl" ng-bind="i18n.lang.front_cache_page">  </span>
+                <span class="lbl" ng-bind="'lang.front_cache_page'|lang">  </span>
             </label>
         </p>
         <p>
             <label>
                 <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="frontCache[1]" />
-                <span class="lbl" ng-bind="i18n.lang.front_cache_sessionStorage">  </span>
+                <span class="lbl" ng-bind="'lang.front_cache_sessionStorage'|lang">  </span>
             </label>
         </p>
         <p>
             <label>
                 <input name="form-field-checkbox" type="checkbox" class="ace" ng-model="frontCache[2]" />
-                <span class="lbl" ng-bind="i18n.lang.front_cache_localStorage">  </span>
+                <span class="lbl" ng-bind="'lang.front_cache_localStorage'|lang">  </span>
             </label>
         </p>
     </div>
     <div class="space-20"></div>
     <div class="col-lg-8">
-        <button ng-click="doClearCache();" class="btn btn-primary" ng-bind="i18n.lang.actions.clearCache"></button>
+        <button ng-click="doClearCache();" class="btn btn-primary" ng-bind="'lang.actions.clearCache'|lang"></button>
     </div>
 </div>
