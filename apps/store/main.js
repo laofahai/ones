@@ -810,6 +810,7 @@
                     },
                     doSubmit: function(){
                         $scope.formMetaData.rows = $scope.billData;
+
                         var data = {
                             workflow: true,
                             node_id: $routeParams.nodeId,

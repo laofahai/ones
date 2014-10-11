@@ -256,7 +256,6 @@ class Workflow {
             );
             //判断proccess表中是否有数据
             $currentProcess = $this->processModel->where($map)->order("start_time DESC")->find();
-//            print_r($currentProcess);exit;
             unset($map["mainrow_id"]);
             if(!$currentProcess) {
                 $node = $this->nodeModel->where($map)->order("listorder ASC")->limit(1)->find();
@@ -269,7 +268,6 @@ class Workflow {
             }
         }
         
-//        echo $this->nodeModel->getLastSql();exit;
         if(!$node and !$ignoreCheck) {
             throw_exception(L("workflow_not_found"));
             return false;
@@ -303,11 +301,10 @@ class Workflow {
             );
 
             $appWorkflowFile = $appWorkflow.$node["execute_file"].".class.php";
-//            echo $appWorkflowFile;exit;
+
             if(is_dir($appWorkflow) && is_file($appWorkflowFile)) {
                 require_cache($appWorkflowFile);
             } else {
-                throw_exception(L("class_not_found").": ".$className);
                 return false;
             }
 

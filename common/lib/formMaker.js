@@ -31,7 +31,7 @@
                                 };
 
                                 opts = $.extend(defaultOpts, opts);
-                                opts = $.extend(opts, opts.opts);
+                                $.extend(opts, opts.opts);
 
                                 if(opts.id || $routeParams.id) {
                                     opts.isEdit = true;
@@ -188,7 +188,7 @@
                 require: 'ngModel',
                 link: function(scope, ele, attrs, c) {
                     scope.$watch(attrs.ngModel, function(newVal, oldVal) {
-
+                        console.log();
                         if(!newVal) {
                             var getter = $parse(attrs.ngModel);
                             getter.assign(scope, c.$viewValue);
@@ -1006,23 +1006,6 @@
                         }
 
                         return html.join("");
-
-//                        if(this.opts.isEdit) {
-//                            this.scope.$on("bill.dataLoaded", function(evt, data){
-//                                self.opts.defaultData = data.rows;
-//                                delete(data.rows);
-//                                self.scope.$parent.formMetaData = data;
-//                                for(var i=0;i<self.opts.defaultData.length;i++) {
-//                                    html.push(self.makeRow(fieldsDefine, i, self.opts.defaultData));
-//                                }
-//                                return html.join("");
-//                            });
-//                        } else {
-//                            for(var i=0;i<this.opts.minRows;i++) {
-//                                html.push(this.makeRow(fieldsDefine, i));
-//                            }
-//                            return html.join("");
-//                        }
                     },
                     makeFoot: function(fieldsDefine){
                         var html = ['<td colspan="2" align="center">'+l('lang.total')+'</td>'];
@@ -1299,9 +1282,6 @@
                             parentScope.billEndEdit(context.td, true);
                         };
                         parentScope.onStockSelect3Blur = function(event){
-                            //                    console.log(self);
-                            //                    console.log(event.target);return;
-                            //                    self.parentScope.onTypeaheadBlur(event);
                             $timeout(function(){
                                 var context = getInputContext(event.target);
                                 var tmp = self.parentScope[self.opts.dataName][context.trid];
@@ -1309,18 +1289,11 @@
                                     id: 0,
                                     stock_id: tmp.stock
                                 };
-                                queryParams = $.extend(tmp, queryParams);
-//                                console.log(queryParams);
-//                                if(tmp.factory_code_all) {
-//                                    queryParams.factory_code_all = tmp.factory_code_all;
-//                                } else {
-//                                    queryParams.factory_code_all = sprintf("%s-%s-%s", tmp.goods_id.split("_")[0], tmp.standard, tmp.version);
-//                                }
+                                queryParams = $.extend(angular.copy(tmp), queryParams);
+
                                 getDataApiPromise($injector.get("Store.StockProductListAPI"), "get", queryParams)
                                     .then(function(data){
                                         self.parentScope[self.opts.dataName][context.trid].store_num=data.num || 0;
-                                        //                        context.tr.find("[data-bind-model=store_num] label").text(data.num||0);
-                                        //                self.parentScope[self.opts.dataName][context.trid].store_num=data.num;
                                     });
                             }, 200);
 

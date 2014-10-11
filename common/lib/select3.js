@@ -12,6 +12,7 @@
 
                 //初始化
                 this.init = function($scope, attrs) {
+
                     var scopeConfig = $scope.$parent.$eval(attrs.config);
 
                     scopeConfig.fieldDefine.field = scopeConfig.name;
@@ -92,6 +93,7 @@
 
                     //获取焦点开始设定当前配置项
                     parentScope.doSelect3Focus = function($event) {
+
                         if(self.focusing) {
                             return false;
                         }
@@ -275,7 +277,6 @@
                     this.scope.setValue = function(element){
 
                         var getter = $parse(self.currentConfig["ng-model"]);
-
                         getter.assign(parentScope, $(element).data("value"));
 
                         //label

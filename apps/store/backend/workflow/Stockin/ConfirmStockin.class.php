@@ -79,6 +79,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
         foreach($data["rows"] as $v) {
 
             if(!$v or !$v["id"]) {
+
                 continue;
             }
 
@@ -140,60 +141,15 @@ class StockinConfirmStockin extends WorkflowAbstract {
         $stockin->commit();
 
         $theStockin = $stockin->find($this->mainrowId);
-        if($theStockin["ined_num"] >= $theStockin["total_num"] or true) {
+        if($theStockin["ined_num"] >= $theStockin["total_num"] && $theStockin["source_model"]) {
             //若外部生成，走外部下一流程
-            if($theStockin["source_model"]) {
-                import("@.Workflow.Workflow");
-                $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
-                $node = $workflow->doNext($theStockin["source_id"], "", true, 3);
-            }
+            import("@.Workflow.Workflow");
+            $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
+            $workflow->doNext($theStockin["source_id"], "", true, 3);
         }
 
+        return true;
 
-
-
-
-//        if(!$id) {
-//            $this->error("params_error");
-//            exit;
-//        }
-//
-//        $map = array(
-//            "stockin_id" => $id
-//        );
-//
-//        $stockinModel = D("Stockin");
-//
-//        $rows = $data["rows"];
-//        $data["status"] = 1;
-//        unset($data["rows"]);
-//        $stockinModel->editBill($data, $rows);
-//
-//
-//        $stockinDetailModel = D("StockinDetail");
-//        $theDetails = $stockinDetailModel->where($map)->select();
-//
-//        $theStockin = $stockinModel->find($id);
-//
-//        //更新库存清单
-//        $stockProductListModel = D("StockProductList");
-//        $stockProductListModel->startTrans();
-//        $rs = $stockProductListModel->updateStoreList($theDetails);
-//
-//
-//        if(true === $rs) {
-//            $stockProductListModel->commit();
-//            $data = array(
-//                "status" => 2,
-//                "stock_manager" => getCurrentUid()
-//            );
-//            $stockinModel->where("id=".$id)->save($data);
-//        } else {
-//            $stockProductListModel->rollback();
-//            $this->error("operate_failed");
-//        }
-//
-//
 
     }
     
