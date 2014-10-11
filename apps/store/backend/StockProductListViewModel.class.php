@@ -14,7 +14,7 @@ class StockProductListViewModel extends ViewModel {
 
     protected $viewFields = array(
         "StockProductList" => array("*", "_type"=>"left"),
-        "Goods" => array("name"=>"goods_name","measure","goods_category_id","store_min","store_max", "_on"=>"Goods.id=StockProductList.goods_id"),
+        "Goods" => array("name"=>"goods_name","measure","goods_category_id","_on"=>"Goods.id=StockProductList.goods_id"),
         "GoodsCategory" => array("name"=>"category_name", "_on"=>"Goods.goods_category_id=GoodsCategory.id"),
         "Stock" => array("name"=>"stock_name", "_on"=>"Stock.id=StockProductList.stock_id"),
     );
@@ -42,7 +42,6 @@ class StockProductListViewModel extends ViewModel {
         foreach($data as $k=>$v) {
             $data[$k]["modelIndex"] = sprintf("%d-%d", $v["goods_category_id"], $theDataModel["id"]);
             $data[$k]["goodsCode"] = explode(DBC("goods.unique.separator"), $v["factory_code_all"]);
-//            $data[$k]["num"] = intval($data[$k]["num"]);
         }
 
         $params = array(

@@ -1601,8 +1601,6 @@
                                 delete(struct.required);
                             }
 
-                            self.scope.$parent[self.opts.dataName][field] = "";
-
                             fieldHTML = self.fm.maker.factory({field: field}, struct, self.scope);
                             if (false !== fieldHTML) {
                                 if(struct.colspan) {

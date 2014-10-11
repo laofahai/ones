@@ -88,10 +88,13 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stock_product_list` (
   `factory_code_all` varchar(40) NOT NULL,
   `goods_id` int(11) NOT NULL,
   `stock_id` int(11) NOT NULL,
+  `store_min` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `store_max` decimal(10,2) NOT NULL DEFAULT '0.00',
   `unit_price` decimal(10,2) NOT NULL,
   `cost` decimal(10,2) NOT NULL,
   `num` decimal(8,2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `factory_code_all` (`factory_code_all`,`stock_id`),
-  KEY `goods_id` (`goods_id`,`stock_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+  KEY `goods_id` (`goods_id`,`stock_id`),
+  KEY `store_min` (`store_min`,`store_max`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

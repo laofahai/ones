@@ -264,10 +264,10 @@
                         hideInForm: true
                     },
                     store_min: {
-                        hideInForm: true
+                        inputType: "number"
                     },
                     store_max: {
-                        hideInForm: true
+                        inputType: "number"
                     }
                 };
             }])
@@ -818,6 +818,7 @@
                             data: $scope.formMetaData
                         };
                         res.doPostWorkflow(data).$promise.then(function(data){
+                            return;
                             $location.url("/store/list/stockin");
                         });
                     }

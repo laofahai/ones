@@ -29,7 +29,7 @@ define("ENTRY_PATH", ROOT_PATH."/server");
 
 
 define("APP_NAME", "ONES");
-define("APP_DEBUG", false);
+define("APP_DEBUG", true);
 define("APP_PATH", "./server/");
 
 require './server/ThinkPHP/ThinkPHP.php';

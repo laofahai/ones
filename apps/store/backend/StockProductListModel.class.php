@@ -59,7 +59,7 @@ class StockProductListModel extends Model {
                 $cleanData[$v["factory_code_all"]] = $v;
             }
         }
-        
+
         foreach($cleanData as $k=>$v) {
             //已存在记录
             if(array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $exists)) {
@@ -72,8 +72,6 @@ class StockProductListModel extends Model {
                 $cost = $v["cost"] ? $v["cost"] : $goodsInfo[$v["goods_id"]]["cost"];
             }
             
-            $cost = $cost ? $cost : 0.00;
-
             $saveData = array(
                 "factory_code_all" => $v["factory_code_all"],
                 "goods_id" => $v["goods_id"],
@@ -84,6 +82,12 @@ class StockProductListModel extends Model {
                 "unit_price" => $unitPrice ? $unitPrice : 0,
                 "cost" => $cost ? $cost : 0
             );
+
+            if(!array_key_exists($v["factory_code_all"]."-".$v["stock_id"], $exists)) {
+                $saveData["store_min"] = $v["store_min"];
+                $saveData["store_max"] = $v["store_max"];
+            }
+
             $rs = $this->add($saveData, array(), true);
 
             if(!$rs) {

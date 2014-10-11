@@ -60,10 +60,23 @@ class StockinConfirmStockin extends WorkflowAbstract {
 
         $logs = array();
         $storeInfo = array();
+        $goodsIds = array();
+
+        foreach($data["rows"] as $k=>$v) {
+            list(,$goods_id,) = explode("_", $v['goods_id']);
+            $data["rows"][$k]["goods_id"] = $goods_id;
+            $goodsIds[] = $goods_id;
+        }
+
+        $goodsModel = D("Goods");
+        $tmp = $goodsModel->field("id,store_min,store_max")->where(array(
+            "id" => array("IN", $goodsIds)
+        ))->select();
+        foreach($tmp as $s) {
+            $storeW[$s["id"]] = $s;
+        }
 
         foreach($data["rows"] as $v) {
-
-            list(,$goods_id,) = explode("_", $v['goods_id']);
 
             if(!$v or !$v["id"]) {
                 continue;
@@ -95,19 +108,23 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 "factory_code_all" => $v["factory_code_all"],
                 "stock_id" => $v["stock"],
                 "num" => $v["num"],
-                "goods_id" => $goods_id
+                "goods_id" => $v["goods_id"],
+                "store_min" => $storeW[$v["goods_id"]]["store_min"],
+                "store_max" => $storeW[$v["goods_id"]]["store_max"]
             );
         }
 
+
         //增加库存
-        $storeProduct->updateStoreList($storeInfo);
+        if(!$storeProduct->updateStoreList($storeInfo)) {}
 
         //更新入库单信息
         $theStockin = $stockin->find($this->mainrowId);
         if($theStockin["status"] == 1) {
             $stockin->where("id=".$this->mainrowId)->setInc("ined_num", $totalIned);
+
         } else {
-            //第一次出库
+            //第一次入库
             $stockin->where("id=".$this->mainrowId)->save(array(
                 "memo"   => $data["memo"],
                 "status" => 1,

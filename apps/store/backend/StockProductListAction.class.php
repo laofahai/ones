@@ -40,8 +40,6 @@ class StockProductListAction extends CommonAction {
             }
         }
 
-//        print_r($data);exit;
-
         $this->response($data);
     }
     
