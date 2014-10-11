@@ -139,6 +139,18 @@ class StockinConfirmStockin extends WorkflowAbstract {
 
         $stockin->commit();
 
+        $theStockin = $stockin->find($this->mainrowId);
+        if($theStockin["ined_num"] >= $theStockin["total_num"] or true) {
+            //若外部生成，走外部下一流程
+            if($theStockin["source_model"]) {
+                import("@.Workflow.Workflow");
+                $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
+                $node = $workflow->doNext($theStockin["source_id"], "", true, 3);
+            }
+        }
+
+
+
 
 
 //        if(!$id) {
@@ -182,12 +194,7 @@ class StockinConfirmStockin extends WorkflowAbstract {
 //        }
 //
 //
-//        //若外部生成，走外部下一流程
-//        if($theStockin["source_model"]) {
-//            import("@.Workflow.Workflow");
-//            $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
-//            $node = $workflow->doNext($theStockin["source_id"], "", true, 3);
-//        }
+
     }
     
     public function checkStockManger($condition) {

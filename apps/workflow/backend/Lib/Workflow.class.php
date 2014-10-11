@@ -378,7 +378,7 @@ class Workflow {
         }
 
         if(is_numeric($auto)) {
-            if($nextNodeObj->currentNode["type"] !== $auto) {
+            if(intval($nextNodeObj->currentNode["type"]) != $auto) {
                 return false;
             }
         }

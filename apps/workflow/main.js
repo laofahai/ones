@@ -171,7 +171,7 @@
 
                 dataAPI.init($routeParams.group, $routeParams.module);
 
-                var actions = $scope.$parent.i18n.urlMap.workflow.modules.WorkflowNode.actions;
+                var actions = l('urlMap.workflow.modules.WorkflowNode.actions');
 
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid, dataAPI.model);
                 ComView.makeGridSelectedActions($scope, dataAPI.model, dataAPI.resource, "workflow", "WorkflowNode");
