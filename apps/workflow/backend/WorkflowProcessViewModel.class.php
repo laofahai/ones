@@ -13,9 +13,9 @@
 class WorkflowProcessViewModel extends ViewModel {
     
     protected $viewFields = array(
-        "WorkflowProcess" => array("id","workflow_id","node_id","mainrow_id","context","start_time","end_time","status","user_id","memo"),
-        "WorkflowNode" => array("prev_node_id", "next_node_id", "status_text", "status_class", "name"=>"nodeName", "_on"=>"WorkflowNode.id=WorkflowProcess.node_id"),
-        "User" => array("truename", "_on"=>"WorkflowProcess.user_id=User.id")
+        "WorkflowProcess" => array("*", "_type"=>"left"),
+        "WorkflowNode" => array("prev_node_id", "next_node_id", "status_text", "status_class", "name"=>"nodeName", "_on"=>"WorkflowNode.id=WorkflowProcess.node_id", "_type"=>"left"),
+        "User" => array("truename", "_on"=>"WorkflowProcess.user_id=User.id", "_type"=>"left")
     );
     
 }

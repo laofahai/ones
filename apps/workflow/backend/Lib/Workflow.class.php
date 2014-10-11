@@ -493,7 +493,7 @@ class Workflow {
         foreach($workflows as $v) {
             $theWorkflows[$v["workflow_file"]] = $v["id"];
         }
-        
+
         $where = array(
             "_logic" => "OR",
             array(
@@ -502,33 +502,51 @@ class Workflow {
             )
         );
 
+        $thisRow = D($model)->find($id);
+
         /*
          * 相关工作流程
          * **/
         if($relationModels) {
-            if(!is_array($relationModels)) {
-                $relationModels = explode(",", $relationModels);
-            }
-            foreach($relationModels as $rm) {
-                $tmpMap = array(
-                    $relationMainrowField => $id,
-                    "source_model" => $model
-                );
-                $tmpModel = D($rm);
+            //当前模型不包含source_model
 
-                $relationItem = $tmpModel->where($tmpMap)->find();
+            //包含source_model
+            if($thisRow["source_model"]) {
+                $tmpModel = D($thisRow["source_model"]);
+
+                $relationItem = $tmpModel->where("id=".$thisRow[$relationMainrowField])->find();
                 if($relationItem) {
                     array_push($where, array(
-                        "WorkflowProcess.workflow_id" => $theWorkflows[$rm],
+                        "WorkflowProcess.workflow_id" => $theWorkflows[$thisRow["source_model"]],
                         "WorkflowProcess.mainrow_id"  => $relationItem["id"],
                     ));
                 }
+            } else {
+                if(!is_array($relationModels)) {
+                    $relationModels = explode(",", $relationModels);
+                }
+                foreach($relationModels as $rm) {
+                    $tmpMap = array(
+                        $relationMainrowField => $id,
+                        "source_model" => $model
+                    );
+                    $tmpModel = D($rm);
+
+                    $relationItem = $tmpModel->where($tmpMap)->find();
+                    if($relationItem) {
+                        array_push($where, array(
+                            "WorkflowProcess.workflow_id" => $theWorkflows[$rm],
+                            "WorkflowProcess.mainrow_id"  => $relationItem["id"],
+                        ));
+                    }
+                }
             }
+
         }
 
-        
+
         $processViewModel = D("WorkflowProcessView");
-        
+
         $map = array(
             "_complex" => $where
         );
