@@ -300,7 +300,7 @@ var toLang = function(key, section) {
 function l(k, langObject) {
     if(!langObject) {
         if(!ones.i18n || isEmptyObject(ones.i18n)) {
-            ones.i18n = ones.getItem("ones.i18n");
+            ones.i18n = ones.caches.getItem("ones.i18n");
         }
         if(!ones.i18n || isEmptyObject(ones.i18n)) {
             throw "can't load i18n package.";

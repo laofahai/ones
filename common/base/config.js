@@ -115,7 +115,7 @@
                  * i18n
                  * */
                 $http.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
-                    ones.caches.setItem("ones.i18n", data, ones.defaultCacheLevel);
+                    ones.caches.setItem("ones.i18n", data, 1);
                     ones.i18n = ones.caches.getItem("ones.i18n");
                     if(!ones.i18n) {
                         throw("can't load i18n package.");

@@ -112,6 +112,7 @@
 
                 //左侧是否展开
                 var expand = ones.caches.getItem("ones.sidebar.expand");
+
                 $scope.expand = expand;
                 $scope.sidebarToggleExpand = function() {
                     $scope.expand = !$scope.expand;
