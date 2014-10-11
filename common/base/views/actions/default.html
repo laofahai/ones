@@ -17,7 +17,7 @@
             </button>
             <ul class="dropdown-menu dropdown-success pull-right">
                 <li>
-                    <a ng-click="doViewWorkflowProcesses()" ng-bind="i18n.lang.actions.viewWorkflowProcess"></a>
+                    <a ng-click="doViewWorkflowProcesses()" ng-bind="'lang.actions.viewWorkflowProcess'|lang"></a>
                 </li>
                 <li ng-repeat="w in workflowActionList" ng-class="{disabled: workflowActionDisabled(w.id)}">
                     <a ng-click="doWorkflow($event, w.id);">{{w.name}}</a>
@@ -28,7 +28,7 @@
         <!--//selected-->
         <div class="actionsBtnRight btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
-                {{i18n.lang.selected_action|sprintf:gridSelected.length}}
+                {{'lang.selected_action'|lang|sprintf:gridSelected.length}}
                 <i class="icon-caret-down icon-on-right"></i>
             </button>
             <ul class="dropdown-menu dropdown-primary pull-right">
@@ -43,7 +43,7 @@
         <div class="actionsBtnRight btn-group" ng-click="showFiltersModal();" ng-show="showFilters">
             <a class="btn btn-sm">
                 <i class="icon icon-search"></i>
-                <span ng-bind="i18n.lang.actions.filters"></span>
+                <span ng-bind="'lang.actions.filters'|lang"></span>
             </a>
         </div>
 
@@ -57,7 +57,7 @@
 
         <!--//workflow in detail page-->
         <div class="actionsBtnRight btn-group" ng-show="workflowInBill.length>0">
-            <button class="btn btn-sm disabled">{{i18n.lang.workflow}}:</button>
+            <button class="btn btn-sm disabled">{{'lang.workflow'|lang}}:</button>
             <button class="btn btn-sm btn-{{w.btn_class||'success'}}"
                     ng-repeat="w in workflowInBill track by $index"
                     ng-bind="w.name"

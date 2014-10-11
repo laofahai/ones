@@ -8,7 +8,7 @@
                     <input type="text" ng-model="formMetaData.source.customer" readonly />
                 </div>
                 <div class="col-sm-4">
-                    <label>{{i18n.lang.dateline}}: </label>
+                    <label>{{'lang.dateline'|lang}}: </label>
                     <span class="input-icon input-icon-right">
                         <input type="datetime-local" ng-model="formMetaData.dateline" placeholder="yyyy-mm-dd HH:MM" />
                     </span>
@@ -16,7 +16,7 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-3 align-right">
-                    <span>{{i18n.lang.billId}}:</span>
+                    <span>{{'lang.billId'|lang}}:</span>
                     <span ng-bind="formMetaData.bill_id" ng-show="formMetaData.bill_id"></span>
                 </div>
             </div>

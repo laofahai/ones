@@ -8,7 +8,7 @@
                     <input type="text" ng-model="formMetaData.subject" readonly />
                 </div>
                 <div class="col-sm-4">
-                    <label>{{i18n.lang.dateline}}: </label>
+                    <label>{{'lang.dateline'|lang}}: </label>
                     <span class="input-icon input-icon-right">
                         <input type="datetime-local" ng-model="formMetaData.dateline" readonly />
                     </span>
@@ -16,7 +16,7 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-3 align-right">
-                    <span>{{i18n.lang.billId}}:</span>
+                    <span>{{'lang.billId'|lang}}:</span>
                     <span ng-bind="formMetaData.bill_id" ng-show="formMetaData.bill_id"></span>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         <div class="billFooter clearfix">
             <div class="row form-group">
                 <label class="col-sm-1 text-right">
-                    {{i18n.lang.memo}}
+                    {{'lang.memo'|lang}}
                 </label>
                 <div class="col-sm-11">
                     <input type="text" ng-model="formMetaData.memo" class="width-100" />
@@ -35,13 +35,13 @@
             </div>
             <div class="row">
                 <div class="col-sm-1 text-right">
-                    {{i18n.lang.sponsor}}
+                    {{'lang.sponsor'|lang}}
                 </div>
                 <div class="col-sm-4">
                     <span ng-bind="$parent.userInfo.truename"></span>
                 </div>
                 <div class="col-sm-7">
-                    <button type="button" class="btn btn-sm btn-success" ng-click="doSubmit();">{{i18n.lang.actions.submit}}</button>
+                    <button type="button" class="btn btn-sm btn-success" ng-click="doSubmit();">{{'lang.actions.submit'|lang}}</button>
                 </div>
             </div>
         </div>

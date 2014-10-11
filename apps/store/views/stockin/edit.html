@@ -4,11 +4,11 @@
         <div class="billHeader">
             <div class="row">
                 <div class="col-sm-3">
-                    <label>{{i18n.lang.subject}}: </label>
+                    <label>{{'lang.subject'|lang}}: </label>
                     <input type="text" class="input-medium" ng-model="formMetaData.subject" required />
                 </div>
                 <div class="col-sm-4">
-                    <label>{{i18n.lang.dateline}}: </label>
+                    <label>{{'lang.dateline'|lang}}: </label>
                     <span class="input-icon input-icon-right">
                         <input type="datetime-local" placeholder="yyyy-mm-dd HH:mm" name="dateline" ng-model="formMetaData.dateline" />
                         <i class="icon-time gray"></i>
@@ -18,7 +18,7 @@
                     <inputfield config="typeSelectOpts"></inputfield>
                 </div>
                 <div class="col-sm-3 align-right" ng-show="formMetaData.bill_id">
-                    <span>{{i18n.lang.billId}}:</span>
+                    <span>{{'lang.billId'|lang}}:</span>
                     <span ng-bind="formMetaData.bill_id"></span>
                 </div>
             </div>

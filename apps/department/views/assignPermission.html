@@ -2,8 +2,8 @@
 <table class="table table-bordered assignPermissionTable">
     <thead>
         <tr>
-            <th width="100">{{i18n.lang.checkAll_uncheck}}</th>
-            <th>{{i18n.lang.authRuleNode}}</th>
+            <th width="100">{{'lang.checkAll_uncheck'|lang}}</th>
+            <th>{{'lang.authRuleNode'|lang}}</th>
         </tr>
     </thead>
     <tbody class="control-group">
@@ -13,7 +13,7 @@
                     <label>
                         <input type="checkbox" class="ace" ng-click="toggleThisLine($event)" />
                         <span class="lbl"></span>
-                        <div ng-bind="'lang['App'+itemList[0].category.ucfirst()].appName || itemList[0].category'|lang"></div>
+                        <div ng-bind="'lang.App'+itemList[0].category.ucfirst()+'.appName'|lang:'':itemList[0].category"></div>
                     </label>
                 </div>
             </td>
@@ -31,7 +31,7 @@
         <tr>
             <td> </td>
             <td colspan="2">
-                <button class="btn btn-primary" ng-bind="'lang.actions.save" ng-click="doSubmit()'|lang"></button>
+                <button class="btn btn-primary" ng-bind="'lang.actions.save'|lang" ng-click="doSubmit()"></button>
             </td>
         </tr>
     </tfoot>

@@ -21,6 +21,9 @@ a{
 .help-block {
     display:inline-block;
 }
+#gridSearchInput {
+    height:31px;
+}
 
 /***/
 

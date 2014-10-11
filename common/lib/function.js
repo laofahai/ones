@@ -310,18 +310,22 @@ function l(k, langObject) {
     }
 
     var key = k.split(".");
-    var rootKey = ["urlMap", "lang"];
 
     if(key.length === 1) {
         return langObject[k];
     }
 
-    var curKey = key.shift();
-    if(typeof(langObject[curKey]) === "string") {
-        return langObject[curKey];
+    //兼容字段key中包含.
+    if(typeof(langObject[key.join(".")]) === "string") {
+        return langObject[key.join(".")];
     }
 
-
+    var curKey = key.shift();
+    //未到最终节点但是已是字符串
+    if(typeof(langObject[curKey]) === "string") {
+        return false;
+        return langObject[curKey];
+    }
 
     return l(key.join("."), langObject[curKey]);
 }
@@ -402,15 +406,19 @@ var toLower = function(str) {
 var getAuthNodeName = function(node, $rootScope) {
 
     var source = node;
-    if(l("lang."+node)) {
+    if(typeof(l("lang."+node)) === "string") {
         return l("lang."+node);
     }
 
     node = node.split(".");
     var action = node[2];
 
-
     node = sprintf("%s.%s", node[0], node[1]);
+
+    var tmp = l("lang."+node+"."+action);
+    if(typeof(tmp) === "string") {
+        return tmp;
+    }
 
     if(l("lang."+node)) {
         return sprintf(l("lang."+node), l("lang.actions."+action));
