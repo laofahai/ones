@@ -34,7 +34,7 @@ class PurchaseBuild extends CommonBuildAction {
                     "name" => "生成入库单",
                     "type" => 1,
                     "listorder" => 2,
-                    "prev_node_id" => "SaveReturnsPaper",
+                    "prev_node_id" => "SavePurchase",
                     "next_node_id" => "CompleteProcess",
                     "status_text" => "已生成入库单"
                 ),
@@ -44,7 +44,7 @@ class PurchaseBuild extends CommonBuildAction {
                     "listorder" => 3,
                     "prev_node_id" => "MakeStockin",
                     "next_node_id" => 0,
-                    "status_text" => "已完成"
+                    "status_text" => "已入库"
                 ),
             )
         )
