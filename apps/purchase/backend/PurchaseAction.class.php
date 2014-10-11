@@ -34,6 +34,10 @@ class PurchaseAction extends CommonAction {
 
     public function update() {
         $model = D("Purchase");
+        if($model->where("id=".I("get.id"))->getField("status") > 0) {
+            $this->error("in_workflow");
+            return;
+        }
         $data = $model->formatData($_POST);
         $billId = $model->editBill($data);
 

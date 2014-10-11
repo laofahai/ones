@@ -120,9 +120,12 @@
             };
         }])
         .filter("toLink", [function(){
-            return function(text, link, target) {
-                target = target || "_self";
-                return sprintf('<a ng-click="$root.goPage(\'%s\')" target="%s">%s</a>', link, target, text);
+            return function(text, link) {
+                var pre = "";
+                if(!ones.useHTML5) {
+                    pre = "#!/";
+                }
+                return sprintf('<a href="%s%s">%s</a>', pre, link, text);
             };
         }])
         .filter("toAuthNodeName", ["$rootScope", function($rootScope){

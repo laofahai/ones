@@ -27,7 +27,7 @@ class StockAction extends CommonAction {
                 break;
         }
     }
-    
+
     
     
 }

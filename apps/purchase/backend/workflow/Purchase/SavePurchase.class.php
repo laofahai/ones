@@ -13,8 +13,7 @@
 class PurchaseSavePurchase extends WorkflowAbstract {
     
     public function run() {
-        $returns = D("Purchase");
-        $returns->where("id=".$this->mainrowId)->save(array("status" => 1));
+        D("Purchase")->where("id=".$this->mainrowId)->save(array("status" => 1));
     }
     
 }
