@@ -16,7 +16,8 @@ class StockWarningAction extends CommonAction {
     protected $indexModel = "StockProductListView";
 
     protected function _filter(&$map) {
-        $map["_string"] = "(store_min>0 and num<=store_min) or (store_max>0 and num>=store_max)";
+        $map["_string"] = "(StockProductList.store_min>0 and num<=StockProductList.store_min)
+                        or (StockProductList.store_max>0 and num>=StockProductList.store_max)";
     }
     
     public function index() {

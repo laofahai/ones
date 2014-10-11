@@ -85,7 +85,7 @@ class StockinModel extends CommonModel {
         unset($bill["user_id"]);
         unset($bill["source_model"]);
         unset($bill["source_id"]);
-        
+
         if(false === $this->save($bill)) {
             $this->rollback();
             return false;
@@ -95,7 +95,6 @@ class StockinModel extends CommonModel {
             "stockin_id"=>$bill["id"]
         );
         $this->removeDeletedRows($rows, $map, $detailModel);
-
 
         foreach($rows as $row) {
             if(!$row["id"]) {

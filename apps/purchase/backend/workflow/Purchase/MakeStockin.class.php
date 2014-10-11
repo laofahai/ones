@@ -23,7 +23,7 @@ class PurchaseMakeStockin extends WorkflowAbstract {
             "subject" => "采购入库",
             "dateline"=> CTS,
             "total_num" => $thePurchase["total_num"],
-            "status"  => 1,
+            "status"  => 0,
             "user_id" => getCurrentUid(),
             "source_model" => "Purchase",
             "source_id"    => $this->mainrowId,

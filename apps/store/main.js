@@ -818,7 +818,6 @@
                             data: $scope.formMetaData
                         };
                         res.doPostWorkflow(data).$promise.then(function(data){
-                            return;
                             $location.url("/store/list/stockin");
                         });
                     }

@@ -102,7 +102,7 @@ class StockinAction extends CommonAction {
         
         list($bill, $rows) = $model->formatData($_POST);
 
-        if($model->editBill($bill, $rows)) {
+        if(!$model->editBill($bill, $rows)) {
             $this->error($model->getError());
         }
     }
