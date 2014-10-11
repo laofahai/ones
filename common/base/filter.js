@@ -81,7 +81,7 @@
             }
         })
         //.filter("append|prepend")
-        .filter("lang", ["$injector", function($injector){
+        .filter("lang", [function(){
             return function(str, section, def) {
                 if(!str) {
                     return;

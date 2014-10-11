@@ -68,7 +68,7 @@
                     }
                 });
             });
-            $scope.doFormSubmit = function() {
+            $scope.doSubmit = function() {
                 res.save($scope.blocks);
                 $location.url("/");
             };
@@ -131,7 +131,7 @@
                         }
 
 
-                        //底色
+                        //随机底色
                         if(!app.btnClass){
                             var tmp = md5.createHash(app.label).slice(2,3);
                             var tmpIndex = chars.indexOf(tmp);
@@ -156,7 +156,9 @@
                     });
                 }, 300);
 
-
+                /**
+                 * 桌面块
+                 * */
                 plugin.callPlugin("hook.dashboard.blocks");
 
                 var tmp = ones.pluginScope.get("dashboardBlocks");

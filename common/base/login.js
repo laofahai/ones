@@ -3,7 +3,8 @@
  * */
 var LoginModule = angular.module('ones.login', [
     "ngResource",
-    "ones.configModule"
+    "ones.configModule",
+    "ones.common.filters"
 ]);
 
 LoginModule

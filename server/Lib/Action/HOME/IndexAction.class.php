@@ -21,7 +21,6 @@ class IndexAction extends CommonAction {
         import("@.ORG.staticRuntime");
         $runtime = new FrontEndRuntime($loadedApps);
         $this->assign("javascripts", $runtime->getJavascripts());
-//        print_r($runtime->getJavascripts());exit;
 
         if($this->isLogin()) {
             $this->assign("APP_PATH", str_replace("index.php", "", __APP__));

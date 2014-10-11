@@ -36,7 +36,7 @@
                                 <div class="widget-main">
                                     <h4 class="header blue lighter bigger">
                                         <i class="icon-coffee green"></i>
-                                        <span ng-bind="i18n.lang.messages.please_enter_your_login_info"></span>
+                                        <span ng-bind="'lang.messages.please_enter_your_login_info'|lang"></span>
                                     </h4>
 
                                     <div class="space-6"></div>
@@ -47,14 +47,14 @@
                                         <fieldset>
                                             <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="text" autofocus class="form-control" placeholder="{{i18n.lang.username}}" ng-model="loginInfo.username" required />
+                                                            <input type="text" autofocus class="form-control" placeholder="{{'lang.username'|lang}}" ng-model="loginInfo.username" required />
                                                             <i class="icon-user"></i>
                                                         </span>
                                             </label>
 
                                             <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" class="form-control" placeholder="{{i18n.lang.password}}" ng-minlength="6" ng-model="loginInfo.password" required />
+                                                            <input type="password" class="form-control" placeholder="{{'lang.password'|lang}}" ng-minlength="6" ng-model="loginInfo.password" required />
                                                             <i class="icon-lock"></i>
                                                         </span>
                                             </label>
@@ -64,12 +64,12 @@
                                             <div class="clearfix">
                                                 <label class="inline">
                                                     <input type="checkbox" class="ace" ng-model="loginInfo.remember" />
-                                                    <span class="lbl"> <small ng-bind="i18n.lang.messages.remember_me"></small></span>
+                                                    <span class="lbl"> <small ng-bind="'lang.messages.remember_me'|lang"></small></span>
                                                 </label>
 
                                                 <button type="button" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
                                                     <i class="icon-key"></i>
-                                                    <span ng-bind="i18n.lang.actions.login"></span>
+                                                    <span ng-bind="'lang.actions.login'|lang"></span>
                                                 </button>
                                             </div>
                                             <div class="space-4"></div>
@@ -82,7 +82,7 @@
                                         <a href="#" onclick="show_box('forgot-box');
                                                             return false;" class="forgot-password-link">
                                             <i class="icon-arrow-left"></i>
-                                            <span ng-bind="i18n.lang.messages.i_fogot_password"></span>
+                                            <span ng-bind="'lang.messages.i_fogot_password'|lang"></span>
                                         </a>
                                     </div>
                                 </div>
@@ -156,6 +156,7 @@
 <script src="common/lib/caches.js"></script>
 <script src="common/base/config.js"></script>
 <script src="common/base/login.js"></script>
+<script src="common/base/filter.js"></script>
 
 <script type="text/javascript">
     function show_box(id) {
