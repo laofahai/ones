@@ -20,11 +20,13 @@
             var endTime = new Date();
             startTime.setMonth(startTime.getMonth()-1);
             return {
-                filters: {
-                    between: {
-                        field: "dateline",
-                        defaultData: [startTime, endTime],
-                        inputType: "datetime"
+                config: {
+                    filters: {
+                        between: {
+                            field: "dateline",
+                            defaultData: [startTime, endTime],
+                            inputType: "datetime"
+                        }
                     }
                 },
                 structure: {
@@ -68,10 +70,10 @@
                 var startTime = new Date();
                 var endTime = new Date();
                 startTime.setMonth(startTime.getMonth()-1);
-                $scope.formData = $scope.formData || {};
-                $scope.formData._filter_start_dateline = startTime;
-                $scope.formData._filter_end_dateline = endTime;
-                $scope.formData.timeStep = "day";
+                $scope.filterFormData = $scope.filterFormData || {};
+                $scope.filterFormData._filter_start_dateline = startTime;
+                $scope.filterFormData._filter_end_dateline = endTime;
+                $scope.filterFormData._filter_timeStep = "day";
                 var filters = {
                     between: {
                         field: "dateline",
@@ -83,16 +85,16 @@
                         inputType: "select",
                         displayName: l('lang.showType'),
                         dataSource: [
-                            {id: "day", name: l('lang.show_by_day}')},
-                            {id: "month", name: l('lang.show_by_month}')},
-                            {id: "year", name: l('lang.show_by_year}')}
+                            {id: "day", name: l('lang.show_by_day')},
+                            {id: "month", name: l('lang.show_by_month')},
+                            {id: "year", name: l('lang.show_by_year')}
                         ]
                     }
                 };
 
                 //page desc
                 $scope.$parent.currentPage.actionDesc = sprintf("%s ~ %s",
-                    toDate($scope.formData._filter_start_dateline/1000, true), toDate($scope.formData._filter_end_dateline/1000, true)
+                    toDate($scope.filterFormData._filter_start_dateline/1000, true), toDate($scope.filterFormData._filter_end_dateline/1000, true)
                 );
 
                 $scope.selectAble = false;
@@ -123,7 +125,7 @@
                 };
 
                 var doQuery = function () {
-                    res.query($scope.formData).$promise.then(function(data){
+                    res.query($scope.filterFormData).$promise.then(function(data){
                         $scope.barData = data;
                     });
                 };

@@ -47,9 +47,7 @@
 
                     self.refresh();
 
-                    if(self.options.showFilter) {
-                        self.methodsList.makeFilters(self.scope.$parent);
-                    }
+                    self.methodsList.makeFilters(self.scope.$parent);
 
                     /**
                      * 搜索框自动获得焦点
@@ -313,13 +311,11 @@
                             }
                         });
 
-//                        console.log(FieldsDefine);
-
                         var modal = null;
                         var modalHtml = null;
                         var $compile = $injector.get("$compile");
 
-                        if(!$scope.doFilter) {
+                        if(typeof($scope.doFilter) !== "function") {
                             $scope.doFilter = function(){
                                 self.filtersData = $scope.filterFormData;
                                 self.scope.doRefresh();

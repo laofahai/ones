@@ -101,7 +101,7 @@ class ProductViewAction extends CommonAction{
                 ->field("factory_code_all, SUM(PurchaseDetail.num) as total_num, SUM(PurchaseDetail.price) AS total_amount")
                 ->where($purchaseMap)->select();
             foreach($tmp as $v) {
-                $purchaseInfo[$v["factory_code_all"]] = $v["total_num"];
+                $purchaseInfo[$v["factory_code_all"]] = $v;
             }
 
             foreach($storeInfo as $k=>$v) {
