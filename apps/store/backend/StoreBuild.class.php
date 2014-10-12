@@ -37,7 +37,7 @@ class StoreBuild extends CommonBuildAction {
                     "listorder" => 2,
                     "prev_node_id" => "ConfirmStockin",
                     "next_node_id" => 0,
-                    "status_text" => "已入库完成"
+                    "status_text" => "已入库"
                 )
             )
         ),

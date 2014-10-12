@@ -22,6 +22,8 @@ class Workflow {
     protected $processModel;
     
     protected $context;
+
+    private $error;
     
     public function __construct($workflowAlias, $context=array()) {
         $this->workflowAlias = $workflowAlias;
@@ -241,7 +243,15 @@ class Workflow {
     public function getCurrentNode ($mainrow_id,$node_id="",$ignoreCheck=false) {
 
         if($node_id) {
-            $node = $this->nodeModel->find($node_id);
+            if(is_numeric($node_id)) {
+                $node = $this->nodeModel->find($node_id);
+            } else {
+                $node = $this->nodeModel->where(array(
+                    "workflow_id" => $this->currentWorkflow["id"],
+                    "execute_file" => $node_id
+                ))->find();
+            }
+
             //当前节点上文
             $map = array(
                 "workflow_id" => $this->currentWorkflow["id"],
@@ -269,7 +279,7 @@ class Workflow {
         }
         
         if(!$node and !$ignoreCheck) {
-            throw_exception(L("workflow_not_found"));
+            $this->error = "workflow_not_found";
             return false;
         }
         
@@ -288,7 +298,7 @@ class Workflow {
 
 
         $file = sprintf("@.Workflow.%s.%s", $this->currentWorkflow["workflow_file"], $node["execute_file"]);
-        $rs = import($file);
+        import($file);
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
 //        echo $className;
         if(!$className or !class_exists($className)) {
@@ -339,6 +349,7 @@ class Workflow {
         $nextNodeObj = $this->getCurrentNode($mainRowid, $nodeId, $ignoreCheck);
 
         if(!$nextNodeObj) {
+            $this->error = "get_next_node_fail";
             return false; //@todo
         }
 
@@ -376,6 +387,7 @@ class Workflow {
 
         if(is_numeric($auto)) {
             if(intval($nextNodeObj->currentNode["type"]) != $auto) {
+                $this->error = "next_node_type_error";
                 return false;
             }
         }
@@ -385,6 +397,7 @@ class Workflow {
         }
         
         if(!$this->checkCondition($mainRowid, $nextNodeObj->currentNode)) {
+            $this->error = "check_workflow_condition_fail";
             return false;
         }
         
@@ -612,6 +625,10 @@ class Workflow {
         $rs = $obj->checkPermission($node["condition"]);
         return $rs === false ? false : true;
 //        exit;
+    }
+
+    public function getError() {
+        return $this->error;
     }
     
 }

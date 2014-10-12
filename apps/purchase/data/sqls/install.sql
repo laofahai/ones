@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]purchase` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]_purchase` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(20) NOT NULL,
   `purchase_type` smallint(3) NOT NULL,
@@ -10,11 +10,14 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]purchase` (
   `dateline` varchar(12) NOT NULL,
   `status` smallint(1) NOT NULL DEFAULT '0',
   `memo` varchar(255) NOT NULL,
+  `deleted` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `subject` (`supplier_id`,`dateline`,`status`),
   KEY `sale_type` (`purchase_type`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `user_id` (`user_id`),
+  KEY `deleted` (`deleted`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]purchase_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
