@@ -232,7 +232,7 @@
             function($scope, res, model, ComView, $routeParams, dataModelModel) {
                 $routeParams.group = "dataModel";
                 $routeParams.module = "DataModelFields";
-                var actions = $scope.$parent.i18n.urlMap.dataModel.modules.DataModelFields.actions;
+                var actions = l('urlMap.dataModel.modules.DataModelFields.actions');
                 ComView.makeGridLinkActions($scope, actions, false, "pid/"+$routeParams.pid, dataModelModel);
                 ComView.makeGridSelectedActions($scope, model, res, "dataModel", "DataModelFields", "/pid/"+$routeParams.pid);
                 ComView.displayGrid($scope,model,res, {

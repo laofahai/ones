@@ -13,43 +13,43 @@
                 var obj = {
                     config: {
                         column: 3,
-                        trashAble: true
+                        trashAble: true,
+                        extraSelectActions: [
+                            {
+                                label: toLang("viewCraft", "actions", $rootScope),
+                                action: function($event, selectedItems, item){
+                                    var scope = obj.extraSelectActions[0].scope;
+                                    var injector = obj.extraSelectActions[0].injector;
+                                    item = item || selectedItems[0];
+                                    var res = injector.get("GoodsCraftRes");
+
+                                    if(!item.id) {
+                                        return false;
+                                    }
+
+
+                                    res.query({goods_id: item.id}).$promise.then(function(data){
+                                        scope.craftsList = data;
+                                    });
+
+                                    var theModal = $modal({
+                                        scope: scope,
+                                        title: sprintf(toLang("_product_craft", "widgetTitles", $rootScope), item.name),
+                                        contentTemplate: appView('productCraft.html', 'produce'),
+                                        show: false
+                                    });
+                                    theModal.$promise.then(theModal.show);
+
+                                    scope.doSaveCraft = function(){
+                                        res.update({id: item.id}, scope.craftsList, function(data){
+                                            theModal.hide();
+                                        });
+                                    };
+                                }
+                            }
+                        ]
                     }
                 };
-                obj.extraSelectActions = [
-                    {
-                        label: toLang("viewCraft", "actions", $rootScope),
-                        action: function($event, selectedItems, item){
-                            var scope = obj.extraSelectActions[0].scope;
-                            var injector = obj.extraSelectActions[0].injector;
-                            item = item || selectedItems[0];
-                            var res = injector.get("GoodsCraftRes");
-
-                            if(!item.id) {
-                                return false;
-                            }
-
-
-                            res.query({goods_id: item.id}).$promise.then(function(data){
-                                scope.craftsList = data;
-                            });
-
-                            var theModal = $modal({
-                                scope: scope,
-                                title: sprintf(toLang("_product_craft", "widgetTitles", $rootScope), item.name),
-                                contentTemplate: appView('productCraft.html', 'produce'),
-                                show: false
-                            });
-                            theModal.$promise.then(theModal.show);
-
-                            scope.doSaveCraft = function(){
-                                res.update({id: item.id}, scope.craftsList, function(data){
-                                    theModal.hide();
-                                });
-                            };
-                        }
-                    }
-                ];
                 obj.getStructure = function() {
                     var defer = $q.defer();
                     plugin.callPlugin("loadModelFromJson", "goods.Goods").promise.then(function(structure){

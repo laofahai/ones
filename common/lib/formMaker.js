@@ -188,7 +188,7 @@
                 require: 'ngModel',
                 link: function(scope, ele, attrs, c) {
                     scope.$watch(attrs.ngModel, function(newVal, oldVal) {
-                        console.log();
+
                         if(!newVal) {
                             var getter = $parse(attrs.ngModel);
                             getter.assign(scope, c.$viewValue);
