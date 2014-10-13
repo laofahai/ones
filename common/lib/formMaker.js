@@ -187,7 +187,13 @@
             return {
                 require: 'ngModel',
                 link: function(scope, ele, attrs, c) {
+                    var inited = {};
                     scope.$watch(attrs.ngModel, function(newVal, oldVal) {
+
+                        if(!inited[attrs.ngModel]) {
+                            inited[attrs.ngModel] = true;
+                            return;
+                        }
 
                         if(!newVal) {
                             var getter = $parse(attrs.ngModel);
