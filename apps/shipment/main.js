@@ -138,7 +138,7 @@
                 //重写doSubmit()方法
                 $scope.doFormSubmit = function(){
                     if (!$scope.form.$valid) {
-                        ComView.alert($scope.i18n.lang.messages.fillTheForm, "danger");
+                        ComView.alert(l('lang.messages.fillTheForm'), "danger");
                         return;
                     }
                     ExpressRes.save($scope.formData, function(data){

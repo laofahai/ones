@@ -747,7 +747,7 @@
             function($scope, StockProductExportModel, ComView, $http, cnf) {
                 $scope.pageActions = [
                     {
-                        label : $scope.i18n.lang.actions.list,
+                        label : l('lang.actions.list'),
                         class : "primary",
                         href  : "/store/list/stockProductList"
                     }
