@@ -47,6 +47,9 @@
         }])
         .service("ConfigureModel", ["ComView", "$rootScope", function(ComView, $rootScope){
             return {
+                config: {
+                    columns: 1
+                },
                 getStructure: function() {
                     return {
                         dbhost: {
@@ -79,6 +82,9 @@
         }])
         .service("InitModel", ["ComView", "$rootScope", function(ComView, $rootScope){
             return {
+                config: {
+                    columns: 1
+                },
                 getStructure: function() {
                     return {
                         email: {
@@ -205,16 +211,16 @@
                 }
             }
         }])
-        .controller("ConfigureCtl", ["$scope", "FormMaker", "ConfigureModel", "$compile", "$rootScope",
-            function($scope, FormMaker, model, $compile, $rootScope){
+        .controller("ConfigureCtl", ["$scope", "ConfigureModel", "$compile", "$rootScope",
+            function($scope, model, $compile, $rootScope){
 
                 $scope.$parent.step = 3;
-                var fm = new FormMaker.makeForm($scope.$parent, {
-                    fieldsDefine: model.getStructure(),
-                    includeFoot: false
-                });
-                var formHTML = fm.makeHTML();
-                $("#configureFormContainer").append($compile(formHTML)($scope));
+                $scope.formConfig = {
+                    model: model,
+                    opts: {
+                        includeFoot: false
+                    }
+                };
 
                 if($scope.$parent.configure.db) {
                     $scope.formData = $scope.$parent.configure.db;
@@ -233,15 +239,16 @@
                 };
 
             }])
-        .controller("InitializeCtl", ["$scope", "FormMaker", "InitModel", "$compile", "$rootScope",
-            function($scope, FormMaker, model, $compile, $rootScope){
+        .controller("InitializeCtl", ["$scope", "InitModel", "$compile", "$rootScope",
+            function($scope, model, $compile, $rootScope){
                 $scope.$parent.step = 4;
-                var fm = new FormMaker.makeForm($scope, {
-                    fieldsDefine: model.getStructure(),
-                    includeFoot: false
-                });
-                var formHTML = fm.makeHTML();
-                $("#initFormContainer").append($compile(formHTML)($scope));
+
+                $scope.formConfig = {
+                    model: model,
+                    opts: {
+                        includeFoot: false
+                    }
+                };
 
                 if($scope.$parent.configure.admin) {
                     $scope.formData = $scope.$parent.configure.admin;
@@ -285,14 +292,7 @@
 
             var installSteps = {
                 _query: function(step, callback) {
-//                    $http({
-//                        method: "POST",
-//                        url: config.BSU+"install",
-//                        data: {
-//                            step: step,
-//                            data: $scope.$parent.configure
-//                        }
-//                    }).then(callback);
+
                     $http.post(config.BSU+"install", {
                         step: step,
                         data: $scope.$parent.configure,

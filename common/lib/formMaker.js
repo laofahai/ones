@@ -317,9 +317,9 @@
                                             mainrow_id: $routeParams.id,
                                             filterFields: ["id", "name"]
                                         }).$promise.then(function(data){
-                                            $scope.workflowInBill = data;
-                                            $scope.mainrow_id = $routeParams.id;
-                                        });
+                                                $scope.workflowInBill = data;
+                                                $scope.mainrow_id = $routeParams.id;
+                                            });
                                     }
 
 
@@ -1521,7 +1521,7 @@
 
                     $scope.$parent.doKeydown = function(event){
 
-                    //绑定回车提交事件
+                        //绑定回车提交事件
                         if(event.keyCode === 13
                             && $(event.target).attr("ng-model")
                             && !$(event.target).is("textarea")
@@ -1581,7 +1581,10 @@
                                 }
                                 var helpText = "";
                                 if(struct.helpText) {
-                                    helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
+                                    try {
+                                        helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
+                                    } catch(e) {}
+                                    helpText = helpText || struct.helpText
                                 }
                                 finalHTML.push(sprintf(boxHTML, {
                                     helpText: helpText,
