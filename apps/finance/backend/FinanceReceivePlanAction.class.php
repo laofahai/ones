@@ -15,6 +15,13 @@ class FinanceReceivePlanAction extends CommonAction {
 
     public $workflowAlias = "financeReceive";
     protected $indexModel = "FinanceReceivePlanView";
+    protected $readModel = "FinanceReceivePlanView";
+
+    protected function pretreatment() {
+        if($_POST["customer_name"]) {
+            $_POST["customer_id"] = $_POST["customer_name"];
+        }
+    }
 
     public function insert() {
         $id = parent::insert(true);
@@ -23,6 +30,8 @@ class FinanceReceivePlanAction extends CommonAction {
         $workflow = new Workflow($this->workflowAlias);
         $rs = $workflow->doNext($id, null, false, false);
     }
+
+
 //
 //    public function update() {
 //        print_r($_POST);exit;

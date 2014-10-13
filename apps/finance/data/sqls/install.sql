@@ -61,16 +61,18 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]finance_record` (
   `account_id` smallint(3) NOT NULL,
   `user_id` int(11) NOT NULL,
   `financer_id` int(11) DEFAULT NULL,
-  `amount` float(10,2) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
   `type` smallint(1) NOT NULL DEFAULT '1' COMMENT '1进2出',
   `status` smallint(1) NOT NULL DEFAULT '0',
   `dateline` varchar(12) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
+  `deleted` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `account_id` (`account_id`),
   KEY `type` (`type`,`status`),
   KEY `dateline` (`dateline`),
   KEY `user_id` (`user_id`),
   KEY `financer_id` (`financer_id`),
-  KEY `type_id` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `type_id` (`type_id`),
+  KEY `deleted` (`deleted`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

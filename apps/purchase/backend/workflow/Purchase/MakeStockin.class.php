@@ -32,27 +32,15 @@ class PurchaseMakeStockin extends WorkflowAbstract {
         );
         
         $stockin = D("Stockin");
-//        $stockinDetail = D("StockinDetail");
-//        
-//        $stockin->startTrans();
-//        
-//        $lastId = $stockin->add($data);
-//        echo $lastId;exit;
-//        var_dump($thePurchaseDetail);exit;
+
         foreach($thePurchaseDetail as $trd) {
             $items[] = array(
-//                "stockin_id" => $lastId,
                 "goods_id"   => $trd["goods_id"],
                 "num"        => $trd["num"],
                 "factory_code_all" => $trd["factory_code_all"],
                 "stock_id"   => 0,
                 "memo"       => $trd["memo"]
             );
-//            print_r($data);exit;
-//            if(!$stockinDetail->add($data)) {
-//                $stockin->rollback();
-//                return false;
-//            }
             
         }
         

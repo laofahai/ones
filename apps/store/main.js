@@ -416,7 +416,8 @@
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true,
-                            printAble: true
+                            printAble: true,
+                            field: "stock_name"
                         },
                         store_num: {
                             displayName: i18n.storeNum,

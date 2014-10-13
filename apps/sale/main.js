@@ -83,7 +83,11 @@
                         dataSource: "HOME.TypesAPI",
                         queryParams: {
                             type: "sale"
-                        }
+                        },
+                        listAble: false
+                    },
+                    sale_type_label: {
+                        displayName: l('lang.type')
                     },
                     customer: {
                         hideInForm: true

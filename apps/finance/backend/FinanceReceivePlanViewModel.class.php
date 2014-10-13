@@ -14,7 +14,7 @@ class FinanceReceivePlanViewModel extends CommonViewModel {
         "FinanceReceivePlan" => array("*", "_type"=>"left"),
         "FinanceAccount" => array("name"=>"account_name", "_on"=>"FinanceReceivePlan.account_id=FinanceAccount.id", "_type"=>"left"),
         "Types" => array("name"=>"type", "_on"=>"FinanceReceivePlan.type_id=Types.id", "_type"=>"left"),
-        "RelationshipCompany" => array("name"=>"customer_name", "_on"=>"FinanceReceivePlan.customer_id=RelationshipCompany.id", "_type"=>"left")
+        "RelationshipCompany" => array("name"=>"customer_name_label", "_on"=>"FinanceReceivePlan.customer_id=RelationshipCompany.id", "_type"=>"left")
     );
 
     public $searchFields = array(

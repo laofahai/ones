@@ -18,8 +18,7 @@ class FinancePayPlanAction extends CommonAction {
     public function insert() {
         $id = parent::insert(true);
 
-        import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
-        $rs = $workflow->doNext($id, null, false, false);
+        $workflow->doNext($id, null, false, false);
     }
 }

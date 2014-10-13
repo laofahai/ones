@@ -21,5 +21,7 @@ class FinancePayPlanModel extends CommonModel {
         array("source_id", ""),
         array("user_id", "getCurrentUid", 1, "function"),
     );
+
+    public function newPlan($data) {}
     
 }

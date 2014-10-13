@@ -252,7 +252,7 @@
                                     try {
                                         promise = self.options.resource.api.query(p).$promise;
                                     } catch(e) {
-                                        conle.log("can't load resource instance.");
+                                        console.log("can't load resource instance.");
                                     }
                                 }
 

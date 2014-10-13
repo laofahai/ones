@@ -14,6 +14,12 @@ class PurchaseSavePurchase extends WorkflowAbstract {
     
     public function run() {
         D("Purchase")->where("id=".$this->mainrowId)->save(array("status" => 1));
+
+        //财务
+        if(isModuleEnabled("Finance")) {
+
+        }
+
     }
     
 }

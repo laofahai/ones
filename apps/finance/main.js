@@ -152,10 +152,14 @@
                             }
                         },
                         source_model: {
-                            cellFilter: "lang"
+                            cellFilter: "lang",
+                            hideInForm: true
                         },
                         customer_name: {
-                            displayName: toLang("customer", "", $rootScope)
+                            field: "customer_name_label",
+                            displayName: l("lang.customer"),
+                            inputType: "select3",
+                            dataSource: "RelationshipCompanyRes"
                         },
                         sponsor: {
                             hideInForm: true
@@ -189,7 +193,8 @@
                         },
                         memo: {
                             required: false,
-                            listAble: false
+                            listAble: false,
+                            inputType: "textarea"
                         }
                     };
                 }
@@ -230,7 +235,7 @@
                     resource: res
                 };
 
-                $scope.doFormSubmit = function(){
+                $scope.doSubmit = function(){
                     var params = $.extend({
                         workflow: true,
                         node_id: $routeParams.nodeId,

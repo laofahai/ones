@@ -482,8 +482,6 @@
 
                         $scope.$broadcast("commonGrid.ready");
 
-
-
                     });
 
 
