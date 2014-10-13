@@ -247,7 +247,7 @@
                 ComView.makeGridLinkActions($scope, actions, model.config.isBill, extra, model);
                 ComView.makeGridSelectedActions($scope, model, res, group, module);
 
-                ComView.displayGrid($scope, model, res, opts);
+                ComView.displayGrid($scope, dataAPI.modelName, res, opts);
             }])
         .controller('ComViewEditCtl', ["$rootScope", "$scope","ComView","$routeParams", "ones.dataApiFactory",
             function($rootScope,$scope, ComView, $routeParams, dataAPI){
@@ -378,13 +378,13 @@
 
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){};
 
-                service.displayGrid = function($scope, fieldsDefine, resource, opts){
+                service.displayGrid = function($scope, model, resource, opts){
                     $scope.totalServerItems = 0;
                     $scope.totalPages = 1;
                     $scope.gridSelected = [];
 
                     var options = opts ? opts : {};
-                    fieldsDefine = fieldsDefine ? fieldsDefine : [];
+                    var fieldsDefine = [];
                     var columnDefs = [];
 
 
@@ -411,79 +411,90 @@
                     opts = $.extend(defaults, options);
                     opts.subModule = opts.subModule ? "/" + opts.subModule : "";
 
-                    //                console.log(typeof(fieldsDefine));
-                    //                console.log("getStructure" in fieldsDefine);
-                    //                console.log(typeof(fieldsDefine.getStructure) == "function");
+                    var modelName;
+                    if(typeof(model) === "string") {
+                        modelName = model;
+                        model = $injector.get(modelName);
+                    }
 
-                    if(typeof(fieldsDefine) === "object"
-                        && "getStructure" in fieldsDefine
-                        && typeof(fieldsDefine.getStructure) === "function") {
-                        var model = fieldsDefine;
+                    if(!model.config) {
+                        model.config = {};
+                    }
 
-                        if(!model.config) {
-                            model.config = {};
-                        }
+                    if(model.config.filters) {
+                        opts.filters = model.config.filters;
+                    }
 
-                        if(model.config.filters) {
-                            opts.filters = model.config.filters;
-                        }
+                    opts = $.extend(opts, model.config);
 
-                        opts = $.extend(opts, model.config);
+                    opts.resource = resource;
+
+                    //非DEBUG模式下模型缓存
+                    var enableModelCache = (!ones.DEBUG && modelName && model.config.modelCacheAble !== false);
+                    if(enableModelCache) {
+                        var cacheKey = "ones.caches.structure."+modelName;
+                        opts.columnDefs = columnDefs = ones.caches.getItem(cacheKey) || [];
+                    }
+
+
+                    if(columnDefs.length < 1) {
 
                         fieldsDefine = model.getStructure(true);
                         if("then" in fieldsDefine && typeof(fieldsDefine.then) === "function") { //需要获取异步数据
                             fieldsDefine.then(function(data){
                                 fieldsDefine = data;
-                                $scope.$broadcast("commonGrid.structureReady", model);
+                                $scope.$broadcast("commonGrid.structureReady", fieldsDefine);
                             }, function(msg){
                                 service.alert(msg);
                             });
                         } else {
                             $timeout(function(){
-                                $scope.$broadcast("commonGrid.structureReady", model);
+                                $scope.$broadcast("commonGrid.structureReady", fieldsDefine);
                             });
                         }
-                    } else {
-                        $timeout(function(){
-                            $scope.$broadcast("commonGrid.structureReady", model);
+
+                        $scope.$on("commonGrid.structureReady", function(evt, fieldsDefine) {
+
+                            /**
+                             * 字段名称
+                             * */
+                            for (var f in fieldsDefine) {
+                                if(!fieldsDefine[f].field) {
+                                    fieldsDefine[f].field = f;
+                                }
+                                if(!fieldsDefine[f].displayName) {
+                                    fieldsDefine[f].displayName = l('lang.'+f);
+                                }
+                                columnDefs.push(fieldsDefine[f]);
+                            }
+
+
+                            /**
+                             * 过滤不显示字段
+                             * */
+                            var tmp = columnDefs;
+                            columnDefs = [];
+                            for(var $i=0;$i<tmp.length;$i++) {
+                                if(tmp[$i].listAble !== false) {
+                                    columnDefs.push(tmp[$i]);
+                                }
+                            }
+
+                            opts.columnDefs = columnDefs;
+
+                            if(enableModelCache) {
+                                ones.caches.setItem(cacheKey, columnDefs, 1, 1);
+                            }
+
+                            $scope.$broadcast("commonGrid.ready");
+
                         });
-                    }
 
-                    $scope.$on("commonGrid.structureReady", function(evt, model) {
+                    } else {
 
-                        opts.resource = resource;
-
-                        /**
-                         * 字段名称
-                         * */
-                        for (var f in fieldsDefine) {
-                            if(!fieldsDefine[f].field) {
-                                fieldsDefine[f].field = f;
-                            }
-                            if(!fieldsDefine[f].displayName) {
-                                fieldsDefine[f].displayName = service.toLang(f);
-                            }
-                            columnDefs.push(fieldsDefine[f]);
-                        }
-
-
-                        /**
-                         * 过滤不显示字段
-                         * */
-                        var tmp = columnDefs;
-                        columnDefs = [];
-                        for(var $i=0;$i<tmp.length;$i++) {
-                            if(tmp[$i].listAble !== false) {
-                                columnDefs.push(tmp[$i]);
-                            }
-                        }
-
-                        opts.columnDefs = columnDefs;
-
+                        console.log(columnDefs);
                         $scope.$broadcast("commonGrid.ready");
-
-                    });
-
+                    }
 
                     $scope.gridOptions = opts;
 

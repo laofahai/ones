@@ -43,28 +43,46 @@
             };
 
             this.init = function(group, module) {
+                var modelName, resourceName;
                 try {
                     //尝试使用DataAPI模式
-                    this.model = $injector.get(toAPIName(group, module));
+                    modelName = toAPIName(group, module);
+                    resourceName = modelName;
+
+                    this.model = $injector.get(modelName);
                     this.resource = this.model;
+
+                    this.resourceName = resourceName;
+                    this.modelName = modelName;
                 } catch(e) {
 
-                    var modelName = module.ucfirst()+"Model";
+                    modelName = module.ucfirst()+"Model";
                     try {
                         this.model = $injector.get(modelName);
+                        this.modelName = modelName;
                     } catch(e) {
                         throw("can't load model:"+ modelName);
                     }
 
                     try {
                         //尝试使用已定义的资源
-                        this.resource = this.model.api ? this.model.api : $injector.get(module.ucfirst()+"Res");
+
+                        if(this.model.api) {
+                            this.resource = this.model.api;
+                            this.resourceName = this.modelName+".api";
+                        } else {
+                            resourceName = module.ucfirst()+"Res";
+                            this.resource = $injector.get(resourceName);
+                            this.resourceName = resourceName;
+                        }
+
                     } catch(e) {
                         //尝试使用动态定义资源
                         var $resource = $injector.get("$resource");
                         this.resource = $resource(sprintf("%s%s/%s/:id.json", group, module), null, {
                             update: {method: "PUT"}
                         });
+                        this.resourceName = sprintf("%s.%s.resource", group, module);
                     }
                 }
 
