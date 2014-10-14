@@ -79,7 +79,7 @@
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300,
+                            width: "20%",
                             dynamicAddOpts: {
                                 model: "GoodsModel"
                             }

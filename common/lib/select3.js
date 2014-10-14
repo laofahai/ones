@@ -300,10 +300,6 @@
                         var modal = $modal({
                             scope: parentScope,
                             title: toLang("add", "actions", $rootScope) + self.currentConfig.displayName,
-    //                            content: {
-    //                                config: $scope.config,
-    //                                defaultData: $scope.defaultData
-    //                            },
                             contentTemplate: "common/base/views/dynamicEdit.html"
                         });
 

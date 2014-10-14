@@ -144,7 +144,7 @@
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300,
+                            width: "20%",
                             printAble:true,
                             dynamicAddOpts: {
                                 model: "GoodsModel"
@@ -242,7 +242,7 @@
                             valueField: "combineId",
                             nameField: "combineLabel",
                             listAble: false,
-                            width: 300
+                            width: "20%"
                         },
                         num: {
                             inputType: "number",
@@ -303,6 +303,7 @@
                         field: "customer_id"
                     },
                     fieldDefine: {
+                        displayName: l("lang.customer"),
 //                        "ui-event": "{blur: 'afterNumBlur($event)'}",
                         inputType: "select3",
                         "ng-model": "formMetaData.customer_id",

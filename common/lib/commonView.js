@@ -491,8 +491,6 @@
                         });
 
                     } else {
-
-                        console.log(columnDefs);
                         $scope.$broadcast("commonGrid.ready");
                     }
 
