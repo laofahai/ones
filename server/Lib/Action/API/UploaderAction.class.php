@@ -15,7 +15,7 @@ class UploaderAction extends CommonAction {
         $upload->autoSub = true;
         $upload->subType = "date";
         $upload->dateFormat = "m_d";
-        $upload->savePath =  '../uploads/'.date("Y/m/", CTS);// 设置附件上传目录
+        $upload->savePath =  'uploads/'.date("Y/m/", CTS);// 设置附件上传目录
 //        echo $upload->savePath;exit;
         if(!$upload->upload()) {// 上传错误提示错误信息
             $this->error($upload->getErrorMsg());
