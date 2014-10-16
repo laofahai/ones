@@ -21,7 +21,7 @@
                                 var defaultOpts = {
                                     name: "form", //表单名称
                                     id: null, //如为编辑，需传递此参数
-                                    dataLoadedEvent: null, //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
+                                    dataLoadedEvent: "form.dataLoaded", //需要异步加载数据时，传递一个dataLoadedEvent的参数标识异步数据已经加载完成的广播事件
                                     dataName: "formData", //数据绑定到$scope的名字
                                     columns: 2,
                                     returnPage: sprintf("/%(group)s/list/%(module)s", {
@@ -52,7 +52,15 @@
 
                                         promise.then(function(defaultData) {
                                             parentScope[opts.dataName] = dataFormat(opts.fieldsDefine, defaultData);
+                                            $timeout(function(){
+                                                parentScope.$broadcast(opts.dataLoadedEvent);
+                                            }, 300);
+
                                         });
+                                    } else {
+                                        $timeout(function(){
+                                            parentScope.$broadcast(opts.dataLoadedEvent);
+                                        }, 300);
                                     }
 
                                     //延时编译
@@ -317,15 +325,19 @@
                                     }
 
 
-                                    if(config.model.config.workflowAlias && config.isEdit && $routeParams.id && isAppLoaded("workflow")) {
+                                    if(config.model.config.workflowAlias
+                                        && config.isEdit
+                                        && $routeParams.id
+                                        && isAppLoaded("workflow")) {
                                         $injector.get("Workflow.WorkflowNodeAPI").api.query({
                                             workflow_alias: config.model.config.workflowAlias,
                                             mainrow_id: $routeParams.id,
-                                            filterFields: ["id", "name"]
+                                            filterFields: ["id", "name"].join()
                                         }).$promise.then(function(data){
-                                                $scope.workflowInBill = data;
-                                                $scope.mainrow_id = $routeParams.id;
-                                            });
+                                            parentScope.workflowInBill = data;
+                                            parentScope.mainrow_id = $routeParams.id;
+                                        });
+
                                     }
 
 
@@ -691,9 +703,10 @@
                             queueLimit: queueLimit
                         });
 
-//                parent.uploaderIsError = false;
+
                         var uploadedFiles = [];
                         uploaderInstance.onCompleteItem = function(i, msg, code){
+                            if(queueLimit < 2) {}
                             if(code == 200) {
                                 uploadedFiles.push(msg.uploadPath);
                             }
@@ -752,6 +765,7 @@
                     },
                     //下拉框选择
                     _select: function(name, fieldDefine, $scope) {
+
                         var valueField = fieldDefine.valueField || "id";
                         var nameField = fieldDefine.nameField || "name";
                         var data = [];
@@ -760,6 +774,8 @@
                         fieldDefine.remoteDataField = fieldDefine.remoteDataField || name;
                         fieldDefine["data-placeholder"]= l('lang.messages.chosen_select_text');
                         fieldDefine["no-results-text"]= l('lang.messages.chosen_no_result_text');
+
+
                         if (fieldDefine.dataSource instanceof Array) {
                             for (var item in fieldDefine.dataSource) {
                                 if (!item || !fieldDefine.dataSource[item][valueField]) {
@@ -777,8 +793,6 @@
                             }
 
                             var queryParams = fieldDefine.queryParams || {};
-
-
 
                             //需要使用已有数据作为参数进行查询
                             if(fieldDefine.queryWithExistsData) {
@@ -801,13 +815,25 @@
                             });
                         }
 
+                        var getter = $injector.get("$parse")(fieldDefine["ng-model"]);
+
+                        $scope.$on("form.dataLoaded", function(){
+                            var exists = $scope.$parent.$eval(fieldDefine["ng-model"]);
+                            if(undefined !== exists || false === fieldDefine.required) {
+                                return;
+                            }
+                            //默认值
+                            try{
+                                getter.assign($scope.$parent, $scope.$parent[fieldDefine.remoteDataField + "sSelect"][0].value);
+                            } catch(e) {}
+
+                        });
+
                         return sprintf(this.$parent.templates["fields/select"], {
                             attr: this._attr(name, fieldDefine),
                             key: name + "item",
                             data: fieldDefine.remoteDataField + "sSelect"
                         });
-
-
                     },
                     _select3: function(name, fieldDefine, $scope) {
                         var key = "s"+md5.createHash(fieldDefine["ng-model"]+"Select3Config");

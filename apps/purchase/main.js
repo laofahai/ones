@@ -166,6 +166,8 @@
                 }
             };
 
+            ComView.makeGridSelectedActions($scope, model, res, "purchase", "purchase");
+
         }])
     ;
 })();

@@ -92,7 +92,6 @@
                     },
                     //双击事件
                     doGridDblClick: function(item, extra, evt){
-
                         var acts = {};
                         angular.forEach(self.selectedActions, function(act) {
                             acts[act.name] = act.action;

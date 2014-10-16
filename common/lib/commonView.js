@@ -643,7 +643,12 @@
                                     workflowAPI.doWorkflow(res, node_id, selectedItems[i].id);
                                 }
                             }
-                            $scope.$broadcast("gridData.changed", true);
+
+                            if($rootScope.currentPage.action === "list") {
+                                $scope.$broadcast("gridData.changed", true);
+                            } else {
+                                $injector.get("$route").reload();
+                            }
                         };
                         $scope.workflowActionDisabled = function(id, item) {
                             try {
@@ -674,12 +679,12 @@
                                 id: $scope.gridSelected[0].id,
                                 workflowAlias: $scope.workflowAlias
                             }).$promise.then(function(data){
-                                    service.aside({
-                                        bill_id: $scope.gridSelected[0].bill_id,
-                                        title: $scope.gridSelected[0].subject,
-                                        subTitle: $scope.gridSelected[0].dateline_lang
-                                    }, data, appView("workflowProcess.html", "workflow"));
-                                });
+                                service.aside({
+                                    bill_id: $scope.gridSelected[0].bill_id,
+                                    title: $scope.gridSelected[0].subject,
+                                    subTitle: $scope.gridSelected[0].dateline_lang
+                                }, data, appView("workflowProcess.html", "workflow"));
+                            });
                         };
                     }
                     //删除
@@ -763,8 +768,6 @@
                     });
 
                     $scope.selectedActions = reIndex($scope.selectedActions);
-
-
                     $injector.get("GridView").selectedActions = $scope.selectedActions;
 
                 };

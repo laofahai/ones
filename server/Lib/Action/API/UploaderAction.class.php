@@ -19,6 +19,7 @@ class UploaderAction extends CommonAction {
 //        echo $upload->savePath;exit;
         if(!$upload->upload()) {// 上传错误提示错误信息
             $this->error($upload->getErrorMsg());
+            return;
         }else{// 上传成功 获取上传文件信息
             $info =  $upload->getUploadFileInfo();
         }

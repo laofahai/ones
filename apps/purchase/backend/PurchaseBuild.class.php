@@ -44,7 +44,7 @@ class PurchaseBuild extends CommonBuildAction {
                     "listorder" => 3,
                     "prev_node_id" => "MakeStockin",
                     "next_node_id" => 0,
-                    "status_text" => "已入库"
+                    "status_text" => "已完成"
                 ),
             )
         )

@@ -61,7 +61,7 @@
             <button class="btn btn-sm btn-{{w.btn_class||'success'}}"
                     ng-repeat="w in workflowInBill track by $index"
                     ng-bind="w.name"
-                    ng-click="doWorkflow($event, w.id)"
+                    ng-click="doWorkflow($event, w.id, mainrow_id)"
                     ></button>
         </div>
         <div class="actionsBtnRight" ng-show="showClearAutoSaved">
