@@ -5,7 +5,8 @@ $BASEConfig = array(
     /*
      * API KEY
      * **/
-    'SERVICE_API_KEY' => '[service_api_key]',
+    'SERVICE_API_KEY' => 'free',
+    'SERVICE_API_PWD' => 'free',
 
     /* 数据库配置 */
     'DB_TYPE'            =>    'mysql',        // 数据库类型

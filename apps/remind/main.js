@@ -129,6 +129,7 @@
             };
 
         }])
+
         .controller("NavRemindCtl", ["$scope", "Remind.RemindAPI", "$compile", function($scope, remind, $compile){
             $scope.reminds = [];
 
@@ -168,7 +169,6 @@
             };
 
         }])
-
     ;
 
 })(window, window.angular, window.ones);

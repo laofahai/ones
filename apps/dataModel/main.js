@@ -163,7 +163,7 @@
                         inputType: "textarea",
                         required: false,
                         style: "height:120px;",
-                        helpText: toLang("dataModel_extraConfig_tip", null, $rootScope),
+                        helpText: l("lang.dataModel_extraConfig_tip"),
                         listAble: false
                     }
                 };

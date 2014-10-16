@@ -25,5 +25,4 @@ class ONESRemindHTMLBehavior extends Behavior {
 EOF;
 
     }
-
-} 
+}

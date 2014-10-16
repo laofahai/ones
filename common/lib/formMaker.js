@@ -1587,7 +1587,7 @@
                                 var helpText = "";
                                 if(struct.helpText) {
                                     try {
-                                        helpText = toLang(struct.helpText, "helpTexts", self.scope.$root);
+                                        helpText = l("lang.helpTexts.".struct.helpText);
                                     } catch(e) {}
                                     helpText = helpText || struct.helpText
                                 }
