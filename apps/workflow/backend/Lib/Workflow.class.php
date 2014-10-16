@@ -285,7 +285,8 @@ class Workflow {
         
         if(false === $ignoreCheck) {
             if(!$this->checkExecutorPermission($node["executor"])) {
-                echo json_encode(array(
+
+                $this->response(array(
                     "error" => 1,
                     "msg"   => "workflow_permission_denied"
                 ));
@@ -393,7 +394,7 @@ class Workflow {
         }
         
         if($hasProcessed) {
-            $nextNodeObj->error("has_processed");
+            //$nextNodeObj->error("has_processed");
         }
         
         if(!$this->checkCondition($mainRowid, $nextNodeObj->currentNode)) {
@@ -481,12 +482,37 @@ class Workflow {
                     case "2":
                         $this->doNext($mainrowId, $nextNode["id"], true);
                         break;
-                    default:
-                        return;
                 }
             }
         }
-        
+
+        /*
+         * 提醒
+         * **/
+        if($curNode["remind"]) {
+            $msg = lang("messages.remind_".$curNode["execute_file"]);
+            preg_match_all("/\_\_([a-zA-Z\_]+)\_\_/", $msg, $vars);
+
+            $model = D($this->currentWorkflow["workflow_file"]);
+            $sourceData = $model->find($this->mainrowId);
+            $search = array();
+            $replace = array();
+            foreach($vars[1] as $k=> $v) {
+                $v = strtolower($v);
+                if(isset($sourceData[$v])) {
+                    $search[] = $vars[0][$k];
+                    $replace[] = $sourceData[$v];
+                }
+            }
+
+            $msg = str_replace($search, $replace, $msg);
+
+            $this->response(array(
+                "type" => "remind",
+                "msg"  => $msg
+            ));
+        }
+
     }
     
     /**
@@ -629,6 +655,10 @@ class Workflow {
 
     public function getError() {
         return $this->error;
+    }
+
+    protected function response($data) {
+        echo json_encode($data);exit;
     }
     
 }

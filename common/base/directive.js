@@ -69,6 +69,21 @@
                 }
             }
         }])
+        .directive( 'compileData', function ( $compile ) {
+            return {
+                scope: true,
+                link: function ( scope, element, attrs ) {
+                    var elmnt;
+                    attrs.$observe( 'template', function ( myTemplate ) {
+                        var tpl = '<span>'+scope.$eval(myTemplate)+'</span>';
+                        elmnt = $compile( tpl )( scope );
+                        $(elmnt).attr("data-id", $(element).data("id"))
+                        element.html(""); // dummy "clear"
+                        element.append( elmnt );
+                    });
+                }
+            };
+        })
 
             /**
              * The ng-thumb directive

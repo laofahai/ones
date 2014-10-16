@@ -13,6 +13,24 @@
 class DepartmentModel extends CommonTreeModel {
 
 
+    public function getUsers($depIds, $includeSub=true) {
+        $model = D("User");
+
+        if($includeSub) {
+            foreach($depIds as $id) {
+                $deps = $this->getTree($id);
+                foreach($deps as $dep) {
+                    $depIds[] = $dep["id"];
+                }
+            }
+        }
+
+        $map = array(
+            "department_id" => array("IN", $depIds)
+        );
+
+        return $model->where($map)->select();
+    }
 
 }
 

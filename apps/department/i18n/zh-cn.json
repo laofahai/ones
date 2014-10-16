@@ -64,6 +64,10 @@
         "department.authgroup": "%s用户组",
         "department.department": "%s部门",
         "department.authgrouprule.read": "查看用户组权限",
-        "department.authgrouprule.edit": "修改用户组权限"
+        "department.authgrouprule.edit": "修改用户组权限",
+
+        "user": "用户",
+        "userGroup": "用户组",
+        "department": "部门"
     }
 }

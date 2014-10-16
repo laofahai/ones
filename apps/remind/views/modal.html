@@ -1,0 +1,18 @@
+<div class="modal" tabindex="-1" role="dialog" ng-controller="RemindModalCtl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="'lang.remind'|lang"></h4>
+            </div>
+            <div class="modal-body red">
+                <commonform config="remindFormConfig" class="form-no-valid"></commonform>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" ng-click="doRemind();" ng-bind="'lang.actions.confirm'|lang"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="'lang.actions.cancel'|lang"></button>
+            </div>
+        </div>
+    </div>
+</div>

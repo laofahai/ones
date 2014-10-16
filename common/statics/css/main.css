@@ -10,9 +10,6 @@ a{
 .navbar-container {
     padding:0;
 }
-.navbar-user .nav li{
-    min-width:160px;
-}
 .gridStyle {
     height:550px;
     border:1px solid #ddd;
@@ -30,6 +27,9 @@ a{
 commonform {
     padding-top:30px;
     display:block;
+}
+.form-no-valid .form-group {
+    color:#000 !important;
 }
 .form-horizontal .form-group {
     min-height:40px;
@@ -59,6 +59,9 @@ commonform {
 
 .footer-copy {
     margin-top:20px;
+}
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close:before {
+    top:-2px;right:0;
 }
 
 /**
@@ -625,4 +628,9 @@ th.sorting_asc,th.sorting_desc {
 }
 .dvt-info {
     padding:5px 10px;
+}
+
+
+.header-reminds-list {
+    width:280px;font-size:12px;
 }

@@ -68,56 +68,7 @@ var toDate = function(timestamp, noTime) {
     return rs;
 }
 
-function notify(content, title, iconUrl) {
 
-    if(!content) {
-        return;
-    }
-
-    title = title || "ONES Notify";
-    iconUrl = iconUrl || "./common/statics/images/logo_mini_blue.png";
-
-    if (window.webkitNotifications) {
-        //chrome老版本
-        if (window.webkitNotifications.checkPermission() == 0) {
-            var notif = window.webkitNotifications.createNotification(iconUrl, title, content);
-            notif.display = function() {}
-            notif.onerror = function() {}
-            notif.onclose = function() {}
-            notif.onclick = function() {this.cancel();}
-            notif.replaceId = 'Meteoric';
-            notif.show();
-        } else {
-            window.webkitNotifications.requestPermission($jy.notify);
-        }
-    }
-    else if("Notification" in window){
-        // 判断是否有权限
-        if (Notification.permission === "granted") {
-            var notification = new Notification(title, {
-                "icon": iconUrl,
-                "body": content,
-            });
-        }
-        //如果没权限，则请求权限
-        else if (Notification.permission !== 'denied') {
-            Notification.requestPermission(function(permission) {
-                // Whatever the user answers, we make sure we store the
-                // information
-                if (!('permission' in Notification)) {
-                    Notification.permission = permission;
-                }
-                //如果接受请求
-                if (permission === "granted") {
-                    var notification = new Notification(title, {
-                        "icon": iconUrl,
-                        "body": content,
-                    });
-                }
-            });
-        }
-    }
-}
 
 var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 var base64DecodeChars = new Array(-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
@@ -312,7 +263,14 @@ function l(k, langObject) {
     var key = k.split(".");
 
     if(key.length === 1) {
-        return langObject[k];
+        //兼容因array_merge_recursive造成的数组元素重复问题
+        var tmp = langObject[k];
+        if(angular.isArray(tmp)
+            && tmp.length < 4
+            && tmp[0] === tmp[1]) {
+            return tmp[0];
+        }
+        return langObject[k] === undefined ? k : langObject[k];
     }
 
     //兼容字段key中包含.

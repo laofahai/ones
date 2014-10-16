@@ -625,8 +625,8 @@
                             workflow_alias: model.config.workflowAlias,
                             only_active: true
                         }).$promise.then(function(data){
-                                $scope.workflowActionList = data;
-                            });
+                            $scope.workflowActionList = data;
+                        });
 
                         $scope.doWorkflow = function(event, node_id, mainrow_id){
                             var workflowAPI = $injector.get("Workflow.WorkflowAPI");
@@ -638,11 +638,11 @@
                                 if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
                                     return false;
                                 }
+                                workflowAPI.scope = $scope;
                                 for(var i=0;i<selectedItems.length;i++) {
                                     workflowAPI.doWorkflow(res, node_id, selectedItems[i].id);
                                 }
                             }
-
                             $scope.$broadcast("gridData.changed", true);
                         };
                         $scope.workflowActionDisabled = function(id, item) {

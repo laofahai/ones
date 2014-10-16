@@ -433,7 +433,6 @@
                                                     lastPage = lastPage[0].split("/");
                                                     returnPage = lastPage[1]+"/list/"+lastPage[3];
                                                 }
-
                                                 $location.url(returnPage);
                                             }
                                         });

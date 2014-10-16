@@ -24,7 +24,11 @@
             "purchase_list": "采购单列表",
             "purchase_return": "采购退货"
         },
-        "Purchase": "采购",
+
+        "messages": {
+            "remind_MakeStockin": "新采购入库单：<a ng-click=\"mark($event);$root.goPage('purchase/editBill/purchase/id/__ID__');\">__BILL_ID__</a>"
+        },
+
         "purchase": "采购",
         "AppPurchase": {
             "appName": "采购模块"

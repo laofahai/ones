@@ -10,54 +10,65 @@
         return $resource(cnf.BSU + "workflow/workflowProcess/:id.json", {type: "@type"});
     }])
 
-    .service("Workflow.WorkflowAPI", ["$rootScope", "ones.dataApiFactory", "ComView", "$location", function($rootScope, dataAPI, ComView, $location){
-        this.config = {
-            subAble: true,
-            addSubAble: false,
-            viewSubAble: true
-        };
-        this.structure = {
-            id: {
-                primary: true
-            },
-            alias : {},
-            name: {},
-            workflow_file: {
-                displayName: toLang("workflowAssitFile", "", $rootScope)
-            },
-            memo: {
-                required: false,
-                inputType: "textarea"
-            }
-        };
-        this.getStructure = function(){
-            return this.structure;
-        };
-        this.api = dataAPI.getResourceInstance({
-            uri: "workflow/workflow"
-        });
+    .service("Workflow.WorkflowAPI", [
+            "$rootScope", "ones.dataApiFactory", "ComView", "$location", "$injector",
+        function($rootScope, dataAPI, ComView, $location, $injector){
 
-        this.doWorkflow = function(resource, node_id, mainrow_id) {
-            resource.doWorkflow({
-                workflow: true,
-                node_id: node_id,
-                id: mainrow_id
-            }).$promise.then(function(data){
-                if(data.type) {
-                    switch(data.type) {
-                        case "redirect":
-                            $location.url(data.location);
-                            return;
-                            break;
-                        case "message":
-                            ComView.alert(ComView.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
-                            return;
-                            break;
-                    }
+            var self = this;
+            this.scope;
+
+            this.config = {
+                subAble: true,
+                addSubAble: false,
+                viewSubAble: true
+            };
+            this.structure = {
+                id: {
+                    primary: true
+                },
+                alias : {},
+                name: {},
+                workflow_file: {
+                    displayName: toLang("workflowAssitFile", "", $rootScope)
+                },
+                memo: {
+                    required: false,
+                    inputType: "textarea"
                 }
+            };
+            this.getStructure = function(){
+                return this.structure;
+            };
+            this.api = dataAPI.getResourceInstance({
+                uri: "workflow/workflow"
             });
-        };
-    }])
+
+            this.doWorkflow = function(resource, node_id, mainrow_id) {
+                resource.doWorkflow({
+                    workflow: true,
+                    node_id: node_id,
+                    id: mainrow_id
+                }).$promise.then(function(data){
+                    if(data.type) {
+                        switch(data.type) {
+                            case "redirect":
+                                $location.url(data.location);
+                                return;
+                                break;
+                            case "message":
+                                ComView.alert(ComView.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
+                                return;
+                                break;
+                            case "remind":
+                                if(isAppLoaded("remind")) {
+                                    $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg);
+                                }
+                                return;
+                        }
+                    }
+                });
+            };
+        }])
     .service("Workflow.WorkflowNodeAPI", ["$rootScope", "ones.dataApiFactory", "$routeParams", "$q",
         function($rootScope, res, $route, $q){
             return {
