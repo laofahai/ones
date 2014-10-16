@@ -26,7 +26,7 @@
         },
 
         "messages": {
-            "remind_MakeStockin": "新采购入库单：<a ng-click=\"mark($event);$root.goPage('purchase/editBill/purchase/id/__ID__');\">__BILL_ID__</a>"
+            "remind_MakeStockin": "有新的采购<a ng-click=\"mark($event);$root.goPage('store/list/stockin')\">入库单</a>需要处理"
         },
 
         "purchase": "采购",

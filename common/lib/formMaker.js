@@ -819,7 +819,7 @@
 
                         $scope.$on("form.dataLoaded", function(){
                             var exists = $scope.$parent.$eval(fieldDefine["ng-model"]);
-                            if(undefined !== exists || false === fieldDefine.required) {
+                            if(undefined !== exists || false === fieldDefine.required || fieldDefine.multiple) {
                                 return;
                             }
                             //默认值

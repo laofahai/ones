@@ -165,7 +165,6 @@
                 remind.api.update({
                     id: id
                 }, {});
-                doQuery();
             };
 
         }])

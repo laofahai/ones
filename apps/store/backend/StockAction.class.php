@@ -23,9 +23,10 @@ class StockAction extends CommonAction {
         switch($this->_method) {
             case "post":
             case "put":
-                $_POST["managers"] = implode(",", $_POST["managers"]);
+                $_POST["managers"] = is_array($_POST["managers"]) ? implode(",", $_POST["managers"]) : $_POST["managers"];
                 break;
         }
+
     }
 
     
