@@ -22,11 +22,11 @@
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
-                .when('/:group/listAll/:module', {
+                .when('/:group/listall/:module', {
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
-                .when('/:group/listAll/:module/:extra*', {
+                .when('/:group/listall/:module/:extra*', {
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
@@ -39,11 +39,12 @@
                     templateUrl: 'common/base/views/grid.html',
                     controller : 'ComViewGridCtl'
                 })
-                //新增
+
                 .when('/:group/viewChild/:module/pid/:pid', {
                     //            templateUrl: 'views/common/grid.html',
                     controller : 'ComViewChildCtl'
                 })
+                //新增
                 .when('/:group/add/:module', {
                     templateUrl: 'common/base/views/edit.html',
                     controller : 'ComViewEditCtl'
@@ -774,7 +775,7 @@
                 service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){
                     //可跳转按钮
                     extraParams = extraParams ? "/"+extraParams : "";
-                    var available = ["add", "list", "listAll", "export", "print", "trash"];
+                    var available = ["add", "list", "listall", "export", "print", "trash"];
                     var actEnabled;
                     $scope.pageActions = [];
                     angular.forEach(actions, function(act, k){
@@ -786,7 +787,7 @@
                         }
                         var action = k;
                         if(isBill && k === "add") {
-                            action = "addBill";
+                            action = "addbill";
                         }
                         actEnabled = k+"Able";
                         if(model && model[actEnabled] === false) {
@@ -830,6 +831,7 @@
                             $scope.pageActions.push(act);
                         });
                     }
+
                 };
                 service.makeDefaultPageAction = function($scope, module, actions, model){
 

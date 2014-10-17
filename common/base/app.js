@@ -237,7 +237,7 @@
                      * 两种URL模式： 普通模式 app/module/action
                      *             URL友好模式 app/action(list|add|edit)/module
                      * */
-                    var actionList = ['list', 'listAll', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print', 'trash'];
+                    var actionList = ['list', 'listall', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print', 'trash'];
                     var fullPath, app, module, action;
                     fullPath = $location.path().split("/").slice(1, 4);
                     if (!fullPath[1]) {
@@ -246,7 +246,7 @@
                     app = fullPath[0];
                     fullPath[1] = fullPath[1].replace(/Bill/ig, ''); //将addBill, editBill转换为普通add,edit
                     //友好模式
-                    if (actionList.indexOf(fullPath[1]) >= 0) {
+                    if (actionList.indexOf(fullPath[1].toLowerCase()) >= 0) {
                         module = fullPath[2].ucfirst();
                         action = fullPath[1];
                     } else {
