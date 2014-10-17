@@ -16,20 +16,23 @@ class RemindAction extends CommonAction {
         }
 
         if(!$_GET["queryAll"]) {
-            $map["status"] = 0;
+            $map["num"] =  array("GT", 0);
         }
     }
 
     public function insert() {
         $model = D("Remind");
         $uids = $model->getRemindToUsers($_POST["remindTo"]);
-        $model->remindTo($uids, $_POST["msg"]);
+        $model->remindTo($uids, $_POST["msg"], $_POST["type"]);
     }
 
     public function update() {
-        $map = array("id" => abs(intval($_GET["id"])));
+        $map = array(
+            "id" => abs(intval($_GET["id"])),
+            "user_id" => getCurrentUid()
+        );
         D("Remind")->where($map)->save(array(
-            "status" => 1
+            "num" => 0
         ));
     }
 

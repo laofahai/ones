@@ -61,9 +61,10 @@
                                 break;
                             case "remind":
                                 if(isAppLoaded("remind")) {
-                                    $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg);
+                                    $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg, data.alias);
                                 }
                                 return;
+                                break;
                         }
                     }
                 });

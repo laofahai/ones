@@ -203,6 +203,8 @@ function HTMLDecode(text)
  * */
 var toLang = function(key, section) {
 
+    key = key.toLowerCase();
+
     if(section && typeof(section) === "string") {
         key = "lang."+section+"."+key;
     } else if("lang" !== key.split(".")[0]) {

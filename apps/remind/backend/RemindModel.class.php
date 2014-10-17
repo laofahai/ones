@@ -36,17 +36,29 @@ class RemindModel extends CommonModel {
         return $uids;
     }
 
-    public function remindTo($uids, $msg) {
+    public function remindTo($uids, $msg, $type) {
         if(!$uids) {
             return;
         }
+
         foreach($uids as $u) {
-            $this->add(array(
+            $map = array(
                 "user_id" => $u,
-                "content" => $msg,
-                "dateline"=> CTS,
-                "status"  => 0
-            ));
+                "type"    => $type
+            );
+
+            $tmp = $this->where($map)->find();
+            if($tmp) {
+                $this->where($map)->setInc("num");
+            } else {
+                $this->add(array(
+                    "user_id" => $u,
+                    "type"    => $type,
+                    "content" => $msg,
+                    "dateline"=> CTS,
+                    "num"     => 1
+                ));
+            }
         }
     }
 

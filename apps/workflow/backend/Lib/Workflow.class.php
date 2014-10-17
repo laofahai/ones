@@ -394,7 +394,7 @@ class Workflow {
         }
         
         if($hasProcessed) {
-            //$nextNodeObj->error("has_processed");
+            $nextNodeObj->error("has_processed");
         }
         
         if(!$this->checkCondition($mainRowid, $nextNodeObj->currentNode)) {
@@ -493,23 +493,26 @@ class Workflow {
             $msg = lang("messages.remind_".$curNode["execute_file"]);
             preg_match_all("/\_\_([a-zA-Z\_]+)\_\_/", $msg, $vars);
 
-            $model = D($this->currentWorkflow["workflow_file"]);
-            $sourceData = $model->find($this->mainrowId);
-            $search = array();
-            $replace = array();
-            foreach($vars[1] as $k=> $v) {
-                $v = strtolower($v);
-                if(isset($sourceData[$v])) {
-                    $search[] = $vars[0][$k];
-                    $replace[] = $sourceData[$v];
+            if($vars[1]) {
+                $model = D($this->currentWorkflow["workflow_file"]);
+                $sourceData = $model->find($this->mainrowId);
+                $search = array();
+                $replace = array();
+                foreach($vars[1] as $k=> $v) {
+                    $v = strtolower($v);
+                    if(isset($sourceData[$v])) {
+                        $search[] = $vars[0][$k];
+                        $replace[] = $sourceData[$v];
+                    }
                 }
-            }
 
-            $msg = str_replace($search, $replace, $msg);
+                $msg = str_replace($search, $replace, $msg);
+            }
 
             $this->response(array(
                 "type" => "remind",
-                "msg"  => $msg
+                "msg"  => $msg,
+                "alias"=> sprintf("workflow.%s.%s", $this->currentWorkflow["alias"], $curNode["execute_file"])
             ));
         }
 

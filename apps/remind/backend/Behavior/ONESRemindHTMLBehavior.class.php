@@ -18,7 +18,10 @@ class ONESRemindHTMLBehavior extends Behavior {
             </a>
 
             <ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close header-reminds-list">
-                <li ng-repeat="rem in reminds" data-id="{{rem.id}}" template="rem.content" compile-data></li>
+                <li ng-repeat="rem in reminds">
+                    <span class="pull-left" template="rem.content" data-id="{{rem.id}}" compile-data></span>
+                    <label class="pull-right badge badge-info">+{{rem.num}}</label>
+                </li>
                 <li ng-bind="'lang.messages.no_unread_notification'|lang" ng-show="reminds.length<=0"></li>
             </ul>
         </li>

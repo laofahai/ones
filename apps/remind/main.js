@@ -45,8 +45,9 @@
                 return this.structure;
             };
 
-            this.showRemindModal = function(scope, content) {
+            this.showRemindModal = function(scope, content, alias) {
                 self.remindContent = content;
+                self.alias = alias;
                 self.modal = $modal({
                     scope: scope,
                     template: appView("modal.html", "remind")
@@ -56,7 +57,8 @@
             this.newRemind = function(remindTo) {
                 self.api.save({
                     remindTo: remindTo,
-                    msg: self.remindContent
+                    msg: self.remindContent,
+                    type: self.alias || "null"
                 }).$promise.then(function(data){
 
                 });
@@ -139,6 +141,9 @@
                 remind.api.query({
                     user_id: ones.userInfo.id
                 }).$promise.then(function(data){
+                    if(data === $scope.reminds) {
+                        return;
+                    }
                     $scope.reminds = data;
                 });
 
@@ -158,7 +163,7 @@
                 $scope.$apply(function(){
                     doQuery();
                 });
-            }, 60000);
+            }, 100000);
 
             $scope.mark = function(evt) {
                 var id = $(evt.target).parent().data("id");

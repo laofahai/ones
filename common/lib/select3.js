@@ -322,10 +322,7 @@
                                     modalHtml = ones.caches.getItem(cacheKey);
                                     $("#dynamicEditContainer").html($compile(modalHtml)(parentScope));
                                 });
-                            }, 100);
-
-//                            console.log(self.currentConfig["data-row-index"]);
-//                            console.log(parentScope[self.currentConfig.dataName]);
+                            }, 300);
 
                             parentScope.doDynamicAdd = function(){
 

@@ -612,5 +612,6 @@ if(false === function_exists('lcfirst'))
 function combineI18n($runtimeObj, $lang = "zh-cn") {
     $data = $runtimeObj->preloadI18n($lang);
     $data = $runtimeObj->combineI18n(false, $data, $lang);
+
     return $data;
 }
