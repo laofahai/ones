@@ -103,7 +103,6 @@
 
         }])
         .run(["$rootScope", "$http", "$injector", "$location", function($rootScope, $http, $injector, $location) {
-
             ones.defaultCacheLevel = ones.BaseConf.DEBUG ? 0 : 1;
 
             $http.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
@@ -124,22 +123,6 @@
                 });
             } catch (err) {}
 
-            /**
-             * 加载语言包
-             * */
-            ones.i18n = ones.caches.getItem("ones.i18n");
-            if((!ones.i18n || isEmptyObject(ones.i18n)) && !ones.installing) {
-                /**
-                 * i18n
-                 * */
-                $http.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
-                    ones.caches.setItem("ones.i18n", data, 1);
-                    ones.i18n = ones.caches.getItem("ones.i18n");
-                    if(!ones.i18n) {
-                        throw("can't load i18n package.");
-                    }
-                });
-            }
         }])
     ;
 })();
