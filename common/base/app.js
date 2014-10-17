@@ -261,20 +261,25 @@
                     $scope.currentPage = {
                         lang: {}
                     };
-                    var urlmap = l("urlMap");
-                    if (urlmap[app]) {
-                        $scope.currentPage.lang.app = urlmap[app].name;
-                        if (urlmap[app].modules[module]) {
-                            $scope.currentPage.lang.module = urlmap[app].modules[module].name;
-                            if (urlmap[app].modules[module].actions[action]) {
-                                $scope.currentPage.lang.action = urlmap[app].modules[module].actions[action] instanceof Array
-                                    ? urlmap[app].modules[module].actions[action][0]
-                                    : urlmap[app].modules[module].actions[action];
-                                $scope.currentPage.lang.actionDesc = urlmap[app].modules[module].actions[action] instanceof Array
-                                    ? urlmap[app].modules[module].actions[action][1] : "";
+
+                    var urlmap, appMapSection, moduleMapSection, actionMapSection;
+                    urlmap = l("urlMap");
+                    appMapSection = l("urlMap."+app);
+                    if (appMapSection) {
+                        $scope.currentPage.lang.app = appMapSection.name;
+                        moduleMapSection = l(sprintf("urlMap.%s.modules.%s", app, module));
+                        if (moduleMapSection) {
+                            $scope.currentPage.lang.module = moduleMapSection.name;
+                            actionMapSection = l(sprintf("urlMap.%s.modules.%s.actions.%s", app, module, action));
+                            if (actionMapSection) {
+                                $scope.currentPage.lang.action = actionMapSection instanceof Array
+                                    ? actionMapSection[0]
+                                    : actionMapSection[action];
+                                $scope.currentPage.lang.actionDesc = actionMapSection instanceof Array
+                                    ? actionMapSection[1] : "";
                             }
                             if (!$scope.currentPage.lang.action) {
-                                $scope.currentPage.lang.action = urlmap[app].modules[module].name;
+                                $scope.currentPage.lang.action = moduleMapSection.name;
                                 $scope.currentPage.lang.actionDesc = l("lang.actions."+action);;
                             }
                         }

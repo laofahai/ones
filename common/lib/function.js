@@ -251,6 +251,7 @@ var toLang = function(key, section) {
  * 获取方式: lang.actions.add
  * */
 function l(k, langObject) {
+    k = k.toLowerCase();
     if(!langObject) {
         if(!ones.i18n || isEmptyObject(ones.i18n)) {
             ones.i18n = ones.caches.getItem("ones.i18n");

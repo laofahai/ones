@@ -11,23 +11,23 @@
                 },
                 "FinanceAccount": {
                     "name": "财务账户",
-                        "actions": {
+                    "actions": {
                         "add": "",
-                            "list": ""
+                        "list": ""
                     }
                 },
                 "FinancePayPlan": {
                     "name": "财务支出计划",
-                        "actions": {
+                    "actions": {
                         "add": "",
-                            "list": ""
+                        "list": ""
                     }
                 },
                 "FinanceReceivePlan": {
                     "name": "财务收入计划",
-                        "actions": {
+                    "actions": {
                         "add": "",
-                            "list": ""
+                        "list": ""
                     }
                 }
             }
