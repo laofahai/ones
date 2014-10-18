@@ -284,7 +284,6 @@
                 $routeParams.group = "sale";
                 $routeParams.module = "orders";
 
-                ComView.makeDefaultPageAction($scope, "sale/orders");
 
 
                 $scope.workflowAble = true;
@@ -359,6 +358,8 @@
                     model: OrdersModel,
                     resource: OrdersRes
                 };
+
+                ComView.makeGridSelectedActions($scope, OrdersModel, OrdersRes, "sale", "orders");
 //                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
 //                $scope.format = $scope.formats[0];
 
@@ -369,7 +370,6 @@
                 $routeParams.group = "sale";
                 $routeParams.module = "returns";
 
-                ComView.makeDefaultPageAction($scope, "sale/returns");
 
                 $scope.workflowAble = true;
                 if(!$scope.formMetaData) {
@@ -414,8 +414,8 @@
 
 
                 $scope.maxDate = new Date();
-//                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
-//                $scope.format = $scope.formats[0];
+
+                ComView.makeGridSelectedActions($scope, ReturnsModel, ReturnsRes, "sale", "returns");
 
             }])
     ;

@@ -675,7 +675,6 @@
                 $routeParams.group = "store";
                 $routeParams.module = "stockin";
 
-                ComView.makeDefaultPageAction($scope, "store/stockin", null, StockinModel);
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
@@ -707,6 +706,8 @@
                     };
                 }
 
+                ComView.makeGridSelectedActions($scope, StockinModel, StockinRes, "store", "stockin");
+
 
             }])
         .controller("StockoutEditCtl", ["$scope", "StockoutRes", "StockoutModel", "ComView", "$routeParams",
@@ -715,7 +716,6 @@
                 $routeParams.group = "store";
                 $routeParams.module = "stockout";
 
-                ComView.makeDefaultPageAction($scope, "store/stockout", [], model);
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
 
@@ -745,6 +745,8 @@
                         dateline: new Date()
                     };
                 }
+
+                ComView.makeGridSelectedActions($scope, StockinModel, StockinRes, "store", "stockout");
             }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "ones.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {

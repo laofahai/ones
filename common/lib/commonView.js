@@ -638,7 +638,6 @@
                                 workflowAPI.doWorkflow(res, node_id, mainrow_id);
                             } else {
                                 var selectedItems = $scope.gridSelected || [];
-                                //                        console.log(arguments);
                                 if(!selectedItems.length || $(event.target).parent().hasClass("disabled")) {
                                     return false;
                                 }

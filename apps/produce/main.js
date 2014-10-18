@@ -534,6 +534,8 @@
                     resource: res
                 };
 
+                ComView.makeGridSelectedActions($scope, model, res, "produce", "producePlan");
+
             }])
 
         .controller("ProductTplDetailCtl", ["$scope", "ProductTplDetailRes", "ProductTplDetailModel", "ComView", "$routeParams",
@@ -594,7 +596,7 @@
                 /**
                  * 扩展选择操作选项
                  * */
-                ComView.makeGridSelectedActions($scope, model, res, "Produce", "doCraft");
+                ComView.makeGridSelectedActions($scope, model, res, "produce", "doCraft");
 
                 ComView.displayGrid($scope, model, res, {
                     queryExtraParams: {
