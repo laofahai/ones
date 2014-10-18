@@ -145,7 +145,7 @@
                         displayName: "ID"
                     },
                     display_name: {
-                        displayName: i18n.displayName
+                        displayName: l('i18n.displayName')
                     },
                     field_name: {
                         displayName: i18n.alias,
@@ -168,7 +168,7 @@
                     }
                 };
 
-                angular.forEach(i18n.inputTypes, function(type, k){
+                angular.forEach(l('lang.inputTypes'), function(type, k){
                     structure.input_type.dataSource.push({
                         id: k,
                         name: toLang(k, "inputTypes", $rootScope)
@@ -196,15 +196,15 @@
                     data: {},
                     pinyin: {
                         required: false,
-                        displayName: i18n.firstChar,
+                        displayName: l('lang.firstChar'),
                         onlyInEdit: true
                     },
                     model_name: {
-                        displayName: i18n.modelName,
+                        displayName: l('lang.modelName'),
                         hideInForm: true
                     },
                     display_name: {
-                        displayName: i18n.displayName,
+                        displayName: l('lang.displayName'),
                         hideInForm: true
                     },
                     field_id: {

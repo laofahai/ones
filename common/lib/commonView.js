@@ -94,7 +94,7 @@
             actionClasses : {
                 "add" : "primary",
                 "list": "default",
-                "listAll": "default",
+                "listall": "default",
                 "export": "success"
             }
         })
@@ -227,7 +227,7 @@
                 }
 
                 //加入查询全部条件
-                if($rootScope.currentPage.action === "listAll") {
+                if($rootScope.currentPage.action === "listall") {
                     opts.queryExtraParams.queryAll = true;
                 }
 
@@ -431,7 +431,10 @@
                     opts.resource = resource;
 
                     //非DEBUG模式下模型缓存
-                    var enableModelCache = (!ones.DEBUG && modelName && model.config.modelCacheAble !== false);
+                    var enableModelCache = true;
+                    if(!ones.DEBUG && modelName && model.config.modelCacheAble !== false) {
+                        enableModelCache = false;
+                    }
                     if(enableModelCache) {
                         var cacheKey = "ones.caches.structure."+modelName;
                         opts.columnDefs = columnDefs = ones.caches.getItem(cacheKey) || [];

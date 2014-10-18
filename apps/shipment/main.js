@@ -85,7 +85,7 @@
 
 
                         total_num: {
-                            displayName: i18n.totalNum,
+                            displayName: l('lang.totalNum'),
                             required: false
                         }
                     };

@@ -119,7 +119,7 @@
                     },
 
                     pinyin: {
-                        displayName: i18n.firstChar,
+                        displayName: l('lang.firstChar'),
                         required: false,
                         onlyInEdit: true
                     },

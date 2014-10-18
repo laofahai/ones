@@ -360,7 +360,7 @@
                     },
                     sponsor: {},
                     stock_manager_name: {
-                        displayName: i18n.stockManager
+                        displayName: l('lang.stockManager')
                     }
                 };
             };
@@ -423,7 +423,7 @@
                             billAble: false
                         },
                         store_num: {
-                            displayName: i18n.storeNum,
+                            displayName: l('lang.storeNum'),
                             editAble:false,
                             min: -9999,
                             listAble: false
@@ -438,7 +438,7 @@
                         num: {
                             inputType: "number",
                             totalAble: true,
-                            displayName: l("this_time_in_stock")
+                            displayName: l("lang.this_time_in_stock")
                         },
                         ined: {
                             inputType: "static",
@@ -622,7 +622,7 @@
                             billAble: false
                         },
                         store_num: {
-                            displayName: i18n.storeNum,
+                            displayName: l("lang.storeNum"),
                             editAble:false,
                             min: -9999,
                             listAble: false

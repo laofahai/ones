@@ -99,7 +99,7 @@
                         dataSource: "RelationshipCompanyRes"
                     },
                     total_num: {
-                        displayName: i18n.totalNum,
+                        displayName: l('lang.totalNum'),
                         hideInForm: true
                     },
                     total_amount_real: {

@@ -277,13 +277,13 @@
                             switch(type) {
                                 case "between":
                                     FieldsDefine["_filter_start_"+item.field] = {
-                                        displayName: toLang(item.field, "", $rootScope) + toLang("start", "", $rootScope),
+                                        displayName: l("lang"+item.field) + l("lang.start"),
                                         inputType: item.inputType || "number",
                                         value: item.defaultData[0] || 0,
                                         required: false
                                     };
                                     FieldsDefine["_filter_end_"+item.field] = {
-                                        displayName: toLang(item.field, "", $rootScope) + toLang("end", "", $rootScope),
+                                        displayName: l("lang"+item.field) + l("lang.end"),
                                         inputType: item.inputType || "number",
                                         value: item.defaultData[1] || 0,
                                         required: false
@@ -295,7 +295,7 @@
                                     break;
                                 case "workflow":
                                     FieldsDefine["_filter_workflow_node_"] = {
-                                        displayName: toLang("workflow", "", $rootScope),
+                                        displayName: l("lang.workflow"),
                                         inputType: "select",
                                         multiple: true,
                                         dataSource: "Workflow.WorkflowNodeAPI",
