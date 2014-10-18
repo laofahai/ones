@@ -239,11 +239,11 @@
                         hideInForm: true
                     },
                     unit_price: {
-                        cellFilter: "currency:'￥'",
+                        cellFilter: "toCurrency:'￥'",
                         inputType: "number"
                     },
                     cost: {
-                        cellFilter: "currency:'￥'",
+                        cellFilter: "toCurrency:'￥'",
                         inputType: "number"
                     },
                     category_name: {

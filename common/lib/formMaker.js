@@ -969,8 +969,8 @@
                             '<thead><tr><th>#</th><th></th>%(headHTML)s</tr></thead>'+
                             '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>',
                         'bills/fields/rowHead.html': '<th>%(i)s</th><td class="center"><label class="rowHead">'+
-                            '<i class="icon icon-plus" ng-click="billAddRow($event.target)"></i> '+
-                            '<i class="icon icon-trash-o" ng-click="billRemoveRow($event.target)"></i> '+
+                            '<i class="icon icon-plus" ng-click="billAddRow($event)"></i> '+
+                            '<i class="icon icon-trash-o" ng-click="billRemoveRow($event)"></i> '+
                             '</label></td>',
                         'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" title="{{%(bind)s}}" %(event)s>%(label)s</label></td>',
                         'bills/fields/typeaheadList.html': '<ul class="typeAheadList editAble" />'+
@@ -1113,7 +1113,7 @@
                                 field: field,
                                 type: item.inputType,
                                 tdClass: false !== item.editAble ? "tdEditAble" : "",
-                                event: false !== item.editAble ? 'ng-click="billFieldEdit($event.target)"' : "",
+                                event: false !== item.editAble ? 'ng-click="billFieldEdit($event)"' : "",
                                 label: label,
                                 bind: labelBind
                             }));
@@ -1128,14 +1128,16 @@
 
                         var self = this;
                         var parentScope = self.parentScope = scope.$parent;
-                        parentScope.billFieldEdit = function(ele){
+                        parentScope.billFieldEdit = function($evt){
+                            var ele = $evt.target;
+
                             var context = getLabelContext(ele);
 
                             //已经存在input
                             if(context.td.find(".editAble").length) {
                                 context.td.find(".editAble").removeClass("hide").find("input");
                                 context.inputAble.trigger("click").focus();
-                                return;
+                                return false;
                             }
                             var struct = self.opts.fieldsDefine[context.field];
                             struct.class="width-100 editAble";
@@ -1178,9 +1180,10 @@
                             }
 
                             //                    console.log(struct["ui-event"]);
-
+//
                             var html = self.fm.maker.factory(context, struct, scope);
                             html = self.compile(html)(parentScope);
+
                             context.td.append(html);
                             $timeout(function(){
                                 context = getInputContext(ele);
@@ -1193,6 +1196,7 @@
                                     }
                                 });
                             }, 200);
+                            return true;
                         };
 
                         //结束编辑 ele 应为td子元素
@@ -1228,7 +1232,8 @@
                         };
 
                         //增删行
-                        parentScope.billAddRow = function(element, isTbody) {
+                        parentScope.billAddRow = function($evt, isTbody) {
+                            var element = $evt.target;
                             var html = self.makeRow(self.opts.fieldsDefine, self.maxTrId+1);
                             html = self.compile(html)(self.parentScope);
                             if(true === isTbody) {
@@ -1238,7 +1243,8 @@
                             }
                             self.reIndexTr();
                         };
-                        parentScope.billRemoveRow = function(element) {
+                        parentScope.billRemoveRow = function($evt) {
+                            var element = $evt.target;
                             if($("#billTable tbody tr").length < 2) {
                                 alert("At least 1 rows");
                                 return;

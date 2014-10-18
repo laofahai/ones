@@ -59,7 +59,7 @@
             };
         })
         .filter("idFormat", function(){
-            return function(id) {
+            return function(id, pre) {
                 return "#"+id;
             };
         })
@@ -143,6 +143,11 @@
                 var lang = text == 1 ? "yes" : "no";
                 return toLang(lang, "", $rootScope);
             };
+        }])
+        .filter("toCurrency", [function($rootScope){
+            return function(text) {
+                return "￥"+text;
+            }
         }])
         .filter("toDateObject", [function(){
             return function(timestamp){

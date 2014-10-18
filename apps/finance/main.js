@@ -49,7 +49,7 @@
                         account: {},
                         record_type: {},
                         amount: {
-                            cellFilter: "currency:'￥'"
+                            cellFilter: "toCurrency:'￥'"
                         },
                         dateline: {
                             cellFilter: "dateFormat:0"
@@ -69,7 +69,7 @@
                         name: {},
                         balance: {
                             inputType: "number",
-                            cellFilter: "currency:'￥'"
+                            cellFilter: "toCurrency:'￥'"
                         },
                         listorder: {
                             value: 99

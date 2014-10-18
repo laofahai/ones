@@ -35,12 +35,12 @@
         },
         "price": {
             "inputType": "number",
-            "cellFilter": "currency:'￥'",
+            "cellFilter": "toCurrency:'￥'",
             "value": 0.00
         },
         "cost": {
             "inputType": "number",
-            "cellFilter": "currency:'￥'",
+            "cellFilter": "toCurrency:'￥'",
             "value": 0.00,
             "hiddenWhen480": true
         },

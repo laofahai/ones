@@ -103,7 +103,7 @@
                         hideInForm: true
                     },
                     total_amount_real: {
-                        cellFilter: "currency:'￥'"
+                        cellFilter: "toCurrency:'￥'"
                     },
                     dateline: {
                         cellFilter: "dateFormat:0",
@@ -162,12 +162,12 @@
                         unit_price: {
                             inputType: "number",
                             "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:'￥'",
+                            cellFilter: "toCurrency:'￥'",
                             printAble:true
                         },
                         amount: {
                             inputType: "number",
-                            cellFilter: "currency:'￥'",
+                            cellFilter: "toCurrency:'￥'",
                             totalAble: true,
                             printAble:true
                         },
@@ -252,11 +252,11 @@
                         unit_price: {
                             inputType: "number",
                             "ui-event": "{blur: 'afterUnitPriceBlur($event)'}",
-                            cellFilter: "currency:'￥'"
+                            cellFilter: "toCurrency:'￥'"
                         },
                         amount: {
                             inputType: "number",
-                            cellFilter: "currency:'￥'",
+                            cellFilter: "toCurrency:'￥'",
                             totalAble: true
                         },
                         memo: {}

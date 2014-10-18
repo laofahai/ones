@@ -790,7 +790,7 @@
                         }
                         var action = k;
                         if(isBill && k === "add") {
-                            action = "addbill";
+                            action = "addBill";
                         }
                         actEnabled = k+"Able";
                         if(model && model[actEnabled] === false) {

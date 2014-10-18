@@ -41,12 +41,12 @@
 
                     if(isAppLoaded("sale")) {
                         this.structure.sale_num = {};
-                        this.structure.sale_amount = {cellFilter: "currency:'￥'"};
+                        this.structure.sale_amount = {cellFilter: "toCurrency:'￥'"};
                     }
 
                     if(isAppLoaded("purchase")) {
                         this.structure.purchase_num = {};
-                        this.structure.purchase_amount = {cellFilter: "currency:'￥'"};
+                        this.structure.purchase_amount = {cellFilter: "toCurrency:'￥'"};
                     }
 
                     if(isAppLoaded("produce")) {
