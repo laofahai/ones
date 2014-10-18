@@ -432,7 +432,7 @@
 
                     //非DEBUG模式下模型缓存
                     var enableModelCache = true;
-                    if(!ones.DEBUG && modelName && model.config.modelCacheAble !== false) {
+                    if(!ones.DEBUG || modelName || model.config.modelCacheAble !== false) {
                         enableModelCache = false;
                     }
                     if(enableModelCache) {

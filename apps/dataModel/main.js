@@ -145,7 +145,7 @@
                         displayName: "ID"
                     },
                     display_name: {
-                        displayName: l('i18n.displayName')
+                        displayName: l('lang.displayName')
                     },
                     field_name: {
                         displayName: i18n.alias,
