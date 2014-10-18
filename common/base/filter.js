@@ -146,7 +146,7 @@
         }])
         .filter("toCurrency", [function($rootScope){
             return function(text) {
-                return "￥"+text;
+                return text ? "￥"+text : "";
             }
         }])
         .filter("toDateObject", [function(){
