@@ -467,6 +467,10 @@ String.prototype.ucfirst = function() {
         // second being the rest of the word.
         var parts = x[i].match(/(\w)(\w*)/);
 
+        if(!parts) {
+            continue;
+        }
+
         // Put it back together but uppercase the first letter and
         // lowercase the rest of the word.
         x[i] = parts[1].toUpperCase() + parts[2];

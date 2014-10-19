@@ -123,8 +123,7 @@
         .filter("toImg", [function(){
             return function(src) {
                 var allow = ["png", "jpg", "jpeg", "gif"];
-                var ext = src.split(".").pop().toLowerCase();
-                if(!src || allow.indexOf(ext) < 0) {
+                if(!src || allow.indexOf(src.split(".").pop().toLowerCase()) < 0) {
                     return;
                 }
                 return sprintf('<img src="%s" class="img-responsive" />', ones.basePath+src);

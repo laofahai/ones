@@ -526,10 +526,7 @@
                             'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
                             'ng-options="%(key)s.label as %(key)s.label for %(key)s in %(data)s($viewValue)" %(attr)s '+
                             'data-html="true" bs-typeahead />',
-                        'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>',
-                        'fields/file': '<div class="fileUploadBtn btn btn-primary btn-minier" ng-click="showUploadModal()" ng-bind="\'lang.actions.upload\'|lang"></div>' +
-                            '<div ng-bind="%(model)s"></div>' +
-                            '<input type="hidden" ng-model="%(model)s" />'
+                        'fields/craft': '<a class="craftSetLink" ng-bind="%(label)s" ng-click="%(action)s"></a>'
                     };
                     this.maker = new service.fieldsMakerFactory(this, this.opts);
                 };
@@ -674,52 +671,6 @@
                     //多选框
                     _checkbox: function(name, fieldDefine) {
 
-                    },
-                    //文件上传
-                    _file: function(name, fieldDefine, $scope) {
-                        var parentScope = $scope.$parent;
-                        parentScope.showUploadModal = function(){
-                            var modalInstance = $injector.get("$modal")({
-                                template: "common/base/views/uploader.html",
-                                scope: parentScope
-                            });
-                        };
-
-                        uploadermultiple = "";
-                        if(fieldDefine.multiple) {
-                            parentScope.uploaderMultiple = "multiple";
-                        }
-
-                        parentScope.uploaderAccept = "*";
-                        if(fieldDefine.accept) {
-                            parentScope.uploaderAccept = fieldDefine.accept;
-                        }
-
-                        var queueLimit = 1;
-                        if(fieldDefine.multiple > 0) {
-                            queueLimit = parseInt(fieldDefine.multiple);
-                        }
-                        parentScope.uploaderQueueLimit = queueLimit;
-
-                        var uploaderObj = $injector.get("FileUploader");
-                        var uploaderInstance = parentScope.uploader = new uploaderObj({
-                            url: ONESConfig.BSU+"api/uploader",
-                            queueLimit: queueLimit
-                        });
-
-
-                        var uploadedFiles = [];
-                        uploaderInstance.onCompleteItem = function(i, msg, code){
-                            if(queueLimit < 2) {}
-                            if(code == 200) {
-                                uploadedFiles.push(msg.uploadPath);
-                            }
-                            $parse(fieldDefine["ng-model"]).assign(parentScope, uploadedFiles.join("\n"));
-                        }
-
-                        return sprintf(this.$parent.templates["fields/file"], {
-                            model: fieldDefine["ng-model"]
-                        });
                     },
                     _static: function(name, fieldDefine) {
                         return "";
