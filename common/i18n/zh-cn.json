@@ -177,7 +177,7 @@
         "home.apps": "%s应用",
         "home.types": "%s基本类型",
         "home.config": "%s字段配置",
-        "home.clearcache": "清除缓存",
+        "home.clearcache.read": "清除缓存",
 
         "dashboard": "控制面板",
 

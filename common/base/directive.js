@@ -18,9 +18,9 @@
                         '<div class="widget-header widget-header-flat"><h5>%(title)s</h5></div>' +
                         '<div class="widget-body"><div class="widget-main no-padding">%(inner)s</div></div>' +
                         '</div>';
-                    var titles = l('lang.widgetTitles');
+                    var title = l('lang.widgetTitles.'+attrs.wtitle);
                     element.html(sprintf(template, {
-                        title: (attrs.wtitle in titles) ? titles[attrs.wtitle] : attrs.wtitle,
+                        title: title,
                         inner: element.html(),
                         class: attrs.wclass
                     }));

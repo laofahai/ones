@@ -32,7 +32,7 @@
         "AppServices": {
             "appName": "ONES基础服务模块"
         },
-        "services.databackup": "数据备份",
-        "services.systemupdate": "系统升级"
+        "services.databackup.read": "数据备份",
+        "services.systemupdate.read": "系统升级"
     }
 }

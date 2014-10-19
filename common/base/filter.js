@@ -76,9 +76,16 @@
         .filter("lang", [function(){
             return function(str, section, def) {
                 if(!str) {
-                    return;
+                    return def;
                 }
-                return toLang(str, section) || (def ? def : str);
+
+                var rs = toLang(str, section);
+
+                if(str.slice(0-rs.length).toLowerCase() === rs) {
+                    return def ? def : rs;
+                } else {
+                    return rs;
+                }
             };
         }])
         .filter("toError", ["$rootScope", function($rootScope){

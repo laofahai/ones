@@ -149,7 +149,7 @@
                     },
                     field_name: {
                         displayName: i18n.alias,
-                        helpText: "field_alias"
+                        helpText: l('lang.helpTexts.filed_alias')
                     },
                     input_type: {
                         inputType: "select",

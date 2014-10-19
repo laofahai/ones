@@ -366,25 +366,23 @@ var toLower = function(str) {
  */
 var getAuthNodeName = function(node, $rootScope) {
 
-    var source = node;
-    if(typeof(l("lang."+node)) === "string") {
-        return l("lang."+node);
+    var source = angular.copy(node);
+
+    var nodesArray = node.split(".");
+    var action = nodesArray[2];
+    var fuzzyNode = sprintf("%s.%s", nodesArray[0], nodesArray[1]);
+
+    //模糊匹配模式
+    var tmp = l("lang."+fuzzyNode);
+    if(typeof(tmp) === "string" && tmp !== action && tmp.indexOf("%s") > -1) {
+        return sprintf(tmp, l("lang.actions."+action));
     }
 
-    node = node.split(".");
-    var action = node[2];
-
-    node = sprintf("%s.%s", node[0], node[1]);
-
-    var tmp = l("lang."+node+"."+action);
-    if(typeof(tmp) === "string") {
+    //全匹配模式
+    tmp = l("lang."+node);
+    if(typeof(tmp) === "string" && tmp !== node.split(".").pop()) {
         return tmp;
     }
-
-    if(l("lang."+node)) {
-        return sprintf(l("lang."+node), l("lang.actions."+action));
-    }
-
     return source;
 
 }

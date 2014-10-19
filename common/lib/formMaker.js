@@ -1100,7 +1100,7 @@
                                 context.inputAble.trigger("click").focus();
                                 return false;
                             }
-                            var struct = self.opts.fieldsDefine[context.field];
+                            var struct = self.opts.fieldsDefine[context.field] || {};
                             struct.class="width-100 editAble";
                             struct.remoteDataField = sprintf("%s_%d", context.field, context.trid);
                             struct["ng-model"] = sprintf("%s[%d].%s", self.opts.dataName, context.trid, context.field);
