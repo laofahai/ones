@@ -9,7 +9,8 @@
             "ones.configModule",
             "ones.common.filters",
             "ones.commonView",
-            "ones.formMaker"
+            "ones.formMaker",
+            "ones.pluginsModule"
         ])
         .config(["$routeProvider", function($route){
             $route

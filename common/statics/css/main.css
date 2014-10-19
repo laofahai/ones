@@ -75,7 +75,7 @@ commonform {
 }
 .workflowBillContainer {
     border-color:#87b87f;
-    box-shadow:0 1px 3px rgb(135, 184, 127);
+    box-shadow:0 1px 5px rgb(135, 184, 127);
 }
 .billContainer .form-control {
     height:auto !important;
