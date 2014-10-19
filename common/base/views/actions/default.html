@@ -56,7 +56,7 @@
         </div>
 
         <!--//workflow in detail page-->
-        <div class="actionsBtnRight btn-group" ng-show="workflowInBill.length>0">
+        <div class="actionsBtnRight btn-group" ng-show="workflowInBill.length>0 && !isWorkflowing">
             <button class="btn btn-sm disabled">{{'lang.workflow'|lang}}:</button>
             <button class="btn btn-sm btn-{{w.btn_class||'success'}}"
                     ng-repeat="w in workflowInBill track by $index"

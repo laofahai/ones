@@ -64,7 +64,6 @@ class StockinAction extends CommonAction {
                 $v["num"] = $v["num"] - $v["ined"];
                 $rowData[$v["id"]] = $v;
             }
-//        array_flip(array_flip($modelIds));
 
             $params = array(
                 $rowData, $modelIds

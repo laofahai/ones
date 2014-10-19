@@ -454,6 +454,18 @@
                                     parentScope.doSubmit = parentScope.doBillSubmit;
                                 }
 
+                                var doMakeBillHTML = function($scope, config, parentScope){
+
+                                    //标记工作流状态
+                                    if($location.url().indexOf("/doWorkflow/") === 0 && $routeParams.nodeId) {
+                                        parentScope.isWorkflowing = true;
+                                        config.isWorkflowing = true;
+                                    }
+
+                                    var b = new FormMaker.makeBill($scope, config);
+                                    iElement.append($compile(b.makeHTML())(parentScope));
+                                }
+
                                 $scope.$on("commonBill.ready", function(){
                                     if (config.isEdit) {
                                         $scope.$on("bill.dataLoaded", function(evt, data) {
@@ -475,13 +487,10 @@
                                                 }
                                             });
                                             parentScope.formMetaData = data;
-                                            var b = new FormMaker.makeBill($scope, config);
-
-                                            iElement.append($compile(b.makeHTML())(parentScope));
+                                            doMakeBillHTML($scope, config, parentScope);
                                         });
                                     } else {
-                                        var b = new FormMaker.makeBill($scope, config);
-                                        iElement.append($compile(b.makeHTML())(parentScope));
+                                        doMakeBillHTML($scope, config, parentScope);
                                     }
                                 });
 
