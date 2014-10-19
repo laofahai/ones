@@ -200,7 +200,7 @@
                         onlyInEdit: true
                     },
                     model_name: {
-                        displayName: l('lang.modelName'),
+                        displayName: l('lang.model_name'),
                         hideInForm: true
                     },
                     display_name: {

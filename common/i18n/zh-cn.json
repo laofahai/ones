@@ -188,7 +188,7 @@
         "cache_data": "数据缓存",
         "front_cache_page": "即时缓存(刷新自动清除)",
         "front_cache_sessionStorage": "会话缓存(sessionStorage 关闭自动清除)",
-        "front_cache_localStorage": "本地存储(localStorage 不会自动清除) - 清除后需要刷新页面两次",
+        "front_cache_localStorage": "本地存储(localStorage 不会自动清除) - 清除后需要刷新页面",
         "yes": "是",
         "no" : "否",
         "id" : "ID",

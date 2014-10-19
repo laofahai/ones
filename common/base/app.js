@@ -2,7 +2,6 @@
 
     'use strict';
     angular.module('ones', [
-            'ngCookies',
             'ngResource',
             'ngSanitize',
             'ngRoute',
@@ -13,7 +12,6 @@
             'ones.gridView',
             "ones.formMaker",
             'ones.detailView',
-            'angularFileUpload',
 
             "ones.pluginsModule",
             "ones.print",

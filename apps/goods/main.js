@@ -77,6 +77,7 @@
                         {
                             label: toLang("viewDataModel", "actions", $rootScope),
                             icon: "eye",
+                            authAction: "datamodel.datamodeldata.read",
                             action: function($event, selectedItems, item){
                                 var scope = this.scope;
                                 var injector = this.injector;
