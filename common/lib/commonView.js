@@ -765,7 +765,7 @@
                     var authedNodes = ones.caches.getItem("ones.authed.nodes") || [];
                     angular.forEach($scope.selectedActions, function(item, k){
                         var authKey;
-                        if(item.authAction.indexOf(".") >= 0) {
+                        if(item.authAction && item.authAction.indexOf(".") >= 0) {
                             authKey = item.authAction;
                         } else {
                             authKey = sprintf("%s.%s.%s", $routeParams.group, $routeParams.module, item.authAction).toLowerCase();

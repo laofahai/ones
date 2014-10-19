@@ -339,57 +339,6 @@ commonform {
 
 
 
-/**
-    reset datepicker
-*/
-.datepicker, .timepicker {
-    padding:0 10px;
-}
-.datepicker {
-    width:270px !important;
-}
-.datepicker table {
-    width:250px !important;
-}
-.datepicker button, .datepikcer .text-muted, .datepikcer td, .timepicker button, .timepicker .text-muted, .timepicker td{
-    background:none !important;
-    padding:0 !important;
-    text-align:center;
-}
-.datepicker button.btn-default,.timepicker button.btn-default {
-    color:#666 !important;
-}
-.datepicker button.btn-default:hover,.timepicker button.btn-default:hover {
-    color:#fff !important;
-}
-.datepicker button.btn-primary,.timepicker button.btn-primary {
-    color:#fff !important;
-    background:#428bca !important;
-}
-.datepicker button[disabled],.timepicker button[disabled] {
-    background:none !important;
-}
-
-.ace-file-multiple input[type=file] {
-    display:none;
-}
-.ace-file-input input[type=file] {
-    display:none;
-}
-.fileUploadBtn {
-    height:28px;line-height:28px;
-    font-size:14px;
-    margin:0;
-    background:#f2f2f2;
-    cursor:pointer;
-}
-.fileUploadBtn span {
-    position:absolute;
-    left:0;top:0;
-    width:100%;
-    text-align:center;
-}
-
 /*
     App Center
 **/

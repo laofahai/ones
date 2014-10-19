@@ -59,6 +59,9 @@
                     var existsValue;
                     scope.$on("form.dataLoaded", function(){
                         existsValue = scope.$eval(attrs.ngModel);
+                        if(!existsValue) {
+                            return;
+                        }
                         var tmp = [];
                         angular.forEach(existsValue.split(","), function(f){
                             tmp.push(f.split("/").pop());

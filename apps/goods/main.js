@@ -17,9 +17,11 @@
                         extraSelectActions: [
                             {
                                 label: toLang("viewCraft", "actions", $rootScope),
+                                icon: "eye",
+                                authAction: "produce.goodscraft.edit",
                                 action: function($event, selectedItems, item){
-                                    var scope = obj.extraSelectActions[0].scope;
-                                    var injector = obj.extraSelectActions[0].injector;
+                                    var scope = obj.config.extraSelectActions[0].scope;
+                                    var injector = obj.config.extraSelectActions[0].injector;
                                     item = item || selectedItems[0];
                                     var res = injector.get("GoodsCraftRes");
 
