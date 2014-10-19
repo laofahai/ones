@@ -228,7 +228,9 @@
             LoadedApps: ['{$loadedAppsStr}'],
             DEBUG: {$isDebug}
         },
-        userInfo: {$userInfo}
+        basePath: '{$APP_PATH}',
+        userInfo: {$userInfo},
+        asyncScript: [],
     };
     <if condition="DBC('site.html5.mode')">
         ones.useHTML5 = {:DBC('site.html5.mode')};

@@ -1,0 +1,9 @@
+{
+    "lang": {
+        "inputTypes": {
+            "file": "文件上传"
+        },
+        "choose file": "选择文件",
+        "viewUploadedFiles": "查看已上传文件"
+    }
+}

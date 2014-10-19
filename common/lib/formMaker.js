@@ -1,8 +1,9 @@
 (function(){
     'use struct';
     angular.module("ones.formMaker", ["ones.select3Module"])
-        .directive("commonform", ["$compile", "FormMaker", "$routeParams", "ComView", "$timeout", "$location",
-            function($compile, FormMaker, $routeParams, ComView, $timeout, $location) {
+        .directive("commonform", ["$compile", "FormMaker", "$routeParams", "ComView", "$timeout", "$location", "pluginExecutor",
+            function($compile, FormMaker, $routeParams, ComView, $timeout, $location, $plugin) {
+                $plugin.callPlugin("when_make_form_init");
                 return {
                     restrict: "E",
                     scope: {
@@ -489,8 +490,8 @@
                     }
                 };
             }])
-        .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config", "$rootScope", "$parse",
-            function($compile, $q, $parse, $injector, $timeout, ONESConfig, $rootScope, $parse) {
+        .service("FormMaker", ["$compile", "$q", "$parse",  "$injector", "$timeout", "ones.config", "$parse", "pluginExecutor",
+            function($compile, $q, $parse, $injector, $timeout, ONESConfig, $parse, $plugin) {
                 var service = {};
                 service.makeField = function(scope, opts) {
                     var defaultOpts = {};
@@ -540,6 +541,9 @@
                         compile: false
                     };
                     this.opts = $.extend(defaultOpts, opts);
+
+                    $plugin.callPlugin("when_fields_factory_init", service.fieldsMakerFactory);
+
                 };
 
 
@@ -570,7 +574,7 @@
                             fieldDefine["data-row-index"] = context.trid;
                         }
                         if (!fieldDefine.displayName) {
-                            fieldDefine.displayName = toLang(context.field, "", $rootScope);
+                            fieldDefine.displayName = l("lang."+context.field);
                         }
 
                         var html = false;
@@ -883,7 +887,6 @@
                                 $scope.$parent[methodName] = dataList;
                             });
                         };
-//                console.log(methodName);
                         var html = sprintf(this.$parent.templates['fields/select2'], {
                             method: methodName,
                             data: name,
@@ -892,10 +895,8 @@
                             model: fieldDefine["ng-model"],
                             event: fieldDefine["ui-event"] ? sprintf('ui-event="%s"', fieldDefine["ui-event"]) : "",
                             attrs: this._attr(name, fieldDefine)
-//                    dataSource: dataSourceName
                         });
 
-//                console.log(html);
                         return html;
 
                     },
@@ -1501,6 +1502,7 @@
                 };
 
                 service.makeForm = function($scope, config) {
+
                     this.scope = $scope;
                     config = config || {};
 
@@ -1569,7 +1571,6 @@
                         }
                     };
 
-                    //this.fieldsMaker
                     this.fm = new service.makeField($scope, this.opts);
                 };
 
