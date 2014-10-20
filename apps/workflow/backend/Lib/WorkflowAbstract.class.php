@@ -104,24 +104,30 @@ abstract class WorkflowAbstract implements WorkflowInterface {
      * 可在节点处理类中灵活实现对当前数据进程的权限判断
      * 场景eg: 销售订单5000元以上需要某高级人员权限审核
      * **/
-    public function checkPermission($condition) {
-        if(!$condition) {
+    final public function checkCondition($condStr) {
+        if(!$condStr) {
             return true;
         }
 
-        foreach($condition as $type=>$cond) {
+        $condition = explode("|", $condStr);
+
+        foreach($condition as $tmp) {
+            list($type, $cond) = explode(":", $tmp);
             switch($type) {
-                case "method":
+                //method
+                case "m":
                     if(method_exists($this, $cond)) {
                         return $this->$cond();
                     }
                     break;
-                case "function":
+                //function
+                case "f":
                     if(function_exists($cond)) {
                         return $cond($this->mainrowId);
                     }
                     break;
-                case "uid":
+                //uid
+                case "u":
                     $uid = getCurrentUid();
                     if(is_array($cond)) {
                         return in_array($uid, $cond);
@@ -131,6 +137,7 @@ abstract class WorkflowAbstract implements WorkflowInterface {
                     break;
             }
         }
+
     }
     
 }

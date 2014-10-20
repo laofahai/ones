@@ -14,4 +14,9 @@ class StockinCompleteProcess extends WorkflowAbstract {
         ));
     }
 
+    public function isAllComplete() {
+        $theStockin = D("Stockin")->find($this->mainrowId);
+        return $theStockin["ined_num"] >= $theStockin["total_num"];
+    }
+
 }

@@ -396,16 +396,11 @@ class Workflow {
         if($hasProcessed) {
             $nextNodeObj->error("has_processed");
         }
-        
+
         if(!$this->checkCondition($mainRowid, $nextNodeObj->currentNode)) {
-            $this->error = "check_workflow_condition_fail";
             return false;
         }
         
-//        echo "not processed";
-//        exit;
-        
-//        echo $nodeId;
         $rs = $nextNodeObj->run();
         
 //        var_dump($next);
@@ -444,11 +439,11 @@ class Workflow {
         }
         $memo = $context["memo"] ? $context["memo"] : ($next->memo ? $next->memo : "");
         unset($context["memo"]);
+        unset($context["exit"]);
         $data = array(
             "workflow_id" => $this->currentWorkflow["id"],
             "node_id" => $nodeId,
             "mainrow_id" => $mainrowId,
-//            "context" => "", //@todo 流程上下文
             "context" => serialize($context),
             "start_time" => CTS,
             "end_time" => "",
@@ -457,7 +452,11 @@ class Workflow {
             "memo" => $memo
         );
         
-        $this->processModel->add($data);
+        $rs = $this->processModel->add($data);
+
+        if(false === $rs) {
+            Log::write($this->processModel->getLastSql(), Log::SQL);
+        }
         
         /**
          * 下一节点
@@ -465,17 +464,11 @@ class Workflow {
         $curNode = $this->nodeModel->find($nodeId);
         //如果有多个动作，默认执行第一个动作（分支，条件判断等）
         //此处应为递归操作
-        if($curNode["next_node_id"]) {
-            if(false === strpos($curNode["next_node_id"], ",")) {
-                $map = array(
-                    "id" => $curNode["next_node_id"],
-                );
-            } else {
-                $map = array(
-                    "id" => array("IN", $curNode["next_node_id"]),
-                    "default" => 1
-                );
-            }
+        if($curNode["next_node_id"] && strlen($curNode["next_node_id"]) > 0) {
+            $map = array(
+                "id" => array("IN", explode(",",$curNode["next_node_id"])),
+                "is_default" => 1
+            );
             $nextNode = $this->nodeModel->where($map)->find();
             if($nextNode) {
                 switch($nextNode["type"]) {
@@ -515,6 +508,12 @@ class Workflow {
                 "alias"=> sprintf("workflow.%s.%s", $this->currentWorkflow["alias"], $curNode["execute_file"])
             ));
         }
+
+        if($context["exit"]) {
+            exit;
+        }
+
+
 
     }
     
@@ -645,15 +644,15 @@ class Workflow {
         import("@.Workflow.WorkflowAbstract");
         import($file);
         $className = $this->currentWorkflow["workflow_file"].$node["execute_file"];
+
         if(!$className or !class_exists($className)) {
             return true;
         }
 
         $node["context"] = unserialize($node["context"]);
         $obj = new $className($mainrowId);
-        $rs = $obj->checkPermission($node["condition"]);
+        $rs = $obj->checkCondition($node["cond"]);
         return $rs === false ? false : true;
-//        exit;
     }
 
     public function getError() {

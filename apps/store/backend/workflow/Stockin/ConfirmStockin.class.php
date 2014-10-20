@@ -149,10 +149,6 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 $workflow->doNext($theStockin["source_id"], "", true, 3);
             }
 
-            //全部入库后，标记已完成
-            $workflow = new Workflow("stockin");
-            $workflow->doNext($this->mainrowId, "CompleteProcess", true, 3);
-            exit;
         }
 
 
