@@ -33,6 +33,7 @@
             </button>
             <ul class="dropdown-menu dropdown-primary pull-right">
                 <li class="{{sa.class}}"
+                    ng-show="gridSelected.length === 1 || sa.multi"
                     ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}"
                     ng-repeat="sa in selectedActions track by $index">
                     <a ng-click="sa.action($event,gridSelected)" ng-bind="sa.label"></a>
