@@ -15,8 +15,8 @@ class UploaderAction extends CommonAction {
             return;
         }
 
-        $relativePath = '/uploads/'.date("Y/m/", CTS);
-        $savePath = ROOT_PATH.$relativePath;
+        $relativePath = 'uploads/'.date("Y/m/", CTS);
+        $savePath = ROOT_PATH."/".$relativePath;
         $returnPath = array();
 
         mkdirs($savePath);
