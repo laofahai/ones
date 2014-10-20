@@ -169,6 +169,11 @@ class AppsAction extends CommonAction {
             $appInfo["currentVersion"] = $appInfo["latest_version"];
         }
 
+        import("@.ORG.markdown");
+        $parseDown = new Parsedown();
+
+        $appInfo["description"] = $parseDown->text($appInfo["description"]);
+
         $this->response($appInfo);
 
 
