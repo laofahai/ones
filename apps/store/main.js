@@ -751,7 +751,7 @@
                     };
                 }
 
-                ComView.makeGridSelectedActions($scope, StockinModel, StockinRes, "store", "stockout");
+                ComView.makeGridSelectedActions($scope, model, res, "store", "stockout");
             }])
         .controller("StockProductsExportCtl", ["$scope", "StockProductExportModel", "ComView", "$http", "ones.config",
             function($scope, StockProductExportModel, ComView, $http, cnf) {
@@ -802,7 +802,6 @@
                             donext: true,
                             data: $scope.formMetaData
                         }).$promise.then(function(data){
-//                    console.log(data);return;
                             $location.url("/store/list/stockout");
                         });
                     }

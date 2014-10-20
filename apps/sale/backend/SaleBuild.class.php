@@ -36,7 +36,8 @@ class SaleBuild extends CommonBuildAction {
                     "listorder" => 2,
                     "prev_node_id" => "SaveOrder",
                     "next_node_id" => "FinanceVerifySuccess",
-                    "status_text"  => "已申请财务审核"
+                    "status_text"  => "已申请财务审核",
+                    "is_default"   => 1
                 ),
                 "FinanceVerifySuccess" => array(
                     "name" => "财务审核通过",
@@ -44,7 +45,8 @@ class SaleBuild extends CommonBuildAction {
                     "listorder" => 3,
                     "prev_node_id" => "RequireFinanceVerify",
                     "next_node_id" => "MakeStockoutPaper",
-                    "status_text"  => "财务已审核"
+                    "status_text"  => "财务已审核",
+                    "is_default"   => 1
                 ),
                 "FinanceVerifyFailed" => array(
                     "name" => "财务审核不通过",
