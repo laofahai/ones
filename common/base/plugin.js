@@ -36,4 +36,18 @@
 
         ones.pluginScope.set("defer", defer);
     });
+
+    //桌面按钮
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
+        var ComView = injector.get("ComView");
+        ones.pluginScope.append("dashboardAppBtns", {
+            label: l("lang.navs.app_center"),
+            name: "app_center",
+            icon: "cloud",
+            link: "HOME/listall/apps"
+        });
+
+        ones.pluginScope.set("defer", defer);
+    });
+
 })();

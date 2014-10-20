@@ -51,12 +51,9 @@ class StockinModel extends CommonModel {
             $this->error = "insert_error";
             return false;
         }
-//        echo $this->getLastSql();exit;
-//        echo $billId;exit;
         $itemsModel = D("StockinDetail");
         foreach($billItems as $billItem) {
             $billItem["stockin_id"] = $billId;
-//            print_r($billItem);
             $id = $itemsModel->add($billItem);
             if(!$id) {
                 $this->rollback();
