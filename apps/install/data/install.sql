@@ -152,25 +152,27 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
 
 
 
-INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
+INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
   (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
-  (4, NULL, 'dataModel.showOnlyBind', '数据模型查询选项', '0', '是否仅显示所绑定分类的数据模型项', 0, 0),
   (8, NULL, 'debt_limit', '欠款额度', '0', '超过此额度会有提醒，0为不提醒', 0, 0),
   (9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0, 0),
-  (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'admin@domain.com', '备份发送至邮箱', 0, 0),
+  (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'webmaster@localhost', '备份发送至邮箱', 0, 0),
   (11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0, 0),
   (12, NULL, 'remote.service.uri', '远程服务地址', 'http://service.ng-erp.com/index.php?s=/', '包括程序更新、帮助信息等', 0, 0),
-  (15, NULL, 'system.version', '当前系统版本', '0.1.3', '请勿手动修改', 0, 0),
-  (39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0, 0),
-  (40, NULL, 'goods.unique.separator', '商品唯一字段分隔符', '-', '开始使用之后请勿修改', 0, 0),
+  (15, NULL, 'system.version', '当前系统版本', '0.1.6', '请勿手动修改', 0, 0),
+  (39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code,standard', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0, 0),
+  (40, NULL, 'goods.unique.separator', '商品唯一字段分隔符', ',', '开始使用之后请勿修改', 0, 0),
   (41, NULL, 'mail.address', '服务邮箱地址', 'ones_robot@163.com', '', 0, 0),
   (42, NULL, 'mail.smtp', '邮箱SMTP服务器', 'smtp.163.com', '', 0, 0),
   (43, NULL, 'mail.login', '邮箱登录账号', 'ones_robot@163.com', '', 0, 0),
   (44, NULL, 'mail.password', '邮箱密码', 'thisisones', '', 0, 0),
   (45, NULL, 'mail.fromname', '发件人名称', 'ONES Robots', '', 0, 0),
-  (46, NULL, 'site.title', '站点标题', 'ONES ERP', '', 0, 0);
+  (46, NULL, 'site.title', '站点标题', 'ONES ERP', '', 0, 0),
+  (47, NULL, 'dataModel.showOnlyBind', '仅显示绑定到当前分类的模型数据', '1', '是否仅显示绑定到当前分类的模型数据；可选0或者1', 0, 0),
+  (48, NULL, 'site.html5.mode', '是否使用HTML5 URL模式', 'false', '使用填写true，不使用填写false', 0, 0);
+
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (

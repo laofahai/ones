@@ -75,6 +75,7 @@
                                 /**
                                  * 自动获取字段
                                  * */
+
                                 opts.model.config = opts.model.config || {};
                                 opts.columns = opts.model.config.columns || opts.columns;
                                 opts.formActions = undefined === opts.model.config.formActions ? true : false;

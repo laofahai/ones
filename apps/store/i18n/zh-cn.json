@@ -96,6 +96,7 @@
         "stock_manager": "库管员",
         "stockManager": "库管员",
         "storeNum": "库存数量",
+        "store_num": "库存数量",
         "store_min": "库存下限",
         "store_max": "库存上限",
         "stockin": "入库单",

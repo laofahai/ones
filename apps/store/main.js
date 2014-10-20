@@ -275,6 +275,9 @@
         .service("StockProductExportModel", ["$rootScope", "GoodsCategoryRes", "$q",
             function($rootScope, GoodsCategoryRes, $q) {
                 var service = {
+                    config: {
+                        columns: 1
+                    },
                     getStructure : function() {
                         var i18n = l('lang');
                         var struct = {
@@ -416,9 +419,11 @@
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true,
-                            printAble: true
+                            printAble: true,
+                            listAble: false
                         },
                         stock_name: {
+                            displayName: l("lang.stock"),
                             hideInForm:true,
                             billAble: false
                         },
@@ -758,7 +763,7 @@
                     }
                 ];
                 $scope.selectAble = false;
-                $scope.formConfig = {
+                $scope.config = {
                     model: StockProductExportModel
                 };
 
