@@ -65,7 +65,7 @@ class RelationshipCompanyAction extends CommonAction {
         $this->pretreatment();
 
         $model = D("RelationshipCompany");
-        $rs = $model->editCompany($_POST["baseInfo"], $_POST["rows"], $_GET["id"]);
+        $rs = $model->editCompany($_POST, $_POST["rows"], $_GET["id"]);
 
         if(!$rs) {
             $this->response($model->getError());

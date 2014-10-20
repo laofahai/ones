@@ -181,8 +181,6 @@
                 $scope.doComplexSubmit = function() {
                     $scope.formMetaData = $scope.formData;
 //
-//                    console.log($scope);
-//                    return;
                     $scope.doBillSubmit();
                 };
             }])
