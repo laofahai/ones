@@ -353,13 +353,25 @@ class AppsAction extends CommonAction {
     private function downloadAndZipAndCopy($remoteUri, $target) {
 
         $localName = md5(CTS).".zip";
-        $localPath = ENTRY_PATH."/Data/apps/".$localName;
-        import("ORG.Net.Http");
-//        echo $remoteUri;exit;
-        Http::curlDownload($remoteUri, $localPath);
+        $localPath = ENTRY_PATH."/Data/apps/";
+        import("@.ORG.CurlAxel");
 
-        $maxTry = 10;
-        $sleep = 0.5;
+        $axel = new CurlAxel();
+
+        $axel->setUrl($remoteUri);
+        $size = $axel->getFileSize($remoteUri);
+
+        $axel->setProgressCallback(false);
+
+        $axel->setTempDir(ENTRY_PATH."Runtime/Temp");
+        $axel->setDownloadDir($localPath);
+        $axel->setFilename($localName);
+        $axel->setBufferSize(32*1024);
+        $axel->activeLog(false);
+        $axel->download();
+
+        $maxTry = 30;
+        $sleep = 1;
         $try = 0;
         $downloaded = false;
 
@@ -368,7 +380,7 @@ class AppsAction extends CommonAction {
             sleep($sleep);
             clearstatcache();
             //下载成功
-            if(is_file($localPath) and filesize($localPath) > 0) {
+            if(is_file($localPath.$localName) and filesize($localPath.$localName) == $size) {
                 $downloaded = true;
                 break;
             }
@@ -383,7 +395,7 @@ class AppsAction extends CommonAction {
 
         $zip = new ZipArchive();
         $tmpFolder = ENTRY_PATH."/Data/apps/installTmp";
-        $rs = $zip->open($localPath);
+        $rs = $zip->open($localPath.$localName);
         if($rs === true) {
             if(!is_dir($tmpFolder)) {
                 mkdir($tmpFolder, 0777);
@@ -394,7 +406,7 @@ class AppsAction extends CommonAction {
 
         recursionCopy($tmpFolder, $target);
 
-        return array($localPath, $tmpFolder);
+        return array($localPath.$localName, $tmpFolder);
     }
 
     /*

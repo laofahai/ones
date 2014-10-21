@@ -40,8 +40,6 @@ class SystemUpdateAction extends CommonAction {
                 return;
             }
 
-            import("ORG.Net.Http");
-
             //文件路径为HTTP绝对地址
             if(strStartWith($version["file"], "http://") or strStartWith($version["file"], "https://")) {
                 $remoteUri = $version["file"];
@@ -49,11 +47,47 @@ class SystemUpdateAction extends CommonAction {
                 $remoteUri = str_replace("/index.php?s=/Update", "", $this->server)."Data/updates/".$version["file"];
             }
 
-            $localPath = $this->getLocalPath($version["file"]);
-            Http::curlDownload($remoteUri, $localPath);
+            $localPathFull = $this->getLocalPath($version["file"]);
+            $tmp = explode("/", $localPathFull);
+            $localName = array_pop($tmp);
+            $localPath = implode("/", $tmp);
 
-            if(!file_exists_case($localPath)) {
+            import("@.ORG.CurlAxel");
+
+            $axel = new CurlAxel();
+
+            $axel->setUrl($remoteUri);
+            $size = $axel->getFileSize($remoteUri);
+
+            $axel->setProgressCallback(false);
+
+            $axel->setTempDir(ENTRY_PATH."Runtime/Temp");
+            $axel->setDownloadDir($localPath);
+            $axel->setFilename($localName);
+            $axel->setBufferSize(32*1024);
+            $axel->activeLog(false);
+            $axel->download();
+
+            $maxTry = 30;
+            $sleep = 1;
+            $try = 0;
+            $downloaded = false;
+
+            do {
+                $try ++;
+                sleep($sleep);
+                clearstatcache();
+                //下载成功
+                if(is_file($localPath.$localName) and filesize($localPath.$localName) == $size) {
+                    $downloaded = true;
+                    break;
+                }
+
+            } while($try <= $maxTry);
+
+            if($downloaded) {
                 $this->error("download_failed");
+                return;
             }
 
 //            var_dump($rs);
@@ -81,8 +115,7 @@ class SystemUpdateAction extends CommonAction {
                 importSQL($sqlFile);
                 unlink($sqlFile);
             }
-//            echo $tmpFolder;
-//            echo dirname(ENTRY_PATH);exit;
+
             //复制文件
             recursionCopy($tmpFolder, dirname(ENTRY_PATH));
 
