@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   KEY `deleted` (`deleted`),
   KEY `app_id` (`app_alias`),
   KEY `protected` (`protected`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 
 
