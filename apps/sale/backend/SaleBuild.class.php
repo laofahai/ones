@@ -35,7 +35,7 @@ class SaleBuild extends CommonBuildAction {
                     "type" => 2,
                     "listorder" => 2,
                     "prev_node_id" => "SaveOrder",
-                    "next_node_id" => "FinanceVerifySuccess",
+                    "next_node_id" => "FinanceVerifySuccess,MakeStockoutPaper",
                     "status_text"  => "已申请财务审核",
                     "is_default"   => 1
                 ),

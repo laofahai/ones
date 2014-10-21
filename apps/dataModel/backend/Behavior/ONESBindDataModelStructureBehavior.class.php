@@ -17,14 +17,40 @@ class ONESBindDataModelStructureBehavior extends Behavior {
         }
 
         $model = D("DataModelFields");
-        $dataModelFields = $model->where("model_id=".$theModel["id"])->select();
+        $dataModelFields = $model->where(array(
+            "model_id" => $theModel["id"],
+            "deleted"  => 0
+        ))->select();
 
         if(!$dataModelFields) {
             return $params;
         }
-        foreach($dataModelFields as $f) {
-            $params["fields"][$f["field_name"]] = $f["display_name"];
+
+        //字段顺序
+        if($params["after"]) {
+            $binded = false;
+            $tmp = array();
+            foreach($params["fields"] as $k=> $p) {
+                if($p === $params["after"] && !$binded) {
+                    $binded = true;
+                    $tmp[$k] = $p;
+                    foreach($dataModelFields as $f) {
+                        $tmp[$f["field_name"]] = $f["display_name"];
+                    }
+
+                } else {
+                    $tmp[$k] = $p;
+                }
+            }
+
+            $params["fields"] = $tmp;
+
+        } else {
+            foreach($dataModelFields as $f) {
+                $params["fields"][$f["field_name"]] = $f["display_name"];
+            }
         }
+
 
     }
 

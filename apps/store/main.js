@@ -768,7 +768,6 @@
                 };
 
                 $scope.doFormSubmit = function(){
-//                    console.log($scope);return;
                     var url = cnf.BSU+'store/stockProductList/export/%s.json';
                     var params = {};
                     if($scope.formData.stock) {
@@ -802,6 +801,8 @@
                             donext: true,
                             data: $scope.formMetaData
                         }).$promise.then(function(data){
+                                return;
+//                    console.log(data);return;
                             $location.url("/store/list/stockout");
                         });
                     }

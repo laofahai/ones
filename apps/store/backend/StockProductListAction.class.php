@@ -94,7 +94,7 @@ class StockProductListAction extends CommonAction {
             $map["stock_id"] = array("IN", implode(",", $params["stock"]));
         }
         if($params["warningonly"] > 0) {
-            $map["_string"] = '((store_min>0 AND store_min>=num) OR (store_max>0 AND store_max<=num))';
+            $map["_string"] = '((StockProductList.store_min>0 AND StockProductList.store_min>=num) OR (StockProductList.store_max>0 AND StockProductList.store_max<=num))';
         }
         if($_GET["category"]) {
             $map["goods_category_id"] = array("IN", implode(",", $params["category"]));
@@ -108,7 +108,8 @@ class StockProductListAction extends CommonAction {
         } else {
             $params = array(
                 "fields" => $this->exportFields,
-                "dataModelAlias"=> "product"
+                "dataModelAlias"=> "product",
+                "after" => "goods_name"
             );
 
             tag("bind_dataModel_structure", $params);

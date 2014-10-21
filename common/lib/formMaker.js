@@ -144,7 +144,7 @@
                                         }
                                     });
                                 } else {
-                                    parent.doSubmit = parentScope.doFormSubmit;
+                                    parentScope.doSubmit = parentScope.doFormSubmit;
                                 }
 
 
