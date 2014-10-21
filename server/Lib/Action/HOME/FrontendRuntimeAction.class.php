@@ -61,11 +61,29 @@ class FrontendRuntimeAction extends CommonAction {
     }
 
     public function read() {
-        $file = $_GET["file"];
+
         import("@.ORG.staticRuntime");
         $loadedApps = F("loadedApp");
+
         $runtime = new FrontEndRuntime($loadedApps);
-        $runtime->echoJS($file);
+
+        if(isset($_GET["compileJS"])) {
+
+            import("@.ORG.staticRuntime");
+            $runtime = new FrontEndRuntime($loadedApps);
+
+            $javascripts = $runtime->getJavascripts();
+
+            foreach($javascripts as $js) {
+                $runtime->echoJS($js);
+            }
+
+        } else if(isset($_GET["js"])) {
+            $file = $_GET["js"];
+            $runtime->echoJS($file);
+        }
+
+
     }
 
 } 

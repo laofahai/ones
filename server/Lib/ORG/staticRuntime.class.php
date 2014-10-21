@@ -69,7 +69,7 @@ class FrontEndRuntime {
 
         $file = ROOT_PATH."/".$file;
         if(is_file($file)) {
-            echo str_replace($find, $replace, file_get_contents($file));
+            echo $this->doTrim(str_replace($find, $replace, file_get_contents($file)));
         }
     }
 
@@ -78,26 +78,20 @@ class FrontEndRuntime {
         foreach($this->preLoadingList as $pre) {
             $tmp = $this->baseDir."/".$pre;
             if(is_file($tmp)){
-                $this->javascripts[] = "common/".$pre;
-//                $content = file_get_contents($tmp);
-//                $content = str_replace($find, $replace, $content);
-//                $this->response($content);
-            } else {
-//                echo $tmp;exit;
+                $js[] = $this->javascripts[] = "common/".$pre;
             }
         }
+        return $js;
     }
 
     public function afterLoadJS() {
         foreach($this->afterLoadingList as $af) {
             $tmp = $this->baseDir."/".$af;
             if(is_file($tmp)){
-                $this->javascripts[] = "common/".$af;
-//                $content = file_get_contents($tmp);
-////                $content = str_replace($find, $replace, $content);
-//                $this->response($content);
+                $js[] = $this->javascripts[] = "common/".$af;
             }
         }
+        return $js;
     }
 
     public function preloadI18n($lang) {
@@ -136,6 +130,7 @@ class FrontEndRuntime {
         if(!is_dir($dir)) {
             return;
         }
+        $js = array();
         if ($dh = opendir($dir)) {
             while (($app = readdir($dh)) !== false) {
 
@@ -144,14 +139,14 @@ class FrontEndRuntime {
                 }
 
                 $appPath = $dir."/".$app;
-                $this->loadAppStatic($appPath, $app);
+                $js = array_merge($js, (array)$this->loadAppStatic($appPath, $app));
 
             }
             closedir($dh);
         }
         $this->combineAppConfig();
 
-        return $this->loadedApps;
+        return $js;
     }
 
     public function doTrim($code) {
@@ -159,6 +154,10 @@ class FrontEndRuntime {
             "    ", "'use strict';", "'use strict'",
             "\t",
         ), "", $code);
+
+        $code = preg_replace("/\s\/\/.*/", "", $code);
+        $code = preg_replace("/\/\*.*\*\//sU", "", $code);
+        $code = preg_replace("/\n\n/", " ", $code);
 
         return $code;
     }
@@ -172,6 +171,7 @@ class FrontEndRuntime {
     }
 
     private function loadAppStatic($appPath, $app) {
+        $js = array();
         $basePath = "apps/".$app."/";
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
@@ -196,7 +196,7 @@ class FrontEndRuntime {
                                 continue;
                             }
                             $depPath = dirname($appPath)."/".$dep;
-                            $this->loadAppStatic($depPath, $dep);
+                            $js = array_merge($js, (array)$this->loadAppStatic($depPath, $dep));
                         }
                     }
                     if($tmpConfig["alias"] && is_file($appPath."/main.js")) {
@@ -205,8 +205,7 @@ class FrontEndRuntime {
                 }
                 if(!in_array($tmpPath, $this->included)) {
                     if(end(explode(".", $tmpPath)) === "js") {
-                        $this->javascripts[] = $basePath.basename($tmpPath);
-                        //$this->response(file_get_contents($tmpPath));
+                        $js[] = $this->javascripts[] = $basePath.basename($tmpPath);
                     }
                     $this->included[md5($tmpPath)] = $tmpPath;
                 }
@@ -214,6 +213,8 @@ class FrontEndRuntime {
         }
 
         closedir($appDH);
+
+        return $js;
     }
 
     private function combineAppConfig() {
@@ -240,11 +241,12 @@ class FrontEndRuntime {
         }
     }
 
-    public function getJavascripts() {
-        $this->preloadJS();
-        $this->combineJS();
-        $this->afterLoadJS();
-        return $this->javascripts;
+    public function getJavascripts($split=false) {
+        $result = array();
+        $result["pre"] = $this->preloadJS();
+        $result["app"] = $this->combineJS();
+        $result["after"] = $this->afterLoadJS();
+        return $split ? $result : $this->javascripts;
     }
 
     public function jsEntry() {

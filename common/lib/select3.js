@@ -354,7 +354,7 @@
 
                             };
 
-                        }
+                        };
 
                         //模型字段增加$routeParams.model_alias
                         if(fieldDefine.dynamicAddOpts.postParams && fieldDefine.dynamicAddOpts.postParams.modelAlias) {

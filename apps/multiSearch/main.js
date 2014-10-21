@@ -13,7 +13,7 @@
     angular.module("ones.multiSearch", [])
         .controller("multiSearchCtl", ["$scope", "pluginExecutor", "$injector", "$location", "$timeout",
             function($scope, plugin, $injector, $location, $timeout){
-                plugin.callPlugin("hook.multiSearch.items")
+                plugin.callPlugin("hook.multiSearch.items");
 
                 var searchItems = ones.pluginScope.get("ones.multiSearch.items");
 
@@ -82,7 +82,7 @@
                 $scope.doSearchFocus = function() {
                     $scope.keyword = "";
                     resetResults();
-                }
+                };
 
                 $scope.doSearchKeydown = function($event){
                     switch($event.keyCode) {
@@ -111,7 +111,7 @@
                             resetResults();
                             break;
                     }
-                }
+                };
 
             }])
     ;

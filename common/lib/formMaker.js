@@ -49,7 +49,7 @@
                                             tmpParams.id = opts.id;
                                         }
 
-                                        var promise = getDataApiPromise(opts.resource, "get", tmpParams)
+                                        var promise = getDataApiPromise(opts.resource, "get", tmpParams);
 
                                         promise.then(function(defaultData) {
                                             parentScope[opts.dataName] = dataFormat(opts.fieldsDefine, defaultData);
@@ -101,7 +101,7 @@
                                         return false;
                                     }
                                     return true;
-                                }
+                                };
 
                                 //提交表单
                                 if(typeof(parentScope.doFormSubmit) !== "function") {
@@ -218,7 +218,7 @@
 
                         queryParams[attrs.name] = scope.$eval(attrs.ngModel);
 
-                        var promise = getDataApiPromise(res, "get", queryParams)
+                        var promise = getDataApiPromise(res, "get", queryParams);
 
                         promise.then(function(data){
                             if(data[attrs.name]) {
@@ -465,7 +465,7 @@
 
                                     var b = new FormMaker.makeBill($scope, config);
                                     iElement.append($compile(b.makeHTML())(parentScope));
-                                }
+                                };
 
                                 $scope.$on("commonBill.ready", function(){
                                     if (config.isEdit) {

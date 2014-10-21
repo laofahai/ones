@@ -33,7 +33,7 @@
                         );
                         $scope.updates = data;
                     });
-                }
+                };
 
                 getUpdates();
 

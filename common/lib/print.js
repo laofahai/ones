@@ -73,7 +73,7 @@
                     includeRows: true //包含子行
                 };
 
-                var promise = getDataApiPromise(res, "get", params)
+                var promise = getDataApiPromise(res, "get", params);
 
                 promise.then(function(data){
                     self.scope.data = data.datas ? data : {datas: [data]};
@@ -91,13 +91,12 @@
                     }
                 }
 
-            }
+            };
 
             this.doPrint = function() {
                 window.print();
             };
         }])
-        .directive()
     ;
 
 })(window.angular, window.ones);

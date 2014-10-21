@@ -56,7 +56,7 @@
 
                     var promise = getDataApiPromise(self.config.resource, "get", {
                         id: $routeParams.id
-                    })
+                    });
 
                     promise.then(function(defaultData) {
                         self.parentScope.detailViewData = dataFormat(structure, defaultData);
@@ -103,9 +103,9 @@
 
                 if(!obj.cellFilter) {
                     return text;
-                }
+                };
 
-                var args = obj.cellFilter.replace(/'/ig, "").split(":")
+                var args = obj.cellFilter.replace(/'/ig, "").split(":");
 
                 var filter = args[0];
 

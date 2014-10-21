@@ -56,7 +56,7 @@
                         $("#gridSearchInput").focus();
                     }, 500);
 
-                }
+                };
 
                 this.refresh = function(){
                     self.methodsList.getPagedDataAsync(
@@ -65,7 +65,7 @@
                         self.parentScope.filterOptions.filterText,
                         self.filtersData
                     );
-                }
+                };
 
                 this.methodsList = {
                     //
@@ -268,9 +268,9 @@
 
                         if(!filters) {
                              return;
-                        }
+                        };
 
-                        $scope.showFilters = true
+                        $scope.showFilters = true;
 
                         var FieldsDefine = {};
                         angular.forEach(filters, function(item, type){

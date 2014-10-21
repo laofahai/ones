@@ -66,7 +66,7 @@ var toDate = function(timestamp, noTime) {
     }
 
     return rs;
-}
+};
 
 
 
@@ -174,7 +174,7 @@ var appView = function(viewPath, app){
         return "apps/"+viewPath;
     }
 
-}
+};
 
 //判断APP是否加载
 var isAppLoaded = function(app) {
@@ -244,7 +244,7 @@ var toLang = function(key, section) {
 ////        console.log(langStr);
 //        return lang === undefined ? key : lang;
 //    }
-}
+};
 
 /**
  * 获取语言包，返回可以是数组或者字符串
@@ -354,11 +354,11 @@ var filterDataFields = function(data, fields) {
         }
         return returned;
     }
-}
+};
 
 var toLower = function(str) {
     return str.toLowerCase();
-}
+};
 /* *
  * 根据权限节点返回当前的节点名称
  * 首先判断是否存在真实的节点路径
@@ -385,7 +385,7 @@ var getAuthNodeName = function(node, $rootScope) {
     }
     return source;
 
-}
+};
 
 
 Array.prototype.in_array = function(e)
@@ -396,7 +396,7 @@ Array.prototype.in_array = function(e)
             return true;
     }
     return false;
-}
+};
 Array.prototype.indexOf = function(val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i] == val)
@@ -420,7 +420,7 @@ Array.prototype.delRepeat=function(){
         }
     }
     return newArray;
-}
+};
 
 /**
  * 按照某字段排序数组
@@ -443,7 +443,7 @@ var arraySortBy = function(name, minor)
             throw ("error when sorting array.");
         }
     }
-}
+};
 
 
 var reIndex = function(data) {

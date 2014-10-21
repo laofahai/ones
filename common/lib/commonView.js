@@ -375,7 +375,7 @@
                 service.redirectTo = function(url) {
                     var url = "/HOME/goTo/url/"+encodeURI(encodeURIComponent(url));
                     $location.url(url);
-                }
+                };
 
                 service.displayForm = function($scope, fieldsDefine, resource, opts, remote){};
 

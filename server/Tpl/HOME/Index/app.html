@@ -237,9 +237,8 @@
     </if>
 </script>
 <foreach name="javascripts" item="js">
-    <script src="{$js}<if condition="$isDebug">?r={:rand(0,99999)}</if>"></script>
+    <script src="{$js}"></script>
 </foreach>
-<script src="{:U('FrontendRuntime/read?file=common/base/app.js')}"></script>
 
 <script type="text/javascript">
     /**

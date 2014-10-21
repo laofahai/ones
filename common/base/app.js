@@ -101,10 +101,10 @@
                 $rootScope.goPage = function(url) {
                     if(undefined === url || !$.trim(url)) {
                         return;
-                    }
+                    };
                     if(url === "DASHBOARD") {
                         url = "";
-                    }
+                    };
                     $location.url(url[0] == "/" ? url : "/"+url);
                 };
 
@@ -115,7 +115,7 @@
                 $scope.sidebarToggleExpand = function() {
                     $scope.expand = !$scope.expand;
                     ones.caches.setItem("ones.sidebar.expand", $scope.expand, 1);
-                }
+                };
 
                 //有需要的APP未能加载
                 if(ones.unfoundApp) {
@@ -209,11 +209,11 @@
 
                 $scope.isAppLoaded = function(app) {
                     return isAppLoaded(app);
-                }
+                };
 
                 $scope.isPrimaryApp = function(app) {
                     return ['dashboard','department', 'services', 'multiSearch'].indexOf(app) >=0 ? true : false;
-                }
+                };
 
                 /**
                  * 监控路由变化
