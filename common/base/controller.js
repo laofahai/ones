@@ -78,7 +78,7 @@
                 var appModel = dataAPI.model;
 
                 $scope.selectAble = false;
-                ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listAll']);
+                ComView.makeDefaultPageAction($scope, "HOME/apps", ['list', 'listall']);
 
                 $scope.consoleMessages = [];
 

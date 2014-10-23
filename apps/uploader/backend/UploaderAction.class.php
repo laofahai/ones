@@ -19,7 +19,7 @@ class UploaderAction extends CommonAction {
         $savePath = ROOT_PATH."/".$relativePath;
         $returnPath = array();
 
-        mkdirs($savePath);
+        mkdir($savePath, 0777, true);
 
         foreach($_POST["files"] as $file) {
             $filename = uniqid().".".end(explode(".", $file["name"]));
