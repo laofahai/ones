@@ -541,7 +541,7 @@ function importSQL($sqlPath) {
             continue;
         }
         if(false === $model->execute($sql)) {
-            return $sql;
+            return array($model->getDbError(), $sql);
         }
     }
 

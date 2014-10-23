@@ -112,8 +112,11 @@ class SystemUpdateAction extends CommonAction {
             //更新数据库
             $sqlFile = $tmpFolder."/upgrade.sql";
             if(file_exists_case($sqlFile)) {
-                importSQL($sqlFile);
+                $rs = importSQL($sqlFile);
                 unlink($sqlFile);
+                if(true !== $rs) {
+                    $this->error($rs[0]);return;
+                }
             }
 
             //复制文件

@@ -30,7 +30,11 @@ class CommonBuildAction {
     public function appInstall($alias) {
         $installSql = sprintf("%s/apps/%s/data/sqls/install.sql", ROOT_PATH, $alias);
         if(is_file($installSql)) {
-            importSQL($installSql);
+            $rs = importSQL($installSql);
+            if(true !== $rs) {
+                $this->error = $rs[0];
+                return false;
+            }
         }
 
         if($this->workflows) {
@@ -81,7 +85,11 @@ class CommonBuildAction {
          * **/
         $uninstallSql = sprintf("%s/apps/%s/data/sqls/uninstall.sql", ROOT_PATH, $this->appConfig["alias"]);
         if(is_file($uninstallSql)) {
-            importSQL($uninstallSql);
+            $rs = importSQL($uninstallSql);
+            if(true !== $rs) {
+                $this->error = $rs[0];
+                return false;
+            }
         }
 
         /*
@@ -119,7 +127,11 @@ class CommonBuildAction {
     public function appUpgrade() {
         $upgradeSql = sprintf("%s/apps/%s/data/sqls/upgrade.sql", ROOT_PATH, $this->appConfig["alias"]);
         if(is_file($upgradeSql)) {
-            importSQL($upgradeSql);
+            $rs = importSQL($upgradeSql);
+            if(true !== $rs) {
+                $this->error = $rs[0];
+                return false;
+            }
         }
 
         return true;

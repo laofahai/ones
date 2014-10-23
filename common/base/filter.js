@@ -146,10 +146,10 @@
                 return $sce.trustAsHtml(text);
             };
         }])
-        .filter('toYesOrNo', ['$rootScope', function ($rootScope) {
+        .filter('toYesOrNo', [function () {
             return function (text) {
                 var lang = text == 1 ? "yes" : "no";
-                return toLang(lang, "", $rootScope);
+                return l("lang."+lang);
             };
         }])
         .filter("toCurrency", [function($rootScope){

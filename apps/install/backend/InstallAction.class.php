@@ -117,7 +117,7 @@ class InstallAction extends CommonAction {
 
         $rs = importSQL(ROOT_PATH."/apps/install/data/install.sql");
         if(true !== $rs) {
-            $this->error($rs);return;
+            $this->error($rs[0]);return;
         }
 
     }
