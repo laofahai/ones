@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods` (
   KEY `deleted` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
@@ -34,5 +36,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_category` (
   KEY `pinyin` (`pinyin`),
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 INSERT INTO `[PREFIX]goods_category` (id, pid, name, pinyin, lft, rgt, listorder, deleted) VALUES(null,0,"ROOT",null,1,2,0,0);

@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]finance_account` (
   KEY `listorder` (`listorder`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]finance_pay_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
@@ -31,6 +33,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]finance_pay_plan` (
   KEY `type_id` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]finance_receive_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject` varchar(50) NOT NULL,
@@ -54,6 +58,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]finance_receive_plan` (
   KEY `financer_id` (`financer_id`),
   KEY `type_id` (`type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]finance_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
   KEY `abbreviation` (`abbreviation`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
-
+-- separator
 
 INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`, `status`) VALUES
   (1, 'department', 'DP', '0.1', 1406906639, 1),
@@ -22,6 +22,7 @@ INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`
   (5, 'workflow', '', '0.1', 1409042547, 1),
   (6, 'multiSearch', 'MTSC', '0.1', 1406906639, 1);
 
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -30,9 +31,13 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+-- separator
+
 
 INSERT INTO `[PREFIX]auth_group` (`id`, `title`, `status`) VALUES
   (1, '超级管理员', 1);
+
+-- separator
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
@@ -43,9 +48,13 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
   KEY `group_id` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- separator
+
 
 INSERT INTO `[PREFIX]auth_group_access` (`uid`, `group_id`) VALUES
   (1, 1);
+
+-- separator
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
@@ -55,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
   KEY `group_id` (`group_id`,`rule_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -68,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_rule` (
   KEY `category` (`category`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=244 ;
 
-
+-- separator
 
 INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VALUES
   (11, 'department.authgroup.read', 1, '', 'set'),
@@ -129,7 +138,7 @@ INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VAL
   (242, 'workflow.workflownode.edit', 1, '', 'workflow'),
   (243, 'workflow.workflownode.delete', 1, '', 'workflow');
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -150,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
   KEY `protected` (`protected`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
-
+-- separator
 
 INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
@@ -173,7 +182,7 @@ INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `desc
   (47, NULL, 'dataModel.showOnlyBind', '仅显示绑定到当前分类的模型数据', '1', '是否仅显示绑定到当前分类的模型数据；可选0或者1', 0, 0),
   (48, NULL, 'site.html5.mode', '是否使用HTML5 URL模式', 'false', '使用填写true，不使用填写false', 0, 0);
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -188,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
   KEY `ailas` (`alias`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
-
+-- separator
 
 INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listAble`, `deleted`) VALUES
   (1, '产品基础信息模型', 'goodsBaseInfo', 'product', 1, 0),
@@ -196,7 +205,7 @@ INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listAble`, `de
   (3, '往来单位基本信息扩展模型', 'crmBaseInfo', 'crm', 1, 0),
   (4, '往来单位联系人信息扩展', 'crmContact', 'crm', 1, 0);
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -214,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
   KEY `data` (`data`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -232,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
   KEY `deleted` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -247,13 +256,13 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
   KEY `parentid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
-
+-- separator
 
 INSERT INTO `[PREFIX]department` (`id`, `pid`, `name`, `leader`, `lft`, `rgt`, `listorder`) VALUES
   (1, 0, '某公司', '', 1, 4, 99),
   (2, 1, '总经办', '', 2, 3, 99);
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
   `uid` int(11) NOT NULL,
@@ -262,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
   KEY `uid` (`uid`,`listorder`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]session` (
   `session_id` varchar(255) NOT NULL,
@@ -271,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]session` (
   UNIQUE KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -288,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]types` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -308,6 +317,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
   KEY `truename` (`truename`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -319,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
   KEY `alias` (`alias`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -346,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   KEY `default` (`is_default`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
   KEY `alias` (`alias`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
@@ -32,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   KEY `listorder` (`listorder`),
   KEY `is_default` (`is_default`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

@@ -7,12 +7,16 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]craft` (
   KEY `listorder` (`listorder`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]goods_craft` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT,
   `craft_id` smallint(5) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
   KEY `goods_id` (`goods_id`,`craft_id`,`listorder`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]produce_boms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -24,6 +28,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_boms` (
   PRIMARY KEY (`id`),
   KEY `plan_id` (`plan_id`,`plan_detail_id`,`goods_id`,`factory_code_all`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -38,6 +44,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan` (
   KEY `type` (`type`,`start_time`,`end_time`,`create_time`,`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
@@ -51,6 +59,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan_detail` (
   PRIMARY KEY (`id`),
   KEY `plan_id` (`plan_id`,`goods_id`,`factory_code_all`,`start_time`,`end_time`,`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]produce_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,6 +79,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_process` (
   KEY `goods_id` (`goods_id`,`factory_code_all`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
@@ -77,6 +89,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl` (
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`,`factory_code_all`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

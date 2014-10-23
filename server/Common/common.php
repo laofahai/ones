@@ -524,7 +524,7 @@ function importSQL($sqlPath) {
 
     $sqls = file_get_contents($sqlPath);
 
-    $sqls = explode("\n\n", $sqls);
+    $sqls = explode("-- separator", $sqls);
 
     $model = M();
     foreach($sqls as $sql) {

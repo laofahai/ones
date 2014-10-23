@@ -10,7 +10,11 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stock` (
   KEY `pinyin` (`pinyin`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+-- separator
+
 INSERT INTO `[PREFIX]stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES (1, '1', '总库', '', 0);
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,6 +38,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
   KEY `deleted` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockin_id` int(11) NOT NULL,
@@ -48,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
   KEY `factory_code_all` (`factory_code_all`),
   KEY `stock_id` (`stock_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -67,6 +75,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   KEY `source_model` (`source_model`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,6 +91,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
   KEY `stockout_id` (`stockout_id`),
   KEY `factory_code_all` (`factory_code_all`,`goods_id`,`stock_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]stock_product_list` (

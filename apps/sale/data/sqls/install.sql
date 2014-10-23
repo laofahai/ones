@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]orders` (
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 CREATE TABLE IF NOT EXISTS `[PREFIX]orders_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
@@ -30,6 +32,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]orders_detail` (
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`,`factory_code_all`,`order_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]returns` (
@@ -50,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]returns` (
   KEY `sale_type` (`returns_type`),
   KEY `deleted` (`deleted`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
 
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]returns_detail` (

@@ -1,5 +1,7 @@
 DELETE FROM `[PREFIX]types` WHERE type = 'express';
+-- separator
 DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.express.%';
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]express` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

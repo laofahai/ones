@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
   KEY `delete` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
+
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,11 +28,15 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
+-- separator
+
 INSERT INTO `[PREFIX]relationship_company_group` (`id`, `name`, `discount`) VALUES
 (1, '客户', 100),
 (2, '供应商', 100),
 (3, '加工商', 100),
 (4, 'VIP客户', 90);
+
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_linkman` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

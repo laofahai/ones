@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]_purchase` (
   KEY `deleted` (`deleted`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- separator
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]purchase_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
