@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
 
 
 
-INSERT INTO `x_config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
+INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
   (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
