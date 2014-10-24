@@ -505,7 +505,7 @@
         }])
 
         .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailEditModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams",
-            function($scope, model, res, detailRes, comView, $routeParams){
+            function($scope, model, res, detailRes, ComView, $routeParams){
 
                 $scope.selectAble = false;
 

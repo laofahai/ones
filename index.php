@@ -1,11 +1,7 @@
 <?php
 
-error_reporting(E_ALL^E_NOTICE);
-
 header("Access-Control-Allow-Origin: *");
 
-//session_cache_limiter('private');
-session_cache_expire(30);
 
 /**
  * CORS非简单跨域请求第一次讯问是否支持跨域
@@ -16,8 +12,6 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     header("Access-Control-Max-Age", 3600);
     exit;
 }
-//$_REQUEST = array_merge($_GET, $_POST, $_COOKIE);
-//print_r($_GET);exit;
 //REST模式
 define('MODE_NAME', 'rest');
 define('__EXT__', 'json');
@@ -31,5 +25,16 @@ define("ENTRY_PATH", ROOT_PATH."/server");
 define("APP_NAME", "ONES");
 define("APP_DEBUG", true);
 define("APP_PATH", "./server/");
+
+session_cache_limiter('private');
+session_cache_expire(10);
+ini_set('session.cookie_lifetime', 600);
+ini_set('session.gc_maxlifetime', 600);
+
+if(APP_DEBUG) {
+    error_reporting(E_ALL^E_NOTICE);
+} else {
+    error_reporting(0);
+}
 
 require './server/ThinkPHP/ThinkPHP.php';

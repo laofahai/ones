@@ -76,7 +76,7 @@
                 $locationProvider.html5Mode(true);
             }
 
-            $locationProvider.hashPrefix('!');
+//            $locationProvider.hashPrefix('!');
 
             $httpProvider.interceptors.push(reqInterceptor);
         }])
@@ -143,7 +143,7 @@
 
                 //监听全局事件
                 $scope.$on("event:loginRequired", function() {
-                    window.location.reload();
+                    window.location.href = "./";
                 });
 
                 $scope.$on("event:permissionDenied", function(evt, msg) {
