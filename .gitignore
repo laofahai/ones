@@ -2,6 +2,7 @@
 .idea
 .idea/*
 .settings
+nbproject
 /server/Runtime/
 /uploads/Avatars/*.jpg
 /server/Data/apps/*.zip
@@ -11,4 +12,5 @@
 /utils/.settings
 /utils/.project
 /utils/.pydevproject
+/utils/server.ini
 /apps/com.*
