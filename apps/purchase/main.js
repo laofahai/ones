@@ -125,7 +125,6 @@
                     inputTime: new Date(),
                     total_amount_real: 0
                 };
-
             }
 
             $routeParams.group = "purchase";

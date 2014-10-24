@@ -277,13 +277,13 @@
                             switch(type) {
                                 case "between":
                                     FieldsDefine["_filter_start_"+item.field] = {
-                                        displayName: l("lang"+item.field) + l("lang.start"),
+                                        displayName: l("lang."+item.field) + l("lang.start"),
                                         inputType: item.inputType || "number",
                                         value: item.defaultData[0] || 0,
                                         required: false
                                     };
                                     FieldsDefine["_filter_end_"+item.field] = {
-                                        displayName: l("lang"+item.field) + l("lang.end"),
+                                        displayName: l("lang."+item.field) + l("lang.end"),
                                         inputType: item.inputType || "number",
                                         value: item.defaultData[1] || 0,
                                         required: false
@@ -294,7 +294,7 @@
                                     FieldsDefine["_filter_"+item.field] = item;
                                     break;
                                 case "workflow":
-                                    FieldsDefine["_filter_workflow_node_"] = {
+                                    FieldsDefine["_filter_workflow_node"] = {
                                         displayName: l("lang.workflow"),
                                         inputType: "select",
                                         multiple: true,

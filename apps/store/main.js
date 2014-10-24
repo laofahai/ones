@@ -683,7 +683,6 @@
 
                 $scope.workflowAble = true;
                 $scope.selectAble = false;
-                $scope.showWeeks = true;
 
                 $scope.config = {
                     model: StockinModel,

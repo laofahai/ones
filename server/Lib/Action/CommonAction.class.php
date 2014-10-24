@@ -332,6 +332,23 @@ class CommonAction extends RestAction {
                 strtotime($_GET["_filter_end_dateline"])
             ));
         }
+        //工作流节点过滤器
+        if($_GET["_filter_workflow_node"] && $this->workflowAlias) {
+            $workflow = D("Workflow")->getByAlias($this->workflowAlias);
+            $processMap = array(
+                "workflow_id" => $workflow["id"],
+                "node_id" => abs(intval($_GET["_filter_workflow_node"])),
+                "status"  => 0
+            );
+
+            $inProcess = D("WorkflowProcess")->field("mainrow_id")->where($processMap)->select();
+            if($inProcess) {
+                foreach($inProcess as $p) {
+                    $sourceIds[] = $p["mainrow_id"];
+                }
+                $map["id"] = array("IN", $sourceIds);
+            }
+        }
 
         //仅回收站数据
         if($_GET["onlyTrash"]) {
