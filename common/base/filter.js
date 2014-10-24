@@ -107,7 +107,7 @@
                             return;
                         }
 //                        tips.push(sprintf(toLang(k, "errors", $rootScope), field.$viewValue));
-                        if(k in i18n.errors) {
+                        if(k.toLowerCase() in i18n.errors) {
                             tips.push(i18n.errors[k]);
                         } else {
                             tips.push(k);

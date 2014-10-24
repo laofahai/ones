@@ -2,7 +2,6 @@
 
 header("Access-Control-Allow-Origin: *");
 
-
 /**
  * CORS非简单跨域请求第一次讯问是否支持跨域
  */
@@ -21,7 +20,6 @@ define("DS", DIRECTORY_SEPARATOR);
 define("ROOT_PATH", dirname(__FILE__));
 define("ENTRY_PATH", ROOT_PATH."/server");
 
-
 define("APP_NAME", "ONES");
 define("APP_DEBUG", true);
 define("APP_PATH", "./server/");
@@ -32,7 +30,7 @@ ini_set('session.cookie_lifetime', 600);
 ini_set('session.gc_maxlifetime', 600);
 
 if(APP_DEBUG) {
-    error_reporting(E_ALL^E_NOTICE);
+    error_reporting(E_ALL^E_NOTICE^E_WARNING);
 } else {
     error_reporting(0);
 }

@@ -159,6 +159,12 @@ class InstallAction extends CommonAction {
         file_put_contents($this->installLockFile, CTS);
 
         $installPath = ROOT_PATH."/apps/install";
+
+        clearCache(0);
+        clearCache(1);
+        clearCache(2);
+        clearCache(3);
+
         delDirAndFile($installPath);
         rmdir($installPath);
         sleep(2);
