@@ -40,7 +40,7 @@ class PurchaseBuild extends CommonBuildAction {
                 ),
                 "CompleteProcess" => array(
                     "name" => "完成采购",
-                    "type" => 2,
+                    "type" => 3,
                     "listorder" => 3,
                     "prev_node_id" => "MakeStockin",
                     "next_node_id" => 0,
