@@ -24,8 +24,8 @@ define("APP_NAME", "ONES");
 define("APP_DEBUG", true);
 define("APP_PATH", "./server/");
 
-session_cache_limiter('private');
-session_cache_expire(10);
+//session_cache_limiter('private');
+//session_cache_expire(10);
 ini_set('session.cookie_lifetime', 600);
 ini_set('session.gc_maxlifetime', 600);
 

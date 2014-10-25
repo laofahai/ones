@@ -59,24 +59,22 @@ class InstallAction extends CommonAction {
     }
 
     private function connectDB($config) {
-        $link = mysql_connect($config["db"]["dbhost"], $config["db"]["dbuser"], $config["db"]["dbpwd"]);
+        $link = mysqli_connect($config["db"]["dbhost"], $config["db"]["dbuser"], $config["db"]["dbpwd"]); 
 
-        if(!$link) {
+        if (mysqli_connect_errno()) {
             $this->error("testDbConnectFailed");
             return false;
         }
-
-        $selected = mysql_select_db($config["db"]["dbname"]);
+        
+        $selected = mysqli_select_db($link, $config["db"]["dbname"]);
 
         if(!$selected) {
             $sql = "CREATE DATABASE IF NOT EXISTS `{$config["db"]["dbname"]}` DEFAULT CHARSET utf8 COLLATE utf8_general_ci";
-            $rs = mysql_query($sql);
-            echo $sql;
-            var_dump($rs);
-            mysql_select_db($config["db"]["dbname"]);
+            mysqli_query($sql);
+            mysqli_select_db($config["db"]["dbname"]);
         }
 
-        mysql_query("SET NAMES UTF8");
+        mysqli_query("SET NAMES UTF8");
 
         return $link;
     }

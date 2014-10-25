@@ -211,6 +211,10 @@ abstract class RestAction {
         if(!$data or !is_array($data)) {
             return;
         }
+        
+        header("Cache-Control", "no-cache");
+        header("Pragma", "no-cache");
+        header("Expires", "0");
 
         echo json_encode($data);
 //        echo $this->encodeData($data,strtolower($type));
