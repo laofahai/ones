@@ -211,10 +211,10 @@ abstract class RestAction {
         if(!$data or !is_array($data)) {
             return;
         }
-        
-        header("Cache-Control", "no-cache");
-        header("Pragma", "no-cache");
-        header("Expires", "0");
+
+        header("cache-control:no-cache");
+        header("Pragma:no-cache");
+        header("Expires:0");
         header("Content-Type", "application/json");
 
         echo json_encode($data);
