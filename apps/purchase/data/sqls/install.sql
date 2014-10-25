@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]_purchase` (
+CREATE TABLE IF NOT EXISTS `[PREFIX]purchase` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(20) NOT NULL,
   `purchase_type` smallint(3) NOT NULL,
