@@ -215,6 +215,7 @@ abstract class RestAction {
         header("Cache-Control", "no-cache");
         header("Pragma", "no-cache");
         header("Expires", "0");
+        header("Content-Type", "application/json");
 
         echo json_encode($data);
 //        echo $this->encodeData($data,strtolower($type));
