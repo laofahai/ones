@@ -70,11 +70,11 @@ class InstallAction extends CommonAction {
 
         if(!$selected) {
             $sql = "CREATE DATABASE IF NOT EXISTS `{$config["db"]["dbname"]}` DEFAULT CHARSET utf8 COLLATE utf8_general_ci";
-            mysqli_query($sql);
-            mysqli_select_db($config["db"]["dbname"]);
+            mysqli_query($link, $sql);
+            mysqli_select_db($link, $config["db"]["dbname"]);
         }
 
-        mysqli_query("SET NAMES UTF8");
+        mysqli_query($link, "SET NAMES UTF8");
 
         return $link;
     }
