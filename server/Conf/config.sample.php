@@ -9,7 +9,7 @@ $BASEConfig = array(
     'SERVICE_API_PWD' => 'free',
 
     /* 数据库配置 */
-    'DB_TYPE'            =>    'mysql',        // 数据库类型
+    'DB_TYPE'            =>    'mysqli',        // 数据库类型
     'DB_HOST'            =>    '[db_host]',    // 数据库服务器地址
     'DB_NAME'            =>    '[db_name]',            // 数据库名
     'DB_USER'            =>    '[db_user]',        // 数据库用户名
