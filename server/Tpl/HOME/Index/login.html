@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="common/statics/css/main.css">
 </head>
 
-<body class="login-layout" ng-app="ones.login">
+<body class="login-layout">
 <div class="main-container" style="min-height:400px;">
     <div class="main-content">
         <div class="row">
@@ -163,6 +163,32 @@
         jQuery('.widget-box.visible').removeClass('visible');
         jQuery('#' + id).addClass('visible');
     }
+    /**
+     * i18n
+     * */
+    jQuery(function(){
+        /**
+         * 加载语言包
+         * */
+        ones.i18n = ones.caches.getItem("ones.i18n");
+        if((!ones.i18n || isEmptyObject(ones.i18n)) && !ones.installing) {
+            jQuery.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
+                ones.caches.setItem("ones.i18n", data, 1);
+                ones.i18n = ones.caches.getItem("ones.i18n");
+                if(!ones.i18n) {
+                    throw("can't load i18n package.");
+                }
+
+                angular.element(document).ready(function() {
+                    angular.bootstrap(document, ['ones.login']);
+                });
+            });
+        } else {
+            angular.element(document).ready(function() {
+                angular.bootstrap(document, ['ones.login']);
+            });
+        }
+    });
 </script>
 </body>
 </html>
