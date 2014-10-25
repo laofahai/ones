@@ -33,7 +33,6 @@ class appPublish:
     def doUpload(self, appNames):
 
         os.chdir(self.appsPath)
-        zips = os.listdir(self.appsPath)
 
         timeout = 60
         bufsize = 1024
