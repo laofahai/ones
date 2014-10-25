@@ -76,12 +76,6 @@
                 $locationProvider.html5Mode(true);
             }
             
-            $resourceProvider.defaults.cache = false;
-            
-            console.log($resourceProvider);
-
-//            $locationProvider.hashPrefix('!');
-
             $httpProvider.interceptors.push(reqInterceptor);
         }])
         /**
