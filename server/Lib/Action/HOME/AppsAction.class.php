@@ -25,6 +25,7 @@ class AppsAction extends CommonAction {
         //获取所有APP
         if($_GET["queryAll"]) {
             //获取所有APP列表
+            $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
             $http->request($this->serviceUri."App/getList", array(
                 "_pn" => $_GET["_pn"],
                 "_ps" => $_GET["_ps"],
@@ -97,6 +98,7 @@ class AppsAction extends CommonAction {
                 $installedAppAlias[] = $app["alias"];
             }
 
+            $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
             $http->request($this->serviceUri."App/getList", array(
                 "alias" => implode(",", $installedAppAlias),
                 "api_key" => C("SERVICE_API_KEY")
@@ -153,6 +155,7 @@ class AppsAction extends CommonAction {
             $params["alias"] = $_GET["alias"];
         }
 
+        $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
         $http->request($this->serviceUri."App/getInfo", $params);
 
         $tmp = $http->get_data();

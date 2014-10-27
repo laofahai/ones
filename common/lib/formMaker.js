@@ -1091,7 +1091,7 @@
                         var self = this;
                         var parentScope = self.parentScope = scope.$parent;
                         parentScope.billFieldEdit = function($evt){
-                            var ele = $evt.target;
+                            var ele = $evt.target || $evt;
 
                             var context = getLabelContext(ele);
 
@@ -1103,8 +1103,8 @@
                             }
                             var struct = self.opts.fieldsDefine[context.field] || {};
                             struct.class="width-100 editAble";
-                            struct.remoteDataField = sprintf("%s_%d", context.field, context.trid);
-                            struct["ng-model"] = sprintf("%s[%d].%s", self.opts.dataName, context.trid, context.field);
+                            struct.remoteDataField = sprintf("%s_%d", context.field, parseInt(context.trid) || 0);
+                            struct["ng-model"] = sprintf("%s[%d].%s", self.opts.dataName, parseInt(context.trid) || 0, context.field);
                             if(struct.editAbleRequire) {
                                 if(struct.editAbleRequire instanceof Array) {
                                     for(var i=0;i<struct.editAbleRequire.length;i++) {
@@ -1124,8 +1124,10 @@
                             //支持的事件列表
                             var eventsList = ["blur", "click", "keydown", "focus", "change"];
                             var events = [];
+                            context.field = context.field || "";
                             angular.forEach(eventsList, function(e){
                                 var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
+
                                 if(m in parentScope) {
                                     //                            console.log(m);
                                     events.push(sprintf("%s:'%s($event)'", e, m));
@@ -1184,7 +1186,8 @@
                                     }
                                     next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
                                 }
-                                self.parentScope.billFieldEdit($(next).find("label"));
+                                console.log(next.find("label"));
+                                self.parentScope.billFieldEdit(next.find("label"));
                             }
                             self.scope.editing = false;
                             if("callback" in self.fieldsDefine[$(td).data("bind-model")]) {
