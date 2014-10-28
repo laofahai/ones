@@ -122,7 +122,7 @@
             return function(text, link) {
                 var pre = "";
                 if(!ones.useHTML5) {
-                    pre = "#!/";
+                    pre = "#/";
                 }
                 return sprintf('<a href="%s%s">%s</a>', pre, link, text);
             };
