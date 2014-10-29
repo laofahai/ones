@@ -233,6 +233,9 @@ class CommonAction extends RestAction {
             return true;
         }
 
+        //权限检测前置方法
+        tag("before_check_action_permission");
+
         $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         $rule = strtolower($rule);
         if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
