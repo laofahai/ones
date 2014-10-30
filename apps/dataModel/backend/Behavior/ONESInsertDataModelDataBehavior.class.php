@@ -40,9 +40,14 @@ class ONESInsertDataModelDataBehavior extends Behavior {
             $modelFields[$row["field_name"]] = $row;
         }
 
+        //数据
         foreach($data as $k=>$v) {
             if(in_array($k, $modelFieldsAlias)) {
-                $modelData[$k] = $v;
+                if(isset($data[$k."_label"])) {
+                    $modelData[$k] = isset($data[$k."_label"]);
+                } else {
+                    $modelData[$k] = $v;
+                }
             }
         }
 

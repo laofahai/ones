@@ -42,6 +42,25 @@ class StockProductListAction extends CommonAction {
 
         $this->response($data);
     }
+
+    public function update() {
+        $allow = array(
+            "id",
+            "store_min",
+            "store_max",
+            "unit_price",
+            "cost"
+        );
+        $tmp = array();
+        foreach($_POST as $k=>$v) {
+            if(!in_array($k, $allow)) {
+                continue;
+            }
+            $tmp[$k] = $v;
+        }
+        $_POST = $tmp;
+        parent::update();
+    }
     
     public function read() {
 
