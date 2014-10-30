@@ -25,9 +25,9 @@ define("APP_DEBUG", true);
 define("APP_PATH", "./server/");
 
 //session_cache_limiter('private');
-session_cache_expire(10);
-ini_set('session.cookie_lifetime', 600);
-ini_set('session.gc_maxlifetime', 600);
+//session_cache_expire(10);
+//ini_set('session.cookie_lifetime', 600);
+//ini_set('session.gc_maxlifetime', 600);
 
 if(APP_DEBUG) {
     error_reporting(E_ALL^E_NOTICE^E_WARNING);
