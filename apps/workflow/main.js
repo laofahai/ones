@@ -54,6 +54,49 @@
                 }
             }
 
+            var doWorkflowResponseType = function(data, resource, node_id, mainrow_id) {
+                switch(data.type) {
+                    case "redirect":
+                        $location.url(data.location);
+                        return;
+                        break;
+                    case "message":
+                        ComView.alert(ComView.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
+                        afterDoWorkflow();
+                        return;
+                        break;
+                    case "remind":
+                        if(isAppLoaded("remind")) {
+                            $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg, data.alias);
+                        }
+                        afterDoWorkflow();
+                        return;
+                        break;
+                    case "leave_message":
+                        $injector.get("$modal")({
+                            template: appView("leaveMessage.html","workflow"),
+                            scope: $rootScope
+                        });
+                        $rootScope.doWorkflowLeaveMessage = function(){
+                            var data = {
+                                workflow: true,
+                                node_id: node_id,
+                                id: mainrow_id,
+                                donext: true,
+                                message: $rootScope.workflowLeaveMessage
+                            };
+                            resource.doPostWorkflow(data).$promise.then(function(data){
+                                if(data.type) {
+                                    doWorkflowResponseType(data);
+                                }
+                                afterDoWorkflow();
+                            });
+                        }
+                        return;
+                        break;
+                }
+            }
+
             this.doWorkflow = function(resource, node_id, mainrow_id) {
                 resource.doWorkflow({
                     workflow: true,
@@ -61,28 +104,7 @@
                     id: mainrow_id
                 }).$promise.then(function(data){
                     if(data.type) {
-                        switch(data.type) {
-                            case "redirect":
-                                $location.url(data.location);
-                                return;
-                                break;
-                            case "message":
-                                ComView.alert(ComView.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
-                                afterDoWorkflow();
-                                return;
-                                break;
-                            case "remind":
-                                if(isAppLoaded("remind")) {
-                                    $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg, data.alias);
-                                }
-                                afterDoWorkflow();
-                                return;
-                                break;
-                            case "leave_message":
-
-                                afterDoWorkflow(false);
-                                break;
-                        }
+                        doWorkflowResponseType(data, resource, node_id, mainrow_id);
                     }
                 });
             };
@@ -156,6 +178,11 @@
                     },
                     remind: {
                         listAble: false
+                    },
+                    max_times: {
+                        displayName: l("lang.max_execute_times"),
+                        value: 9999,
+                        inputType: "number"
                     },
                     status_text: {},
                     memo: {

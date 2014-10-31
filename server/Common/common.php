@@ -93,7 +93,7 @@ function lang($key, $data=array()) {
 
     $data = $data ? $data : F("i18n/".C("lang"));
 
-    if(strtolower(substr($key, 0, 6) !== "urlmap") && $data["urlMap"]) {
+    if(strtolower(substr($key, 0, 6) !== "urlmap") && $data["urlmap"]) {
         $data = $data["lang"];
     }
 
@@ -619,6 +619,9 @@ if(false === function_exists('lcfirst'))
 /*
  * 返回整合的语言包
  * **/
+function langToLower($match) {
+    return sprintf('"%s":', strtolower($match[1]));
+}
 function combineI18n($runtimeObj, $lang = "zh-cn") {
     $data = $runtimeObj->preloadI18n($lang);
     $data = $runtimeObj->combineI18n(false, $data, $lang);

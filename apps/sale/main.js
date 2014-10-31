@@ -48,7 +48,12 @@
             ;
         }])
         .factory("OrdersRes", ["$resource", "ones.config", function($resource, cnf) {
-            return $resource(cnf.BSU + "sale/orders/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
+            return $resource(cnf.BSU + "sale/orders/:id.json", null,
+                {
+                    'doWorkflow': {method: 'GET'},
+                    'doPostWorkflow': {method: 'POST'},
+                    'update': {method: 'PUT'}
+                });
         }])
         .factory("ReturnsRes", ["$resource", "ones.config", function($resource, cnf) {
             return $resource(cnf.BSU + "sale/returns/:id.json", null,

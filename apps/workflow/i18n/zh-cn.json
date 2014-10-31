@@ -50,6 +50,7 @@
         "AppWorkflow": {
             "appName": "工作流模块"
         },
+        "max_execute_times": "最大执行次数",
         "workflowAssitFile": "工作流辅助文件目录",
         "workflowTypes": [
             {"id": "1", "name": "人为决策"},

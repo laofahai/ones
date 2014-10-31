@@ -55,7 +55,6 @@ class RemindModel extends CommonModel {
                     "user_id" => $u,
                     "type"    => $type,
                     "content" => $msg,
-                    "dateline"=> CTS,
                     "num"     => 1
                 ));
             }

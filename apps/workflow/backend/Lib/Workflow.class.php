@@ -375,13 +375,21 @@ class Workflow {
                 //process表存在当前节点数据，初步判定已执行过，尝试判断最后一个执行节点的下一节点是否包含当前需执行节点
                 //或者判断当前需执行节点的上一节点是否包含最后一个已执行节点
                 if($lastNode["listorder"] >= $nextNodeObj->currentNode["listorder"]) {
-
                     $theNextNodes = explode(",", $lastNode["next_node_id"]);
                     if(!in_array($lastNode["id"], $theNextNodes)){
                         $hasProcessed = true;
                     } else {
                         $hasProcessed = false;
                     }
+                }
+            }
+
+            //查看最大执行次数
+            if(!$hasProcessed) {
+                $map["node_id"] = $nextNodeObj->currentNode["id"];
+                $executedTimes = $this->processModel->where($map)->count();
+                if($executedTimes >= $nextNodeObj->currentNode["max_times"]) {
+                    $hasProcessed = true;
                 }
             }
         }
@@ -483,7 +491,7 @@ class Workflow {
          * 提醒
          * **/
         if($curNode["remind"]) {
-            $msg = lang("messages.remind_".$curNode["execute_file"]);
+            $msg = lang("messages.remind_".$this->currentWorkflow["alias"]."_".$curNode["execute_file"]);
             preg_match_all("/\_\_([a-zA-Z\_]+)\_\_/", $msg, $vars);
 
             if($vars[1]) {

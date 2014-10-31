@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   `execute_type` smallint(1) NOT NULL COMMENT '0一人执行,1所有人执行',
   `remind` int(11) NOT NULL COMMENT '是否提醒',
   `max_time` int(11) NOT NULL COMMENT '最大执行时间，超出失效，小时',
+  `max_times` smallint(5) NOT NULL DEFAULT '9999',
   `status_text` varchar(50) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
   `btn_class` varchar(20) NOT NULL,
@@ -32,8 +33,9 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   PRIMARY KEY (`id`),
   KEY `workflow_id` (`workflow_id`,`prev_node_id`,`next_node_id`,`remind`),
   KEY `listorder` (`listorder`),
-  KEY `is_default` (`is_default`)
+  KEY `default` (`is_default`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- separator
 

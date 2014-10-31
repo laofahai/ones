@@ -98,6 +98,10 @@ class OrdersAction extends CommonAction {
      * 
      */
     public function insert() {
+
+        if($_REQUEST["workflow"]) {
+            return $this->doWorkflow();
+        }
         
         $model = D("Orders");
         $data = $model->formatData($_POST);

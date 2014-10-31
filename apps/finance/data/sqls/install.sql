@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]finance_account` (
 
 CREATE TABLE IF NOT EXISTS `[PREFIX]finance_pay_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subject` varchar(50) NOT NULL,
+  `subject` varchar(50) NULL,
   `type_id` smallint(5) NOT NULL,
   `user_id` int(11) NOT NULL,
   `financer_id` int(11) NOT NULL DEFAULT '0',
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]finance_pay_plan` (
   `source_id` int(11) NOT NULL,
   `amount` float(10,2) NOT NULL,
   `create_dateline` varchar(12) NOT NULL,
-  `pay_dateline` varchar(12) NOT NULL,
+  `pay_dateline` varchar(12) DEFAULT NULL,
   `memo` varchar(255) NOT NULL,
   `status` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
