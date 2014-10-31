@@ -93,6 +93,13 @@ abstract class WorkflowAbstract implements WorkflowInterface {
         ));
     }
 
+    //弹出一个备注框
+    public function leaveMessage() {
+        $this->response(array(
+            "type" => "leave_message"
+        ));
+    }
+
     /*
      * 节点扩展权限检测
      * @param array $condition

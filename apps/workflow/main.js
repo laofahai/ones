@@ -43,6 +43,17 @@
                 uri: "workflow/workflow"
             });
 
+            var afterDoWorkflow = function(reload){
+                reload = reload === false ? false : true;
+                if(reload) {
+                    if($rootScope.currentPage.action === "list") {
+                        $rootScope.$broadcast("gridData.changed", true);
+                    } else {
+                        $injector.get("$route").reload();
+                    }
+                }
+            }
+
             this.doWorkflow = function(resource, node_id, mainrow_id) {
                 resource.doWorkflow({
                     workflow: true,
@@ -57,13 +68,19 @@
                                 break;
                             case "message":
                                 ComView.alert(ComView.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
+                                afterDoWorkflow();
                                 return;
                                 break;
                             case "remind":
                                 if(isAppLoaded("remind")) {
                                     $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg, data.alias);
                                 }
+                                afterDoWorkflow();
                                 return;
+                                break;
+                            case "leave_message":
+
+                                afterDoWorkflow(false);
                                 break;
                         }
                     }

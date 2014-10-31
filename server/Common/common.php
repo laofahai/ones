@@ -89,6 +89,8 @@ function reIndex($data) {
  * **/
 function lang($key, $data=array()) {
 
+    $key = strtolower($key);
+
     $data = $data ? $data : F("i18n/".C("lang"));
 
     if(strtolower(substr($key, 0, 6) !== "urlmap") && $data["urlMap"]) {
@@ -375,6 +377,14 @@ function LogSQLError($model, $rollback=false) {
 function checkParamsFull($data, $needed) {
     foreach($needed as $v) {
         if(!array_key_exists($v, $data)) {
+            return false;
+        }
+    }
+    return true;
+}
+function checkParamsFullMulti($data, $needed) {
+    foreach($data as $row) {
+        if(!checkParamsFull($row, $needed)) {
             return false;
         }
     }

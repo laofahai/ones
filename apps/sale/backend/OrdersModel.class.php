@@ -27,6 +27,10 @@ class OrdersModel extends CommonModel {
     public $relationModels = array(
         "Stockout"
     );
+
+    protected $readonlyField = array(
+        "bill_id","sale_id","dateline"
+    );
     
     public function newOrder($data) {
         
@@ -34,8 +38,17 @@ class OrdersModel extends CommonModel {
             return false;
         }
 
+        //检测每行产品及数据是否完整
         if(!$this->checkFactoryCodeAll($data["rows"])) {
             $this->error = "factory_code_not_full";
+            return false;
+        }
+
+        $needed = array(
+            "num","discount","unit_price","amount"
+        );
+        if(!checkParamsFullMulti($data["rows"], $needed)) {
+            $this->error = "";
             return false;
         }
         
@@ -53,6 +66,10 @@ class OrdersModel extends CommonModel {
         
         $orderId = $this->$method($data);
 
+        if(!$orderId && $data["id"]) {
+            $orderId = $data["id"];
+        }
+
         if(false === $orderId) {
             Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
             $this->rollback();
@@ -60,8 +77,6 @@ class OrdersModel extends CommonModel {
         }
 
 
-
-//        print_r($data["rows"]);exit;
         $detail = D("OrdersDetail");
 
         if($data["id"]) {
@@ -72,12 +87,9 @@ class OrdersModel extends CommonModel {
         }
 
         foreach($data["rows"] as $row) {
-            if($method !== "save") {
-                $row["order_id"] = $orderId;
-            } else {
-                unset($row["order_id"]);
-            }
-            $rs = $detail->$method($row);
+            $row["order_id"] = $orderId;
+            $rowMethod = $row["id"] ? "save" : "add";
+            $rs = $detail->$rowMethod($row);
             if(false === $rs) {
                 Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
                 $this->rollback();
@@ -86,9 +98,8 @@ class OrdersModel extends CommonModel {
         }
         
         $this->commit();
-        
+
         return $orderId;
-//        echo $orderId;exit;
     }
     
     public function formatData($data) {
@@ -102,8 +113,6 @@ class OrdersModel extends CommonModel {
             $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
 
         }
-
-
         
         $id = abs(intval($_GET["id"]));
         if($id) {

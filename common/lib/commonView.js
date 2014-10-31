@@ -646,12 +646,6 @@
                                     workflowAPI.doWorkflow(res, node_id, selectedItems[i].id);
                                 }
                             }
-
-                            if($rootScope.currentPage.action === "list") {
-                                $scope.$broadcast("gridData.changed", true);
-                            } else {
-                                $injector.get("$route").reload();
-                            }
                         };
                         $scope.workflowActionDisabled = function(id, item) {
                             try {

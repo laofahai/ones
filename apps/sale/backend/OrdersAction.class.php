@@ -87,7 +87,7 @@ class OrdersAction extends CommonAction {
         }
 
         $data = $model->formatData($_POST);
-        if(!$model->newOrder($data)) {
+        if(false === $model->newOrder($data)) {
             $this->error($model->getError());
             return;
         }
@@ -102,7 +102,7 @@ class OrdersAction extends CommonAction {
         $model = D("Orders");
         $data = $model->formatData($_POST);
         $orderId = $model->newOrder($data);
-        if(!$orderId) {
+        if(false === $orderId) {
             $this->error($model->getError());
             return;
         }
