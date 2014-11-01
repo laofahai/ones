@@ -384,12 +384,14 @@ class Workflow {
                 }
             }
 
-            //查看最大执行次数
-            if(!$hasProcessed) {
+            //最大执行次数
+            if(true === $hasProcessed) {
                 $map["node_id"] = $nextNodeObj->currentNode["id"];
                 $executedTimes = $this->processModel->where($map)->count();
                 if($executedTimes >= $nextNodeObj->currentNode["max_times"]) {
                     $hasProcessed = true;
+                } else {
+                    $hasProcessed = false;
                 }
             }
         }
@@ -403,9 +405,13 @@ class Workflow {
         
         if($hasProcessed) {
             $nextNodeObj->error("has_processed");
+            return;
         }
 
         if(!$this->checkCondition($mainRowid, $nextNodeObj->currentNode)) {
+            if($this->error) {
+                $nextNodeObj->error($this->error);
+            }
             return false;
         }
         
@@ -660,7 +666,12 @@ class Workflow {
         $node["context"] = unserialize($node["context"]);
         $obj = new $className($mainrowId);
         $rs = $obj->checkCondition($node["cond"]);
-        return $rs === false ? false : true;
+        if(false === $rs) {
+            $this->error = $obj->error;
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function getError() {

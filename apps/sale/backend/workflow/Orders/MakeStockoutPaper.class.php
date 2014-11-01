@@ -33,7 +33,21 @@ class OrdersMakeStockoutPaper extends WorkflowAbstract {
         import("@.Workflow.Workflow");
         $workflow = new Workflow("stockout", $this->context);
         $workflow->doNext($stockoutId, "", true, true);
-        
+    }
+
+
+    public function IsMaked () {
+        $model = D("Stockout");
+        $map = array(
+            "source_model" => "Orders",
+            "source_id"    => $this->mainrowId
+        );
+        if($model->where($map)->find()){
+            $this->error = "stockout already maked";
+            return false;
+        } else {
+            return true;
+        }
     }
     
 }

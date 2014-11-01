@@ -39,7 +39,7 @@ class PurchaseModel extends CommonModel {
         $this->startTrans();
         
         $purchaseId = $this->add($data);
-//        echo $this->getLastSql();exit;
+
         if(!$purchaseId) {
             $this->error = "insert purchase bill failed";
             Log::write("SQL Error:".$this->getLastSql(), Log::SQL);
@@ -113,15 +113,12 @@ class PurchaseModel extends CommonModel {
             list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
             $data["rows"][$k]["goods_id"] = $goods_id;
             $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
-
-            unset($data["rows"][$k]["standard"]);
-            unset($data["rows"][$k]["version"]);
         }
 //        $data["total_price_real"] = $data["total_amount_real"];
 //        $data["total_price"] = $data["total_amount"];
 //        $data["quantity"] = $data["total_num"];
         $data["bill_id"] = makeBillCode("CG");
-        $data["dateline"] = strtotime($data["inputTime"]);
+        $data["dateline"] = $data["inputTime"] ? strtotime($data["inputTime"]) : CTS;
         $data["user_id"] = getCurrentUid();
 
 

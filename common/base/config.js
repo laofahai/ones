@@ -66,7 +66,6 @@
 
                     try {
                         //尝试使用已定义的资源
-
                         if(this.model.api) {
                             this.resource = this.model.api;
                             this.resourceName = this.modelName+".api";

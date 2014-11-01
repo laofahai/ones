@@ -32,7 +32,7 @@ class OrdersMakeFinanceReceive extends WorkflowAbstract {
 
         $model = D("FinanceReceivePlan");
         $model->record($data);
-
     }
+
 
 } 

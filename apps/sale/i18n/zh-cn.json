@@ -31,7 +31,8 @@
             "returns": "退货单"
         },
         "messages": {
-            "remind_orders_MakeFinanceReceive": "有新的销售<a ng-click=\"mark($event);$root.goPage('finance/list/financeReceivePlan')\">应收款</a>需要处理"
+            "remind_orders_MakeFinanceReceive": "有新的销售<a ng-click=\"mark($event);$root.goPage('finance/list/financeReceivePlan')\">应收款</a>需要处理",
+            "stockout already maked": "出库单已生成"
         },
         "modules": {
             "Orders": "订单"

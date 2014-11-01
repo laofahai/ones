@@ -45,6 +45,12 @@
                     templateUrl: appView('returns/edit.html', "sale"),
                     controller: 'ReturnsEditCtl'
                 })
+
+                //工作流
+                .when('/doWorkflow/orders/make:outsideGroup-:outsideModule/:nodeId/:id', {
+                    templateUrl: appView('makeOutSiding.html', 'sale'),
+                    controller: 'OrdersOutSidingCtl'
+                })
             ;
         }])
         .factory("OrdersRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -282,6 +288,43 @@
 
                 return obj;
             }])
+        .service("OrdersMakeOutSidingModel", ["pluginExecutor", function(plugin){
+            return {
+                config: {
+                    rowsModel: "OrdersMakeOutSidingModel"
+                },
+                getStructure: function(){
+                    var fields = {
+                        goods_id: {
+                            displayName: l("lang.goods"),
+                            labelField: true,
+                            inputType: "static",
+                            width: "20%"
+                        },
+                        num: {
+                            inputType: "number",
+                            totalAble: true,
+                            "ui-event": "{blur: 'afterNumBlur($event)'}",
+                            printAble:true
+                        },
+                        memo: {}
+
+                    };
+
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: fields,
+                        alias: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"],
+                        config: {
+                            inputType: "static"
+                        }
+                    });
+
+                    return ones.pluginScope.get("defer").promise;
+                }
+            };
+        }])
 
         .controller("OrdersEditCtl", ["$scope", "OrdersRes", "GoodsRes", "OrdersModel", "ComView", "RelationshipCompanyRes", "$routeParams",
             function($scope, OrdersRes, GoodsRes, OrdersModel, ComView, RelationshipCompanyRes, $routeParams) {
@@ -422,6 +465,41 @@
 
                 ComView.makeGridSelectedActions($scope, ReturnsModel, ReturnsRes, "sale", "returns");
 
+            }])
+
+        .controller("OrdersOutSidingCtl", ["$scope", "$routeParams", "$injector", "OrdersRes", "ones.dataApiFactory",
+            function($scope, $routeParams, $injector, OrdersRes, dataAPI){
+
+                var outsideGroup = $routeParams.outsideGroup.toLowerCase();
+                var outsideModule = $routeParams.outsideModule.toLowerCase();
+
+                if(!isAppLoaded(outsideGroup)) {
+                    return false;
+                }
+
+                dataAPI.init(outsideGroup,outsideModule);
+                var outSideRes = dataAPI.resource;
+
+                $scope.doBillSubmit = function(){
+                    OrdersRes.save({
+                        workflow:true,
+                        node_id: $routeParams.nodeId
+                    }, {
+                        doNext: true,
+                        id: $scope.formMetaData.id,
+                        total_num: $scope.formMetaData.total_num,
+                        source_model: "Orders",
+                        memo: $scope.formMetaData.memo,
+                        rows: $scope.billData
+                    }).$promise.then(function(data){
+                        $scope.$root.goPage("sale/list/orders");
+                    });
+                }
+
+                $scope.billConfig = {
+                    model: $injector.get("OrdersMakeOutSidingModel"),
+                    resource: OrdersRes
+                };
             }])
     ;
 })();
