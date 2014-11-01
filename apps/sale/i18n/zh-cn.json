@@ -32,6 +32,7 @@
         },
         "messages": {
             "remind_orders_MakeFinanceReceive": "有新的销售<a ng-click=\"mark($event);$root.goPage('finance/list/financeReceivePlan')\">应收款</a>需要处理",
+            "remind_orders_MakePurchase": "有新的销售<a ng-click=\"mark($event);$root.goPage('purchase/list/purchase')\">采购单</a>需要处理",
             "stockout already maked": "出库单已生成"
         },
         "modules": {

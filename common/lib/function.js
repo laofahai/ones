@@ -477,6 +477,28 @@ String.prototype.ucfirst = function() {
     // Rejoin the string and return.
     return x.join(' ');
 };
+String.prototype.lcfirst = function(){
+    // Split the string into words if string contains multiple words.
+    var x = this.split(/\s+/g);
+
+    for (var i = 0; i < x.length; i++) {
+
+        // Splits the word into two parts. One part being the first letter,
+        // second being the rest of the word.
+        var parts = x[i].match(/(\w)(\w*)/);
+
+        if(!parts) {
+            continue;
+        }
+
+        // Put it back together but uppercase the first letter and
+        // lowercase the rest of the word.
+        x[i] = parts[1].toLowerCase() + parts[2];
+    }
+
+    // Rejoin the string and return.
+    return x.join(' ');
+}
 
 /**
  * 格式化表单中得数据，比如input number之类的

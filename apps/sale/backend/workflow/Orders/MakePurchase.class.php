@@ -10,7 +10,7 @@ class OrdersMakePurchase extends WorkflowAbstract {
 
     public function run() {
 
-        if(!isAppLoaded("finance")) {
+        if(!isAppLoaded("purchase")) {
             $this->error(sprintf(lang("messages.unfoundApp"), "purchase"));
             return;
         }
@@ -32,6 +32,10 @@ class OrdersMakePurchase extends WorkflowAbstract {
 
         $data["source_model"] = "Orders";
         $data["source_id"] = $this->mainrowId;
+
+        foreach($data["rows"] as $k=>$row) {
+            unset($data["rows"][$k]["id"]);
+        }
 
         $data = $model->formatData($data);
 

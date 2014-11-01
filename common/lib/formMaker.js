@@ -320,7 +320,10 @@
 
                                     if($routeParams.id) {
                                         config.isEdit = true;
-                                        var queryExtraParams = {id: $routeParams.id, includeRows: true};
+                                        var queryExtraParams = {
+                                            id: $routeParams.id, includeRows: true
+                                        };
+                                        queryExtraParams = angular.extend(queryExtraParams, config.queryExtraParams);
                                         config.resource.get(queryExtraParams).$promise.then(function(data){
                                             $scope.$broadcast("bill.dataLoaded", data);
                                         });

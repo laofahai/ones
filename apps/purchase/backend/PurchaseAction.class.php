@@ -26,10 +26,6 @@ class PurchaseAction extends CommonAction {
             $this->error($model->getError());
             return;
         }
-
-        import("@.Workflow.Workflow");
-        $workflow = new Workflow($this->workflowAlias);
-        $node = $workflow->doNext($billId, "", true);
     }
 
     public function update() {

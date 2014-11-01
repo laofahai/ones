@@ -45,16 +45,18 @@
 
             var afterDoWorkflow = function(reload){
                 reload = reload === false ? false : true;
-                if(reload) {
+                if(undefined === reload || reload) {
                     if($rootScope.currentPage.action === "list") {
                         $rootScope.$broadcast("gridData.changed", true);
                     } else {
                         $injector.get("$route").reload();
                     }
+                } else if(typeof(reload) == "function") {
+                    reload();
                 }
             }
 
-            var doWorkflowResponseType = function(data, resource, node_id, mainrow_id) {
+            var doWorkflowResponseType = function(data, resource, node_id, mainrow_id, callback) {
                 switch(data.type) {
                     case "redirect":
                         $location.url(data.location);
@@ -62,14 +64,14 @@
                         break;
                     case "message":
                         ComView.alert(ComView.toLang(data.msg, "messages"), data.error ? "danger" : "warning");
-                        afterDoWorkflow();
+                        afterDoWorkflow(callback);
                         return;
                         break;
                     case "remind":
                         if(isAppLoaded("remind")) {
                             $injector.get("Remind.RemindAPI").showRemindModal(self.scope, data.msg, data.alias);
                         }
-                        afterDoWorkflow();
+                        afterDoWorkflow(callback);
                         return;
                         break;
                     case "leave_message":
@@ -89,7 +91,7 @@
                                 if(data.type) {
                                     doWorkflowResponseType(data);
                                 }
-                                afterDoWorkflow();
+                                afterDoWorkflow(callback);
                             });
                         }
                         return;
@@ -106,6 +108,18 @@
                     if(data.type) {
                         doWorkflowResponseType(data, resource, node_id, mainrow_id);
                     }
+                });
+            };
+
+            this.doPostWorkflow = function(resource, node_id, mainrow_id, postData, callback){
+                console.log(callback);
+                resource.doPostWorkflow({
+                    workflow: true,
+                    doNext: true,
+                    node_id: node_id,
+                    id: mainrow_id
+                }, postData).$promise.then(function(data){
+                    doWorkflowResponseType(data, resource, node_id, mainrow_id, callback)
                 });
             };
         }])

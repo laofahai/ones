@@ -470,8 +470,8 @@
         .controller("OrdersOutSidingCtl", ["$scope", "$routeParams", "$injector", "OrdersRes", "ones.dataApiFactory",
             function($scope, $routeParams, $injector, OrdersRes, dataAPI){
 
-                var outsideGroup = $routeParams.outsideGroup.toLowerCase();
-                var outsideModule = $routeParams.outsideModule.toLowerCase();
+                var outsideGroup = $routeParams.outsideGroup.lcfirst();
+                var outsideModule = $routeParams.outsideModule.lcfirst();
 
                 if(!isAppLoaded(outsideGroup)) {
                     return false;
@@ -481,19 +481,19 @@
                 var outSideRes = dataAPI.resource;
 
                 $scope.doBillSubmit = function(){
-                    OrdersRes.save({
-                        workflow:true,
-                        node_id: $routeParams.nodeId
-                    }, {
-                        doNext: true,
-                        id: $scope.formMetaData.id,
-                        total_num: $scope.formMetaData.total_num,
-                        source_model: "Orders",
-                        memo: $scope.formMetaData.memo,
-                        rows: $scope.billData
-                    }).$promise.then(function(data){
-                        $scope.$root.goPage("sale/list/orders");
-                    });
+                    $injector.get("Workflow.WorkflowAPI").doPostWorkflow(
+                        OrdersRes, $routeParams.nodeId, $scope.formMetaData.id,
+                        {
+                            total_num: $scope.formMetaData.total_num,
+                            source_model: "Orders",
+                            memo: $scope.formMetaData.memo,
+                            rows: $scope.billData
+                        },
+                        function(){
+                            console.log("callback");return;
+                            $scope.$root.goPage("sale/list/orders");
+                        }
+                    );
                 }
 
                 $scope.billConfig = {

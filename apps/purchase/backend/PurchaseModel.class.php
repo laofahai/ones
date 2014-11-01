@@ -60,6 +60,9 @@ class PurchaseModel extends CommonModel {
         }
         
         $this->commit();
+
+        $workflow = new Workflow($this->workflowAlias);
+        $workflow->doNext($purchaseId, "", true);
         
         return $purchaseId;
     }
@@ -117,6 +120,10 @@ class PurchaseModel extends CommonModel {
 //        $data["total_price_real"] = $data["total_amount_real"];
 //        $data["total_price"] = $data["total_amount"];
 //        $data["quantity"] = $data["total_num"];
+
+        $data["purchase_type"] = $data["purchase_type"] ? $data["purchase_type"] : 0;
+        $data["supplier_id"] = $data["supplier_id"] ? $data["supplier_id"] : 0;
+
         $data["bill_id"] = makeBillCode("CG");
         $data["dateline"] = $data["inputTime"] ? strtotime($data["inputTime"]) : CTS;
         $data["user_id"] = getCurrentUid();

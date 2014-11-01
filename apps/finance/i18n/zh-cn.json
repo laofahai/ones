@@ -17,14 +17,14 @@
                     }
                 },
                 "FinancePayPlan": {
-                    "name": "财务支出计划",
+                    "name": "应付款",
                     "actions": {
                         "add": "",
                         "list": ""
                     }
                 },
                 "FinanceReceivePlan": {
-                    "name": "财务收入计划",
+                    "name": "应收款",
                     "actions": {
                         "add": "",
                         "list": ""
@@ -35,7 +35,7 @@
         "doWorkflow": {
             "modules": {
                 "FinanceReceivePlan": {
-                    "name": "财务收款计划",
+                    "name": "应收款",
                     "actions": {
                         "confirm": "确认收款"
                     }
@@ -48,8 +48,8 @@
             "finance": "财务管理",
             "finance_account": "财务账户管理",
             "finance_record" : "收支记录",
-            "finance_receive_plan": "财务收入计划",
-            "finance_pay_plan": "财务付款计划"
+            "finance_receive_plan": "应收款",
+            "finance_pay_plan": "应付款"
         },
         "widgetTitles": {
             "confirm_finance_receive": "财务确认收款"
@@ -57,6 +57,8 @@
         "AppFinance": {
             "appName": "基础财务模块"
         },
+        "financeReceivePlan": "应收款",
+        "financePayPlan": "应付款",
         "balance_direction": "余额方向",
         "record_type": "记录类型",
         "account": "账户",

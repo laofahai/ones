@@ -71,8 +71,31 @@ class OrdersAction extends CommonAction {
         $rowData = $dataModel->assignModelData($rowData, $modelIds);
         
         $formData["rows"] = reIndex($rowData);
-        
-        
+
+        /*
+         * 相关单据
+         * **/
+        $relateItem = array();
+        $map = array(
+            "source_model" => "Orders",
+            "source_id"    => $_GET["id"]
+        );
+        if(isAppLoaded("purchase")) {
+            $purchases = D("Purchase")->field(
+                "id,bill_id,'Purchase' AS type,'shopping-cart' AS icon,'purchase/editBill/purchase/id/' AS link"
+            )->where($map)->select();
+            $relateItem = array_merge($relateItem, (array)$purchases);
+        }
+
+        if(isAppLoaded("finance")) {
+            $finance = D("FinanceReceivePlan")->field(
+                "id, id AS bill_id,'FinanceReceivePlan' AS type,'money' AS icon,'finance/viewDetail/financeReceivePlan/id/' AS link"
+            )->where($map)->select();
+            $relateItem = array_merge($relateItem, (array)$finance);
+        }
+
+        $formData["relatedItems"] = $relateItem;
+
         $this->response($formData);
         
     }
