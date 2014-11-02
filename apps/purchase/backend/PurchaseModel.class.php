@@ -131,6 +131,16 @@ class PurchaseModel extends CommonModel {
 
         return $data;
     }
+
+    public function toRelatedItem($sourceModel, $sourceId) {
+        $map = array(
+            "source_model" => $sourceModel,
+            "source_id"    => $sourceId
+        );
+        return $this->field(
+            "id,bill_id,'Purchase' AS type,'shopping-cart' AS icon,'purchase/editBill/purchase/id/' AS link"
+        )->where($map)->order("id ASC")->select();
+    }
     
 }
 

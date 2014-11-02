@@ -77,9 +77,6 @@ class ProducePlanAction extends CommonAction {
             $this->httpError(500, $model->getError());
         }
         
-        import("@.Workflow.Workflow");
-        $workflow = new Workflow($this->workflowAlias);
-        $workflow->doNext($id, "", true);
     }
 
     public function update() {

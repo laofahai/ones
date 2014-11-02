@@ -44,5 +44,15 @@ class FinanceReceivePlanModel extends CommonModel {
 
         return $lastId;
     }
+
+    public function toRelatedItem($sourceModel, $sourceId) {
+        $map = array(
+            "source_model" => $sourceModel,
+            "source_id"    => $sourceId
+        );
+        return $this->field(
+            "id, id AS bill_id,'FinanceReceivePlan' AS type,'money' AS icon,'finance/viewDetail/financeReceivePlan/id/' AS link"
+        )->where($map)->order("id ASC")->select();
+    }
     
 }

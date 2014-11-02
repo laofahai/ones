@@ -22,7 +22,25 @@ class OrdersMakeProducePlan extends WorkflowAbstract {
             ));
         }
 
-        exit;
+        $model = D("ProducePlan");
+
+        $data = $_POST;
+
+        unset($data["doNext"]);
+        unset($data["id"]);
+
+        $data["source_model"] = "Orders";
+        $data["source_id"] = $this->mainrowId;
+
+        foreach($data["rows"] as $k=>$row) {
+            unset($data["rows"][$k]["id"]);
+        }
+
+        $data = $model->formatData($data);
+
+        $planId = $model->newBill($data);
+
+        $this->context["memo"] = "#".$planId;
 
     }
 

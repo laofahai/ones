@@ -50,8 +50,15 @@ class ProducePlanModel extends CommonModel {
         }
         
         $this->commit();
+
+        $workflow = new Workflow($this->workflowAlias);
+        $workflow->doNext($id, "", true);
         
         return $id;
+    }
+
+    public function newBill($data) {
+        return $this->newPlan($data);
     }
 
     public function editPlan($data) {
@@ -96,7 +103,9 @@ class ProducePlanModel extends CommonModel {
             "type" => $postData["type"],
             "memo" => $postData["memo"],
             "total_num" => $postData["total_num"],
-            "create_time"=> CTS
+            "create_time"=> CTS,
+            "source_model" => $postData["source_model"],
+            "source_id" => $postData["source_id"],
         );
 
         if($_POST["id"]) {
@@ -132,4 +141,15 @@ class ProducePlanModel extends CommonModel {
         $data["rows"] = $rows;
         return $data;
     }
+
+    public function toRelatedItem($sourceModel, $sourceId) {
+        $map = array(
+            "source_model" => $sourceModel,
+            "source_id"    => $sourceId
+        );
+        return $this->field(
+            "id,id AS 'bill_id','ProducePlan' AS type,'retweet' AS icon,'produce/editBill/producePlan/id/' AS link"
+        )->where($map)->order("id ASC")->select();
+    }
+
 }
