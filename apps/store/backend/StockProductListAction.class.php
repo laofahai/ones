@@ -59,6 +59,8 @@ class StockProductListAction extends CommonAction {
             $tmp[$k] = $v;
         }
         $_POST = $tmp;
+
+        $this->dataModelAlias = null;
         parent::update();
     }
     
