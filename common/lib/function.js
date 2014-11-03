@@ -273,7 +273,7 @@ function l(k, langObject) {
             && tmp[0] === tmp[1]) {
             return tmp[0];
         }
-        return langObject[k] === undefined ? k : langObject[k];
+        return langObject[k] === undefined ? undefined : langObject[k];
     }
 
     //兼容字段key中包含.

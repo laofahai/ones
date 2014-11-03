@@ -25,6 +25,10 @@
         "widgetTitles": {
             "editMyProfile" : "修改我的资料"
         },
+        "wizardMessages": {
+            "dashboard.after.install.appCenterBtn.title": "欢迎使用ONES",
+            "dashboard.after.install.appCenterBtn.body": "首次使用请进入应用中心安装您需要的应用"
+        },
         "AppDashboard": {
             "appName": "控制面板模块"
         },

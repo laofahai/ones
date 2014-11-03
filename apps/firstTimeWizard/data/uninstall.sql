@@ -1,0 +1,1 @@
+DROP TABLE `[PREFIX]first_time_wizard`;

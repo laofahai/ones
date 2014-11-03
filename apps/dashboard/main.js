@@ -74,8 +74,8 @@
             };
         }])
 
-        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout", "Department.UserAPI",
-            function($scope, $rootScope, MyDesktopRes, conf, plugin, $timeout, user){
+        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "MyDesktopRes", "ones.config", "pluginExecutor", "$timeout", "Department.UserAPI", "FirstTimeWizard.WizardAPI",
+            function($scope, $rootScope, MyDesktopRes, conf, plugin, $timeout, user, wizard){
 
                 var chars = 'abcdefghijklmnopqrstuvwxyz';
                 var btnClasses = [
@@ -154,6 +154,8 @@
 
                         $scope.appBtns.push(app);
                     });
+
+                    wizard.showWizard("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn");
                 }, 300);
 
                 /**
