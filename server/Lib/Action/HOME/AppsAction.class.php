@@ -237,7 +237,7 @@ class AppsAction extends CommonAction {
         $remoteUri = sprintf("%sApp/getDownload/alias/%s/api_key/%s",
             $this->serviceUri,
             $alias,
-            C("SERVICE_API_KEY")
+            C("SERVICE_API_KEY")."|".C("SERVICE_SECRET_KEY")
         );
 
         $target = ROOT_PATH."/apps";
