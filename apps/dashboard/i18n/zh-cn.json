@@ -27,7 +27,7 @@
         },
         "wizardMessages": {
             "dashboard.after.install.appCenterBtn.title": "欢迎使用ONES",
-            "dashboard.after.install.appCenterBtn.body": "首次使用请进入应用中心安装您需要的应用"
+            "dashboard.after.install.appCenterBtn.body": "ONES安装包中默认并不包含业务应用，首次使用请进入应用中心安装您需要的应用"
         },
         "AppDashboard": {
             "appName": "控制面板模块"
