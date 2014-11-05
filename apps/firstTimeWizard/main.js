@@ -29,7 +29,7 @@
                  * @param selector 显示popover的选择器
                  * @param key popover唯一KEY
                  * */
-                this.showWizard = function(selector, key) {
+                this.showPopover = function(selector, key) {
 
                     if(ones.firstTimeWizarded && ones.firstTimeWizarded.indexOf(key) >= 0) {
                         return;
@@ -51,7 +51,7 @@
                         $timeout(function(){
                             wizardPop.$scope.key = key;
                             wizardPop.$scope.doMarkPop =  function(key, forever) {
-                                self.hideWizard(wizardPop, key, forever);
+                                self.hidePopover(wizardPop, key, forever);
                             };
                             wizardPop.show();
                         }, 500);
@@ -60,7 +60,7 @@
                     }, 2000);
                 };
 
-                this.hideWizard = function(popObj, key, forever) {
+                this.hidePopover = function(popObj, key, forever) {
                     forever = forever === false ? false : true;
                     self.api.save({
                         key: key

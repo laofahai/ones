@@ -155,7 +155,7 @@
                         $scope.appBtns.push(app);
                     });
 
-                    wizard.showWizard("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn");
+                    wizard.showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn");
                 }, 300);
 
                 /**

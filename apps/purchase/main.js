@@ -1,4 +1,29 @@
 (function(){
+
+    //桌面按钮
+    ones.pluginRegister("hook.dashboard.appBtn", function(injector, defer) {
+        var ComView = injector.get("ComView");
+        ones.pluginScope.append("dashboardAppBtns", {
+            label: ComView.toLang("Purchase"),
+            name: "Purchase",
+            icon: "shopping-cart",
+            link: "purchase/list/purchase"
+        });
+
+        ones.pluginScope.set("defer", defer);
+    });
+
+    //综合搜索
+    ones.pluginRegister("hook.multiSearch.items", function(inject, defer, params){
+        ones.pluginScope.append("ones.multiSearch.items", {
+            name: "Purchase",
+            dataSource: "PurchaseRes",
+            labelField: "bill_id",
+            linkTpl: "purchase/editBill/purchase/id/+id",
+            link: "purchase/list/purchase"
+        });
+    });
+
     angular.module("ones.purchase",[])
     .config(["$routeProvider", function($route){
         $route //采购
