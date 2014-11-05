@@ -175,7 +175,7 @@ class AppsAction extends CommonAction {
         import("@.ORG.markdown");
         $parseDown = new Parsedown();
 
-        $appInfo["description"] = $parseDown->text($appInfo["description"]);
+        $appInfo["content"] = $parseDown->text($appInfo["content"]);
 
         $this->response($appInfo);
 

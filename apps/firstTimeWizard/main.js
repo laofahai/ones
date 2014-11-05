@@ -62,13 +62,15 @@
 
                 this.hidePopover = function(popObj, key, forever) {
                     forever = forever === false ? false : true;
-                    self.api.save({
-                        key: key
-                    }).$promise.then(function(){
-                        ones.firstTimeWizarded.push(key);
-                        ones.caches.setItem("ones.firstTimeWizard.nodes", ones.firstTimeWizarded);
-                        popObj.hide();
-                    });
+                    if(forever) {
+                        self.api.save({
+                            key: key
+                        }).$promise.then(function(){
+                                ones.firstTimeWizarded.push(key);
+                                ones.caches.setItem("ones.firstTimeWizard.nodes", ones.firstTimeWizarded);
+                                popObj.hide();
+                            });
+                    }
                 };
 
             }])
