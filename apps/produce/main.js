@@ -276,9 +276,6 @@
                 },
                 getStructure: function(){
                     var s = {
-                        plan_id: {
-                            editAble: false
-                        },
                         goods_id: {
                             displayName: l('lang.goods'),
                             labelField: true,

@@ -28,9 +28,10 @@ class GoodsAction extends CommonAction {
 //            $map["_complex"] = $where;
 //            $map["deleted"] = 0;
 //        }
-        
+
         if($_GET["factory_code"]) {
             $map["factory_code"] = trim($_GET["factory_code"]);
+            $map["deleted"] = array("EGT", 0);
         }
     }
 

@@ -671,6 +671,7 @@ class CommonAction extends RestAction {
                 "id" => $result
             ));
         } else {
+            Log::write($model->getLastSql(), Log::SQL);
             if($return) {
                 return false;
             }

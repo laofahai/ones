@@ -36,12 +36,15 @@ class ProduceMakeBoms extends WorkflowAbstract {
             //重新写入
             foreach($_POST["data"]["rows"] as $row) {
                 list($factoryCode,$goodsId, $catId) = explode("_", $row["goods_id"]);
+                if(!$goodsId) {
+                    continue;
+                }
                 $row["goods_id"] = $goodsId;
                 $data = array(
                     "plan_id" => $_POST["id"],
                     "plan_detail_id" => $row["plan_detail_id"] ? $row["plan_detail_id"] : 0,
                     "factory_code_all" => $row["factory_code_all"] ? $row["factory_code_all"] : makeFactoryCode($row, $factoryCode),
-                    "num" => $row["num"],
+                    "num" => intval($row["num"]),
                     "goods_id" => $goodsId
                 );
                 if(!$bomModel->add($data)) {
