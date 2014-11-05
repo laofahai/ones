@@ -349,9 +349,6 @@
                         displayName: i18n.billId
                     },
                     subject: {},
-                    source_model: {
-                        cellFilter: "lang"
-                    },
                     total_num: {},
                     ined_num: {},
                     dateline: {
@@ -686,7 +683,12 @@
 
                 $scope.config = {
                     model: StockinModel,
-                    resource: StockinRes
+                    resource: StockinRes,
+                    opts: {
+                        queryExtraParams: {
+                            includeRelated: true
+                        }
+                    }
                 };
 
                 //入库类型字段定义

@@ -43,6 +43,23 @@
                     <button type="button" class="btn btn-sm" onclick="history.go(-1);" ng-bind="'lang.actions.return'|lang"></button>
                 </div>
             </div>
+
+            <div class="row" ng-show="formMetaData.relatedItems.length>0">
+                <hr class="hr-10" />
+                <div class="col-xs-12">
+                    <h4 ng-bind="'lang.relatedItemAndBill'|lang"></h4>
+                    <ul class="list-unstyled spaced">
+                        <li class="col-sm-4" ng-repeat="item in formMetaData.relatedItems" title="">
+                            <i class="icon icon-{{item.icon}}"></i>
+                            {{item.type|lang}}
+                            <a ng-click="$root.goPage(item.link+item.id)">
+                                #{{item.bill_id}}
+                            </a>
+                            <span class="grey">{{item.processes.status_text}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </form>
 </div>

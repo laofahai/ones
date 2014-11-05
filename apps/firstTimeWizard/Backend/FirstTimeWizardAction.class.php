@@ -11,11 +11,25 @@ class FirstTimeWizardAction extends CommonAction {
     //标记已忽略popover
     public function insert() {
         $key = trim(I("post.key"));
-        D("FirstTimeWizard")->add(array(
-            "uid" => getCurrentUid(),
-            "node_key" => $key,
-            "status" => 1
-        ));
+        $uid = getCurrentUid();
+        $map = array(
+            "uid" => $uid,
+            "node_key" => $key
+        );
+        $model = D("FirstTimeWizard");
+        $exists = $model->where($map)->find();
+        if($exists) {
+            $model->save(array(
+                "id" => $exists["id"],
+                "status" => 1
+            ));
+        } else {
+            $model->add(array(
+                "uid" => $uid,
+                "node_key" => $key,
+                "status" => 1
+            ));
+        }
     }
 
     public function _filter(&$map) {

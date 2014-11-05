@@ -96,6 +96,8 @@
                         }
                         return;
                         break;
+                    default:
+                        afterDoWorkflow();
                 }
             }
 

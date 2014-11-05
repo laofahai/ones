@@ -72,11 +72,18 @@ class StockinAction extends CommonAction {
 
             $formData["rows"] = reIndex($params[0]);
 
+            if($_GET["includeRelated"] && $formData["source_model"] && $formData["source_id"]) {
+                try {
+                    $model = D($formData["source_model"]);
+                    $related = $model->getRelatedItem($formData["source_id"]);
+                    $formData["relatedItems"][] = $related;
+                } catch(Exception $e) {}
+            }
+
             $results[] = $formData;
         }
 
         if($isSingle) {
-//            print_r($formData);exit;
             $this->response($formData);
             return;
         }
@@ -126,7 +133,6 @@ class StockinAction extends CommonAction {
             $this->error($stockinModel->getError());
         }
         
-//        var_dump($billId);
     }
     
 }
