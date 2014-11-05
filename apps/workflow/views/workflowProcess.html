@@ -15,7 +15,7 @@
                     <dd class="tree-item" ng-repeat="item in asideContent.content">
                         <div class="tree-item-name">
                             <i class="icon icon-user"></i>
-                            {{item.truename}} <small>{{item.start_time|dateFormat}}</small>
+                            {{item.truename}} <small>{{item.start_time|dateFormat:0}}</small>
                             <div ng-bind="item.nodeName"></div>
                             <div ng-bind-html="item.memo|nl2br"></div>
                         </div>

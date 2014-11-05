@@ -668,18 +668,22 @@
                             return result;
                         };
                         //查看工作进程
-                        $scope.doViewWorkflowProcesses = function(){
-                            if(!$scope.gridSelected.length) {
+                        $scope.doViewWorkflowProcesses = function(item){
+                            if(!item) {
+                                item = $scope.gridSelected[0];
+                            }
+                            if(!item) {
                                 return false;
                             }
                             $injector.get("WorkflowProcessRes").query({
-                                id: $scope.gridSelected[0].id,
+                                id: item.id,
                                 workflowAlias: $scope.workflowAlias
                             }).$promise.then(function(data){
                                 service.aside({
-                                    bill_id: $scope.gridSelected[0].bill_id,
-                                    title: $scope.gridSelected[0].subject,
-                                    subTitle: $scope.gridSelected[0].dateline_lang
+                                    animation: "am-fade-and-slide-left",
+                                    bill_id: item.bill_id,
+                                    title: item.subject,
+                                    subTitle: item.dateline_lang
                                 }, data, appView("workflowProcess.html", "workflow"));
                             });
                         };
