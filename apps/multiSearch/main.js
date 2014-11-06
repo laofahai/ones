@@ -11,8 +11,8 @@
         }
     });
     angular.module("ones.multiSearch", [])
-        .controller("multiSearchCtl", ["$scope", "pluginExecutor", "$injector", "$location", "$timeout",
-            function($scope, plugin, $injector, $location, $timeout){
+        .controller("multiSearchCtl", ["$scope", "pluginExecutor", "$injector", "$location", "$timeout", "$modal",
+            function($scope, plugin, $injector, $location, $timeout, $modal){
                 plugin.callPlugin("hook.multiSearch.items");
 
                 var searchItems = ones.pluginScope.get("ones.multiSearch.items");
@@ -24,12 +24,23 @@
 
                 var rowIndex = 0;
 
+                //总共查询次数
+                var queried = 0;
+
+                var isModalShown = false;
+
+                var searchResultModal
+
                 var assignData = function(item, data){
                     var result = {};
                     result.subject = {
                         title: item.name,
                         link: item.link
                     };
+                    if(data.length < 1) {
+                        return;
+                    }
+
                     angular.forEach(data, function(row){
                         result.datas = result.datas || [];
                         var itemRow = {
@@ -42,16 +53,23 @@
                         rowIndex++;
                     });
 
-
                     return result;
                 };
 
                 var resetResults = function() {
+                    queried = 0;
                     $scope.results = [];
                     $scope.resultsAll = [];
                     $scope.selectedIndex = 0;
                     rowIndex = 0;
                 };
+
+                searchResultModal = $modal({
+                    scope: $scope,
+                    title: l("lang.multiSearchResult"),
+                    template: appView("searchResult.html", "multiSearch"),
+                    show: false
+                });
 
                 $scope.$watch("keyword", function(keyword){
                     if($.trim(keyword)) {
@@ -61,7 +79,7 @@
 
                             getDataApiPromise(dataSource, "query", {
                                 _kw: keyword,
-                                limit: item.pageSize || 3,
+                                limit: item.pageSize || 5,
                                 _si: item.sortBy || "+id",
                                 _fd: item.fields || ""
                             }).then(function(data){
@@ -69,48 +87,24 @@
                                     $scope.results.push(assignData(item, data));
                                 }
                             });
+
+                            queried++;
+
+                            //查询完成
+                            if(queried >= searchItems.length && !isModalShown) {
+                                isModalShown = true;
+                                searchResultModal.show();
+                                $timeout(function(){
+                                    $("#multiSearchModalKeyword").focus();
+                                },300);
+                            }
                         });
                     }
                 });
 
-                $scope.doSearchBlur = function($event){
-                    $timeout(function(){
-                        resetResults();
-                    }, 200);
-                };
-
-                $scope.doSearchFocus = function() {
-                    $scope.keyword = "";
-                    resetResults();
-                };
-
-                $scope.doSearchKeydown = function($event){
-                    switch($event.keyCode) {
-                        case ones.keyCodes.Down:
-                            $scope.selectedIndex++;
-                            if($scope.selectedIndex > $scope.resultsAll.length) {
-                                $scope.selectedIndex = 0;
-                            }
-                            window.event.returnValue = false;
-                            break;
-                        case ones.keyCodes.Up:
-                            $scope.selectedIndex--;
-                            if($scope.selectedIndex < 0) {
-                                $scope.selectedIndex = $scope.resultsAll.length;
-                            }
-                            window.event.returnValue = false;
-                            break;
-                        case ones.keyCodes.Enter:
-                            window.event.returnValue = false;
-                            $location.url($scope.resultsAll[$scope.selectedIndex].link);
-                            $timeout(function(){
-                                resetResults();
-                            },200);
-                            break;
-                        case ones.keyCodes.Escape:
-                            resetResults();
-                            break;
-                    }
+                $scope.hideModal = function() {
+                    searchResultModal.hide();
+                    isModalShown = false;
                 };
 
             }])

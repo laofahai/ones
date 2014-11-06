@@ -81,7 +81,7 @@
 
                 var rs = toLang(str, section);
 
-                if(str.slice(0-rs.length).toLowerCase() === rs) {
+                if(rs === undefined || str.slice(0-rs.length).toLowerCase() === rs) {
                     return def ? def : rs;
                 } else {
                     return rs;

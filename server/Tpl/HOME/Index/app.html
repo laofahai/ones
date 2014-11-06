@@ -164,20 +164,6 @@
                         <i class="icon-search nav-search-icon"></i>
                     </span>
 
-                    <ul class="typeahead dropdown-menu" ng-show="results.length>0">
-                        <li ng-repeat="p in results track by $index" ng-show="p.datas.length>0">
-                            <a ng-click="$root.goPage(p.subject.link)">
-                                <span ng-bind="p.subject.title|lang"></span>
-                                <i class="icon icon-level-down"></i>
-                            </a>
-                            <ul>
-                                <li ng-repeat="row in p.datas track by $index" ng-class="{active:row.index===selectedIndex}">
-                                    <a ng-click="$root.goPage(row.link)" ng-bind="row.label"></a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
                 </div><!-- #nav-search -->
             </div>
 
