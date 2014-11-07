@@ -15,6 +15,7 @@
             <tr ng-repeat="item in itemsList"
                 ng-dblclick="doGridDblClick(item, null, $event)"
                 ng-click="doGridClick($index, $event)"
+                ng-touch="doAlert($event,item,config)"
                 ng-right-click="doContextMenu($event,item,config)">
                 <td align="center" class="hidden-480">
                     <label>

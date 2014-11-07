@@ -190,10 +190,30 @@
         }])
 
         .service("ProducePlanModel", ["$rootScope", function($rootScope){
-            return {
+            var obj = {
                 config: {
                     isBill: true,
-                    workflowAlias: "produce"
+                    workflowAlias: "produce",
+                    extraSelectActions: [
+                        {
+                            label: l("lang.viewBomList"),
+                            icon: "eye",
+                            authAction: "produce.produceboms.read",
+                            action: function($event, selectedItems, item){
+                                var scope = obj.config.extraSelectActions[0].scope;
+                                var injector = obj.config.extraSelectActions[0].injector;
+                                item = item || selectedItems[0];
+                                var model = injector.get("ProduceBomsModel");
+
+                                if(!item.id) {
+                                    return false;
+                                }
+
+                                model.showMakedBoms(item.id);
+
+                            }
+                        }
+                    ]
                 },
                 getStructure: function(){
                     return {
@@ -218,6 +238,8 @@
                     };
                 }
             };
+
+            return obj;
         }])
         .service("ProducePlanDetailEditModel", ["$rootScope", "GoodsRes", "pluginExecutor", function($rootScope, GoodsRes, plugin){
             return {
@@ -268,40 +290,58 @@
                 }
             };
         }])
-        .service("ProduceBomsModel", ["$rootScope", "GoodsRes", "pluginExecutor", function($rootScope,GoodsRes,plugin){
-            return {
-                config: {
-                    isBill: true,
-                    workflowAlias: "produce"
-                },
-                getStructure: function(){
-                    var s = {
-                        goods_id: {
-                            displayName: l('lang.goods'),
-                            labelField: true,
-                            inputType: "select3",
-                            dataSource: GoodsRes,
-                            valueField: "combineId",
-                            nameField: "combineLabel",
-                            listAble: false,
-                            width: 300
-                        },
-                        num: {
-                            inputType: "number"
-                        }
-                    };
+        .service("ProduceBomsModel", ["$rootScope", "GoodsRes", "pluginExecutor", "ones.dataApiFactory", "ComView", "$location",
+            function($rootScope,GoodsRes,plugin, dataAPI, ComView, $location){
+                var self = {
+                    config: {
+                        isBill: true,
+                        workflowAlias: "produce"
+                    },
+                    api: dataAPI.getResourceInstance({
+                        uri: "produce/produceBoms"
+                    }),
+                    getStructure: function(){
+                        var s = {
+                            goods_id: {
+                                displayName: l('lang.goods'),
+                                labelField: true,
+                                inputType: "select3",
+                                dataSource: GoodsRes,
+                                valueField: "combineId",
+                                nameField: "combineLabel",
+                                listAble: false,
+                                width: 300
+                            },
+                            num: {
+                                inputType: "number"
+                            }
+                        };
 
-                    plugin.callPlugin("bind_dataModel_to_structure", {
-                        structure: s,
-                        alias: "product",
-                        require: ["goods_id"],
-                        queryExtra: ["goods_id"]
-                    });
+                        plugin.callPlugin("bind_dataModel_to_structure", {
+                            structure: s,
+                            alias: "product",
+                            require: ["goods_id"],
+                            queryExtra: ["goods_id"]
+                        });
 
-                    return ones.pluginScope.get("defer").promise;
-                }
-            };
-        }])
+                        return ones.pluginScope.get("defer").promise;
+                    },
+                    showMakedBoms: function(plan_id) {
+                        self.api.get({
+                            id: plan_id,
+                            checkIsMaked: true
+                        }).$promise.then(function(data){
+                            if(!data.maked) {
+                                ComView.alert(l("lang.messages.bom_not_maked"));
+                            } else {
+                                $location.url("/produce/editBill/produceBoms/"+plan_id);
+                            }
+                        });
+                    }
+                };
+
+                return self;
+            }])
         .service("ProducePlanDetailModel", ["$rootScope", "pluginExecutor", "ComView", function($rootScope, plugin, ComView) {
             return {
                 config: {

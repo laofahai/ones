@@ -81,6 +81,10 @@
                         'subject',
                         'id'
                     ],
+                    doAlert: function() {
+                        console.log(arguments);
+                        alert(1);
+                    },
                     doContextMenu: function(evt, item, config){
                         self.scope.$emit("contextMenu", {
                             items: self.selectedActions,

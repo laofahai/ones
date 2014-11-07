@@ -16,6 +16,10 @@ class ProduceBomsAction extends CommonAction {
     protected $workflowAlias = "produce";
     
     public function read() {
+
+        if($_GET["checkIsMaked"]) {
+            return $this->checkIsMaked();
+        }
         
         $model = D("ProduceBomsView");
         $rows = $model->where("ProduceBoms.plan_id=".$_GET["id"])->select();
@@ -42,6 +46,16 @@ class ProduceBomsAction extends CommonAction {
             "rows" => $params[0]
         );
         $this->response($data);
+    }
+
+    private function checkIsMaked() {
+        $plan_id = abs(intval($_GET["id"]));
+        $model = D("ProduceBoms");
+        if($model->where("plan_id=".$plan_id)->select()) {
+            $this->response(array(
+                "maked" => true
+            ));
+        }
     }
     
 

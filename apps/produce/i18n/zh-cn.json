@@ -64,7 +64,8 @@
         },
         "messages": {
             "craft_listorder_memo": "* 排序中 0表示不参与本产品生产，生产按照工艺排序正序进行",
-            "all_craft_ended": "所有生产工序已执行完成"
+            "all_craft_ended": "所有生产工序已执行完成",
+            "bom_not_maked": "物料清单尚未生成"
         },
         "actions": {
             "viewCraft": "查看生产工艺",
@@ -78,6 +79,7 @@
         "craft": "工艺",
         "ProducePlan": "生产计划",
         "produce": "生产",
+        "viewBomList": "查看物料清单",
 
         "types" : {
             "produce" : "生产计划类型"

@@ -6,6 +6,7 @@
             'ngSanitize',
             'ngRoute',
             'ngAnimate',
+            'ngTouch',
             'mgcrea.ngStrap',
             'localytics.directives', //FOR CHOSEN
             'ui.utils',

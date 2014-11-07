@@ -60,6 +60,26 @@ var toDate = function(timestamp, noTime) {
     var minute = d.getMinutes();
     var second = d.getSeconds();
 
+    if(month < 10) {
+        month = "0"+String(month);
+    }
+
+    if(date < 10) {
+        date = "0"+String(date);
+    }
+
+    if(hour < 10) {
+        hour = "0"+String(hour);
+    }
+
+    if(minute < 10) {
+        minute = "0"+String(minute);
+    }
+
+    if(second < 10) {
+        second = "0"+String(second);
+    }
+
     var rs = sprintf("%s-%s-%s", year, month, date);
     if(noTime !== true && parseInt(noTime)===0) {
         rs = rs+ sprintf(" %s:%s:%s", hour, minute, second);
