@@ -17,9 +17,9 @@
                     <td ng-bind="u.dateline|dateFormat"></td>
                     <!--<td ng-bind="u.memo"></td>-->
                     <td>
-                        <a ng-click="doDownload(u.id)" ng-bind="'lang.download" ng-show="!u.downloaded'|lang"></a>
-                        <span ng-bind="'lang.downloaded" ng-show="u.downloaded'|lang"></span>
-                        <a ng-click="doUpdate(u.id)" ng-bind="'lang.update" ng-show="u.downloaded'|lang"></a>
+                        <a ng-click="doDownload(u.id)" ng-bind="'lang.download'|lang" ng-show="!u.downloaded"></a>
+                        <span ng-bind="'lang.downloaded'|lang" ng-show="u.downloaded"></span>
+                        <a ng-click="doUpdate(u.id)" ng-bind="'lang.update'|lang" ng-show="u.downloaded"></a>
                         <a ng-click="showUpdateLog(u.memo)" ng-bind="'lang.updateLog'|lang"></a>
                     </td>
                 </tr>

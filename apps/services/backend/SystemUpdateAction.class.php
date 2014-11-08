@@ -29,68 +29,73 @@ class SystemUpdateAction extends CommonAction {
         }
     }
 
+    //下载
+    public function read() {
+        $version = $this->getVersion($_GET["id"]);
+
+        //检测是不是相邻版本
+        if(!$this->isAdjoiningVersion(DBC("system.version"), $version["version"])) {
+            $this->error("you only can upgrade current version to the adjoining version.");
+            return;
+        }
+
+        //文件路径为HTTP绝对地址
+        if(strStartWith($version["file"], "http://") or strStartWith($version["file"], "https://")) {
+            $remoteUri = $version["file"];
+        } else {
+            $remoteUri = file_get_contents($this->server."getDownload/id/".$version["id"]);
+        }
+
+
+        $localPathFull = $this->getLocalPath($version["file"]);
+        $tmp = explode("/", $localPathFull);
+        $localName = array_pop($tmp);
+        $localPath = implode("/", $tmp);
+
+        import("@.ORG.CurlAxel");
+
+        $axel = new CurlAxel();
+
+        $axel->setUrl($remoteUri);
+        $size = $axel->getFileSize($remoteUri);
+
+        $axel->setProgressCallback(false);
+
+        $axel->setTempDir(ENTRY_PATH."/Runtime/Temp");
+        $axel->setDownloadDir($localPath);
+        $axel->setFilename($localName);
+        $axel->setBufferSize(32*1024);
+        $axel->activeLog(true);
+        $axel->download();
+
+        $maxTry = 30;
+        $sleep = 1;
+        $try = 0;
+        $downloaded = false;
+
+        do {
+            $try ++;
+            sleep($sleep);
+            clearstatcache();
+            //下载成功
+            if(is_file($localPath.$localName) and filesize($localPath.$localName) == $size) {
+                $downloaded = true;
+                break;
+            }
+
+        } while($try <= $maxTry);
+
+        if($downloaded) {
+            $this->error("download_failed");
+            return;
+        }
+    }
+
     public function insert() {
         //下载升级包
         if($_POST["doDownload"] && $_POST["version"]) {
-            $version = $this->getVersion($_POST["version"]);
 
-            //检测是不是相邻版本
-            if(!$this->isAdjoiningVersion(DBC("system.version"), $version["version"])) {
-                $this->error("you only can upgrade current version to the adjoining version.");
-                return;
-            }
 
-            //文件路径为HTTP绝对地址
-            if(strStartWith($version["file"], "http://") or strStartWith($version["file"], "https://")) {
-                $remoteUri = $version["file"];
-            } else {
-                $remoteUri = str_replace("/index.php?s=/Update", "", $this->server)."Data/updates/".$version["file"];
-            }
-
-            $localPathFull = $this->getLocalPath($version["file"]);
-            $tmp = explode("/", $localPathFull);
-            $localName = array_pop($tmp);
-            $localPath = implode("/", $tmp);
-
-            import("@.ORG.CurlAxel");
-
-            $axel = new CurlAxel();
-
-            $axel->setUrl($remoteUri);
-            $size = $axel->getFileSize($remoteUri);
-
-            $axel->setProgressCallback(false);
-
-            $axel->setTempDir(ENTRY_PATH."Runtime/Temp");
-            $axel->setDownloadDir($localPath);
-            $axel->setFilename($localName);
-            $axel->setBufferSize(32*1024);
-            $axel->activeLog(false);
-            $axel->download();
-
-            $maxTry = 30;
-            $sleep = 1;
-            $try = 0;
-            $downloaded = false;
-
-            do {
-                $try ++;
-                sleep($sleep);
-                clearstatcache();
-                //下载成功
-                if(is_file($localPath.$localName) and filesize($localPath.$localName) == $size) {
-                    $downloaded = true;
-                    break;
-                }
-
-            } while($try <= $maxTry);
-
-            if($downloaded) {
-                $this->error("download_failed");
-                return;
-            }
-
-//            var_dump($rs);
         }
 
         //执行升级，需要zip模块支持
@@ -152,7 +157,7 @@ class SystemUpdateAction extends CommonAction {
      * 获取可更新版本列表
      * **/
     private function getUpdateVersions() {
-        $url = $this->server."getUpdates/version/".$this->currentVersion;
+        $url = $this->server."getUpdates/version/".$this->currentVersion.".json";
         $versions = file_get_contents($url);
         if($versions) {
             $versions = json_decode($versions, true);
@@ -182,7 +187,7 @@ class SystemUpdateAction extends CommonAction {
     }
 
     private function getLocalPath($file) {
-        return $this->local.md5($file).".zip";
+        return $this->local."/".md5($file).".zip";
     }
 
 } 

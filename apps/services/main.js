@@ -16,9 +16,16 @@
             ;
         }])
 
+        .service("Service.SystemUpdateAPI", ["ones.dataApiFactory", function(dataAPI){
+            this.config = {}
+            this.api = dataAPI.getResourceInstance({
+                uri: "services/systemUpdate"
+            });
+        }])
+
         //系统升级
-        .controller("systemUpdateCtl", ["$scope", "$http", "ones.config", "ComView", "$rootScope", "$modal",
-            function($scope, $http, conf, ComView, $rootScope, $modal){
+        .controller("systemUpdateCtl", ["$scope", "$http", "ones.config", "ComView", "$rootScope", "$modal", "Service.SystemUpdateAPI",
+            function($scope, $http, conf, ComView, $rootScope, $modal, updateApi){
                 var uri = conf.BSU+"services/systemUpdate.json";
                 var pageDesc = $scope.$parent.currentPage.lang.actionDesc;
                 var getUpdates = function() {
@@ -48,10 +55,9 @@
 
                 //下载更新文件
                 $scope.doDownload = function(id) {
-                    $http.post(uri, {
-                        doDownload: true,
-                        version: id
-                    }).success(function(data){
+                    updateApi.api.get({
+                        id: id
+                    }).$promise.then(function(){
                         getUpdates();
                     });
                 };
