@@ -85,7 +85,7 @@ class SystemUpdateAction extends CommonAction {
 
         } while($try <= $maxTry);
 
-        if($downloaded) {
+        if(!$downloaded) {
             $this->error("download_failed");
             return;
         }
@@ -160,11 +160,17 @@ class SystemUpdateAction extends CommonAction {
         $url = $this->server."getUpdates/version/".$this->currentVersion.".json";
         $versions = file_get_contents($url);
         if($versions) {
+
+            import("@.ORG.markdown");
+            $markdown = new Parsedown();
+
             $versions = json_decode($versions, true);
             foreach($versions as $k=>$ver) {
                 if(is_file($this->getLocalPath($ver["file"]))) {
                     $versions[$k]["downloaded"] = true;
                 }
+
+                $versions[$k]["memo"] = $markdown->text($ver["memo"]);
             }
         }
         $data["current_version"] = $this->currentVersion;
