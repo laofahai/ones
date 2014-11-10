@@ -147,6 +147,11 @@
                                     parentScope.doSubmit = parentScope.doFormSubmit;
                                 }
 
+                                parentScope.doResetForm = function(){
+                                    parentScope[opts.name].$setPristine(true)
+                                    parentScope[opts.dataName] = {};
+                                };
+
 
                                 $scope.$on("commonForm.ready", function() {
                                     var fm = new FormMaker.makeForm($scope, opts);
@@ -1490,7 +1495,7 @@
                                 '{{%(langsubmit)s}}' +
                                 '</button>' +
                                 '&nbsp; &nbsp; &nbsp;' +
-                                '<button class="btn" type="reset">' +
+                                '<button class="btn" ng-click="doResetForm()">' +
                                 '<i class="icon-undo bigger-110"></i>' +
                                 '{{%(langreset)s}}' +
                                 '</button>' +
