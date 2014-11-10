@@ -802,8 +802,6 @@
                             donext: true,
                             data: $scope.formMetaData
                         }).$promise.then(function(data){
-                                return;
-//                    console.log(data);return;
                             $location.url("/store/list/stockout");
                         });
                     }

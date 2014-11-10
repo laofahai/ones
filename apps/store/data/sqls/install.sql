@@ -67,13 +67,15 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
   `total_num` decimal(10,2) NOT NULL,
   `outed_num` decimal(10,2) NOT NULL DEFAULT '0.00',
   `stock_manager` int(11) NOT NULL DEFAULT '0',
+  `express_id` int(11) DEFAULT NULL,
   `status` smallint(1) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `source_id` (`source_id`,`dateline`,`outtime`,`stock_manager`),
   KEY `status` (`status`),
-  KEY `source_model` (`source_model`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `source_model` (`source_model`),
+  KEY `express_id` (`express_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- separator
 

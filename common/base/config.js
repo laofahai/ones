@@ -106,7 +106,6 @@
 
             $http.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
-
             try {
                 var configRes = $injector.get("HOME.ConfigAPI");
                 /**

@@ -94,8 +94,8 @@
         }])
 
         //生成发货单
-        .controller("WorkflowMakeexpressCtl", ["$scope", "StockoutRes", "RelationshipCompanyRes", "ExpressRes", "ExpressModel", "ComView", "$routeParams", "ones.config", "$location", "$timeout",
-            function($scope, res, cusRes, ExpressRes, model, ComView, $routeParams, conf, $location, $timeout){
+        .controller("WorkflowMakeExpressCtl", ["$scope", "StockoutRes", "RelationshipCompanyRes", "ExpressRes", "ExpressModel", "ComView", "$routeParams", "$location", "$timeout",
+            function($scope, res, cusRes, ExpressRes, model, ComView, $routeParams,  $location, $timeout){
                 var cusId;
                 $scope.formData = $scope.formData || {};
                 res.get({id:$routeParams.id}).$promise.then(function(data){
@@ -110,12 +110,13 @@
 
                     if(cusId) {
                         cusRes.get({
-                            id: cusId
+                            id: cusId,
+                            includeRows: true
                         }).$promise.then(function(data){
                             $scope.formData.to_company = data.name;
-                            $scope.formData.to_name = data.Linkman[0].contact;
+                            $scope.formData.to_name = data.rows[0].contact;
                             $scope.formData.to_address = data.address;
-                            $scope.formData.to_phone = data.Linkman[0].mobile || data.linkman[0].tel;
+                            $scope.formData.to_phone = data.rows[0].mobile || data.rows[0].tel;
                         });
                     }
                 });
@@ -123,10 +124,10 @@
                 //@todo. 按状态监测，非延时监测
                 $timeout(function(){
                     $scope.formData.from_name = ones.userInfo.truename;
-                    $scope.formData.from_company = conf.company_name;
-                    $scope.formData.from_address = conf.company_address;
-                    $scope.formData.from_phone   = conf.company_phone;
-                },200);
+                    $scope.formData.from_company = ones.BaseConf.company_name;
+                    $scope.formData.from_address = ones.BaseConf.company_address;
+                    $scope.formData.from_phone   = ones.BaseConf.company_phone;
+                }, 1000);
 
 
                 $scope.selectAble = false;

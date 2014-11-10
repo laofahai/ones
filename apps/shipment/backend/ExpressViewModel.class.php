@@ -14,7 +14,7 @@ class ExpressViewModel extends CommonViewModel {
     
     protected $viewFields = array(
         "Express" => array("*", "_type"=>"left"),
-        "Types" => array("name" => "express_type_label", "alias" => "expressTypeAlias", "_on"=>"Shipment.express_type=Types.id", "_type"=>"left")
+        "Types" => array("name" => "express_type_label", "alias" => "expressTypeAlias", "_on"=>"Express.express_type=Types.id", "_type"=>"left")
     );
 
     public $searchFields = array(

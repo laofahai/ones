@@ -33,15 +33,14 @@ class StockoutMakeExpress extends WorkflowAbstract {
         if(IS_POST) {
 //            print_r($_POST);exit;
             $shipmentModel = D("Express");
-            $shipmentModel->create();
-            $lastId = $shipmentModel->add();
-//            var_dump($lastId);exit;
-            
+            $_POST["stockout_id"] = $this->mainrowId;
+            $lastId = $shipmentModel->add($_POST);
+
             if(!$lastId) {
                 return;
                //@todo 
             }
-            $stockModel = D("Stock");
+            $stockModel = D("StockOut");
             $stockModel->where("id=".$this->mainrowId)->save(array(
                 "express_id" => $lastId
             ));

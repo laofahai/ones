@@ -6,7 +6,7 @@ DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.express.%';
 CREATE TABLE IF NOT EXISTS `[PREFIX]express` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) DEFAULT '0',
-  `express_type` smallint(4) NOT NULL,
+  `express_type` smallint(5) NOT NULL,
   `from_name` varchar(50) NOT NULL,
   `from_company` varchar(100) NOT NULL,
   `from_address` varchar(255) NOT NULL,
