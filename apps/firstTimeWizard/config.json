@@ -1,3 +1,6 @@
 {
-    "alias" : "firstTimeWizard"
+    "alias" : "firstTimeWizard",
+    "plugins": {
+        "before_check_action_permission": ["ONESFirstTimeWizardBeforeCheckPermission"]
+    }
 }
