@@ -272,7 +272,7 @@ var toLang = function(key, section) {
  * */
 function l(k, langObject) {
     k = k.toLowerCase();
-    if(!langObject) {
+    if(undefined === langObject) {
         if(!ones.i18n || isEmptyObject(ones.i18n)) {
             ones.i18n = ones.caches.getItem("ones.i18n");
         }
@@ -281,6 +281,7 @@ function l(k, langObject) {
             return;
         }
         langObject = ones.i18n;
+        ones.sourceLangKey = k;
     }
 
     var key = k.split(".");
@@ -293,7 +294,7 @@ function l(k, langObject) {
             && tmp[0] === tmp[1]) {
             return tmp[0];
         }
-        return langObject[k] === undefined ? undefined : langObject[k];
+        return langObject[k] === undefined ? ones.sourceLangKey : langObject[k];
     }
 
     //兼容字段key中包含.
@@ -306,6 +307,11 @@ function l(k, langObject) {
     if(typeof(langObject[curKey]) === "string") {
         return false;
         return langObject[curKey];
+    }
+
+    //langObject 空
+    if(undefined === langObject[curKey]) {
+        return k;
     }
 
     return l(key.join("."), langObject[curKey]);

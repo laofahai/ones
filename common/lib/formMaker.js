@@ -152,7 +152,6 @@
                                     parentScope[opts.dataName] = {};
                                 };
 
-
                                 $scope.$on("commonForm.ready", function() {
                                     var fm = new FormMaker.makeForm($scope, opts);
                                     var html = fm.makeHTML();
