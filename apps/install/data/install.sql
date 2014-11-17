@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
   KEY `alias` (`alias`,`dateline`,`status`),
   KEY `version` (`version`),
   KEY `abbreviation` (`abbreviation`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 -- separator
 
@@ -18,9 +18,10 @@ INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`
   (1, 'department', 'DP', '0.1', 1406906639, 1),
   (2, 'dashboard', 'DBD', '0.1', 1406906639, 1),
   (3, 'services', 'SVS', '0.1', 1406906639, 1),
-  (4, 'dataModel', '', '0.1', 1409042540, 1),
-  (5, 'workflow', '', '0.1', 1409042547, 1),
-  (6, 'multiSearch', 'MTSC', '0.1', 1406906639, 1);
+  (4, 'fistTimeWizard', 'FTW', '0.1', 1406906639, 1),
+  (5, 'dataModel', '', '0.1', 1409042540, 1),
+  (6, 'workflow', '', '0.1', 1409042547, 1),
+  (7, 'multiSearch', 'MTSC', '0.1', 1406906639, 1);
 
 -- separator
 
