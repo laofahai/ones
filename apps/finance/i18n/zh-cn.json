@@ -52,7 +52,8 @@
             "finance_pay_plan": "应付款"
         },
         "widgetTitles": {
-            "confirm_finance_receive": "财务确认收款"
+            "confirm_finance_receive": "财务确认收款",
+            "confirm_finance_pay": "财务确认付款"
         },
         "AppFinance": {
             "appName": "基础财务模块"

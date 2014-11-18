@@ -2,9 +2,13 @@
     angular.module("ones.finance", [])
         .config(["$routeProvider", function($route){
             $route.when('/doWorkflow/FinanceReceivePlan/confirm/:nodeId/:id', {
-                templateUrl: appView("confirmReceive.html", "finance"),
-                controller: "WorkflowFinanceReceiveConfirmCtl"
-            })
+                    templateUrl: appView("confirmReceive.html", "finance"),
+                    controller: "WorkflowFinanceReceiveConfirmCtl"
+                })
+                .when('/doWorkflow/FinancePayPlan/confirm/:nodeId/:id', {
+                    templateUrl: appView("confirmPay.html", "finance"),
+                    controller: "WorkflowFinancePayConfirmCtl"
+                })
             ;
         }])
         //财务模块
@@ -100,17 +104,6 @@
                         sponsor: {
                             hideInForm: true
                         },
-                        financer: {
-                            hideInForm: true
-                        },
-                        account_id: {
-                            field: "account_name",
-                            displayName: l('lang.account'),
-                            inputType: "select",
-                            dataSource: "FinanceAccountRes",
-                            nameField: "name",
-                            valueField: "id"
-                        },
                         amount: {
                             inputType: "number"
                         },
@@ -165,6 +158,9 @@
                             inputType: "select3",
                             dataSource: "RelationshipCompanyRes"
                         },
+                        sponsor: {
+                            hideInForm: true
+                        },
                         amount: {
                             inputType: "number"
                         },
@@ -217,6 +213,27 @@
             };
         }])
 
+        .service("ConfirmPayModel", ["$rootScope", "FinanceAccountRes", function($rootScope,res){
+            return {
+                getStructure: function(){
+                    return {
+                        unpayed: {
+                            inputType: "number",
+                            displayName: l("lang.amount")
+                        },
+                        account_id: {
+                            displayName: l('lang.account'),
+                            inputType: "select",
+                            dataSource: "FinanceAccountRes"
+                        },
+                        memo: {
+                            required: false
+                        }
+                    };
+                }
+            };
+        }])
+
         /**
          * 确认收款
          * */
@@ -237,8 +254,28 @@
                         donext: true
                     }, $scope.formData);
                     res.doPostWorkflow(params).$promise.then(function(data){
-                        return;
                         $location.url('/finance/list/financeReceivePlan');
+                    });
+                };
+            }])
+        .controller("WorkflowFinancePayConfirmCtl", ["$scope", "ComView", "ConfirmPayModel", "FinancePayPlanRes", "$routeParams", "$location",
+            function($scope, ComView, model, res, $routeParams, $location){
+                $scope.selectAble = false;
+
+                $scope.config = {
+                    model:model,
+                    resource: res
+                };
+
+                $scope.doFormSubmit = function(){
+                    var params = $.extend({
+                        workflow: true,
+                        node_id: $routeParams.nodeId,
+                        id: $routeParams.id,
+                        donext: true
+                    }, $scope.formData);
+                    res.doPostWorkflow(params).$promise.then(function(data){
+                        $location.url('/finance/list/financePayPlan');
                     });
                 };
             }])

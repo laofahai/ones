@@ -12,7 +12,6 @@ class FinancePayPlanViewModel extends CommonViewModel {
 
     protected $viewFields = array(
         "FinancePayPlan" => array("*", "_type"=>"left"),
-        "FinanceAccount" => array("name"=>"account_name", "_on"=>"FinancePayPlan.account_id=FinanceAccount.id", "_type"=>"left"),
         "Types" => array("name"=>"type", "_on"=>"FinancePayPlan.type_id=Types.id", "_type"=>"left"),
         "RelationshipCompany" => array("name"=>"supplier_name", "_on"=>"FinancePayPlan.supplier_id=RelationshipCompany.id", "_type"=>"left")
     );

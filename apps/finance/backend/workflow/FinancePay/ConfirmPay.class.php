@@ -3,28 +3,28 @@
  * Created by PhpStorm.
  * User: nemo
  * Date: 14/11/18
- * Time: 11:29
+ * Time: 14:02
  */
 
-class FinanceReceiveConfirmReceive extends WorkflowAbstract {
+class FinancePayConfirmPay extends WorkflowAbstract {
 
     public function run() {
 
-        $model = D("FinanceReceivePlan");
+        $model = D("FinancePayPlan");
         $plan = $model->find($this->mainrowId);
 
-        if($plan["received"] >= $plan["amount"]) {
+        if($plan["payed"] >= $plan["amount"]) {
             $this->response(array(
                 "type" => "message",
                 "error"=> "true",
-                "msg"  => "all_money_has_received"
+                "msg"  => "all_money_has_payed"
             ));return;
         }
 
         if(!IS_POST) {
             $this->response(array(
                 "type" => "redirect",
-                "location" => sprintf("/doWorkflow/FinanceReceivePlan/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
+                "location" => sprintf("/doWorkflow/FinancePayPlan/confirm/%d/%d", $this->currentNode["id"], $this->mainrowId)
             ));
         }
 
@@ -33,7 +33,7 @@ class FinanceReceiveConfirmReceive extends WorkflowAbstract {
             $this->error("params_error");
         }
 
-        $amount = $_POST["unreceived"];
+        $amount = $_POST["unpayed"];
 
         $data = array(
             "account_id" => $accountId,
@@ -45,14 +45,14 @@ class FinanceReceiveConfirmReceive extends WorkflowAbstract {
         $recordId = $recordModel->addRecord($data);
 
         $data = array(
-            "received" => $plan["received"]+$amount
+            "payed" => $plan["payed"]+$amount
         );
 
-        $allReceived = $plan["received"]+$amount >= $plan["amount"];
+        $allPayed = $plan["payed"]+$amount >= $plan["amount"];
 
-        if($allReceived) {
+        if($allPayed) {
             $data["status"] = 2;
-            $data["receive_dateline"] = CTS;
+            $data["pay_dateline"] = CTS;
         } else {
             $data["status"] = 1;
         }
