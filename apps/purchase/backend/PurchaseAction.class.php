@@ -18,6 +18,11 @@ class PurchaseAction extends CommonAction {
     protected $indexModel = "PurchaseView";
     
     public function insert() {
+
+        if($_REQUEST["workflow"]) {
+            return $this->doWorkflow();
+        }
+
         $model = D("Purchase");
         $data = $model->formatData($_POST);
         $billId = $model->newBill($data);

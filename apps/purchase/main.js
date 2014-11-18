@@ -37,7 +37,11 @@
             })
     }])
     .factory("PurchaseRes", ["$resource", "ones.config", function($resource, cnf) {
-        return $resource(cnf.BSU + "purchase/purchase/:id.json", null, {'doWorkflow': {method: 'GET'}, 'update': {method: 'PUT'}});
+        return $resource(cnf.BSU + "purchase/purchase/:id.json", null, {
+            'doWorkflow': {method: 'GET'},
+            'doPostWorkflow': {method: 'POST'},
+            'update': {method: 'PUT'}
+        });
     }])
 
     .service("PurchaseModel", ["$rootScope", function($rootScope){

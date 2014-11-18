@@ -27,15 +27,23 @@ class PurchaseBuild extends CommonBuildAction {
                     "type" => 1,
                     "listorder" => 1,
                     "prev_node_id" => "StartProcess",
-                    "next_node_id" => "MakeStockin",
+                    "next_node_id" => "MakeStockin,MakeFinancePay",
                     "status_text" => "采购单已保存"
+                ),
+                "MakeFinancePay" => array(
+                    "name" => "生成应付款",
+                    "type" => 1,
+                    "listorder" => 2,
+                    "prev_node_id" => "SavePurchase,MakeFinancePay,MakeStockin",
+                    "next_node_id" => "CompleteProcess,MakeFinancePay,MakeStockin",
+                    "status_text" => "已生成应付款"
                 ),
                 "MakeStockin" => array(
                     "name" => "生成入库单",
                     "type" => 1,
                     "listorder" => 2,
-                    "prev_node_id" => "SavePurchase",
-                    "next_node_id" => "CompleteProcess",
+                    "prev_node_id" => "SavePurchase,MakeFinancePay",
+                    "next_node_id" => "CompleteProcess,MakeFinancePay",
                     "status_text" => "已生成入库单"
                 ),
                 "CompleteProcess" => array(

@@ -114,7 +114,6 @@
             };
 
             this.doPostWorkflow = function(resource, node_id, mainrow_id, postData, callback){
-                console.log(callback);
                 resource.doPostWorkflow({
                     workflow: true,
                     doNext: true,
