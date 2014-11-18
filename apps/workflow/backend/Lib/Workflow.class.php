@@ -402,7 +402,8 @@ class Workflow {
                 return false;
             }
         }
-        
+
+        //已执行过
         if($hasProcessed) {
             $nextNodeObj->error("has_processed");
             return;
@@ -476,20 +477,23 @@ class Workflow {
          * 下一节点
          */
         $curNode = $this->nodeModel->find($nodeId);
-        //如果有多个动作，默认执行第一个动作（分支，条件判断等）
+        //如果有多个动作，循环判断
         //此处应为递归操作
         if($curNode["next_node_id"] && strlen($curNode["next_node_id"]) > 0) {
             $map = array(
                 "id" => array("IN", explode(",",$curNode["next_node_id"])),
                 "is_default" => 1
             );
-            $nextNode = $this->nodeModel->where($map)->find();
-            if($nextNode) {
-                switch($nextNode["type"]) {
-                    case "2":
-                        $this->doNext($mainrowId, $nextNode["id"], true);
-                        break;
+            $nextNodes = $this->nodeModel->where($map)->select();
+            if($nextNodes) {
+                foreach($nextNodes as $nextNode) {
+                    switch($nextNode["type"]) {
+                        case "2":
+                            $this->doNext($mainrowId, $nextNode["id"], true);
+                            break;
+                    }
                 }
+
             }
         }
 

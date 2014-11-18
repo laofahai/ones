@@ -16,6 +16,14 @@ class FinancePayCompleteProcess extends WorkflowAbstract {
 
         $model = D("FinancePayPlan");
         $plan = $model->find($this->mainrowId);
+
+        if($plan["payed"] >= $plan["amount"]) {
+            $this->response(array(
+                "type" => "message",
+                "error"=> "true",
+                "msg"  => "all_money_has_payed"
+            ));return;
+        }
         
         if(!$plan["account_id"] and !IS_POST) {
             $this->response(array(
@@ -29,7 +37,6 @@ class FinancePayCompleteProcess extends WorkflowAbstract {
             $this->error("params_error");
         }
 
-//        var_dump($plan);exit;
         $data = array(
             "account_id" => $accountId,
             "amount" => $plan["amount"],
@@ -38,8 +45,7 @@ class FinancePayCompleteProcess extends WorkflowAbstract {
         );
         $recordModel = D("FinanceRecord");
         $recordId = $recordModel->addRecord($data);
-//        echo $recordModel->getLastSql();exit;
-//        var_dump($recordId) ;exit;
+
         if($recordId) {
             $model->where(array("id=".$this->mainrowId))->save(array(
                 "status" => 1,
@@ -48,8 +54,6 @@ class FinancePayCompleteProcess extends WorkflowAbstract {
                 "pay_dateline" => CTS
             ));
         }
-//        echo $model->getLastSql();exit;
-//        exit;
     }
     
 }

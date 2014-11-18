@@ -691,6 +691,15 @@ class CommonAction extends RestAction {
         
         $name = $this->updateModel ? $this->updateModel : $this->getActionName();
         $model = D($name);
+
+
+        //不可修改状态
+        if($this->lockedStatus) {
+            $sourceData = $model->find($_POST["id"]);
+            if(isset($sourceData["status"]) && $sourceData["status"] >= $this->lockedStatus) {
+                return $this->error("in_workflow");
+            }
+        }
         
         /**
          * 对提交数据进行预处理

@@ -17,6 +17,8 @@ class FinanceReceivePlanAction extends CommonAction {
     protected $indexModel = "FinanceReceivePlanView";
     protected $readModel = "FinanceReceivePlanView";
 
+    protected $lockedStatus = 1;
+
     protected function pretreatment() {
         if($_POST["customer_name"]) {
             $_POST["customer_id"] = $_POST["customer_name"];
@@ -29,6 +31,13 @@ class FinanceReceivePlanAction extends CommonAction {
         import("@.Workflow.Workflow");
         $workflow = new Workflow($this->workflowAlias);
         $rs = $workflow->doNext($id, null, false, false);
+    }
+
+    public function read() {
+        $data = parent::read(true);
+        $data["unreceived"] = $data["amount"] - $data["received"];
+
+        $this->response($data);
     }
 
 

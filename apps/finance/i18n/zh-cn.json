@@ -57,6 +57,10 @@
         "AppFinance": {
             "appName": "基础财务模块"
         },
+        "messages": {
+            "all_money_has_payed": "已完成付款",
+            "all_money_has_received": "已完成收款"
+        },
         "financeReceivePlan": "应收款",
         "financePayPlan": "应付款",
         "balance_direction": "余额方向",

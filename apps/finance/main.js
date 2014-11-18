@@ -114,6 +114,10 @@
                         amount: {
                             inputType: "number"
                         },
+                        payed: {
+                            inputType: "number",
+                            value: 0
+                        },
                         create_dateline: {
                             hideInForm: true,
                             cellFilter: "dateFormat:0"
@@ -161,23 +165,12 @@
                             inputType: "select3",
                             dataSource: "RelationshipCompanyRes"
                         },
-                        sponsor: {
-                            hideInForm: true
-                        },
-                        financer: {
-                            hideInForm: true
-                        },
-                        account_id: {
-                            field: "account_name",
-                            displayName: l('lang.account'),
-                            inputType: "select",
-                            dataSource: FinanceAccountRes,
-                            nameField: "name",
-                            valueField: "id",
-                            listAble: false
-                        },
                         amount: {
                             inputType: "number"
+                        },
+                        received: {
+                            inputType: "number",
+                            value: 0
                         },
                         create_dateline: {
                             hideInForm: true,
@@ -205,8 +198,9 @@
             return {
                 getStructure: function(){
                     return {
-                        amount: {
-                            inputType: "number"
+                        unreceived: {
+                            inputType: "number",
+                            displayName: l("lang.amount")
                         },
                         account_id: {
                             displayName: l('lang.account'),
@@ -235,7 +229,7 @@
                     resource: res
                 };
 
-                $scope.doSubmit = function(){
+                $scope.doFormSubmit = function(){
                     var params = $.extend({
                         workflow: true,
                         node_id: $routeParams.nodeId,
@@ -243,6 +237,7 @@
                         donext: true
                     }, $scope.formData);
                     res.doPostWorkflow(params).$promise.then(function(data){
+                        return;
                         $location.url('/finance/list/financeReceivePlan');
                     });
                 };

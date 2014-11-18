@@ -19,17 +19,26 @@ class FinanceBuild extends CommonBuildAction {
                     "type" => 1,
                     "listorder" => 0,
                     "prev_node_id" => 0,
-                    "next_node_id" => "CompleteProcess",
+                    "next_node_id" => "ConfirmReceive",
                     "status_text" => "新收款计划"
                 ),
-                "CompleteProcess" => array(
+                "ConfirmReceive" => array(
                     "name" => "确认收款",
                     "type" => 1,
                     "listorder" => 1,
-                    "prev_node_id" => "StartProcess",
-                    "next_node_id" => 0,
+                    "prev_node_id" => "StartProcess,ConfirmReceive",
+                    "next_node_id" => "ConfirmReceive,CompleteProcess",
+                    "status_text" => "已收款",
+                    "max_times" => 9999
+                ),
+                "CompleteProcess" => array(
+                    "name" => "完成收款",
+                    "type" => 2,
+                    "listorder" => 2,
+                    "prev_node_id" => "ConfirmReceive",
+                    "next_node_id" => "",
                     "status_text" => "已收款"
-                )
+                ),
             )
         ),
         "financePay" => array(
@@ -42,16 +51,17 @@ class FinanceBuild extends CommonBuildAction {
                     "type" => 1,
                     "listorder" => 0,
                     "prev_node_id" => 0,
-                    "next_node_id" => "SubmitToCommander",
+                    "next_node_id" => "CompleteProcess",
                     "status_text" => "新付款计划"
                 ),
                 "CompleteProcess" => array(
-                    "name" => "确认收款",
+                    "name" => "确认付款",
                     "type" => 1,
                     "listorder" => 1,
                     "prev_node_id" => "StartProcess",
-                    "next_node_id" => "VerifySuccess,VerifyFailed",
-                    "status_text" => "已收款"
+                    "next_node_id" => 0,
+                    "status_text" => "已付款",
+                    "max_times" => 9999
                 )
             )
         )
