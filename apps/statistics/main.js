@@ -24,7 +24,7 @@
                     filters: {
                         between: {
                             field: "dateline",
-                            defaultData: [startTime, endTime],
+                            defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
                             inputType: "datetime"
                         }
                     }
@@ -77,7 +77,7 @@
                 var filters = {
                     between: {
                         field: "dateline",
-                        defaultData: [startTime, endTime],
+                        defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
                         inputType: "datetime"
                     },
                     select: {

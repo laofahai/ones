@@ -69,6 +69,8 @@
         "account": "账户",
         "financer": "财务员",
         "balance": "余额",
+        "received": "已收",
+        "payed": "已付",
 
         "types" : {
             "receive" : "收款类别",

@@ -547,8 +547,8 @@
                 $scope.selectAble = false;
 
                 $scope.formMetaData = {
-                    start_time : new Date(),
-                    end_time : new Date()
+                    start_time : getDateForInput(),
+                    end_time : getDateForInput()
                 };
 
                 //生产计划类型字段定义

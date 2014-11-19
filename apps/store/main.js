@@ -35,12 +35,12 @@
             unhandled: true,
             onlyCount: true
         }).$promise.then(function(data){
-            var count = parseInt(data[0].count);
-            if(count <= 0) {
-                return;
-            }
-            ones.pluginScope.get("dashboardSetBtnTip")("stockinList", count);
-        });
+                var count = parseInt(data[0].count);
+                if(count <= 0) {
+                    return;
+                }
+                ones.pluginScope.get("dashboardSetBtnTip")("stockinList", count);
+            });
 
         //未处理出库单
         var stockOutRes = injector.get("StockoutRes");
@@ -48,12 +48,12 @@
             unhandled: true,
             onlyCount: true
         }).$promise.then(function(data){
-            var count = parseInt(data[0].count);
-            if(count <= 0) {
-                return;
-            }
-            ones.pluginScope.get("dashboardSetBtnTip")("stockoutList", count);
-        });
+                var count = parseInt(data[0].count);
+                if(count <= 0) {
+                    return;
+                }
+                ones.pluginScope.get("dashboardSetBtnTip")("stockoutList", count);
+            });
 
         //库存警告
         var stockWarningAPI = injector.get("Store.StockWarningAPI");
@@ -61,12 +61,12 @@
             unhandled: true,
             onlyCount: true
         }).$promise.then(function(data){
-            var count = parseInt(data[0].count);
-            if(count <= 0) {
-                return;
-            }
-            ones.pluginScope.get("dashboardSetBtnTip")("stockWarningList", count);
-        });
+                var count = parseInt(data[0].count);
+                if(count <= 0) {
+                    return;
+                }
+                ones.pluginScope.get("dashboardSetBtnTip")("stockWarningList", count);
+            });
 
         ones.pluginScope.set("defer", defer);
     });
@@ -328,7 +328,7 @@
                     filters: {
                         between: {
                             field: "dateline",
-                            defaultData: [startTime, endTime],
+                            defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
                             inputType: "datetime"
                         },
                         workflow: "stockin"
@@ -520,7 +520,7 @@
                     filters: {
                         between: {
                             field: "dateline",
-                            defaultData: [startTime, endTime],
+                            defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
                             inputType: "datetime"
                         }
                     },
@@ -708,7 +708,7 @@
 
                 if(!$scope.formMetaData) {
                     $scope.formMetaData = {
-                        dateline: new Date()
+                        dateline: getDateForInput()
                     };
                 }
 
@@ -748,7 +748,7 @@
 
                 if(!$routeParams.id) {
                     $scope.formMetaData = {
-                        dateline: new Date()
+                        dateline: getDateForInput()
                     };
                 }
 
@@ -802,8 +802,8 @@
                             donext: true,
                             data: $scope.formMetaData
                         }).$promise.then(function(data){
-                            $location.url("/store/list/stockout");
-                        });
+                                $location.url("/store/list/stockout");
+                            });
                     }
                 };
             }])
@@ -841,8 +841,8 @@
                 latest: true,
                 limit: 5
             }).$promise.then(function(data){
-                $scope.items = data;
-            });
+                    $scope.items = data;
+                });
         }])
 
         .controller("DashboardStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
@@ -851,8 +851,8 @@
                 limit: 5,
                 handled: true
             }).$promise.then(function(data){
-                $scope.items = data;
-            });
+                    $scope.items = data;
+                });
         }])
 
         .controller("DashboardNeedStockoutCtl", ["$scope", "StockoutRes", function($scope, res){
@@ -861,8 +861,8 @@
                 unhandled: true,
                 limit: 5
             }).$promise.then(function(data){
-                $scope.items = data;
-            });
+                    $scope.items = data;
+                });
         }])
     ;
 })();

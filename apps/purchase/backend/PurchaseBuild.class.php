@@ -36,7 +36,8 @@ class PurchaseBuild extends CommonBuildAction {
                     "listorder" => 2,
                     "prev_node_id" => "SavePurchase,MakeFinancePay,MakeStockin",
                     "next_node_id" => "CompleteProcess,MakeFinancePay,MakeStockin",
-                    "status_text" => "已生成应付款"
+                    "status_text" => "已生成应付款",
+                    "max_times" => 9999
                 ),
                 "MakeStockin" => array(
                     "name" => "生成入库单",

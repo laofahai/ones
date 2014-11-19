@@ -18,7 +18,7 @@ INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`
   (1, 'department', 'DP', '0.1', 1406906639, 1),
   (2, 'dashboard', 'DBD', '0.1', 1406906639, 1),
   (3, 'services', 'SVS', '0.1', 1406906639, 1),
-  (4, 'fistTimeWizard', 'FTW', '0.1', 1406906639, 1),
+  (4, 'firstTimeWizard', 'FTW', '0.1', 1406906639, 1),
   (5, 'dataModel', '', '0.1', 1409042540, 1),
   (6, 'workflow', '', '0.1', 1409042547, 1),
   (7, 'multiSearch', 'MTSC', '0.1', 1406906639, 1);
@@ -358,6 +358,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
   `execute_type` smallint(1) NOT NULL COMMENT '0一人执行,1所有人执行',
   `remind` int(11) NOT NULL COMMENT '是否提醒',
   `max_time` int(11) NOT NULL COMMENT '最大执行时间，超出失效，小时',
+  `max_times` smallint(5) NOT NULL DEFAULT '1',
   `status_text` varchar(50) NOT NULL,
   `memo` varchar(255) DEFAULT NULL,
   `btn_class` varchar(20) NOT NULL,

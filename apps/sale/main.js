@@ -119,7 +119,7 @@
                     dateline: {
                         cellFilter: "dateFormat:0",
                         inputType: "datetime",
-                        value: new Date()
+                        value: getDateForInput()
                     },
                     status_text: {
                         displayName: i18n.status,
@@ -339,7 +339,7 @@
 
                 if(!$scope.formMetaData) {
                     $scope.formMetaData = {
-                        inputTime: new Date(),
+                        inputTime: getDateForInput(),
                         total_amount_real: 0
                     };
                 }
@@ -400,7 +400,7 @@
                         });
                     }
                 });
-                $scope.maxDate = new Date();
+                $scope.maxDate = getDateForInput();
 
                 $scope.billConfig = {
                     model: OrdersModel,
@@ -422,7 +422,7 @@
                 $scope.workflowAble = true;
                 if(!$scope.formMetaData) {
                     $scope.formMetaData = {
-                        inputTime: new Date(),
+                        inputTime: getDateForInput(),
                         total_amount_real: 0
                     };
                 }
@@ -461,7 +461,7 @@
 
 
 
-                $scope.maxDate = new Date();
+                $scope.maxDate = getDateForInput();
 
                 ComView.makeGridSelectedActions($scope, ReturnsModel, ReturnsRes, "sale", "returns");
 

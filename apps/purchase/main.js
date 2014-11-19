@@ -151,7 +151,7 @@
             $scope.selectAble = false;
             if(!$scope.formMetaData) {
                 $scope.formMetaData = {
-                    inputTime: new Date(),
+                    inputTime: getDateForInput(),
                     total_amount_real: 0
                 };
             }
