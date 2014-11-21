@@ -20,7 +20,7 @@ class appPublish:
         if appNames:
             appNames = appNames.split(",")
         else:
-            ignoreList = ['.DS_Store', 'com.', 'dashboard','dataModel','department','install','multiSearch','services','workflow']
+            ignoreList = ['.DS_Store', 'com-', 'dashboard','dataModel','department','install','multiSearch','services','workflow']
             appNames = []
             files = os.listdir(self.appsPath)
             for f in files:
@@ -41,6 +41,10 @@ class appPublish:
 
         ftp = ftplib.FTP()
 
+        print self.cfg.get("ftp", "host");
+        print self.cfg.get("ftp", "remoteFolder");
+        #return
+
         try:
             ftp.set_pasv(True)
             ftp.connect(self.cfg.get("ftp","host"), self.cfg.get("ftp","port"))
@@ -51,7 +55,7 @@ class appPublish:
             return False
 
         if not self.remotePath:
-            self.remotePath = '/wwwroot/ones_service/Data/apps'
+            self.remotePath = self.cfg.get("ftp","remoteFolder")
 
         try:
             ftp.cwd(self.remotePath)
@@ -100,8 +104,8 @@ class appPublish:
 
 if __name__ == "__main__":
 
-    apps = raw_input("app name(explode by `,` and default to all;) : ")
-    remotePath = raw_input("remote path(default is `/wwwroot/ones_service/Data/apps`):")
+    apps = raw_input("app name(explode by `,` and default to all) : ")
+    remotePath = raw_input("remote path:")
 
     p = appPublish()
     p.remotePath = remotePath
