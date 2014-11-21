@@ -181,7 +181,7 @@ INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `desc
   (9, NULL, 'allow_negative_store', '允许负库存', '1', '是否允许负库存，允许写1 不允许写0', 0, 0),
   (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'webmaster@localhost', '备份发送至邮箱', 0, 0),
   (11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0, 0),
-  (12, NULL, 'remote.service.uri', '远程服务地址', 'http://service.ng-erp.com/index.php?s=/', '包括程序更新、帮助信息等', 0, 0),
+  (12, NULL, 'remote.service.uri', '远程服务地址', 'https://ng-erp.com/api/', '包括程序更新、帮助信息等', 0, 0),
   (15, NULL, 'system.version', '当前系统版本', '0.1.6', '请勿手动修改', 0, 0),
   (39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0, 0),
   (40, NULL, 'goods.unique.separator', '商品唯一字段分隔符', '.', '开始使用之后请勿修改', 0, 0),
