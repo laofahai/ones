@@ -345,13 +345,20 @@ class CommonAction extends RestAction {
             );
 
             $inProcess = D("WorkflowProcess")->field("mainrow_id")->where($processMap)->select();
+
             if($inProcess) {
                 foreach($inProcess as $p) {
                     $sourceIds[] = $p["mainrow_id"];
                 }
                 $map["id"] = array("IN", $sourceIds);
+            } else {
+                $this->response(array(
+                    array("count" => 0, "totalPages"=>0), array()
+                ));
+                exit;
             }
         }
+
 
         //仅回收站数据
         if($_GET["onlyTrash"]) {
