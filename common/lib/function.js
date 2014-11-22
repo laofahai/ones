@@ -54,8 +54,6 @@ var toDate = function(timestamp, noTime) {
 
     var mask;
 
-    console.log(noTime);
-
     switch(noTime) {
         case 1:
         case "1":
