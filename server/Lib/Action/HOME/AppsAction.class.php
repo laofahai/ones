@@ -357,6 +357,7 @@ class AppsAction extends CommonAction {
 
         $localName = md5(CTS).".zip";
         $localPath = ENTRY_PATH."/Data/apps/";
+        @mkdirs($localPath, 0777);
         import("@.ORG.CurlAxel");
 
         $axel = new CurlAxel();

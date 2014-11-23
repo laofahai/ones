@@ -15,7 +15,6 @@ class InstallAction extends CommonAction {
         "/server/Conf",
         "/server/Runtime",
         "/server/Data",
-        "/server/Data/apps",
         "/server/Data/Backup",
         "/server/Data/logs",
         "/server/Data/Updates",
