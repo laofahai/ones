@@ -22,5 +22,5 @@ ONES not ONS，项目前端基于AngularJS+Bootstrap, 后端使用PHP+MySQL，�
 
 ## 链接
 
-* 演示见：http://ones.coding.io
+* 演示见：http://demo.ng-erp.com
 * 讨论/反馈：http://project.ng-erp.com/projects/ones
