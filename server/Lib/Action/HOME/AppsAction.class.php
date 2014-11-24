@@ -30,7 +30,8 @@ class AppsAction extends CommonAction {
                 "_pn" => $_GET["_pn"],
                 "_ps" => $_GET["_ps"],
                 "_kw" => $_GET["_kw"],
-                "api_key" => C("SERVICE_API_KEY")
+                "api_key" => C("SERVICE_API_KEY"),
+                "secret_key" => C("SERVICE_SECRET_KEY"),
             ));
 
             $tmp = $http->get_data();
@@ -101,7 +102,8 @@ class AppsAction extends CommonAction {
             $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
             $http->request($this->serviceUri."App/getList", array(
                 "alias" => implode(",", $installedAppAlias),
-                "api_key" => C("SERVICE_API_KEY")
+                "api_key" => C("SERVICE_API_KEY"),
+                "secret_key" => C("SERVICE_SECRET_KEY"),
             ));
 
             $tmp = $http->get_data();
@@ -144,7 +146,8 @@ class AppsAction extends CommonAction {
         $http = new httplib();
 
         $params = array(
-            "api_key" => C('SERVICE_API_KEY')
+            "api_key" => C("SERVICE_API_KEY"),
+            "secret_key" => C("SERVICE_SECRET_KEY"),
         );
 
 
