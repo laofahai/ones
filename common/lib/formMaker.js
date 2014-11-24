@@ -622,7 +622,8 @@
                             "hideInForm",
                             "cellFilter",
                             "primary",
-                            "dataSource"
+                            "dataSource",
+                            "helpText"
                         ];
                         bl = $.extend(bl, blackList);
                         fieldDefine["autocomplete"] = "false";

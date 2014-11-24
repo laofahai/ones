@@ -5,8 +5,8 @@ $BASEConfig = array(
     /*
      * API KEY
      * **/
-    'SERVICE_API_KEY' => 'free',
-    'SERVICE_SECRET_KEY' => 'free',
+    'SERVICE_API_KEY' => '[api_key]',
+    'SERVICE_SECRET_KEY' => '[secret_key]',
 
     /* 数据库配置 */
     'DB_TYPE'            =>    'mysqli',        // 数据库类型

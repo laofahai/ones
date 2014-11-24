@@ -24,7 +24,12 @@
         "next": "下一步",
 
         "helpText": {
-            "dbhost": "通常为127.0.0.1 或者 localhost"
+            "dbhost": "通常为127.0.0.1 或者 localhost",
+            "apiKey": "<a href=\"https://ng-erp.com/dashboard\" target=\"_blank\">申请或者查看</a>"
+        },
+        "errors": {
+            "required": "必填",
+            "email": "必须为email"
         },
 
         "installLocked": "安装已被锁定",

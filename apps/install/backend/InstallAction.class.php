@@ -92,7 +92,9 @@ class InstallAction extends CommonAction {
             "[db_user]",
             "[db_port]",
             "[db_pre]",
-            "[db_pwd]"
+            "[db_pwd]",
+            "[api_key]",
+            "[secret_key]"
         );
         $replace = array(
             md5($_SERVER["SERVER_NAME"].CTS.rand(1,5000)),
@@ -102,6 +104,8 @@ class InstallAction extends CommonAction {
             $config["db"]["dbport"] ? $config["db"]["dbport"] : 3306,
             $config["db"]["dbpre"],
             $config["db"]["dbpwd"],
+            $config["db"]["api_key"],
+            $config["db"]["secret_key"]
         );
 
         $configContent = str_replace($search, $replace, $configContent);
