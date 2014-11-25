@@ -161,8 +161,8 @@
             };
         }])
 
-        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "RelationshipCompanyLinkmanModel", "$routeParams",
-            function($scope, ComView, RelationshipCompanyModel, res, RelationshipCompanyLinkmanModel, $routeParams){
+        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "ComView",
+            function($scope, ComView, RelationshipCompanyModel, res, ComView){
                 $scope.selectAble = false;
 
                 $scope.billConfig = {
@@ -180,6 +180,15 @@
 
                 $scope.doComplexSubmit = function() {
                     $scope.formMetaData = $scope.formData;
+
+                    if (false === $scope.form.$valid) {
+                        if($scope.form.$error) {
+                            ComView.alert(ComView.toLang("fillTheForm", "messages"), "danger");
+                        } else {
+                            ComView.alert(ComView.toLang("fillTheForm", "messages"), "danger");
+                        }
+                        return false;
+                    }
 //
                     $scope.doBillSubmit();
                 };

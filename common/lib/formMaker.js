@@ -106,8 +106,6 @@
                                 //提交表单
                                 if(typeof(parentScope.doFormSubmit) !== "function") {
                                     parentScope.doSubmit = parentScope.doFormSubmit = (opts.doSubmit ? opts.doSubmit : function() {
-                                        //                    console.log("submit");
-
                                         if(!doFormValidate()) {
                                             return;
                                         }
