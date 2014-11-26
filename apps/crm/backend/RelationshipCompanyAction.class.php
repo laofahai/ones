@@ -97,12 +97,4 @@ class RelationshipCompanyAction extends CommonAction {
         $this->response($data);
     }
 
-    final protected function _extend_rows_permission_index($map, $order) {
-        return "ONLY_LEADED_DEPARTMENT";
-    }
-
-    final protected function _extend_rows_permission_read($id) {
-        return "ONLY_LEADED_DEPARTMENT";
-    }
-    
 }

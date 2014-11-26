@@ -411,11 +411,30 @@ function D($name='',$layer='') {
     if(class_exists($class)) {
         $model      =   new $class(basename($name));
     }else {
-        Think::autoload($class);
-        if(class_exists($class)) {
+
+        $app = lcfirst($_GET["_URL_"][0]);
+        $module = ucfirst($_GET["_URL_"][1]);
+        $module = $module ? $module : ucfirst($app);
+
+        $appModel = sprintf("%s/apps/%s/backend/%sModel.class.php", ROOT_PATH, $app , $module);
+        $extendModel = sprintf("%s/extend/apps/%s/%sModel.class.php", ROOT_PATH, $app , $module);
+
+        if(is_file($appModel)) {
+            require_cache($appModel);
+        }
+        if(is_file($extendModel)) {
+            require_cache($extendModel);
+            $class = "Extend".$class;
+        }
+        if(is_file($appModel) && class_exists($class)) {
             $model = new $class(basename($name));
         } else {
-            $model      =   new Model(basename($name));
+            Think::autoload($class);
+            if(class_exists($class)) {
+                $model = new $class(basename($name));
+            } else {
+                $model      =   new Model(basename($name));
+            }
         }
     }
     $_model[$name]  =  $model;
@@ -490,9 +509,17 @@ function A($name,$layer='',$common=false) {
         $module = $module ? $module : ucfirst($app);
 
         $appAction = sprintf("%s/apps/%s/backend/%sAction.class.php", ROOT_PATH, $app , $module);
-
         require_cache($appAction);
-        $class = ucfirst($module."Action");
+
+        $extendAction = sprintf("%s/extends/apps/%s/%sAction.class.php", ROOT_PATH, $app, $module);
+
+        if(is_file($extendAction)) {
+            require_cache($extendAction);
+            $class = ucfirst("Extend".$module."Action");
+        } else {
+            $class = ucfirst($module."Action");
+        }
+
         if($class == "Action") {
             return false;
         }

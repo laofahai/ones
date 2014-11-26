@@ -29,7 +29,7 @@
          * On 401 response – it stores the request and broadcasts 'event:loginRequired'.
          */
         .config(["$httpProvider", "$locationProvider", function($httpProvider, $locationProvider) {
-                
+
             var reqInterceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', function ($q, $cacheFactory, $timeout, $rootScope) {
 
                 $rootScope.dataQuering = 0;
@@ -76,7 +76,7 @@
             if(ones.useHTML5) {
                 $locationProvider.html5Mode(true);
             }
-            
+
             $httpProvider.interceptors.push(reqInterceptor);
         }])
         /**
