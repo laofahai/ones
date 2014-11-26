@@ -48,11 +48,17 @@ class UserModel extends CommonModel {
         return $isLeader;
     }
 
-    public function getLeadedUsers($onlyId=true, $uid=null) {
+    public function getLeadedUsers($onlyId=true, $uid=null, $includeSelf=true) {
 
         $map = array(
-            "department_id" => array("IN", $this->getLeadedDepartments(true, $uid))
+            "department_id" => array("IN", $this->getLeadedDepartments(true, $uid)),
         );
+
+        if($includeSelf) {
+            $map["id"] = getCurrentUid();
+            $map["_logic"] = "OR";
+        }
+
         $leadedUsers = $this->where($map)->select();
 
         if(!$onlyId) {
@@ -68,8 +74,10 @@ class UserModel extends CommonModel {
 
         $model = D("Department");
 
+        $theUser = $this->find($uid);
+
         //获取用户所在部门的所有子集部门(包含当前部门)
-        $tmp = $model->getTree($_SESSION["user"]["Department"]["id"]);
+        $tmp = $model->getTree($theUser["department_id"]);
 
         $leaded = array();
         foreach($tmp as $dep) {
@@ -79,6 +87,7 @@ class UserModel extends CommonModel {
         }
 
         $departments = array();
+        //遍历查询效率问题
         foreach($leaded as $lead) {
             $departments = array_merge($departments, (array)$model->getTree($lead));
         }

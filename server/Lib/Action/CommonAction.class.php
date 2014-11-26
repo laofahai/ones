@@ -443,22 +443,10 @@ class CommonAction extends RestAction {
         $this->_filter($map);
         $this->_order($order);
 
-        $extendPermissionCheck = call_user_func_array(
+        call_user_func_array(
             array($this, "_extend_rows_permission_index"),
             array(&$map)
         );
-
-        //仅自己的和自己领导的部门下属的
-        if("ONLY_LEADED_DEPARTMENT" === $extendPermissionCheck) {
-            $user = D("User");
-            $users = $user->getLeadedUsers();
-
-            if(!$users) {
-                $users = array(getCurrentUid());
-            }
-
-            $map["user_id"] = array("IN", $users);
-        }
 
         if($_GET["onlyCount"]) {
             $total = $model->where($map)->count();
@@ -577,20 +565,7 @@ class CommonAction extends RestAction {
             array($id, &$map)
         );
 
-        //仅自己的和自己领导的部门下属的
-        if("ONLY_LEADED_DEPARTMENT" === $extendPermissionCheck) {
-            $user = D("User");
-            $users = $user->getLeadedUsers();
-
-            if(!$users) {
-                $users = array(getCurrentUid());
-            }
-
-            $map["user_id"] = array("IN", $users);
-        }
-
         $tmp = $model->where($map)->select();
-//        echo $model->getLastSql();exit;
 
         //扩展权限检测
         if(($extendPermissionCheck && !$tmp) or false === $extendPermissionCheck) {
