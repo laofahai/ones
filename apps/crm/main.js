@@ -61,6 +61,7 @@
                             primary: true
                         },
                         name: {},
+                        alias: {},
                         discount: {
                             inputType: "number",
                             min: 1,

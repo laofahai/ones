@@ -575,6 +575,7 @@ class CommonAction extends RestAction {
         }
 
         if(!$tmp) {
+            $this->error("can not find item");
             return;
         }
 

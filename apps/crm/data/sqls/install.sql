@@ -24,17 +24,19 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
 CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
+  `alias` varchar(50) NOT NULL,
   `discount` smallint(2) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias` (`alias`),
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
 
 -- separator
 
-INSERT INTO `[PREFIX]relationship_company_group` (`id`, `name`, `discount`) VALUES
-(1, '客户', 100),
-(2, '供应商', 100),
-(3, '加工商', 100),
-(4, 'VIP客户', 90);
+INSERT INTO `[PREFIX]relationship_company_group` (`id`, `name`, `alias`, `discount`) VALUES
+(1, '客户', 'customer', 100),
+(2, '供应商', 'supplier', 100),
+(3, 'VIP客户', 'vip', 90);
 
 -- separator
 
