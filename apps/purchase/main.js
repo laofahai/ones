@@ -198,7 +198,7 @@
                 }
             };
 
-            $scope.unitPriceFile = "cost";
+            $scope.unitPriceField = "cost";
 
             ComView.makeGridSelectedActions($scope, model, res, "purchase", "purchase");
 

@@ -216,6 +216,12 @@
                 this.api = dataAPI.getResourceInstance({
                     uri: "Store/StockProductList"
                 });
+                this.getUnitPrice = function(row){
+                    return self.api.save({
+                        row: row,
+                        act: 'getUnitPrice'
+                    }).$promise;
+                }
                 this.getStructure = function(){
                     plugin.callPlugin("bind_dataModel_to_structure", {
                         structure: self.structure,

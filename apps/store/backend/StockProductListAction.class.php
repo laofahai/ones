@@ -44,12 +44,19 @@ class StockProductListAction extends CommonAction {
     }
 
     public function update() {
+
+        $model = D("StockProductList");
+        $model->where(array(
+            "factory_code_all" => $_POST["factory_code_all"]
+        ))->save(array(
+            "unit_price" => $_POST["unit_price"],
+            "cost" => $_POST["cost"]
+        ));
+
         $allow = array(
             "id",
             "store_min",
-            "store_max",
-            "unit_price",
-            "cost"
+            "store_max"
         );
         $tmp = array();
         foreach($_POST as $k=>$v) {
@@ -140,6 +147,26 @@ class StockProductListAction extends CommonAction {
 
 
         $this->doExport(sprintf("export_kcqd_%s", date("YmdHis", CTS)), $data);
+    }
+
+    public function ACT_getUnitPrice() {
+        $row = $_POST["row"];
+        list($factory_code, $goods_id, $catid) = explode("_", $row["goods_id"]);
+        $row["factory_code"] = $factory_code;
+        $factory_code_all = makeFactoryCode($row);
+
+        $data = D("StockProductList")->where(array("factory_code_all"=>$factory_code_all))->find();
+
+        if(!$data) {
+            $data = D("Goods")->find($goods_id);
+            $data["unit_price"] = $data["price"];
+        }
+
+        $this->response(array(
+            "price" => $data["unit_price"],
+            "cost" => $data["cost"]
+        ));
+
     }
     
 }

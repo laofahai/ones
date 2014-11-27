@@ -280,7 +280,8 @@ class CommonAction extends RestAction {
 
     protected function _external_action() {
         //动作执行
-        $method = "ACT_".$_GET["act"];
+        $method = "ACT_".$_REQUEST["act"];
+
         if(method_exists($this, $method)) {
             $this->breakAction = true;
             return $this->$method();
@@ -612,6 +613,12 @@ class CommonAction extends RestAction {
     public function insert($return = false) {
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
+        }
+
+        $this->_external_action();
+
+        if($this->breakAction) {
+            return;
         }
         
         $name = $this->insertModel ? $this->insertModel : $this->getActionName();

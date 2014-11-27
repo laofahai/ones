@@ -1158,7 +1158,7 @@
                                     } else {
                                         eventFuncName = e;
                                     }
-                                    if(events[k] && angular.isArray(e) && e[0] !== "override") {
+                                    if(events[k] || (angular.isArray(e) && e[0] !== "override")) {
                                         events[k] = events[k]+","+eventFuncName;
                                     } else {
                                         events[k] = eventFuncName;
@@ -1400,15 +1400,24 @@
                             });
                             parentScope.formMetaData.total_num = totalNum;
                             if(parentScope[self.opts.dataName][context.trid] && parentScope[self.opts.dataName][context.trid].goods_id) {
-                                if(!parentScope[self.opts.dataName][context.trid].unit_price){
+                                if(undefined === parentScope[self.opts.dataName][context.trid].unit_price){
                                     var gid = parentScope[self.opts.dataName][context.trid].goods_id.split("_");
-                                    $injector.get("GoodsRes").get({
-                                        id: gid[1]
-                                    }).$promise.then(function(data){
-                                        parentScope[self.opts.dataName][context.trid].unit_price = Number(data[parentScope.unitPriceFile||"price"]);
-                                        parentScope.countRowAmount(context.trid);
-                                        parentScope.recountTotalAmount();
-                                    });
+
+                                    $injector.get("Store.StockProductListAPI").getUnitPrice(parentScope[self.opts.dataName][context.trid], parentScope.unitPriceField || "price")
+                                        .then(function(data){
+                                            parentScope[self.opts.dataName][context.trid].unit_price = Number(data[parentScope.unitPriceField||"price"]);
+                                            parentScope.countRowAmount(context.trid);
+                                            parentScope.recountTotalAmount();
+                                        })
+                                    ;
+//                                    return;
+//                                    $injector.get("Store.StockProductListAPI").get({
+//                                        id: gid[1]
+//                                    }).$promise.then(function(data){
+//                                        parentScope[self.opts.dataName][context.trid].unit_price = Number(data[parentScope.unitPriceFile||"price"]);
+//                                        parentScope.countRowAmount(context.trid);
+//                                        parentScope.recountTotalAmount();
+//                                    });
                                 } else {
                                     parentScope.countRowAmount(context.trid);
                                     parentScope.recountTotalAmount();
