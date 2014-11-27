@@ -311,12 +311,31 @@ class Workflow {
                 $this->currentWorkflow["workflow_file"]
             );
 
+            $appWorkflowExtend = sprintf("%s/extends/apps/%s/workflow/%s/",
+                ROOT_PATH,
+                $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
+                $this->currentWorkflow["workflow_file"]
+            );
+
             $appWorkflowFile = $appWorkflow.$node["execute_file"].".class.php";
+
+            $appWorkflowFileExtend = $appWorkflowExtend.$node["execute_file"].".class.php";
 
             if(is_dir($appWorkflow) && is_file($appWorkflowFile)) {
                 require_cache($appWorkflowFile);
+
+                if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
+                    require_cache($appWorkflowFileExtend);
+                    $className = "Extend".$className;
+                }
+
             } else {
-                return false;
+                if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
+                    require_cache($appWorkflowFileExtend);
+                    $className = "Extend".$className;
+                } else {
+                    return false;
+                }
             }
 
         }

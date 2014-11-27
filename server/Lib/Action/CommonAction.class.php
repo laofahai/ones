@@ -568,7 +568,7 @@ class CommonAction extends RestAction {
         $tmp = $model->where($map)->select();
 
         //扩展权限检测
-        if(($extendPermissionCheck && !$tmp) or false === $extendPermissionCheck) {
+        if((false !== $extendPermissionCheck && !$tmp) or false === $extendPermissionCheck) {
             $this->error("need_authorize");
             return;
         }
@@ -616,6 +616,16 @@ class CommonAction extends RestAction {
         
         $name = $this->insertModel ? $this->insertModel : $this->getActionName();
         $model = D($name);
+
+        $extendPermissionCheck = call_user_func_array(
+            array($this, "_extend_rows_permission_index"),
+            array()
+        );
+
+        if(false === $extendPermissionCheck) {
+            $this->error("need_authorize");
+            return;
+        }
 
         /**
          * 对提交数据进行预处理
@@ -673,6 +683,18 @@ class CommonAction extends RestAction {
         
         $name = $this->updateModel ? $this->updateModel : $this->getActionName();
         $model = D($name);
+
+        $id = abs(intval($_GET["id"]));
+
+        $extendPermissionCheck = call_user_func_array(
+            array($this, "_extend_rows_permission_index"),
+            array($id)
+        );
+
+        if(false === $extendPermissionCheck) {
+            $this->error("need_authorize");
+            return;
+        }
 
 
         //不可修改状态
