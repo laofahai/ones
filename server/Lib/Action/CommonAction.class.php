@@ -625,7 +625,7 @@ class CommonAction extends RestAction {
         $model = D($name);
 
         $extendPermissionCheck = call_user_func_array(
-            array($this, "_extend_rows_permission_index"),
+            array($this, "_extend_rows_permission_read"),
             array()
         );
 
@@ -694,7 +694,7 @@ class CommonAction extends RestAction {
         $id = abs(intval($_GET["id"]));
 
         $extendPermissionCheck = call_user_func_array(
-            array($this, "_extend_rows_permission_index"),
+            array($this, "_extend_rows_permission_update"),
             array($id)
         );
 
