@@ -116,7 +116,11 @@
                         num: {
                             inputType: "number",
                             totalAble: true,
-                            "ui-event": "{blur: 'afterNumBlur($event)'}"
+                            uiEvents: {
+                                blur: function($events, scope) {
+                                    //console.log(arguments);
+                                }
+                            }
                         },
                         unit_price: {
                             inputType: "number",
@@ -193,6 +197,8 @@
                     }
                 }
             };
+
+            $scope.unitPriceFile = "cost";
 
             ComView.makeGridSelectedActions($scope, model, res, "purchase", "purchase");
 

@@ -621,7 +621,8 @@
                             "cellFilter",
                             "primary",
                             "dataSource",
-                            "helpText"
+                            "helpText",
+                            "uiEvents"
                         ];
                         bl = $.extend(bl, blackList);
                         fieldDefine["autocomplete"] = "false";
@@ -1129,28 +1130,56 @@
 
                             //支持的事件列表
                             var eventsList = ["blur", "click", "keydown", "focus", "change"];
-                            var events = [];
+                            var events = {};
+
                             context.field = context.field || "";
                             angular.forEach(eventsList, function(e){
                                 var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
 
                                 if(m in parentScope) {
-                                    //                            console.log(m);
-                                    events.push(sprintf("%s:'%s($event)'", e, m));
+                                    events[e] = m;
                                 } else {
                                     m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
                                     if(m in parentScope) {
-                                        events.push(sprintf("%s:'%s($event)'", e, m));
+                                        events[e] = m;
                                     }
                                 }
                             });
 
-                            if(events.length) {
-                                struct["ui-event"] = sprintf("{%s}", events.join());
+                            if(struct["uiEvents"]) {
+                                var eventFuncName = "";
+                                angular.forEach(struct.uiEvents, function(e, k){
+                                    if(typeof(e) == "function") {
+                                        eventFuncName = "e_"+md5.createHash(String(Math.random()));
+                                        parentScope[eventFuncName] = e;
+                                    } else if(angular.isArray(e)) {
+                                        eventFuncName = "e_"+md5.createHash(String(Math.random()));
+                                        parentScope[eventFuncName] = e[1];
+                                    } else {
+                                        eventFuncName = e;
+                                    }
+                                    if(events[k] && angular.isArray(e) && e[0] !== "override") {
+                                        events[k] = events[k]+","+eventFuncName;
+                                    } else {
+                                        events[k] = eventFuncName;
+                                    }
+
+                                });
                             }
 
-                            //                    console.log(struct["ui-event"]);
-//
+                            struct["ui-event"] = [];
+                            if(events) {
+                                angular.forEach(events, function(method, e){
+                                    var methods = [];
+                                    angular.forEach(method.split(","), function(m){
+                                        methods.push(m+"($event, this)");
+                                    });
+                                    struct["ui-event"].push(sprintf("%s: '%s'", e, methods.join(";")));
+                                });
+
+                                struct["ui-event"] = sprintf("{%s}", struct["ui-event"].join(","));
+                            }
+
                             var html = self.fm.maker.factory(context, struct, scope);
                             html = self.compile(html)(parentScope);
 
@@ -1192,7 +1221,6 @@
                                     }
                                     next = $("#billTable tbody tr").eq(td.parent().index()+1).find("td.tdEditAble").eq(0);//跳到下一行
                                 }
-                                console.log(next.find("label"));
                                 self.parentScope.billFieldEdit(next.find("label"));
                             }
                             self.scope.editing = false;
@@ -1374,13 +1402,13 @@
                             if(parentScope[self.opts.dataName][context.trid] && parentScope[self.opts.dataName][context.trid].goods_id) {
                                 if(!parentScope[self.opts.dataName][context.trid].unit_price){
                                     var gid = parentScope[self.opts.dataName][context.trid].goods_id.split("_");
-                                    var goods = $injector.get("GoodsRes").get({
+                                    $injector.get("GoodsRes").get({
                                         id: gid[1]
                                     }).$promise.then(function(data){
-                                            parentScope[self.opts.dataName][context.trid].unit_price = Number(data.price);
-                                            parentScope.countRowAmount(context.trid);
-                                            parentScope.recountTotalAmount();
-                                        });
+                                        parentScope[self.opts.dataName][context.trid].unit_price = Number(data[parentScope.unitPriceFile||"price"]);
+                                        parentScope.countRowAmount(context.trid);
+                                        parentScope.recountTotalAmount();
+                                    });
                                 } else {
                                     parentScope.countRowAmount(context.trid);
                                     parentScope.recountTotalAmount();
