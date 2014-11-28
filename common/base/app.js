@@ -93,8 +93,6 @@
                     return $rootScope.dataQuering;
                 }, function(dataQuering, old){
 
-                    console.log(arguments);
-
                     if(!dataQuering) {
                         setTimeout(function(){
                             $("#loadingStateBarProgress").width("0");

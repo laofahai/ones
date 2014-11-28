@@ -75,7 +75,7 @@
                 <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
                     <div class="row">
                         <div class="col-xs-4">
-                            <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email=335454250@qq.com&s=50" width="50" />
+                            <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=50" />
                         </div>
                         <div class="col-xs-8">
                             <a ng-click="$root.goPage('department/Profile')"><i class="icon icon-user"></i></a>
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-                    <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email=335454250@qq.com&s=50" width="50" />
+                    <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=50" />
                 </div>
             </div><!-- #sidebar-shortcuts -->
 
