@@ -376,6 +376,7 @@ commonform {
     -moz-animation:spinPulse 2s infinite ease-in-out;
     -webkit-animation:spinPulse 2s infinite linear;
     position:absolute;
+    z-index:9999;
     top:350px;
     left:50%;
     margin-left:-35px !important;
@@ -399,6 +400,7 @@ commonform {
     position:absolute;
     top:350px;
     left:50%;
+    z-index:9999;
     margin-left:-25px !important;
     margin-top:-15px !important;
 }
@@ -425,6 +427,7 @@ commonform {
     position:fixed;
     left:50%;
     top:100px;
+    z-index:9999;
 }
 .loadingState .loadingCircle, .loadingState .loadingCircle1 {
     position:static;

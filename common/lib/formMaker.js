@@ -1430,7 +1430,14 @@
                          * */
                         if(self.opts.relateMoney) {
                             //实收金额
+                            var times = 0;
                             parentScope.$watch('formMetaData.total_amount', function(newVal, oldVal){
+                                if(times <= 1) {
+                                    times++;
+                                    return;
+                                }
+
+                                times = 0;
                                 parentScope.formMetaData.total_amount_real = parentScope.formMetaData.total_amount;
                             });
 

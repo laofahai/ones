@@ -87,8 +87,15 @@ class OrdersModel extends CommonModel {
         }
 
         foreach($data["rows"] as $row) {
-            $row["order_id"] = $orderId;
+
             $rowMethod = $row["id"] ? "save" : "add";
+
+            if($rowMethod == "add") {
+                $row["order_id"] = $orderId;
+            } else {
+                unset($row["order_id"]);
+            }
+
             $rs = $detail->$rowMethod($row);
             if(false === $rs) {
                 Log::write("SQL Error:".$this->getLastSql(), Log::SQL);

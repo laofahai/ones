@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
   `alias` varchar(50) NOT NULL,
   `discount` smallint(2) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `alias` (`alias`),
+  UNIQUE KEY `alias` (`alias`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 
