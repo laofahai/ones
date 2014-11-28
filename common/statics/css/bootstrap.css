@@ -5373,7 +5373,7 @@ button.close {
   border: 0;
 }
 .modal-open {
-  overflow: hidden;
+
 }
 .modal {
   position: fixed;
