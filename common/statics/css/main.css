@@ -427,7 +427,7 @@ commonform {
     position:fixed;
     left:50%;
     top:100px;
-    z-index:9999;
+    z-index:9998;
 }
 .loadingState .loadingCircle, .loadingState .loadingCircle1 {
     position:static;
