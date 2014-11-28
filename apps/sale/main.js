@@ -377,7 +377,7 @@
 
                 //客户ID变动时 更新当前的折扣率
                 $scope.$watch('formMetaData.customer_id', function(){
-                    if(!$scope.billData) {
+                    if(!$scope.billData || $routeParams.id) {
                         return;
                     }
                     if($scope.formMetaData.customer_id) {
@@ -391,7 +391,7 @@
                                 discount: parseInt(data.discount)
                             };
                             angular.forEach($scope.billData, function(item, k) {
-                                if(!item.goods_id) {
+                                if(!item.goods_id || item.discount) {
                                     return;
                                 }
                                 $scope.billData[k].discount = parseInt(data.discount);
@@ -408,8 +408,6 @@
                 };
 
                 ComView.makeGridSelectedActions($scope, OrdersModel, OrdersRes, "sale", "orders");
-//                $scope.formats = ["yyyy-MM-dd", "yyyy-mm-dd", "shortDate"];
-//                $scope.format = $scope.formats[0];
 
             }])
         .controller("ReturnsEditCtl", ["$scope", "ReturnsRes", "GoodsRes", "ReturnsModel", "ComView", "RelationshipCompanyRes", "$routeParams",
