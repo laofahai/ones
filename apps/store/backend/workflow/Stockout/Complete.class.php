@@ -26,6 +26,11 @@ class StockoutComplete extends WorkflowAbstract {
             $workflow->doNext($theStockout["source_id"], $sourceNode["id"], true, 3);
         }
     }
+
+    public function isAllComplete() {
+        $theStockout = D("Stockout")->find($this->mainrowId);
+        return $theStockout["outed_num"] >= $theStockout["total_num"];
+    }
     
 }
 

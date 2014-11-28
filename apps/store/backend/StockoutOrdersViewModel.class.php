@@ -27,7 +27,7 @@ class StockoutOrdersViewModel extends CommonViewModel {
         "info", "success"
     );
     
-    protected $workflowAlias = "order";
+    protected $workflowAlias = "orders";
     
     protected $workflowMainRowField = "id";
     

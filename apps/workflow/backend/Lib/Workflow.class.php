@@ -505,6 +505,7 @@ class Workflow {
             );
             $nextNodes = $this->nodeModel->where($map)->select();
             if($nextNodes) {
+
                 foreach($nextNodes as $nextNode) {
                     switch($nextNode["type"]) {
                         case "2":

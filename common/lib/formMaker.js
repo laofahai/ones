@@ -1432,7 +1432,7 @@
                             //实收金额
                             var times = 0;
                             parentScope.$watch('formMetaData.total_amount', function(newVal, oldVal){
-                                if(times <= 1) {
+                                if(self.opts.isEdit && times <= 1) {
                                     times++;
                                     return;
                                 }

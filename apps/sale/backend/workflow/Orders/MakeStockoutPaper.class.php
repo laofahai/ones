@@ -19,7 +19,7 @@ class OrdersMakeStockoutPaper extends WorkflowAbstract {
         //流程上下文
         $this->context = array(
             "sourceModel" => "Orders",
-            "sourceWorkflow" => "order",
+            "sourceWorkflow" => "orders",
             "sourceId" => $this->mainrowId,
             "sourceMainrowField" => "order_id"
         );
