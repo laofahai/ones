@@ -27,7 +27,7 @@ class StoreBuild extends CommonBuildAction {
                     "name" => "确认入库",
                     "type" => 1,
                     "listorder" => 1,
-                    "prev_node_id" => "StartProcess",
+                    "prev_node_id" => "StartProcess,ConfirmStockin",
                     "next_node_id" => "ConfirmStockin,CompleteProcess",
                     "status_text" => "正在入库",
                     "max_times" => 9999
@@ -61,10 +61,10 @@ class StoreBuild extends CommonBuildAction {
                 ),
                 "ConfirmStockout" => array(
                     "name" => "确认出库",
-                    "type" => 7,
+                    "type" => 1,
                     "listorder" => 1,
-                    "prev_node_id" => "StartProcess",
-                    "next_node_id" => "MakeExpress,Complete",
+                    "prev_node_id" => "StartProcess,ConfirmStockout",
+                    "next_node_id" => "MakeExpress,Complete,ConfirmStockout",
                     "status_text" => "正在出库",
                     "max_times" => 9999
                 ),
@@ -82,7 +82,9 @@ class StoreBuild extends CommonBuildAction {
                     "listorder" => 3,
                     "prev_node_id" => "ConfirmStockout,MakeExpress",
                     "next_node_id" => "MakeExpress",
-                    "status_text" => "已完成"
+                    "status_text" => "已完成",
+                    "is_default" => 1,
+                    "cond" => "m:isAllComplete"
                 )
             )
         )

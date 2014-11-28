@@ -9,9 +9,20 @@
 class StockinCompleteProcess extends WorkflowAbstract {
 
     public function run() {
-        D("Stockin")->where("id=".$this->mainrowId)->save(array(
+
+        $stockin = D("Stockin");
+
+        $stockin->where("id=".$this->mainrowId)->save(array(
             "status" => 2
         ));
+
+        $theStockin = $stockin->find($this->mainrowId);
+        if($theStockin["source_model"]) {
+            //若外部生成，走外部下一流程
+            $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
+            $workflow->doNext($theStockin["source_id"], "", true, 3);
+        }
+
     }
 
     public function isAllComplete() {

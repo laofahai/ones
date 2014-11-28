@@ -112,10 +112,11 @@ class SaleBuild extends CommonBuildAction {
                 ),
                 "CompleteProcess" => array(
                     "name" => "完成退货",
-                    "type" => 1,
+                    "type" => 3,
                     "listorder" =>3,
                     "prev_node_id" => "MakeStockin",
                     "next_node_id" => 0,
+                    "is_default" => 1,
                     "status_text" => "已完成"
                 )
             )
