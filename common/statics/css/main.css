@@ -593,3 +593,45 @@ th.sorting_asc,th.sorting_desc {
     color:#000;
 }
 
+
+.topest_toggle_sidebar_btn {
+    position:absolute;left:0;top:0;
+    width:59px;
+    height:45px;
+    line-height:45px;
+    display:block;
+    font-size:20px;
+    text-align:center;
+    background:#62a8d1;
+    color:#fff;
+}
+.topest_toggle_sidebar_btn:hover {
+    text-decoration: none;
+    background:#f2f2f2;
+    color:#62a8d1
+}
+
+.navbar-brand {
+    margin-left:78px;
+}
+
+.sidebar-shortcuts .nav-user-photo {
+    margin:0;
+}
+.sidebar-shortcuts {
+    height:60px;
+    line-height:60px;
+}
+
+.sidebar-shortcuts-large .nav-user-photo{
+    margin:-5px 0 0 10px;
+    height:40px;
+}
+
+.sidebar-shortcuts-large a {
+    margin:0 5px;
+    font-size:18px;
+}
+.sidebar-shortcuts-large a:hover {
+    text-decoration: none;
+}

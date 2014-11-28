@@ -7,8 +7,8 @@
             <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
         </div>
         <!--//workflow in detail page-->
-        <div class="pull-left  btn-group" ng-show="workflowInBill.length>0 && !isWorkflowing">
-            <button class="btn btn-sm btn-primary" ng-click="doViewWorkflowProcesses(formMetaData)">{{'lang.workflow'|lang}}:</button>
+        <div class="pull-left btn-group">
+            <button class="btn btn-sm btn-primary" ng-click="doViewWorkflowProcesses(formMetaData)">{{'lang.workflow'|lang}}</button>
             <button class="btn btn-sm btn-{{w.btn_class||'success'}}"
                     ng-repeat="w in workflowInBill track by $index"
                     ng-bind="w.name"

@@ -18,51 +18,22 @@
     <base href="{$APP_PATH}" />
 </head>
 <body ng-controller="MainCtl" ng-keydown="doMainKeyDown($event)">
-<div class="initCover" id="initCover">
-    <div class="loadingCircle"></div>
-    <div class="loadingCircle1"></div>
-</div>
 <div class="navbar navbar-default" id="navbar">
     <div class="navbar-container" id="navbar-container">
         <div class="navbar-header pull-left">
-            <a href="#" class="navbar-brand"></a><!-- /.brand -->
+            <a ng-click="sidebarToggleExpand()" class="topest_toggle_sidebar_btn">
+                <i class="icon icon-list-ul"></i>
+            </a>
+            <a ng-click="$root.goPage('/')" class="navbar-brand"></a><!-- /.brand -->
         </div><!-- /.navbar-header -->
 
         <div class="navbar-header pull-right navbar-user" role="navigation">
             <ul class="nav ace-nav">
                 {:tag("nav_bar_dropdown_html")}
-                <li class="light-blue">
-                    <a data-toggle="dropdown" class="dropdown-toggle">
-                        <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=50" />
-                                <span class="user-info">
-                                    <small>Welcome,</small>
-                                    <em ng-bind="userInfo.truename"></em>
-                                </span>
-
-                        <i class="icon-caret-down"></i>
+                <li>
+                    <a ng-click="$root.goPage('department/Logout')">
+                        <i class="icon icon-power-off"></i>
                     </a>
-                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
-                            <a ng-click="$root.goPage('department/Profile')">
-                                <i class="icon-user"></i>
-                                <span ng-bind="'lang.myprofile'|lang"></span>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a ng-click="$root.goPage('dashboard/list/myDesktop')">
-                                <i class="icon-desktop"></i>
-                                <span ng-bind="'lang.my_desktop'|lang"></span>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a ng-click="$root.goPage('department/Logout')">
-                                <i class="icon-power-off"></i>
-                                <span ng-bind="'lang.logout'|lang"></span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul><!-- /.ace-nav -->
         </div><!-- /.navbar-header -->
@@ -79,31 +50,20 @@
         <div class="sidebar" id="sidebar" ng-class="{'menu-min':expand!==true}">
             <div class="sidebar-shortcuts" id="sidebar-shortcuts">
                 <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                    <a class="btn btn-success" ng-click="$root.goPage('HOME/list/apps')">
-                        <i class="icon icon-cloud"></i>
-                    </a>
-
-                    <a class="btn btn-info" href="http://project.ng-erp.com/projects/ones/wiki" target="_blank">
-                        <i class="icon-book"></i>
-                    </a>
-
-                    <button class="btn btn-warning">
-                        <i class="icon-group"></i>
-                    </button>
-
-                    <button class="btn btn-danger">
-                        <i class="icon-cogs"></i>
-                    </button>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email=335454250@qq.com&s=50" width="50" />
+                        </div>
+                        <div class="col-xs-8">
+                            <a ng-click="$root.goPage('department/Profile')"><i class="icon icon-user"></i></a>
+                            <a ng-click="$root.goPage('dashboard/list/myDesktop')"><i class="icon icon-cog"></i></a>
+                            <a ng-click="$root.goPage('department/Logout')"><i class="icon icon-power-off"></i></a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-                    <span class="btn btn-success"></span>
-
-                    <span class="btn btn-info"></span>
-
-                    <span class="btn btn-warning"></span>
-
-                    <span class="btn btn-danger"></span>
+                    <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email=335454250@qq.com&s=50" width="50" />
                 </div>
             </div><!-- #sidebar-shortcuts -->
 
@@ -194,9 +154,9 @@
 
 <div class="bottomAlertContainer" id="bottomAlertContainer"></div>
 
-<ul class="ui-menu ui-widget ui-widget-content ui-corner-all contextMenuDropdown"
+<ul class="ui-menu ui-widget ui-widget-content ui-corner-all contextMenuDropdown ng-hide"
     role="menu"
-    ng-hide="contextMenu.items.length<=0"
+    ng-show="contextMenu.items.length>0"
     id="contextMenuDropdown"
     style="left:{{contextMenu.left||-9999}}px;top:{{contextMenu.top||-9999}}px;">
     <li ng-repeat="act in contextMenu.items track by $index" class="ui-menu-item" role="presentation">
