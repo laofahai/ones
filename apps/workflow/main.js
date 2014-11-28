@@ -45,7 +45,7 @@
 
             var afterDoWorkflow = function(reload){
                 reload = reload === false ? false : true;
-                if(undefined === reload || reload) {
+                if(reload) {
                     if($rootScope.currentPage.action === "list") {
                         $rootScope.$broadcast("gridData.changed", true);
                     } else {
@@ -109,6 +109,8 @@
                 }).$promise.then(function(data){
                     if(data.type) {
                         doWorkflowResponseType(data, resource, node_id, mainrow_id);
+                    } else {
+                        afterDoWorkflow();
                     }
                 });
             };

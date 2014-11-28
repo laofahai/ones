@@ -1354,7 +1354,7 @@
                                 }
                                 totalAmount += Number(row.amount);
                             });
-                            parentScope.formMetaData.total_amount = totalAmount;
+                            parentScope.formMetaData.total_amount = parseFloat(totalAmount).toFixed(2);
                         };
 
                         var recountTotalAble = parentScope.recountTotalAble = function(){
@@ -1480,7 +1480,7 @@
                             var context = getInputContext(element);
                             angular.forEach(this.scope.$parent[this.opts.dataName], function(item){
                                 if(item && context.field in item) {
-                                    total += parseFloat(item[context.field]);
+                                    total += Number(item[context.field]);
                                 }
                             });
                             total = total.toFixed(2);

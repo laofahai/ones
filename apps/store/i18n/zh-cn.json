@@ -89,7 +89,8 @@
         },
         "messages": {
             "all_have_outed_stock": "所有产品均已出库",
-            "all_have_ined_stock" : "所有产品均已入库"
+            "all_have_ined_stock" : "所有产品均已入库",
+            "select_stock": "请选择仓库"
         },
         "stock": "仓库",
         "outStockTime": "出库时间",

@@ -152,9 +152,9 @@
                 return l("lang."+lang);
             };
         }])
-        .filter("toCurrency", [function($rootScope){
+        .filter("toCurrency", [function(){
             return function(text) {
-                return text ? "￥"+text : "";
+                return text ? "￥"+String(parseFloat(text).toFixed(2)) : "";
             }
         }])
         .filter("toDateObject", [function(){
