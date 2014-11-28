@@ -1575,10 +1575,9 @@ blockquote.pull-right {
 /* breadcrumbs and searchbox */
 .breadcrumbs {
   position: relative;
-  border-bottom: 1px solid #e5e5e5;
   background-color: #f5f5f5;
-  min-height: 41px;
-  line-height: 40px;
+  min-height: 49px;
+  line-height: 49px;
   padding: 0 12px 0 0;
   display: block;
 }
@@ -1683,8 +1682,8 @@ blockquote.pull-right {
 /* searchbox */
 .nav-search {
   position: absolute;
-  top: 6px;
-  right: 22px;
+  top: 11px;
+  right: 10px;
   line-height: 24px;
 }
 .nav-search .form-search {

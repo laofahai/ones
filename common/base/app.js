@@ -85,17 +85,25 @@
         .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor", "$injector", "$route",
             function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin, $injector, $route) {
 
-                setTimeout(function(){
-                    if($("#initCover").length) {
-                        $("#initCover").fadeOut(function(){
-                            $("html").css({
-                                height: "auto",
-                                overflow: "scroll"
-                            });
-                            $("#initCover").remove();
-                        });
+                var timer;
+                $scope.$watch(function(){
+                    return $rootScope.dataQuering;
+                }, function(dataQuering){
+                    if(!dataQuering) {
+                        timer = setTimeout(function(){
+                            $("#loadingStateBarProgress").width("0");
+                        }, 1500);
                     }
-                }, 2000);
+                    var loadingStatePercent = Number(100-parseInt((dataQuering-1)*100/dataQuering));
+                    if(isNaN(loadingStatePercent)) {
+                        loadingStatePercent = 100;
+                    }
+                    if(dataQuering > 0) {
+                        loadingStatePercent = 70;
+                    }
+                    $("#loadingStateBarProgress").width(String(loadingStatePercent)+"%");
+
+                });
 
                 $rootScope.goPage = function(url) {
                     if(undefined === url || !$.trim(url)) {
