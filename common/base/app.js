@@ -33,6 +33,8 @@
             var reqInterceptor = ['$q', '$cacheFactory', '$timeout', '$rootScope', function ($q, $cacheFactory, $timeout, $rootScope) {
 
                 $rootScope.dataQuering = 0;
+                var loadingStatePercent = 0;
+                var timer;
 
                 return {
                     'request': function(config) {
@@ -67,7 +69,7 @@
                             default:
                                 break;
                         };
-                        $rootScope.dataQuering = false;
+                        $rootScope.dataQuering = 0;
                         return $q.reject(response);
                     }
                 };
@@ -86,21 +88,30 @@
             function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin, $injector, $route) {
 
                 var timer;
+                var loadingStatePercent
                 $scope.$watch(function(){
                     return $rootScope.dataQuering;
-                }, function(dataQuering){
+                }, function(dataQuering, old){
+
+                    console.log(arguments);
+
                     if(!dataQuering) {
-                        timer = setTimeout(function(){
+                        setTimeout(function(){
                             $("#loadingStateBarProgress").width("0");
                         }, 1500);
+                        return;
                     }
-                    var loadingStatePercent = Number(100-parseInt((dataQuering-1)*100/dataQuering));
-                    if(isNaN(loadingStatePercent)) {
-                        loadingStatePercent = 100;
+                    if(old === dataQuering) {
+                        loadingStatePercent = 0;
+                    } else {
+
+                        loadingStatePercent = Number(100-parseInt((dataQuering-1)*100/dataQuering));
+
+                        if(isNaN(loadingStatePercent)) {
+                            loadingStatePercent = 100;
+                        }
                     }
-                    if(dataQuering > 0) {
-                        loadingStatePercent = 70;
-                    }
+
                     $("#loadingStateBarProgress").width(String(loadingStatePercent)+"%");
 
                 });
@@ -317,6 +328,7 @@
                  * }
                  * */
                 $http.get(conf.BSU + "home/index/0.json").success(function(data) {
+                    $scope.settingNavs = data.navs.shift();
                     $scope.$broadcast("initDataLoaded", data);
                 });
 

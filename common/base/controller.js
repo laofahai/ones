@@ -50,7 +50,9 @@
             };
         }])
         .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
+
             $scope.$on("initDataLoaded", function(event, data){
+                console.log(data.navs);
                 $scope.navs = data.navs;
                 $scope.activeSubNav = "";
                 $scope.checkActiveNav = function($index, id) {

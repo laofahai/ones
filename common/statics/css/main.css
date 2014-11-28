@@ -554,3 +554,28 @@ th.sorting_asc,th.sorting_desc {
 .loadingStateBar {
     height:1px;overflow:hidden;
 }
+
+.topSetting .dropdown-menu > li:hover > .submenu {
+    display:block;
+}
+.topSetting ul.submenu{
+    list-style:none;
+}
+.topSetting ul.submenu li {
+    height:22px;line-height:22px;
+}
+.topSetting ul.submenu li a {
+    color:#555;
+}
+.topSetting ul.submenu li a:hover {
+    text-decoration: none;
+    background:none;
+}
+.topSetting li:last-child > a{
+    text-align:left;
+    height:1px;
+    padding:0;
+}
+.topSetting li:last-child > a i {
+    display:inline !important;
+}

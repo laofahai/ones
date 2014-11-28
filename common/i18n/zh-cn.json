@@ -3,12 +3,6 @@
         "HOME": {
             "name": "基础模块",
             "modules": {
-                "Index": {
-                    "name": "",
-                    "actions": {
-                        "dashboard": "控制面板"
-                    }
-                },
                 "Config": {
                     "name": "Key-Value 配置设置",
                     "actions": {

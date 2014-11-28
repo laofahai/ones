@@ -12,11 +12,6 @@
  */
 
 return array(
-    "dashboard" => array(
-        "childs" => array(),
-        "icon" => "home",
-        "action" => "DASHBOARD"
-    ),
     "settings" => array(
         "childs" => array(
             "app_center" => "HOME/list/apps",
