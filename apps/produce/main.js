@@ -7,8 +7,7 @@
     ones.pluginRegister("hook.dashboard.blocks", function(injector, defer, params) {
         ones.pluginScope.append("dashboardBlocks", {
             name: "produceInProcess",
-            template: appView("producePlan/dashboardProducePlanDetail.html", "produce"),
-            width:4
+            template: appView("producePlan/dashboardProducePlanDetail.html", "produce")
         });
     });
 

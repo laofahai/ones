@@ -53,22 +53,6 @@
                 }
             }
         }])
-        .directive("masonry", ["$rootScope", function($rootScope){
-            return {
-                restrict: "A",
-                link: function($scope, element, attrs, ctl) {
-                    var container = document.querySelector("#"+attrs.id);
-                    if(!container) {
-                        return;
-                    }
-                    $scope.$on("dashboardItems.loaded", function(){
-                        var msnry = new Masonry( container, {
-                            itemSelector: '.masonry-brick'
-                        });
-                    });
-                }
-            }
-        }])
         .directive( 'compileData', function ( $compile ) {
             return {
                 scope: true,

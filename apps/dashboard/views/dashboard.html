@@ -1,17 +1,24 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="row">
-            <a ng-click="$root.goPage(app.link)"
-               id="dashboard_appBtn_{{app.name}}"
-               class="btn btn-app btn-sm no-radius btn-{{app.btnClass}}"
-               ng-repeat="app in appBtns">
-                <i class="icon-{{app.icon}} bigger-230"></i>
-                <small class="smaller" ng-bind="app.label"></small>
-                <span class="badge badge-pink" ng-show="app.tip" ng-bind="app.tip"></span>
-            </a>
+            <div class="col-xs-12">
+                <a ng-click="$root.goPage(app.link)"
+                   id="dashboard_appBtn_{{app.name}}"
+                   class="btn btn-app btn-sm no-radius btn-{{app.btnClass}}"
+                   ng-repeat="app in appBtns">
+                    <i class="icon-{{app.icon}} bigger-230"></i>
+                    <small class="smaller" ng-bind="app.label"></small>
+                    <span class="badge badge-pink" ng-show="app.tip" ng-bind="app.tip"></span>
+                </a>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div ng-repeat="item in dashboardItems.left" ng-include="item.template"></div>
+                </div>
+                <div class="col-md-6">
+                    <div ng-repeat="item in dashboardItems.right" ng-include="item.template"></div>
+                </div>
+            </div>
         </div>
     </div><!-- /.col -->
 </div><!-- /.row -->
-<div class="row" id="dashboardItemsContainer" masonry>
-    <div ng-repeat="item in dashboardItems" ng-include="item.template" class="masonry-brick col-sm-{{item.width}}"></div>
-</div>

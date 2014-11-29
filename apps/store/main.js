@@ -93,18 +93,15 @@
     ones.pluginRegister("hook.dashboard.blocks", function(injector, defer, params) {
         ones.pluginScope.append("dashboardBlocks", {
             name: "latestStockin",
-            template: appView("stockin/dashboardLatestStockin.html", "store"),
-            width:4
+            template: appView("stockin/dashboardLatestStockin.html", "store")
         });
         ones.pluginScope.append("dashboardBlocks", {
             name: "latestStockout",
-            template: appView("stockout/dashboardLatestStockout.html", "store"),
-            width:4
+            template: appView("stockout/dashboardLatestStockout.html", "store")
         });
         ones.pluginScope.append("dashboardBlocks", {
             name: "needStockout",
-            template: appView("stockout/dashboardNeedStockout.html", "store"),
-            width:4
+            template: appView("stockout/dashboardNeedStockout.html", "store")
         });
     });
 

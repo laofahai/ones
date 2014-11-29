@@ -4879,11 +4879,9 @@ fieldset[disabled] .btn-light.active {
 }
 .form-actions {
   display: block;
-  background-color: #F5F5F5;
   border-top: 1px solid #E5E5E5;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  padding: 19px 20px 20px;
+  margin-top: 40px;
+  padding: 19px 20px 0;
 }
 .help-button {
   display: inline-block;
@@ -6918,11 +6916,17 @@ td .lbl:only-child {
 }
 /* widget boxes */
 .widget-box {
-  padding: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  margin: 3px 0;
-  border-bottom: 1px solid #CCC;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    border-color: #e4e4e4;
+    margin-bottom: 20px;
+    margin-top:8px;
+    position: relative;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 @media only screen and (max-width: 767px) {
   .widget-box {
@@ -6931,22 +6935,18 @@ td .lbl:only-child {
   }
 }
 .widget-header {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  position: relative;
-  min-height: 38px;
-  background: #f7f7f7;
-  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#ffffff), to(#eeeeee));
-  background-image: -webkit-linear-gradient(top, #ffffff, 0%, #eeeeee, 100%);
-  background-image: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%);
-  background-image: linear-gradient(to bottom, #ffffff 0%, #eeeeee 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
-  color: #669fc7;
-  border: 1px solid #CCC;
-  border-bottom: 1px solid #DDD;
-  padding-left: 12px;
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+    background: #fafafa;
+    border-bottom: 2px solid #ececec;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 3px;
+    position: relative;
+    color:#555;
 }
 .widget-header:before,
 .widget-header:after {
@@ -6963,10 +6963,7 @@ td .lbl:only-child {
 .collapsed .widget-body {
   display: none;
 }
-.widget-header-flat {
-  background: #F7F7F7;
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
+
 .widget-header-large {
   min-height: 49px;
   padding-left: 18px;
@@ -7173,9 +7170,9 @@ td .lbl:only-child {
   color: #E09E96;
 }
 .widget-body {
-  border: 1px solid #CCC;
-  border-top: none;
-  background-color: #FFF;
+    background: #fff;
+    margin: 0;
+    padding: 20px;
 }
 .widget-main {
   padding: 12px;

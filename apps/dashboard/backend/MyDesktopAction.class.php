@@ -31,7 +31,8 @@ class MyDesktopAction extends CommonAction {
             $model->add(array(
                 "uid" => $this->user["id"],
                 "name" => $row["name"],
-                "listorder"=>$row["listorder"]
+                "listorder"=>$row["listorder"],
+                "position" => intval($row["position"])
             ));
         }
         

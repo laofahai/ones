@@ -22,27 +22,6 @@
             });
         }])
 
-        .service("UserDesktopModel", function(){
-            return {
-                getStructure: function(){
-                    return {
-                        id: {primary: true},
-                        name: {},
-                        template: {},
-                        width: {
-                            value: 6,
-                            max: 12,
-                            inputType: "number"
-                        },
-                        listorder: {
-                            inputType: "number",
-                            value: 99
-                        }
-                    };
-                }
-            };
-        })
-
         .controller("HomeMyDesktopCtl", ["$scope", "MyDesktopRes", "$location", "pluginExecutor", "$rootScope", function($scope, res, $location, plugin, $rootScope){
 
             plugin.callPlugin("hook.dashboard.blocks");
@@ -62,9 +41,11 @@
                 angular.forEach($scope.blocks, function(block, k){
                     if(actived.indexOf(block.name) >= 0) {
                         $scope.blocks[k]["listorder"] = parseInt(activedItem[block.name].listorder);
+                        $scope.blocks[k]["position"] = parseInt(activedItem[block.name].position) || 1;
                         $scope.blocks[k]["selected"] = true;
                     } else {
                         $scope.blocks[k]["listorder"] = 99;
+                        $scope.blocks[k]["position"] = 1;
                     }
                 });
             });
@@ -178,12 +159,20 @@
                 });
 
 
-                $scope.dashboardItems = [];
+                $scope.dashboardItems = {
+                    left: [],
+                    right: []
+                };
                 MyDesktopRes.query({
                     onlyUsed: true
                 }, function(data){
                     angular.forEach(data, function(item){
-                        $scope.dashboardItems.push(dashboardItemsArray[item.name]);
+                        if(item.position > 1) {
+                            $scope.dashboardItems.right.push(dashboardItemsArray[item.name]);
+                        } else {
+                            $scope.dashboardItems.left.push(dashboardItemsArray[item.name]);
+                        }
+
                     });
                     ones.pluginScope.remove("dashboardBlocks");
                 });

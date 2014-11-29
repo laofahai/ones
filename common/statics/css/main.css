@@ -39,7 +39,7 @@ commonform {
     clear:both;
 }
 .actionsBtn {
-    margin-bottom:15px;
+    margin:0 -10px 15px
 }
 .actionsBtnLeft {
     float:left;

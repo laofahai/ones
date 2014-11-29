@@ -279,6 +279,7 @@ INSERT INTO `__PREFIX__department` (`id`, `pid`, `name`, `leader`, `lft`, `rgt`,
 CREATE TABLE IF NOT EXISTS `__PREFIX__my_desktop` (
   `uid` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
+  `position` smallint(1) NOT NULL DEFAULT '0',
   `listorder` smallint(3) NOT NULL DEFAULT '99',
   KEY `uid` (`uid`,`listorder`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
