@@ -11,133 +11,107 @@
     <link rel="stylesheet" href="common/statics/css/vendor.css" />
     <link rel="stylesheet" href="common/statics/css/bootstrap.css" />
     <link rel="stylesheet" href="common/statics/css/ace.css" />
-    <link rel="stylesheet" href="common/statics/css/ace-skins.css" />
     <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
-    <link rel="stylesheet" href="common/statics/css/main.css">
+    <link rel="stylesheet" href="common/statics/css/login.css">
 </head>
 
-<body class="login-layout">
-<div class="main-container" style="min-height:400px;">
-    <div class="main-content">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="login-container">
-                    <div class="center">
-                        <h1>
-                            <img src="common/statics/images/logo_mini_white.png" />
-                        </h1>
-                    </div>
+<body class="login-layout theme-clean page-signin" id="animate-area">
 
-                    <div class="space-6"></div>
+    <div class="signin-container" ng-controller="LoginCtl" id="signin-container">
 
-                    <div class="position-relative" ng-controller="LoginCtl">
-                        <div id="login-box" class="login-box visible widget-box no-border" ng-keydown="doKeyDown($event)">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header blue lighter bigger">
-                                        <i class="icon-coffee green"></i>
-                                        <span ng-bind="'lang.messages.please_enter_your_login_info'|lang"></span>
-                                    </h4>
+        <!-- Left side -->
+        <div class="signin-info">
+            <a href="https://ng-erp.com" target="_blank" class="logo">
+                <img src="common/statics/images/logo_mini_white.png" />
+            </a> <!-- / .logo -->
+            <div class="slogan">
+                简单. 灵活. 实用. 强大.
+            </div> <!-- / .slogan -->
+            <ul>
+                <li>
+                    <a href="http://project.ng-erp.com/projects/ones/wiki/ONES_ERP_%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C" target="_blank">
+                        <i class="icon icon-file-text-o signin-icon"></i> 使用手册
+                    </a>
+                </li>
+                <li>
+                    <a href="http://project.ng-erp.com/projects/ones/boards" target="_blank">
+                        <i class="icon icon-comments signin-icon"></i> 讨论 &amp; 反馈
+                    </a>
+                </li>
+                <li>
+                    <a href="http://project.ng-erp.com/projects/ones/boards" target="_blank">
+                        <i class="icon icon-support signin-icon"></i> 商业用户支持
+                    </a>
+                </li>
+                <li>
+                    <a href="https://ng-erp.com/mobile" target="_blank">
+                        <i class="icon icon-apple signin-icon"></i> 手机客户端下载
+                    </a>
+                </li>
+            </ul> <!-- / Info list -->
+        </div>
+        <!-- / Left side -->
 
-                                    <div class="space-6"></div>
-                                    <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
-                                        <div><span ng-bind-html="error.msg"></span></div>
-                                    </div>
-                                    <form name="LoginForm">
-                                        <fieldset>
-                                            <label class="block clearfix">
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="text" autofocus class="form-control" placeholder="{{'lang.username'|lang}}" ng-model="loginInfo.username" required />
-                                                            <i class="icon-user"></i>
-                                                        </span>
-                                            </label>
+        <!-- Right side -->
+        <div class="signin-form">
+            <!-- Form -->
+            <form name="LoginForm" autocomplete="off">
+                <div class="signin-text">
+                    <span ng-bind="'lang.messages.please_enter_your_login_info'|lang"></span>
+                </div> <!-- / .signin-text -->
 
-                                            <label class="block clearfix">
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="password" class="form-control" placeholder="{{'lang.password'|lang}}" ng-minlength="6" ng-model="loginInfo.password" required />
-                                                            <i class="icon-lock"></i>
-                                                        </span>
-                                            </label>
+                <div class="form-group w-icon">
+                    <input type="text" name="signin_username" id="username_id" class="form-control input-lg" ng-model="loginInfo.username" placeholder="{{'lang.username'|lang}}" autocomplete="off" autofocus>
+                    <span class="icon icon-user signin-form-icon"></span>
+                </div> <!-- / Username -->
 
-                                            <div class="space"></div>
+                <div class="form-group w-icon">
+                    <input type="password" name="signin_password" id="password_id" class="form-control input-lg" ng-model="loginInfo.password" placeholder="{{'lang.password'|lang}}" autocomplete="off">
+                    <span class="icon icon-lock signin-form-icon"></span>
+                </div> <!-- / Password -->
 
-                                            <div class="clearfix">
-                                                <!--<label class="inline">-->
-                                                    <!--<input type="checkbox" class="ace" ng-model="loginInfo.remember" />-->
-                                                    <!--<span class="lbl"> <small ng-bind="'lang.messages.remember_me'|lang"></small></span>-->
-                                                <!--</label>-->
+                <div class="form-actions">
+                    <button class="signin-btn bg-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
+                        <span ng-bind="'lang.actions.login'|lang"></span>
+                    </button>
+                    <a href="#" class="forgot-password" id="forgot-password-link">
+                        <span ng-bind="'lang.messages.i_fogot_password'|lang"></span>
+                    </a>
+                </div> <!-- / .form-actions -->
+            </form>
+            <!-- / Form -->
 
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
-                                                    <i class="icon-key"></i>
-                                                    <span ng-bind="'lang.actions.login'|lang"></span>
-                                                </button>
-                                            </div>
-                                            <div class="space-4"></div>
-                                        </fieldset>
-                                    </form>
-                                </div><!-- /widget-main -->
+            <!-- "Sign In with" block -->
+            <div class="signin-with">
+                Present by <a href="https://ng-erp.com" target="_blank">ONES Team</a> &copy; 2014
+            </div>
+            <!-- / "Sign In with" block -->
 
-                                <div class="toolbar clearfix">
-                                    <div>
-                                        <a href="#" onclick="show_box('forgot-box');
-                                                            return false;" class="forgot-password-link">
-                                            <i class="icon-arrow-left"></i>
-                                            <span ng-bind="'lang.messages.i_fogot_password'|lang"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div><!-- /widget-body -->
-                        </div><!-- /login-box -->
+            <div class="password-reset-form" id="password-reset-form" style="display: none;">
+                <div class="header">
+                    <div class="signin-text">
+                        <span>Password reset</span>
+                        <div class="close">×</div>
+                    </div> <!-- / .signin-text -->
+                </div> <!-- / .header -->
 
-                        <div id="forgot-box" class="forgot-box widget-box no-border">
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    <h4 class="header red lighter bigger">
-                                        <i class="icon-key"></i>
-                                        Retrieve Password
-                                    </h4>
+                <!-- Form -->
+                <form action="index.html" id="password-reset-form_id" novalidate="novalidate">
+                    <div class="form-group w-icon">
+                        <input type="text" name="password_reset_email" id="p_email_id" class="form-control input-lg" placeholder="{{'lang.email'|lang}}">
+                        <span class="icon icon-envelope signin-form-icon"></span>
+                    </div> <!-- / Email -->
 
-                                    <div class="space-6"></div>
-                                    <p>
-                                        Enter your email and to receive instructions
-                                    </p>
+                    <div class="form-actions">
+                        <input type="submit" value="SEND PASSWORD RESET LINK" class="signin-btn bg-primary">
+                    </div> <!-- / .form-actions -->
+                </form>
+                <!-- / Form -->
+            </div>
 
-                                    <form name="RetrivePwdForm">
-                                        <fieldset>
-                                            <label class="block clearfix">
-                                                        <span class="block input-icon input-icon-right">
-                                                            <input type="email" class="form-control" placeholder="Email" ng-model="retriveInfo.email" />
-                                                            <i class="icon-envelope"></i>
-                                                        </span>
-                                            </label>
-
-                                            <div class="clearfix">
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-danger" ng-click="doRetrivePwd()">
-                                                    <i class="icon-lightbulb"></i>
-                                                    Send Me!
-                                                </button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div><!-- /widget-main -->
-
-                                <div class="toolbar center">
-                                    <a href="#" onclick="show_box('login-box');
-                                                        return false;" class="back-to-login-link">
-                                        Back to login
-                                        <i class="icon-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div><!-- /widget-body -->
-                        </div><!-- /forgot-box -->
-                    </div><!-- /position-relative -->
-                </div>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+        </div>
+        <!-- Right side -->
     </div>
-</div><!-- /.main-container -->
-<p class="center white">Present by <a href="http://www.ng-erp.com" target="_blank" class="white">ONES Team</a>. &copy; 2014</p>
-
 <script type="text/javascript">
     var ones = {
         BaseConf: {
@@ -188,7 +162,22 @@
                 angular.bootstrap(document, ['ones.login']);
             });
         }
+
+        setTimeout(function(){
+            $("#signin-container").animate({
+                opacity: 1
+            }, 800);
+        }, 500);
+
+
+        $("#password-reset-form .close").click(function(){
+            $("#password-reset-form").fadeOut();
+        });
+        $("#forgot-password-link").click(function(){
+            $("#password-reset-form").fadeIn();
+        });
     });
 </script>
+
 </body>
 </html>

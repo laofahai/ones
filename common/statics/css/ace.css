@@ -2560,7 +2560,7 @@ li [class*=" icon-"],
     bottom: auto;
     top: auto !important;
     /*so that it's applied even if it's .sidebar-fixed */
-  
+
     margin-top: 40px;
     border: 1px solid #CCC;
     border-left-width: 0;
@@ -2709,7 +2709,7 @@ li [class*=" icon-"],
    float:none;
    position:absolute;
    border-width:0 1px 1px 0;
-  
+
    border-left:none;
    box-shadow:none;
    margin-top:0;
@@ -7025,8 +7025,6 @@ td .lbl:only-child {
   top: 3px;
   bottom: 3px;
   left: -1px;
-  border: 1px solid #D9D9D9;
-  border-width: 0 1px 0 0;
 }
 .widget-header-large > .widget-toolbar:before {
   top: 6px;
@@ -8719,8 +8717,7 @@ td .lbl:only-child {
   color: #CF7;
 }
 .login-box .toolbar {
-  background: #5090C1;
-  border-top: 2px solid #597597;
+  border-top: 1px solid #ddd;
 }
 .login-box .toolbar > div {
   width: 50%;
@@ -11735,7 +11732,7 @@ ul.attachment-list > li {
     border: 1px dotted #D00;
     overflow: visible !important;
     /* because it's image only, so it's ok */
-  
+
     display: inline-block !important;
     vertical-align: middle;
   }

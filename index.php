@@ -11,6 +11,7 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     header("Access-Control-Max-Age", 3600);
     exit;
 }
+
 //REST模式
 define('MODE_NAME', 'rest');
 define('__EXT__', 'json');
@@ -33,6 +34,10 @@ if(APP_DEBUG) {
     error_reporting(E_ALL^E_NOTICE^E_WARNING);
 } else {
     error_reporting(0);
+}
+
+if(!$_REQUEST["installing"] && (!is_file(ENTRY_PATH."/Data/install.lock") or !is_file(ENTRY_PATH."/Conf/config.php"))) {
+    header("Location:install.html");
 }
 
 require './server/ThinkPHP/ThinkPHP.php';
