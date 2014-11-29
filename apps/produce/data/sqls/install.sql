@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]craft` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__craft` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]craft` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]goods_craft` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__goods_craft` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT,
   `craft_id` smallint(5) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]goods_craft` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]produce_boms` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__produce_boms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `plan_detail_id` int(11) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_boms` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__produce_plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` smallint(4) NULL,
   `total_num` decimal(10,2) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan_detail` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__produce_plan_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_plan_detail` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]produce_process` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__produce_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `plan_id` int(11) NOT NULL,
   `plan_detail_id` int(11) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]produce_process` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__product_tpl` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]product_tpl_detail` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__product_tpl_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tpl_id` smallint(5) NOT NULL,
   `goods_id` int(11) NOT NULL,

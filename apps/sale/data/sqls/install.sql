@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]orders` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(20) NOT NULL,
   `sale_type` smallint(3) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]orders` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]orders_detail` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__orders_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]orders_detail` (
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]returns` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__returns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(30) NOT NULL,
   `returns_type` smallint(3) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]returns` (
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]returns_detail` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__returns_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `returns_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,

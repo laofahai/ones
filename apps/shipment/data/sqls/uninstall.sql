@@ -1,6 +1,6 @@
-DELETE FROM `[PREFIX]types` WHERE type = 'express';
+DELETE FROM `__PREFIX__types` WHERE type = 'express';
 -- separator
-DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.express.%';
+DELETE FROM `__PREFIX__auth_rule` WHERE name LIKE 'shipment.express.%';
 -- separator
 
-DROP TABLE `[PREFIX]express`;
+DROP TABLE `__PREFIX__express`;

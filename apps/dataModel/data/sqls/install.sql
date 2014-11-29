@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__data_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
   `alias` varchar(50) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__data_model_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source_id` int(11) NOT NULL,
   `model_id` int(11) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__data_model_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `model_id` int(11) NOT NULL,
   `display_name` varchar(30) NOT NULL,
@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
 
 -- separator
 
-INSERT INTO `[PREFIX]data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"产品基础信息模型","goodsBaseInfo","product",1,0);
+INSERT INTO `__PREFIX__data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"产品基础信息模型","goodsBaseInfo","product",1,0);
 -- separator
-INSERT INTO `[PREFIX]data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"产品扩展属性模型","product","product",1,0);
+INSERT INTO `__PREFIX__data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"产品扩展属性模型","product","product",1,0);
 -- separator
-INSERT INTO `[PREFIX]data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"往来单位基本信息扩展模型","crmBaseInfo","crm",1,0);
+INSERT INTO `__PREFIX__data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"往来单位基本信息扩展模型","crmBaseInfo","crm",1,0);
 -- separator
-INSERT INTO `[PREFIX]data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"往来单位联系人信息扩展","crmContact","crm",1,0);
+INSERT INTO `__PREFIX__data_model`(id,name,alias,type,listAble,deleted)VALUES(null,"往来单位联系人信息扩展","crmContact","crm",1,0);

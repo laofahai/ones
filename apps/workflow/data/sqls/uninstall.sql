@@ -1,5 +1,5 @@
-DROP TABLE `[PREFIX]workflow`;
+DROP TABLE `__PREFIX__workflow`;
 -- separator
-DROP TABLE `[PREFIX]workflow_node`;
+DROP TABLE `__PREFIX__workflow_node`;
 -- separator
-DROP TABLE `[PREFIX]workflow_process`;
+DROP TABLE `__PREFIX__workflow_process`;

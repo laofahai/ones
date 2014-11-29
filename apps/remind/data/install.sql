@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]remind` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__remind` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `type` varchar(50) NOT NULL,

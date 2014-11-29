@@ -1,3 +1,3 @@
-DROP TABLE `[PREFIX]goods`;
+DROP TABLE `__PREFIX__goods`;
 -- separator
-DROP TABLE `[PREFIX]goods_category`;
+DROP TABLE `__PREFIX__goods_category`;

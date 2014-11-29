@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]first_time_wizard` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__first_time_wizard` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `node_key` varchar(100) NOT NULL,

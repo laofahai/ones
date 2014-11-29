@@ -1,15 +1,15 @@
-DROP TABLE `[PREFIX]craft`;
+DROP TABLE `__PREFIX__craft`;
 -- separator
-DROP TABLE `[PREFIX]goods_craft`;
+DROP TABLE `__PREFIX__goods_craft`;
 -- separator
-DROP TABLE `[PREFIX]produce_boms`;
+DROP TABLE `__PREFIX__produce_boms`;
 -- separator
-DROP TABLE `[PREFIX]produce_plan`;
+DROP TABLE `__PREFIX__produce_plan`;
 -- separator
-DROP TABLE `[PREFIX]produce_plan_detail`;
+DROP TABLE `__PREFIX__produce_plan_detail`;
 -- separator
-DROP TABLE `[PREFIX]produce_process`;
+DROP TABLE `__PREFIX__produce_process`;
 -- separator
-DROP TABLE `[PREFIX]product_tpl`;
+DROP TABLE `__PREFIX__product_tpl`;
 -- separator
-DROP TABLE `[PREFIX]product_tpl_detail`;
+DROP TABLE `__PREFIX__product_tpl_detail`;

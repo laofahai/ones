@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alias` varchar(30) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__workflow_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__workflow_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,

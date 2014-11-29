@@ -1,7 +1,7 @@
-DROP TABLE `[PREFIX]finance_account`;
+DROP TABLE `__PREFIX__finance_account`;
 -- separator
-DROP TABLE `[PREFIX]finance_pay_plan`;
+DROP TABLE `__PREFIX__finance_pay_plan`;
 -- separator
-DROP TABLE `[PREFIX]finance_receive_plan`;
+DROP TABLE `__PREFIX__finance_receive_plan`;
 -- separator
-DROP TABLE `[PREFIX]finance_record`;
+DROP TABLE `__PREFIX__finance_record`;

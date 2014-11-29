@@ -4,6 +4,7 @@
 .settings
 nbproject
 /server/Runtime/
+/server/Conf/config.php
 /uploads/Avatars/*.jpg
 /server/Data/apps/*.zip
 /server/Data/logs/*.log

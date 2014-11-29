@@ -1,1 +1,1 @@
-DROP TABLE `[PREFIX]first_time_wizard`;
+DROP TABLE `__PREFIX__first_time_wizard`;

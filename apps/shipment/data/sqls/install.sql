@@ -1,9 +1,9 @@
-DELETE FROM `[PREFIX]types` WHERE type = 'express';
+DELETE FROM `__PREFIX__types` WHERE type = 'express';
 -- separator
-DELETE FROM `[PREFIX]auth_rule` WHERE name LIKE 'shipment.express.%';
+DELETE FROM `__PREFIX__auth_rule` WHERE name LIKE 'shipment.express.%';
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]express` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__express` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) DEFAULT '0',
   `express_type` smallint(5) NOT NULL,

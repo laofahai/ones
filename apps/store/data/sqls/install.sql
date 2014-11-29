@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]stock` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `managers` varchar(50) NOT NULL DEFAULT '',
   `name` varchar(50) NOT NULL,
@@ -12,11 +12,11 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stock` (
 
 -- separator
 
-INSERT INTO `[PREFIX]stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES (1, '1', '总库', '', 0);
+INSERT INTO `__PREFIX__stock` (`id`, `managers`, `name`, `pinyin`, `deleted`) VALUES (1, '1', '总库', '', 0);
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__stockin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
   `type_id` smallint(5) DEFAULT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__stockin_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockin_id` int(11) NOT NULL,
   `goods_id` int(11) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockin_detail` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__stockout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bill_id` varchar(50) NOT NULL,
   `source_id` int(11) DEFAULT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout` (
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__stockout_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stockout_id` int(11) NOT NULL,
   `factory_code_all` varchar(50) NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]stockout_detail` (
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]stock_product_list` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__stock_product_list` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `factory_code_all` varchar(40) NOT NULL,
   `goods_id` int(11) NOT NULL,

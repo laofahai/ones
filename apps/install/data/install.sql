@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__apps` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
   `alias` varchar(50) NOT NULL,
   `abbreviation` varchar(10) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]apps` (
 
 -- separator
 
-INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`, `status`) VALUES
+INSERT INTO `__PREFIX__apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`, `status`) VALUES
   (1, 'department', 'DP', '0.1', 1406906639, 1),
   (2, 'dashboard', 'DBD', '0.1', 1406906639, 1),
   (3, 'services', 'SVS', '0.1', 1406906639, 1),
@@ -25,7 +25,7 @@ INSERT INTO `[PREFIX]apps` (`id`, `alias`, `abbreviation`, `version`, `dateline`
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__auth_group` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` char(100) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group` (
 -- separator
 
 
-INSERT INTO `[PREFIX]auth_group` (`id`, `title`, `status`) VALUES
+INSERT INTO `__PREFIX__auth_group` (`id`, `title`, `status`) VALUES
   (1, '超级管理员', 1);
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]first_time_wizard` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__first_time_wizard` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `node_key` varchar(100) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]first_time_wizard` (
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__auth_group_access` (
   `uid` mediumint(8) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
@@ -63,13 +63,13 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_access` (
 -- separator
 
 
-INSERT INTO `[PREFIX]auth_group_access` (`uid`, `group_id`) VALUES
+INSERT INTO `__PREFIX__auth_group_access` (`uid`, `group_id`) VALUES
   (1, 1);
 
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__auth_group_rule` (
   `group_id` smallint(5) NOT NULL,
   `rule_id` int(11) NOT NULL,
   `flag` tinyint(1) NOT NULL DEFAULT '1',
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_group_rule` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]auth_rule` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(80) NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]auth_rule` (
 
 -- separator
 
-INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VALUES
+INSERT INTO `__PREFIX__auth_rule` (`id`, `name`, `status`, `cond`, `category`) VALUES
   (11, 'department.authgroup.read', 1, '', 'set'),
   (12, 'department.authrule.add', 1, '', 'set'),
   (13, 'department.authrule.edit', 1, '', 'set'),
@@ -152,7 +152,7 @@ INSERT INTO `[PREFIX]auth_rule` (`id`, `name`, `status`, `cond`, `category`) VAL
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_alias` varchar(50) DEFAULT NULL,
   `alias` varchar(100) NOT NULL,
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]config` (
 
 -- separator
 
-INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
+INSERT INTO `__PREFIX__config` (`id`, `app_alias`, `alias`, `name`, `value`, `description`, `protected`, `deleted`) VALUES
   (1, NULL, 'company_name', '公司名称', '某某公司名称', NULL, 0, 0),
   (2, NULL, 'company_address', '公司地址', '某某公司地址', NULL, 0, 0),
   (3, NULL, 'company_phone', '联系电话', '0536-88888888', NULL, 0, 0),
@@ -196,7 +196,7 @@ INSERT INTO `[PREFIX]config` (`id`, `app_alias`, `alias`, `name`, `value`, `desc
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__data_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
   `alias` varchar(50) NOT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model` (
 
 -- separator
 
-INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listAble`, `deleted`) VALUES
+INSERT INTO `__PREFIX__data_model` (`id`, `name`, `alias`, `type`, `listAble`, `deleted`) VALUES
   (1, '产品基础信息模型', 'goodsBaseInfo', 'product', 1, 0),
   (2, '产品扩展属性模型', 'product', 'product', 1, 0),
   (3, '往来单位基本信息扩展模型', 'crmBaseInfo', 'crm', 1, 0),
@@ -219,7 +219,7 @@ INSERT INTO `[PREFIX]data_model` (`id`, `name`, `alias`, `type`, `listAble`, `de
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__data_model_data` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source_id` int(11) NOT NULL,
   `model_id` int(11) NOT NULL,
@@ -237,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_data` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__data_model_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `model_id` int(11) NOT NULL,
   `display_name` varchar(30) NOT NULL,
@@ -255,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]data_model_fields` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__department` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(5) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL,
@@ -270,13 +270,13 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]department` (
 
 -- separator
 
-INSERT INTO `[PREFIX]department` (`id`, `pid`, `name`, `leader`, `lft`, `rgt`, `listorder`) VALUES
+INSERT INTO `__PREFIX__department` (`id`, `pid`, `name`, `leader`, `lft`, `rgt`, `listorder`) VALUES
   (1, 0, '某公司', '', 1, 4, 99),
   (2, 1, '总经办', '', 2, 3, 99);
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__my_desktop` (
   `uid` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `listorder` smallint(3) NOT NULL DEFAULT '99',
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]my_desktop` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]session` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__session` (
   `session_id` varchar(255) NOT NULL,
   `session_expire` int(11) NOT NULL,
   `session_data` blob,
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]session` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]types` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(20) NOT NULL,
   `alias` varchar(20) DEFAULT NULL,
@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]types` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
   `truename` varchar(30) NOT NULL,
@@ -331,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]user` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__workflow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `alias` varchar(30) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -343,7 +343,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__workflow_node` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -371,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_node` (
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]workflow_process` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__workflow_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `workflow_id` int(11) NOT NULL,
   `node_id` int(11) NOT NULL,

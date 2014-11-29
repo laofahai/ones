@@ -1,11 +1,11 @@
-DROP TABLE `[PREFIX]stock`;
+DROP TABLE `__PREFIX__stock`;
 -- separator
-DROP TABLE `[PREFIX]stockin`;
+DROP TABLE `__PREFIX__stockin`;
 -- separator
-DROP TABLE `[PREFIX]stockin_detail`;
+DROP TABLE `__PREFIX__stockin_detail`;
 -- separator
-DROP TABLE `[PREFIX]stockout`;
+DROP TABLE `__PREFIX__stockout`;
 -- separator
-DROP TABLE `[PREFIX]stockout_dtail`;
+DROP TABLE `__PREFIX__stockout_dtail`;
 -- separator
-DROP TABLE `[PREFIX]stock_product_list`;
+DROP TABLE `__PREFIX__stock_product_list`;

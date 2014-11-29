@@ -1,5 +1,5 @@
-DROP TABLE `[PREFIX]relationship_company`;
+DROP TABLE `__PREFIX__relationship_company`;
 -- separator
-DROP TABLE `[PREFIX]relationship_company_group`;
+DROP TABLE `__PREFIX__relationship_company_group`;
 -- separator
-DROP TABLE `[PREFIX]relationship_company_linkman`;
+DROP TABLE `__PREFIX__relationship_company_linkman`;

@@ -1,1 +1,1 @@
-DROP TABLE `[PREFIX]remind`;
+DROP TABLE `__PREFIX__remind`;

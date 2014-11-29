@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__relationship_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `pinyin` varchar(50) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company` (
 -- separator
 
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__relationship_company_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `alias` varchar(50) NOT NULL,
@@ -33,14 +33,14 @@ CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_group` (
 
 -- separator
 
-INSERT INTO `[PREFIX]relationship_company_group` (`id`, `name`, `alias`, `discount`) VALUES
+INSERT INTO `__PREFIX__relationship_company_group` (`id`, `name`, `alias`, `discount`) VALUES
 (1, '客户', 'customer', 100),
 (2, '供应商', 'supplier', 100),
 (3, 'VIP客户', 'vip', 90);
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `[PREFIX]relationship_company_linkman` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__relationship_company_linkman` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `relationship_company_id` int(11) NOT NULL,
   `contact` varchar(20) NOT NULL,

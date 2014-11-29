@@ -1,7 +1,7 @@
-DROP TABLE `[PREFIX]orders`;
+DROP TABLE `__PREFIX__orders`;
 -- separator
-DROP TABLE `[PREFIX]orders_detail`;
+DROP TABLE `__PREFIX__orders_detail`;
 -- separator
-DROP TABLE `[PREFIX]returns`;
+DROP TABLE `__PREFIX__returns`;
 -- separator
-DROP TABLE `[PREFIX]returns_detail`;
+DROP TABLE `__PREFIX__returns_detail`;
