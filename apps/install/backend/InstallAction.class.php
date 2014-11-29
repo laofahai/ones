@@ -86,7 +86,6 @@ class InstallAction extends CommonAction {
 
         $configContent = file_get_contents(ENTRY_PATH."/Conf/config.sample.php");
         $search = array(
-            "[service_api_key]",
             "[db_host]",
             "[db_name]",
             "[db_user]",
@@ -97,7 +96,6 @@ class InstallAction extends CommonAction {
             "[secret_key]"
         );
         $replace = array(
-            md5($_SERVER["SERVER_NAME"].CTS.rand(1,5000)),
             $config["db"]["dbhost"],
             $config["db"]["dbname"],
             $config["db"]["dbuser"],
@@ -167,6 +165,7 @@ class InstallAction extends CommonAction {
         clearCache(3);
 
         delDirAndFile($installPath);
+        unlink(ROOT_PATH."/install.html");
         rmdir($installPath);
         sleep(2);
     }

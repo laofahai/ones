@@ -569,13 +569,12 @@ class CommonAction extends RestAction {
         $tmp = $model->where($map)->select();
 
         //扩展权限检测
-        if((false !== $extendPermissionCheck && !$tmp) or false === $extendPermissionCheck) {
+        if(false === $extendPermissionCheck) {
             $this->error("need_authorize");
             return;
         }
 
         if(!$tmp) {
-            $this->error("can not find item");
             return;
         }
 
