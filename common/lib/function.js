@@ -85,8 +85,10 @@ function getDateForInput(timestamp, mask) {
             timestamp *= 1000;
         }
         d = new Date(timestamp);
+        d.setHours(d.getHours()-8);
     } else {
         d  = new Date();
+        d.setHours(d.getHours()-8);
     }
     return new Date(d.format(mask || "yyyy-MM-dd HH:mm").replace(" ", "T"))
 }
