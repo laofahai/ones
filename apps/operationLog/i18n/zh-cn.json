@@ -1,0 +1,11 @@
+{
+    "urlMap": {},
+    "lang": {
+        "navs": {
+            "operation_log": "操作日志"
+        },
+        "operation_log": "操作日志",
+
+        "operationLog.operationLog": "%s操作日志"
+    }
+}

@@ -170,6 +170,9 @@
             "forward": "前进"
         },
 
+        "minute_ago" : "%s分钟之前",
+        "hour_ago" : "%s小时之前",
+
         "home.apps": "%s应用",
         "home.types": "%s基本类型",
         "home.config": "%s字段配置",

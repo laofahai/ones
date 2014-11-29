@@ -533,13 +533,15 @@ th.sorting_asc,th.sorting_desc {
     height:50px;
     line-height:48px;
 }
+.sidebar-shortcuts .nav-user-photo {
+    width:40px;
+    height:40px;
+}
 
 .sidebar-shortcuts-large .nav-user-photo{
     margin:0px 0 0 15px;
-    height:40px;
 }
 .sidebar-shortcuts-mini .nav-user-photo {
-    height:40px;
     margin:4px 0 0 0 ;
 }
 

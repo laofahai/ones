@@ -69,6 +69,14 @@
         }
     },
     "lang": {
+        "_links": {
+            "Stockin": {
+                "detail": "store/editBill/stockin/id/+source_id"
+            },
+            "Stockout": {
+                "detail": "store/editBill/stockout/id/+source_id"
+            }
+        },
         "navs": {
             "stock": "库存管理",
             "stock_manage": "仓库管理",

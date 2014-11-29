@@ -120,6 +120,7 @@ if($ext == "json") {
     $_GET["m"] = $module ? $module : "index";
     $_GET["id"] = $id;
     define("CURRENT_APP", strtolower($group));
+    define("CURRENT_MODULE", ucfirst($module));
 }
 
 //print_r(routeMaker($k, $action));exit;

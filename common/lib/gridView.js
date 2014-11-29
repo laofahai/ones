@@ -457,13 +457,6 @@
 
                 var item = ones.GridScope.$eval("itemsList["+$index+"]");
 
-                var filterParams = filter.match(/\+\w+/);
-                if(filterParams) {
-                    angular.forEach(filterParams, function(p){
-                        filter = filter.replace(p, item[p.replace("+", "")]);
-                    });
-                }
-
                 filter = filter.replace(/'/g, "");
 
 
@@ -473,6 +466,15 @@
                 if(args[1] && args[1].indexOf("item.") >=0) {
                     var itemField = args[1].split(".");
                     args[1] = ones.GridScope.$eval("itemsList["+$index+"]."+itemField[1]);
+                }
+
+                if(args[1]) {
+                    var filterParams = args[1].match(/\+[a-zA-Z0-9\_\-]+/);
+                    if(filterParams) {
+                        angular.forEach(filterParams, function(p){
+                            args[1] = args[1].replace(p, item[p.replace("+", "")]);
+                        });
+                    }
                 }
 
                 args = Array.prototype.slice.call(args, 1);

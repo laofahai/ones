@@ -24,6 +24,11 @@
         }
     },
     "lang": {
+        "_links": {
+            "Orders": {
+                "detail": "sale/editBill/orders/id/+source_id"
+            }
+        },
         "navs": {
             "sale": "销售",
             "add_new_orders": "新增销售订单",

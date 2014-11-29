@@ -120,6 +120,9 @@
         }])
         .filter("toLink", [function(){
             return function(text, link) {
+                if(!link) {
+                    return text;
+                }
                 var pre = "";
                 if(!ones.useHTML5) {
                     pre = "#/";

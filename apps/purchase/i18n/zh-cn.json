@@ -18,6 +18,11 @@
         }
     },
     "lang": {
+        "_links": {
+            "Purchase": {
+                "detail": "purchase/editBill/purchase/id/+source_id"
+            }
+        },
         "navs": {
             "purchase": "采购",
             "add_new_purchase": "新建采购单",

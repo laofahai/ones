@@ -44,6 +44,14 @@
         }
     },
     "lang": {
+        "_links": {
+            "FinanceReceive": {
+                "detail": "finance/edit/financeReceivePlan/id/+source_id"
+            },
+            "FinancePay": {
+                "detail": "finance/edit/financePayPlan/id/+source_id"
+            }
+        },
         "navs": {
             "finance": "财务管理",
             "finance_account": "财务账户管理",

@@ -52,6 +52,14 @@ var toDate = function(timestamp, noTime) {
         timestamp = parseInt(timestamp)/1000;
     }
 
+    var cur = parseInt(new Date().getTime()/1000)-timestamp;
+
+    if(cur < 3600) {
+        return sprintf(l("lang.minute_ago"), parseInt(cur/60));
+    } else if(cur < 3600 * 12) {
+        return sprintf(l("lang.hour_ago"), parseInt(cur/3600));
+    }
+
     var mask;
 
     switch(noTime) {
@@ -59,13 +67,13 @@ var toDate = function(timestamp, noTime) {
         case "1":
         case "true":
         case true:
-            mask = "yyyy-MM-dd";
+            mask = "MM-dd";
             break;
         case "":
         case undefined:
         case "0":
         case 0:
-            mask = "yyyy-MM-dd HH:mm:ss";
+            mask = "MM-dd HH:mm";
             break;
         default:
             mask = noTime || "yyyy-MM-dd HH:mm:ss";

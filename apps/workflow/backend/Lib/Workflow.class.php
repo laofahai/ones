@@ -488,6 +488,16 @@ class Workflow {
         
         $rs = $this->processModel->add($data);
 
+        $curNode = $this->nodeModel->find($nodeId);
+
+        $log = array(
+            "alias" => sprintf("workflow.%s.%s", $this->currentWorkflow["workflow_file"], $curNode["execute_file"]),
+            "action"=> $curNode["name"],
+            "source_model" => $this->currentWorkflow["workflow_file"],
+            "source_id" => $mainrowId
+        );
+        tag("record_operation_log", $log);
+
         if(false === $rs) {
             Log::write($this->processModel->getLastSql(), Log::SQL);
         }
@@ -495,7 +505,7 @@ class Workflow {
         /**
          * 下一节点
          */
-        $curNode = $this->nodeModel->find($nodeId);
+
         //如果有多个动作，循环判断
         //此处应为递归操作
         if($curNode["next_node_id"] && strlen($curNode["next_node_id"]) > 0) {
