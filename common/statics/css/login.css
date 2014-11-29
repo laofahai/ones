@@ -9,6 +9,9 @@
 body, html {
     overflow:hidden;
 }
+a {
+    cursor:pointer;
+}
 #animate-area	{
     background-color:#c0deed;
     background-image: url(../images/cloud.jpg);
