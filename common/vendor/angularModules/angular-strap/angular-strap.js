@@ -1895,7 +1895,7 @@ angular.module('mgcrea.ngStrap.modal', ['mgcrea.ngStrap.helpers.dimensions']).pr
           // Weird PhantomJS bug hack
           var el = modalElement[0];
           requestAnimationFrame(function () {
-            el.focus();
+            //el.focus();
           });
           bodyElement.addClass(options.prefixClass + '-open');
           if (options.animation) {
