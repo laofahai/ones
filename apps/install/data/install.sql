@@ -276,12 +276,10 @@ INSERT INTO `__PREFIX__department` (`id`, `pid`, `name`, `leader`, `lft`, `rgt`,
 
 -- separator
 
-CREATE TABLE IF NOT EXISTS `__PREFIX__my_desktop` (
+CREATE TABLE IF NOT EXISTS `__PREFIX__user_preference` (
   `uid` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `position` smallint(1) NOT NULL DEFAULT '0',
-  `listorder` smallint(3) NOT NULL DEFAULT '99',
-  KEY `uid` (`uid`,`listorder`)
+  `data` text,
+  PRIMARY KEY (`uid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- separator
