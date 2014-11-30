@@ -232,6 +232,22 @@ function getCurrentUid() {
     return $_SESSION["user"]["id"];
 }
 
+function multi_array_sort($multi_array,$sort_key,$sort=SORT_DESC){
+    if(is_array($multi_array)){
+        foreach ($multi_array as $row_array){
+            if(is_array($row_array)){
+                $key_array[] = $row_array[$sort_key];
+            }else{
+                return -1;
+            }
+        }
+    }else{
+        return -1;
+    }
+    array_multisort($key_array,$sort,$multi_array);
+    return $multi_array;
+}
+
 /**
  * 汉字转拼音
  */

@@ -48,12 +48,12 @@
             unhandled: true,
             onlyCount: true
         }).$promise.then(function(data){
-                var count = parseInt(data[0].count);
-                if(count <= 0) {
-                    return;
-                }
-                ones.pluginScope.get("dashboardSetBtnTip")("stockoutList", count);
-            });
+            var count = parseInt(data[0].count);
+            if(count <= 0) {
+                return;
+            }
+            ones.pluginScope.get("dashboardSetBtnTip")("stockoutList", count);
+        });
 
         //库存警告
         var stockWarningAPI = injector.get("Store.StockWarningAPI");

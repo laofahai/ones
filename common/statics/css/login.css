@@ -6,10 +6,13 @@
     from { background-position: 0 0; }
     to { background-position: 100% 0; }
 }
-body, html {
+html, body {
     overflow:hidden;
 }
-a {
+body {
+    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;
+}
+a{
     cursor:pointer;
 }
 #animate-area	{

@@ -68,6 +68,7 @@
 
         "user": "用户",
         "userGroup": "用户组",
-        "department": "部门"
+        "department": "部门",
+        "myProfile": "我的资料"
     }
 }

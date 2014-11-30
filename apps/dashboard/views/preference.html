@@ -1,0 +1,101 @@
+<div class="tabbable">
+    <ul class="nav nav-tabs nav-tabs-right" id="myTab">
+        <li class="active">
+            <a data-toggle="tab" href="#preference-profile">
+                <i class="green icon-user bigger-110"></i>
+                <span ng-bind="'lang.myProfile'|lang"></span>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#preference-dashboard-block">
+                <i class="green icon-home bigger-110"></i>
+                <span ng-bind="'lang.dashboardBlocks'|lang"></span>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#preference-dashboard-btn">
+                <span ng-bind="'lang.dashboardBtns'|lang"></span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="preference-profile" class="tab-pane active">
+            <div ng-include="'apps/department/views/profile.html'"></div>
+        </div>
+        <div id="preference-dashboard-block" class="tab-pane">
+            <table class="table table-bordered table-striped">
+                <thead class="thin-border-bottom">
+                <tr>
+                    <th></th>
+                    <th>
+                        <span ng-bind="'lang.name'|lang"></span>
+                    </th>
+                    <th> </th>
+                    <th class="hidden-480">
+                        <span ng-bind="'lang.listorder'|lang"></span>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="item in blocks">
+                    <td>
+                        <input type="checkbox" ng-model="item.selected" />
+                    </td>
+                    <td ng-bind="item.name|lang:'widgetTitles'"></td>
+                    <td>
+                        <input type="number" ng-model="item.position" class="input-mini" min="1" max="2" />
+                    </td>
+                    <td>
+                        <input type="number" ng-model="item.listorder" class="input-mini" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="center">
+                <button class="btn btn-primary btn-sm" ng-click="doSubmit();" ng-bind="'lang.actions.submit'|lang"></button>
+            </div>
+        </div>
+
+        <div id="preference-dashboard-btn" class="tab-pane">
+            <table class="table table-bordered table-striped">
+                <thead class="thin-border-bottom">
+                <tr>
+                    <th></th>
+                    <th>
+                        <span ng-bind="'lang.name'|lang"></span>
+                    </th>
+                    <th>
+                        <span ng-bind="'lang.listorder'|lang"></span>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="item in btns">
+                    <td>
+                        <input type="checkbox" ng-model="item.selected" />
+                    </td>
+                    <td ng-bind="item.label"></td>
+                    <td>
+                        <input type="number" ng-model="item.listorder" class="input-mini" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="center">
+                <button class="btn btn-primary btn-sm" ng-click="doSubmit();" ng-bind="'lang.actions.submit'|lang"></button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-6">
+
+    </div>
+</div>

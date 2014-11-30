@@ -9,10 +9,10 @@
                         "dashboard": "控制面板"
                     }
                 },
-                "MyDesktop": {
-                    "name": "我的桌面",
+                "My": {
+                    "name": "我的",
                     "actions": {
-                        "list": ["管理我的桌面", "无权限项选中会报错并且不可用"]
+                        "preference": "个人偏好设置"
                     }
                 }
             }
@@ -32,6 +32,8 @@
         "AppDashboard": {
             "appName": "控制面板模块"
         },
-        "dashboard.userdesktop": "%s用户桌面项"
+        "dashboard.userdesktop": "%s用户桌面项",
+        "dashboardBlocks": "工作台模块",
+        "dashboardBtns": "工作台按钮"
     }
 }
