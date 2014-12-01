@@ -97,37 +97,41 @@
         .controller("WorkflowMakeExpressCtl", ["$scope", "StockoutRes", "RelationshipCompanyRes", "ExpressRes", "ExpressModel", "ComView", "$routeParams", "$location", "$timeout",
             function($scope, res, cusRes, ExpressRes, model, ComView, $routeParams,  $location, $timeout){
                 var cusId;
-                $scope.formData = $scope.formData || {};
-                res.get({id:$routeParams.id}).$promise.then(function(data){
-                    if(!data.source) {
-                        return;
-                    }
-                    if(data.source.customer_id) {
-                        cusId = data.source.customer_id;
-                    } else if(data.source.supplier_id) {
-                        cusId = data.source.supplier_id;
-                    }
+                $scope.formData = {};
 
-                    if(cusId) {
-                        cusRes.get({
-                            id: cusId,
-                            includeRows: true
-                        }).$promise.then(function(data){
-                            $scope.formData.to_company = data.name;
-                            $scope.formData.to_name = data.rows[0].contact;
-                            $scope.formData.to_address = data.address;
-                            $scope.formData.to_phone = data.rows[0].mobile || data.rows[0].tel;
-                        });
-                    }
+                $scope.$on("form.dataLoaded", function(){
+                    res.get({id:$routeParams.id}).$promise.then(function(data){
+
+                        $scope.formData.from_name = ones.userInfo.truename;
+                        $scope.formData.from_company = ones.BaseConf.company_name;
+                        $scope.formData.from_address = ones.BaseConf.company_address;
+                        $scope.formData.from_phone   = ones.BaseConf.company_phone;
+
+                        if(!data.source) {
+                            return;
+                        }
+                        if(data.source.customer_id) {
+                            cusId = data.source.customer_id;
+                        } else if(data.source.supplier_id) {
+                            cusId = data.source.supplier_id;
+                        }
+
+                        if(cusId) {
+                            cusRes.get({
+                                id: cusId,
+                                includeRows: true
+                            }).$promise.then(function(data){
+                                    $scope.formData.to_company = data.name;
+                                    try {
+                                        $scope.formData.to_name = data.rows[0].contact;
+                                        $scope.formData.to_address = data.address;
+                                        $scope.formData.to_phone = data.rows[0].mobile || data.rows[0].tel;
+                                    } catch(e) {}
+
+                                });
+                        }
+                    });
                 });
-
-                //@todo. 按状态监测，非延时监测
-                $timeout(function(){
-                    $scope.formData.from_name = ones.userInfo.truename;
-                    $scope.formData.from_company = ones.BaseConf.company_name;
-                    $scope.formData.from_address = ones.BaseConf.company_address;
-                    $scope.formData.from_phone   = ones.BaseConf.company_phone;
-                }, 1000);
 
 
                 $scope.selectAble = false;

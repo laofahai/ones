@@ -76,6 +76,8 @@ class StockinConfirmStockin extends WorkflowAbstract {
             $storeW[$s["id"]] = $s;
         }
 
+        $stockLog = D("StockLog");
+
         foreach($data["rows"] as $v) {
 
             if(!$v or !$v["id"]) {
@@ -113,6 +115,18 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 "store_min" => $storeW[$v["goods_id"]]["store_min"],
                 "store_max" => $storeW[$v["goods_id"]]["store_max"]
             );
+
+            //记录库存操作日志
+            $stockLog->record(array(
+                "factory_code_all" => $v["factory_code_all"],
+                "repository_id" => $v["stock"],
+                "num" => $v["num"],
+                "source_id" => $this->mainrowId,
+                "dateline" => CTS,
+                "type" => 1,
+                "memo" => $v["memo"]
+            ));
+
         }
 
 

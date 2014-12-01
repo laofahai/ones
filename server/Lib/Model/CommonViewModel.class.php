@@ -12,14 +12,7 @@
  */
 class CommonViewModel extends ViewModel{
     
-//    protected $status_lang = array(
-//        "ineffective","effective"
-//    );
-//    
-//    protected $status_class = array(
-//        "normal","success"
-//    );
-    
+
     protected $workflowAlias;
     
     protected $workflowMainRowField = "id";
@@ -75,32 +68,17 @@ class CommonViewModel extends ViewModel{
      */
     public function select($options = array()) {
         $data = parent::select($options);
-        
+
 //        var_dump($this);
-        
+
 //        echo $this->getLastSql()."<br />";
-        
+
         if(!$data) {
             return $data;
         }
         foreach($data as $k=>$v) {
-            if($v["dateline"]) {
-                $data[$k]["dateline_lang"] = date("Y-m-d H:i:s", $v["dateline"]);
-            }
-//            if(isset($v["status"])) {
-//                if(isset($this->status_lang)) {
-//                    $data[$k]["status_lang"] = L($this->status_lang[$v["status"]]);
-//                }
-//                if($this->status_class) {
-//                    $data[$k]["status_class"] = $this->status_class[$v["status"]];
-//                }
-//            }
-            if(isset($v["factory_code"]) and $v["color_id"] and $v["standard_id"]) {
-                $data[$k]["factory_code_all"] = makeFactoryCode($v, $v["factory_code"]);
-            }
-            
             $ids[] = $v[$this->workflowMainRowField];
-            
+
         }
 //        echo $this->workflowMainRowField;exit;
 //        print_r($ids);exit;
@@ -126,21 +104,6 @@ class CommonViewModel extends ViewModel{
         if(!$data) {
             return $data;
         }
-        if($data["dateline"]) {
-            $data["dateline_lang"] = date("Y-m-d H:i:s", $data["dateline"]);
-        }
-        if(isset($data["status"])) {
-            if(isset($this->status_lang)) {
-                $data["status_lang"] = L($this->status_lang[$data["status"]]);
-            }
-            if($this->status_class) {
-                $data["status_class"] = $this->status_class[$data["status"]];
-            }
-        }
-        if(isset($data["factory_code"]) and $data["color_id"] and $data["standard_id"]) {
-            $data["factory_code_all"] = makeFactoryCode($data, $data["factory_code"]);
-        }
-        
         /**
          * 工作流
          */

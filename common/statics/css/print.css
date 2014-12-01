@@ -1,23 +1,345 @@
-/**
-打印
-*/
-.printAbleContainer h1 {
-    font-size:20px;text-align:center;
-    margin:0 auto;
-    padding:0 0 8px 0;
-    letter-spacing: 20px;
-    padding-left:20px;
+.page-invoice .invoice
+{
+    padding:0 20px;
 }
-.printAbleContainer table {
-    margin-bottom:10px;
-}
-.printAbleContainer table th, .printAbleContainer table td{
-    border-bottom:1px solid #666;
-    padding:2px 4px;
-}
-.printAbleContainer table tfoot td {
+
+.page-invoice .invoice hr
+{
     border:none;
+    border-bottom:3px solid #f1f1f1;
+    margin:0 -20px;
 }
+
+.page-invoice .invoice-header
+{
+    background:#f7f7f7;
+    border-bottom:8px solid #f1f1f1;
+    position:relative;
+    margin:0 -20px;
+    padding:20px;
+    height:120px;
+}
+
+.page-invoice .invoice-header h3
+{
+    font-size:19px;
+    font-weight:600;
+    height:55px;
+    line-height:23px;
+    word-wrap:normal;
+    margin:0;
+    padding:0;
+    float:left;
+}
+
+.page-invoice .invoice-header small
+{
+    color:#a0a0a0;
+    font-size:12px;
+    font-weight:normal;
+}
+
+.page-invoice .invoice-header .invoice-logo
+{
+    display:block;
+    height:26px;
+    width:26px;
+    position:absolute;
+    margin:12px 0 0 -40px;
+}
+
+.page-invoice .invoice-header address
+{
+    border-left:5px solid #e8e8e8;
+    color:#959595;
+    display:block;
+    font-size:12px;
+    line-height:15px;
+    padding-left:10px;
+    margin-top:5px;
+}
+
+.page-invoice .invoice-date
+{
+    font-size:16px;
+    font-weight:600;
+    margin-top:-7px;
+}
+
+.page-invoice .invoice-info,.page-invoice .invoice-table
+{
+    margin:30px 0;
+}
+
+.page-invoice .invoice-recipient
+{
+    font-size:14px;
+    line-height:19px;
+    height:60px;
+    padding-left:70px;
+}
+.page-invoice .invoice-recipient strong {
+    padding-top:15px;
+    display:block;
+}
+.page-invoice .invoice-recipient:before
+{
+    background:#f7f7f7;
+    border-radius:999px;
+    color:#888;
+    content:"TO";
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    height:52px;
+    line-height:52px;
+    position:absolute;
+    text-align:center;
+    width:52px;
+    margin:4px 0 0 -70px;
+}
+
+.page-invoice .invoice-total
+{
+    background:#f7f7f7;
+    color:#888;
+    font-weight:600;
+    height:60px;
+    line-height:60px;
+    white-space:nowrap;
+    padding:0 25px;
+}
+
+.page-invoice .invoice-total span
+{
+    display:block;
+    float:right;
+    color:#555;
+    font-size:24px;
+}
+
+.page-invoice .invoice-description
+{
+    color:#aaa;
+    font-size:12px;
+    font-weight:400;
+    line-height:15px;
+    padding-top:4px;
+}
+
+.page-invoice table {
+    width:100%;
+}
+.page-invoice table thead
+{
+    background:#f7f7f7;
+    color:#888;
+    font-size:12px;
+}
+
+.page-invoice table tbody tr
+{
+    font-size:14px;
+}
+
+.page-invoice table tbody tr+tr
+{
+    border-top:1px solid #f1f1f1;
+}
+
+.page-invoice table td,.page-invoice table th
+{
+    border-left:1px solid #fff;
+    font-weight:600;
+    text-align:left;
+    vertical-align:top;
+    padding:7px 0 7px 15px;
+}
+
+.page-invoice table td
+{
+    padding-bottom:10px;
+    padding-top:10px;
+    font-size:12px;
+}
+
+
+
+.page-invoice .invoice
+{
+    padding:0 40px;
+}
+
+.page-invoice .invoice hr
+{
+    border:none;
+    border-bottom:3px solid #f1f1f1;
+    margin:0 -40px;
+}
+
+.page-invoice .invoice-header
+{
+    margin:0 -40px;
+    padding:30px;
+}
+
+.page-invoice .invoice-header address
+{
+    float:left;
+    margin:0 0 0 30px;
+    line-height:20px;
+}
+
+.page-invoice .invoice-date
+{
+    float:right;
+    margin-top:6px;
+}
+
+.page-invoice .invoice-recipient {
+    float:left;
+    width:40%;
+}
+.page-invoice .invoice-total
+{
+    width:60%;
+    float:left;
+}
+
+@media print{
+    .page-invoice.page-invoice-print .invoice
+    {
+        min-width:768px;
+        padding:0 40px;
+    }
+
+    .page-invoice.page-invoice-print .invoice hr
+    {
+        border-bottom:1px solid #aaa;
+        margin:0 -40px;
+    }
+
+    .page-invoice.page-invoice-print .invoice-header
+    {
+        background:0 0;
+        border-bottom:2px solid #aaa;
+        margin:0 -40px;
+        padding:40px;
+    }
+
+    .page-invoice.page-invoice-print .invoice-header h3
+    {
+        float:left;
+        margin:0!important;
+    }
+
+    .page-invoice.page-invoice-print .invoice-header address
+    {
+        float:left;
+        margin:6px 0 0 30px;
+    }
+
+    .page-invoice.page-invoice-print .invoice-date
+    {
+        float:right;
+        margin-top:6px;
+    }
+
+    .page-invoice.page-invoice-print .invoice-recipient,.page-invoice.page-invoice-print .invoice-total
+    {
+        width:50%;
+    }
+
+    .page-invoice.page-invoice-print .invoice-recipient
+    {
+        float:left;
+    }
+
+    .page-invoice.page-invoice-print .invoice-recipient:before
+    {
+        color:#000;
+        background:0 0;
+    }
+
+    .page-invoice.page-invoice-print .invoice-total
+    {
+        float:right;
+        margin-top:0;
+        background:0 0;
+        text-align:right;
+    }
+
+    .page-invoice.page-invoice-print .invoice-total span
+    {
+        margin-left:15px;
+    }
+
+    .page-invoice.page-invoice-print table thead
+    {
+        background:0 0;
+        border-bottom:1px solid #aaa;
+    }
+
+    .invoice-table tbody td {
+        font-weight: normal !important;
+    }
+
+    .page-invoice .invoice {
+        border:none !important;
+    }
+
+    .page-invoice .invoice-header {
+        padding:10px !important;
+        height:70px;
+        margin:0;
+        border-bottom-width:1px;
+        border-bottom-color:#666
+    }
+    .page-invoice .invoice-header address {
+        border-left-width:1px;
+        border-left-color:#666
+    }
+    .page-invoice .invoice-date {
+        margin-top:-5px !important;
+    }
+
+    .page-invoice .invoice-header h3 {
+        margin-top:-6px;
+    }
+
+    .page-invoice .invoice-total small {
+        font-size:12px;
+        font-weight:normal;
+    }
+
+    .page-invoice .invoice
+    {
+        padding:0 !important;
+
+    }
+
+    .page-invoice .invoice-info,.page-invoice .invoice-table {
+        margin: 0;
+        border-bottom:1px solid #666;
+    }
+
+    .page-invoice .invoice-recipient:before {
+        display:none;
+    }
+    .page-invoice .invoice-recipient {
+        margin:0;padding-left:10px;
+    }
+
+    .page-invoice .invoice-total span {
+        font-size:18px !important;
+    }
+
+}
+
+
+
+
+
 
 @media print {
     html {
@@ -39,5 +361,8 @@
     .main-content, .page-content {
         margin: 0 !important;
         padding:0 !important;
+    }
+    .unprintable {
+        display:none !important;
     }
 }

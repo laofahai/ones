@@ -78,6 +78,7 @@
                         blocks: $scope.blocks,
                         btns: $scope.btns
                     });
+                    $location.url("/");
                 };
             }])
 

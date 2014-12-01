@@ -581,3 +581,12 @@ th.sorting_asc,th.sorting_desc {
 .topSetting li:last-child > a i {
     display:inline !important;
 }
+
+
+.panel, .panel-default {
+    border-color: #e4e4e4;
+    margin-bottom: 22px;
+    position: relative;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

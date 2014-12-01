@@ -479,6 +479,7 @@ class CommonAction extends RestAction {
 
             $list = $model->select();
 
+
             $this->queryMeta = array(
                 "map" => $map,
                 "limit" => $limit,
@@ -539,6 +540,9 @@ class CommonAction extends RestAction {
         }
 
         $id = $_GET["id"];
+        if($_GET["single"]) {
+            $id = abs(intval(array_shift(explode(",", $id))));
+        }
         
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);

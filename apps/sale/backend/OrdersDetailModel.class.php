@@ -11,13 +11,8 @@
  * 
  */
 class OrdersDetailModel extends CommonModel {
-    
-    protected $_link = array(
-        "Orders" => array(
-            "mapping_type" => BELONGS_TO,
-            "foreign_key" => "order_id"
-        )
-    );
+
+    public $foreignKey = "order_id";
     
 }
 

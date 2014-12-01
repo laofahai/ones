@@ -38,7 +38,7 @@ class FinancePayConfirmPay extends WorkflowAbstract {
         $data = array(
             "account_id" => $accountId,
             "amount" => $amount,
-            "type" => 1,
+            "type" => 2,
             "type_id" => $plan["type_id"]
         );
         $recordModel = D("FinanceRecord");

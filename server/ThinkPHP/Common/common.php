@@ -78,7 +78,7 @@ function I($name,$default='',$filter=null) {
         case 'get'     :   $input =& $_GET;break;
         case 'post'    :   $input =& $_POST;break;
         case 'put'     :   parse_str(file_get_contents('php://input'), $input);break;
-        case 'param'   :  
+        case 'param'   :
             switch($_SERVER['REQUEST_METHOD']) {
                 case 'POST':
                     $input  =  $_POST;
@@ -101,7 +101,7 @@ function I($name,$default='',$filter=null) {
         default:
             return NULL;
     }
-    
+
     
     // 全局过滤
     // array_walk_recursive($input,'filter_exp');

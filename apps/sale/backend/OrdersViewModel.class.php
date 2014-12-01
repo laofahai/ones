@@ -17,7 +17,7 @@ class OrdersViewModel extends CommonViewModel {
     protected $viewFields = array(
         "Orders" => array("*", "_type"=>"left"),
         "User" => array("truename" => "sponsor", "_on" => "Orders.saler_id=User.id", "_type"=>"left"),
-        "RelationshipCompany" => array("name"=>"customer", "_on"=>"RelationshipCompany.id=Orders.customer_id", "_type"=>"left"),
+        "RelationshipCompany" => array("name"=>"customer", "address", "_on"=>"RelationshipCompany.id=Orders.customer_id", "_type"=>"left"),
         "Types" => array("name"=>"sale_type_label", "_on"=>"Types.id=Orders.sale_type", "_type"=>"left")
     );
 
@@ -36,15 +36,6 @@ class OrdersViewModel extends CommonViewModel {
      * 6: 库管发货，订单结束          已发货
      * 7: 订单完成                  已完成
      */
-    protected $status_lang = array(
-        "new_order", 
-        "processed_and_uneditable",
-    );
-    
-    protected $status_class = array(
-        "info", "normal"
-    );
-    
     
 }
 

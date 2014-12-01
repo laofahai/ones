@@ -192,8 +192,6 @@
                 $scope.selectAble = false;
                 $scope.printModule = group+"_"+module;
 
-                $scope.printTitle = model.printTitle;
-
                 printer.init($scope, $routeParams.id);
                 printer.displayPrintPage(model, res);
 

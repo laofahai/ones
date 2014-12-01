@@ -64,6 +64,8 @@ class StockoutConfirmStockout extends WorkflowAbstract {
             $dataModelFields[] = $field["field_name"];
         }
 
+        $stockLog = D("StockLog");
+
         $logs = array();
         foreach($data["rows"] as $k=>$v) {
             if(!$v or !$v["id"]) {
@@ -97,6 +99,18 @@ class StockoutConfirmStockout extends WorkflowAbstract {
                 "factory_code_all" => $v["factory_code_all"],
                 "stock_id" => $v["stock"]
             ))->setDec("num", $v["num"]);
+
+            //记录库存操作日志
+            $stockLog->record(array(
+                "factory_code_all" => $v["factory_code_all"],
+                "repository_id" => $v["stock"],
+                "num" => $v["num"],
+                "source_id" => $this->mainrowId,
+                "source_row_id" => $v["id"],
+                "dateline" => CTS,
+                "type" => 2,
+                "memo" => $v["memo"]
+            ));
         }
 
         //不允许负数库存存在, 库存自动清零

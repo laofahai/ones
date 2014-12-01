@@ -54,12 +54,6 @@ var toDate = function(timestamp, noTime) {
 
     var cur = parseInt(new Date().getTime()/1000)-timestamp;
 
-    if(cur < 3600) {
-        return sprintf(l("lang.minute_ago"), parseInt(cur/60));
-    } else if(cur < 3600 * 12) {
-        return sprintf(l("lang.hour_ago"), parseInt(cur/3600));
-    }
-
     var mask;
 
     switch(noTime) {
@@ -394,6 +388,25 @@ var filterDataFields = function(data, fields) {
         return returned;
     }
 };
+
+var arrayUnique = function(arr) {
+    var result = [], hash = {};
+    for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+        if (!hash[elem]) {
+            result.push(elem);
+            hash[elem] = true;
+        }
+    }
+    return result;
+}
+
+var getArrayField = function(data, field) {
+    var tmp = [];
+    angular.forEach(data, function(item) {
+        tmp.push(item[field]);
+    });
+    return arrayUnique(tmp);
+}
 
 var toLower = function(str) {
     return str.toLowerCase();

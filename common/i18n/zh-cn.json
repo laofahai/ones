@@ -296,6 +296,7 @@
         "queue_limit": "队列最大长度",
         "totalServerItem": "条目总数：",
         "paginationInfo": "分页信息：",
-        "relatedItemAndBill": "相关项目和单据"
+        "relatedItemAndBill": "相关项目和单据",
+        "handlingMan": "经手人"
     }
 }

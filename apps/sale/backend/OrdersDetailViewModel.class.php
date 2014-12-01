@@ -11,6 +11,8 @@
  * @author 志鹏
  */
 class OrdersDetailViewModel extends CommonViewModel {
+
+    public $foreignKey = "order_id";
     
     protected $viewFields = array(
         "OrdersDetail" => array("*", "_type"=>"left"),

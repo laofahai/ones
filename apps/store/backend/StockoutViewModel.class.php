@@ -49,6 +49,20 @@ class StockoutViewModel extends CommonViewModel {
         if($data["source_model"]) {
             $sourceModel = D($data["source_model"]."View");
             $data["source"] = $sourceModel->find($data["source_id"]);
+
+            if($_GET["includeSourceRows"]) {
+                $sourceDetailModel = D($data["source_model"]."Detail");
+
+                $foreignKey = $sourceDetailModel->foreignKey ? $sourceDetailModel->foreignKey : lcfirst($data["source_model"])."_id";
+
+                $map[$foreignKey] = $data["source_id"];
+
+                $tmp = $sourceDetailModel->where($map)->select();
+                foreach($tmp as $t) {
+                    $data["source_detail"][$t["factory_code_all"]] = $t;
+                }
+            }
+
         }
 
         $detailModel = D("StockoutDetailView");
