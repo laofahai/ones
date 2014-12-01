@@ -112,3 +112,22 @@ CREATE TABLE IF NOT EXISTS `__PREFIX__stock_product_list` (
   KEY `goods_id` (`goods_id`,`stock_id`),
   KEY `store_min` (`store_min`,`store_max`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- separator
+
+CREATE TABLE IF NOT EXISTS `__PREFIX__stock_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` smallint(1) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `source_id` int(11) NOT NULL,
+  `repository_id` smallint(5) NOT NULL,
+  `dateline` int(11) NOT NULL,
+  `goods_id` int(11) NOT NULL,
+  `factory_code_all` varchar(80) NOT NULL,
+  `num` decimal(10,2) NOT NULL,
+  `memo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`repository_id`,`factory_code_all`),
+  KEY `source_id` (`source_id`),
+  KEY `goods_id` (`goods_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
