@@ -824,11 +824,7 @@
                 var stockOutRows = {};
                 var assignData = function(batch) {
 
-                    if(batch === "all") {
-                        printer.assignStructure(model);
-                    } else {
-                        printer.assignStructure(model);
-                    }
+                    printer.assignStructure(model);
 
                     this.params = {
                         id: $routeParams.id,
@@ -845,6 +841,10 @@
                             type: 2,
                             batch: batch
                         };
+
+                        if(batch !== "all") {
+                            $scope.dateline = batch;
+                        }
 
                         stockLog.api.query(params).$promise.then(function(data) {
 
