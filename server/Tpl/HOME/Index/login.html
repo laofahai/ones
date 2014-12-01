@@ -66,6 +66,10 @@
                     <span ng-bind="'lang.messages.please_enter_your_login_info'|lang"></span>
                 </div> <!-- / .signin-text -->
 
+                <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
+                    <div><span ng-bind-html="error.msg"></span></div>
+                </div>
+
                 <div class="form-group w-icon">
                     <input type="text" name="signin_username" id="username_id" class="form-control input-lg" ng-model="loginInfo.username" placeholder="{{'lang.username'|lang}}" autocomplete="off" autofocus>
                     <span class="icon icon-user signin-form-icon"></span>
