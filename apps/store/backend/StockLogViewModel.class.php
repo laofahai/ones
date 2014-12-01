@@ -19,7 +19,7 @@ class StockLogViewModel extends CommonViewModel {
         if($_GET["type"] > 1) {
             $this->viewFields["StockoutDetail"] = array("num"=>"total_num", "_on"=>"StockLog.factory_code_all=StockoutDetail.factory_code_all AND StockLog.source_id=StockoutDetail.stockout_id", "_type"=>"left");
         } else {
-            $this->viewFields["StockoutDetail"] = array("num"=>"total_num", "_on"=>"StockLog.factory_code_all=StockinDetail.factory_code_all AND StockLog.source_id=StockinDetail.stockin_id", "_type"=>"left");
+            $this->viewFields["StockinDetail"] = array("num"=>"total_num", "_on"=>"StockLog.factory_code_all=StockinDetail.factory_code_all AND StockLog.source_id=StockinDetail.stockin_id", "_type"=>"left");
         }
         parent::__construct();
     }
@@ -33,32 +33,5 @@ class StockLogViewModel extends CommonViewModel {
         return $data;
     }
 
-    /*
-     * $options = array(
-     *  type => 1进2出
-     *  source_id => 原始单据ID
-     *  factory_code_all => 编码
-     *  user_id => 操作员ID
-     *  repository_id => 仓库ID
-     *  dateline => 时间
-     * );
-     * **/
-    public function record($options) {
-        $needed = array(
-            "type", "source_id", "factory_code_all", "repository_id", "num"
-        );
-
-        foreach($needed as $need) {
-            if(!array_key_exists($need, $options)) {
-                return false;
-            }
-        }
-
-        $options["user_id"] = $options["user_id"] ? $options["user_id"] : getCurrentUid();
-        $options["dateline"] = $options["dateline"] ? $options["dateline"] : CTS;
-
-        $this->add($options);
-
-    }
 
 } 

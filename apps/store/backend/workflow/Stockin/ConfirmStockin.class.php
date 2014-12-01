@@ -124,7 +124,8 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 "source_id" => $this->mainrowId,
                 "dateline" => CTS,
                 "type" => 1,
-                "memo" => $v["memo"]
+                "memo" => $v["memo"],
+                "goods_id" => $v["goods_id"]
             ));
 
         }

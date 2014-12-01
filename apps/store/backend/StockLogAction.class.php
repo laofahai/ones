@@ -46,6 +46,7 @@ class StockLogAction extends CommonAction {
                 unset($tmp[$k]["stocks"]);
             }
 
+
             $this->response(reIndex($tmp));
 
         } else {

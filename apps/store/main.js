@@ -406,8 +406,7 @@
                         },
                         factory_code_all: {
                             billAble:false,
-                            hideInForm:true,
-                            printAble: true
+                            hideInForm:true
                         },
                         goods_name: {
                             printAble: true,
@@ -434,13 +433,13 @@
                             autoQuery: true,
                             autoReset: true,
                             autoHide: true,
-                            printAble: true,
                             listAble: false
                         },
                         stock_name: {
                             displayName: l("lang.stock"),
                             hideInForm:true,
-                            billAble: false
+                            billAble: false,
+                            printAble: true
                         },
                         store_num: {
                             displayName: l('lang.storeNum'),
@@ -458,12 +457,19 @@
                         num: {
                             inputType: "number",
                             totalAble: true,
-                            displayName: l("lang.this_time_in_stock")
+                            displayName: l("lang.this_time_in_stock"),
+                            printAble: true
                         },
                         ined: {
                             inputType: "static",
                             onlyInEdit: true,
                             totalAble: true
+                        },
+                        dateline: {
+                            printAble: true,
+                            hideInForm: true,
+                            listAble: false,
+                            billAble: false
                         },
                         memo: {
                             printAble: true
@@ -805,8 +811,8 @@
                 };
             }])
 
-        .controller("StockoutPrintCtl", ["$scope", "StockoutModel", "StockoutRes", "CommonPrint", "$routeParams", "Store.StockLogAPI", "$route",
-            function($scope, model, res, printer, $routeParams, stockLog, $route){
+        .controller("StockoutPrintCtl", ["$scope", "StockoutModel", "StockoutRes", "CommonPrint", "$routeParams", "Store.StockLogAPI",
+            function($scope, model, res, printer, $routeParams, stockLog){
                 $scope.selectAble = false;
                 $scope.printModule = "store_stockout";
 
@@ -820,8 +826,6 @@
 
                 printer.init($scope, $routeParams.id);
 
-
-                var stockOutRows = {};
                 var assignData = function(batch) {
 
                     printer.assignStructure(model);
@@ -829,8 +833,7 @@
                     this.params = {
                         id: $routeParams.id,
                         single: true,
-                        includeRows: true, //包含子行,
-                        includeSourceRows: true
+                        includeRows: true
                     };
 
                     var promise = getDataApiPromise(res, "get", this.params);
@@ -860,6 +863,64 @@
 
             }
         ])
+
+
+
+        .controller("StockinPrintCtl", ["$scope", "StockinModel", "StockinRes", "CommonPrint", "$routeParams", "Store.StockLogAPI",
+            function($scope, model, res, printer, $routeParams, stockLog){
+                $scope.selectAble = false;
+                $scope.printModule = "store_stockin";
+
+                $scope.stockinBatch = "all";
+                $scope.batches = [];
+                var bachesLoaded = false;
+
+                $scope.$watch("stockinBatch", function(){
+                    assignData($scope.stockinBatch);
+                });
+
+                printer.init($scope, $routeParams.id);
+
+                var assignData = function(batch) {
+
+                    printer.assignStructure(model);
+
+                    this.params = {
+                        id: $routeParams.id,
+                        single: true,
+                        includeRows: true, //包含子行,
+                        includeSourceRows: true,
+                        includeRelated: true
+                    };
+
+                    var promise = getDataApiPromise(res, "get", this.params);
+                    printer.assignMeta(promise, model, function() {
+                        //批次
+                        var params = {
+                            source_id: $routeParams.id,
+                            type: 1,
+                            batch: batch
+                        };
+
+                        if(batch !== "all") {
+                            $scope.dateline = batch;
+                        }
+
+                        stockLog.api.query(params).$promise.then(function(data) {
+
+                            $scope.data.rows = data;
+
+                            if(!bachesLoaded) {
+                                bachesLoaded = true;
+                                $scope.batches = getArrayField(data, "dateline");
+                            }
+                        });
+                    });
+                };
+
+            }
+        ])
+
 
         //确认出库
         .controller("WorkflowConfirmStockoutCtl", ["$scope", "$routeParams", "ComView", "StockoutRes", "StockoutDetailModel", "$location",

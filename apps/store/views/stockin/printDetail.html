@@ -1,17 +1,71 @@
-<tr>
-    <td colspan="{{rowsStructure.length}}">
-        <div class="printAbleBillHead row">
-            <div class="col-xs-4">
-                <span ng-bind="'lang.bill_id'|lang|colon"></span>
-                <span ng-bind="bill.bill_id"></span>
+<pageactions></pageactions>
+
+<div class="page-invoice printAbleContainer print_{{printModule}}">
+    <div class="panel invoice">
+        <div class="invoice-header">
+            <h3>
+                <div>
+                    <small>
+                        <span ng-bind="onesConf.company_name"></span>
+                        <span ng-bind="printTitle"></span>
+                    </small><br>
+                    <span ng-bind="billId"></span>
+                </div>
+            </h3>
+            <address>
+                <span ng-bind="companyInfo.address"></span><br />
+                <span ng-bind="companyInfo.phone"></span><br />
+            </address>
+            <div class="invoice-date">
+                <small ng-bind="dateline|dateFormat:'yyyy-MM-dd HH:mm'"></small>
+                <br />
+                <small ng-bind="'lang.handlingMan'|lang"></small>
+                <small ng-bind="$parent.userInfo.truename"></small>
             </div>
-            <div class="col-xs-4">
-                <span ng-bind="bill.dateline|dateFormat"></span>
-            </div>
-            <div class="col-xs-4 text-right">
-                <span ng-bind="'lang.stock_manager'|lang|colon"></span>
-                <span ng-bind="bill.stock_manager"></span>
-            </div>
+        </div> <!-- / .invoice-header -->
+        <div class="invoice-info" ng-show="sourceData.supplier_id">
+            <div class="invoice-recipient">
+                <strong ng-bind="sourceData.supplier_id_label"></strong>
+                <span ng-bind="sourceData.address"></span>
+            </div> <!-- / .invoice-recipient -->
+            <div class="invoice-total" ng-show="sourceData.total_amount_real">
+                <small ng-bind="'lang.total'|lang"></small>
+                <small ng-bind="'lang.total_amount_real'|lang"></small>:
+                <span ng-bind="sourceData.total_amount_real|currency:'￥'"></span>
+                <small ng-bind="sourceData.total_amount_real|rmbToBig"></small>
+            </div> <!-- / .invoice-total -->
+            <div class="clearfix"></div>
         </div>
-    </td>
-</tr>
+
+        <div>
+            <select ng-model="stockinBatch" ng-change="changeBatch()" class="unprintable">
+                <option ng-bind="'lang.actions.listAll'|lang" value="all" selected></option>
+                <option ng-repeat="batch in batches" ng-bind="batch|dateFormat:'yyyy-MM-dd HH:mm'" ng-value="batch"></option>
+            </select>
+        </div>
+
+        <div class="invoice-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th ng-bind="rowField.displayName" ng-repeat="rowField in rowsStructure"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in data.rows">
+                        <td ng-repeat="rowField in rowsStructure" ng-bind="row[rowField.field+'_label']||row[rowField.field]"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row text-center">
+    <button class="btn btn-primary btn-sm hidden-print" ng-click="doPrint()">
+        <i class="icon icon-print"></i>
+        {{'lang.actions.print'|lang}}
+    </button>
+</div>
+
+

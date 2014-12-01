@@ -289,9 +289,9 @@
     }
 
     .page-invoice .invoice-header {
-        padding:10px !important;
-        height:70px;
-        margin:0;
+        padding:0 10px !important;
+        height:50px;
+        margin:-20px 0 0 0;
         border-bottom-width:1px;
         border-bottom-color:#666
     }
@@ -320,7 +320,7 @@
 
     .page-invoice .invoice-info,.page-invoice .invoice-table {
         margin: 0;
-        border-bottom:1px solid #666;
+        border-bottom:none;
     }
 
     .page-invoice .invoice-recipient:before {
@@ -355,7 +355,7 @@
     h1 {
         font-weight:bold !important;
     }
-    .navbar, .breadcrumbs, .sidebar, .page-header, pageactions, .unprintable, .ace-settings-container, .btn-scroll-up, .footer-copy {
+    .navbar, .breadcrumbs, .sidebar, .page-header, pageactions, .unprintable, .ace-settings-container, .btn-scroll-up, .footer-copy, hr {
         display:none !important;
     }
     .main-content, .page-content {

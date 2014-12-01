@@ -109,7 +109,8 @@ class StockoutConfirmStockout extends WorkflowAbstract {
                 "source_row_id" => $v["id"],
                 "dateline" => CTS,
                 "type" => 2,
-                "memo" => $v["memo"]
+                "memo" => $v["memo"],
+                "goods_id" => $v["goods_id"]
             ));
         }
 

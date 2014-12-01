@@ -72,16 +72,29 @@ class StockinAction extends CommonAction {
 
             $formData["rows"] = reIndex($params[0]);
 
-            if($_GET["includeRelated"] && $formData["source_model"] && $formData["source_id"]) {
-                try {
-                    $model = D($formData["source_model"]);
-                    $related = $model->getRelatedItem($formData["source_id"]);
-                    $formData["relatedItems"][] = $related;
-                } catch(Exception $e) {}
+            if($formData["source_model"] && $formData["source_id"]) {
+                $sourceModel = D($formData["source_model"]."View");
+                $formData["source"] = $sourceModel->find($formData["source_id"]);
+
+                if($_GET["includeRelated"]) {
+                    try {
+                        $model = D($formData["source_model"]);
+                        $related = $model->getRelatedItem($formData["source_id"]);
+                        $formData["relatedItems"][] = $related;
+                    } catch(Exception $e) {}
+
+                    if($_GET["includeSourceRows"]) {
+                        $model = D($formData["source_model"]."DetailView");
+                        $foreignKey = $model->foreignKey ? $model->foreignKey : lcfirst($formData["source_model"])."_id";
+                        $map[$foreignKey] = $formData["source_id"];
+                        $formData["source_detail"] = $model->where($map)->select();
+                    }
+                }
             }
 
             $results[] = $formData;
         }
+
 
         if($isSingle) {
             $this->response($formData);
