@@ -92,6 +92,10 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 return "error";
             }
 
+            if(strpos($v["goods_id"], "_") !== false) {
+                list($fc, $v["goods_id"], $catid) = explode("_", $v["goods_id"]);
+            }
+
             //本次入库总数量
             $totalIned += $v["num"];
 
