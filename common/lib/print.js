@@ -64,7 +64,7 @@
                             address: conf.company_address,
                             phone: conf.company_phone
                         };
-                        self.scope.billId = data.bill_id || data.id;
+                        self.scope.billId = data.bill_id || "#"+data.id;
                         if(model.config.printConfig.dateline) {
                             self.scope.dateline = self.scope.$eval("data."+model.config.printConfig.dateline);
                         } else {
@@ -73,7 +73,10 @@
 
                         self.scope.printTitle = model.config.printConfig.title;
 
-                        callback();
+                        if(typeof(callback) === 'function') {
+                            callback();
+                        }
+
                     });
                 };
 

@@ -18,7 +18,8 @@
             var i18n = l('lang');
             return {
                 config: {
-                    printAble: true
+                    printAble: true,
+                    printConfig: {}
                 },
                 getStructure: function() {
                     return {

@@ -193,11 +193,15 @@
                 $scope.printModule = group+"_"+module;
 
                 printer.init($scope, $routeParams.id);
-                printer.displayPrintPage(model, res);
+                printer.assignStructure(model);
 
-                $scope.doPrint = function(){
-                    printer.doPrint();
+                var params = {
+                    id: $routeParams.id
                 };
+
+                var promise = getDataApiPromise(res, "get", params);
+                printer.assignMeta(promise, model)
+
 
                 //        $scope.doPrint();
 
