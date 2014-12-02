@@ -2,11 +2,40 @@
     angular.module("ones.statistics", ["ngHighcharts"])
         .config(["$routeProvider", function($routeProvider){
             $routeProvider.when('/statistics/list/sale', {
-                templateUrl: appView('sale.html', "statistics"),
-                controller: 'StatisticsSaleCtl'
-            })
+                    templateUrl: appView('sale.html', "statistics"),
+                    controller: 'StatisticsSaleCtl'
+                })
+                .when('/:app/statistics/:module', {
+                    templateUrl: appView('entry.html', "statistics"),
+                    controller: "CommonStatisticsCtl"
+                })
             ;
         }])
+
+        /**
+         * items: {
+         *  subject:
+         *  type:
+         *  res:
+         *  options: {
+         *      queryParams:
+         *  }
+         * }
+         * */
+        .service("CommonStatisticsService", [function(){
+
+            var statisticsItems = [];
+
+            this.setStatisticsItem = function() {}
+        }])
+
+        .controller("CommonStatisticsCtl", ["$scope", "CommonStatisticsService", "$injector",
+            function($scope, statisticsService, $injector){
+
+            }])
+
+
+
         //统计
         .factory("ProductViewRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"statistics/productView/:id.json");
@@ -14,6 +43,7 @@
         .factory("StatisticsSaleRes", ["$resource","ones.config", function($resource, cnf){
             return $resource(cnf.BSU+"statistics/sale/:id.json");
         }])
+
 
         .service("ProductViewModel", ["$rootScope", "pluginExecutor", function($rootScope, plugin){
             var startTime = new Date();

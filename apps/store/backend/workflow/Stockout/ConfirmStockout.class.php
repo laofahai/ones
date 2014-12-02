@@ -79,6 +79,10 @@ class StockoutConfirmStockout extends WorkflowAbstract {
                 return "error";
             }
 
+            if(strpos($v["goods_id"], "_") !== false) {
+                list($fc, $v["goods_id"], $catid) = explode("_", $v["goods_id"]);
+            }
+
             //本次出库总数量
             $totalOuted += $v["num"];
 
