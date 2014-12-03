@@ -45,7 +45,21 @@ LoginModule
 
             User.login($scope.loginInfo).promise.then(function(data){
 //                window.location.href = './?hash='+data;
-                window.location.reload();
+
+                /**
+                 * 获取页面基本信息
+                 * @return {
+                 *  user: {},
+                 *  navs: {}
+                 * }
+                 * */
+                $http.get(conf.BSU + "home/index/0.json").success(function(data) {
+                    ones.caches.setItem("ones.authed.nodes", data.authed, 1);
+                    ones.caches.setItem("ones.main.navs", data.navs, 1);
+                    window.location.reload();
+                });
+
+
             }, function(data){
                 $scope.error.isError = true;
                 $scope.error.msg = $sce.trustAsHtml(data);

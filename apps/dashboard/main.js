@@ -106,6 +106,9 @@
                 var appBtns = {};
                 plugin.callPlugin("hook.dashboard.appBtn", $scope);
                 var dashboardAppBtns = ones.pluginScope.get("dashboardAppBtns");
+
+                var authedNodes = ones.caches.getItem("ones.authed.nodes");
+
                 angular.forEach(dashboardAppBtns, function(app){
                     //权限检测
                     var authNode;
@@ -127,7 +130,6 @@
                         authNode = [tmp[0],tmp[2],action].join(".").toLowerCase();
                     }
 
-                    var authedNodes = ones.caches.getItem("ones.authed.nodes");
                     try {
                         if(authedNodes.indexOf(authNode) < 0) {
                             return false;

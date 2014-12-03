@@ -87,7 +87,23 @@
         .controller('MainCtl', ["$scope", "$rootScope", "$location", "$http", "ones.config", "ComView", "$timeout", "pluginExecutor", "$injector", "$route",
             function($scope, $rootScope, $location, $http, conf, ComView, $timeout, plugin, $injector, $route) {
 
-                var timer;
+                if(!ones.caches.getItem("ones.authed.nodes")) {
+                    if(ones.caches.getItem("ones.reloading")) {
+                        ones.caches.removeItem("ones.reloading");
+                        alert("Something is wrong, please clear the cache and re-login.");
+                    }
+
+                    $http.get(conf.BSU + "home/index/0.json").success(function(data) {
+                        ones.caches.setItem("ones.authed.nodes", data.authed, 1);
+                        ones.caches.setItem("ones.main.navs", data.navs, 1);
+
+                        ones.caches.setItem("ones.reloading", 1);
+
+                        window.location.reload();
+                    });
+
+                }
+
                 var loadingStatePercent
                 $scope.$watch(function(){
                     return $rootScope.dataQuering;
@@ -316,24 +332,6 @@
                  }
 
                 doWhenLocationChanged();
-
-
-                /**
-                 * 获取页面基本信息
-                 * @return {
-                 *  user: {},
-                 *  navs: {}
-                 * }
-                 * */
-                $http.get(conf.BSU + "home/index/0.json").success(function(data) {
-                    $scope.settingNavs = data.navs.shift();
-                    $scope.$broadcast("initDataLoaded", data);
-                });
-
-                $scope.$on("initDataLoaded", function(event, data) {
-                    $rootScope.authedNodes = data.authed;
-                    ones.caches.setItem("ones.authed.nodes", data.authed, 1);
-                });
 
                 $scope.userInfo = ones.userInfo;
 

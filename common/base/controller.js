@@ -51,24 +51,29 @@
         }])
         .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
 
-            $scope.$on("initDataLoaded", function(event, data){
-                $scope.navs = data.navs;
-                $scope.activeSubNav = "";
-                $scope.checkActiveNav = function($index, id) {
-                    $scope.openNav = id;
-                    $scope.activeNav = id;
-                };
-                $scope.checkSubActiveNav = function(id, parent) {
-                    $scope.activeSubNav = id;
-                    $scope.activeShowNav = parent;
-                    $scope.openNav = parent;
-                };
-                $scope.checkThirdActiveNav = function(id, pid) {
-                    $scope.activeThirdNav = id;
-                    $scope.activeSubNav = pid;
-                };
+            var navs = ones.caches.getItem("ones.main.navs");
 
-            });
+            if(!navs) {
+                return false;
+            }
+
+            $scope.$parent.settingNavs = navs.shift();
+
+            $scope.navs = navs;
+            $scope.activeSubNav = "";
+            $scope.checkActiveNav = function($index, id) {
+                $scope.openNav = id;
+                $scope.activeNav = id;
+            };
+            $scope.checkSubActiveNav = function(id, parent) {
+                $scope.activeSubNav = id;
+                $scope.activeShowNav = parent;
+                $scope.openNav = parent;
+            };
+            $scope.checkThirdActiveNav = function(id, pid) {
+                $scope.activeThirdNav = id;
+                $scope.activeSubNav = pid;
+            };
         }])
 
         //app详情
