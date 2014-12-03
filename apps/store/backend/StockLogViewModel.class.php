@@ -15,6 +15,10 @@ class StockLogViewModel extends CommonViewModel {
         "Goods"=> array("name"=>"goods_name", "_on"=>"StockLog.goods_id=Goods.id", "_type"=>"left")
     );
 
+    public $searchFields = array(
+        "User.truename", "Stock.name", "Goods.name"
+    );
+
     public function __construct() {
         if($_GET["type"] > 1) {
             $this->viewFields["StockoutDetail"] = array("num"=>"total_num", "_on"=>"StockLog.factory_code_all=StockoutDetail.factory_code_all AND StockLog.source_id=StockoutDetail.stockout_id", "_type"=>"left");
@@ -28,6 +32,7 @@ class StockLogViewModel extends CommonViewModel {
         $data = parent::select($options);
         foreach($data as $k=>$v) {
             $data[$k]["dateline_label"] = date("Y-m-d H:i", $v["dateline"]);
+            $data[$k]["stock_direction"] = $v["type"] > 1 ? "-" : "+";
         }
 
         return $data;

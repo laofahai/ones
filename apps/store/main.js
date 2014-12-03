@@ -174,10 +174,46 @@
                 });
         }])
 
-        .service("Store.StockLogAPI", ["ones.dataApiFactory", function(dataAPI){
+        .service("Store.StockLogAPI", ["ones.dataApiFactory", "pluginExecutor", function(dataAPI, plugin){
+            var self = this;
+
             this.api = dataAPI.getResourceInstance({
                 uri: "store/stockLog"
             });
+
+            this.config = {};
+
+            this.structure = {
+                id : { },
+                factory_code_all: { },
+                stock_direction: {},
+                goods_name: { },
+                stock_name: {
+                    displayName: l("lang.stock")
+                },
+                num: {},
+                handlingMan: {
+                    field: "operationMan"
+                },
+                dateline: {
+                    field: "dateline_label"
+                },
+                memo: {}
+
+            };
+
+
+
+            this.getStructure = function() {
+                plugin.callPlugin("bind_dataModel_to_structure", {
+                    structure: self.structure,
+                    alias: "product",
+                    after: "goods_name"
+                });
+
+                return ones.pluginScope.get("defer").promise;
+            };
+
         }])
         .service("Store.StockAPI", ["$rootScope", "$q", "ones.dataApiFactory", function($rootScope, $q, dataApiFactory){
             this.structure = {

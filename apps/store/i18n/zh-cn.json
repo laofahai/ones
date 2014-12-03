@@ -47,6 +47,10 @@
                 "StockoutDetail": {
                     "name": "出库单详情",
                     "actions": {}
+                },
+                "StockLog": {
+                    "name": "库存操作记录",
+                    "actions": {}
                 }
             }
         },
@@ -83,7 +87,8 @@
             "stock_list": "库存列表",
             "stockin_paper": "入库单",
             "stockout_paper": "出库单",
-            "stock_transfer": "库存调拨"
+            "stock_transfer": "库存调拨",
+            "stock_log": "库存操作记录"
         },
         "modules": {
             "Stockin": "入库单",
@@ -112,6 +117,7 @@
         "stockout": "出库单",
         "stockWarningOnly": "仅库存警告数据",
         "stock_warning": "库存警告",
+        "stock_direction": "库存方向",
 
         "AppStore": {
             "appName": "仓储模块"
@@ -127,6 +133,7 @@
         "store.stockout": "%s出库单",
         "store.stockwarning.read": "库存警告",
         "store.stockproductlist": "%s库存清单",
+        "store.stocklog.read": "查看库存操作记录",
 
         "ined": "已入库",
         "ined_num": "已入库数量",

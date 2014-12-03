@@ -412,6 +412,15 @@ li.select3_add i {
 .table-grid td.td-id {
     text-align:center;
 }
+.table-grid th.th-factory_code_all {
+    width:100px;
+}
+.table-grid th.th-stock_direction {
+    width:50px;
+}
+.table-grid td.td-stock_direction {
+    text-align:center;
+}
 .table-grid td {
     min-height:40px;vertical-align: middle !important;
 }

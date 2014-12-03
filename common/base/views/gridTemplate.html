@@ -30,7 +30,7 @@
                     ng-class="{'hidden-480': hiddenWhen480px.indexOf(field.field)>=0||field.hiddenWhen480}"></td>
             </tr>
             <tr ng-show="itemsList.length<1">
-                <td colspan="{{config.columnDefs.length+3}}" class="td-unfound" align="center" ng-bind="'lang.messages.nodata'|lang"></td>
+                <td colspan="{{config.columnDefs.length+1}}" class="td-unfound" align="center" ng-bind="'lang.messages.nodata'|lang"></td>
             </tr>
         </tbody>
         <tfoot>

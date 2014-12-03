@@ -7,6 +7,7 @@
         "stock": {
             "icon": "database",
             "childs": {
+                "stock_log": "store/list/stockLog",
                 "stock_list": "store/list/stockProductList",
                 "stockin_paper": "store/list/stockin",
                 "stockout_paper": "store/list/stockout"

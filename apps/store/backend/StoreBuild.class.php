@@ -95,7 +95,8 @@ class StoreBuild extends CommonBuildAction {
         "store.stockin.*",
         "store.stockout.*",
         "store.stockwarning.read",
-        "store.stockproductlist.*"
+        "store.stockproductlist.*",
+        "store.stocklog.read"
     );
 
 } 
