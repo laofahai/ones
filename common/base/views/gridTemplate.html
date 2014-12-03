@@ -25,6 +25,7 @@
                 </td>
                 <td ng-repeat="field in config.columnDefs"
                     class="td-{{field.field}}"
+                    title="{{item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$parent.$index}}"
                     ng-bind-html="item[field.field]|tryGridEval:$parent.$index:field.field|tryGridFilter:field.cellFilter:$parent.$index"
                     ng-class="{'hidden-480': hiddenWhen480px.indexOf(field.field)>=0||field.hiddenWhen480}"></td>
             </tr>
@@ -33,32 +34,32 @@
             </tr>
         </tbody>
         <tfoot>
-        <tr>
-            <td colspan="{{config.columnDefs.length+2}}" valign="middle">
-                <div class="row">
-                    <div class="col-sm-4">
-                        {{'totalServerItem'|lang}} {{totalServerItems}}<br />
-                        {{'paginationInfo'|lang}} {{pagingOptions.currentPage}}/{{totalPages}}
-                    </div>
-                    <div class="col-sm-8 text-right">
-                        <select class="actionsBtnRight" ng-options="p for p in pageSizes" ng-model="pagingOptions.pageSize"></select>
-                        <div class="dataTables_paginate paging_bootstrap">
-                            <ul class="pagination">
-                                <li class="prev" ng-click="setPage(1)">
-                                    <a href=""><i class="icon-angle-double-left"></i></a>
-                                </li>
-                                <li ng-click="setPage('-1')"><a href=""><i class="icon-angle-left"></i></a></li>
-                                <li><input type="number" class="input-mini pagingInput" ng-model-options="{ debounce: 500 }" ng-model="pagingOptions.currentPage" min="1" max="{{totalPages}}" /></li>
-                                <li ng-click="setPage('+1')"><a href=""><i class="icon-angle-right"></i></a></li>
-                                <li class="next" ng-click="setPage('max')">
-                                    <a href=""><i class="icon-angle-double-right"></i></a>
-                                </li>
-                            </ul>
+            <tr>
+                <td colspan="{{config.columnDefs.length+1}}" valign="middle">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{'totalServerItem'|lang}} {{totalServerItems}}<br />
+                            {{'paginationInfo'|lang}} {{pagingOptions.currentPage}}/{{totalPages}}
+                        </div>
+                        <div class="col-sm-8 text-right">
+                            <select class="actionsBtnRight" ng-options="p for p in pageSizes" ng-model="pagingOptions.pageSize"></select>
+                            <div class="dataTables_paginate paging_bootstrap">
+                                <ul class="pagination">
+                                    <li class="prev" ng-click="setPage(1)">
+                                        <a href=""><i class="icon-angle-double-left"></i></a>
+                                    </li>
+                                    <li ng-click="setPage('-1')"><a href=""><i class="icon-angle-left"></i></a></li>
+                                    <li><input type="number" class="input-mini pagingInput" ng-model-options="{ debounce: 500 }" ng-model="pagingOptions.currentPage" min="1" max="{{totalPages}}" /></li>
+                                    <li ng-click="setPage('+1')"><a href=""><i class="icon-angle-right"></i></a></li>
+                                    <li class="next" ng-click="setPage('max')">
+                                        <a href=""><i class="icon-angle-double-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
         </tfoot>
     </table>
 </div>

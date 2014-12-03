@@ -22,6 +22,15 @@ a{
     height:31px;
 }
 
+table.table-grid {
+    table-layout: fixed;
+}
+table.table-grid tbody td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /***/
 
 commonform {
