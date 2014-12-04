@@ -335,12 +335,13 @@ function Pinyin($zh) {
 /**
  * 内置模块是否已启用
  */
-function isModuleEnabled($moduleName) {
+function isModuleEnabled($moduleName, $version="0", $compare=">=") {
     $modules = F("loadedApp");
+    return array_key_exists($moduleName, $modules);
     return in_array(strtolower($moduleName), $modules);
 }
-function isAppLoaded($appName) {
-    return isModuleEnabled($appName);
+function isAppLoaded($appName, $version="0", $compare=">=") {
+    return isModuleEnabled($appName, $version, $compare);
 }
 
 /**
