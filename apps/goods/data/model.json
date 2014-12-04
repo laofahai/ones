@@ -6,7 +6,8 @@
         },
         "factory_code": {
             "ensureunique": "GoodsRes",
-            "hiddenWhen480": true
+            "hiddenWhen480": true,
+            "helpText": "factory_code_helptext"
         },
         "name": {
             "ensureunique": "GoodsRes"

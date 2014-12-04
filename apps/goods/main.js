@@ -12,7 +12,7 @@
             function($rootScope, GoodsCategoryRes, $q, $location, $modal, plugin) {
                 var obj = {
                     config: {
-                        column: 3,
+                        columns: 1,
                         trashAble: true,
                         extraSelectActions: [
                             {

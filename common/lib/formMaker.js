@@ -1634,7 +1634,7 @@
                                 var helpText = "";
                                 if(struct.helpText) {
                                     try {
-                                        helpText = l("lang.helpTexts.".struct.helpText);
+                                        helpText = l("lang.helpTexts."+struct.helpText);
                                     } catch(e) {}
                                     helpText = helpText || struct.helpText
                                 }
