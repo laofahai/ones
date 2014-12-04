@@ -204,9 +204,12 @@ var appView = function(viewPath, app){
 };
 
 //判断APP是否加载
-var isAppLoaded = function(appParam, version) {
-    var compare = "==";
+var isAppLoaded = function(appParam, version, compare) {
+
     var expression, app;
+
+    compare = compare || ">=";
+    version = version || 0;
     if(appParam.app !== undefined && appParam.compare !== undefined) {
         app = appParam.app;
         compare = appParam.compare == "=" ? "==" : appParam.compare;
@@ -230,11 +233,14 @@ var isAppLoaded = function(appParam, version) {
             }
         }
 
-        try {
-            return eval(expression);
-        } catch(e) {
-            return false;
+        if("false" !== expression) {
+            try {
+                return eval(expression);
+            } catch(e) {
+                return false;
+            }
         }
+
 
     }
     return false;
