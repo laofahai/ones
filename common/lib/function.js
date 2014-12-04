@@ -204,8 +204,40 @@ var appView = function(viewPath, app){
 };
 
 //判断APP是否加载
-var isAppLoaded = function(app) {
-    return ones.BaseConf.LoadedApps.indexOf(app) >= 0;
+var isAppLoaded = function(appParam, version) {
+    var compare = "==";
+    var expression, app;
+    if(appParam.app !== undefined && appParam.compare !== undefined) {
+        app = appParam.app;
+        compare = appParam.compare == "=" ? "==" : appParam.compare;
+        version = appParam.version
+    } else {
+        app = appParam;
+    }
+
+    for(var alias in ones.BaseConf.LoadedApps) {
+
+        expression = "false";
+
+        if(app == "ones") {
+            expression = sprintf("'%s'%s'%s'", ones.BaseConf['system.version'], compare, version);
+        } else {
+            if(app == alias) {
+                if(!version) {
+                    return true;
+                }
+                expression = sprintf("'%s'%s'%s'", ones.BaseConf.LoadedApps[alias], compare, version);
+            }
+        }
+
+        try {
+            return eval(expression);
+        } catch(e) {
+            return false;
+        }
+
+    }
+    return false;
 };
 
 function HTMLEncode(html)

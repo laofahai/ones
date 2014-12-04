@@ -166,9 +166,10 @@ class AppsAction extends CommonAction {
         $model = D("Apps");
         $installed = $model->where(array("alias" => $appInfo["alias"]))->find();
 
+        $appInfo["latest"] = reset($appInfo["versions"]);
         if($installed) {
             $appInfo["installed"] = true;
-            $appInfo["hasUpdate"] = $appInfo["latest_version"] > $installed["version"] ? true : false;
+            $appInfo["hasUpdate"] = $appInfo["latest"]["version"] > $installed["version"] ? true : false;
             $appInfo["currentVersion"] = $installed["version"];
             $appInfo["status"] = $installed["status"];
         } else {
@@ -243,15 +244,12 @@ class AppsAction extends CommonAction {
             C("SERVICE_API_KEY")."|".C("SERVICE_SECRET_KEY")
         );
 
-        $target = ROOT_PATH."/apps";
+        $target = ENTRY_PATH."/Data/apps";
         list($localPath, $tmpFolder) = $this->downloadAndZipAndCopy($remoteUri, $target);
-
-//        sleep(2);exit;
 
         $appDir = $target."/".$alias;
 
         if(!is_dir($appDir)) {
-//            $this->installClean($localPath, $tmpFolder);
             Log::write("Install app failed while copy: {$tmpFolder} to {$appDir}");
             $this->error("install failed while copy");
             return;
@@ -305,13 +303,14 @@ class AppsAction extends CommonAction {
             "alias"=> $alias
         ))->find();
 
-        $remoteUri = sprintf("%sApp/getUpgrade/alias/%s/api_key/%s/oldVersion/".$appInfo["version"],
+        $remoteUri = sprintf("%sApp/getUpgrade/alias/%s/api_key/%s/oldVersion/".str_replace(".", "-", $appInfo["version"]),
             $this->serviceUri,
             $alias,
-            C("SERVICE_API_KEY")
+            C("SERVICE_API_KEY")."|".C("SERVICE_SECRET_KEY")
         );
 
-        $target = ROOT_PATH."/apps/";
+        $target = ENTRY_PATH."/Data/apps/";
+
 
         $downloadResult = $this->downloadAndZipAndCopy($remoteUri, $target);
         if(!$downloadResult) {
@@ -435,11 +434,22 @@ class AppsAction extends CommonAction {
                 $requirements[] = $req;
             }
         }
-        if($requirements) {
+
+        $checkRequired = checkAppRequirements($appConf["requirements"]);
+        if(true !== $checkRequired) {
             $this->installClean();
+
+            if($checkRequired["ones"]) {
+                $this->response(array(
+                    "type" => "ones",
+                    "requirements" => $checkRequired["ones"]
+                ));
+                return false;
+            }
+
             $this->response(array(
                 "type" => "requirements",
-                "requirements" => implode(",", $requirements)
+                "requirements" => $checkRequired
             ));
             return false;
         }

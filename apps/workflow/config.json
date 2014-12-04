@@ -1,7 +1,6 @@
 {
+    "primary": "true",
     "alias": "workflow",
-    "version": "0.1",
-    "requirements": ["department"],
     "plugins": {
         "action_end_init": ["ONESWorkflowInit"]
     },

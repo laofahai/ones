@@ -2,7 +2,7 @@
     /**
      * ONES 服务模块，包括系统升级、数据备份等
      * */
-    angular.module("ones.services", ["ones.department"])
+    angular.module("ones.services", [])
         .config(["$routeProvider", function($route){
             $route
                 .when('/services/list/systemUpdate', {

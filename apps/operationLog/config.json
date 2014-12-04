@@ -1,6 +1,9 @@
 {
     "alias" : "operationLog",
     "version": "0.1",
+    "requirements": {
+        "ones": ">= 0.1.6"
+    },
     "plugins": {
         "record_operation_log": ["OperationLogRecord"]
     },

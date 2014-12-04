@@ -1,6 +1,8 @@
 {
     "alias": "crm",
-    "requirements": ["department"],
+    "requirements": {
+        "ones": ">= 0.1.6"
+    },
     "version": "0.1",
     "modules": ["relationshipCompany", "relationshipCompanyGroup"],
     "btnClass": "success",

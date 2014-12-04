@@ -644,3 +644,69 @@ function combineI18n($runtimeObj, $lang = "zh-cn") {
 
     return $data;
 }
+
+
+function checkAppRequirements($requirements) {
+
+    $loadedApps = F("loadedApp");
+
+    $lost = array();
+
+    if(!$requirements) {
+        return true;
+    }
+
+    foreach($requirements as $app=>$cond) {
+        list($compare, $version) = explode(" ", $cond);
+
+        if(!array_key_exists($app, $loadedApps) && $app !== "ones") {
+            $lost[] = $app;
+            continue;
+        }
+
+        $count = count($lost);
+
+        $currentVersion = $loadedApps[$app];
+        if($app == "ones") {
+            $currentVersion = DBC("system.version");
+        }
+
+        switch($compare) {
+            case "=":
+                if($currentVersion != $version) {
+                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
+                }
+                break;
+            case ">":
+                if($currentVersion <= $version) {
+                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
+                }
+                break;
+            case "<":
+                if($currentVersion >= $version) {
+                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
+                }
+                break;
+            case ">=":
+                if($currentVersion < $version) {
+                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
+                }
+                break;
+            case "<=":
+                if($currentVersion > $version) {
+                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
+                }
+                break;
+        }
+
+        //当前为判断系统版本
+        if($app === "ones" && count($lost) > $count) {
+            return array(
+                "ones" => $compare.$version
+            );
+        }
+    }
+
+    return $lost ? $lost : true;
+
+}

@@ -1,7 +1,10 @@
 {
     "alias": "produce",
     "version": "0.1",
-    "requirements": ["department", "workflow", "goods", "dataModel"],
+    "requirements": {
+        "ones": ">= 0.1.6",
+        "store": ">= 0.1"
+    },
     "workflow": ["Produce"],
     "navs": {
         "produce": {

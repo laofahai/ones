@@ -1,4 +1,17 @@
 (function(){
+
+    ones.pluginRegister("crm.related.items", function(injector, defer, id) {
+        ones.pluginScope.push("crm.related.items", {
+            title: l("lang.financeReceivePlan"),
+            controller: "CRMRelatedFinanceReceivePlanCtl"
+        });
+
+        ones.pluginScope.push("crm.related.items", {
+            title: l("lang.financePayPlan"),
+            controller: "CRMRelatedFinancePayPlanCtl"
+        });
+    });
+
     angular.module("ones.finance", [])
         .config(["$routeProvider", function($route){
             $route.when('/doWorkflow/FinanceReceivePlan/confirm/:nodeId/:id', {
@@ -278,6 +291,11 @@
                         $location.url('/finance/list/financePayPlan');
                     });
                 };
+            }])
+
+        .controller("CRMRelatedFinanceReceivePlanCtl", ["$scope", "FinanceReceivePlanModel", "FinanceReceivePlanRes",
+            function($scope, model, res){
+
             }])
 
 

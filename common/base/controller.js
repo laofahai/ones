@@ -144,10 +144,17 @@
                     };
                     appModel.api.save(params, function(data){
 
+                        if(data.type === "ones") {
+                            $scope.consoleClass = "danger"
+                            $scope.consoleMessages.push(
+                                sprintf(l("lang.messages.apps.requirementOnesVersion"), data.requirements)
+                            );
+                            return;
+                        }
                         if(data.type == "requirements") {
                             $scope.consoleClass = "danger";
                             $scope.consoleMessages.push(
-                                l("lang.requirementsApp") + ": " + data.requirements
+                                l("lang.messages.apps.requirementsApp") + "<br /> " + data.requirements.join("<br />")
                             );
                             $scope.consoleMessages.push(
                                 l("lang.messages.apps.requirements")
@@ -213,6 +220,25 @@
                         alias: $scope.appInfo.alias,
                         upgrade: true
                     }, {}, function(data){
+
+                        if(data.type === "ones") {
+                            $scope.consoleClass = "danger"
+                            $scope.consoleMessages.push(
+                                sprintf(l("lang.messages.apps.requirementOnesVersion"), data.requirements)
+                            );
+                            return;
+                        }
+                        if(data.type == "requirements") {
+                            $scope.consoleClass = "danger";
+                            $scope.consoleMessages.push(
+                                l("lang.messages.apps.requirementsApp") + "<br /> " + data.requirements.join("<br />")
+                            );
+                            $scope.consoleMessages.push(
+                                l("lang.messages.apps.requirements")
+                            );
+                            return;
+                        }
+
                         $scope.consoleMessages.push(
                             l('lang.messages.apps.upgradeSuccess')
                         );

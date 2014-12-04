@@ -1,7 +1,9 @@
 {
     "alias": "statistics",
     "version": "0.1",
-    "requirements": [],
+    "requirements": {
+        "ones": ">= 0.1.6"
+    },
     "navs": {
         "statistics": {
             "icon": "bar-chart-o",

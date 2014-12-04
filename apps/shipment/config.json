@@ -1,7 +1,9 @@
 {
     "alias": "shipment",
     "version": "0.4",
-    "requirements": ["crm"],
+    "requirements": {
+        "crm": ">= 0.1"
+    },
     "navs": {
         "stock": {
             "childs": {

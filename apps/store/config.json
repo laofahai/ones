@@ -1,7 +1,10 @@
 {
     "alias": "store",
     "version": "0.1",
-    "requirements": ["department", "goods", "dataModel", "workflow"],
+    "requirements": {
+        "ones": ">= 0.1.6",
+        "goods": ">= 0.1"
+    },
     "workflow": ["Stockin", "Stockout", "StockTransfer"],
     "navs": {
         "stock": {

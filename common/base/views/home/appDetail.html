@@ -17,13 +17,13 @@
                         <h5 class="bolder" ng-bind="'lang.appDesc'|lang"></h5>
                         <p class="grey" ng-bind-html="appInfo.content"></p>
                         <div ng-show="appInfo.versions[appInfo.currentVersion].requirements[0]">
-                            <h5 class="bolder" ng-bind="'lang.requirementsApp'|lang"></h5>
+                            <h5 class="bolder" ng-bind="'lang.messages.apps.requirementsApp'|lang"></h5>
                             <p>
                                 <a class="label label-info arrowed arrowed-in-right"
                                       ng-class="{'label-danger':!isAppLoaded(req)}"
                                       ng-repeat="req in appInfo.versions[appInfo.currentVersion].requirements"
-                                      ng-bind="'lang.App'+req.ucfirst()+'.appName'|lang:'':req"
-                                      ng-click="$root.goPage('HOME/viewDetail/apps/alias/'+req)">
+                                      ng-bind="req|toAppNameWithVersion"
+                                      ng-click="$root.goPage('HOME/viewDetail/apps/alias/'+req['app'])">
                                 </a>
                             </p>
                         </div>
@@ -46,7 +46,7 @@
                         <p ng-show="appInfo.hasUpdate"><icon class="icon icon-arrow-up green"></icon> <span ng-bind="'lang.HasUpdate'|lang"></span></p>
                         <p>
                             <span ng-bind="'lang.appLatestVersion'|lang"></span>:
-                            <span class="green"> v<stong ng-bind="appInfo.latest_version"></stong></span>
+                            <span class="green"> v<stong ng-bind="appInfo.latest.version"></stong></span>
                         </p>
                         <p ng-show="appInfo.currentVersion">
                             <span ng-bind="'lang.appCurrentVersion'|lang"></span>:

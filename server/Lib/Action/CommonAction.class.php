@@ -77,7 +77,7 @@ class CommonAction extends RestAction {
         F("loadedApp", $this->loadedApp);
 
         //自动加载路径
-        foreach($this->loadedApp as $app) {
+        foreach($this->loadedApp as $app=>$version) {
             $autoloadPath[] = sprintf("%s/apps/%s/backend", ROOT_PATH, $app);
             $autoloadPath[] = sprintf("%s/apps/%s/backend/Action", ROOT_PATH, $app);
             $autoloadPath[] = sprintf("%s/apps/%s/backend/Model", ROOT_PATH, $app);
@@ -156,7 +156,7 @@ class CommonAction extends RestAction {
                     }
                     $this->appsConf[$file] = $tmpConf;
 
-                    $this->loadedApp[] = $file;
+                    $this->loadedApp[$file] = $tmpConf["version"];
                 }
             }
         }

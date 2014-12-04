@@ -31,16 +31,16 @@
         });
     });
 
-    angular.module("ones.crm", ["ones.department"])
+    angular.module("ones.crm", [])
         .config(["$routeProvider", function($routeProvider){
             $routeProvider.when("/crm/addBill/relationshipCompany", {
-                templateUrl: appView("edit.html", "crm"),
-                controller: "CRMRelCompanyEditCtl"
-            })
-            .when("/crm/editBill/relationshipCompany/id/:id", {
-                templateUrl: appView("edit.html", "crm"),
-                controller: "CRMRelCompanyEditCtl"
-            })
+                    templateUrl: appView("edit.html", "crm"),
+                    controller: "CRMRelCompanyEditCtl"
+                })
+                .when("/crm/editBill/relationshipCompany/id/:id", {
+                    templateUrl: appView("edit.html", "crm"),
+                    controller: "CRMRelCompanyEditCtl"
+                })
             ;
         }])
         .factory("RelationshipCompanyGroupRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -162,8 +162,8 @@
             };
         }])
 
-        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "ComView",
-            function($scope, ComView, RelationshipCompanyModel, res, ComView){
+        .controller("CRMRelCompanyEditCtl", ["$scope", "ComView", "RelationshipCompanyModel", "RelationshipCompanyRes", "ComView", "pluginExecutor", "$routeParams",
+            function($scope, ComView, RelationshipCompanyModel, res, ComView, plugin, $routeParams){
                 $scope.selectAble = false;
 
                 $scope.billConfig = {
@@ -193,6 +193,12 @@
 //
                     $scope.doBillSubmit();
                 };
+
+                plugin.callPlugin("crm.related.items", $routeParams.id);
+                $scope.relatedItems = ones.pluginScope.get("crm.related.items") || [];
+
+                console.log($scope.relatedItems);
+
             }])
     ;
 })();

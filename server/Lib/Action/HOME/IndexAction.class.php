@@ -15,8 +15,8 @@ class IndexAction extends CommonAction {
         $this->assign("siteTitle", DBC("site.title"));
 
         $loadedApps = F("loadedApp");
-        $this->assign("loadedApps", $loadedApps);
-        $this->assign("loadedAppsStr", implode("','",$loadedApps));
+
+        $this->assign("loadedAppsStr", json_encode($loadedApps));
 
         //静态资源
         import("@.ORG.staticRuntime");

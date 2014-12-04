@@ -45,7 +45,10 @@ class FrontEndRuntime {
 
     public function __construct($loadedApps) {
         $this->baseDir = ROOT_PATH."/common";
-        $this->loadedApps = $loadedApps;
+
+        foreach($loadedApps as $app=>$version) {
+            $this->loadedApps[] = $app;
+        }
 
         $this->preLoadingList = C("preloadJS".(APP_DEBUG ? "DEBUG": ""));
 
@@ -64,7 +67,7 @@ class FrontEndRuntime {
 //            $loadedApps[] = "ones.".$app;
 //        }
         $replace = array(
-            sprintf("'ones.%s'", implode("','ones.", $this->loadedApps)),
+            sprintf("'ones.%s'", implode("','ones.", $this->loadedApps))
         );
 
         $file = ROOT_PATH."/".$file;

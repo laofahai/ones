@@ -63,6 +63,18 @@
                 return str + (CJK ? "：" : ":");
             };
         })
+        .filter("toAppNameWithVersion", [function(){
+            return function(appInfo) {
+
+                var k = "lang.App"+appInfo.app+".appName";
+                var rs = l(k);
+
+                if(rs === undefined || k.toLowerCase() === rs) {
+                    rs = appInfo.app;
+                }
+                return sprintf("%s %s v%s", rs, appInfo.compare, appInfo.version);
+            };
+        }])
         //label 包围
         .filter("labelAble", function(){
             return function(str, cls) {

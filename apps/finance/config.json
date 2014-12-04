@@ -1,6 +1,9 @@
 {
     "alias": "finance",
-    "requirements": ["crm", "department", "workflow"],
+    "requirements": {
+        "ones": ">= 0.1.6",
+        "crm": ">= 0.1"
+    },
     "workflow": ["FinancePay","FinanceReceive"],
     "version": "0.1",
     "navs": {
