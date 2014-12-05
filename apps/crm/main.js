@@ -197,7 +197,7 @@
                 plugin.callPlugin("crm.related.items", $routeParams.id);
                 $scope.relatedItems = ones.pluginScope.get("crm.related.items") || [];
 
-                console.log($scope.relatedItems);
+                ones.pluginScope.remove("crm.related.items");
 
             }])
     ;

@@ -79,6 +79,8 @@
         "balance": "余额",
         "received": "已收",
         "payed": "已付",
+        "unreceived": "未收",
+        "unpayed": "未付",
 
         "types" : {
             "receive" : "收款类别",

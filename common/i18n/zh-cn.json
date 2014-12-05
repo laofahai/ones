@@ -303,6 +303,7 @@
         "totalServerItem": "条目总数：",
         "paginationInfo": "分页信息：",
         "relatedItemAndBill": "相关项目和单据",
-        "handlingMan": "经手人"
+        "handlingMan": "经手人",
+        "latest_update_dateline": "最后更新时间"
     }
 }

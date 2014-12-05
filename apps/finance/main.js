@@ -1,12 +1,12 @@
 (function(){
 
     ones.pluginRegister("crm.related.items", function(injector, defer, id) {
-        ones.pluginScope.push("crm.related.items", {
+        ones.pluginScope.append("crm.related.items", {
             title: l("lang.financeReceivePlan"),
-            controller: "CRMRelatedFinanceReceivePlanCtl"
+            template: appView("plugins/crmRelated.html", "finance")
         });
 
-        ones.pluginScope.push("crm.related.items", {
+        ones.pluginScope.append("crm.related.items", {
             title: l("lang.financePayPlan"),
             controller: "CRMRelatedFinancePayPlanCtl"
         });
@@ -293,10 +293,18 @@
                 };
             }])
 
-        .controller("CRMRelatedFinanceReceivePlanCtl", ["$scope", "FinanceReceivePlanModel", "FinanceReceivePlanRes",
-            function($scope, model, res){
-
+        .controller("CRMRelatedFinanceReceivePlanCtl", ["$scope", "FinanceReceivePlanModel", "FinanceReceivePlanRes", "$routeParams",
+            function($scope, model, res, $routeParams){
+                res.query({
+                    customer_id: $routeParams.id,
+                    _si: "-status",
+                    unhandled: true
+                }).$promise.then(function(data){
+                    $scope.needReceived = data;
+                });
             }])
+
+
 
 
     ;

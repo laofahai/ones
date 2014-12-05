@@ -19,6 +19,15 @@ class FinanceReceivePlanAction extends CommonAction {
 
     protected $lockedStatus = 1;
 
+    protected function _filter(&$map) {
+        if($_GET["customer_id"]) {
+            $map["customer_id"] = abs(intval($_GET["customer_id"]));
+        }
+        if($_GET["unhandled"]) {
+            $map["status"] = array("LT", 2);
+        }
+    }
+
     protected function pretreatment() {
         if($_POST["customer_name"]) {
             $_POST["customer_id"] = $_POST["customer_name"];

@@ -20,4 +20,8 @@ class FinanceReceivePlanViewModel extends CommonViewModel {
         "FinanceAccount.name", "Types.name", "RelationshipCompany.name"
     );
 
+    public $orderFields = array(
+        "status"
+    );
+
 } 
