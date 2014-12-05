@@ -69,7 +69,7 @@
                 var k = "lang.App"+appInfo.app+".appName";
                 var rs = l(k);
 
-                if(rs === undefined || k.toLowerCase() === rs) {
+                if(rs === undefined || k.toLowerCase() === "lang."+rs) {
                     rs = appInfo.app;
                 }
                 return sprintf("%s %s v%s", rs, appInfo.compare, appInfo.version);

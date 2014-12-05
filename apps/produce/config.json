@@ -3,7 +3,8 @@
     "version": "0.1",
     "requirements": {
         "ones": ">= 0.1.6",
-        "store": ">= 0.1"
+        "store": ">= 0.1",
+        "goods": ">= 0.1"
     },
     "workflow": ["ProducePlan"],
     "navs": {

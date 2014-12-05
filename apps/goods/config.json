@@ -1,6 +1,7 @@
 {
     "primary": "true",
     "alias": "goods",
+    "version": "0.1",
     "navs" : {
         "settings" : {
             "childs" : {

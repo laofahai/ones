@@ -4,7 +4,8 @@
     "requirements": {
         "ones": ">= 0.1.6",
         "store": ">= 0.1",
-        "crm": ">= 0.1"
+        "crm": ">= 0.1",
+        "goods": ">= 0.1"
     },
     "workflow": ["Orders", "Returns"],
     "plugins": {},
