@@ -6,7 +6,7 @@
                 <td ng-bind="'lang.subject'|lang"></td>
                 <td ng-bind="'lang.source_model'|lang"></td>
                 <td ng-bind="'lang.amount'|lang"></td>
-                <td ng-bind="'lang.unreceived'|lang"></td>
+                <td ng-bind="'lang.unpayed'|lang"></td>
                 <td ng-bind="'lang.status'|lang"></td>
                 <td ng-bind="'lang.latest_update_dateline'|lang"></td>
                 <td ng-bind="'lang.handlingMan'|lang"></td>
@@ -15,7 +15,7 @@
         <tbody>
             <tr ng-repeat="re in needReceived">
                 <td>
-                    <a ng-click="$root.goPage('/finance/edit/financeReceivePlan/id/'+re.id)" ng-bind="re.id|idFormat"></a>
+                    <a ng-click="$root.goPage('/finance/edit/financePayPlan/id/'+re.id)" ng-bind="re.id|idFormat"></a>
                 </td>
                 <td ng-bind="re.subject"></td>
                 <td>

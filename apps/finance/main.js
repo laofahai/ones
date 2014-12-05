@@ -3,12 +3,12 @@
     ones.pluginRegister("crm.related.items", function(injector, defer, id) {
         ones.pluginScope.append("crm.related.items", {
             title: l("lang.financeReceivePlan"),
-            template: appView("plugins/crmRelated.html", "finance")
+            template: appView("plugins/crmRelatedReceive.html", "finance")
         });
 
         ones.pluginScope.append("crm.related.items", {
             title: l("lang.financePayPlan"),
-            controller: "CRMRelatedFinancePayPlanCtl"
+            template: appView("plugins/crmRelatedPay.html", "finance")
         });
     });
 
@@ -113,6 +113,12 @@
                             queryParams: {
                                 type: "pay"
                             }
+                        },
+                        supplier_name: {
+                            field: "supplier_name_label",
+                            displayName: l("lang.supplier"),
+                            inputType: "select3",
+                            dataSource: "RelationshipCompanyRes"
                         },
                         sponsor: {
                             hideInForm: true
@@ -303,9 +309,16 @@
                     $scope.needReceived = data;
                 });
             }])
-
-
-
+        .controller("CRMRelatedFinancePayPlanCtl", ["$scope", "FinancePayPlanModel", "FinancePayPlanRes", "$routeParams",
+            function($scope, model, res, $routeParams){
+                res.query({
+                    customer_id: $routeParams.id,
+                    _si: "-status",
+                    unhandled: true
+                }).$promise.then(function(data){
+                        $scope.needPayed = data;
+                    });
+            }])
 
     ;
 })();

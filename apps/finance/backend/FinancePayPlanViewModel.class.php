@@ -13,7 +13,7 @@ class FinancePayPlanViewModel extends CommonViewModel {
     protected $viewFields = array(
         "FinancePayPlan" => array("*", "_type"=>"left"),
         "Types" => array("name"=>"type", "_on"=>"FinancePayPlan.type_id=Types.id", "_type"=>"left"),
-        "RelationshipCompany" => array("name"=>"supplier_name", "_on"=>"FinancePayPlan.supplier_id=RelationshipCompany.id", "_type"=>"left")
+        "RelationshipCompany" => array("name"=>"supplier_name_label", "_on"=>"FinancePayPlan.supplier_id=RelationshipCompany.id", "_type"=>"left")
     );
 
     public $searchFields = array(

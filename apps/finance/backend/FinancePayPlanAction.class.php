@@ -14,8 +14,18 @@
 class FinancePayPlanAction extends CommonAction {
     public $workflowAlias = "financePay";
     protected $indexModel = "FinancePayPlanView";
+    protected $readModel = "FinancePayPlanView";
 
     protected $lockedStatus = 1;
+
+    protected function _filter(&$map) {
+        if($_GET["supplier_id"]) {
+            $map["supplier_id"] = abs(intval($_GET["supplier_id"]));
+        }
+        if($_GET["unhandled"]) {
+            $map["status"] = array("LT", 2);
+        }
+    }
 
     public function insert() {
         $id = parent::insert(true);
