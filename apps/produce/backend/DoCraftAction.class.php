@@ -29,15 +29,25 @@ class DoCraftAction extends CommonAction {
     /**
      * 执行产品的生产工序
      * @params $ids => ProducePlanDetail.id
+     *
+     * 1、工艺执行开始 -》
+     * 2、结束当前工艺 -》current.status = 1, current.end_time = CTS;
+     *      判断当前工艺是否最后工艺，if true: 更新detail.end_time = CTS
+     * 3、执行下一工艺 -》insert next status -> produce process next.start_time = CTS, status=0
+     * 4、完成所有工艺 ->
      */
     public function update() {
+
         $ids = explode(",", $_GET["id"]);
+
+        //结束当前工艺
+        if($_GET["act"] == "endCurrentCraft") {
+            return $this->endCurrentNode();
+        }
         
         $viewModel = D("ProduceProcessView");
         $data = $viewModel->assignProcessData($ids, true);
 
-//        print_r($data);exit;
-        
         $doingData = array();
         foreach($data as $row) {
             $planIds[] = $row["plan_id"];
@@ -56,16 +66,11 @@ class DoCraftAction extends CommonAction {
         
         $processModel = D("ProduceProcess");
         if($processModel->doProcess($doingData)) {
-            //标识产品已进入生产工序
-            $detailModel = D("ProducePlanDetail");
-            $detailModel->where(array(
-                "id" => array("IN", implode(",", $ids))
-            ))->save(array(
-                "status"=>1
-            ));
+
 
             D("ProducePlan")->where(array(
-                "id" => array("IN", implode(",",$planIds))
+                "id" => array("IN", implode(",",$planIds)),
+                "status" => array("LT", 3)
             ))->save(array(
                 "status"=>3
             ));
@@ -86,7 +91,21 @@ class DoCraftAction extends CommonAction {
         $model = D("ProduceProcessView");
         $rows = $model->where("plan_detail_id=".$detailId)->group("ProduceProcess.id")->select();
         $data["rows"] = $rows;
+
         $this->response($data);
+    }
+
+    private function endCurrentNode($ids=array()) {
+        $ids = $ids ? $ids : array(abs(intval($_GET["id"])));
+
+        $model = D("ProduceProcess")->where(array(
+            "plan_detail_id" => array('IN', $ids),
+            "status" => "0"
+        ))->save(array(
+            "end_time" => CTS,
+            "status" => 1
+        ));
+
     }
     
     

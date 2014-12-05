@@ -11,7 +11,7 @@
  *
  * @author nemo
  */
-class ProduceMakeStockout extends WorkflowAbstract {
+class ProducePlanMakeStockout extends WorkflowAbstract {
     
     public function run() {
         

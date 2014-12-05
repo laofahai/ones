@@ -45,10 +45,13 @@ class ProduceProcessViewModel extends CommonViewModel {
          * 取得所有已进入生产工序的最后一个进程信息
          */
         $tmp = $this->where(array(
-            "ProduceProcess.plan_detail_id" => array("IN", implode(",", $produceDetailIds)),
-            "ProduceProcess.status" => 0
+            "ProduceProcess.plan_detail_id" => array("IN", implode(",", $produceDetailIds))
         ))->order("ProduceProcess.id DESC")->select();
+        $processes = array();
         foreach($tmp as $k=>$v) {
+            if($processes[$v["plan_detail_id"]]) {
+                continue;
+            }
             $processes[$v["plan_detail_id"]] = $v;
         }
 //        print_r($processes);exit;

@@ -325,7 +325,8 @@
                                         var queryExtraParams = {
                                             id: $routeParams.id, includeRows: true
                                         };
-                                        queryExtraParams = angular.extend(queryExtraParams, config.queryExtraParams);
+
+                                        angular.extend(queryExtraParams, config.queryExtraParams);
                                         config.resource.get(queryExtraParams).$promise.then(function(data){
                                             $scope.$broadcast("bill.dataLoaded", data);
                                         });

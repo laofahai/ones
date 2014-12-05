@@ -1,0 +1,34 @@
+<div ng-controller="CRMRelatedFinancePayPlanCtl">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td ng-bind="'lang.subject'|lang"></td>
+                <td ng-bind="'lang.source_model'|lang"></td>
+                <td ng-bind="'lang.amount'|lang"></td>
+                <td ng-bind="'lang.unpayed'|lang"></td>
+                <td ng-bind="'lang.status'|lang"></td>
+                <td ng-bind="'lang.latest_update_dateline'|lang"></td>
+                <td ng-bind="'lang.handlingMan'|lang"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="re in needPayed">
+                <td>
+                    <a ng-click="$root.goPage('/finance/edit/financePayPlan/id/'+re.id)" ng-bind="re.id|idFormat"></a>
+                </td>
+                <td ng-bind="re.subject"></td>
+                <td>
+                    <a href="" ng-show="re.source_model">
+                        {{'lang.'+re.source_model|lang}} {{re.id|idFormat}}
+                    </a>
+                </td>
+                <td ng-bind="re.amount|currency:'￥'"></td>
+                <td ng-bind="(re.amount-re.received)|currency:'￥'"></td>
+                <td ng-bind="re.processes.status_text"></td>
+                <td ng-bind="re.processes.start_time|dateFormat"></td>
+                <td ng-bind="re.processes.truename"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

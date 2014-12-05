@@ -61,13 +61,13 @@ var toDate = function(timestamp, noTime) {
         case "1":
         case "true":
         case true:
-            mask = "MM-dd";
+            mask = "yyyy-MM-dd";
             break;
         case "":
         case undefined:
         case "0":
         case 0:
-            mask = "MM-dd HH:mm";
+            mask = "yyyy-MM-dd HH:mm";
             break;
         default:
             mask = noTime || "yyyy-MM-dd HH:mm:ss";

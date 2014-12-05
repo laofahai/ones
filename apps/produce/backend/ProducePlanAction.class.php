@@ -13,7 +13,7 @@
  */
 class ProducePlanAction extends CommonAction {
     
-    public $workflowAlias = "produce";
+    public $workflowAlias = "producePlan";
     
     protected $indexModel = "ProducePlanView";
     
@@ -40,8 +40,6 @@ class ProducePlanAction extends CommonAction {
             $v["stock_label"] = $v["stock_name"];
             $v["goods_id"] = sprintf("%s_%s_%s", $factory_code, $v["goods_id"], $v["goods_category_id"]); // factory_code, id, catid
             $v["goods_id_label"] = sprintf("%s",$v["goods_name"]);
-            $v["start_time"] = $v["start_time"]*1000;
-            $v["end_time"] = $v["end_time"]*1000;
             $rowData[$v["id"]] = $v;
         }
 //        array_flip(array_flip($modelIds));

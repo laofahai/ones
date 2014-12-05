@@ -13,7 +13,7 @@
  */
 class ProducePlanViewModel extends CommonViewModel {
     
-    public $workflowAlias = "produce";
+    public $workflowAlias = "producePlan";
     
     public $viewFields = array(
         "ProducePlan"=> array("*", "_type"=>"left"),

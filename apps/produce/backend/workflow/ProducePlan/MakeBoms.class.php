@@ -13,7 +13,7 @@
  *
  * @author nemo
  */
-class ProduceMakeBoms extends WorkflowAbstract {
+class ProducePlanMakeBoms extends WorkflowAbstract {
     
     private $returnData = array();
     

@@ -69,7 +69,10 @@
         },
         "actions": {
             "viewCraft": "查看生产工艺",
-            "doCraft" : "执行生产工艺"
+            "doCraft" : "执行生产工艺",
+            "doNextCraft" : "执行下一生产工艺",
+            "endCurrentCraft": "完成当前工艺",
+            "viewProduceProcess": "查看生产进程"
         },
         "AppProduce": {
             "生产计划模块": "基础财务模块"
@@ -88,6 +91,7 @@
         "produce.craft": "%s生产工艺",
         "produce.goodscraft": "%s产品工序",
         "produce.docraft.read": "查看生产计划详情工序",
+        "produce.docraft.edit": "执行生产工序",
         "produce.produceboms": "%s生产计划物料清单",
         "produce.produceplan": "%s生产计划",
         "produce.produceplandetail": "%s生产计划详情",

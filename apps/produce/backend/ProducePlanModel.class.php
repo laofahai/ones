@@ -13,7 +13,7 @@
  */
 class ProducePlanModel extends CommonModel {
     
-    public $workflowAlias = "produce";
+    public $workflowAlias = "producePlan";
 
     protected $readonlyField = array("create_time");
 

@@ -13,23 +13,25 @@
  */
 class ProduceBomsAction extends CommonAction {
     
-    protected $workflowAlias = "produce";
-    
+    protected $workflowAlias = "producePlan";
+
+    protected $lockedStatus = 1;
+
+    /*
+     * read方法下 get.plan_id = get.id
+     * **/
     public function read() {
 
         if($_GET["checkIsMaked"]) {
             return $this->checkIsMaked();
         }
-        
+
         $model = D("ProduceBomsView");
         $rows = $model->where("ProduceBoms.plan_id=".$_GET["id"])->select();
-//        echo $model->getLastSql();
         $modelIds = array();
         foreach($rows as $k=>$v) {
-            $tmp = explode(DBC("goods.unique.separator"), $v["factory_code_all"]); //根据factory_code_all factory_code - standard - version
+            $tmp = explode(DBC("goods.unique.separator"), $v["factory_code_all"]);
             $factory_code = array_shift($tmp);
-//            $rows[$k]["stock"] = $v["stock_id"];
-//            $rows[$k]["goods_id"] = $v["factory_code_all"];
             $modelIds = array_merge($modelIds, $tmp);
             $rows[$k]["modelIds"] = $tmp;
         }
@@ -38,14 +40,15 @@ class ProduceBomsAction extends CommonAction {
             $rows, $modelIds
         );
         tag("assign_dataModel_data", $params);
-//
-//        $dataModel = D("DataModelDataView");
-//        $rows = $dataModel->assignModelData($rows, $modelIds);
-//        print_r($rows);exit;
+
         $data = array(
             "rows" => $params[0]
         );
         $this->response($data);
+    }
+
+    public function update() {
+        print_r($_POST);
     }
 
     private function checkIsMaked() {

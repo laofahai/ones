@@ -36,9 +36,17 @@
                     templateUrl: appView("doCraft.html", "produce"),
                     controller : "WorkflowDoCraftCtl"
                 })
+                .when('/doWorkflow/Produce/doCraft/:id', {
+                    templateUrl: appView("doCraft.html", "produce"),
+                    controller : "WorkflowDoCraftCtl"
+                })
                 .when('/doWorkflow/Produce/makeStockin/:nodeId/:id', {
                     templateUrl: appView("producePlan/makeStockin.html", "produce"),
                     controller : "WorkflowProduceMakeStockinCtl"
+                })
+                .when('/produce/editBill/produceBoms/id/:planId', {
+                    templateUrl: appView("producePlan/editProduceBoms.html", "produce"),
+                    controller: "ProducePlanEditBomsCtl"
                 })
             ;
         }])
@@ -111,36 +119,85 @@
                     deleteAble: false,
                     extraSelectActions: [
                         {
-                            label: toLang("doCraft", "actions", $rootScope),
-                            icon: "level-down",
-                            authAction: "read",
-                            action: function($event, selectedItems, item){
+                            label: l('lang.actions.endCurrentCraft'),
+                            icon: "retweet",
+                            authAction: "produce.doCraft.edit",
+                            action: function($event, selectedItems, theItem){
                                 var scope = this.scope;
                                 var injector = this.injector;
                                 var res = injector.get("DoCraftRes");
+                                var $location = injector.get("$location");
 
+                                if(selectedItems.length <= 0 && !theItem) {
+                                    return;
+                                }
                                 var ids = [];
-                                if(selectedItems) {
-                                    angular.forEach(selectedItems, function(it){
-                                        ids.push(it.id);
-                                    });
-                                }
-
-                                if(item) {
+                                angular.forEach(selectedItems, function(item){
                                     ids.push(item.id);
-                                }
+                                });
 
-                                if(!ids) {
+                                res.update({
+                                    id: (theItem && theItem.id) || ids.join(),
+                                    act: "endCurrentCraft"
+                                }, {}, function(data){
+                                    if(data.error) {
+                                        ComView.alert(l("lang.messages."+data.msg), "danger");
+                                    } else {
+                                        scope.$broadcast("gridData.changed", true);
+                                    }
+
+                                });
+                            }
+                        },
+                        {
+                            label: l('lang.actions.doNextCraft'),
+                            icon: "level-down",
+                            authAction: "produce.doCraft.edit",
+                            multi: true,
+                            action: function($event, selectedItems, theItem){
+                                var scope = this.scope;
+                                var injector = this.injector;
+                                var res = injector.get("DoCraftRes");
+                                var $location = injector.get("$location");
+
+                                if(selectedItems.length <= 0 && !theItem) {
+                                    return;
+                                }
+                                var ids = [];
+                                angular.forEach(selectedItems, function(item){
+                                    ids.push(item.id);
+                                });
+
+                                res.update({
+                                    id: (theItem && theItem.id) || ids.join()
+                                }, {}, function(data){
+                                    if(data.error) {
+                                        ComView.alert(l("lang.messages."+data.msg), "danger");
+                                    } else {
+                                        scope.$broadcast("gridData.changed", true);
+                                    }
+
+                                });
+                            }
+                        },
+                        {
+                            label: l('lang.actions.viewProduceProcess'),
+                            icon: "eye",
+                            authAction: "produce.doCraft.read",
+                            action: function($event, selectedItems, theItem){
+                                var injector = this.injector;
+                                var res = injector.get("DoCraftRes");
+                                var ComView = injector.get("ComView");
+
+                                if(selectedItems.length !== 1 && !theItem) {
                                     return;
                                 }
 
-                                res.update({
-                                    id: ids.join(),
-                                    workflow: true
-                                }, {}, function(){
-                                    //刷新当前页面
-                                    $route.reload();
-                                });
+                                res.get({
+                                    id: (theItem && theItem.id) || selectedItems[0].id
+                                }).$promise.then(function(data){
+                                        ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
+                                    });
                             }
                         }
                     ]
@@ -162,15 +219,17 @@
                         num: {},
                         current_craft: {
                             field: "processes.craft_name",
-                            displayName: l('lang.next_craft'),
                             cellFilter: "labelAble:'success arrowed-right'"
                         },
                         start_time: {
                             cellFilter: "dateFormat:0"
                         },
+                        end_time: {
+                            cellFilter: "dateFormat:0",
+                            field: "processes.end_time"
+                        },
                         next_craft: {
                             field: "processes.next_craft_name",
-                            displayName: l('lang.next_craft'),
                             cellFilter: "labelAble:'primary arrowed-right'"
                         }
                     };
@@ -192,7 +251,8 @@
             var obj = {
                 config: {
                     isBill: true,
-                    workflowAlias: "produce",
+                    workflowAlias: "producePlan",
+                    rowsModel: "ProducePlanDetailEditModel",
                     extraSelectActions: [
                         {
                             label: l("lang.viewBomList"),
@@ -209,6 +269,23 @@
                                 }
 
                                 model.showMakedBoms(item.id);
+
+                            }
+                        },
+                        {
+                            label: l("lang.actions.viewDetail"),
+                            icon: "eye",
+                            authAction: "produce.producePlanDetail.read",
+                            action: function($event, selectedItems, item){
+                                var injector = obj.config.extraSelectActions[1].injector;
+                                item = item || selectedItems[0];
+                                var $location = injector.get("$location");
+
+                                if(!item.id) {
+                                    return false;
+                                }
+
+                                $location.url("/produce/list/producePlanDetail/plan_id/"+item.id);
 
                             }
                         }
@@ -293,8 +370,7 @@
             function($rootScope,GoodsRes,plugin, dataAPI, ComView, $location){
                 var self = {
                     config: {
-                        isBill: true,
-                        workflowAlias: "produce"
+                        isBill: true
                     },
                     api: dataAPI.getResourceInstance({
                         uri: "produce/produceBoms"
@@ -333,7 +409,7 @@
                             if(!data.maked) {
                                 ComView.alert(l("lang.messages.bom_not_maked"));
                             } else {
-                                $location.url("/produce/editBill/produceBoms/"+plan_id);
+                                $location.url("/produce/editBill/produceBoms/id/"+plan_id);
                             }
                         });
                     }
@@ -348,54 +424,18 @@
                     deleteAble: false,
                     extraSelectActions: [
                         {
-                            label: l('lang.actions.doCraft'),
+                            label: l('lang.actions.viewProduceProcess'),
                             icon: "level-down",
+                            authAction: false,
                             action: function($event, selectedItems, theItem){
-                                var scope = this.scope;
                                 var injector = this.injector;
-                                var res = injector.get("DoCraftRes");
-                                var conf = injector.get("ones.config");
                                 var $location = injector.get("$location");
 
                                 if(selectedItems.length <= 0 && !theItem) {
                                     return;
                                 }
-                                var ids = [];
-                                angular.forEach(selectedItems, function(item){
-                                    ids.push(item.id);
-                                });
 
-                                res.update({
-                                    id: theItem.id || ids.join(),
-                                    workflow: true
-                                }, {}, function(data){
-                                    if(data.error) {
-                                        ComView.alert(toLang(data.msg, "messages", $rootScope), "danger");
-                                    } else {
-                                        scope.$broadcast("gridData.changed", true);
-                                    }
-
-                                });
-                            }
-                        },
-                        {
-                            label: l('lang.actions.viewCraft'),
-                            icon: "eye",
-                            action: function($event, selectedItems, theItem){
-                                var scope = this.scope;
-                                var injector = this.injector;
-                                var res = injector.get("DoCraftRes");
-                                var ComView = injector.get("ComView");
-
-                                if(selectedItems.length !== 1 && !theItem) {
-                                    return;
-                                }
-
-                                res.get({
-                                    id: theItem.id || selectedItems[0].id
-                                }).$promise.then(function(data){
-                                        ComView.aside(data, data.rows, appView("craftProcess.html", "produce"));
-                                    });
+                                $location.url("/doWorkflow/Produce/doCraft/"+theItem.plan_id);
                             }
                         }
                     ]
@@ -432,8 +472,7 @@
                     plugin.callPlugin("bind_dataModel_to_structure", {
                         structure: structure,
                         alias: "product",
-                        require: ["goods_id"],
-                        queryExtra: ["goods_id"]
+                        after: "product"
                     });
 
                     return ones.pluginScope.get("defer").promise;
@@ -540,14 +579,17 @@
             };
         }])
 
-        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanDetailEditModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams",
+        .controller("ProducePlanEditCtl", ["$scope", "ProducePlanModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams",
             function($scope, model, res, detailRes, ComView, $routeParams){
 
                 $scope.selectAble = false;
 
+                var e = new Date();
+                e.setMonth(e.getMonth()+1);
+
                 $scope.formMetaData = {
                     start_time : getDateForInput(),
-                    end_time : getDateForInput()
+                    end_time : getDateForInput(e)
                 };
 
                 //生产计划类型字段定义
@@ -678,5 +720,20 @@
                 $scope.items = data;
             });
         }])
+        .controller("ProducePlanEditBomsCtl", ["$scope", "ProduceBomsRes", "ProduceBomsModel", "$routeParams", "ComView",
+            function($scope, res, model, $routeParams, ComView){
+
+                $scope.selectAble=false;
+
+                ComView.makeGridSelectedActions($scope, model, res, "Produce", "ProducePlan");
+
+                $scope.billConfig = {
+                    model: model,
+                    resource: res,
+                    returnPage: "/produce/list/producePlan"
+                };
+                $routeParams.id = $routeParams.planId;
+
+            }])
     ;
 })();

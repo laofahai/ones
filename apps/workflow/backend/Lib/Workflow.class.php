@@ -329,15 +329,12 @@ class Workflow {
                     $className = "Extend".$className;
                 }
 
-            } else {
-                if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
-                    require_cache($appWorkflowFileExtend);
-                    $className = "Extend".$className;
-                } else {
-                    return false;
-                }
             }
 
+            if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
+                require_cache($appWorkflowFileExtend);
+                $className = "Extend".$className;
+            }
         }
         $node["context"] = unserialize($node["context"]);
         $obj = new $className($mainrow_id, $currentProcess["context"]);

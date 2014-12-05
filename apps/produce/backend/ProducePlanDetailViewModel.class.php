@@ -37,7 +37,7 @@ class ProducePlanDetailViewModel extends CommonViewModel {
         $data = $params[0];
         $processModel = D("ProduceProcessView");
         $data = $processModel->assignProcessData($data);
-        
+
         return $data;
     }
 }

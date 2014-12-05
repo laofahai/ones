@@ -6,7 +6,7 @@
  * Time: 00:12
  */
 
-class ProduceMakeStockin extends WorkflowAbstract {
+class ProducePlanMakeStockin extends WorkflowAbstract {
 
     /*
      * 生成入库单，只取得已执行完所有工艺并且未生成入库单的产品

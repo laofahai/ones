@@ -6,6 +6,6 @@
  * Time: 10:00
  */
 
-class ProduceCompleteProcess extends WorkflowAbstract {
+class ProducePlanCompleteProcess extends WorkflowAbstract {
 
 } 

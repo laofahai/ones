@@ -5,7 +5,7 @@
         "ones": ">= 0.1.6",
         "store": ">= 0.1"
     },
-    "workflow": ["Produce"],
+    "workflow": ["ProducePlan"],
     "navs": {
         "produce": {
             "childs" : {

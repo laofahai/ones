@@ -14,6 +14,12 @@
 class ProducePlanDetailAction extends CommonAction {
     
     protected $indexModel = "ProducePlanDetailView";
+
+    protected function _filter(&$map) {
+        if($_GET["plan_id"]) {
+            $map["plan_id"] = abs(intval($_GET["plan_id"]));
+        }
+    }
     
 
 }

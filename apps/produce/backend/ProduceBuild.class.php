@@ -9,8 +9,8 @@
 class ProduceBuild extends CommonBuildAction {
 
     protected $workflows = array(
-        "produce" => array(
-            "workflow_file" => "Produce",
+        "producePlan" => array(
+            "workflow_file" => "ProducePlan",
             "name" => "生产计划工作流",
 
             "_rows" => array(
@@ -36,7 +36,7 @@ class ProduceBuild extends CommonBuildAction {
                     "listorder" => 2,
                     "prev_node_id" => "MakeBoms",
                     "next_node_id" => "DoCraft,MakeStockin",
-                    "status_text" => "已出库"
+                    "status_text" => "物料已出库"
                 ),
                 "DoCraft" => array(
                     "name" => "执行生产工艺",
@@ -47,16 +47,16 @@ class ProduceBuild extends CommonBuildAction {
                     "status" => "生产进程中"
                 ),
                 "MakeStockin" => array(
-                    "name" => "完成计划",
+                    "name" => "生成入库单",
                     "type" => 1,
                     "listorder" => 4,
                     "prev_node_id" => "StartProcess,DoCraft",
                     "next_node_id" => "CompleteProcess",
-                    "status_text" => "已入库"
+                    "status_text" => "成品正在入库"
                 ),
                 "CompleteProcess" => array(
                     "name" => "完成计划",
-                    "type" => 2,
+                    "type" => 3,
                     "listorder" => 5,
                     "prev_node_id" => "MakeStockin",
                     "next_node_id" => 0,
@@ -70,6 +70,7 @@ class ProduceBuild extends CommonBuildAction {
         "produce.craft.*",
         "produce.goodscraft.*",
         "produce.docraft.read",
+        "produce.docraft.edit",
         "produce.produceboms.*",
         "produce.produceplan.*",
         "produce.produceplandetail.read",

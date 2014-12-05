@@ -35,7 +35,6 @@ class StockinConfirmStockin extends WorkflowAbstract {
                 );
             }
 
-
             $this->response($data);
         }
 

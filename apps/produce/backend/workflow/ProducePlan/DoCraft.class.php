@@ -12,7 +12,7 @@
  * @author nemo
  * @ 判断是否执行结束
  */
-class ProduceDoCraft extends WorkflowAbstract {
+class ProducePlanDoCraft extends WorkflowAbstract {
     
     public function run() {
         $detailModel = D("ProducePlanDetail");

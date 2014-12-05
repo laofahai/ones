@@ -11,6 +11,6 @@
  *
  * @author nemo
  */
-class ProduceStartProcess extends WorkflowAbstract {
+class ProducePlanStartProcess extends WorkflowAbstract {
     //put your code here
 }

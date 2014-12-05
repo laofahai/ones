@@ -764,13 +764,18 @@
 
                     var authedNodes = ones.caches.getItem("ones.authed.nodes") || [];
                     angular.forEach($scope.selectedActions, function(item, k){
+
+                        if(false === item.authAction) {
+                            return;
+                        }
+
                         var authKey;
                         if(item.authAction && item.authAction.indexOf(".") >= 0) {
                             authKey = item.authAction;
                         } else {
                             authKey = sprintf("%s.%s.%s", $routeParams.group, $routeParams.module, item.authAction).toLowerCase();
                         }
-                        if(authedNodes.indexOf(authKey) < 0){
+                        if(authedNodes.indexOf(authKey.toLowerCase()) < 0){
                             delete($scope.selectedActions[k]);
                         }
                     });

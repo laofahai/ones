@@ -19,7 +19,7 @@ class StockinCompleteProcess extends WorkflowAbstract {
         $theStockin = $stockin->find($this->mainrowId);
         if($theStockin["source_model"]) {
             //若外部生成，走外部下一流程
-            $workflow = new Workflow(strtolower($theStockin["source_model"]), $this->action);
+            $workflow = new Workflow(lcfirst($theStockin["source_model"]), $this->action);
             $workflow->doNext($theStockin["source_id"], "", true, 3);
         }
 

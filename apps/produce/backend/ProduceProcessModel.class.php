@@ -30,7 +30,8 @@ class ProduceProcessModel extends CommonModel {
             $detailIds[] = $row['plan_detail_id'];
             $newAddIds[] = $rs;
         }
-        
+
+
         if($detailIds) {
             foreach($detailIds as $id) {
                 $this->where(array(
@@ -42,6 +43,18 @@ class ProduceProcessModel extends CommonModel {
                     "status" => 1
                 ));
             }
+
+            $detailModel = D("ProducePlanDetail");
+
+            //标识产品已进入生产工序
+            $detailModel = D("ProducePlanDetail");
+            $detailModel->where(array(
+                "id" => array("IN", $detailIds),
+                "status" => array("LT", 1)
+            ))->save(array(
+                "status"=>1,
+                "start_time" => CTS
+            ));
         }
         
         $this->commit();
