@@ -203,6 +203,10 @@
                         $scope.appBtns.push(appBtns[item.name]);
                     });
 
+                    if(!$scope.appBtns.length) {
+                        $scope.appBtns.push(appBtns.app_center);
+                    }
+
                     ones.pluginScope.remove("dashboardBlocks");
                 });
             }])
