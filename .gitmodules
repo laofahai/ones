@@ -1,0 +1,3 @@
+[submodule "apps"]
+	path = apps
+	url = https://git.oschina.net/xiaolan/ones_apps_org.git
