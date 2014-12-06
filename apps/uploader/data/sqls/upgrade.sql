@@ -1,1 +1,0 @@
-INSERT INTO `__PREFIX__craft` (name, listorder, memo)VALUES('uploader', 12, 'test');

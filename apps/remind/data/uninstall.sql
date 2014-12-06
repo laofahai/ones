@@ -1,1 +1,0 @@
-DROP TABLE `__PREFIX__remind`;

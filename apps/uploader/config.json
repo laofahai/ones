@@ -1,7 +1,0 @@
-{
-    "alias": "uploader",
-    "version": 0.1,
-    "requirements": {
-        "ones": ">= 0.1.6"
-    }
-}
