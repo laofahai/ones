@@ -45,12 +45,23 @@
     }])
 
     .service("PurchaseModel", ["$rootScope", function($rootScope){
+        var startTime = new Date();
+        var endTime = new Date();
+        startTime.setMonth(startTime.getMonth()-1);
         return {
             config: {
                 isBill: true,
                 workflowAlias: "purchase",
                 rowsModel: "PurchaseEditModel",
-                relateMoney: true
+                relateMoney: true,
+                filters: {
+                    between: {
+                        field: "dateline",
+                        defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
+                        inputType: "datetime"
+                    },
+                    workflow: "purchase"
+                }
             },
             getStructure: function(){
                 return {

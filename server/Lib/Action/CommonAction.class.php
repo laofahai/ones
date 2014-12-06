@@ -341,7 +341,7 @@ class CommonAction extends RestAction {
             $workflow = D("Workflow")->getByAlias($this->workflowAlias);
             $processMap = array(
                 "workflow_id" => $workflow["id"],
-                "node_id" => abs(intval($_GET["_filter_workflow_node"])),
+                "node_id" => array("IN", explode(",", $_GET["_filter_workflow_node"])),
                 "status"  => 0
             );
 

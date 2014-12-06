@@ -585,7 +585,8 @@
                             field: "dateline",
                             defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
                             inputType: "datetime"
-                        }
+                        },
+                        workflow: "stockout"
                     },
                     extraPageActions: [
                         {

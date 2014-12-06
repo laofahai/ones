@@ -71,13 +71,24 @@
         }])
 
         .service("OrdersModel", ["$rootScope", function($rootScope){
+            var startTime = new Date();
+            var endTime = new Date();
+            startTime.setMonth(startTime.getMonth()-1);
             var obj = {
                 config: {
                     relateMoney: true,
                     isBill: true,
                     workflowAlias: "orders",
                     printAble: true,
-                    rowsModel: "OrdersEditModel"
+                    rowsModel: "OrdersEditModel",
+                    filters: {
+                        between: {
+                            field: "dateline",
+                            defaultData: [getDateForInput(startTime), getDateForInput(endTime)],
+                            inputType: "datetime"
+                        },
+                        workflow: "orders"
+                    }
                 }
             };
             obj.getStructure= function() {

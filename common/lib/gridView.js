@@ -321,6 +321,9 @@
                         if(typeof($scope.doFilter) !== "function") {
                             $scope.doFilter = function(){
                                 self.filtersData = $scope.filterFormData;
+                                if($scope.filterFormData._filter_workflow_node) {
+                                    $scope.filterFormData._filter_workflow_node = $scope.filterFormData._filter_workflow_node.join();
+                                }
                                 self.scope.doRefresh();
                                 modal.hide();
                             };
