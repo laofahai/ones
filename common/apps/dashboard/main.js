@@ -82,8 +82,8 @@
                 };
             }])
 
-        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "UserPreferenceRes", "ones.config", "pluginExecutor", "$timeout", "Department.UserAPI", "FirstTimeWizard.WizardAPI",
-            function($scope, $rootScope, UserPreferenceRes, conf, plugin, $timeout, user, wizard){
+        .controller("HOMEDashboardCtl", ["$scope", "$rootScope", "UserPreferenceRes", "ones.config", "pluginExecutor", "$timeout", "Department.UserAPI", "$injector",
+            function($scope, $rootScope, UserPreferenceRes, conf, plugin, $timeout, user, $injector){
 
                 var chars = 'abcdefghijklmnopqrstuvwxyz';
                 var btnClasses = [
@@ -163,7 +163,12 @@
                     appBtns[app.name] = app;
                 });
 
-                wizard.showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn", "right");
+                if(isAppLoaded("firstTimeWizard")) {
+                    try {
+                        $injector.get("FirstTimeWizard.WizardAPI").showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn", "right");
+                    } catch(e) {}
+
+                }
 
                 /**
                  * 桌面块

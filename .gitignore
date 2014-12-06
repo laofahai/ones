@@ -14,5 +14,5 @@ nbproject
 /utils/.project
 /utils/.pydevproject
 /utils/server.ini
-/apps/com.*
+/apps/com-*
 /uploads/2014/

@@ -15,6 +15,9 @@ class IndexAction extends CommonAction {
         $this->assign("siteTitle", DBC("site.title"));
 
         $loadedApps = F("loadedApp");
+        $loadedApps = array_merge($loadedApps, getPrimaryApps(true));
+
+        unset($loadedApps["install"]);
 
         $this->assign("loadedAppsStr", json_encode($loadedApps));
 
@@ -22,12 +25,12 @@ class IndexAction extends CommonAction {
         import("@.ORG.staticRuntime");
         $runtime = new FrontEndRuntime($loadedApps);
 
-        $javascripts = $runtime->getJavascripts();
-
         if(!APP_DEBUG) {
             $javascripts = array(
                 U('FrontendRuntime/read?compileJS=compile.js')
             );
+        } else {
+            $javascripts = $runtime->getJavascripts();
         }
 
         $javascripts[] = U('FrontendRuntime/read?js=common/base/app.js');
@@ -72,6 +75,9 @@ class IndexAction extends CommonAction {
         $navs = require APP_PATH."Conf".DS."navs.php";
 
         $appConf = $this->getAppConfig();
+
+//        print_r($appConf);exit;
+
         $navs = array_merge_recursive($navs, $appConf["navs"]);
 
         import("@.ORG.Auth");

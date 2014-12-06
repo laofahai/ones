@@ -689,3 +689,27 @@ function checkAppRequirements($requirements) {
     return $lost ? $lost : true;
 
 }
+
+function getPrimaryApps($includeVersion=false) {
+    $apps = array(
+        "dataModel",
+        "department",
+        "firstTimeWizard",
+        "install",
+        "multiSearch",
+        "services",
+        "workflow",
+        "dashboard"
+    );
+    if(!$includeVersion) {
+        return $apps;
+    }
+
+    foreach($apps as $v) {
+        $return[$v] = "0.0.0";
+    }
+    return $return;
+}
+function isPrimaryApp($app) {
+    return in_array($app, getPrimaryApps());
+}

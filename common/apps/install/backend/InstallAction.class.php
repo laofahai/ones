@@ -114,7 +114,7 @@ class InstallAction extends CommonAction {
 
     private function importDB($config) {
 
-        $rs = importSQL(ROOT_PATH."/apps/install/data/install.sql");
+        $rs = importSQL(ROOT_PATH."/common/apps/install/data/install.sql");
         if(true !== $rs) {
             $this->error($rs[0]);return;
         }
@@ -157,7 +157,7 @@ class InstallAction extends CommonAction {
     private function clearData($config) {
         file_put_contents($this->installLockFile, CTS);
 
-        $installPath = ROOT_PATH."/apps/install";
+        $installPath = ROOT_PATH."/common/apps/install";
 
         clearCache(0);
         clearCache(1);

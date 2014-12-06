@@ -40,7 +40,7 @@
         }])
         .run(["$rootScope", function($rootScope){
             var language = uriParamsGet("lang") || ones.defaultLanguage;
-            $.getJSON("apps/install/i18n/"+language+".json", function(data){
+            $.getJSON("common/apps/install/i18n/"+language+".json", function(data){
                 $rootScope.$apply(function(){
                     $rootScope.installLang = data.lang;
                     ones.caches.setItem("ones.i18n", data);
@@ -188,7 +188,7 @@
             $scope.$parent.step = 1;
             $scope.agree = false;
 
-            $.get("apps/install/i18n/license/"+$scope.selectedLanguage, function(data){
+            $.get("common/apps/install/i18n/license/"+$scope.selectedLanguage, function(data){
                 $("#agreementContent").html(data);
             });
 

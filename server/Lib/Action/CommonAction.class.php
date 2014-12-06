@@ -27,6 +27,10 @@ class CommonAction extends RestAction {
 
     protected $breakAction = false;
 
+    protected $primaryApps = array();
+
+    protected $compiledAppConf = array();
+
     //扩展权限检测
     protected $_extend_permission_check_methods = array();
 
@@ -84,6 +88,15 @@ class CommonAction extends RestAction {
             $autoloadPath[] = sprintf("%s/apps/%s/backend/Lib", ROOT_PATH, $app);
             $autoloadPath[] = sprintf("%s/apps/%s/backend/Behavior", ROOT_PATH, $app);
         }
+        $this->primaryApps = getPrimaryApps();
+        foreach($this->primaryApps as $app) {
+            $autoloadPath[] = sprintf("%s/common/apps/%s/backend", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/common/apps/%s/backend/Action", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/common/apps/%s/backend/Model", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/common/apps/%s/backend/Lib", ROOT_PATH, $app);
+            $autoloadPath[] = sprintf("%s/common/apps/%s/backend/Behavior", ROOT_PATH, $app);
+        }
+
         C("APP_AUTOLOAD_PATH", C("APP_AUTOLOAD_PATH").",". implode(",", $autoloadPath));
 
         //CURD权限检测
@@ -101,27 +114,35 @@ class CommonAction extends RestAction {
         if($this->compiledAppConf) {
             return $this->compiledAppConf;
         }
-
         /*
          * 禁用的APP
          * **/
         $model = D("Apps");
         $tmp = $model->select();
-        $disabledApps = array();
+        $disabledApps = array(
+            "install"
+        );
         foreach($tmp as $t) {
             if($t["status"] != 1) {
                 $disabledApps[] = $t["alias"];
             } else {
                 $enabledApps[] = $t["alias"];
             }
-
         }
 
         /*
          * 应用的配置路径
          * **/
-        $appDirs = ROOT_PATH."/apps";
-        $dirHandle = opendir($appDirs);
+        $appConf = $this->_getAppConfig(ROOT_PATH."/apps", $disabledApps, $enabledApps);
+        $primaryAppConf = $this->_getAppConfig(ROOT_PATH."/common/apps", $disabledApps, $enabledApps);
+
+        $this->compiledAppConf = array_merge_recursive($this->compiledAppConf, $appConf, $primaryAppConf);
+
+        return $this->compiledAppConf;
+    }
+
+    private function _getAppConfig($dir, $disabledApps, $enabledApps) {
+        $dirHandle = opendir($dir);
         $blacklist = array(
             ".", "..", "__MACOS", ".DS_Store"
         );
@@ -132,7 +153,7 @@ class CommonAction extends RestAction {
                 if(in_array($file, $disabledApps) or !in_array($file, $enabledApps)) {
                     continue;
                 }
-                $appDir = $appDirs.DS.$file.DS;
+                $appDir = $dir.DS.$file.DS;
 
                 if(!is_dir($appDir) or !is_file($appDir."config.json") or in_array($file, $blacklist)) {
                     continue;
@@ -161,7 +182,6 @@ class CommonAction extends RestAction {
             }
         }
 
-        $this->compiledAppConf = $appConf;
         return $appConf;
     }
 

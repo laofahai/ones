@@ -196,12 +196,28 @@ var isEmptyObject=function(v){
 //获得应用的view路径
 var appView = function(viewPath, app){
     if(app) {
-        return sprintf("apps/%s/views/%s", app, viewPath);
+        if(isPrimaryApp(app)) {
+            return sprintf("common/apps/%s/views/%s", app, viewPath);
+        } else {
+            return sprintf("apps/%s/views/%s", app, viewPath);
+        }
     } else {
         return "apps/"+viewPath;
     }
 
 };
+var isPrimaryApp = function(app) {
+    return [
+        "dataModel",
+        "department",
+        "firstTimeWizard",
+        "install",
+        "multiSearch",
+        "services",
+        "workflow",
+        "dashboard"
+    ].indexOf(app) >= 0;
+}
 
 //判断APP是否加载
 var isAppLoaded = function(appParam, version, compare) {

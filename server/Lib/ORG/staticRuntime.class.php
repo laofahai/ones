@@ -66,8 +66,15 @@ class FrontEndRuntime {
 //        foreach($this->loadedApps as $app) {
 //            $loadedApps[] = "ones.".$app;
 //        }
+        $loadedApps = array_merge(getPrimaryApps(), $this->loadedApps);
+        foreach($loadedApps as $k=>$v) {
+            if($v == "install") {
+                unset($loadedApps[$k]);
+                break;
+            }
+        }
         $replace = array(
-            sprintf("'ones.%s'", implode("','ones.", $this->loadedApps))
+            sprintf("'ones.%s'", implode("','ones.", $loadedApps))
         );
 
         $file = ROOT_PATH."/".$file;
@@ -108,7 +115,12 @@ class FrontEndRuntime {
     public function combineI18n($dir=false, $langData = array(), $lang) {
         $langData = $langData ? $langData : array();
         foreach($this->loadedApps as $app) {
-            $langFile = sprintf("%s/apps/%s/i18n/%s.json", ROOT_PATH, $app, $lang);
+            if(isPrimaryApp($app)) {
+                $langFile = sprintf("%s/common/apps/%s/i18n/%s.json", ROOT_PATH, $app, $lang);
+            } else {
+                $langFile = sprintf("%s/apps/%s/i18n/%s.json", ROOT_PATH, $app, $lang);
+            }
+
             if($langFile && !is_file($langFile)) {
                 continue;
             }
@@ -136,8 +148,11 @@ class FrontEndRuntime {
         $js = array();
         if ($dh = opendir($dir)) {
             while (($app = readdir($dh)) !== false) {
+                if($app === "install") {
+                    continue;
+                }
 
-                if(!in_array($app, $this->loadedApps)) {
+                if(!in_array($app, $this->loadedApps) && !isPrimaryApp($app)) {
                     continue;
                 }
 
@@ -175,7 +190,12 @@ class FrontEndRuntime {
 
     private function loadAppStatic($appPath, $app) {
         $js = array();
-        $basePath = "apps/".$app."/";
+        if(isPrimaryApp($app)) {
+            $basePath = "common/apps/".$app."/";
+        } else {
+            $basePath = "apps/".$app."/";
+        }
+
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
             if(in_array($appFile, $this->blackList)) {
@@ -248,6 +268,7 @@ class FrontEndRuntime {
         $result = array();
         $result["pre"] = $this->preloadJS();
         $result["app"] = $this->combineJS();
+        $result["primaryApp"] = $this->combineJS(ROOT_PATH."/common/apps");
         $result["after"] = $this->afterLoadJS();
         return $split ? $result : $this->javascripts;
     }

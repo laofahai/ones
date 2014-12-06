@@ -310,6 +310,13 @@ class Workflow {
                 $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
                 $this->currentWorkflow["workflow_file"]
             );
+            if(!is_file($appWorkflow)) {
+                $appWorkflow = sprintf("%s/common/apps/%s/backend/workflow/%s/",
+                    ROOT_PATH,
+                    $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
+                    $this->currentWorkflow["workflow_file"]
+                );
+            }
 
             $appWorkflowExtend = sprintf("%s/extends/apps/%s/workflow/%s/",
                 ROOT_PATH,

@@ -417,6 +417,9 @@ function D($name='',$layer='') {
         $module = $module ? $module : ucfirst($app);
 
         $appModel = sprintf("%s/apps/%s/backend/%sModel.class.php", ROOT_PATH, $app , $module);
+        if(!is_file($appModel)) {
+            $appModel = sprintf("%s/common/apps/%s/backend/%sModel.class.php", ROOT_PATH, $app , $module);
+        }
         $extendModel = sprintf("%s/extend/apps/%s/%sModel.class.php", ROOT_PATH, $app , $module);
 
         if(is_file($appModel)) {
@@ -509,6 +512,9 @@ function A($name,$layer='',$common=false) {
         $module = $module ? $module : ucfirst($app);
 
         $appAction = sprintf("%s/apps/%s/backend/%sAction.class.php", ROOT_PATH, $app , $module);
+        if(!is_file($appAction)) {
+            $appAction = sprintf("%s/common/apps/%s/backend/%sAction.class.php", ROOT_PATH, $app , $module);
+        }
         require_cache($appAction);
 
         $extendAction = sprintf("%s/extends/apps/%s/%sAction.class.php", ROOT_PATH, $app, $module);
@@ -700,6 +706,7 @@ function B($name, &$params=NULL) {
     if(APP_DEBUG) {
         G('behaviorStart');
     }
+    Think::autoload();
     $behavior   = new $class();
     $behavior->$method($params);
     if(APP_DEBUG) { // 记录行为的执行日志
