@@ -244,7 +244,7 @@
                 };
 
                 $scope.isPrimaryApp = function(app) {
-                    return ['dashboard','department', 'services', 'multiSearch'].indexOf(app) >=0 ? true : false;
+                    return isPrimaryApp(app);
                 };
 
                 /**

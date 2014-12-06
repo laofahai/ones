@@ -207,6 +207,9 @@ var appView = function(viewPath, app){
 
 };
 var isPrimaryApp = function(app) {
+    return getPrimaryApp().indexOf(app) >= 0;
+}
+var getPrimaryApp = function() {
     return [
         "dataModel",
         "department",
@@ -216,7 +219,7 @@ var isPrimaryApp = function(app) {
         "services",
         "workflow",
         "dashboard"
-    ].indexOf(app) >= 0;
+    ];
 }
 
 //判断APP是否加载
