@@ -1400,8 +1400,9 @@
                                 totalNum += Number(item.num);
                             });
                             parentScope.formMetaData.total_num = totalNum;
+
                             if(parentScope[self.opts.dataName][context.trid] && parentScope[self.opts.dataName][context.trid].goods_id) {
-                                if(undefined === parentScope[self.opts.dataName][context.trid].unit_price){
+                                if(!parentScope[self.opts.dataName][context.trid].unit_price){
                                     var gid = parentScope[self.opts.dataName][context.trid].goods_id.split("_");
 
                                     $injector.get("Store.StockProductListAPI").getUnitPrice(parentScope[self.opts.dataName][context.trid], parentScope.unitPriceField || "price")

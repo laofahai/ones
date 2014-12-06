@@ -93,7 +93,7 @@ class PurchaseModel extends CommonModel {
 
         foreach($rows as $row) {
             $row["purchase_id"] = $data["id"];
-            $row["price"] = $row["amount"];
+            $row["price"] = $row["price"] ? $row["price"] : $row["amount"];
             $method = $row["id"] ? "save" : "add";
             if(false === $detailModel->$method($row)) {
                 $this->error = "edit purchase bill detail failed";
@@ -115,6 +115,7 @@ class PurchaseModel extends CommonModel {
             }
             list($fcCode, $goods_id, $catid) = explode("_", $row["goods_id"]);
             $data["rows"][$k]["goods_id"] = $goods_id;
+            $data["rows"][$k]["price"] = $row["price"] ? $row["price"] : 0;
             $data["rows"][$k]["factory_code_all"] = makeFactoryCode($row, $fcCode);
         }
 //        $data["total_price_real"] = $data["total_amount_real"];

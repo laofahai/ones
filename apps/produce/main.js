@@ -48,6 +48,11 @@
                     templateUrl: appView("producePlan/editProduceBoms.html", "produce"),
                     controller: "ProducePlanEditBomsCtl"
                 })
+                //工作流
+                .when('/doWorkflow/producePlan/makePurchase/:nodeId/:id', {
+                    templateUrl: appView('producePlan/makePurchase.html', 'produce'),
+                    controller: 'ProducePlanMakePurchaseCtl'
+                })
             ;
         }])
         .factory("ProductTplRes", ["$resource", "ones.config", function($resource, cnf) {
@@ -579,6 +584,44 @@
             };
         }])
 
+        .service("ProducePlanMakePurchaseModel", ["pluginExecutor", function(plugin){
+            return {
+                config: {
+                    rowsModel: "ProducePlanMakePurchaseModel"
+                },
+                getStructure: function(){
+                    var fields = {
+                        goods_id: {
+                            displayName: l("lang.goods"),
+                            labelField: true,
+                            inputType: "static",
+                            width: "20%"
+                        },
+                        num: {
+                            inputType: "number",
+                            totalAble: true,
+                            "ui-event": "{blur: 'afterNumBlur($event)'}",
+                            printAble:true
+                        },
+                        memo: {}
+
+                    };
+
+                    plugin.callPlugin("bind_dataModel_to_structure", {
+                        structure: fields,
+                        alias: "product",
+                        require: ["goods_id"],
+                        queryExtra: ["goods_id"],
+                        config: {
+                            inputType: "static"
+                        }
+                    });
+
+                    return ones.pluginScope.get("defer").promise;
+                }
+            };
+        }])
+
         .controller("ProducePlanEditCtl", ["$scope", "ProducePlanModel", "ProducePlanRes", "ProducePlanDetailRes", "ComView", "$routeParams",
             function($scope, model, res, detailRes, ComView, $routeParams){
 
@@ -734,6 +777,37 @@
                 };
                 $routeParams.id = $routeParams.planId;
 
+            }])
+
+        .controller("ProducePlanMakePurchaseCtl", ["$scope", "$routeParams", "$injector", "ProduceBomsRes", "ones.dataApiFactory",
+            function($scope, $routeParams, $injector, ProduceBomsRes, dataAPI){
+
+                if(!isAppLoaded("purchase")) {
+                    return false;
+                }
+
+                var outSideRes = $injector.get("PurchaseRes");
+
+                $scope.doBillSubmit = function(){
+                    $injector.get("Workflow.WorkflowAPI").doPostWorkflow(
+                        ProduceBomsRes, $routeParams.nodeId, $routeParams.id,
+                        {
+                            total_num: $scope.formMetaData.total_num,
+                            source_model: "ProducePlan",
+                            memo: $scope.formMetaData.memo,
+                            rows: $scope.billData
+                        },
+                        function(){
+                            //
+                            $scope.$root.goPage("produce/list/producePlan");
+                        }
+                    );
+                }
+
+                $scope.billConfig = {
+                    model: $injector.get("ProducePlanMakePurchaseModel"),
+                    resource: ProduceBomsRes
+                };
             }])
     ;
 })();

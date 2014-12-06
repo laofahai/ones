@@ -499,7 +499,6 @@
                             rows: $scope.billData
                         },
                         function(){
-                            console.log("callback");return;
                             $scope.$root.goPage("sale/list/orders");
                         }
                     );
