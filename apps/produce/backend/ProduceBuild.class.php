@@ -34,23 +34,30 @@ class ProduceBuild extends CommonBuildAction {
                     "name" => "生成出库单",
                     "type" => 1,
                     "listorder" => 2,
-                    "prev_node_id" => "MakeBoms",
-                    "next_node_id" => "DoCraft,MakeStockin",
+                    "prev_node_id" => "MakeBoms,MakePurchase",
+                    "next_node_id" => "DoCraft,MakeStockin,MakePurchase",
                     "status_text" => "物料已出库"
+                ),
+                "MakePurchase" => array(
+                    "name" => "生成物料采购单",
+                    "type" => 1,
+                    "listorder" => 2,
+                    "prev_node_id" => "MakeStockout,DoCraft",
+                    "next_node_id" => "MakeStockout,DoCraft,MakeStockin"
                 ),
                 "DoCraft" => array(
                     "name" => "执行生产工艺",
                     "type" => 1,
                     "listorder" => 3,
                     "prev_node_id" => "StartProcess,MakeStockout",
-                    "next_node_id" => "MakeStockin",
+                    "next_node_id" => "MakeStockin,MakeStockout,MakePurchase",
                     "status" => "生产进程中"
                 ),
                 "MakeStockin" => array(
                     "name" => "生成入库单",
                     "type" => 1,
                     "listorder" => 4,
-                    "prev_node_id" => "StartProcess,DoCraft",
+                    "prev_node_id" => "MakePurchase,MakeStockout,DoCraft",
                     "next_node_id" => "CompleteProcess",
                     "status_text" => "成品正在入库"
                 ),
