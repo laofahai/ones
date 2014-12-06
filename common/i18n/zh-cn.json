@@ -118,6 +118,10 @@
             "install failed while download": "下载安装包失败",
             "ones_not_installed": "检测到您还没有完整安装ONES<br /><a href='install.html'>点击这里进行安装</a>"
         },
+        "wizardMessages": {
+            "dashboard.after.install.topestSettingBtn.title": "Tips",
+            "dashboard.after.install.topestSettingBtn.body": "查看系统设置项目"
+        },
         "errors": {
             "required": "必填",
             "number"  : "必须是数字",

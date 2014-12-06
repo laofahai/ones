@@ -29,7 +29,7 @@
                  * @param selector 显示popover的选择器
                  * @param key popover唯一KEY
                  * */
-                this.showPopover = function(selector, key) {
+                this.showPopover = function(selector, key, placement) {
 
                     if(ones.firstTimeWizarded && ones.firstTimeWizarded.indexOf(key) >= 0) {
                         return;
@@ -37,6 +37,11 @@
 
                     var content = l("lang.wizardMessages."+key+".body");
                     var wizardPop;
+                    placement = placement || "bottom";
+
+                    if(!angular.element(selector).length) {
+                        return;
+                    }
 
                     $timeout(function(){
 
@@ -45,6 +50,7 @@
                             content: content,
                             trigger: "manual",
                             html: true,
+                            placement: placement,
                             contentTemplate: appView("popup.html", "firstTimeWizard")
                         });
 

@@ -335,6 +335,11 @@
 
                 $scope.userInfo = ones.userInfo;
 
+
+                if(isAppLoaded("firstTimeWizard")) {
+                    $injector.get("FirstTimeWizard.WizardAPI").showPopover("#topest_setting_btn", "dashboard.after.install.topestSettingBtn");
+                }
+
             }])
     ;
 })();
