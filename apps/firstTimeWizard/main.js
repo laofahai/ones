@@ -39,9 +39,6 @@
                     var wizardPop;
                     placement = placement || "bottom";
 
-                    if(!angular.element(selector).length) {
-                        return;
-                    }
 
                     $timeout(function(){
 

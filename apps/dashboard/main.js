@@ -163,7 +163,7 @@
                     appBtns[app.name] = app;
                 });
 
-                wizard.showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn");
+                wizard.showPopover("#dashboard_appBtn_app_center", "dashboard.after.install.appCenterBtn", "right");
 
                 /**
                  * 桌面块
