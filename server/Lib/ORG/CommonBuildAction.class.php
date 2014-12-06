@@ -110,7 +110,7 @@ class CommonBuildAction {
         }
 
         if(is_dir($this->appPath)) {
-            $this->error("uninstall failed when remove the app dir");
+            //$this->error("uninstall failed when remove the app dir");
         }
 
         return true;

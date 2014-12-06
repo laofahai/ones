@@ -144,7 +144,7 @@ function delDirAndFile($dirName) {
                 if (is_dir($dirName."/".$item)) {
                     delDirAndFile($dirName."/".$item);
                 } else {
-                    unlink($dirName."/".$item) or die("Can't delete: ". $dirName."/".$item);
+                    unlink($dirName."/".$item);
                 }
             }
         }
@@ -665,46 +665,24 @@ function checkAppRequirements($requirements) {
             continue;
         }
 
-        $count = count($lost);
-
         $currentVersion = $loadedApps[$app];
         if($app == "ones") {
             $currentVersion = DBC("system.version");
         }
 
-        switch($compare) {
-            case "=":
-                if($currentVersion != $version) {
-                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
-                }
-                break;
-            case ">":
-                if($currentVersion <= $version) {
-                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
-                }
-                break;
-            case "<":
-                if($currentVersion >= $version) {
-                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
-                }
-                break;
-            case ">=":
-                if($currentVersion < $version) {
-                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
-                }
-                break;
-            case "<=":
-                if($currentVersion > $version) {
-                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
-                }
-                break;
-        }
 
         //当前为判断系统版本
-        if($app === "ones" && count($lost) > $count) {
-            return array(
-                "ones" => $compare.$version
-            );
+        if($app === "ones") {
+            if(!version_compare($currentVersion, $version, $compare)) {
+                if($app === "ones") {
+                    return array(
+                        "ones" => $compare.$version
+                    );
+                } else {
+                    $lost[] = sprintf("%s %s v%s needed.", $app, $compare, $version);
+                }
+            }
+
         }
     }
 

@@ -56,7 +56,7 @@
                     <div class="col-sm-12" ng-show="consoleMessages.length > 0">
                         <div class="alert alert-{{consoleClass}}">
                             <dl>
-                                <dd ng-repeat="cm in consoleMessages" ng-bind="cm"></dd>
+                                <dd ng-repeat="cm in consoleMessages" ng-bind-html="cm"></dd>
                             </dl>
                         </div>
                     </div>
