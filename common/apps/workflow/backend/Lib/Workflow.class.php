@@ -310,14 +310,8 @@ class Workflow {
                 $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
                 $this->currentWorkflow["workflow_file"]
             );
-            if(!is_file($appWorkflow)) {
-                $appWorkflow = sprintf("%s/common/apps/%s/backend/workflow/%s/",
-                    ROOT_PATH,
-                    $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
-                    $this->currentWorkflow["workflow_file"]
-                );
-            }
 
+            //二次开发目录
             $appWorkflowExtend = sprintf("%s/extends/apps/%s/workflow/%s/",
                 ROOT_PATH,
                 $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
@@ -326,16 +320,25 @@ class Workflow {
 
             $appWorkflowFile = $appWorkflow.$node["execute_file"].".class.php";
 
+            //primary app目录
+            if(!is_file($appWorkflowFile)) {
+                $appWorkflow = sprintf("%s/common/apps/%s/backend/workflow/%s/",
+                    ROOT_PATH,
+                    $appConfCombined["workflow"][$this->currentWorkflow["workflow_file"]],
+                    $this->currentWorkflow["workflow_file"]
+                );
+                $appWorkflowFile = $appWorkflow.$node["execute_file"].".class.php";
+            }
+
             $appWorkflowFileExtend = $appWorkflowExtend.$node["execute_file"].".class.php";
 
             if(is_dir($appWorkflow) && is_file($appWorkflowFile)) {
                 require_cache($appWorkflowFile);
+            }
 
-                if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
-                    require_cache($appWorkflowFileExtend);
-                    $className = "Extend".$className;
-                }
-
+            if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
+                require_cache($appWorkflowFileExtend);
+                $className = "Extend".$className;
             }
 
             if(is_dir($appWorkflowExtend) && is_file($appWorkflowFileExtend)) {
@@ -343,6 +346,7 @@ class Workflow {
                 $className = "Extend".$className;
             }
         }
+
         $node["context"] = unserialize($node["context"]);
         $obj = new $className($mainrow_id, $currentProcess["context"]);
         
