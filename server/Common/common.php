@@ -526,10 +526,20 @@ function finalTrim($str) {
  * 目录复制
  * **/
 function recursionCopy($src,$dst) {  // 原目录，复制到的目录
+
+    $dst = realpath($dst);
+    $src = realpath($src);
+
     $dir = opendir($src);
+    $ignore = array(
+        ".",
+        "..",
+        ".DS_Store",
+        "__MACOSX"
+    );
     while(false !== ( $file = readdir($dir)) ) {
 
-        if ($file != '.' && $file != '..' && $file != "__MACOSX") {
+        if (!in_array($file, $ignore)) {
             if ( is_dir($src . '/' . $file) ) {
                 if(!is_dir($dst . '/' . $file)) {
                     mkdir($dst . '/' . $file, 0777);
@@ -537,7 +547,7 @@ function recursionCopy($src,$dst) {  // 原目录，复制到的目录
                 recursionCopy($src . '/' . $file, $dst . '/' . $file);
             }
             else {
-                copy($src . '/' . $file,$dst . '/' . $file);
+                $rs = copy($src . '/' . $file,$dst . '/' . $file);
             }
         }
     }
