@@ -244,7 +244,7 @@ class AppsAction extends CommonAction {
             C("SERVICE_API_KEY")."|".C("SERVICE_SECRET_KEY")
         );
 
-        $target = ENTRY_PATH."/apps";
+        $target = ROOT_PATH."/apps";
         list($localPath, $tmpFolder) = $this->downloadAndZipAndCopy($remoteUri, $target);
 
         $appDir = $target."/".$alias;
