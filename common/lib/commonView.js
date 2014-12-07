@@ -334,7 +334,7 @@
                         placement = config.placement || placement;
                     }
 
-                    type = type || "warning";
+                    type = type || "success";
 
                     var erpalert = $alert({title: title,
                         content: alertMsg+" &nbsp;",
@@ -342,13 +342,13 @@
                         type: type,
                         show: true,
                         container: container,
-                        animation: false
+                        animation: "am-fade-and-slide-bottom"
                     });
 
                     if(autohide !== false) {
                         var sleep = parseInt(autohide);
-                        if(isNaN(sleep) || sleep < 3000) {
-                            sleep = 3000;
+                        if(isNaN(sleep) || sleep < 4000) {
+                            sleep = 4000;
                         }
 
                         $timeout(function(){

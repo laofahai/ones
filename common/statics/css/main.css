@@ -583,6 +583,7 @@ th.sorting_asc,th.sorting_desc {
 }
 .topSetting ul.submenu li {
     height:22px;line-height:22px;
+    font-size:12px;
 }
 .topSetting ul.submenu li a {
     color:#555;
@@ -607,4 +608,25 @@ th.sorting_asc,th.sorting_desc {
     position: relative;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+#alerts-container {
+    padding:0;
+    position:fixed;
+    z-index:999;
+    bottom:100px;
+    width:30%;
+    text-align:center;
+    left:50%;
+    margin-left:-15%;
+}
+#alerts-container .alert{
+    margin-bottom:10px;
+    padding:8px 15px;
+    border-radius: 25px;
+    position:relative;
+}
+#alerts-container .alert .close {
+    position:absolute;right:20px;
+    top:10px;
 }

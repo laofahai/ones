@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="common/statics/css/vendor.css" />
     <link rel="stylesheet" href="common/statics/css/bootstrap.css" />
     <link rel="stylesheet" href="common/statics/css/ace.css" />
-    <link rel="stylesheet" href="common/statics/css/ace-skins.css" />
     <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
     <link rel="stylesheet" href="common/statics/css/main.css">
+    <link rel="stylesheet" href="common/statics/css/angular-motion.css">
     <link rel="stylesheet" href="{:U('FrontendRuntime/index?action=getCss')}" />
     <base href="{$APP_PATH}" />
 </head>
@@ -155,10 +155,10 @@
             <div class="progress loadingStateBar" id="loadingStateBar">
                 <div class="progress-bar" id="loadingStateBarProgress"></div>
             </div>
+            <div id="alerts-container"></div>
 
             <div class="page-content">
                 <div class="row">
-                    <div id="alerts-container" class="col-xs-12"></div>
                     <div class="col-xs-12" ng-view></div>
                 </div>
                 <hr class="hr-10 hr-double" />

@@ -340,6 +340,7 @@
                     $injector.get("FirstTimeWizard.WizardAPI").showPopover("#topest_setting_btn", "dashboard.after.install.topestSettingBtn");
                 }
 
+
             }])
     ;
 })();

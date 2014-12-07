@@ -45,7 +45,7 @@
                     }
                 });
                 $http({method: "POST", url:conf.BSU+'home/clearCache.json', data:{types: $scope.cacheTypes}}).success(function(data){
-                    ComView.alert(l('lang.messages.cacheCleared'), "info");
+                    ComView.alert(l('lang.messages.cacheCleared'));
                 });
             };
         }])
