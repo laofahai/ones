@@ -13,6 +13,7 @@ class ONESDashboardBeforeCheckPermissionBehavior extends Behavior {
         $dontNeed = C("AUTH_CONFIG.AUTH_DONT_NEED");
 
         array_push($dontNeed, "dashboard.userPreference.read");
+        array_push($dontNeed, "dashboard.userPreference.add");
 
         C("AUTH_CONFIG.AUTH_DONT_NEED", $dontNeed);
 

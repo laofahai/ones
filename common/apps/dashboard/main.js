@@ -92,6 +92,14 @@
                 ];
 
                 ones.pluginScope.set("dashboardAppBtns", []);
+
+
+                var appBtns = {};
+                plugin.callPlugin("hook.dashboard.appBtn", $scope);
+                var dashboardAppBtns = ones.pluginScope.get("dashboardAppBtns");
+
+                var authedNodes = ones.caches.getItem("ones.authed.nodes");
+
                 ones.pluginScope.set("dashboardSetBtnTip", function(btnName, tip){
                     $timeout(function(){
                         for(var i=0;i<$scope.appBtns.length;i++) {
@@ -102,12 +110,6 @@
                         }
                     }, 1000);
                 });
-
-                var appBtns = {};
-                plugin.callPlugin("hook.dashboard.appBtn", $scope);
-                var dashboardAppBtns = ones.pluginScope.get("dashboardAppBtns");
-
-                var authedNodes = ones.caches.getItem("ones.authed.nodes");
 
                 angular.forEach(dashboardAppBtns, function(app){
                     //权限检测
@@ -160,12 +162,9 @@
                         app.icon = "folder-close-alt";
                     }
 
-                    if(typeof(app.getTip) === "function") {
-                        app.getTip();
-                    }
-
                     appBtns[app.name] = app;
                 });
+
 
                 if(isAppLoaded("firstTimeWizard")) {
                     try {
@@ -209,6 +208,12 @@
                     });
 
                     angular.forEach(data.btns, function(item){
+                        if(!item || !appBtns[item.name]) {
+                            return;
+                        }
+                        if(typeof(item.getTip) === "function") {
+                            item.getTip();
+                        }
                         $scope.appBtns.push(appBtns[item.name]);
                     });
 
