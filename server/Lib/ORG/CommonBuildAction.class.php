@@ -86,10 +86,10 @@ class CommonBuildAction {
         $uninstallSql = sprintf("%s/apps/%s/data/sqls/uninstall.sql", ROOT_PATH, $this->appConfig["alias"]);
         if(is_file($uninstallSql)) {
             $rs = importSQL($uninstallSql);
-            if(true !== $rs) {
-                $this->error = $rs[0];
-                return false;
-            }
+//            if(true !== $rs) {
+//                $this->error = $rs[0];
+//                return false;
+//            }
         }
 
         /*
