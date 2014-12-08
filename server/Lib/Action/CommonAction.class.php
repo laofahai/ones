@@ -266,7 +266,11 @@ class CommonAction extends RestAction {
 
         $rule = $path ? $path : sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         $rule = strtolower($rule);
-        if(in_array($rule, array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN")))) {
+        $dontNeed = array_merge(C("AUTH_CONFIG.AUTH_DONT_NEED"), C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"));
+        array_walk($dontNeed, function(&$val, $k) {
+            $val = strtolower($val);
+        });
+        if(in_array($rule, $dontNeed)) {
             $rs = true;
         } else {
             $rs = $auth->check($rule, $_SESSION["user"]["id"]);
