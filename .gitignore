@@ -2,6 +2,7 @@
 .idea
 .idea/*
 .settings
+/apps
 nbproject
 /server/Runtime/
 /server/Conf/config.php
@@ -14,5 +15,4 @@ nbproject
 /utils/.project
 /utils/.pydevproject
 /utils/server.ini
-/apps/com-*
 /uploads/2014/
