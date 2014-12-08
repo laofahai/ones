@@ -1,4 +1,7 @@
 {
     "primary": "true",
-    "alias": "dashboard"
+    "alias": "dashboard",
+    "plugins": {
+        "before_check_action_permission": ["ONESDashboardBeforeCheckPermissionBehavior"]
+    }
 }

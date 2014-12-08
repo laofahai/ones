@@ -160,6 +160,10 @@
                         app.icon = "folder-close-alt";
                     }
 
+                    if(typeof(app.getTip) === "function") {
+                        app.getTip();
+                    }
+
                     appBtns[app.name] = app;
                 });
 
