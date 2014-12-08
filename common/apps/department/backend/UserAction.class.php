@@ -83,4 +83,11 @@ class UserAction extends CommonAction {
         unset($item["password"]);
         $this->response($item);
     }
+
+    public function ACT_getMine() {
+        $info = D("UserRelation")->relation(true)->find($this->user["id"]);
+        unset($info["password"]);
+        $this->response($info);
+    }
+
 }

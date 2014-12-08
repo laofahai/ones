@@ -158,6 +158,7 @@ commonform {
 .chosen-container {
     min-width: 80%;
     background:#fff !important;
+    display:block;
 }
 
 .chosen-container a {
@@ -168,7 +169,7 @@ commonform {
     border:1px solid #e99c51 !important;
 }
 .chosen-container .chosen-drop {
-    border-color:#e99c51
+    border-color:#e99c51;
 }
 .chosen-container-active .chosen-choices {
     border-color:#e99c51;

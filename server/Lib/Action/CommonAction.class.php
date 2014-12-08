@@ -53,17 +53,25 @@ class CommonAction extends RestAction {
         import("@.ORG.Auth");
 
         //判断来路
-        if ($_SERVER["HTTP_SESSIONHASH"]) {
+        if ($_SERVER["HTTP_SESSIONHASH"] && $_SERVER["HTTP_SESSIONHASH"] !== "null") {
 
             $isSameDomain = false;
             $tmp = sprintf("http://%s", $_SERVER["SERVER_NAME"]);
+            $httpsTmp = sprintf("https://%s", $_SERVER["SERVER_NAME"]);
 
-            if(substr($_SERVER["HTTP_REFERER"], 0, strlen($tmp)) == $tmp) {
-                $isSameDomain = true;
+            $originPort = end(explode(":", $_SERVER["HTTP_ORIGIN"]));
+            $originPort = $originPort ? $originPort : 80;
+
+            if(substr($_SERVER["HTTP_REFERER"], 0, strlen($tmp)) == $tmp || substr($_SERVER["HTTP_REFERER"], 0, strlen($httpsTmp)) == $httpsTmp) {
+                if($_SERVER["SERVER_PORT"] == $originPort) {
+                    $isSameDomain = true;
+                }
             }
+
             if(!$isSameDomain) {
                 session_destroy();
             }
+
             session_id($_SERVER["HTTP_SESSIONHASH"]);
             session_start();
         }
