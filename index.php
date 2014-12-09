@@ -36,6 +36,15 @@ if(APP_DEBUG) {
     error_reporting(0);
 }
 
+//修正POST不能正确获取数据问题
+if(in_array($_SERVER["REQUEST_METHOD"], array("POST", "PUT")) && !$_POST) {
+    try{
+        $_POST = json_decode(file_get_contents("php://input"), true);
+        $_REQUEST = array_merge($_GET, $_POST);
+    } catch(Exception $e) {}
+
+}
+
 if(!$_REQUEST["installing"] && (!is_file(ENTRY_PATH."/Data/install.lock") or !is_file(ENTRY_PATH."/Conf/config.php"))) {
     header("Location:install.html");
 }

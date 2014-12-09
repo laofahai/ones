@@ -12,9 +12,9 @@
  * @author Administrator
  */
 class CommonAction extends RestAction {
-    
+
     protected $indexModel = null;
-    
+
     protected $user;
 
     protected $appConf;
@@ -38,17 +38,12 @@ class CommonAction extends RestAction {
 
         //检测是否安装
         if(!$_REQUEST["installing"] && !is_file(ENTRY_PATH."/Data/install.lock")) {
+            echo 222;exit;
             header("Location:install.html");
             return;
         }
 
         parent::__construct();
-
-        //修正POST不能正确获取数据问题
-        if(in_array($this->_method, array("post", "put")) && !$_POST) {
-            $tmp = file_get_contents("php://input");
-            $_POST = json_decode($tmp, true);
-        }
 
         import("@.ORG.Auth");
 
@@ -77,9 +72,6 @@ class CommonAction extends RestAction {
         }
 
         $this->user = $_SESSION["user"];
-
-        //修正session问题
-        $_REQUEST = array_merge((array)$_COOKIE, (array)$_GET, (array)$_POST);
 
         $appConfCombined = $this->getAppConfig();
 
@@ -196,7 +188,7 @@ class CommonAction extends RestAction {
     protected function isLogin() {
         return $_SESSION["user"]["id"] ? 1 : 0;
     }
-    
+
     protected function parseActionName($action=null) {
         $action = $action ? $action : ACTION_NAME;
         switch($action) {
@@ -221,21 +213,21 @@ class CommonAction extends RestAction {
             $action = "read";
         }
 
-        
+
         return $action;
     }
-    
+
     protected function loginRequired() {
 
         $current = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         $current = strtolower($current);
-        if (!$this->isLogin() and 
-                !in_array($current,
-                        C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"))) {
+        if (!$this->isLogin() and
+            !in_array($current,
+                C("AUTH_CONFIG.AUTH_DONT_NEED_LOGIN"))) {
             $this->httpError(401);
         }
     }
-    
+
     /**
      * 权限预检测
      */
@@ -252,7 +244,7 @@ class CommonAction extends RestAction {
         if($_REQUEST["workflow"]) {
             return true;
         }
-        
+
         import('ORG.Util.Auth');//加载类库
         $auth = new Auth();
 
@@ -284,10 +276,10 @@ class CommonAction extends RestAction {
                 $this->httpError(403, $rule);
                 exit;
             }
-            
+
         }
     }
-    
+
     /**
      * 通用返回错误方法
      * @param $msg string
@@ -442,8 +434,8 @@ class CommonAction extends RestAction {
     }
 
     /**
-     * 
-     * 通用REST列表返回 
+     *
+     * 通用REST列表返回
      **/
     public function index($return=false, $returnIncludeCount=true) {
 
@@ -464,7 +456,7 @@ class CommonAction extends RestAction {
         /**
          * 查看是否在fields列表中
          */
-        
+
         if (empty($model)) {
             $this->error(L("Server error"));
         }
@@ -575,12 +567,12 @@ class CommonAction extends RestAction {
         if($_GET["single"]) {
             $id = abs(intval(array_shift(explode(",", $id))));
         }
-        
+
         $name = $this->readModel ? $this->readModel : $this->getActionName();
         $model = D($name);
 
         $map = $this->beforeFilter($model);
-        
+
         if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
@@ -639,7 +631,7 @@ class CommonAction extends RestAction {
         if($return) {
             return $item;
         }
-        
+
         $this->response($item);
     }
 
@@ -656,7 +648,7 @@ class CommonAction extends RestAction {
         if($this->breakAction) {
             return;
         }
-        
+
         $name = $this->insertModel ? $this->insertModel : $this->getActionName();
         $model = D($name);
 
@@ -714,16 +706,16 @@ class CommonAction extends RestAction {
             $this->error($model->getError());
         }
     }
-    
+
     /**
      * 更新
      */
     public function update() {
-        
+
         if($_REQUEST["workflow"]) {
             return $this->doWorkflow();
         }
-        
+
         $name = $this->updateModel ? $this->updateModel : $this->getActionName();
         $model = D($name);
 
@@ -747,7 +739,7 @@ class CommonAction extends RestAction {
                 return $this->error("in_workflow");
             }
         }
-        
+
         /**
          * 对提交数据进行预处理
          */
@@ -755,7 +747,7 @@ class CommonAction extends RestAction {
         if (false === $model->create($_POST)) {
             $this->error($model->getError());
         }
-        
+
         if($this->relation && method_exists($model, "relation")) {
             $model = $model->relation(true);
         }
@@ -785,7 +777,7 @@ class CommonAction extends RestAction {
             $this->error($model->getError());
         }
     }
-    
+
     /**
      * 删除
      */
@@ -818,9 +810,9 @@ class CommonAction extends RestAction {
             return $rs;
         }
     }
-    
+
     public function foreverDelete() {}
-    
+
     /**
      * 执行工作流节点
      */
@@ -833,7 +825,7 @@ class CommonAction extends RestAction {
             Log::write("workflow error: something is wrong : {$this->workflowAlias},{$mainRowid},{$nodeId}");
             $this->error("not_allowed1");return;
         }
-        
+
         $workflow = new Workflow($this->workflowAlias);
         $rs = $workflow->doNext($mainRowid, $nodeId, false, false);
         if(false === $rs) {
@@ -846,18 +838,18 @@ class CommonAction extends RestAction {
             $this->success("Success");
         }
     }
-    
+
     /**
      * 过滤器
      */
     protected function _filter(&$map) {}
     protected function _order(&$order) {}
-    
+
     /**
      * 对数据进行预处理
      */
     protected function pretreatment() {}
-    
+
     /**
      * 执行导出excel
      * @todo 循环效率
@@ -867,12 +859,12 @@ class CommonAction extends RestAction {
         if(!$this->exportFields or !$data) {
             return;
         }
-        
+
         import("@.ORG.excel.XMLExcel");
         $xls=new XMLExcel;
-	    $xls->setDefaultWidth(80);
+        $xls->setDefaultWidth(80);
         $xls->setDefaultHeight(20);
-	    $xls->setDefaultAlign("center");
+        $xls->setDefaultAlign("center");
         $head = array();
         foreach($this->exportFields as $k=>$v) {
             if(is_numeric($k)) {
@@ -883,7 +875,7 @@ class CommonAction extends RestAction {
         }
 
 //        print_r($head);exit;
-        
+
         foreach($data as $item) {
             $rowTpl = array();
 
