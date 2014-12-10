@@ -187,7 +187,7 @@ INSERT INTO `__PREFIX__config` (`id`, `app_alias`, `alias`, `name`, `value`, `de
   (43, NULL, 'mail.login', '邮箱登录账号', 'ones_robot@163.com', '', 0, 0),
   (44, NULL, 'mail.password', '邮箱密码', 'thisisones', '', 0, 0),
   (45, NULL, 'mail.fromname', '发件人名称', 'ONES Robots', '', 0, 0),
-  (46, NULL, 'site.title', '站点标题', 'ONES ERP', '', 0, 0),
+  (46, NULL, 'site.title', '站点标题', 'ONES', '', 0, 0),
   (47, NULL, 'dataModel.showOnlyBind', '仅显示绑定到当前分类的模型数据', '1', '是否仅显示绑定到当前分类的模型数据；可选0或者1', 0, 0),
   (48, NULL, 'site.html5.mode', '是否使用HTML5 URL模式', 'false', '使用填写true，不使用填写false', 0, 0);
 
