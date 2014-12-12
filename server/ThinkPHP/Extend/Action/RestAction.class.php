@@ -206,7 +206,7 @@ abstract class RestAction {
         // 保存日志
         if(C('LOG_RECORD')) Log::save();
         $type = $type ? $type : "json";
-        $this->sendHttpStatus($code);
+        //$this->sendHttpStatus($code);
 
         if(!$data or !is_array($data)) {
             return;

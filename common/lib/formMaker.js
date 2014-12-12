@@ -328,7 +328,7 @@
 
                                         angular.extend(queryExtraParams, config.queryExtraParams);
                                         config.resource.get(queryExtraParams).$promise.then(function(data){
-                                            $scope.$broadcast("bill.dataLoaded", data);
+                                            parentScope.$broadcast("bill.dataLoaded", data);
                                         });
                                     }
 
@@ -719,7 +719,8 @@
                                     crafts.push(item.name);
                                 });
                                 if(crafts.length) {
-                                    $scope.$parent[factory.opts.dataName][context.trid].craft = crafts.join(">");
+                                    var getter = $injector.get("$parse")(sprintf("%s[%d].craft", factory.opts.dataName, context.trid));
+                                    getter.assign($scope.$parent, crafts.join(">"));
                                 }
                             });
 
