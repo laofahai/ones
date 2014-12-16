@@ -184,7 +184,7 @@
                                 droppable: true,
                                 onchange:null,
                                 whitelist:'gif|png|jpg|jpeg',
-                                no_icon:'icon-cloud-upload',
+                                no_icon:'fa-cloud-upload',
                                 style: "well",
                                 thumbnail: "fit"
                             }
@@ -532,11 +532,11 @@
                             '</ui-select>',
                         'fields/datepicker': '<span class="input-icon input-icon-right"> \
                                     <input type="date" ng-model="%(model)s" %(attrs)s /> \
-                                <i class="icon-calendar gray"></i> \
+                                <i class="fa-calendar gray"></i> \
                             </span>',
                         'fields/datetime': '<span class="input-icon input-icon-right"> \
                                     <input type="datetime-local" ng-model="%(model)s" %(attrs)s /> \
-                                <i class="icon-calendar gray"></i> \
+                                <i class="fa-calendar gray"></i> \
                             </span>',
                         'fields/typeahead': '<input type="text" ' +
                             'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
@@ -940,8 +940,8 @@
                             '<thead><tr><th>#</th><th></th>%(headHTML)s</tr></thead>'+
                             '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>',
                         'bills/fields/rowHead.html': '<th>%(i)s</th><td class="center"><label class="rowHead">'+
-                            '<i class="icon icon-plus" ng-click="billAddRow($event)"></i> '+
-                            '<i class="icon icon-trash-o" ng-click="billRemoveRow($event)"></i> '+
+                            '<i class="icon fa-plus" ng-click="billAddRow($event)"></i> '+
+                            '<i class="icon fa-trash-o" ng-click="billRemoveRow($event)"></i> '+
                             '</label></td>',
                         'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" title="{{%(bind)s}}" %(event)s>%(label)s</label></td>',
                         'bills/fields/typeaheadList.html': '<ul class="typeAheadList editAble" />'+
@@ -1536,17 +1536,17 @@
                             "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" ng-keydown="doKeydown($event)" novalidate>%(html)s</form>',
                             "commonForm/footer.html": '<div class="clearfix form-actions center">' +
                                 '<button id="submitbtn" class="btn btn-primary" ng-click="%(action)s();" type="button">' +
-                                '<i class="icon-ok bigger-110"></i>' +
+                                '<i class="fa-ok bigger-110"></i>' +
                                 '{{%(langsubmit)s}}' +
                                 '</button>' +
                                 '&nbsp; &nbsp; &nbsp;' +
                                 '<button class="btn" ng-click="doResetForm()">' +
-                                '<i class="icon-undo bigger-110"></i>' +
+                                '<i class="fa-undo bigger-110"></i>' +
                                 '{{%(langreset)s}}' +
                                 '</button>' +
                                 '&nbsp; &nbsp; &nbsp;' +
                                 '<button class="btn btn-info" onclick="history.back()">' +
-                                '<i class="icon-undo bigger-110"></i>' +
+                                '<i class="fa-undo bigger-110"></i>' +
                                 '{{%(langreturn)s}}' +
                                 '</button>' +
                                 '</div>',

@@ -101,7 +101,7 @@
 
 
 
-.skin-1 .nav-list > li > .submenu > li > a > [class*="icon-"]:first-child {
+.skin-1 .nav-list > li > .submenu > li > a > [class*="fa-"]:first-child {
  display:none;
 }
 
@@ -151,7 +151,7 @@
 .skin-1 .sidebar-collapse:before {
  border-color:#3F4E54;
 }
-.skin-1 .sidebar-collapse > [class*="icon-"] {
+.skin-1 .sidebar-collapse > [class*="fa-"] {
  background-color:#222A2D;
 }
 
@@ -208,14 +208,14 @@
  color: #D1DAE1;
  font-size: 13px;
 }
-.skin-1 .nav-list > li .submenu li > .submenu > li a > [class*="icon-"]:first-child {
+.skin-1 .nav-list > li .submenu li > .submenu > li a > [class*="fa-"]:first-child {
  color: inherit;
 }
 .skin-1 .nav-list > li .submenu li > .submenu > li a:hover {
   color: #8AB4DE;
   text-decoration:none;
 }
-.skin-1 .nav-list > li .submenu li > .submenu > li a:hover > [class*="icon-"]:first-child  {
+.skin-1 .nav-list > li .submenu li > .submenu > li a:hover > [class*="fa-"]:first-child  {
   color: #55A0DC;
 }
 
@@ -225,8 +225,8 @@
 {
  color: #85C0EC;
 }
-.skin-1 .nav-list > li .submenu li.open > a > [class*="icon-"]:first-child ,
-.skin-1 .nav-list > li .submenu li > .submenu > li.open > a > [class*="icon-"]:first-child
+.skin-1 .nav-list > li .submenu li.open > a > [class*="fa-"]:first-child ,
+.skin-1 .nav-list > li .submenu li > .submenu > li.open > a > [class*="fa-"]:first-child
 {
  color: inherit;
 }
@@ -235,7 +235,7 @@
 .skin-1 .nav-list > li .submenu li > .submenu li.active > a {
   color: #61A8DD;
 }
-.skin-1 .nav-list > li .submenu li > .submenu li.active > a > [class*="icon-"]:first-child{
+.skin-1 .nav-list > li .submenu li > .submenu li.active > a > [class*="fa-"]:first-child{
   color: inherit;
 }
 .skin-1 .nav-list > li .submenu li > .submenu li.active > a:hover {
@@ -346,7 +346,7 @@
  color:#CCC;
  border-bottom-color:#555;
 }
-.skin-2 .nav-list > li > .submenu > li > a > [class*="icon-"]:first-child {
+.skin-2 .nav-list > li > .submenu > li > a > [class*="fa-"]:first-child {
  display:none;
 }
 
@@ -480,8 +480,8 @@
 }
 
 
-.skin-2 .menu-min .nav-list > li.active > a > [class*="icon-"],
-.skin-2 .nav-list > li:not(.active):hover > a > [class*="icon-"] {
+.skin-2 .menu-min .nav-list > li.active > a > [class*="fa-"],
+.skin-2 .nav-list > li:not(.active):hover > a > [class*="fa-"] {
  color:#FFF;
 }
 
@@ -511,8 +511,8 @@
 .skin-2 .sidebar:not(.menu-min) .nav-list > li:not(.active) > a:hover .label.label-transparent{
   color:rgba(255,255,255,0.75) !important;
 }
-.skin-2 .sidebar:not(.menu-min) .nav-list > li:not(.active) > a:hover .badge.badge-transparent [class*="icon-"],
-.skin-2 .sidebar:not(.menu-min) .nav-list > li:not(.active) > a:hover .label.label-transparent [class*="icon-"]{
+.skin-2 .sidebar:not(.menu-min) .nav-list > li:not(.active) > a:hover .badge.badge-transparent [class*="fa-"],
+.skin-2 .sidebar:not(.menu-min) .nav-list > li:not(.active) > a:hover .label.label-transparent [class*="fa-"]{
   color:rgba(255,255,255,0.75) !important;
 }
 
@@ -665,7 +665,7 @@
 .skin-2 .sidebar-collapse:before {
  border-color:#666;
 }
-.skin-2 .sidebar-collapse > [class*="icon-"] {
+.skin-2 .sidebar-collapse > [class*="fa-"] {
  background-color:#333;
 }
 
@@ -765,10 +765,10 @@ body.skin-2 .main-content{
 .skin-2 .nav-list > li > .submenu li > .submenu > li a {
  color:#D5D5D5;
 }
-.skin-2 .nav-list > li > .submenu li > .submenu > li a > [class*="icon-"]:first-child {
+.skin-2 .nav-list > li > .submenu li > .submenu > li a > [class*="fa-"]:first-child {
  color:#D5D5D5;
 }
-.skin-2 .nav-list > li > .submenu li > .submenu li.active > a > [class*="icon-"]:first-child {
+.skin-2 .nav-list > li > .submenu li > .submenu li.active > a > [class*="fa-"]:first-child {
  color:inherit;
 }
 
@@ -813,8 +813,8 @@ body.skin-2 .main-content{
 }
 
 
-.skin-2 .nav-list > li > .submenu > li.open > a > [class*="icon-"]:first-child ,
-.skin-2 .nav-list > li > .submenu > li > .submenu > li.open > a > [class*="icon-"]:first-child
+.skin-2 .nav-list > li > .submenu > li.open > a > [class*="fa-"]:first-child ,
+.skin-2 .nav-list > li > .submenu > li > .submenu > li.open > a > [class*="fa-"]:first-child
 {
 	color:inherit;
 }
@@ -1059,7 +1059,7 @@ body.skin-2 .main-content{
 .skin-3 .sidebar-collapse:before {
  border-color:#FFF;
 }
-.skin-3 .sidebar-collapse > [class*="icon-"] {
+.skin-3 .sidebar-collapse > [class*="fa-"] {
  background-color:#FFF;
  border-color:#999;
  color:#999;

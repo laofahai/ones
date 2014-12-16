@@ -64,7 +64,7 @@
                 <div class="widget-body">
                     <div class="widget-main no-padding">
                         <h4 class="header blue lighter bigger">
-                            <i class="icon-coffee green"></i>
+                            <i class="fa-coffee green"></i>
                             <span ng-bind="installLang.title"></span>
                             <div class="widget-toolbar languageSelector">
                                 <select ng-model="selectedLanguage" ng-change="changeLanguage()" ng-options="l.alias as l.name for l in languages"></select>
@@ -78,7 +78,7 @@
                                     <div ng-repeat="st in steps">
                                         <h4 ng-class="{blue: step==st}">
                                             Step {{st}}
-                                            <i class="icon icon-angle-double-right" ng-show="step==st"></i>
+                                            <i class="icon fa-angle-double-right" ng-show="step==st"></i>
                                         </h4>
                                         <p ng-bind="installLang['step_'+st]"></p>
                                     </div>

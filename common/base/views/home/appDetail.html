@@ -21,7 +21,7 @@
                         <p class="grey">
                         <ul ng-repeat="ver in appInfo.versions">
                             <li>
-                                <i class="icon icon-arrow-up green"></i>
+                                <i class="icon fa-arrow-up green"></i>
                                 <strong class="green bolder">v{{ver.version}} </strong>
                                 <span class="smaller grey">  - [{{ver.dateline|dateFormat:1}}] </span>
                                 <p>{{ver.updates}}</p>
@@ -32,8 +32,8 @@
                     <div class="col-sm-1"></div>
                     <div class="col-sm-4">
                         <br />
-                        <p ng-show="appInfo.installed"><icon class="icon icon-leaf green"></icon> <span ng-bind="'lang.Installed'|lang"></span></p>
-                        <p ng-show="appInfo.hasUpdate"><icon class="icon icon-arrow-up green"></icon> <span ng-bind="'lang.HasUpdate'|lang"></span></p>
+                        <p ng-show="appInfo.installed"><icon class="icon fa-leaf green"></icon> <span ng-bind="'lang.Installed'|lang"></span></p>
+                        <p ng-show="appInfo.hasUpdate"><icon class="icon fa-arrow-up green"></icon> <span ng-bind="'lang.HasUpdate'|lang"></span></p>
                         <p>
                             <span ng-bind="'lang.appLatestVersion'|lang"></span>:
                             <span class="green"> v<stong ng-bind="appInfo.latest.version"></stong></span>

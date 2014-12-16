@@ -120,7 +120,7 @@ ace.settings = {
 		collpase = collpase || false;
 
 		var sidebar = document.getElementById('sidebar');
-		var icon = document.getElementById('sidebar-collapse').querySelector('[class*="icon-"]');
+		var icon = document.getElementById('sidebar-collapse').querySelector('[class*="fa-"]');
 		var $icon1 = icon.getAttribute('data-icon1');//the icon for expanded state
 		var $icon2 = icon.getAttribute('data-icon2');//the icon for collapsed state
 

@@ -10,61 +10,56 @@
     <link rel="shortcut icon" href="common/statics/images/favicon.ico" />
     <link rel="stylesheet" href="common/statics/css/vendor.css" />
     <link rel="stylesheet" href="common/statics/css/bootstrap.css" />
-    <link rel="stylesheet" href="common/statics/css/ace.css" />
     <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
     <link rel="stylesheet" href="common/statics/css/login.css">
 </head>
 
-<body class="login-layout theme-clean page-signin" id="animate-area">
+<body class="login-layout ones-login-signin" id="animate-area">
 
     <div class="signin-container" ng-controller="LoginCtl" id="signin-container">
 
-        <!-- Left side -->
         <div class="signin-info">
             <a href="https://ng-erp.com" target="_blank" class="logo">
                 <img src="common/statics/images/logo_mini_white.png" />
-            </a> <!-- / .logo -->
+            </a>
             <div class="slogan">
                 简单. 灵活. 实用. 强大.
-            </div> <!-- / .slogan -->
+            </div>
             <ul>
                 <li>
                     <a onclick="ones.caches.clear();window.location.reload()">
-                        <i class="icon icon-warning signin-icon"></i>
+                        <i class="icon fa-warning signin-icon"></i>
                         清除缓存
                     </a>
                 </li>
                 <li>
                     <a href="http://project.ng-erp.com/projects/ones/wiki/ONES_ERP_%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C" target="_blank">
-                        <i class="icon icon-file-text-o signin-icon"></i> 使用手册
+                        <i class="icon fa-file-text-o signin-icon"></i> 使用手册
                     </a>
                 </li>
                 <li>
                     <a href="http://project.ng-erp.com/projects/ones/boards" target="_blank">
-                        <i class="icon icon-comments signin-icon"></i> 讨论 &amp; 反馈
+                        <i class="icon fa-comments signin-icon"></i> 讨论 &amp; 反馈
                     </a>
                 </li>
                 <li>
                     <a href="http://project.ng-erp.com/projects/ones/boards" target="_blank">
-                        <i class="icon icon-support signin-icon"></i> 商业用户支持
+                        <i class="icon fa-support signin-icon"></i> 商业用户支持
                     </a>
                 </li>
                 <li>
                     <a href="https://ng-erp.com/mobile" target="_blank">
-                        <i class="icon icon-apple signin-icon"></i> 手机客户端下载
+                        <i class="icon fa-apple signin-icon"></i> 手机客户端下载
                     </a>
                 </li>
-            </ul> <!-- / Info list -->
+            </ul>
         </div>
-        <!-- / Left side -->
 
-        <!-- Right side -->
         <div class="signin-form">
-            <!-- Form -->
             <form name="LoginForm" autocomplete="off">
                 <div class="signin-text">
                     <span ng-bind="'lang.messages.please_enter_your_login_info'|lang"></span>
-                </div> <!-- / .signin-text -->
+                </div>
 
                 <div class="alert alert-danger hide" ng-class="{'hide':!error.isError}">
                     <div><span ng-bind-html="error.msg"></span></div>
@@ -72,13 +67,13 @@
 
                 <div class="form-group w-icon">
                     <input type="text" name="signin_username" id="username_id" class="form-control input-lg" ng-model="loginInfo.username" placeholder="{{'lang.username'|lang}}" autocomplete="off" autofocus>
-                    <span class="icon icon-user signin-form-icon"></span>
-                </div> <!-- / Username -->
+                    <span class="icon fa-user signin-form-icon"></span>
+                </div>
 
                 <div class="form-group w-icon">
                     <input type="password" name="signin_password" id="password_id" class="form-control input-lg" ng-model="loginInfo.password" placeholder="{{'lang.password'|lang}}" autocomplete="off">
-                    <span class="icon icon-lock signin-form-icon"></span>
-                </div> <!-- / Password -->
+                    <span class="icon fa-lock signin-form-icon"></span>
+                </div>
 
                 <div class="form-actions">
                     <button class="signin-btn bg-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
@@ -87,40 +82,34 @@
                     <a href="#" class="forgot-password" id="forgot-password-link">
                         <span ng-bind="'lang.messages.i_fogot_password'|lang"></span>
                     </a>
-                </div> <!-- / .form-actions -->
+                </div>
             </form>
-            <!-- / Form -->
 
-            <!-- "Sign In with" block -->
             <div class="signin-with">
                 Present by <a href="https://ng-erp.com" target="_blank">ONES Team</a> &copy; 2014
             </div>
-            <!-- / "Sign In with" block -->
 
             <div class="password-reset-form" id="password-reset-form" style="display: none;">
                 <div class="header">
                     <div class="signin-text">
                         <span>Password reset</span>
                         <div class="close">×</div>
-                    </div> <!-- / .signin-text -->
-                </div> <!-- / .header -->
+                    </div>
+                </div>
 
-                <!-- Form -->
                 <form action="index.html" id="password-reset-form_id" novalidate="novalidate">
                     <div class="form-group w-icon">
                         <input type="text" name="password_reset_email" id="p_email_id" class="form-control input-lg" placeholder="{{'lang.email'|lang}}">
-                        <span class="icon icon-envelope signin-form-icon"></span>
-                    </div> <!-- / Email -->
+                        <span class="icon fa-envelope signin-form-icon"></span>
+                    </div>
 
                     <div class="form-actions">
                         <input type="submit" value="SEND PASSWORD RESET LINK" class="signin-btn bg-primary">
-                    </div> <!-- / .form-actions -->
+                    </div>
                 </form>
-                <!-- / Form -->
             </div>
 
         </div>
-        <!-- Right side -->
     </div>
 <script type="text/javascript">
     var ones = {
@@ -132,9 +121,6 @@
 </script>
 <script src="common/vendor/jquery/jquery-2.1.1.min.js"></script>
 <script src="common/vendor/angular-1.3.0-rc/angular.min.js"></script>
-<script src="common/vendor/ace/ace.js"></script>
-<script src="common/vendor/ace/ace-extra.min.js"></script>
-<script src="common/vendor/ace/ace-elements.min.js"></script>
 <script src="common/vendor/angular-1.3.0-rc/angular-resource.min.js"></script>
 <script src="common/lib/function.js"></script>
 <script src="common/lib/caches.js"></script>

@@ -2,9 +2,9 @@
 
     <div class="col-lg-8 right">
         <div class="pull-left btn-group">
-            <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon icon-arrow-left"></i></a>
-            <a class="btn btn-sm btn-light" href="" ng-click="$parent.doPageRefresh()"><i class="icon icon-refresh"></i></a>
-            <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon icon-arrow-right"></i></a>
+            <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon fa-arrow-left"></i></a>
+            <a class="btn btn-sm btn-light" href="" ng-click="$parent.doPageRefresh()"><i class="icon fa-refresh"></i></a>
+            <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon fa-arrow-right"></i></a>
         </div>
         <!--//workflow in detail page-->
         <div class="pull-left btn-group" ng-show="workflowInBill !== undefined">
@@ -17,7 +17,7 @@
         </div>
         <div class="pull-left btn-group" ng-click="showFiltersModal();" ng-show="showFilters">
             <a class="btn btn-sm">
-                <i class="icon icon-search"></i>
+                <i class="icon fa-search"></i>
                 <span ng-bind="'lang.actions.filters'|lang"></span>
             </a>
         </div>
@@ -26,7 +26,7 @@
         <div class="pull-left btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
                 {{'lang.selected_action'|lang|sprintf:gridSelected.length}}
-                <i class="icon-caret-down icon-on-right"></i>
+                <i class="fa-caret-down fa-on-right"></i>
             </button>
             <ul class="dropdown-menu dropdown-primary pull-right">
                 <li class="{{sa.class}}"
@@ -46,7 +46,7 @@
         <div class="pull-left  btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble">
                 {{'lang.workflow'|lang}}
-                <span class="icon-caret-down icon-on-right"></span>
+                <span class="fa-caret-down fa-on-right"></span>
             </button>
             <ul class="dropdown-menu dropdown-success pull-right">
                 <li>
@@ -62,7 +62,7 @@
         <div class="pull-left " ng-show="searchAble">
             <span class="input-icon">
                 <input type="text" placeholder="Search ..." id="gridSearchInput" class="nav-search-input" ng-model-options="{ debounce: 300 }" ng-model="filterOptions.filterText" autocomplete="off" autofocus />
-                <i class="icon-search nav-search-icon"></i>
+                <i class="fa-search nav-search-icon"></i>
             </span>
         </div>
 
@@ -74,7 +74,7 @@
         <div class="pull-right btn-group">
             <a class="btn btn-sm btn-{{pa.class}}" ng-click="$root.goPage(pa.href)" ng-repeat="pa in pageActions track by $index">{{pa.label}}</a>
             <button class="btn btn-sm btn-danger" ng-click="doClearCachedData()" ng-show="showClearAutoSaved">
-                <i class="icon icon-trash-o"></i>
+                <i class="icon fa-trash-o"></i>
             </button>
         </div>
     </div>

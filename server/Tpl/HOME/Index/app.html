@@ -22,7 +22,7 @@
     <div class="navbar-container" id="navbar-container">
         <div class="navbar-header pull-left">
             <a ng-click="sidebarToggleExpand()" class="topest_toggle_sidebar_btn">
-                <i class="icon icon-list-ul"></i>
+                <i class="icon fa-list-ul"></i>
             </a>
             <a ng-click="$root.goPage('/')" class="navbar-brand"></a><!-- /.brand -->
         </div><!-- /.navbar-header -->
@@ -32,19 +32,19 @@
                 {:tag("nav_bar_dropdown_html")}
                 <li class="topSetting" id="topest_setting_btn">
                     <a data-toggle="dropdown" class="dropdown-toggle">
-                        <i class="icon icon-cog"></i>
+                        <i class="icon fa-cog"></i>
                         <span class="badge badge-important ng-binding ng-hide" ng-bind="reminds.length" ng-show="reminds.length>0">0</span>
                     </a>
                     <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close header-reminds-list">
                         <li ng-repeat="nc in settingNavs.childs">
                             <a ng-click="$root.goPage(nc.url)">
-                                <i class="icon-angle-double-right"></i>
+                                <i class="fa-angle-double-right"></i>
                                 <span class="menu-text" ng-bind="'lang.navs.'+nc.label|lang"></span>
                             </a>
                             <ul class="submenu">
                                 <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
                                     <a ng-click="$root.goPage(nct.url)">
-                                        <i class="icon-angle-double-right"></i>
+                                        <i class="fa-angle-double-right"></i>
                                         <span class="menu-text" ng-bind="'lang.navs.'+nct.label|lang"></span>
                                     </a>
                                 </li>
@@ -55,7 +55,7 @@
                 </li>
                 <li>
                     <a ng-click="$root.goPage('department/Logout')">
-                        <i class="icon icon-power-off"></i>
+                        <i class="icon fa-power-off"></i>
                     </a>
                 </li>
             </ul><!-- /.ace-nav -->
@@ -80,8 +80,8 @@
                             </a>
                         </div>
                         <div class="col-xs-8">
-                            <a ng-click="$root.goPage('my/preference')"><i class="icon icon-cog"></i></a>
-                            <a ng-click="$root.goPage('department/Logout')"><i class="icon icon-power-off"></i></a>
+                            <a ng-click="$root.goPage('my/preference')"><i class="icon fa-cog"></i></a>
+                            <a ng-click="$root.goPage('department/Logout')"><i class="icon fa-power-off"></i></a>
                         </div>
                     </div>
                 </div>
@@ -96,20 +96,20 @@
             <ul id="nav-list" class="nav nav-list" ng-controller="CommonSidebarCtl">
                 <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
                     <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);$root.goPage(nav.url)">
-                        <i class="icon-{{nav.icon}}"></i>
+                        <i class="fa-{{nav.icon}}"></i>
                         <span class="menu-text" ng-bind="'lang.navs.'+nav.label|lang"></span>
-                        <b class="arrow icon-angle-down" ng-show="{{nav.childs.length}}"></b>
+                        <b class="arrow fa-angle-down" ng-show="{{nav.childs.length}}"></b>
                     </a>
                     <ul class="submenu">
                         <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
                             <a ng-click="checkSubActiveNav(nc.id, nav.id);$root.goPage(nc.url)">
-                                <i class="icon-angle-double-right"></i>
+                                <i class="fa-angle-double-right"></i>
                                 <span class="menu-text" ng-bind="'lang.navs.'+nc.label|lang"></span>
                             </a>
                             <ul class="submenu">
                                 <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
                                     <a ng-click="checkThirdActiveNav(nct.id, nc.id);$root.goPage(nct.url)">
-                                        <i class="icon-angle-double-right"></i>
+                                        <i class="fa-angle-double-right"></i>
                                         <span class="menu-text" ng-bind="'lang.navs.'+nct.label|lang"></span>
                                     </a>
                                 </li>
@@ -120,7 +120,7 @@
             </ul>
 
             <div class="sidebar-collapse" ng-click="sidebarToggleExpand()">
-                <i class="icon" ng-class="{'icon-angle-double-right':expand!==true,'icon-angle-double-left':expand===true}"></i>
+                <i class="icon" ng-class="{'fa-angle-double-right':expand!==true,'fa-angle-double-left':expand===true}"></i>
             </div>
         </div>
 
@@ -128,7 +128,7 @@
             <div class="breadcrumbs" id="breadcrumbs">
                 <ul class="breadcrumb">
                     <li>
-                        <i class="icon-home home-icon"></i>
+                        <i class="fa-home home-icon"></i>
                         <a ng-click="$root.goPage('DASHBOARD')" ng-bind="'lang.dashboard'|lang"></a>
                     </li>
                     <li ng-bind="currentPage.lang.app"></li>
@@ -147,7 +147,7 @@
                                ng-keydown="doSearchKeydown($event)"
                                ng-blur="doSearchBlur($event)"
                                ng-focus="doSearchFocus($event)" />
-                        <i class="icon-search nav-search-icon"></i>
+                        <i class="fa-search nav-search-icon"></i>
                     </span>
 
                 </div><!-- #nav-search -->
@@ -186,7 +186,7 @@
         <a tabindex="-1"
            class="ui-corner-all"
            ng-click="act.action(null,contextMenu.selectedItems,contextMenu.currentItem);hideContextMenu();">
-            <i class="icon icon-{{act.icon}}"></i>
+            <i class="icon fa-{{act.icon}}"></i>
             <span ng-bind="act.label"></span>
            </a>
     </li>

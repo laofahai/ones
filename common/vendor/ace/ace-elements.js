@@ -86,21 +86,21 @@ jQuery(function() {
 			if(index == 0)index = filename.lastIndexOf("/") + 1;
 			filename = filename.substr(index);
 			
-			var fileIcon = 'icon-file';
+			var fileIcon = 'fa-file';
 			if((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
-				fileIcon = 'icon-picture';
+				fileIcon = 'fa-picture';
 			}
-			else if((/\.(mpe?g|flv|mov|avi|swf|mp4|mkv|webm|wmv|3gp)$/i).test(filename)) fileIcon = 'icon-film';
-			else if((/\.(mp3|ogg|wav|wma|amr|aac)$/i).test(filename)) fileIcon = 'icon-music';
+			else if((/\.(mpe?g|flv|mov|avi|swf|mp4|mkv|webm|wmv|3gp)$/i).test(filename)) fileIcon = 'fa-film';
+			else if((/\.(mp3|ogg|wav|wma|amr|aac)$/i).test(filename)) fileIcon = 'fa-music';
 
 
-			if(!this.well_style) this.$label.find('.file-name').attr({'data-title':filename}).find('[class*="icon-"]').attr('class', fileIcon);
+			if(!this.well_style) this.$label.find('.file-name').attr({'data-title':filename}).find('[class*="fa-"]').attr('class', fileIcon);
 			else {
 				this.$label.append('<span class="file-name" data-title="'+filename+'"><i class="'+fileIcon+'"></i></span>');
 				var type = $.trim(files[i].type);
 				var can_preview = hasFileReader && this.settings.thumbnail 
 						&&
-						( (type.length > 0 && type.match('image')) || (type.length == 0 && fileIcon == 'icon-picture') )//the second one is for Android's default browser which gives an empty text for file.type
+						( (type.length > 0 && type.match('image')) || (type.length == 0 && fileIcon == 'fa-picture') )//the second one is for Android's default browser which gives an empty text for file.type
 				if(can_preview) {
 					var self = this;
 					$.when(preview_image.call(this, files[i])).fail(function(result){
@@ -118,9 +118,9 @@ jQuery(function() {
 	Ace_File_Input.prototype.reset_input = function() {
 	  this.$label.attr({'data-title':this.settings.btn_choose, 'class':'file-label'})
 			.find('.file-name:first').attr({'data-title':this.settings.no_file , 'class':'file-name'})
-			.find('[class*="icon-"]').attr('class', this.settings.no_icon)
+			.find('[class*="fa-"]').attr('class', this.settings.no_icon)
 			.prev('img').remove();
-			if(!this.settings.no_icon) this.$label.find('[class*="icon-"]').remove();
+			if(!this.settings.no_icon) this.$label.find('[class*="fa-"]').remove();
 		
 		this.$label.find('.file-name').not(':first').remove();
 		
@@ -350,10 +350,10 @@ jQuery(function() {
 	$.fn.ace_file_input.defaults = {
 		style:false,
 		no_file:'No File ...',
-		no_icon:'icon-upload-alt',
+		no_icon:'fa-upload-alt',
 		btn_choose:'Choose',
 		btn_change:'Change',
-		icon_remove:'icon-remove',
+		icon_remove:'fa-remove',
 		droppable:false,
 		thumbnail:false,//large, fit, small
 		
@@ -378,8 +378,8 @@ jQuery(function() {
 		
 		//when min is negative, the input maxlength does not account for the extra minus sign
 		this.each(function() {
-			var icon_up = options.icon_up || 'icon-chevron-up'
-			var icon_down = options.icon_down || 'icon-chevron-down'
+			var icon_up = options.icon_up || 'fa-chevron-up'
+			var icon_down = options.icon_down || 'fa-chevron-down'
 			var on_sides = options.on_sides || false
 			
 			var btn_up_class = options.btn_up_class || ''
@@ -543,10 +543,10 @@ jQuery(function() {
 (function($ , undefined) {
 	$.fn.ace_tree = function(options) {
 		var $options = {
-			'open-icon' : 'icon-folder-open',
-			'close-icon' : 'icon-folder-close',
+			'open-icon' : 'fa-folder-open',
+			'close-icon' : 'fa-folder-close',
 			'selectable' : true,
-			'selected-icon' : 'icon-ok',
+			'selected-icon' : 'fa-ok',
 			'unselected-icon' : 'tree-dot'
 		}
 		
@@ -607,77 +607,77 @@ jQuery(function() {
 		{
 			'font' : {
 				values:['Arial', 'Courier', 'Comic Sans MS', 'Helvetica', 'Open Sans', 'Tahoma', 'Verdana'],
-				icon:'icon-font',
+				icon:'fa-font',
 				title:'Font'
 			},
 			'fontSize' : {
 				values:{5:'Huge', 3:'Normal', 1:'Small'},
-				icon:'icon-text-height',
+				icon:'fa-text-height',
 				title:'Font Size'
 			},
 			'bold' : {
-				icon : 'icon-bold',
+				icon : 'fa-bold',
 				title : 'Bold (Ctrl/Cmd+B)'
 			},
 			'italic' : {
-				icon : 'icon-italic',
+				icon : 'fa-italic',
 				title : 'Italic (Ctrl/Cmd+I)'
 			},
 			'strikethrough' : {
-				icon : 'icon-strikethrough',
+				icon : 'fa-strikethrough',
 				title : 'Strikethrough'
 			},
 			'underline' : {
-				icon : 'icon-underline',
+				icon : 'fa-underline',
 				title : 'Underline'
 			},
 			'insertunorderedlist' : {
-				icon : 'icon-list-ul',
+				icon : 'fa-list-ul',
 				title : 'Bullet list'
 			},
 			'insertorderedlist' : {
-				icon : 'icon-list-ol',
+				icon : 'fa-list-ol',
 				title : 'Number list'
 			},
 			'outdent' : {
-				icon : 'icon-indent-left',
+				icon : 'fa-indent-left',
 				title : 'Reduce indent (Shift+Tab)'
 			},
 			'indent' : {
-				icon : 'icon-indent-right',
+				icon : 'fa-indent-right',
 				title : 'Indent (Tab)'
 			},
 			'justifyleft' : {
-				icon : 'icon-align-left',
+				icon : 'fa-align-left',
 				title : 'Align Left (Ctrl/Cmd+L)'
 			},
 			'justifycenter' : {
-				icon : 'icon-align-center',
+				icon : 'fa-align-center',
 				title : 'Center (Ctrl/Cmd+E)'
 			},
 			'justifyright' : {
-				icon : 'icon-align-right',
+				icon : 'fa-align-right',
 				title : 'Align Right (Ctrl/Cmd+R)'
 			},
 			'justifyfull' : {
-				icon : 'icon-align-justify',
+				icon : 'fa-align-justify',
 				title : 'Justify (Ctrl/Cmd+J)'
 			},
 			'createLink' : {
-				icon : 'icon-link',
+				icon : 'fa-link',
 				title : 'Hyperlink',
 				button_text : 'Add',
 				placeholder : 'URL',
 				button_class : 'btn-primary'
 			},
 			'unlink' : {
-				icon : 'icon-unlink',
+				icon : 'fa-unlink',
 				title : 'Remove Hyperlink'
 			},
 			'insertImage' : {
-				icon : 'icon-picture',
+				icon : 'fa-picture',
 				title : 'Insert picture',
-				button_text : '<i class="icon-file"></i> Choose Image &hellip;',
+				button_text : '<i class="fa-file"></i> Choose Image &hellip;',
 				placeholder : 'Image URL',
 				button_insert : 'Insert',
 				button_class : 'btn-success',
@@ -693,15 +693,15 @@ jQuery(function() {
 				title : 'Change Background Color'
 			},
 			'undo' : {
-				icon : 'icon-undo',
+				icon : 'fa-undo',
 				title : 'Undo (Ctrl/Cmd+Z)'
 			},
 			'redo' : {
-				icon : 'icon-repeat',
+				icon : 'fa-repeat',
 				title : 'Redo (Ctrl/Cmd+Y)'
 			},
 			'viewSource' : {
-				icon : 'icon-code',
+				icon : 'fa-code',
 				title : 'View Source'
 			}
 		}
@@ -763,7 +763,7 @@ jQuery(function() {
 				var className = "className" in button ? button.className : '';
 				switch(button.name) {
 					case 'font':
-						toolbar += ' <a class="btn btn-sm '+className+' dropdown-toggle" data-toggle="dropdown" title="'+button.title+'"><i class="'+button.icon+'"></i><i class="icon-angle-down icon-on-right"></i></a> ';
+						toolbar += ' <a class="btn btn-sm '+className+' dropdown-toggle" data-toggle="dropdown" title="'+button.title+'"><i class="'+button.icon+'"></i><i class="fa-angle-down fa-on-right"></i></a> ';
 						toolbar += ' <ul class="dropdown-menu dropdown-light">';
 						for(var font in button.values)
 							if(button.values.hasOwnProperty(font))
@@ -772,7 +772,7 @@ jQuery(function() {
 					break;
 
 					case 'fontSize':
-						toolbar += ' <a class="btn btn-sm '+className+' dropdown-toggle" data-toggle="dropdown" title="'+button.title+'"><i class="'+button.icon+'"></i>&nbsp;<i class="icon-angle-down icon-on-right"></i></a> ';
+						toolbar += ' <a class="btn btn-sm '+className+' dropdown-toggle" data-toggle="dropdown" title="'+button.title+'"><i class="'+button.icon+'"></i>&nbsp;<i class="fa-angle-down fa-on-right"></i></a> ';
 						toolbar += ' <ul class="dropdown-menu dropdown-light"> ';
 						for(var size in button.values)
 							if(button.values.hasOwnProperty(size))
