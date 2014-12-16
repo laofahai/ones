@@ -134,7 +134,7 @@ class FrontEndRuntime {
         return $langData;
     }
 
-    public function combineJS($dir=false, $require=false) {
+    public function combineJS($dir=false, $require=false, $rebuildBathPath=true) {
         $dir = $dir ? $dir : ROOT_PATH."/apps";
         if($require && !is_dir($dir)) {
             $tmp = end(explode("/", $dir));
@@ -157,7 +157,7 @@ class FrontEndRuntime {
                 }
 
                 $appPath = $dir."/".$app;
-                $js = array_merge($js, (array)$this->loadAppStatic($appPath, $app));
+                $js = array_merge($js, (array)$this->loadAppStatic($appPath, $app, $rebuildBathPath));
 
             }
             closedir($dh);
@@ -188,13 +188,25 @@ class FrontEndRuntime {
         print_r($this->included);
     }
 
-    private function loadAppStatic($appPath, $app) {
+    /*
+     * 返回静态文件地址
+     * @param $appPath 应用路径
+     * @param $app 应用名称
+     * @param $rebuildBathPath 是否重置basepath
+     * **/
+    private function loadAppStatic($appPath, $app, $rebuildBathPath=true) {
         $js = array();
-        if(isPrimaryApp($app)) {
-            $basePath = "common/apps/".$app."/";
+        if($rebuildBathPath) {
+            if(isPrimaryApp($app)) {
+                $basePath = "common/apps/".$app."/";
+            } else {
+                $basePath = "apps/".$app."/";
+            }
         } else {
-            $basePath = "apps/".$app."/";
+            $basePath = str_replace(ROOT_PATH, "", $appPath);
+            $basePath = substr($basePath, 1, strlen($basePath))."/";
         }
+
 
         $appDH = opendir($appPath);
         while(($appFile = readdir($appDH)) !== false) {
@@ -262,6 +274,18 @@ class FrontEndRuntime {
             }
             closedir($dh);
         }
+    }
+
+    /*
+     * 返回移动客户端使用的JS
+     * **/
+    public function combineMobileJs() {
+        $scripts = $this->combineJS(ROOT_PATH."/mobile/apps", false, false);
+        ob_start();
+        foreach($scripts as $s) {
+            echo $this->doTrim(file_get_contents(ROOT_PATH."/".$s));
+        }
+        ob_end_flush();
     }
 
     public function getJavascripts($split=false) {

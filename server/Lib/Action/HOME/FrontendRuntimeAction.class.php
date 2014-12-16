@@ -42,6 +42,10 @@ class FrontendRuntimeAction extends CommonAction {
                 header("Content-Type:text/css;charset=utf-8");
                 $data = $runtime->combineCSS();
                 break;
+            case "getMobileScript":
+                header("Content-Type:text/javascript;charset=utf-8");
+                $runtime->combineMobileJs();
+                break;
             default:
                 header("Content-Type:application/javascript;charset=utf-8");
                 ob_start();

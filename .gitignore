@@ -2,6 +2,7 @@
 .idea
 .idea/*
 .settings
+/mobile
 /apps
 nbproject
 /server/Runtime/
