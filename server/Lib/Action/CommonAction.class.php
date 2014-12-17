@@ -35,10 +35,8 @@ class CommonAction extends RestAction {
     protected $_extend_permission_check_methods = array();
 
     public function __construct() {
-
         //检测是否安装
         if(!$_REQUEST["installing"] && !is_file(ENTRY_PATH."/Data/install.lock")) {
-            echo 222;exit;
             header("Location:install.html");
             return;
         }
@@ -46,30 +44,6 @@ class CommonAction extends RestAction {
         parent::__construct();
 
         import("@.ORG.Auth");
-
-        //判断来路
-        if ($_SERVER["HTTP_SESSIONHASH"] && $_SERVER["HTTP_SESSIONHASH"] !== "null") {
-
-            $isSameDomain = false;
-            $tmp = sprintf("http://%s", $_SERVER["SERVER_NAME"]);
-            $httpsTmp = sprintf("https://%s", $_SERVER["SERVER_NAME"]);
-
-            $originPort = end(explode(":", $_SERVER["HTTP_ORIGIN"]));
-            $originPort = $originPort ? $originPort : 80;
-
-            if(substr($_SERVER["HTTP_REFERER"], 0, strlen($tmp)) == $tmp || substr($_SERVER["HTTP_REFERER"], 0, strlen($httpsTmp)) == $httpsTmp) {
-                if($_SERVER["SERVER_PORT"] == $originPort) {
-                    $isSameDomain = true;
-                }
-            }
-
-            if(!$isSameDomain) {
-                session_destroy();
-            }
-
-            session_id($_SERVER["HTTP_SESSIONHASH"]);
-            session_start();
-        }
 
         $this->user = $_SESSION["user"];
 
@@ -218,7 +192,6 @@ class CommonAction extends RestAction {
     }
 
     protected function loginRequired() {
-
         $current = sprintf("%s.%s.%s", GROUP_NAME, MODULE_NAME, $this->parseActionName());
         $current = strtolower($current);
         if (!$this->isLogin() and

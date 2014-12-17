@@ -46,6 +46,15 @@ class FrontendRuntimeAction extends CommonAction {
                 header("Content-Type:text/javascript;charset=utf-8");
                 $runtime->combineMobileJs();
                 break;
+            case "getMobileView":
+                header("Content-Type:text/html;charset=utf-8");
+                $path = sprintf("%s/mobile/apps/%s.html", ROOT_PATH, str_replace("|", "/", $_GET["view"]));
+                echo file_get_contents($path);
+                break;
+            case "getMobileStyle":
+                header("Content-Type:text/css;charset=utf-8");
+                $runtime->combineCSS(ROOT_PATH."/mobile/apps");
+                break;
             default:
                 header("Content-Type:application/javascript;charset=utf-8");
                 ob_start();
