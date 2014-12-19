@@ -1345,7 +1345,7 @@
                             if(discount === undefined || parseInt(discount) === 0) {
                                 discount = 100;
                             };
-                            parentScope[self.opts.dataName][index].amount = Number(parseFloat(num * price * discount / 100).toFixed(2));
+                            parentScope[self.opts.dataName][index].amount = Number(parseFloat(num * price * discount / 100).toFixed(ones.BaseConf["system.decimal.fixed"]));
                             recountTotalAmount();
                         };
                         var recountTotalAmount = parentScope.recountTotalAmount = function() {
@@ -1356,7 +1356,7 @@
                                 }
                                 totalAmount += Number(row.amount);
                             });
-                            parentScope.formMetaData.total_amount = parseFloat(totalAmount).toFixed(2);
+                            parentScope.formMetaData.total_amount = parseFloat(totalAmount).toFixed(ones.BaseConf["system.decimal.fixed"]);
                         };
 
                         var recountTotalAble = parentScope.recountTotalAble = function(){
@@ -1374,9 +1374,9 @@
                                             total += parseFloat(item[context.field]);
                                         }
                                     });
-                                    total = total.toFixed(2);
+                                    total = total.toFixed(ones.BaseConf["system.decimal.fixed"]);
                                     var data = 0;
-                                    data = parseFloat(data).toFixed(2);
+                                    data = parseFloat(data).toFixed(ones.BaseConf["system.decimal.fixed"]);
                                     parentScope.formMetaData["total_"+context.field] = total;
                                 }
                             });
@@ -1486,8 +1486,8 @@
                                     total += Number(item[context.field]);
                                 }
                             });
-                            total = total.toFixed(2);
-                            data = parseFloat(data).toFixed(2);
+                            total = total.toFixed(ones.BaseConf["system.decimal.fixed"]);
+                            data = parseFloat(data).toFixed(ones.BaseConf["system.decimal.fixed"]);
                             this.scope.$parent.formMetaData["total_"+context.field] = total;
                             this.setData(element, data, isBlur);
                         } else {

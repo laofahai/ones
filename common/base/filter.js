@@ -169,7 +169,12 @@
         }])
         .filter("toCurrency", [function(){
             return function(text) {
-                return text ? "￥"+String(parseFloat(text).toFixed(2)) : "";
+                return text ? ones.BaseConf["system.currency"]+String(Number(parseFloat(text).toFixed(ones.BaseConf["system.decimal.fixed"])).toLocaleString()) : "";
+            }
+        }])
+        .filter("currency", [function(){
+            return function(text) {
+                return text ? ones.BaseConf["system.currency"]+String(Number(parseFloat(text).toFixed(ones.BaseConf["system.decimal.fixed"])).toLocaleString()) : "";
             }
         }])
         .filter("toDateObject", [function(){

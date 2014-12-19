@@ -688,7 +688,11 @@ var dataFormat = function(fieldsDefine, data) {
                 }
                 break;
             case "number":
-                data[f] = Number(data[f]) || 0;
+                if(/^([0-9]*[.0-9])$/.test(data[f])) {
+                    data[f] = parseFloat(Number(data[f])).toFixed(ones.BaseConf["system.decimal.fixed"]) || 0;
+                } else {
+                    data[f] = Number(data[f]) || 0;
+                }
                 break;
             default:
                 if (/^\d+$/.test(data[f])) {
