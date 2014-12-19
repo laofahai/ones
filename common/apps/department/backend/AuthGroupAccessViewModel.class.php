@@ -3,9 +3,9 @@
 /**
  * @filename AuthGroupAccessViewModel.class.php 
  * @encoding UTF-8 
- * @author nemo.xiaolan <a href="mailto:335454250@qq.com">335454250@qq.com</a>
- * @link <a href="http://www.sep-v.com">http://www.sep-v.com</a>
- * @license http://www.sep-v.com/code-license
+ * @author 闫志鹏 <a href="mailto:dk_nemo@163.com">dk_nemo@163.com</a>
+ *
+ *
  * @datetime 2013-11-18  15:09:33
  * @Description
  * 

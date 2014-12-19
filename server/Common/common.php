@@ -496,7 +496,7 @@ EOF;
         @unlink($zipname);
     }
     return true;
-//        $rs = sendMail("hello", "335454250@qq.com", "老大", '123123', array(
+//        $rs = sendMail("hello", "dk_nemo@163.com", "老大", '123123', array(
 //            "/Users/nemo/wwwroot/newopenx/erp_server/1.zip"
 //        ));
 //        var_dump($rs);
