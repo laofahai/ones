@@ -132,6 +132,13 @@ class CommonAction extends RestAction {
                 if(!is_dir($appDir) or !is_file($appDir."config.json") or in_array($file, $blacklist)) {
                     continue;
                 }
+
+                //php function
+                $commonFuncFile = $appDir."backend/common.php";
+                if(is_file($commonFuncFile)) {
+                    require_cache($commonFuncFile);
+                }
+
                 $tmpConf = json_decode(file_get_contents($appDir."config.json"), true);
 
                 if($tmpConf) {

@@ -192,6 +192,44 @@ var isEmptyObject=function(v){
     return true
 };
 
+//通过 store/list/stockin => store.stockin.read
+var link2action = function(link) {
+    link = link.split("/");
+
+    //防止/开头
+    if(!link[0]) {
+        link.shift();
+    }
+
+    var action = link[1];
+
+    var curd;
+
+    switch(action) {
+        case "list":
+        case "listall":
+        case "listAll":
+        case "viewDetail":
+            curd = "read";
+            break;
+        case "edit":
+        case "editBill":
+            curd = "edit";
+            break;
+        case "add":
+        case "addBill":
+            curd = "add";
+            break;
+    }
+
+    return sprintf("%s.%s.%s", link[0], link[2], curd);
+
+};
+
+var isNodeAuthed = function(node) {
+    return ones.caches.getItem("ones.authed.nodes").indexOf(node.toLowerCase()) >= 0;
+};
+
 //app view
 //获得应用的view路径
 var appView = function(viewPath, app){

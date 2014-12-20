@@ -75,6 +75,13 @@
                     if($.trim(keyword)) {
                         resetResults();
                         angular.forEach(searchItems, function(item){
+
+                            var node = link2action(item.link);
+                            if(!isNodeAuthed(node)){
+                                console.log("unauthed.node:" + node);
+                                return;
+                            }
+
                             var dataSource = typeof(item.dataSource) === "string" ? $injector.get(item.dataSource) : item.dataSource;
 
                             getDataApiPromise(dataSource, "query", {
