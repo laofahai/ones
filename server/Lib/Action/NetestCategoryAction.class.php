@@ -12,7 +12,7 @@
  */
 class NetestCategoryAction extends CommonAction {
     
-    public function index($return=false) {
+    public function index($return=false, $parentid=1) {
 
         $this->_external_action();
         if($this->breakAction) {
@@ -22,7 +22,7 @@ class NetestCategoryAction extends CommonAction {
         $name = $this->indexModel ? $this->indexModel : $this->getActionName();
 //        echo $name;exit;
         $categoryModel = D($name);
-        $tree = $categoryModel->getTree(1);
+        $tree = $categoryModel->getTree($parentid);
 //        echo $categoryModel->getLastSql();exit;
         foreach($tree as $k=>$t) {
             $tree[$k]["prefix_name"] = $t["prefix"].$t["name"];

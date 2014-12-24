@@ -304,13 +304,9 @@
                             if (actionMapSection) {
                                 $scope.currentPage.lang.action = actionMapSection instanceof Array
                                     ? actionMapSection[0]
-                                    : actionMapSection[action];
+                                    : actionMapSection;
                                 $scope.currentPage.lang.actionDesc = actionMapSection instanceof Array
                                     ? actionMapSection[1] : "";
-                            }
-                            if (!$scope.currentPage.lang.action) {
-                                $scope.currentPage.lang.action = moduleMapSection.name;
-                                $scope.currentPage.lang.actionDesc = l("lang.actions."+action);;
                             }
                         }
                     }

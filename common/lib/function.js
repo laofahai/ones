@@ -651,7 +651,7 @@ String.prototype.ucfirst = function() {
 
         // Splits the word into two parts. One part being the first letter,
         // second being the rest of the word.
-        var parts = x[i].match(/(\w)(\w*)/);
+        var parts = x[i].match(/(\w)([\w\-]*)/);
 
         if(!parts) {
             continue;

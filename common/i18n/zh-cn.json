@@ -116,7 +116,12 @@
                 "appUninstallTip": "应用卸载后将不能为您提供功能，应用数据将会一并删除，如果有其他应用依赖此应用，您将会收到警告！请您再次确认您要删除此应用！如果您只是暂时不用，请选择禁用选项！"
             },
             "install failed while download": "下载安装包失败",
-            "ones_not_installed": "检测到您还没有完整安装ONES<br /><a href='install.html'>点击这里进行安装</a>"
+            "ones_not_installed": "检测到您还没有完整安装ONES<br /><a href='install.html'>点击这里进行安装</a>",
+            "this field not support dynamic add": "此字段不支持动态添加",
+            "get apps list failed": "获取应用列表失败",
+            "install failed while copy": "复制文件失败，请检查目录权限",
+            "install failed while download": "下载安装或更新文件失败",
+            "install failed while parse config": "解析配置文件失败"
         },
         "wizardMessages": {
             "dashboard.after.install.topestSettingBtn.title": "Tips",

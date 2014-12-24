@@ -14,6 +14,9 @@
                 this.init = function($scope, attrs) {
 
                     var scopeConfig = $scope.$parent.$eval(attrs.config);
+                    if(attrs.model) {
+                        scopeConfig.fieldDefine["ng-model"] = attrs.model;
+                    }
 
                     scopeConfig.fieldDefine.field = scopeConfig.name;
                     scopeConfig["ng-model"] = scopeConfig["ng-model"] || scopeConfig.fieldDefine["ng-model"];
@@ -42,9 +45,9 @@
                         'blur': "'doSelect3Blur($event)'",
                         'keydown': "'doSelect3Keydown($event)'"
                     };
-                    if(config["ui-event"]) {
+                    if(config["uiEvents"]) {
                         var tmpEvents;
-                        eval('tmpEvents='+config["ui-event"]);
+                        eval('tmpEvents='+config["uiEvents"]);
                         angular.forEach(tmpEvents, function(evt, key){
                             if(key in events) {
                                 events[key] = events[key].replace(")'", ");"+evt+"'");
@@ -93,7 +96,6 @@
 
                     //获取焦点开始设定当前配置项
                     parentScope.doSelect3Focus = function($event) {
-
                         if(self.focusing) {
                             return false;
                         }
@@ -143,7 +145,7 @@
                                     if(!$("#select3Container li").length) {
                                         return false;
                                     }
-                                    self.scope.setValue($("#select3Container li.active"), $event);
+                                    self.scope.setValue($("#select3Container li.active"));
                                     break;
                                 case Keys.Tab:
                                 case Keys.Escape:
@@ -283,6 +285,10 @@
                         getter = $parse(self.currentConfig["ng-model"]+"_label");
                         getter.assign(parentScope, $(element).text());
 
+                        if(typeof(parentScope.afterSelect3SetValue) == "function") {
+                            parentScope.afterSelect3SetValue();
+                        }
+
                         parentScope.hideSelect3Options();
                     };
 
@@ -379,7 +385,8 @@
                 restrict: "E",
                 replace: true,
                 scope: {
-                    config: "="
+                    config: "=",
+                    model: "="
                 },
                 transclusion: true,
                 compile: function(element, attrs, transclude) {

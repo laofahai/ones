@@ -69,6 +69,10 @@
                     templateUrl: 'common/base/views/edit.html',
                     controller : 'ComViewEditCtl'
                 })
+                .when('/:group/addChild/:module/pid/:pid/:extra*', {
+                    templateUrl: 'common/base/views/edit.html',
+                    controller : 'ComViewEditCtl'
+                })
                 //打印
                 .when('/:group/print/:module/id/:id', {
                     controller : 'ComViewPrintCtl',
@@ -775,7 +779,7 @@
                         } else {
                             authKey = sprintf("%s.%s.%s", $routeParams.group, $routeParams.module, item.authAction).toLowerCase();
                         }
-                        if(authedNodes.indexOf(authKey.toLowerCase()) < 0){
+                        if(!isNodeAuthed(authKey)){
                             delete($scope.selectedActions[k]);
                         }
                     });
@@ -789,6 +793,8 @@
                     extraParams = extraParams ? "/"+extraParams : "";
                     var available = ["add", "list", "listall", "export", "print", "trash"];
                     var actEnabled;
+                    model.config = model.config || {};
+
                     $scope.pageActions = [];
                     angular.forEach(actions, function(act, k){
                         if(available.indexOf(k) < 0) {
@@ -802,7 +808,7 @@
                             action = "addBill";
                         }
                         actEnabled = k+"Able";
-                        if(model && model[actEnabled] === false) {
+                        if(model && (model[actEnabled] === false || model.config[actEnabled] === false)) {
                             return;
                         }
 
@@ -821,7 +827,7 @@
                         return;
                     }
 
-                    model.config = model.config || {};
+
 
                     //打印按钮
                     if(!$scope.selectAble && model && model.config.printAble) {

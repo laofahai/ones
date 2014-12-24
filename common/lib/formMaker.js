@@ -243,13 +243,19 @@
                 restrict: "E",
                 replace: true,
                 scope: {
-                    config: "="
+                    config: "=",
+                    model: "="
                 },
                 compile: function(element, attrs, transclude) {
                     return {
                         pre: function($scope, iElement, iAttrs, controller) {
+
+                            if(iAttrs.model) {
+                                $scope.$parent[iAttrs.config].fieldDefine["ng-model"] = iAttrs.model;
+                            }
+
                             var fieldDefine = $scope.$parent[iAttrs.config].fieldDefine;
-                            var formMaker = new FormMaker.makeField($scope);
+                            var formMaker = new FormMaker.makeField($scope, $scope.$parent[iAttrs.config].extraConfig || {});
                             var html = formMaker.maker.factory($scope.$parent[iAttrs.config].context, fieldDefine, $scope);
 
                             iElement.append($compile(html)($scope.$parent));
@@ -791,7 +797,7 @@
 
                         var getter = $injector.get("$parse")(fieldDefine["ng-model"]);
 
-                        $scope.$on("form.dataLoaded", function(){
+                        var setDefaultValue = function() {
                             var exists = $scope.$parent.$eval(fieldDefine["ng-model"]);
                             if(undefined !== exists || false === fieldDefine.required || fieldDefine.multiple) {
                                 return;
@@ -800,8 +806,15 @@
                             try{
                                 getter.assign($scope.$parent, $scope.$parent[fieldDefine.remoteDataField + "sSelect"][0].value);
                             } catch(e) {}
+                        };
 
+                        $scope.$on("form.dataLoaded", function(){
+                            setDefaultValue();
                         });
+                        $scope.$on("bill.dataLoaded", function(){
+                            setDefaultValue();
+                        });
+
 
                         return sprintf(this.$parent.templates["fields/select"], {
                             attr: this._attr(name, fieldDefine),
