@@ -609,6 +609,9 @@ Array.prototype.delRepeat=function(){
     }
     return newArray;
 };
+Array.prototype.insert = function (index, item) {
+    this.splice(index, 0, item);
+};
 
 /**
  * 按照某字段排序数组

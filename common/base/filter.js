@@ -142,6 +142,14 @@
                 return sprintf('<a href="%s%s">%s</a>', pre, link, text);
             };
         }])
+        .filter("toExternalLink", [function(){
+            return function(text, link) {
+                if(!link) {
+                    return text;
+                }
+                return sprintf('<a href="%s" target="_blank">%s</a>', link, text);
+            }
+        }])
         .filter("toImg", [function(){
             return function(src) {
                 var allow = ["png", "jpg", "jpeg", "gif"];
