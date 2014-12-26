@@ -192,7 +192,7 @@ class AppsAction extends CommonAction {
     public function delete() {
         $alias = $_GET["id"];
 
-        $buildClassName = sprintf("%sBuild", ucfirst($alias));
+        $buildClassName = str_replace("-", "_", sprintf("%sBuild", ucfirst($alias)));
 
         import("@.ORG.CommonBuildAction");
         $buildFile = sprintf("%s/apps/%s/backend/%s.class.php", ROOT_PATH, $alias, $buildClassName);
@@ -462,7 +462,8 @@ class AppsAction extends CommonAction {
      * **/
     private function appBuild($appConf, $action="install") {
         $alias = $appConf["alias"];
-        $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, ucfirst($alias));
+        $aliasName = ucfirst(str_replace("-", "_", $alias));
+        $buildFile = sprintf("%s/apps/%s/backend/%sBuild.class.php", ROOT_PATH, $alias, $aliasName);
 
         $buildClassName = ucfirst($alias)."Build";
 

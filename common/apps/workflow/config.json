@@ -6,8 +6,10 @@
     },
     "navs": {
         "settings": {
-            "childs" : {
-                "workflow": "workflow/list/workflow"
+            "childs": {
+                "system_setting": {
+                    "workflow": "workflow/list/workflow"
+                }
             }
         }
     }

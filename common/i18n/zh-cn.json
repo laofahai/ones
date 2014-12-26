@@ -53,7 +53,8 @@
             "types_manage": "类型管理",
             "system_operation": "系统操作",
             "clear_cache": "清除缓存",
-            "app_center": "应用中心"
+            "app_center": "应用中心",
+            "system_setting": "系统设置"
         },
         "helpTexts": {},
         "widgetTitles": {

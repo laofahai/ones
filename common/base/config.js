@@ -18,6 +18,13 @@
         "exportAble",
         "multiSelect"
     ];
+    ones.BaseConf.actionsList = [
+        'list', 'listall',
+        'export', 'add',
+        'edit', 'addchild',
+        'viewchild', 'viewdetail',
+        'print', 'trash'
+    ]
 
     ones.keyCodes = {
         Enter: 13,

@@ -267,7 +267,7 @@
                      * 两种URL模式： 普通模式 app/module/action
                      *             URL友好模式 app/action(list|add|edit)/module
                      * */
-                    var actionList = ['list', 'listall', 'export', 'add', 'edit', 'addChild', 'viewChild', 'viewDetail', 'print', 'trash'];
+                    var actionList = ones.BaseConf.actionsList;
                     var fullPath, app, module, action;
                     fullPath = $location.path().split("/").slice(1, 4);
                     if (!fullPath[1]) {

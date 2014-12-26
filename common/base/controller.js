@@ -19,6 +19,10 @@
                     templateUrl: "common/base/views/home/appDetail.html",
                     controller: "AppViewDetailCtl"
                 })
+                .when("/systemPreference", {
+                    templateUrl: "common/base/views/systemPreference.html",
+                    controller: "SystemPreferenceCtl"
+                })
             ;
 //            $locationProvider.html5Mode(true);
 //            $locationProvider.hashPrefix('!');
@@ -75,6 +79,12 @@
                 $scope.activeSubNav = pid;
             };
         }])
+
+        .controller("SystemPreferenceCtl", ["$scope",
+            function($scope){
+                $scope.selectAble = false;
+                console.log($scope.$parent.settingNavs);
+            }])
 
         //app详情
         .controller("AppViewDetailCtl", ["$scope", "$rootScope", "ComView", "ones.dataApiFactory", "$routeParams", "$location", "$timeout", "$modal",
