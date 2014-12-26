@@ -83,7 +83,7 @@
         .controller("SystemPreferenceCtl", ["$scope",
             function($scope){
                 $scope.selectAble = false;
-                console.log($scope.$parent.settingNavs);
+                //console.log($scope.$parent.settingNavs);
             }])
 
         //app详情

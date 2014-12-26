@@ -766,7 +766,6 @@
                         });
                     }
 
-                    var authedNodes = ones.caches.getItem("ones.authed.nodes") || [];
                     angular.forEach($scope.selectedActions, function(item, k){
 
                         if(false === item.authAction) {
@@ -780,6 +779,7 @@
                             authKey = sprintf("%s.%s.%s", $routeParams.group, $routeParams.module, item.authAction).toLowerCase();
                         }
                         if(!isNodeAuthed(authKey)){
+                            ones.BaseConf.DEBUG && console.debug("unauthed: "+authKey);
                             delete($scope.selectedActions[k]);
                         }
                     });
