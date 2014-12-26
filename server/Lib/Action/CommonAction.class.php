@@ -461,6 +461,8 @@ class CommonAction extends RestAction {
 
             if($this->relation && method_exists($model, "relation")) {
                 $model = $model->relation(true);
+            } else if($this->relation && $model->_link) {
+                $model = $model->switchModel("Relation", array("_link", $model->_link))->relation(true);
             }
 
             $model = $model->where($map)->order($order);
