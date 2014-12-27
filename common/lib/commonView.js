@@ -827,8 +827,6 @@
                         return;
                     }
 
-
-
                     //打印按钮
                     if(!$scope.selectAble && model && model.config.printAble) {
                         $scope.pageActions.push({

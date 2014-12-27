@@ -1163,7 +1163,13 @@
 
                             if(struct["uiEvents"]) {
                                 var eventFuncName = "";
-                                angular.forEach(struct.uiEvents, function(e, k){
+                                if(typeof(struct.uiEvents) == "string") {
+                                    eval("var uiEvents="+struct.uiEvents);
+                                } else if(typeof(struct.uiEvents) == "object") {
+                                    var uiEvents = struct.uiEvents;
+                                }
+
+                                angular.forEach(uiEvents, function(e, k){
                                     if(typeof(e) == "function") {
                                         eventFuncName = "e_"+md5.createHash(String(Math.random()));
                                         parentScope[eventFuncName] = e;

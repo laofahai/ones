@@ -729,8 +729,11 @@ var dataFormat = function(fieldsDefine, data) {
                 }
                 break;
             case "number":
-                if(/^([0-9]*[.0-9])$/.test(data[f])) {
-                    data[f] = parseFloat(Number(data[f])).toFixed(ones.BaseConf["system.decimal.fixed"]) || 0;
+                if(data[f] instanceof Number) {
+                    break;
+                }
+                if(/^([0-9]*\.[0-9]+)$/.test(data[f])) {
+                    data[f] = Number(parseFloat(Number(data[f])).toFixed(ones.BaseConf["system.decimal.fixed"]) || 0);
                 } else {
                     data[f] = Number(data[f]) || 0;
                 }
