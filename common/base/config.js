@@ -62,13 +62,15 @@
                     this.resourceName = resourceName;
                     this.modelName = modelName;
                 } catch(e) {
-
+                    console.log(e);
                     modelName = module.ucfirst()+"Model";
                     try {
                         this.model = $injector.get(modelName);
                         this.modelName = modelName;
                     } catch(e) {
+                        console.log(e);
                         throw("can't load model:"+ modelName);
+
                     }
 
                     try {

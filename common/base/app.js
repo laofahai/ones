@@ -288,24 +288,24 @@
                     module = module ? module : "Index";
                     action = action && isNaN(parseInt(action)) ? action : "list";
 //                        console.log(module);
-                    $scope.currentPage = {
+                    $rootScope.currentPage = {
                         lang: {}
                     };
 
                     var urlmap, appMapSection, moduleMapSection, actionMapSection;
-                    urlmap = l("urlMap");
+
                     appMapSection = l("urlMap."+app);
                     if (appMapSection) {
-                        $scope.currentPage.lang.app = appMapSection.name;
+                        $rootScope.currentPage.lang.app = appMapSection.name;
                         moduleMapSection = l(sprintf("urlMap.%s.modules.%s", app, module));
                         if (moduleMapSection) {
-                            $scope.currentPage.lang.module = moduleMapSection.name;
+                            $rootScope.currentPage.lang.module = moduleMapSection.name;
                             actionMapSection = l(sprintf("urlMap.%s.modules.%s.actions.%s", app, module, action));
                             if (actionMapSection) {
-                                $scope.currentPage.lang.action = actionMapSection instanceof Array
+                                $rootScope.currentPage.lang.action = actionMapSection instanceof Array
                                     ? actionMapSection[0]
                                     : actionMapSection;
-                                $scope.currentPage.lang.actionDesc = actionMapSection instanceof Array
+                                $rootScope.currentPage.lang.actionDesc = actionMapSection instanceof Array
                                     ? actionMapSection[1] : "";
                             }
                         }
@@ -315,10 +315,10 @@
                      * 设定当前APP信息
                      * current location info
                      * */
-                    $scope.currentPage.app = app;
-                    $scope.currentPage.action = action;
-                    $scope.currentPage.module = module;
-                    $rootScope.currentPage = $scope.currentPage;
+                    $rootScope.currentPage.app = app;
+                    $rootScope.currentPage.action = action;
+                    $rootScope.currentPage.module = module;
+                    $scope.currentPage = $rootScope.currentPage;
 
 
                     /**

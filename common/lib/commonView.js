@@ -229,6 +229,7 @@
                 };
                 if($routeParams.extra) {
                     opts.queryExtraParams = parseParams($routeParams.extra);
+                    angular.extend($routeParams, opts.queryExtraParams);
                     var extra = $routeParams.extra;
                 }
 
