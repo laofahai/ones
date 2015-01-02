@@ -201,6 +201,10 @@ class CommonTreeModel extends CommonModel {
             } else {
                 $row["prefix"] = "";
             }
+            // 是否包含子分类
+            if($row["rgt"]-$row["lft"] > 1) {
+                $row["has_child"] = true;
+            }
             
             $row["deep"] = $rightLength;
             $items[] = $row;
