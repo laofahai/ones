@@ -19,5 +19,11 @@ class TypesAction extends CommonAction {
         }
     }
 
+    protected function _order(&$order) {
+        if($_GET["type"]) {
+            $order = "listorder DESC";
+        }
+    }
+
     
 }

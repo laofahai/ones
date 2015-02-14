@@ -496,6 +496,14 @@ var getDataApiPromise = function(dataSource, method, params) {
 var nl2br = function(str) {
     return str.replace(/\n/ig, "<br />");
 };
+var isNumberKeydown = function(keycode){
+    var codes = [46,48,49,50,51,52,53,54,55,56,57,190,96,97,98,99,100,101,102,103,104,105,110]
+    return codes.indexOf(keycode) >= 0;
+}
+var isFnKeydown = function(keycode) {
+    var codes = [17,16,13,27,20,9,8,91];
+    return codes.indexOf(keycode) >= 0;
+}
 
 //过滤数据对象/数组，仅保留需包含的字段
 var filterDataFields = function(data, fields) {

@@ -15,6 +15,8 @@ class CommonAction extends RestAction {
 
     protected $indexModel = null;
 
+    protected $readModel = null;
+
     protected $user;
 
     protected $appConf;
@@ -30,6 +32,13 @@ class CommonAction extends RestAction {
     protected $primaryApps = array();
 
     protected $compiledAppConf = array();
+
+    protected $error = false;
+
+    protected $echoSQL = false;
+
+    protected $exportFields = array();
+
 
     //扩展权限检测
     protected $_extend_permission_check_methods = array();
@@ -265,6 +274,7 @@ class CommonAction extends RestAction {
      * @param $msg string
      */
     protected function error($msg) {
+        $this->error = true;
         $this->response(array(
             "error" => 1,
             "msg"   => $msg
@@ -307,7 +317,6 @@ class CommonAction extends RestAction {
 
         if($_GET["_kw"] or $_GET["typeahead"]) {
             $kw = $_GET["_kw"] ? $_GET["_kw"] : $_GET["typeahead"];
-
             if($model->searchFields) {
                 foreach($model->searchFields as $k => $sf) {
                     $where[$sf] = array('like', "%{$kw}%");
@@ -453,6 +462,8 @@ class CommonAction extends RestAction {
             array(&$map)
         );
 
+
+
         if($_GET["onlyCount"]) {
             $total = $model->where($map)->count();
             $this->response(array(array("count"=>$total)));
@@ -485,6 +496,9 @@ class CommonAction extends RestAction {
 
             $list = $model->select();
 
+            if($this->echoSQL) {
+                echo $model->getLastSql();exit;
+            }
 
             $this->queryMeta = array(
                 "map" => $map,
@@ -502,6 +516,8 @@ class CommonAction extends RestAction {
                 $list = $params[0];
             }
         }
+
+
 
         $list = reIndex($list);
         //包含总数
@@ -857,8 +873,6 @@ class CommonAction extends RestAction {
                 $head[$k] = $v;
             }
         }
-
-//        print_r($head);exit;
 
         foreach($data as $item) {
             $rowTpl = array();

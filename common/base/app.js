@@ -184,7 +184,13 @@
                 });
 
                 $scope.$on("event:serverError", function(evt, msg) {
-                    msg = ComView.toLang(msg || "serverError", "messages");
+                    //msg = ComView.toLang(msg || "serverError", "messages");
+
+                    if(msg.indexOf("_unicode_|") >= 0) {
+                        msg = msg.replace('_unicode_|', '');
+                    } else {
+                        msg = l("lang.messages."+msg);
+                    }
                     ComView.alert(msg, "danger");
                 });
 

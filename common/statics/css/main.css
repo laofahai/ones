@@ -158,7 +158,7 @@ commonform {
 .chosen-container {
     min-width: 80%;
     background:#fff !important;
-    display:block;
+    display:inline-block;
 }
 
 .chosen-container a {
@@ -313,7 +313,7 @@ commonform {
 /** select3 */
 .select3Container {
     position:absolute;
-    z-index:90;
+    z-index:9999;
     background:#fff;
     border-bottom:1px solid #ddd;
     border-top:1px solid #ddd;

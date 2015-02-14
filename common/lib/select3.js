@@ -1,8 +1,8 @@
 (function(){
 
     angular.module("ones.select3Module", [])
-        .service("select3Field", ["$timeout", "$compile", "$parse", "$injector", "$rootScope", "FormMaker", "ComView", "$routeParams",
-            function($timeout, $compile, $parse, $injector, $rootScope, FormMaker, ComView, $routeParams){
+        .service("select3Field", ["$timeout", "$compile", "$parse", "$injector", "$rootScope", "FormMaker", "ComView", "$routeParams", "$interval",
+            function($timeout, $compile, $parse, $injector, $rootScope, FormMaker, ComView, $routeParams, $interval){
 
                 var self = this;
 
@@ -12,7 +12,6 @@
 
                 //初始化
                 this.init = function($scope, attrs) {
-
                     var scopeConfig = $scope.$parent.$eval(attrs.config);
                     if(attrs.model) {
                         scopeConfig.fieldDefine["ng-model"] = attrs.model;
@@ -43,7 +42,8 @@
                     var events = {
                         'focus': "'doSelect3Focus($event)'",
                         'blur': "'doSelect3Blur($event)'",
-                        'keydown': "'doSelect3Keydown($event)'"
+                        'keydown': "'doSelect3Keydown($event)'",
+                        'change': "'doSelect3Change($event)'"
                     };
                     if(config["uiEvents"]) {
                         var tmpEvents;
@@ -108,7 +108,10 @@
                         }
                         if(val || config.dynamicAddOpts || config.dataSource.dynamicAddOpts) {
                             parentScope.doSelect3Query(val);
+                        } else {
+                            parentScope.doSelect3Query('');
                         }
+
 
                     };
 
@@ -129,23 +132,30 @@
                         }, 150);
                     };
 
+                    parentScope.$on("select3.data.queried", function() {
+                        parentScope.dataQueried = true;
+                    });
                     parentScope.doSelect3Keydown = function($event){
-
-                        var config = self.currentConfig;
-
-
                         var Keys = ones.keyCodes;
                         if($event.keyCode === Keys.Up || $event.keyCode === Keys.down) {
                             window.event.returnValue =false;
                         }
+
                         $timeout(function(){
                             //监听键盘事件
                             switch($event.keyCode) {
                                 case Keys.Enter:
-                                    if(!$("#select3Container li").length) {
-                                        return false;
-                                    }
-                                    self.scope.setValue($("#select3Container li.active"));
+                                    $event.stopPropagation();
+                                    $event.preventDefault();
+                                    var promise = $interval(function(){
+                                        if(!$("#select3Container li").length) {
+                                            return false;
+                                        }
+                                        self.scope.setValue($("#select3Container li.active"));
+                                    }, 300, 20);
+//                                    parentScope.$on("select3.data.queried", function() {
+
+//                                    });
                                     break;
                                 case Keys.Tab:
                                 case Keys.Escape:
@@ -178,40 +188,72 @@
                                     break;
                             }
                             parentScope.$digest();
-                        });
+                        }, 100);
                     };
+                    parent.doSelect3Change = function($event) {
+                        console.log(arguments);
+                    }
 
                     parentScope.doSelect3Query = function(val){
-                        var config = self.currentConfig;
-                        //总是取得所有数据
-//                        if(config.autoQuery) {
-//                            val = "_";
-//                        }
-                        self.scope.select3Items = [];
-                        //非数组形式数据源
-                        if(!angular.isArray(config.dataSource)) {
-                            if(!$.trim(val) && !config.dynamicAddOpts) {
-                                parentScope.hideSelect3Options(true);
+                        $timeout(function(){
+
+                            if(parentScope.select3Quering) {
                                 return;
                             }
 
-                            var queryParams = config.queryParams || {};
-                            queryParams.typeahead = $.trim(val);
-                            if('queryWithExistsData' in config) {
-                                angular.forEach(config.queryWithExistsData, function(qItem){
-                                    queryParams[qItem] = config["data-row-index"] !== undefined
-                                        ? parentScope[config.dataName][config["data-row-index"]][qItem]
-                                        : parentScope[config.dataName][qItem];
-                                });
-                            }
-                            var promise = getDataApiPromise(config.dataSource, "query", queryParams);
-                            promise.then(function(data){
-                                if(data.length < 1 && !config.dynamicAddOpts) {
+                            var config = self.currentConfig;
+                            //总是取得所有数据
+//                        if(config.autoQuery) {
+//                            val = "_";
+//                        }
+                            self.scope.select3Items = [];
+                            //非数组形式数据源
+                            if(!angular.isArray(config.dataSource)) {
+                                if(!$.trim(val) && !config.dynamicAddOpts) {
                                     parentScope.hideSelect3Options(true);
                                     return;
                                 }
+
+                                parentScope.select3Quering = true;
+
+                                var queryParams = config.queryParams || {};
+                                queryParams.typeahead = $.trim(val);
+                                if('queryWithExistsData' in config) {
+                                    angular.forEach(config.queryWithExistsData, function(qItem){
+                                        queryParams[qItem] = config["data-row-index"] !== undefined
+                                            ? parentScope[config.dataName][config["data-row-index"]][qItem]
+                                            : parentScope[config.dataName][qItem];
+                                    });
+                                }
+                                var promise = getDataApiPromise(config.dataSource, "query", queryParams);
+                                promise.then(function(data){
+                                    if(data.length < 1 && !config.dynamicAddOpts) {
+                                        parentScope.hideSelect3Options(true);
+                                        return;
+                                    }
+                                    var tmpList = [];
+                                    angular.forEach(data, function(item){
+                                        tmpList.push({
+                                            label: item[config.nameField || "name"],
+                                            value: item[config.valueField || "id"]
+                                        });
+                                    });
+                                    self.scope.select3Items = tmpList;
+                                    parentScope.displaySelect3Options();
+                                    parentScope.select3Quering = false;
+                                    parentScope.$broadcast("select3.data.queried");
+                                });
+                            } else {
+                                if(config.dataSource.length < 1 && !config.dynamicAddOpts) {
+                                    //@todo no result
+                                    parentScope.hideSelect3Options(true);
+                                    return;
+                                }
+
+                                parentScope.select3Quering = true;
+
                                 var tmpList = [];
-                                angular.forEach(data, function(item){
+                                angular.forEach(config.dataSource, function(item){
                                     tmpList.push({
                                         label: item[config.nameField || "name"],
                                         value: item[config.valueField || "id"]
@@ -219,23 +261,11 @@
                                 });
                                 self.scope.select3Items = tmpList;
                                 parentScope.displaySelect3Options();
-                            });
-                        } else {
-                            if(config.dataSource.length < 1 && !config.dynamicAddOpts) {
-                                //@todo no result
-                                parentScope.hideSelect3Options(true);
-                                return;
+                                parentScope.select3Quering = false;
+                                parentScope.$broadcast("select3.data.queried");
                             }
-                            var tmpList = [];
-                            angular.forEach(config.dataSource, function(item){
-                                tmpList.push({
-                                    label: item[config.nameField || "name"],
-                                    value: item[config.valueField || "id"]
-                                });
-                            });
-                            self.scope.select3Items = tmpList;
-                            parentScope.displaySelect3Options();
-                        }
+
+                        }, 200);
                     };
 
 
@@ -264,8 +294,12 @@
                     };
                     parentScope.hideSelect3Options = function(keepFocus){
                         if(!keepFocus) {
-                            $(".select3Input:focus").blur();
+                            $timeout(function(){
+                                $(".select3Input:focus").blur();
+
+                            }, 300);
                         }
+
                         if(!keepFocus && self.currentConfig.autoHide) {
     //                        $(".select3Input").addClass("hide");
                         }
@@ -288,6 +322,7 @@
                         if(typeof(parentScope.afterSelect3SetValue) == "function") {
                             parentScope.afterSelect3SetValue();
                         }
+
 
                         parentScope.hideSelect3Options();
                     };

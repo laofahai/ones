@@ -23,7 +23,7 @@
                 "DataModelFields": {
                     "name": "模型数据字段",
                     "actions": {
-                        "list": "", "add": "", "edit": ""
+                        "list": "", "add": "", "edit": "", "viewChild": ""
                     }
                 }
             }

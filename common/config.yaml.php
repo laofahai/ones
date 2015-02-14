@@ -5,7 +5,7 @@
   MAIL_AUTH:      true   #邮箱认证
   MAIL_HTML:      true   #true HTML格式 false TXT格式
   TMPL_EXCEPTION_FILE: ./server/Tpl/exception.html
-  LANG: zh-cn
+  LANG: zh-tw
   - preloadJSDebug:
     - "vendor/jquery/jquery-2.1.1.min.js"
     - "vendor/angular-1.3.0-rc/angular.min.js"

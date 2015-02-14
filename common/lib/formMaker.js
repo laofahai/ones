@@ -421,7 +421,7 @@
                                         });
                                     }
 
-                                    $scope.$broadcast("commonBill.ready");
+                                    $scope.$parent.$broadcast("commonBill.ready");
                                 };
 
 
@@ -438,6 +438,10 @@
                                         var getParams = {};
                                         for (var k in $routeParams) {
                                             getParams[k] = $routeParams[k];
+                                        }
+
+                                        if(config.opts && config.opts.queryExtraParams) {
+                                            angular.extend(getParams, config.opts.queryExtraParams);
                                         }
 
                                         var rs;
@@ -628,8 +632,7 @@
                             "cellFilter",
                             "primary",
                             "dataSource",
-                            "helpText",
-                            "uiEvents"
+                            "helpText"
                         ];
                         bl = $.extend(bl, blackList);
                         fieldDefine["autocomplete"] = "false";
@@ -642,7 +645,11 @@
                             if (bl.indexOf(k) >= 0) {
                                 continue;
                             }
+
                             v = fieldDefine[k];
+                            if(k == "uiEvents") {
+                                k = "ui-event";
+                            }
                             html.push(sprintf('%s="%s"', k, v));
                         }
                         return html.join(" ");
@@ -659,7 +666,13 @@
                         return sprintf(this.$parent.templates["fields/email"], this._attr(name, fieldDefine));
                     },
                     //数字
-                    _number: function(name, fieldDefine) {
+                    _number: function(name, fieldDefine, $scope) {
+                        fieldDefine["ng-keydown"] = "doNumberFieldKeydownNormal($event)";
+                        $scope.$parent.doNumberFieldKeydownNormal = function($evt){
+                            if(!isNumberKeydown($evt.keyCode) && !isFnKeydown($evt.keyCode)) {
+                                event.preventDefault();
+                            }
+                        }
                         return sprintf(this.$parent.templates["fields/number"], this._attr(name, fieldDefine));
                     },
                     _password: function(name, fieldDefine) {
@@ -811,7 +824,7 @@
                         $scope.$on("form.dataLoaded", function(){
                             setDefaultValue();
                         });
-                        $scope.$on("bill.dataLoaded", function(){
+                        $scope.$on("commonBill.ready", function(){
                             setDefaultValue();
                         });
 
@@ -1078,7 +1091,7 @@
                             if(defaultData.length) {
                                 var curRowData = self.scope.$parent[self.opts.dataName][i];
                                 //判断返回数据中是否有_label显示的字段
-                                if(item.field+"_label" in curRowData) {
+                                if(item.field+"_label" in curRowData || item.bindToLabel) {
                                     curRowData[item.field+"_label"] = defaultData[i][item.field+"_label"];
                                     labelBind = sprintf('%s[%d].%s_label', self.opts.dataName, i, field);
                                 } else {
@@ -1144,62 +1157,67 @@
 
 
                             //支持的事件列表
-                            var eventsList = ["blur", "click", "keydown", "focus", "change"];
-                            var events = {};
+                            if(!struct.inited) {
+                                var eventsList = ["blur", "click", "keydown", "focus", "change"];
+                                var events = {};
 
-                            context.field = context.field || "";
-                            angular.forEach(eventsList, function(e){
-                                var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
+                                context.field = context.field || "";
+                                angular.forEach(eventsList, function(e){
+                                    var m = sprintf("on%s%s%s", context.field.ucfirst(), context.inputType.ucfirst(), e.ucfirst());
 
-                                if(m in parentScope) {
-                                    events[e] = m;
-                                } else {
-                                    m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
                                     if(m in parentScope) {
                                         events[e] = m;
-                                    }
-                                }
-                            });
-
-                            if(struct["uiEvents"]) {
-                                var eventFuncName = "";
-                                if(typeof(struct.uiEvents) == "string") {
-                                    eval("var uiEvents="+struct.uiEvents);
-                                } else if(typeof(struct.uiEvents) == "object") {
-                                    var uiEvents = struct.uiEvents;
-                                }
-
-                                angular.forEach(uiEvents, function(e, k){
-                                    if(typeof(e) == "function") {
-                                        eventFuncName = "e_"+md5.createHash(String(Math.random()));
-                                        parentScope[eventFuncName] = e;
-                                    } else if(angular.isArray(e)) {
-                                        eventFuncName = "e_"+md5.createHash(String(Math.random()));
-                                        parentScope[eventFuncName] = e[1];
                                     } else {
-                                        eventFuncName = e;
+                                        m = sprintf("on%s%s", context.inputType.ucfirst(), e.ucfirst());
+                                        if(m in parentScope) {
+                                            events[e] = m;
+                                        }
                                     }
-                                    if(events[k] || (angular.isArray(e) && e[0] !== "override")) {
-                                        events[k] = events[k]+","+eventFuncName;
-                                    } else {
-                                        events[k] = eventFuncName;
-                                    }
-
                                 });
-                            }
 
-                            struct["ui-event"] = [];
-                            if(events) {
-                                angular.forEach(events, function(method, e){
-                                    var methods = [];
-                                    angular.forEach(method.split(","), function(m){
-                                        methods.push(m+"($event, this)");
+                                if(struct["uiEvents"]) {
+                                    var eventFuncName = "";
+                                    if(typeof(struct.uiEvents) == "string") {
+                                        eval("var uiEvents="+struct.uiEvents);
+                                    } else if(typeof(struct.uiEvents) == "object") {
+                                        var uiEvents = struct.uiEvents;
+                                    }
+
+                                    angular.forEach(uiEvents, function(e, k){
+                                        if(typeof(e) == "function") {
+                                            eventFuncName = "e_"+md5.createHash(String(Math.random()));
+                                            parentScope[eventFuncName] = e;
+                                        } else if(angular.isArray(e)) {
+                                            eventFuncName = "e_"+md5.createHash(String(Math.random()));
+                                            parentScope[eventFuncName] = e[1];
+                                        } else {
+                                            eventFuncName = e;
+                                        }
+                                        if(events[k] || (angular.isArray(e) && e[0] !== "override")) {
+                                            events[k] = events[k]+","+eventFuncName;
+                                        } else {
+                                            events[k] = eventFuncName;
+                                        }
+
                                     });
-                                    struct["ui-event"].push(sprintf("%s: '%s'", e, methods.join(";")));
-                                });
+                                }
 
-                                struct["ui-event"] = sprintf("{%s}", struct["ui-event"].join(","));
+
+                                struct["uiEvents"] = [];
+                                if(events) {
+                                    angular.forEach(events, function(method, e){
+                                        var methods = [];
+                                        angular.forEach(method.split(","), function(m){
+                                            methods.push(m+"($event, this)");
+                                        });
+                                        struct["uiEvents"].push(sprintf("%s: '%s'", e, methods.join(";")));
+                                    });
+
+                                    struct["uiEvents"] = sprintf("{%s}", struct["uiEvents"].join(","));
+                                }
+                                struct.inited = true;
                             }
+
 
                             var html = self.fm.maker.factory(context, struct, scope);
                             html = self.compile(html)(parentScope);
@@ -1656,7 +1674,7 @@
                                 var helpText = "";
                                 if(struct.helpText) {
                                     try {
-                                        helpText = l("lang.helpTexts."+struct.helpText);
+                                        helpText = l(struct.helpText);
                                     } catch(e) {}
                                     helpText = helpText || struct.helpText
                                 }

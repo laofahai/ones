@@ -14,7 +14,7 @@
                 this.init = function($scope, options){
 
                     self.scope = $scope;
-                    self.options = options;
+                    self.options = options || {};
                     self.parentScope = self.scope.$parent;
 
                     self.methodsList.doResetGridOptions();
@@ -262,7 +262,9 @@
                                 promise.then(function(remoteData){
                                     self.scope.setPagingData(remoteData, page, pageSize);
                                 });
-                            } catch(e) {}
+                            } catch(e) {
+                                console.log(e);
+                            }
                         });
                     },
                     //过滤器
@@ -277,7 +279,7 @@
                         $scope.showFilters = true;
 
                         var FieldsDefine = {};
-                        angular.forEach(filters, function(item, type){
+                        var assignFilterField = function(item, type){
                             switch(type) {
                                 case "between":
                                     FieldsDefine["_filter_start_"+item.field] = {
@@ -305,14 +307,30 @@
                                         dataSource: "Workflow.WorkflowNodeAPI",
                                         nameField: "status_text",
                                         queryParams: {
-                                            workflow_alias: item
+                                            workflow_alias: angular.isObject(item) ? item.field : item
                                         },
                                         required: false
                                     };
                                     break;
-
+                                case "select3":
+                                    item.inputType = "select3";
+                                    item.displayName = item.displayName || l("lang."+item.field);
+                                    FieldsDefine["_filter_"+item.field] = item;
+                                    break;
                             }
-                        });
+                        }
+                        //以字段为索引
+                        if(filters._fieldMap) {
+                            angular.forEach(filters, function(item, field) {
+                                item.field = field;
+                                assignFilterField(item, item.type);
+                            });
+                        } else {
+                            angular.forEach(filters, function(item, type){
+                                assignFilterField(item, type);
+                            });
+                        }
+
 
                         var modal = null;
                         var modalHtml = null;
@@ -372,6 +390,7 @@
                         pre: function($scope, iElement, iAttrs, controller) {
 
                             var fetchData = function(){
+
                                 var gridOptions = $scope.$parent.$eval(iAttrs.config);
 
                                 GridView.init($scope, gridOptions);
@@ -460,32 +479,42 @@
 
                 var item = ones.GridScope.$eval("itemsList["+$index+"]");
 
-                filter = filter.replace(/'/g, "");
+                var filters = filter.split("|");
+
+                var data;
+
+                angular.forEach(filters, function(filter){
+                    filter = filter.replace(/'/g, "");
 
 
-                args = filter.split(":");
-                filter = args[0];
+                    args = filter.split(":");
+                    filter = args[0];
 
-                if(args[1] && args[1].indexOf("item.") >=0) {
-                    var itemField = args[1].split(".");
-                    args[1] = ones.GridScope.$eval("itemsList["+$index+"]."+itemField[1]);
-                }
-
-                if(args[1]) {
-                    var filterParams = args[1].match(/\+[a-zA-Z0-9\_\-]+/);
-                    if(filterParams) {
-                        angular.forEach(filterParams, function(p){
-                            args[1] = args[1].replace(p, item[p.replace("+", "")]);
-                        });
+                    if(args[1] && args[1].indexOf("item.") >=0) {
+                        var itemField = args[1].split(".");
+                        args[1] = ones.GridScope.$eval("itemsList["+$index+"]."+itemField[1]);
                     }
-                }
 
-                args = Array.prototype.slice.call(args, 1);
+                    if(args[1]) {
+                        var filterParams = args[1].match(/\+[a-zA-Z0-9\_\-]+/);
+                        if(filterParams) {
+                            angular.forEach(filterParams, function(p){
+                                args[1] = args[1].replace(p, item[p.replace("+", "")]);
+                            });
+                        }
+                    }
 
-                args.unshift(text);
-                args.push($index);
+                    args = Array.prototype.slice.call(args, 1);
 
-                return $filter(filter).apply(null, args);
+                    args.unshift(data || text);
+                    args.push($index);
+
+                    data = $filter(filter).apply(null, args);
+                });
+
+                return data;
+
+
             };
         }])
     ;

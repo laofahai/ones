@@ -3,6 +3,7 @@
     /**
      * 基本配置
      * */
+    ones.BaseConf.lang = "zh-cn";
     ones.BaseConf.BSU = "./index.php?s=/";
     ones.BaseConf.Prefix= "ones";
     ones.BaseConf.modelConfigFields = [

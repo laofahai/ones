@@ -774,6 +774,7 @@
                         }
 
                         var authKey;
+
                         if(item.authAction && item.authAction.indexOf(".") >= 0) {
                             authKey = item.authAction;
                         } else {

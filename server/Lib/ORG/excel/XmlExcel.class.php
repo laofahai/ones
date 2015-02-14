@@ -170,7 +170,7 @@ class XmlExcel implements IExcel
 		header("Content-Type: application/vnd.ms-excel; charset=" . $this->charset);
         header("Content-Disposition:attachment; filename=\"{$fileName}.xls\"");
         echo stripslashes(sprintf($this->header, $this->charset));
-        echo str_replace("{company}","xiao meng online",str_replace("{time}",date("Y-m-dH:i:s",time()),str_replace("{author}","mengdejun",str_replace("{version}",VERSION,$this->documentInfo))));
+        echo str_replace("{company}","ONES",str_replace("{time}",date("Y-m-dH:i:s",time()),str_replace("{author}","ONES Team",str_replace("{version}",VERSION,$this->documentInfo))));
         echo "<Styles>";
         echo stripslashes(sprintf($this->align_default, $this->_align));
 	    echo $this->align_left;
@@ -438,4 +438,3 @@ class XmlExcel implements IExcel
 		$this->_columnType = $_columnType;
 	}
 }
-?>
