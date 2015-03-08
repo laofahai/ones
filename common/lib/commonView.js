@@ -97,8 +97,7 @@
         .value('ComViewConfig', {
             actionClasses : {
                 "add" : "primary",
-                "list": "default",
-                "listall": "default",
+                "list": "primary",
                 "export": "success"
             }
         })
@@ -793,7 +792,7 @@
                 service.makeGridLinkActions = function($scope, actions, isBill, extraParams, model){
                     //可跳转按钮
                     extraParams = extraParams ? "/"+extraParams : "";
-                    var available = ["add", "list", "listall", "export", "print", "trash"];
+                    var available = ["add", "list", "listall", "export", "trash"];
                     var actEnabled;
                     model.config = model.config || {};
 
@@ -816,7 +815,7 @@
 
                         $scope.pageActions.push({
                             label: service.toLang(k, "actions"),
-                            class: ComViewConfig.actionClasses[k],
+                            'class': ComViewConfig.actionClasses[k],
                             href : sprintf("/%(group)s/%(action)s/%(module)s", {
                                 group: $routeParams.group,
                                 action: action,

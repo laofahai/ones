@@ -629,6 +629,9 @@ class Workflow {
                     );
                     $tmpModel = D($rm);
 
+                    $workflowAlias = $tmpModel->workflowAlias ? ucfirst($tmpModel->workflowAlias) : $rm;
+
+
                     $relationItem = $tmpModel->where($tmpMap)->find();
                     if($relationItem) {
                         array_push($where, array(

@@ -1,10 +1,32 @@
-<section class="actionsBtn row clearfix">
+<section class="actionsBtn clearfix">
 
-    <div class="col-lg-8 right">
+    <div class="pull-left actions-btn-left">
         <div class="pull-left btn-group">
-            <a class="btn btn-sm btn-light" href="javascript:history.back();"><i class="icon fa-arrow-left"></i></a>
-            <a class="btn btn-sm btn-light" href="" ng-click="$parent.doPageRefresh()"><i class="icon fa-refresh"></i></a>
-            <a class="btn btn-sm btn-light" href="javascript:history.forward();"><i class="icon fa-arrow-right"></i></a>
+            <a class="btn btn-sm btn-default" href="javascript:history.back();"><i class="fa fa-arrow-left"></i></a>
+            <a class="btn btn-sm btn-default" href="" ng-click="$parent.doPageRefresh()"><i class="fa fa-refresh"></i></a>
+            <a class="btn btn-sm btn-default" href="javascript:history.forward();"><i class="fa fa-arrow-right"></i></a>
+            
+        </div>
+        <div class="pull-left btn-group">
+            <a class="btn btn-sm btn-default" ng-click="showFiltersModal();" ng-show="showFilters||selectAble" ng-class="{'disabled': !showFilters}">
+                <i class="fa fa-search"></i>
+                <span ng-bind="'lang.actions.filters'|lang"></span>
+            </a>
+            <button data-toggle="dropdown" class="btn btn-sm btn-danger dropdown-toggle" ng-show="selectAble" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
+                {{'lang.selected_action'|lang|sprintf:gridSelected.length}}
+                <i class="fa fa-caret-down fa-on-right"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-primary pull-right">
+                <li class="{{sa.class}}"
+                    ng-show="gridSelected.length === 1 || sa.multi"
+                    ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}"
+                    ng-repeat="sa in selectedActions track by $index">
+                    <a ng-click="sa.action($event,gridSelected)">
+                        <i class="fa fa-{{sa.icon}}"></i>
+                        {{sa.label}}
+                    </a>
+                </li>
+            </ul>
         </div>
         <!--//workflow in detail page-->
         <div class="pull-left btn-group" ng-show="workflowInBill !== undefined">
@@ -15,38 +37,12 @@
                     ng-click="doWorkflow($event, w.id, mainrow_id)"
                     ></button>
         </div>
-        <div class="pull-left btn-group" ng-click="showFiltersModal();" ng-show="showFilters">
-            <a class="btn btn-sm">
-                <i class="icon fa-search"></i>
-                <span ng-bind="'lang.actions.filters'|lang"></span>
-            </a>
-        </div>
-
-        <!--//selected-->
-        <div class="pull-left btn-group" ng-hide="false === selectAble">
-            <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle" ng-class="{disabled: !gridSelected.length, 'btn-primary': gridSelected.length}">
-                {{'lang.selected_action'|lang|sprintf:gridSelected.length}}
-                <i class="fa-caret-down fa-on-right"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-primary pull-right">
-                <li class="{{sa.class}}"
-                    ng-show="gridSelected.length === 1 || sa.multi"
-                    ng-class="{disabled: !gridSelected.length||(!sa.multi&&(gridSelected.length!=1))}"
-                    ng-repeat="sa in selectedActions track by $index">
-                    <a ng-click="sa.action($event,gridSelected)" ng-bind="sa.label"></a>
-                </li>
-            </ul>
-        </div>
-
-
-
-
 
         <!--//workflow-->
         <div class="pull-left  btn-group" ng-hide="false === selectAble">
             <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble">
                 {{'lang.workflow'|lang}}
-                <span class="fa-caret-down fa-on-right"></span>
+                <span class="fa fa-caret-down fa-on-right"></span>
             </button>
             <ul class="dropdown-menu dropdown-success pull-right">
                 <li>
@@ -59,22 +55,18 @@
         </div>
 
         <!--//search box-->
-        <div class="pull-left " ng-show="searchAble">
-            <span class="input-icon">
-                <input type="text" placeholder="Search ..." id="gridSearchInput" class="nav-search-input" ng-model-options="{ debounce: 300 }" ng-model="filterOptions.filterText" autocomplete="off" autofocus />
-                <i class="fa-search nav-search-icon"></i>
-            </span>
+        <div class="input-group pull-left actions-search-box" ng-show="searchAble">
+            <input type="text" placeholder="Search ..." id="gridSearchInput" class="nav-search-input" ng-model-options="{ debounce: 300 }" ng-model="filterOptions.filterText" autocomplete="off" autofocus />
+            <span class="input-group-addon"><i class="fa fa-search nav-search-icon"></i></span>
         </div>
-
-
 
     </div>
 
-    <div class="col-lg-4">
+    <div class="pull-right">
         <div class="pull-right btn-group">
-            <a class="btn btn-sm btn-{{pa.class}}" ng-click="$root.goPage(pa.href)" ng-repeat="pa in pageActions track by $index">{{pa.label}}</a>
+            <a class="btn btn-sm btn-{{pa.class|default:'primary'}}" ng-click="$root.goPage(pa.href)" ng-repeat="pa in pageActions track by $index">{{pa.label}}</a>
             <button class="btn btn-sm btn-danger" ng-click="doClearCachedData()" ng-show="showClearAutoSaved">
-                <i class="icon fa-trash-o"></i>
+                <i class="fa fa-trash-o"></i>
             </button>
         </div>
     </div>

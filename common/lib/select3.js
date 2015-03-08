@@ -85,7 +85,7 @@
                         inputTpl: '<input type="text" ng-model="%(model)s_label" %(attr)s /><input type="hidden" ng-model="%(model)s" />',
                         selectTpl: '<ul class="select3Container" id="select3Container">'+
                             '<li ng-repeat="s3it in select3Items" ng-class="{active:$index==selectedItem}" data-value="{{s3it.value}}" ng-bind="s3it.label" ng-show="s3it.label.length>0" ui-event="%(events)s"></li>'+
-                            '<li class="select3_add" ng-click="doSelect3AddNew(\'%(field)s\')"><i class="icon fa-plus"></i>{{\'lang.actions.add\'|lang}}</li>'+
+                            '<li class="select3_add" ng-click="doSelect3AddNew(\'%(field)s\')"><i class="fa fa-plus"></i>{{\'lang.actions.add\'|lang}}</li>'+
                             '</ul>'
                     };
                 };
@@ -152,7 +152,7 @@
                                             return false;
                                         }
                                         self.scope.setValue($("#select3Container li.active"));
-                                    }, 300, 20);
+                                    }, 100, 10);
 //                                    parentScope.$on("select3.data.queried", function() {
 
 //                                    });
@@ -198,7 +198,7 @@
                         $timeout(function(){
 
                             if(parentScope.select3Quering) {
-                                return;
+                                //return;
                             }
 
                             var config = self.currentConfig;
@@ -296,8 +296,7 @@
                         if(!keepFocus) {
                             $timeout(function(){
                                 $(".select3Input:focus").blur();
-
-                            }, 300);
+                            }, 200);
                         }
 
                         if(!keepFocus && self.currentConfig.autoHide) {

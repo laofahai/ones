@@ -463,6 +463,9 @@
                                                     lastPage = lastPage[0].split("/");
                                                     returnPage = lastPage[1]+"/list/"+lastPage[3];
                                                 }
+                                                //return;
+                                                returnPage = $location.url().replace("addBill", "list").replace("editBill", "list");
+                                                returnPage = returnPage.split('/').slice(0,4).join('/')
                                                 $location.url(returnPage);
                                             }
                                         });
@@ -542,11 +545,11 @@
                             '</ui-select>',
                         'fields/datepicker': '<span class="input-icon input-icon-right"> \
                                     <input type="date" ng-model="%(model)s" %(attrs)s /> \
-                                <i class="fa-calendar gray"></i> \
+                                <i class="fa fa-calendar gray"></i> \
                             </span>',
                         'fields/datetime': '<span class="input-icon input-icon-right"> \
                                     <input type="datetime-local" ng-model="%(model)s" %(attrs)s /> \
-                                <i class="fa-calendar gray"></i> \
+                                <i class="fa fa-calendar gray"></i> \
                             </span>',
                         'fields/typeahead': '<input type="text" ' +
                             'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +
@@ -966,8 +969,8 @@
                             '<thead><tr><th>#</th><th></th>%(headHTML)s</tr></thead>'+
                             '<tbody>%(bodyHTML)s</tbody><tfoot><tr>%(footHTML)s</tr></tfoot></table>',
                         'bills/fields/rowHead.html': '<th>%(i)s</th><td class="center"><label class="rowHead">'+
-                            '<i class="icon fa-plus" ng-click="billAddRow($event)"></i> '+
-                            '<i class="icon fa-trash-o" ng-click="billRemoveRow($event)"></i> '+
+                            '<i class="fa fa-plus" ng-click="billAddRow($event)"></i> '+
+                            '<i class="fa fa-trash-o" ng-click="billRemoveRow($event)"></i> '+
                             '</label></td>',
                         'bills/fields/td.html': '<td class="%(tdClass)s" data-input-type="%(type)s" data-bind-model="%(field)s"><label ng-bind="%(bind)s" title="{{%(bind)s}}" %(event)s>%(label)s</label></td>',
                         'bills/fields/typeaheadList.html': '<ul class="typeAheadList editAble" />'+
@@ -1571,19 +1574,19 @@
                         includeFoot: true,
                         templates: {
                             "commonForm/form.html": '<form class="form-horizontal" name="%(name)s" ng-keydown="doKeydown($event)" novalidate>%(html)s</form>',
-                            "commonForm/footer.html": '<div class="clearfix form-actions center">' +
-                                '<button id="submitbtn" class="btn btn-primary" ng-click="%(action)s();" type="button">' +
-                                '<i class="fa-ok bigger-110"></i>' +
+                            "commonForm/footer.html": '<div class="clearfix panel-footer form-actions text-center">' +
+                                '<button id="submitbtn" class="btn btn-primary btn-lg" ng-click="%(action)s();" type="button">' +
+                                '<i class="fa fa-check bigger-110"></i> ' +
                                 '{{%(langsubmit)s}}' +
                                 '</button>' +
                                 '&nbsp; &nbsp; &nbsp;' +
-                                '<button class="btn" ng-click="doResetForm()">' +
-                                '<i class="fa-undo bigger-110"></i>' +
+                                '<button class="btn btn-danger btn-lg" ng-click="doResetForm()">' +
+                                '<i class="fa fa-undo bigger-110"></i> ' +
                                 '{{%(langreset)s}}' +
                                 '</button>' +
                                 '&nbsp; &nbsp; &nbsp;' +
-                                '<button class="btn btn-info" onclick="history.back()">' +
-                                '<i class="fa-undo bigger-110"></i>' +
+                                '<button class="btn btn-default btn-lg" onclick="history.back()">' +
+                                '<i class="fa fa-undo bigger-110"></i> ' +
                                 '{{%(langreturn)s}}' +
                                 '</button>' +
                                 '</div>',

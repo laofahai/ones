@@ -15,6 +15,7 @@ class AppsAction extends CommonAction {
     public function __construct() {
         parent::__construct();
         $this->serviceUri = DBC("remote.service.uri");
+        $this->lang = strtolower(C("LANG"));
     }
 
     public function index() {
@@ -26,10 +27,11 @@ class AppsAction extends CommonAction {
         if($_GET["queryAll"]) {
             //获取所有APP列表
             $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
-            $http->request($this->serviceUri."App/getList", array(
+            $http->request($this->serviceUri."App/getList/", array(
                 "_pn" => $_GET["_pn"],
                 "_ps" => $_GET["_ps"],
                 "_kw" => $_GET["_kw"],
+                "lang"=> $this->lang,
                 "api_key" => C("SERVICE_API_KEY"),
                 "secret_key" => C("SERVICE_SECRET_KEY"),
             ));
@@ -100,11 +102,13 @@ class AppsAction extends CommonAction {
             }
 
             $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
-            $http->request($this->serviceUri."App/getList", array(
+            $http->request($this->serviceUri."App/getList/", array(
                 "alias" => implode(",", $installedAppAlias),
+                "lang"=> $this->lang,
                 "api_key" => C("SERVICE_API_KEY"),
                 "secret_key" => C("SERVICE_SECRET_KEY"),
             ));
+
 
             $tmp = $http->get_data();
             $response = json_decode($tmp, true);
@@ -146,6 +150,7 @@ class AppsAction extends CommonAction {
         $http = new httplib();
 
         $params = array(
+            "lang"=> $this->lang,
             "api_key" => C("SERVICE_API_KEY"),
             "secret_key" => C("SERVICE_SECRET_KEY"),
         );
@@ -159,14 +164,14 @@ class AppsAction extends CommonAction {
         }
 
         $http->set_header("Accept", "application/json,text/x-json,application/jsonrequest,text/json");
-        $http->request($this->serviceUri."App/getInfo", $params);
+        $http->request($this->serviceUri."App/getInfo/", $params);
 
         $tmp = $http->get_data();
         $appInfo = json_decode($tmp, true);
         $model = D("Apps");
         $installed = $model->where(array("alias" => $appInfo["alias"]))->find();
 
-        $appInfo["latest"] = reset($appInfo["versions"]);
+        //$appInfo["latest"] = reset($appInfo["versions"]);
         if($installed) {
             $appInfo["installed"] = true;
             $appInfo["hasUpdate"] = $appInfo["latest"]["version"] > $installed["version"] ? true : false;
@@ -175,6 +180,16 @@ class AppsAction extends CommonAction {
         } else {
             $appInfo["currentVersion"] = $appInfo["latest_version"];
         }
+
+        foreach($appInfo["latest"]["requirements"] as $k=>$v) {
+            list($compare, $version) = explode(" ", $v);
+            $latest_requirements[] = array(
+                "app" => $k,
+                "compare" => $compare,
+                "version" => $version
+            );
+        }
+        $appInfo["latest"]["requirements"] = $latest_requirements;
 
         import("@.ORG.markdown");
         $parseDown = new Parsedown();
@@ -238,7 +253,7 @@ class AppsAction extends CommonAction {
             return false;
         }
 
-        $remoteUri = sprintf("%sApp/getDownload/alias/%s/api_key/%s",
+        $remoteUri = sprintf("%sApp/getDownload/%s/%s/",
             $this->serviceUri,
             $alias,
             C("SERVICE_API_KEY")."|".C("SERVICE_SECRET_KEY")
@@ -303,7 +318,7 @@ class AppsAction extends CommonAction {
             "alias"=> $alias
         ))->find();
 
-        $remoteUri = sprintf("%sApp/getUpgrade/alias/%s/api_key/%s/oldVersion/".str_replace(".", "-", $appInfo["version"]),
+        $remoteUri = sprintf("%sApp/getUpgrade/%s/%s/".str_replace(".", "-", $appInfo["version"]),
             $this->serviceUri,
             $alias,
             C("SERVICE_API_KEY")."|".C("SERVICE_SECRET_KEY")
@@ -361,6 +376,10 @@ class AppsAction extends CommonAction {
         $localPath = ENTRY_PATH."/Data/apps/";
         @mkdirs($localPath, 0777);
         import("@.ORG.CurlAxel");
+
+        if(!is_writeable($localPath)) {
+            return $this->error("Temp dir is not writeable");
+        }
 
         $axel = new CurlAxel();
 

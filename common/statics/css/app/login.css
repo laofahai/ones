@@ -17,7 +17,7 @@ a{
 }
 #animate-area	{
     background-color:#c0deed;
-    background-image: url(../images/cloud.jpg);
+    background-image: url(../../images/cloud.jpg);
     background-position: 0px 0px;
     background-repeat: repeat-x;
     animation: animatedBackground 40s linear infinite;

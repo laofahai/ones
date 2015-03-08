@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div>
     <table class="table table-bordered table-hover table-grid dataTable">
         <thead>
         <tr>
@@ -8,7 +8,8 @@
                 ng-bind-html="f.displayName"
                 ng-class="{sortable: f.sortAble||f.field=='id', sorting_asc:sorting==f.field+' DESC',sorting_desc:sorting==f.field+' ASC', 'hidden-480': hiddenWhen480px.indexOf(f.field)>=0||f.hiddenWhen480}"
                 ng-repeat="f in config.columnDefs"
-                ng-click="doGridSortBy(f.field)"></th>
+                ng-click="doGridSortBy(f.field)"
+                width="{{f.width}}"></th>
         </tr>
         </thead>
         <tbody>
@@ -42,19 +43,24 @@
                             {{'paginationInfo'|lang}} {{pagingOptions.currentPage}}/{{totalPages}}
                         </div>
                         <div class="col-sm-8 text-right">
-                            <select class="actionsBtnRight" ng-options="p for p in pageSizes" ng-model="pagingOptions.pageSize"></select>
-                            <div class="dataTables_paginate paging_bootstrap">
-                                <ul class="pagination">
-                                    <li class="prev" ng-click="setPage(1)">
-                                        <a href=""><i class="fa-angle-double-left"></i></a>
-                                    </li>
-                                    <li ng-click="setPage('-1')"><a href=""><i class="fa-angle-left"></i></a></li>
-                                    <li><input type="number" class="input-mini pagingInput" ng-model-options="{ debounce: 500 }" ng-model="pagingOptions.currentPage" min="1" max="{{totalPages}}" /></li>
-                                    <li ng-click="setPage('+1')"><a href=""><i class="fa-angle-right"></i></a></li>
-                                    <li class="next" ng-click="setPage('max')">
-                                        <a href=""><i class="fa-angle-double-right"></i></a>
-                                    </li>
-                                </ul>
+                            <div class="input-group pull-right grid-page-select-box">
+                                <input type="number" class="input-mini form-control" ng-model-options="{ debounce: 500 }" ng-model="pagingOptions.currentPage" min="1" max="{{totalPages}}" />
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        {{pagingOptions.pageSize}}<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                        <li ng-repeat="p in pageSizes">
+                                            <a href="javascript:void(0);" ng-bind="p"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group pull-right">
+                                <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage(1)"><i class="fa fa-angle-double-left"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage(-1)"><i class="fa fa-angle-left"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage('+1')"><i class="fa fa-angle-right"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage('max')"><i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     </div>

@@ -8,10 +8,10 @@
     <meta name="description" content="User login page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="common/statics/images/favicon.ico" />
-    <link rel="stylesheet" href="common/statics/css/vendor.css" />
-    <link rel="stylesheet" href="common/statics/css/bootstrap.css" />
-    <link rel="stylesheet" href="common/statics/css/font-awesome.css" />
-    <link rel="stylesheet" href="common/statics/css/login.css">
+    <link rel="stylesheet" href="common/statics/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="common/statics/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="common/statics/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="common/statics/css/app/login.css">
 </head>
 
 <body class="login-layout ones-login-signin" id="animate-area">
@@ -28,28 +28,28 @@
             <ul>
                 <li>
                     <a onclick="ones.caches.clear();window.location.reload()">
-                        <i class="icon fa-warning signin-icon"></i>
+                        <i class="fa fa-warning signin-icon"></i>
                         清除缓存
                     </a>
                 </li>
                 <li>
                     <a href="http://project.ng-erp.com/projects/ones/wiki/ONES_ERP_%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C" target="_blank">
-                        <i class="icon fa-file-text-o signin-icon"></i> 使用手册
+                        <i class="fa fa-file-text-o signin-icon"></i> 使用手册
                     </a>
                 </li>
                 <li>
                     <a href="http://project.ng-erp.com/projects/ones/boards" target="_blank">
-                        <i class="icon fa-comments signin-icon"></i> 讨论 &amp; 反馈
+                        <i class="fa fa-comments signin-icon"></i> 讨论 &amp; 反馈
                     </a>
                 </li>
                 <li>
                     <a href="http://project.ng-erp.com/projects/ones/boards" target="_blank">
-                        <i class="icon fa-support signin-icon"></i> 商业用户支持
+                        <i class="fa fa-support signin-icon"></i> 商业用户支持
                     </a>
                 </li>
                 <li>
                     <a href="https://ng-erp.com/mobile" target="_blank">
-                        <i class="icon fa-apple signin-icon"></i> 手机客户端下载
+                        <i class="fa fa-apple signin-icon"></i> 手机客户端下载
                     </a>
                 </li>
             </ul>
@@ -67,12 +67,12 @@
 
                 <div class="form-group w-icon">
                     <input type="text" name="signin_username" id="username_id" class="form-control input-lg" ng-model="loginInfo.username" placeholder="{{'lang.username'|lang}}" autocomplete="off" autofocus>
-                    <span class="icon fa-user signin-form-icon"></span>
+                    <span class="fa fa-user signin-form-icon"></span>
                 </div>
 
                 <div class="form-group w-icon">
                     <input type="password" name="signin_password" id="password_id" class="form-control input-lg" ng-model="loginInfo.password" placeholder="{{'lang.password'|lang}}" autocomplete="off">
-                    <span class="icon fa-lock signin-form-icon"></span>
+                    <span class="fa fa-lock signin-form-icon"></span>
                 </div>
 
                 <div class="form-actions">

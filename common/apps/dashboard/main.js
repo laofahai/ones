@@ -103,6 +103,7 @@
                 ones.pluginScope.set("dashboardSetBtnTip", function(btnName, tip){
                     $timeout(function(){
                         for(var i=0;i<$scope.appBtns.length;i++) {
+                        	$scope.appBtns[i].id = $scope.appBtns[i].name;
                             if($scope.appBtns[i].name == btnName) {
                                 $scope.appBtns[i].tip = tip;
                                 break;
@@ -114,6 +115,9 @@
                 angular.forEach(dashboardAppBtns, function(app){
                     //权限检测
                     var authNode;
+                    if(!app.link && !app.authNode){
+                    	return;
+                    }
                     if(app.authNode) {
                         authNode = app.authNode;
                     } else {
@@ -141,29 +145,13 @@
                     }
 
 
-                    //随机底色
-                    if(!app.btnClass){
-                        var tmp = md5.createHash(app.label).slice(2,3);
-                        var tmpIndex = chars.indexOf(tmp);
-                        if(tmpIndex >= 0) {
-                            if(tmpIndex > 11) {
-                                tmpIndex -= 11;
-                            }
-                            if(tmpIndex > 21) {
-                                tmpIndex -= 21;
-                            }
-                        } else {
-                            tmpIndex = tmp;
-                        }
-                        app.btnClass = btnClasses[tmpIndex];
-                    }
-                    //图标
-                    if(!app.icon){
-                        app.icon = "folder-close-alt";
-                    }
-
+                    app.id = app.name;
+                    app.label_combined = true;
+                    app.url = app.link;
                     appBtns[app.name] = app;
                 });
+                
+                $scope.$emit("left_side_changed", appBtns);
 
 
                 if(isAppLoaded("firstTimeWizard")) {

@@ -14,15 +14,15 @@
                 replace: false,
                 transclusion: true,
                 compile: function(element, attrs) {
-                    var template = '<div class="widget-box %(class)s">' +
-                        '<div class="widget-header widget-header-flat"><h5>%(title)s</h5></div>' +
-                        '<div class="widget-body"><div class="widget-main no-padding">%(inner)s</div></div>' +
+                    var template = '<div class="panel panel-%(class)s">' +
+                        '<div class="panel-heading"><h3 class="panel-title">%(title)s</h3></div>' +
+                        '<div class="panel-body"><div class="widget-main no-padding">%(inner)s</div></div>' +
                         '</div>';
                     var title = l('lang.widgetTitles.'+attrs.wtitle);
                     element.html(sprintf(template, {
                         title: title,
                         inner: element.html(),
-                        class: attrs.wclass
+                        'class': attrs.wclass ? attrs.wclass: 'default'
                     }));
                 }
             };

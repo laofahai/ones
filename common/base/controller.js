@@ -79,6 +79,34 @@
                 $scope.activeSubNav = pid;
             };
         }])
+        .controller('TopBarCtl', ['$scope', function($scope){
+        	var navs = ones.caches.getItem("ones.main.navs");
+
+            if(!navs) {
+                return false;
+            }
+            navs.shift();
+            $scope.navs = navs;
+            
+            angular.forEach(navs, function(c1, k) {
+            	if(c1.childs) {
+            		angular.forEach(c1.childs, function(c2, i){
+            			navs[k].childs[i].label = l("lang.navs."+c2.label);
+            			if(c2.childs) {
+    						angular.forEach(c2.childs, function(c3, j){
+    							navs[k].childs[i].childs[j].label = l("lang.navs."+c3.label);
+    						});
+            			}
+            		});
+            	}
+            });
+            
+            //左侧导航切换
+            $scope.toggleLeftMenu = function(childs, id){
+            	$scope.active_nav = id;
+            	$scope.$emit("left_side_changed", childs);
+            }
+        }])
 
         .controller("SystemPreferenceCtl", ["$scope",
             function($scope){

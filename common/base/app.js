@@ -130,23 +130,26 @@
 
                 });
 
-                $rootScope.goPage = function(url) {
+                $rootScope.goPage = function(url, evt) {
                     if(undefined === url || !$.trim(url)) {
                         return;
                     };
                     if(url === "DASHBOARD") {
                         url = "";
                     };
+                    if(evt) {
+                    	$(evt.target).siblings().removeClass('active').addClass('active');
+                    }
                     $location.url(url[0] == "/" ? url : "/"+url);
                 };
 
                 //左侧是否展开
                 var expand = ones.caches.getItem("ones.sidebar.expand");
 
-                $scope.expand = expand;
+                $scope.sidebar_expand = expand;
                 $scope.sidebarToggleExpand = function() {
-                    $scope.expand = !$scope.expand;
-                    ones.caches.setItem("ones.sidebar.expand", $scope.expand, 1);
+                    $scope.sidebar_expand = !$scope.sidebar_expand;
+                    ones.caches.setItem("ones.sidebar.expand", $scope.sidebar_expand, 1);
                 };
 
                 //有需要的APP未能加载
@@ -211,6 +214,18 @@
                         });
                     });
                 });
+                
+                //左侧导航
+                $scope.$on("left_side_changed", function(evt, childs){
+                	$scope.left_navs = childs;
+                });
+                $scope.toggle_sidebar_active_nav = function(id, url){
+                	$scope.sidebar_active_nav = id;
+                	if(url) {
+                		$rootScope.goPage(url);
+                	}
+                };
+                
 
                 //窗口活动状态
                 $(window).blur(function(){

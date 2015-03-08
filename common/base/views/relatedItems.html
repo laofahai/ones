@@ -4,7 +4,7 @@
         <h4 ng-bind="'lang.relatedItemAndBill'|lang"></h4>
         <ul class="list-unstyled spaced">
             <li class="col-sm-4" ng-repeat="item in formMetaData.relatedItems" title="">
-                <i class="icon fa-{{item.icon}}"></i>
+                <i class="fa fa-{{item.icon}}"></i>
                 {{item.type|lang}}
                 <a ng-click="$root.goPage(item.link+item.id)">
                     #{{item.bill_id}}
