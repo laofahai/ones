@@ -25,6 +25,9 @@ a, a:hover {
 #gridSearchInput {
     height:31px;
 }
+.height-100p {
+    height:100%;
+}
 
 table.table-grid {
     table-layout: fixed;
@@ -520,6 +523,9 @@ th.sorting_asc,th.sorting_desc {
     margin:0;padding:3px 5px;
     margin-top:5px;
 }
+.bottomAlertContainer .alert button {
+    margin-top:-50px !important;
+}
 
 .detailViewTable {
     border:none !important;
@@ -558,8 +564,9 @@ th.sorting_asc,th.sorting_desc {
     position:relative;
 }
 #alerts-container .alert .close {
-    position:absolute;right:20px;
-    top:10px;
+    position:absolute;
+    right:15px;
+    top:6px;
 }
 
 #multiSearchModal .modal-dialog {
@@ -744,6 +751,7 @@ th.sorting_asc,th.sorting_desc {
     border:none;
     width:100%;
     padding:8px 5px;
+    height:48px;
 }
 .nav-search .input-group-addon {
     border:none;
@@ -806,3 +814,54 @@ th.sorting_asc,th.sorting_desc {
 .tooltip {
     z-index:9999;
 }
+.gridster-content {
+    margin: -20px;
+}
+.dashboard-block-container {
+    margin-top:10px !important;
+    margin-left:-10px !important;
+    margin-right:-10px !important;
+}
+.dashboard-block-item {
+    position:relative;
+}
+.dashboard-block-item .panel-body {
+    height:100%;
+}
+.dashboard-block-item .panel-default .panel-heading {
+    background:none;
+    border-top:2px solid #ddd;
+}
+
+.main-content-heading {
+    margin: -10px -10px 10px -10px;
+    height:49px;line-height:49px;
+    padding:0 13px;
+    position:relative;
+    background:#f2f2f2;
+    border-bottom:1px solid #ccc;
+    position:relative;
+}
+.main-content-heading h1 {
+    margin: 0;
+    font-size:16px;
+    height:50px;line-height:50px;
+}
+.main-content-heading-tools {
+    position:absolute;
+    right:10px;
+    top:0;
+    font-size:20px;
+}
+.main-content-heading-tools a {
+    margin-left:10px;
+}
+.main-content-heading-tools a.support {
+    font-size:18px;
+}
+
+.panel-body .widget-main {
+    padding-bottom:30px;
+}
+
+.widget {}

@@ -31,10 +31,6 @@
                     <th>
                         <span ng-bind="'lang.name'|lang"></span>
                     </th>
-                    <th> </th>
-                    <th class="hidden-480">
-                        <span ng-bind="'lang.listorder'|lang"></span>
-                    </th>
                 </tr>
                 </thead>
 
@@ -44,12 +40,6 @@
                         <input type="checkbox" ng-model="item.selected" />
                     </td>
                     <td ng-bind="item.name|lang:'widgetTitles'"></td>
-                    <td>
-                        <input type="number" ng-model="item.position" class="input-mini" min="1" max="2" />
-                    </td>
-                    <td>
-                        <input type="number" ng-model="item.listorder" class="input-mini" />
-                    </td>
                 </tr>
                 </tbody>
             </table>

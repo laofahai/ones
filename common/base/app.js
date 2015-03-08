@@ -10,6 +10,8 @@
             'mgcrea.ngStrap',
             'localytics.directives', //FOR CHOSEN
             'ui.utils',
+            'gridster',
+            
             'ones.gridView',
             "ones.formMaker",
             'ones.detailView',
@@ -96,7 +98,6 @@
                     $http.get(conf.BSU + "home/index/0.json").success(function(data) {
                         ones.caches.setItem("ones.authed.nodes", data.authed, 1);
                         ones.caches.setItem("ones.main.navs", data.navs, 1);
-
                         ones.caches.setItem("ones.reloading", 1);
 
                         window.location.reload();
@@ -155,12 +156,26 @@
                 //有需要的APP未能加载
                 if(ones.unfoundApp) {
                     ComView.alert(
-                        sprintf(l(lang.messages.unfoundApp), ones.unfoundApp.join()),
+                        sprintf(l('lang.messages.unfoundApp'), ones.unfoundApp.join()),
                         "danger",
                         "!",
                         false);
                     $scope.unfoundApp = ones.unfoundApp;
                 }
+                
+                //打开wiki帮助页面
+                $scope.goToWiki = function(app){
+                	if(!app) {
+                		ComView.alert(l("lang.mesages.this_page_has_no_wiki"));
+                		return;
+                	}
+                	var uri = 'http://project.ng-erp.com/projects/ones/';
+                	if(app != "home" && app != "dashboard") {
+                		uri = sprintf('%ssearch?q=%s&wiki_pages=1', uri, app);
+                	}
+                	
+                	window.open(uri);
+                };
 
                 $scope.onesConf = conf;
                 $scope.BSU = conf.BSU;

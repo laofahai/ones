@@ -19,7 +19,7 @@
     - "vendor/angularModules/angular-strap/angular-strap.js"
     - "vendor/angularModules/angular-strap/angular-strap.tpl.js"
     - "vendor/angularModules/ui-utils/ui-utils.min.js"
-    - "vendor/angularModules/gridster/angular-gridster.min.js"
+    - "vendor/angularModules/gridster/angular-gridster.js"
     - "vendor/jquery/chosen/chosen.jquery.js"
     - "vendor/angularModules/angular-chosen/chosen.js"
     - "vendor/highcharts/highcharts.js"

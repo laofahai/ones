@@ -644,6 +644,7 @@
                             fieldDefine.id = "id_" + name;
                             fieldDefine.name = name;
                         }
+                        fieldDefine["class"] += " form-control";
                         for (k in fieldDefine) {
                             if (bl.indexOf(k) >= 0) {
                                 continue;
@@ -655,6 +656,7 @@
                             }
                             html.push(sprintf('%s="%s"', k, v));
                         }
+                        
                         return html.join(" ");
                     },
                     _hidden: function(name, fieldDefine) {

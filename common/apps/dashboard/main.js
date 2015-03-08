@@ -161,56 +161,137 @@
 
                 }
 
-                /**
-                 * 桌面块
-                 * */
-                plugin.callPlugin("hook.dashboard.blocks");
-
-                var tmp = ones.pluginScope.get("dashboardBlocks");
-                var dashboardItemsArray = {};
-                angular.forEach(tmp, function(blk){
-                    dashboardItemsArray[blk.name] = blk;
-                });
-
-                $scope.$watch(function(){
-                    return $rootScope.dataQuering;
-                }, function(dataQuering){
-                    if(dataQuering <= 0) {
-                        $scope.$broadcast("dashboardItems.loaded");
-                    }
-                });
+                
 
 
-                $scope.dashboardItems = {
-                    left: [],
-                    right: []
+                $scope.appBtns = ones.caches.getItem("ones.dashboard_btn.config") || [];
+                $scope.dashboardsBlocks = ones.caches.getItem("ones.dashboard_block.config") || [];
+                
+                if(!$scope.appBtns.length || !$scope.dashboardsBlocks.length) {
+                	/**
+                     * 桌面块
+                     * */
+                    plugin.callPlugin("hook.dashboard.blocks");
+
+                    var tmp = ones.pluginScope.get("dashboardBlocks");
+                    var dashboardItemsArray = {};
+                    angular.forEach(tmp, function(blk){
+                        dashboardItemsArray[blk.name] = blk;
+                    });
+
+                    $scope.$watch(function(){
+                        return $rootScope.dataQuering;
+                    }, function(dataQuering){
+                        if(dataQuering <= 0) {
+                            $scope.$broadcast("dashboardItems.loaded");
+                        }
+                    });
+                	UserPreferenceRes.get().$promise.then(function(data){
+                        angular.forEach(data.blocks, function(item){
+                    		block = dashboardItemsArray[item.name];
+                        	$scope.dashboardsBlocks.push({
+                    			name: block.name,
+                    			sizeX: item.width || 6,
+                    			sizeY: item.height || 3,
+                    			row: item.row || null,
+                    			col: item.col || null,
+                    			template: block.template
+                        	});
+                        });
+                        
+                        angular.forEach(data.btns, function(item){
+                            if(!item || !appBtns[item.name]) {
+                                return;
+                            }
+                            if(typeof(item.getTip) === "function") {
+                                item.getTip();
+                            }
+                            $scope.appBtns.push(appBtns[item.name]);
+                        });
+
+                        if(!$scope.appBtns.length) {
+                            $scope.appBtns.push(appBtns.app_center);
+                        }
+
+                        ones.pluginScope.remove("dashboardBlocks");
+                    });
+                }
+                
+                
+                //更新用户首选项
+                var t = 0;
+                function updateUserPreference() {
+                	data = [];
+                	angular.forEach($scope.dashboardsBlocks, function(block){
+                		data.push({
+                			name: block.name,
+                			col: block.col,
+                			row: block.row,
+                			width: block.sizeX,
+                			height: block.sizeY
+                		});
+                	});
+                	if(t) {
+                		return;
+                	}
+                	
+                	t = setTimeout(function(){
+                		UserPreferenceRes.save({'blocks': data, 'customize': true}, function(){ });
+                		ones.caches.setItem("ones.dashboard_block.config", $scope.dashboardsBlocks);
+                		ones.caches.setItem("ones.dashboard_btn.config", $scope.appBtns);
+                		t = 0;
+                	}, 10000); 
+                }
+                
+                
+                $scope.gridsterOptions = {
+        			margins: [10,10],
+        			columns: 12,
+        			draggable: {
+        				handle: '.dragable',
+        				stop: function(){
+        					updateUserPreference();
+        				}
+        			},
+        			resizable: {
+        				stop: function(){
+        					updateUserPreference();
+        				}
+        			}
+        		};
+                
+                //page info
+                $rootScope.currentPage = {};
+                $rootScope.currentPage.app = "home";
+                $rootScope.currentPage.action = "index";
+                $rootScope.currentPage.module = "dashboard";
+                $rootScope.currentPage.lang = {
+                		app: l("urlmap.dashboard.name")
                 };
-                $scope.appBtns = [];
-                UserPreferenceRes.get().$promise.then(function(data){
-                    angular.forEach(data.blocks, function(item){
-                        if(item.position > 1) {
-                            $scope.dashboardItems.right.push(dashboardItemsArray[item.name]);
-                        } else {
-                            $scope.dashboardItems.left.push(dashboardItemsArray[item.name]);
-                        }
-                    });
-
-                    angular.forEach(data.btns, function(item){
-                        if(!item || !appBtns[item.name]) {
-                            return;
-                        }
-                        if(typeof(item.getTip) === "function") {
-                            item.getTip();
-                        }
-                        $scope.appBtns.push(appBtns[item.name]);
-                    });
-
-                    if(!$scope.appBtns.length) {
-                        $scope.appBtns.push(appBtns.app_center);
-                    }
-
-                    ones.pluginScope.remove("dashboardBlocks");
-                });
+            		
             }])
+            
+            .controller('CustomWidgetCtrl', ['$scope', '$modal',
+				function($scope, $modal) {
+			
+					$scope.remove = function(widget) {
+						$scope.dashboard.widgets.splice($scope.dashboard.widgets.indexOf(widget), 1);
+					};
+			
+					$scope.openSettings = function(widget) {
+						$modal.open({
+							scope: $scope,
+							templateUrl: 'demo/dashboard/widget_settings.html',
+							controller: 'WidgetSettingsCtrl',
+							resolve: {
+								widget: function() {
+									return widget;
+								}
+							}
+						});
+					};
+			
+				}
+			])
     ;
 })();

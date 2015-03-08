@@ -53,39 +53,13 @@
                 });
             };
         }])
-        .controller('CommonSidebarCtl', ['$scope','$location', function($scope, $location) {
-
-            var navs = ones.caches.getItem("ones.main.navs");
-
-            if(!navs) {
-                return false;
-            }
-
-            $scope.$parent.settingNavs = navs.shift();
-
-            $scope.navs = navs;
-            $scope.activeSubNav = "";
-            $scope.checkActiveNav = function($index, id) {
-                $scope.openNav = id;
-                $scope.activeNav = id;
-            };
-            $scope.checkSubActiveNav = function(id, parent) {
-                $scope.activeSubNav = id;
-                $scope.activeShowNav = parent;
-                $scope.openNav = parent;
-            };
-            $scope.checkThirdActiveNav = function(id, pid) {
-                $scope.activeThirdNav = id;
-                $scope.activeSubNav = pid;
-            };
-        }])
         .controller('TopBarCtl', ['$scope', function($scope){
         	var navs = ones.caches.getItem("ones.main.navs");
 
             if(!navs) {
                 return false;
             }
-            navs.shift();
+            ones.caches.setItem("ones.settings.navs", navs.shift());
             $scope.navs = navs;
             
             angular.forEach(navs, function(c1, k) {
@@ -108,10 +82,15 @@
             }
         }])
 
-        .controller("SystemPreferenceCtl", ["$scope",
-            function($scope){
+        .controller("SystemPreferenceCtl", ["$scope", "$rootScope",
+            function($scope, $rootScope){
                 $scope.selectAble = false;
-                //console.log($scope.$parent.settingNavs);
+                $scope.settingNav = ones.caches.getItem("ones.settings.navs");
+                $rootScope.currentPage = {
+                		lang: {
+                			app: l("lang.navs.system_setting")
+                		}
+                };
             }])
 
         //app详情

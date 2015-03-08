@@ -16,7 +16,7 @@
                 compile: function(element, attrs) {
                     var template = '<div class="panel panel-%(class)s">' +
                         '<div class="panel-heading"><h3 class="panel-title">%(title)s</h3></div>' +
-                        '<div class="panel-body"><div class="widget-main no-padding">%(inner)s</div></div>' +
+                        '<div class="panel-body"><div class="widget-main no-padding clearfix">%(inner)s</div></div>' +
                         '</div>';
                     var title = l('lang.widgetTitles.'+attrs.wtitle);
                     element.html(sprintf(template, {

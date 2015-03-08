@@ -1,24 +1,10 @@
-<div class="row" on-finish-render="dashboard.rendered">
-    <div class="col-xs-12">
-        <div class="row">
-            <div class="col-xs-12">
-                <a ng-click="$root.goPage(app.link)"
-                   id="dashboard_appBtn_{{app.name}}"
-                   class="btn btn-app btn-sm no-radius btn-{{app.btnClass}}"
-                   ng-repeat="app in appBtns">
-                    <i class="fa fa-{{app.icon}} bigger-230"></i>
-                    <small class="smaller" ng-bind="app.label"></small>
-                    <span class="badge badge-pink" ng-show="app.tip" ng-bind="app.tip"></span>
-                </a>
+<div gridster="gridsterOptions" on-finish-render="dashboard.rendered" class="dashboard-block-container">
+    <ul style="list-style:none;padding:0" class="clearfix">
+        <li gridster-item="widget" ng-repeat="widget in dashboardsBlocks">
+            <div class="dashboard-block-item height-100p dragable">
+                <div ng-include="widget.template"
+                class="height-100p"></div>
             </div>
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <div ng-repeat="item in dashboardItems.left" ng-include="item.template"></div>
-                </div>
-                <div class="col-md-6">
-                    <div ng-repeat="item in dashboardItems.right" ng-include="item.template"></div>
-                </div>
-            </div>
-        </div>
-    </div><!-- /.col -->
-</div><!-- /.row -->
+        </li>
+    </ul>
+</div>
