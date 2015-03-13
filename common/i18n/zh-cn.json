@@ -176,7 +176,10 @@
             "remove_all": "删除全部",
             "complete": "完成",
             "read": "查看",
-            "trash": "回收站"
+            "trash": "回收站",
+            "view_manunal": "查看用户手册",
+            "get_support" : "获取帮助",
+            "online_chat" : "ONES客服在线沟通"
         },
 
         "navigation": {

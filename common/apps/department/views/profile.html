@@ -1,12 +1,9 @@
 <div id="user-profile-1" class="user-profile row" ng-controller="PassportProfileCtl">
-    <div class="col-xs-12 col-sm-3 center">
+    <div class="col-xs-12 col-sm-3 text-center">
         <div>
-            <span class="profile-picture">
-                <img id="avatar" class="editable img-responsive editable-click editable-empty" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=200" style="display: block;" />
-            </span>
-            <div class="space-4"></div>
+            <img id="avatar" class="img-responsive" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=200" style="margin:10px auto;" />
 
-            <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+            <div class="width-80 badge badge-info badge-xlg arrowed-in arrowed-in-right">
                 <div class="inline position-relative">
                     <i class="fa fa-circle light-green middle"></i>
                     &nbsp;
@@ -49,7 +46,7 @@
             </div>
             <div class="profile-info-row">
                 <div class="profile-info-value">
-                    <span class="editable editable-click" id="signup" ng-click="showProfileEdit();" ng-bind="'lang.actions.edit'|lang"></span>
+                    <a class="btn btn-primary" id="signup" ng-click="showProfileEdit();" ng-bind="'lang.actions.edit'|lang"></a>
                 </div>
             </div>
         </div>

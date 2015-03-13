@@ -165,13 +165,12 @@
                 
                 //打开wiki帮助页面
                 $scope.goToWiki = function(app){
-                	if(!app) {
-                		ComView.alert(l("lang.mesages.this_page_has_no_wiki"));
-                		return;
-                	}
                 	var uri = 'http://project.ng-erp.com/projects/ones/';
+                	if(isPrimaryApp()) {}
                 	if(app != "home" && app != "dashboard") {
                 		uri = sprintf('%ssearch?q=%s&wiki_pages=1', uri, app);
+                	} else {
+                		uri += "wiki"
                 	}
                 	
                 	window.open(uri);

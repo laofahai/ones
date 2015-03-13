@@ -53,7 +53,7 @@
                 }
             }
         }])
-        .directive( 'compileData', function ( $compile ) {
+        .directive( 'compileData', ["$compile", function ( $compile ) {
             return {
                 scope: true,
                 link: function ( scope, element, attrs ) {
@@ -67,7 +67,7 @@
                     });
                 }
             };
-        })
+        }])
 
             /**
              * The ng-thumb directive

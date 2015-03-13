@@ -47,12 +47,7 @@
 
                     angular.forEach($scope.blocks, function(block, k){
                         if(activedBlocks.indexOf(block.name) >= 0) {
-                            $scope.blocks[k]["listorder"] = parseInt(activedBlockItem[block.name].listorder);
-                            $scope.blocks[k]["position"] = parseInt(activedBlockItem[block.name].position) || 1;
                             $scope.blocks[k]["selected"] = true;
-                        } else {
-                            $scope.blocks[k]["listorder"] = 99;
-                            $scope.blocks[k]["position"] = 1;
                         }
                     });
 
@@ -74,6 +69,8 @@
 
 
                 $scope.doSubmit = function() {
+            		ones.caches.removeItem("ones.dashboard_block.config");
+            		ones.caches.removeItem("ones.dashboard_btn.config")
                     res.save({
                         blocks: $scope.blocks,
                         btns: $scope.btns
@@ -191,8 +188,8 @@
                     		block = dashboardItemsArray[item.name];
                         	$scope.dashboardsBlocks.push({
                     			name: block.name,
-                    			sizeX: item.width || 6,
-                    			sizeY: item.height || 3,
+                    			sizeX: item.width || 12,
+                    			sizeY: item.height || 4,
                     			row: item.row || null,
                     			col: item.col || null,
                     			template: block.template
@@ -240,13 +237,13 @@
                 		ones.caches.setItem("ones.dashboard_block.config", $scope.dashboardsBlocks);
                 		ones.caches.setItem("ones.dashboard_btn.config", $scope.appBtns);
                 		t = 0;
-                	}, 10000); 
+                	}, 3000); 
                 }
                 
                 
                 $scope.gridsterOptions = {
         			margins: [10,10],
-        			columns: 12,
+        			columns: 24,
         			draggable: {
         				handle: '.dragable',
         				stop: function(){
@@ -270,28 +267,5 @@
                 };
             		
             }])
-            
-            .controller('CustomWidgetCtrl', ['$scope', '$modal',
-				function($scope, $modal) {
-			
-					$scope.remove = function(widget) {
-						$scope.dashboard.widgets.splice($scope.dashboard.widgets.indexOf(widget), 1);
-					};
-			
-					$scope.openSettings = function(widget) {
-						$modal.open({
-							scope: $scope,
-							templateUrl: 'demo/dashboard/widget_settings.html',
-							controller: 'WidgetSettingsCtrl',
-							resolve: {
-								widget: function() {
-									return widget;
-								}
-							}
-						});
-					};
-			
-				}
-			])
     ;
 })();

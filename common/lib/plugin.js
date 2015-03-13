@@ -84,7 +84,6 @@
     angular.module("ones.pluginsModule", [])
         .service("pluginExecutor", ["$injector", "$q", function($injector, $q){
             return {
-
                 setDefer: function(defer) {
                     this.defer = defer;
                 },
@@ -101,7 +100,6 @@
                     var p = ones.pluginHooks[hookName];
 
                     if(!p) {
-//                        throw("unregisted hook: "+ hookName);
                         return false;
                     }
 
@@ -116,6 +114,24 @@
                     return defer;
                 }
             };
+        }])
+        .directive("callPlugin", ["$injector", "pluginExecutor", function($injector, plugin){
+        	return {
+        		restrict: "E",
+        		scope: {
+        			hook: "="
+        		},
+        		replace: true,
+                transclusion: true,
+                compile: function(element, attrs) {
+                	plugin.callPlugin(attrs.hook);
+                	html = ones.pluginScope.get(attrs['var']);
+                	if(html){
+                		html = html.join();
+                	}
+                	angular.element(element).after(html).remove();
+                }
+        	};
         }])
     ;
 

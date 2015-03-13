@@ -58,7 +58,7 @@
                     events = $.extend(events, config.events);
                     var attrs = [
                         ["ui-event", angular.toJson(events).replace(/"/g, "")],
-                        ["class", "select3Input editAble"],
+                        ["class", "select3Input editAble form-control"],
                         ["data-field", config.field],
                         ["data-config-hash", attrs.config]
                     ];

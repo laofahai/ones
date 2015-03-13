@@ -1,6 +1,6 @@
 <?php
     error_reporting("E_ERROR");
-    $localPath = './'.md5(strtolower(trim($email))).'.jpg';
+    
     
     $timeLimit = 1209600; //本地缓存时间
     
@@ -10,6 +10,8 @@
             $_GET["d"] ? $_GET["d"] : "mm",
             $_GET["r"] ? $_GET["r"] : "g"
     );
+    
+    $localPath = './'.md5($url).'.jpg';
 
     $url = "http://linode.tokyo.sep-v.com/avatar.php?s=".base64_encode($url);
 

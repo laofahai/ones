@@ -1398,7 +1398,7 @@
                                 }
                                 totalAmount += Number(row.amount);
                             });
-                            parentScope.formMetaData.total_amount = parseFloat(totalAmount).toFixed(ones.BaseConf["system.decimal.fixed"]);
+                            parentScope.formMetaData.total_amount = Number(parseFloat(totalAmount).toFixed(ones.BaseConf["system.decimal.fixed"]));
                         };
 
                         var recountTotalAble = parentScope.recountTotalAble = function(){

@@ -84,15 +84,21 @@ class IndexAction extends CommonAction {
 
         foreach($navs as $rootLabel => $data) {
             $theChild = array();
+            //二级菜单
             foreach($data["childs"] as $childLabel => $childData) {
                 $theThird = array();
                 // 包含三级菜单
                 if(is_array($childData)) {
-                    foreach($childData as $thirdLabel => $thirdData) {
+                    foreach($childData as $thirdLabel => $thirdUrl) {
+                    	list($thirdData, $thirdIcon) = explode(",", $thirdUrl);
+                    	if($thirdLabel == "icon") {
+                    		continue;
+                    	}
                         if($this->checkNavPermission($thirdData)) {
                             $theThird[] = array(
                                 "label" => $thirdLabel,
                                 "url"   => $thirdData,
+                            	"icon"  => $thirdIcon,
                                 "id"    => md5($thirdData.$thirdLabel)
                             );
                         } else {
@@ -103,17 +109,21 @@ class IndexAction extends CommonAction {
                 
                 if($theThird) {
                     $theChild[$childLabel]["childs"] = $theThird;
+                    if($childData["icon"]) {
+                    	$theChild[$childLabel]["icon"] = $childData["icon"];                    	
+                    }
+                    $childUrl = $childData;
                 } else {
-                    $tmpRs = $this->checkNavPermission($childData);
-//                    echo $childData;
-//                    var_dump($tmpRs);
+                	list($childUrl, $childIcon) = explode(",", $childData);
+                    $tmpRs = $this->checkNavPermission($childUrl);
                     if($tmpRs) {
-                        $theChild[$childLabel]["url"] = $childData;
+                        $theChild[$childLabel]["url"] = $childUrl;
+                        $theChild[$childLabel]["icon"] = $childIcon;
                     }
                 }
                 if($theThird or $tmpRs) {
                     $theChild[$childLabel]["label"] = $childLabel;
-                    $theChild[$childLabel]["id"] = md5($childLabel.json_encode($childData));
+                    $theChild[$childLabel]["id"] = md5($childLabel.json_encode($childUrl));
                 }
                 
             }
