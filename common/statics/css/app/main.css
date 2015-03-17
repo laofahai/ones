@@ -36,6 +36,9 @@ a, a:hover {
 .mt-10{
     margin-top:10px;
 }
+.no-padding {
+    padding:0 !important;
+}
 table.table-grid {
     table-layout: fixed;
 }
@@ -806,7 +809,7 @@ th.sorting_asc,th.sorting_desc {
     border:0;
     margin:0;
     padding:0;
-    position:absolute;
+    position:fixed;
     top:50px;
     width:100%;
 }

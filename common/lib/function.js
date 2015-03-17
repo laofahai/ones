@@ -413,6 +413,9 @@ var toLang = function(key, section) {
  * 获取语言包，返回可以是数组或者字符串
  * 获取方式: lang.actions.add
  * */
+function _(k, langObject) {
+	return l(k, langObject);
+}
 function l(k, langObject) {
     k = k.toLowerCase();
     if(undefined === langObject) {

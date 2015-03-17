@@ -543,13 +543,13 @@
                             '<div ng-bind-html="%(data)s.label"></div>'+
                             '</choices>'+
                             '</ui-select>',
-                        'fields/datepicker': '<span class="input-icon input-icon-right"> \
+                        'fields/datepicker': '<span class="input-group"> \
                                     <input type="date" ng-model="%(model)s" %(attrs)s /> \
-                                <i class="fa fa-calendar gray"></i> \
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div> \
                             </span>',
-                        'fields/datetime': '<span class="input-icon input-icon-right"> \
+                        'fields/datetime': '<span class="input-group"> \
                                     <input type="datetime-local" ng-model="%(model)s" %(attrs)s /> \
-                                <i class="fa fa-calendar gray"></i> \
+                        	<div class="input-group-addon"><i class="fa fa-calendar"></i></div> \
                             </span>',
                         'fields/typeahead': '<input type="text" ' +
                             'typeahead-on-select="showselected(this)" typeahead-editable="false" typeahead-min-length="0" ' +

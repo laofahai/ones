@@ -270,7 +270,6 @@
         "operation": "操作",
         "password": "密码",
         "unit_price": "单价",
-        "department": "部门",
         "create_time": "创建时间",
         "create_dateline": "创建时间",
         "receive_dateline": "收到时间",

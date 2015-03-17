@@ -179,7 +179,7 @@ INSERT INTO `__PREFIX__config` (`id`, `app_alias`, `alias`, `name`, `value`, `de
   (10, NULL, 'backup.sendto.email', '备份文件发送邮箱', 'webmaster@localhost', '备份发送至邮箱', 0, 0),
   (11, NULL, 'backup.days', '定期备份', '1', '以天位单位。', 0, 0),
   (12, NULL, 'remote.service.uri', '远程服务地址', 'https://ng-erp.com/api/', '包括程序更新、帮助信息等', 0, 0),
-  (15, NULL, 'system.version', '当前系统版本', '0.2', '请勿手动修改', 0, 0),
+  (15, NULL, 'system.version', '当前系统版本', '0.3', '请勿手动修改', 0, 0),
   (16, NULL, 'system.currency', '货币符号', '￥', '', 0, 0),
   (17, NULL, 'system.decimal.fixed', '小数点位', '2', '最多两位', 0, 0),
   (39, NULL, 'goods.unique.template', '商品唯一编码生成模板', 'factory_code', '以逗号分隔，第一个默认为goods表factory_code字段，后面为数据模型字段的alias', 0, 0),
