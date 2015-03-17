@@ -51,7 +51,9 @@ class UserModel extends CommonModel {
     public function getLeadedUsers($onlyId=true, $uid=null, $includeSelf=true) {
 
         $map = array(
-            "department_id" => array("IN", $this->getLeadedDepartments(true, $uid)),
+            "department_id" => array("IN", array_merge(
+            		$this->getLeadedDepartments(true, $uid), array(-1)
+            )),
         );
 
         if($includeSelf) {
