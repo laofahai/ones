@@ -142,7 +142,7 @@
                     }
 
 
-                    app.id = app.name;
+                    app.id = 'dashboard_appBtn_'+app.name;
                     app.label_combined = true;
                     app.url = app.link;
                     appBtns[app.name] = app;
@@ -157,8 +157,6 @@
                     } catch(e) {}
 
                 }
-
-                
 
 
                 $scope.appBtns = ones.caches.getItem("ones.dashboard_btn.config") || [];

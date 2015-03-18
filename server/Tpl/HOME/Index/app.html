@@ -1,34 +1,34 @@
 <!doctype html>
 <html>
-	<head>
-	    <meta name="renderer" content="webkit" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	    <meta charset="utf-8">
-	    <title>{$siteTitle}</title>
-	    <meta name="description" content="">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-	    <link rel="shortcut icon" href="common/statics/images/favicon.ico" />
-	    <link rel="stylesheet" href="common/statics/css/bootstrap.min.css" />
-	    <link rel="stylesheet" href="common/statics/css/bootstrap-theme.min.css" />
-	    <link rel="stylesheet" href="common/statics/css/todc-bootstrap.min.css" />
-	    <link rel="stylesheet" href="common/statics/css/font-awesome.min.css" />
-	    <link rel="stylesheet" href="common/statics/css/vendor.css">
-	    <link rel="stylesheet" href="common/statics/css/app/main.css">
-	    <link rel="stylesheet" href="common/statics/css/angular-motion.css">
-	    <link rel="stylesheet" href="common/vendor/angularModules/gridster/angular-gridster.min.css">
-	    <link rel="stylesheet" href="{:U('FrontendRuntime/index?action=getCss')}" />
-	    <base href="{$APP_PATH}" />
-	</head>
-	<body ng-controller="MainCtl" ng-keydown="doMainKeyDown($event)">
-		<header class="topest clearfix">
-		    <div class="pull-left topbar-brand">
-		        <a href="javascript:void(0);" ng-click="sidebarToggleExpand()" class="toggle_left_sidebar pull-left">
-		            <i class="fa" ng-class="{'fa-angle-double-left':sidebar_expand,'fa-angle-double-right':!sidebar_expand}"></i>
-		        </a>
-		        <a ng-click="$root.goPage('/')" class="logo pull-left"></a>
-		    </div>
-			<div class="navbar-nav" ng-controller="TopBarCtl">
-			    <ul id="nav-list" class="clearfix">
+    <head>
+        <meta name="renderer" content="webkit" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta charset="utf-8">
+        <title>{$siteTitle}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="shortcut icon" href="common/statics/images/favicon.ico" />
+        <link rel="stylesheet" href="common/statics/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="common/statics/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="common/statics/css/todc-bootstrap.min.css" />
+        <link rel="stylesheet" href="common/statics/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="common/statics/css/vendor.css">
+        <link rel="stylesheet" href="common/statics/css/app/main.css">
+        <link rel="stylesheet" href="common/statics/css/angular-motion.css">
+        <link rel="stylesheet" href="common/vendor/angularModules/gridster/angular-gridster.min.css">
+        <link rel="stylesheet" href="{:U('FrontendRuntime/index?action=getCss')}" />
+        <base href="{$APP_PATH}" />
+    </head>
+    <body ng-controller="MainCtl" ng-keydown="doMainKeyDown($event)">
+        <header class="topest clearfix">
+            <div class="pull-left topbar-brand">
+                <a href="javascript:void(0);" ng-click="sidebarToggleExpand()" class="toggle_left_sidebar pull-left">
+                    <i class="fa" ng-class="{'fa-angle-double-left':sidebar_expand,'fa-angle-double-right':!sidebar_expand}"></i>
+                </a>
+                <a ng-click="$root.goPage('/')" class="logo pull-left"></a>
+            </div>
+            <div class="navbar-nav" ng-controller="TopBarCtl">
+                <ul id="nav-list" class="clearfix">
                     <li ng-repeat="nav in navs" ng-class="{'active': nav.id==active_nav}">
                         <a href="javascript:void(0);" 
                         title="{{'lang.navs.'+nav.label|lang}}" 
@@ -38,23 +38,23 @@
                         </a>
                     </li>
                 </ul>
-			</div>
-			<div class="pull-right topbar-right">
+            </div>
+            <div class="pull-right topbar-right">
                 {:tag("nav_bar_dropdown_html")}
-                <a ng-click="$root.goPage('systemPreference')">
+                <a ng-click="$root.goPage('systemPreference')" id="topest_setting_btn">
                     <i class="fa fa-cog"></i>
                 </a>
                 <a ng-click="$root.goPage('department/Logout')">
                     <i class="fa fa-power-off"></i>
                 </a>
-			</div>
-		</header>
-		<div class="progress loadingStateBar" id="loadingStateBar">
+            </div>
+        </header>
+        <div class="progress loadingStateBar" id="loadingStateBar">
             <div class="progress-bar progress-bar-info" id="loadingStateBarProgress"></div>
         </div>
-		<section class="main-container">
-		    <aside ng-class="{'nexpand':!sidebar_expand}">
-	            <div class="nav-search input-group" ng-controller="multiSearchCtl">
+        <section class="main-container">
+            <aside ng-class="{'nexpand':!sidebar_expand}">
+                <div class="nav-search input-group" ng-controller="multiSearchCtl">
                     <input type="text"
                        id="multiSearchInput"
                        placeholder="Search ..."
@@ -66,8 +66,8 @@
                        ng-blur="doSearchBlur($event)"
                        ng-focus="doSearchFocus($event)" />
                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-		        </div>
-		        <div class="sidebar-user clearfix">
+                </div>
+                <div class="sidebar-user clearfix">
                     <a ng-click="$root.goPage('/my/preference')" class="sidebar-user-photo pull-left">
                         <img class="img-circle" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=40" width="40" />
                     </a>
@@ -81,11 +81,13 @@
                         <a ng-click="$root.goPage('my/preference')"><i class="fa fa-cog"></i></a>
                     </div>
                 </div>
-		        <ul class="sidebar-nav">
-		            <li ng-repeat="ln in left_navs" ng-class="{'active': sidebar_active_nav==ln.id}">
+                <ul class="sidebar-nav">
+                    <li ng-repeat="ln in left_navs" ng-class="{'active': sidebar_active_nav==ln.id}">
                         <a href="javascript:void(0);" 
                         ng-click="toggle_sidebar_active_nav(ln.id, ln.url);"
                         title="{{ln.label}}" 
+                        id="{{ln.id}}"
+                        class="nav-a" 
                         onclick="$(this).next('.has_child').toggleClass('hide')" 
                         bs-tooltip="'{{ln.label}}'" data-trigger="hover" data-placement="right">
                             <i class="fa fa-{{ln.icon|default:'circle-o'}}"></i>
@@ -95,6 +97,7 @@
                         <ul class="submenu" ng-class="{'has_child': ln.childs, 'hide': !sidebar_active_nav||sidebar_active_nav!=ln.id, 'visible': sidebar_active_nav && sidebar_active_nav==ln.id}">
                             <li ng-repeat="nct in ln.childs" ng-class="{'active': sidebar_active_nav==nct.id}">
                                 <a href="javascript:void(0);" ng-click="toggle_sidebar_active_nav(nct.id, nct.url);" 
+                                class="nav-a" 
                                 bs-tooltip="'{{nct.label}}'" data-trigger="hover" data-placement="right">
                                     <i class="fa fa-angle-double-right"></i>
                                     <span>{{nct.label}}</span>
@@ -102,24 +105,24 @@
                             </li>
                         </ul>
                     </li>
-		        </ul>
-		    </aside>
-		    <article class="main-content-container" ng-class="{'when_sidebar_nexpand':!sidebar_expand}">
-		        <div class="main-content-heading">
-		            <h1>
-		                <span ng-bind="currentPage.lang.app"></span>
-		                <small ng-bind="currentPage.lang.module" ng-show="currentPage.lang.module"></small>
-		            </h1>
-		            <div class="main-content-heading-tools">
-		                <a href="javascript:void(0);" 
-		                  class="wiki" 
-		                  ng-show="$root.currentPage.app" 
+                </ul>
+            </aside>
+            <article class="main-content-container" ng-class="{'when_sidebar_nexpand':!sidebar_expand}">
+                <div class="main-content-heading">
+                    <h1>
+                        <span ng-bind="currentPage.lang.app"></span>
+                        <small ng-bind="currentPage.lang.module" ng-show="currentPage.lang.module"></small>
+                    </h1>
+                    <div class="main-content-heading-tools">
+                        <a href="javascript:void(0);" 
+                          class="wiki" 
+                          ng-show="$root.currentPage.app" 
                           ng-click="goToWiki($root.currentPage.app)"                  
-		                  title="{{currentPage.lang.app}} - {{'lang.actions.view_manunal'|lang}}" 
-		                  target="_blank">
-		                    <i class="fa fa-question-circle"></i>
-		                </a>
-		                <a href="http://project.ng-erp.com/projects/ones/boards" title="{{'lang.actions.get_support'|lang}}" class="support" target="_blank">
+                          title="{{currentPage.lang.app}} - {{'lang.actions.view_manunal'|lang}}" 
+                          target="_blank">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                        <a href="http://project.ng-erp.com/projects/ones/boards" title="{{'lang.actions.get_support'|lang}}" class="support" target="_blank">
                             <i class="fa fa-support"></i>
                         </a>
                         <a href="javascript:void(0);" 
@@ -128,8 +131,8 @@
                         onclick="if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 && window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('https://chat.ng-erp.com', 'mibew', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=640,height=450,resizable=0');this.newWindow.focus();this.newWindow.opener=window;return false;">
                             <i class="fa fa-comments"></i>
                         </a>
-		            </div>
-		        </div>
+                    </div>
+                </div>
                 <div id="alerts-container"></div>
     
                 <div class="page-content">
@@ -145,9 +148,9 @@
                     </div>
                     <!--//demo-->
                 </div><!-- /.page-content -->
-		    </article>
-		</section>
-		<div class="bottomAlertContainer" id="bottomAlertContainer"></div>
+            </article>
+        </section>
+        <div class="bottomAlertContainer" id="bottomAlertContainer"></div>
     
         <ul class="dropdown-menu contextMenuDropdown ng-hide"
             role="menu"
@@ -163,259 +166,52 @@
                    </a>
             </li>
         </ul>
-		<script type="text/javascript">
-		    var ones = {
-		        BaseConf: {
-		            LoadedApps: {$loadedAppsStr},
-		            DEBUG: {$isDebug}
-		        },
-		        basePath: '{$APP_PATH}',
-		        userInfo: {$userInfo},
-		        asyncScript: [],
-		    };
-		    <if condition="DBC('site.html5.mode')">
-		        ones.useHTML5 = {:DBC('site.html5.mode')};
-		    </if>
-		</script>
-		<foreach name="javascripts" item="js">
-		    <script src="{$js}"></script>
-		</foreach>
-		
-		<script type="text/javascript">
-		    /**
-		     * i18n
-		     * */
-		     jQuery(function(){
-		         /**
-		          * 加载语言包
-		          * */
-		         ones.i18n = ones.caches.getItem("ones.i18n");
-		         if((!ones.i18n || isEmptyObject(ones.i18n)) && !ones.installing) {
-		             jQuery.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
-		                 ones.caches.setItem("ones.i18n", data, 1);
-		                 ones.i18n = ones.caches.getItem("ones.i18n");
-		                 if(!ones.i18n) {
-		                     throw("can't load i18n package.");
-		                 }
-		
-		                 angular.element(document).ready(function() {
-		                     angular.bootstrap(document, ['ones']);
-		                 });
-		             });
-		         } else {
-		             angular.element(document).ready(function() {
-		                 angular.bootstrap(document, ['ones']);
-		                 $('[data-toggle="tooltip"]').tooltip();
-		             });
-		         }
-		     });
-		</script>
-	</body>
-</html>
-<php>exit;</php>
-<body ng-controller="MainCtl" ng-keydown="doMainKeyDown($event)">
-	<div class="navbar navbar-default" id="navbar">
-	    <div class="navbar-container" id="navbar-container">
-	        <div class="navbar-header pull-left">
-	            <a ng-click="sidebarToggleExpand()" class="topest_toggle_sidebar_btn">
-	                <i class="fa fa-list-ul"></i>
-	            </a>
-	            <a ng-click="$root.goPage('/')" class="navbar-brand"></a><!-- /.brand -->
-	        </div><!-- /.navbar-header -->
-	
-	        <div class="navbar-header pull-right navbar-user" role="navigation">
-	            <ul class="nav ace-nav">
-	                {:tag("nav_bar_dropdown_html")}
-	                <li class="topSetting" id="topest_setting_btn">
-	                    <a ng-click="$root.goPage('systemPreference')">
-	                        <i class="fa fa-cog"></i>
-	                        <span class="badge badge-important ng-binding ng-hide" ng-bind="reminds.length" ng-show="reminds.length>0">0</span>
-	                    </a>
-	                </li>
-	                <li>
-	                    <a ng-click="$root.goPage('department/Logout')">
-	                        <i class="fa fa-power-off"></i>
-	                    </a>
-	                </li>
-	            </ul><!-- /.ace-nav -->
-	        </div><!-- /.navbar-header -->
-	    </div><!-- /.container -->
-	</div>
-	
-	
-	<div class="main-container" id="main-container">
-	    <div class="main-container-inner">
-	        <a class="menu-toggler" id="menu-toggler" href="#">
-	            <span class="menu-text"></span>
-	        </a>
-	
-	        <div class="sidebar" id="sidebar" ng-class="{'menu-min':expand!==true}">
-	            <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-	                <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-	                    <div class="row">
-	                        <div class="col-xs-4">
-	                            <a ng-click="$root.goPage('/my/preference')">
-	                                <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=50" />
-	                            </a>
-	                        </div>
-	                        <div class="col-xs-8">
-	                            <a ng-click="$root.goPage('my/preference')"><i class="fa fa-cog"></i></a>
-	                            <a ng-click="$root.goPage('department/Logout')"><i class="fa fa-power-off"></i></a>
-	                        </div>
-	                    </div>
-	                </div>
-	
-	                <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
-	                    <a ng-click="$root.goPage('/my/preference')">
-	                        <img class="nav-user-photo" ng-src="./uploads/Avatars/avatar.php?email={{userInfo.email}}&s=50" />
-	                    </a>
-	                </div>
-	            </div><!-- #sidebar-shortcuts -->
-	
-	            <ul id="nav-list" class="nav nav-list" ng-controller="CommonSidebarCtl">
-	                <li ng-repeat="nav in navs" ng-class="{'active': nav.id==activeShowNav}">
-	                    <a ng-class="{'dropdown-toggle' : nav.childs.length}" ng-click="checkActiveNav($index, nav.id);$root.goPage(nav.url)">
-	                        <i class="fa fa-{{nav.icon}}"></i>
-	                        <span class="menu-text" ng-bind="'lang.navs.'+nav.label|lang"></span>
-	                        <b class="fa fa-angle-down" ng-show="{{nav.childs.length}}"></b>
-	                    </a>
-	                    <ul class="submenu">
-	                        <li ng-repeat="nc in nav.childs" ng-class="{'active':nc.id==activeSubNav}">
-	                            <a ng-click="checkSubActiveNav(nc.id, nav.id);$root.goPage(nc.url)">
-	                                <i class="fa fa-angle-double-right"></i>
-	                                <span class="menu-text" ng-bind="'lang.navs.'+nc.label|lang"></span>
-	                            </a>
-	                            <ul class="submenu">
-	                                <li ng-repeat="nct in nc.childs" ng-class="{'active':nct.id == activeThirdNav}">
-	                                    <a ng-click="checkThirdActiveNav(nct.id, nc.id);$root.goPage(nct.url)">
-	                                        <i class="fa fa-angle-double-right"></i>
-	                                        <span class="menu-text" ng-bind="'lang.navs.'+nct.label|lang"></span>
-	                                    </a>
-	                                </li>
-	                            </ul>
-	                        </li>
-	                    </ul>
-	                </li>
-	            </ul>
-	
-	            <div class="sidebar-collapse" ng-click="sidebarToggleExpand()">
-	                <i class="icon" ng-class="{'fa-angle-double-right':expand!==true,'fa-angle-double-left':expand===true}"></i>
-	            </div>
-	        </div>
-	
-	        <div class="main-content">
-	            <div class="breadcrumbs" id="breadcrumbs">
-	                <ul class="breadcrumb">
-	                    <li>
-	                        <i class="fa fa-home home-icon"></i>
-	                        <a ng-click="$root.goPage('DASHBOARD')" ng-bind="'lang.dashboard'|lang"></a>
-	                    </li>
-	                    <li ng-bind="currentPage.lang.app"></li>
-	                    <li class="active" ng-bind="currentPage.lang.module" ng-show="currentPage.lang.module"></li>
-	                    <li class="active" ng-bind="currentPage.lang.action" ng-show="currentPage.lang.action"></li>
-	                </ul><!-- .breadcrumb -->
-	
-	                <div class="nav-search" ng-controller="multiSearchCtl">
-	                    <span class="input-icon">
-	                        <input type="text"
-	                               id="multiSearchInput"
-	                               placeholder="Search ..."
-	                               class="nav-search-input"
-	                               autocomplete="off"
-	                               ng-model="keyword"
-	                               ng-model-options="{debounce:300}"
-	                               ng-keydown="doSearchKeydown($event)"
-	                               ng-blur="doSearchBlur($event)"
-	                               ng-focus="doSearchFocus($event)" />
-	                        <i class="fa fa-search nav-search-icon"></i>
-	                    </span>
-	
-	                </div><!-- #nav-search -->
-	            </div>
-	            <div class="progress loadingStateBar" id="loadingStateBar">
-	                <div class="progress-bar" id="loadingStateBarProgress"></div>
-	            </div>
-	            <div id="alerts-container"></div>
-	
-	            <div class="page-content">
-	                <div class="row">
-	                    <div class="col-xs-12 am-fade-and-scale" ng-view></div>
-	                </div>
-	                <hr class="hr-10 hr-double" />
-	                <div class="row footer-copy">
-	                    <p class="text-center">
-	                        &copy; 2014 Present by <a href="http://www.ng-erp.com" target="_blank">ONES Team</a>
-	                        v{:DBC('system.version')}
-	                    </p>
-	                </div>
-	                <!--//demo-->
-	            </div><!-- /.page-content -->
-	        </div><!-- /.main-content -->
-	
-	    </div><!-- /.main-container-inner -->
-	</div><!-- /.main-container -->
-	
-	<div class="bottomAlertContainer" id="bottomAlertContainer"></div>
-	
-	<ul class="ui-menu ui-widget ui-widget-content ui-corner-all contextMenuDropdown ng-hide"
-	    role="menu"
-	    ng-show="contextMenu.items.length>0"
-	    id="contextMenuDropdown"
-	    style="left:{{contextMenu.left||-9999}}px;top:{{contextMenu.top||-9999}}px;">
-	    <li ng-repeat="act in contextMenu.items track by $index" class="ui-menu-item" role="presentation">
-	        <a tabindex="-1"
-	           class="ui-corner-all"
-	           ng-click="act.action(null,contextMenu.selectedItems,contextMenu.currentItem);hideContextMenu();">
-	            <i class="fa fa-{{act.icon}}"></i>
-	            <span ng-bind="act.label"></span>
-	           </a>
-	    </li>
-	</ul>
-	<script type="text/javascript">
-	    var ones = {
-	        BaseConf: {
-	            LoadedApps: {$loadedAppsStr},
-	            DEBUG: {$isDebug}
-	        },
-	        basePath: '{$APP_PATH}',
-	        userInfo: {$userInfo},
-	        asyncScript: [],
-	    };
-	    <if condition="DBC('site.html5.mode')">
-	        ones.useHTML5 = {:DBC('site.html5.mode')};
-	    </if>
-	</script>
-	<foreach name="javascripts" item="js">
-	    <script src="{$js}"></script>
-	</foreach>
-	
-	<script type="text/javascript">
-	    /**
-	     * i18n
-	     * */
-	     jQuery(function(){
-	         /**
-	          * 加载语言包
-	          * */
-	         ones.i18n = ones.caches.getItem("ones.i18n");
-	         if((!ones.i18n || isEmptyObject(ones.i18n)) && !ones.installing) {
-	             jQuery.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
-	                 ones.caches.setItem("ones.i18n", data, 1);
-	                 ones.i18n = ones.caches.getItem("ones.i18n");
-	                 if(!ones.i18n) {
-	                     throw("can't load i18n package.");
-	                 }
-	
-	                 angular.element(document).ready(function() {
-	                     angular.bootstrap(document, ['ones']);
-	                 });
-	             });
-	         } else {
-	             angular.element(document).ready(function() {
-	                 angular.bootstrap(document, ['ones']);
-	             });
-	         }
-	     });
-	</script>
-</body>
+        <script type="text/javascript">
+            var ones = {
+                BaseConf: {
+                    LoadedApps: {$loadedAppsStr},
+                    DEBUG: {$isDebug}
+                },
+                basePath: '{$APP_PATH}',
+                userInfo: {$userInfo},
+                asyncScript: [],
+            };
+            <if condition="DBC('site.html5.mode')">
+                ones.useHTML5 = {:DBC('site.html5.mode')};
+            </if>
+        </script>
+        <foreach name="javascripts" item="js">
+            <script src="{$js}"></script>
+        </foreach>
+        
+        <script type="text/javascript">
+            /**
+             * i18n
+             * */
+             jQuery(function(){
+                 /**
+                  * 加载语言包
+                  * */
+                 ones.i18n = ones.caches.getItem("ones.i18n");
+                 if((!ones.i18n || isEmptyObject(ones.i18n)) && !ones.installing) {
+                     jQuery.get(ones.BaseConf.BSU+"FrontendRuntime/index/action/getI18n/lang/zh-cn").success(function(data) {
+                         ones.caches.setItem("ones.i18n", data, 1);
+                         ones.i18n = ones.caches.getItem("ones.i18n");
+                         if(!ones.i18n) {
+                             throw("can't load i18n package.");
+                         }
+        
+                         angular.element(document).ready(function() {
+                             angular.bootstrap(document, ['ones']);
+                         });
+                     });
+                 } else {
+                     angular.element(document).ready(function() {
+                         angular.bootstrap(document, ['ones']);
+                         $('[data-toggle="tooltip"]').tooltip();
+                     });
+                 }
+             });
+        </script>
+    </body>
 </html>

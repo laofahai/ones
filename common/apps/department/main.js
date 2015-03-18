@@ -61,7 +61,6 @@
                     },
                     truename: {},
                     phone: {
-                        inputType: "number"
                     },
                     group_name: {
                         displayName: toLang("usergroup", "", $rootScope),

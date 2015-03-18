@@ -1,4 +1,16 @@
 (function(window, ones, angular){
+	/**
+	 * @ones.plugin
+	 * @plugin.hook_name  hook.firstTimeWizard
+	 * @plugin.param opts = {
+	 * 		id: //bind to element id,
+	 * 		lang_key: //the popover unique key, language: {key: {title: '', body: ''}},
+	 * 		positon: // where the popover show with element 
+	 * }
+	 * */
+//	ones.pluginRegister("hook.firstTimeWizard.popover", function(injector, defer, opts){
+//		
+//	});
     angular.module("ones.firstTimeWizard", [])
         .service("FirstTimeWizard.WizardAPI", ["ones.dataApiFactory", "$popover", "$timeout", "$rootScope",
             function(dataAPI, $popover, $timeout, $rootScope){

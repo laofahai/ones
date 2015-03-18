@@ -429,11 +429,6 @@
 
                                 if(typeof(parentScope.doBillSubmit) !== "function") {
                                     parentScope.doSubmit = parentScope.doBillSubmit = (config.doSubmit ? config.doSubmit : function() {
-                                        if(!config.returnPage) {
-                                            var tmp = $location.$$url.split("/").slice(1,4);
-                                            tmp[1] = "list";
-                                            config.returnPage = "/"+tmp.join("/");
-                                        }
                                         var data = $.extend(parentScope.formMetaData, {rows: parentScope[config.dataName]});
                                         var getParams = {};
                                         for (var k in $routeParams) {
@@ -464,8 +459,11 @@
                                                     returnPage = lastPage[1]+"/list/"+lastPage[3];
                                                 }
                                                 //return;
-                                                returnPage = $location.url().replace("addBill", "list").replace("editBill", "list");
-                                                returnPage = returnPage.split('/').slice(0,4).join('/')
+                                                if(!returnPage) {
+                                                	returnPage = $location.url().replace("addBill", "list").replace("editBill", "list");
+                                                    returnPage = returnPage.split('/').slice(0,4).join('/')                                                	
+                                                }
+                                                
                                                 $location.url(returnPage);
                                             }
                                         });

@@ -299,7 +299,7 @@
         "author": "作者",
         "description": "描述",
         "link": "链接",
-        "appStatus": " ",
+        "appStatus": "应用状态",
         "Installed": "已安装",
         "HasUpdate": "可升级",
         "Inactive": "已禁用",

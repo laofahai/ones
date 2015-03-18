@@ -3,7 +3,7 @@
         <tr ng-repeat="p in permissions.lists">
             <td ng-bind="p.dir"></td>
             <td>
-                <i class="icon" ng-class="{'fa-check green': p.writeable, 'fa-times red': p.writeable===false}"></i>
+                <i class="fa" ng-class="{'fa-check green': p.writeable, 'fa-times red': p.writeable===false}"></i>
             </td>
         </tr>
     </tbody>
