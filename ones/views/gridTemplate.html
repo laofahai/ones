@@ -1,0 +1,126 @@
+<div class="grid-container" ng-class="{'has-filter': $parent.show_filters && $parent.has_filters}">
+    <div class="grid-table-container" style="min-height:{{filter_height}}px">
+        <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
+            <thead>
+                <tr>
+                    <th width="40" class="hidden-480 text-center">
+                        <!--<input type="checkbox"-->
+                               <!--ng-change="selectAll()"-->
+                               <!--ng-model="all_checked" />-->
+                    </th>
+                    <th
+                            class="th-{{f}}"
+                            ng-class="{sortable: is_sortable(f) || f == 'id', sorting: sortInfo.fields == f}"
+                            ng-repeat="f in schema_display"
+                            ng-click="is_sortable(f) && doGridSortBy(f)"
+                            width="{{column_defs[f].width}}">
+                        <span ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"></span>
+                        <i class="sorting-icon fa"
+                           ng-class="{'fa-sort-asc':sorting == f + ' DESC','fa-sort-desc':sorting == f + ' ASC'}"
+                           ng-show="is_sortable(f)"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in itemsList"
+                    ng-dblclick="doGridDblClick(item, null, $event)"
+                    ng-click="doGridClick($index, $event)"
+                    ng-touch="doAlert($event,item,config)"
+                    ng-right-click="doContextMenu($event,item,config)">
+                    <td align="center" class="hidden-480">
+                        <label>
+                            <input type="checkbox"
+                                   ng-change="recordSelected(result)"
+                                   ng-true-value="{{$index + 1}}"
+                                   ng-checked="checked_box[('index_'+$index)]"
+                                   ng-false-value="{{-($index + 1)}}" ng-model="result" />
+                            <span class="lbl"></span>
+                        </label>
+                    </td>
+                    <td ng-repeat="field in schema_display"
+                        class="td-{{field}} {{column_defs[field].class}}"
+                        ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
+                        ui-event="{{column_defs[field].ui_event}}"
+                        ng-click="{{column_defs[field].ng_click}}"
+                        ng-bind-html="(column_defs[field].get_display && column_defs[field].get_display(item[field], item)) || item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index"
+                            ></td>
+                </tr>
+                <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">
+                    <td colspan="{{schema_display.length + 1}}"
+                        class="grid-td-unfound" align="center" ng-bind="'common.No data to display' | lang"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr ng-show="count_object_size(search_able)>0">
+                    <th width="40" class="grid-th-search"></th>
+                    <th
+                            class="th-{{f}} grid-th-search"
+                            ng-repeat="f in schema_display"
+                            width="{{column_defs[f].width}}">
+                        <input type="text"
+                               class="grid-search-input"
+                               ng-show="search_able[f].type>0"
+                               ng-model="search_value[f]"
+                               placeholder="{{('common.'+(search_able[f].type == 2 ? 'Precision ': 'Fuzzy')+' Search By %s')|lang:(app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang)}}"
+                               ng-focus="doResetSearchValue(f)"
+                               ng-model-options="{ debounce: 500 }" />
+                        <span
+                                ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"
+                                ng-show="!search_able[f]"
+                                ></span>
+                    </th>
+                </tr>
+                <tr ng-show="(model_config.app +'.HELP_TEXTS.grid.'+model_config.module|lang) != model_config.module ">
+                    <td colspan="{{schema_display.length + 1}}" ng-bind-html="model_config.app +'.HELP_TEXTS.grid.'+model_config.module|lang"></td>
+                </tr>
+                <tr>
+                    <td colspan="{{schema_display.length + 1}}" valign="middle">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <span ng-bind="'common.%s Items Total'|lang:(totalServerItems||0)"></span><br />
+                                <span ng-bind="'common.Current Page %s/%s'|lang:[(pagingOptions.currentPage||1),(totalPages||1)]"></span>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="btn-group pull-right">
+                                    <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage(1)"><i class="fa fa-angle-double-left"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage(-1)"><i class="fa fa-angle-left"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage('+1')"><i class="fa fa-angle-right"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-default" ng-click="setPage('max')"><i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                                <div class="input-group pull-right grid-page-select-box">
+                                    <input type="number" class="input-mini form-control" ng-model-options="{ debounce: 500 }" ng-model="pagingOptions.currentPage" min="1" max="{{totalPages}}" />
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <span ng-bind="pagingOptions.pageSize"></span> <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li ng-repeat="p in pageSizes">
+                                                <a href="javascript:void(0);" ng-bind="'common.%s items per page'|lang:p" ng-click="pagingOptions.pageSize=p"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="grid-filter-container" id="grid-filter-container" ng-show="$parent.show_filters && $parent.has_filters">
+        <h2 class="filter-title">
+            <i class="fa fa-filter"></i>
+            <span ng-bind="'common.Filters'|lang"></span>
+        </h2>
+        <div class="filter-content" style="min-height:{{table_height-23}}px">
+            <dl ng-repeat="link in filters.links" class="filter-content-links">
+                <dt ng-bind="'common.By %s:'|lang:(app_info.app+'.'+link.label|lang)"></dt>
+                <dd ng-repeat="i in link.items" ng-class="{'active': i.id===filter_actives[link.source_field]}">
+                    <a href="javascript:void(0)"
+                       ng-click="filter_by_link(link.map_field, link.source_field, i.id)"
+                       ng-bind="i.name"></a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

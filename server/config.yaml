@@ -1,0 +1,24 @@
+# 是否DEBUG
+DEBUG: true
+# 当前版本
+version: "1.0"
+# 默认语言
+default_language: zh-cn
+# 会话保存时间
+access_max_age: 600
+# 无需认证动作
+auth_dont_need_login: 
+    - home.config.bootstrap.event
+    - home.i18n.event
+auth_dont_need_check:
+    - home.config.app.get
+
+    
+# 默认导航
+navs:
+    Base Data Set:
+        icon: navicon
+        app: common
+    System Preference:
+        icon: cog
+        app: common

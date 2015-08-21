@@ -1,0 +1,78 @@
+data_model_field:
+    belongs_to_module:
+        limit: 100
+    alias:
+        limit: 50
+        comment: 字段别名
+    label:
+        limit: 100
+        comment: 字段显示名称
+    widget:
+        limit: 50
+        comment: 录入控件，对应form.fields
+    data_type:
+        limit: 50
+        comment: 数据类型，对应schema.field.type
+    search_able:
+        type: enum
+        values: [0,1,2]
+        default: '0'
+        comment: 是否可搜索0不可搜索，1模糊搜索，2精确匹配
+    config:
+        type: text
+        blank: true
+        comment: 扩展字段配置
+
+    $meta:
+        indexes:
+            belongs_to_module:
+            company_alias:
+                fields: [company_id, alias]
+                unique: true
+            alias:
+            search_able:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+        enable_trash: true
+
+data_model_data_search:
+    source_id:
+        type: integer
+    data:
+        limit: 255
+        comment: 可搜索数据
+    $meta:
+        indexes:
+            source_id:
+            unique_key:
+                fields: [source_id, data_model_field_id]
+                unique: true
+        foreign:
+            data_model_field:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+
+data_model_data:
+    source_id:
+        type: integer
+    data:
+        type: text
+        comment: 不可搜索数据
+    $meta:
+        indexes:
+            source_id:
+            unique_key:
+                fields: [source_id, data_model_field_id]
+                unique: true
+        foreign:
+            data_model_field:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

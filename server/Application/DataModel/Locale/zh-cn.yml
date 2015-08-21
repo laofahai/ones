@@ -1,0 +1,15 @@
+APP_NAME: 数据模型
+
+Data Model Field: 数据模型字段
+Data Model: 数据模型
+Alias: 别名
+Label: 显示名称
+Widget: 输入控件
+Data Type: 数据类型
+Search Able: 是否可搜索
+Extra Config: 扩展配置
+Belongs To Module: 从属于模块
+
+help_text_field_extra_config: "每行一个配置，eg: key:value。<a href=\"http://forum.ng-erp.com/topic/13\" target=\"_blank\">配置项目参考</a>"
+help_text_search_able: '<strong class="text-warning">选中后不可进行修改</strong>'
+help_text_alias: '接受英文字母和下划线，建议加入命名前缀'

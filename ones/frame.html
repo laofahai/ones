@@ -1,0 +1,126 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title ng-bind="'common.ONES - TEam Swift Present'|lang"></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/todc-bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+        <link rel="stylesheet" href="bower_components/chosen/bootstrap-chosen.css" />
+        <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css">
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/base.css">
+        <link rel="stylesheet" href="styles/frame.css">
+        <!-- endbuild -->
+    </head>
+    <body ng-controller="MainFrameCtrl">
+        <div ng-view>
+            <h1 class="frame_bger" id="frame_bger">Loading app ... </h1>
+        </div>
+
+        <div class="footer-copy" id="footer-copy">
+            Powered By <a href="javascript:void(0);" id="footer-copy-link" target="_blank"></a>
+        </div>
+
+        <ul class="dropdown-menu contextMenuDropdown ng-hide"
+            role="menu"
+            ng-show="contextMenu.items.length>0"
+            id="contextMenuDropdown"
+            style="left:{{contextMenu.left||-9999}}px;top:{{contextMenu.top||-9999}}px;">
+            <li ng-repeat="act in contextMenu.items track by $index"
+                ng-class="{'dropdown-submenu': act.children}"
+                class="ui-menu-item"
+                role="presentation">
+                <a tabindex="-1"
+                   class="ui-corner-all"
+                   ng-click="!act.children && act.action($event,contextMenu.selectedItems,contextMenu.currentItem);hideContextMenu();">
+                    <i class="fa fa-{{act.icon}}"></i>
+                    <span ng-bind="act.label"></span>
+                   </a>
+                <ul ng-show="act.children" class="dropdown-menu">
+                    <li ng-repeat="child in act.children" ng-class="{'dropdown-header': child.is_header}">
+                        <a href="javascript:void(0);"
+                           ng-bind="child.label"
+                           ng-click="!child.is_header && child.action($event, contextMenu.selectedItems, contextMenu.currentItem); hideContextMenu();"
+                                ></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <a href="javascript:void(0);"
+           class="add_to_common_nav_btn"
+           title="{{(exists_in_common ? 'common.Remove Frome Common Nav' : 'common.Add To Common Nav')|lang}}"
+           ng-click="toggle_common_nav()"
+                >
+            <i class="fa" ng-class="{'fa-plus': !exists_in_common, 'fa-close': exists_in_common}"></i>
+        </a>
+
+
+        <script> var ones = {}; </script>
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/todc-bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script src="bower_components/chosen/chosen.jquery.min.js"></script>
+        <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
+        <script src="bower_components/moment/min/moment-with-locales.js"></script>
+        <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+        <script src="bower_components/showdown/src/showdown.js"></script>
+        <script src="bower_components/angular-markdown-directive/markdown.js"></script>
+        <script src="bower_components/angular-socket-io/socket.js"></script>
+        <script src="bower_components/socket.io-client/socket.io.js"></script>
+        <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
+        <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
+        <script src="bower_components/jsbarcode/JsBarcode.js"></script>
+        <script src="bower_components/jsbarcode/CODE128.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,ones}) scripts/frame_lib.js -->
+        <script src="lib/vendor/sprintf.js"></script>
+        <script src="lib/vendor/md5.js"></script>
+        <script src="lib/vendor/accounting.min.js"></script>
+        <script src="lib/vendor/money.min.js"></script>
+        <script src="common/config.js"></script>
+        <script src="lib/function.js"></script>
+        <script src="lib/caches.js"></script>
+        <script src="lib/i18n.js"></script>
+        <script src="lib/plugin.js"></script>
+        <script src="lib/require.js"></script>
+        <script src="lib/common_view.js"></script>
+        <script src="lib/form/form.js"></script>
+        <script src="lib/form/form.fields.js"></script>
+        <script src="lib/form/form.fields.tpl.js"></script>
+        <script src="lib/grid_view.js"></script>
+        <script src="lib/detail_view/detail_view.js"></script>
+        <script src="lib/detail_view/detail_view.widget.js"></script>
+        <script src="apps/dataModel/service.js"></script>
+        <script src="common/directive.js"></script>
+        <script src="common/service.js"></script>
+        <script src="common/filter.js"></script>
+        <script src="common/frame.js"></script>
+        <!-- endbuild -->
+        <script>
+            frame_init();
+        </script>
+    </body>
+</html>

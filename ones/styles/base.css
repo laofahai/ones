@@ -1,0 +1,51 @@
+@import url(animate.css);
+html, body {
+  height: 100%;
+  color: #656565; }
+
+a, button, input {
+  transition: all 0.1s ease-out; }
+
+.text-white {
+  color: #fff; }
+
+.contextMenuDropdown {
+  position: absolute;
+  margin: 0;
+  z-index: 100;
+  background: #fff; }
+
+.contextMenuDropdown li {
+  list-style: none; }
+  .contextMenuDropdown li a i {
+    float: left;
+    width: 20px; }
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 25px 3px 15px !important; }
+
+.contextMenuDropdown a:hover {
+  text-decoration: none; }
+
+.contextMenuDropdown.dropdown-menu {
+  display: block;
+  min-width: 0; }
+
+.contextMenuDropdown.dropdown-menu:focus {
+  border: 1px solid red !important; }
+
+.no-padding {
+  padding: 0 !important; }
+
+.no-border {
+  border: 0 !important; }
+
+.avatar img {
+  margin: -4px 8px 0 0;
+  border-radius: 100%;
+  border: 2px solid #FFF;
+  width: 45px;
+  height: 45px; }
+
+/*# sourceMappingURL=base.css.map */

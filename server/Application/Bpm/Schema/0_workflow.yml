@@ -1,0 +1,132 @@
+workflow:
+    name:
+    module:
+        limit: 50
+    is_default:
+        type: boolean
+        default: true
+    last_update:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    locked:
+        type: boolean
+        default: false
+    $meta:
+        indexes:
+            name:
+            module:
+            is_default:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            app:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+
+workflow_node:
+    label:
+        comment: 节点名称
+        limit: 100
+    status_label:
+        comment: 状态名称
+        blank: true
+        limit: 100
+    node_type:
+        limit: 10
+        comment: 节点类型
+    action_type:
+        limit: 5
+        comment: 节点执行动作类型
+    action:
+        comment: 执行动作
+        blank: true
+        limit: 100
+    executor:
+        comment: 执行人
+        limit: 20
+    execute_condition:
+        comment: 执行条件
+        blank: true
+        limit: 100
+    prev_nodes:
+        comment: 当前节点来源节点ID
+        blank: true
+        limit: 100
+    next_nodes:
+        comment: 当前节点后续节点ID
+        blank: true
+        limit: 100
+    condition_true_nodes:
+        comment: 如果是条件判断节点，条件真时的下一节点IDS
+        blank: true
+        limit: 100
+    condition_false_nodes:
+        comment: 如果是条件判断节点，条件假时的下一节点IDS
+        blank: true
+        limit: 100
+    notify:
+        type: string
+        limit: 100
+        blank: true
+        comment: 提醒类型
+    notify_content:
+        type: string
+        comment: 提醒内容
+        blank: true
+    widget_id:
+        type: integer
+        limit: 3
+        comment: widget在builder中的ID
+    widget_config:
+        type: text
+        limit: text
+        comment: widget的其他配置，位置/尺寸等
+    $meta:
+        enable_trash: true
+        foreign:
+            workflow:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+
+
+workflow_progress:
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    source_id:
+        type: integer
+        limit: 11
+    context:
+        type: text
+        limit: text
+        blank: true
+    remark:
+        blank: true
+    $meta:
+        indexes:
+            source_id:
+        foreign:
+            workflow:
+                restrict:
+                    delete: CASCADE
+            workflow_node:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: CASCADE

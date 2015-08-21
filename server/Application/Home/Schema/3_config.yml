@@ -1,0 +1,17 @@
+config:
+    alias:
+    val:
+    data_type:
+        limit: 50
+    app:
+
+    $meta:
+        indexes:
+            app:
+            alias:
+                fields: [company_id, alias]
+                unique: true
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE

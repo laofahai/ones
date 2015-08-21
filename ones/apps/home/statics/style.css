@@ -1,0 +1,45 @@
+.home-config-container {
+  position: relative; }
+
+.home-config-left {
+  margin-right: 179px; }
+
+.home-config-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 180px; }
+  .home-config-right h2.filter-title {
+    height: 25px;
+    font-size: 12px;
+    line-height: 25px;
+    margin: 0;
+    padding: 0 10px;
+    background: #4d90fe;
+    color: #fff; }
+  .home-config-right .filter-content {
+    padding-top: 10px;
+    background: #efefef;
+    border: 1px solid #ddd;
+    border-top: 0;
+    font-size: 12px; }
+    .home-config-right .filter-content .filter-content-links {
+      line-height: 180%;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 10px; }
+      .home-config-right .filter-content .filter-content-links dd, .home-config-right .filter-content .filter-content-links dt {
+        padding: 0 6px;
+        border-left: 5px solid #efefef;
+        height: 20px;
+        line-height: 20px; }
+      .home-config-right .filter-content .filter-content-links dd a {
+        color: #666; }
+      .home-config-right .filter-content .filter-content-links dd a:hover {
+        color: #1155cc; }
+      .home-config-right .filter-content .filter-content-links dd.active {
+        border-color: #1155cc; }
+        .home-config-right .filter-content .filter-content-links dd.active a {
+          color: #1155cc; }
+
+/*# sourceMappingURL=style.css.map */

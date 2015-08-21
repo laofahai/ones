@@ -1,0 +1,18 @@
+app:
+    alias:
+        comment: 应用别名
+    slug:
+        blank: true
+        comment: 缩写
+        after: alias
+    requirements:
+        type: text
+        blank: true
+        comment: 依赖
+        
+    $meta:
+        # truncate_when_migrate: true
+        indexes:
+            alias:
+                unique: true
+

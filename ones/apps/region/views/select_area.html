@@ -1,0 +1,43 @@
+<div class="region_select_container">
+    <input type="hidden" %(attr)s readonly />
+    <a href="javascript:void(0);" ng-click="show_region_select_modal($event)" class="region_label">
+        <span ng-bind="%(label_model)s"></span>
+        <i class="fa fa-caret-down"></i>
+    </a>
+    <div class="region_select_panel">
+        <div class="region_select_title">
+            <ul>
+                <li
+                        ng-repeat="type in types"
+                        ng-class="{active: active_tab===type}"
+                        ng-click="change_tab_to(type)"
+                        >
+                    <a href="javascript:void(0);"
+                        ng-bind="%(label_model)s_{{type}}"
+                        ></a>
+                </li>
+                <div class="clearfix"></div>
+            </ul>
+        </div>
+
+        <div class="region_select_items">
+            <ul>
+                <li ng-repeat="ci in region_items track by ci.id">
+                    <a href="javascript:void(0);"
+                            ng-class="{active: is_region_item_active(ci.type, ci.id)}"
+                            ng-click="select_region_item(ci)"
+                            ng-bind="ci.name"></a>
+                </li>
+                <div class="clearfix"></div>
+            </ul>
+        </div>
+
+        <div class="text-center">
+            <a href="javascript:void(0)"
+               onclick="$('.region_select_container').removeClass('active');"
+               class="btn btn-primary btn-sm close-btn"
+               ng-bind="'common.Close'|lang"
+                    ></a>
+        </div>
+    </div>
+</div>

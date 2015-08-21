@@ -1,0 +1,11 @@
+alias: currency
+author: 
+link: 
+requirement: 
+
+auth_nodes:
+
+include:
+    js:
+        - apps/currency/main
+        - apps/currency/model

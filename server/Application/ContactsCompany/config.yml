@@ -1,0 +1,42 @@
+alias: contactsCompany
+verseion: 0.1
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - region
+
+auth_nodes:
+    - contactsCompany.contactsCompany.get|flag
+    - contactsCompany.contactsCompany.post
+    - contactsCompany.contactsCompany.put|flag
+    - contactsCompany.contactsCompany.delete|flag
+    - contactsCompany.contactsCompanyLinkman.get|flag
+    - contactsCompany.contactsCompanyLinkman.post
+    - contactsCompany.contactsCompanyLinkman.put|flag
+    - contactsCompany.contactsCompanyLinkman.delete|flag
+    - contactsCompany.contactsCompanyRole.*
+include:
+    js:
+        - apps/contactsCompany/model
+        - apps/contactsCompany/main
+
+global_include:
+    js:
+        - apps/contactsCompany/plugin
+        - apps/contactsCompany/model
+navs:
+    Base Data Set:
+        children:
+            Contacts Company Manage:
+                app: contactsCompany
+                icon: link
+                children:
+                    Contacts Company:
+                        app: contactsCompany
+                        link: contactsCompany/contactsCompany
+                    Linkman:
+                        app: contactsCompany
+                        link: contactsCompany/contactsCompanyLinkman
+                    Role:
+                        app: contactsCompany
+                        link: contactsCompany/contactsCompanyRole

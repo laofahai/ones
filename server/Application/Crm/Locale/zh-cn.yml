@@ -1,0 +1,80 @@
+APP_NAME: 客户关系管理
+METHODS:
+    crmClue:
+        dispatch: 分配
+        collect: 领取
+        release: 释放
+        transform: 转换
+    customer:
+        dispatch: 分配
+        collect: 领取
+        release: 释放
+HELP_TEXTS:
+    grid:
+        crmClue: <i class="fa fa-user text-danger"></i> 我负责的  <i class="fa fa-user text-primary"></i> 我创建的
+        customer: <i class="fa fa-user text-danger"></i> 我负责的  <i class="fa fa-user text-primary"></i> 我创建的
+
+Date Range: 时间序列
+Clue: 线索
+Crm: 客户关系管理
+Crm Clue: 线索
+Clue Pool: 线索池
+Company Name: 公司名称
+Customer Communicate: 客户沟通
+Communicate Log: 沟通记录
+Linkman: 联系人
+Position: 职务
+CRM: 客户关系管理
+Customer: 客户
+Customer Pool: 客户池
+Customer Care: 客户关怀
+Last Contact Time: 最近联系时间
+Next Contact Time: 下次联系时间
+Next Contact Content: 下次联系内容
+Next Contact Time %s, Subject is %s: 下次联系时间%s, 主题：%s
+Headman: 负责人
+Customer Role: 客户角色
+Customer GC Time: 客户回收时间
+Customer GC Time Help Text: 以天位单位，未创建商机客户将自动转回客户池
+Clue GC Time: 线索回收时间
+Clue GC Time Help Text: 以天位单位，未转换线索将自动转回线索池
+Source From Type: 线索来源
+Customer Care Type: 关怀类型
+Dispatch Clue: 分配线索
+Collect Clue: 领取线索
+Release Clue: 释放线索
+Collect Customer: 领取客户
+Dispatch Customer: 分配客户
+Release Customer: 释放客户
+Transform To Customer: 转化为客户
+Transformed Clue: 已转化线索
+This Clue is transformed yet: 这条线索已经被转化为客户了
+Company Name: 公司名称
+Subject: 主题
+Executor: 执行者
+Current Contact Time: 本次联系时间
+
+I Created: 我创建的
+I Headed: 我负责的
+My Subordinates Created: 下属创建的
+My Subordinates Headed: 下属负责的
+
+Label: ' '
+From Clue: 来源线索
+
+Customer Head Log: 线索日志
+Customer Head Log Type 1: 领取了此线索
+Customer Head Log Type 2: 释放了此线索
+Customer Head Log Type 3: 分配了此线索
+Customer Head Log Type 4: 转化了此线索
+Customer Head Log Type 5: 领取了此客户
+Customer Head Log Type 6: 释放了此客户
+Customer Head Log Type 7: 分配了此客户
+
+Need To Contact Today: 今天需联系
+Need To Contact This Week: 本周需联系
+Need To Contact This Month: 本月需联系
+
+%s Days Without Contact: %s天未联系
+
+Customer Head Man: 客户负责人

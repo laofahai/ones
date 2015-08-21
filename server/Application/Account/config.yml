@@ -1,0 +1,50 @@
+alias: account
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+load_modules:
+    - ones.gridViewModule
+    - ones.detailViewModule
+load_all_i18n: true
+auth_nodes:
+    - account.authorize.put
+    - account.authRole.*
+    - account.authNode.get
+    - account.user.*
+    - account.department.*
+auth_dont_need_login:
+    - account.login.post
+    - account.register.post
+auth_dont_need_check:
+    - account.user.current.get
+    - account.user.logout.get
+    - account.userPreference.post
+include:
+    js:
+        - apps/account/main
+    css:
+        - apps/account/statics/style
+force_global_include:
+    js:
+        - apps/account/main
+        - apps/account/model
+
+navs:
+    System Preference:
+        children:
+            Organization Manage:
+                app: account
+                icon: sitemap
+                children:
+                    Department:
+                        app: account
+                        link: account/department
+                        icon: sitemap
+                    Role Manage:
+                        app: account
+                        icon: male
+                        link: account/authRole
+                    Users List:
+                        app: account
+                        icon: users
+                        link: account/user

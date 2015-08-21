@@ -1,0 +1,42 @@
+<page-actions></page-actions>
+<div class="bill-container" ng-class="{'workflowing': workflowing}">
+    <div ng-include="'views/billHeader.html'"></div>
+    <div class="bill-body">
+        <bill config="bill_config"></bill>
+    </div>
+    <div class="bill-footer">
+
+        <div class="bill-footer-input row">
+            <div class="input-group bill-footer-input-item" style="width: auto">
+                <span class="input-group-addon" ng-bind="'common.Remark'|lang"></span>
+                <input type="text" class="form-control" ng-model="bill_meta_data.remark" ng-readonly="bill_meta_data.locked">
+            </div>
+            <div class="bill-footer-input-item">
+                <input-field config="date_config" ng-readonly="bill_meta_data.locked"></input-field>
+            </div>
+            <div class="bill-footer-input-item">
+                <input-field config="workflow_config" ng-readonly="bill_meta_data.locked"></input-field>
+            </div>
+        </div>
+
+        <div class="bill-footer-meta">
+            <span class="label label-primary">
+                <span ng-bind="'common.Prepared By'|lang"></span>
+                <span ng-bind="bill_meta_data.user_id|to_user_fullname"></span>
+            </span>
+            <div class="pull-right">
+                <button class="btn btn-primary btn-lg"
+                        ng-show="!bill_meta_data.locked && !is_view"
+                        ng-click="do_bill_submit()"
+                        ng-bind="'common.Submit'|lang"
+                        once-click></button>
+                <button class="btn btn-primary btn-lg"
+                        ng-show="workflowing && is_confirm"
+                        ng-click="do_confirm()"
+                        ng-bind="'common.Submit'|lang"
+                        once-click></button>
+            </div>
+        </div>
+
+    </div>
+</div>

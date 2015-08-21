@@ -1,0 +1,16 @@
+.input-uploader-container {
+    table {
+        margin-top:-1px;
+        .uploader-thumb {
+            max-height:40px;
+            img {
+                max-width: 80%;
+                max-height: 60px;
+            }
+        }
+    }
+
+    td {
+        vertical-align: middle !important;
+    }
+}

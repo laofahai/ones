@@ -1,0 +1,46 @@
+company:
+    name:
+        #type: string default
+        #maxlength: 255
+        #null: true
+        #default: abc
+        comment: 公司名称
+    sign_id:
+        #type: string
+        maxlength: 50
+        comment: 公司唯一编号
+    superuser:
+        type: integer
+        blank: true
+        comment: 超级用户外键
+    address:
+        comment: 地址
+        blank: true
+    phone:
+        comment: 公司电话
+        blank: true
+    description:
+        blank: true
+        comment: 公司简介
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    $meta:
+        indexes:
+            name:
+            sign_id: 
+                unique: true
+
+company_active_apps:
+    $meta:
+        indexes:
+            company_apps:
+                fields: [company_id, app_id]
+                unique: true
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            app:
+                restrict:
+                    delete: CASCADE

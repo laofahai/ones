@@ -1,0 +1,65 @@
+<div class="calendar-header row">
+    <div class="col-xs-12">
+        <div class="pull-left btn-group">
+            <a class="btn btn-info btn-sm" href="javascript:void(0);" onclick="window.location.reload();" ng-show="show_refresh_btn">
+                <i class="fa fa-refresh"></i>
+            </a>
+            <button
+                    class="btn btn-primary btn-sm"
+                    mwl-date-modifier
+                    date="calendarDay"
+                    ng-bind="calendarTitle"
+                    set-to-today>
+            </button>
+            <button
+                    class="btn btn-default btn-sm"
+                    mwl-date-modifier
+                    date="calendarDay"
+                    decrement="calendarView"
+                    ng-bind="'calendar.Previous'|lang">
+            </button>
+            <button
+                    class="btn btn-default btn-sm"
+                    mwl-date-modifier
+                    date="calendarDay"
+                    ng-bind="'calendar.Next'|lang"
+                    increment="calendarView">
+            </button>
+            <button
+                    class="btn btn-default btn-sm"
+                    data-toggle="dropdown">
+                <span ng-bind="'common.View By %s'|lang:calendarViewLabel"></span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+                <li role="presentation" ng-repeat="cvo in calendarViewOptions">
+                    <a role="menuitem"
+                       tabindex="-1"
+                       href="javascript:void(0);"
+                       ng-click="setCalendarView(cvo)">
+                        <i class="fa" ng-class="{'fa-check text-primary': cvo.value == calendarView, 'fa-flask': cvo.value != calendarView}"></i>
+                        <span ng-bind="'common.View By %s'|lang:cvo.label"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <a href="javascript:void(0);" ng-click="$root.link_open_frame(add_frame)" class="pull-right btn btn-sm btn-primary" ng-bind="'common.Add New'|lang"></a>
+    </div>
+</div>
+<p>&nbsp;</p>
+<mwl-calendar
+        events="events"
+        view="calendarView"
+        view-title="calendarTitle"
+        current-day="calendarDay"
+        on-event-click="eventClicked(calendarEvent)"
+        on-event-drop="eventDropped(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+        edit-event-html="'<i class=\'fa fa-edit text-white\'></i>'"
+        delete-event-html="'<i class=\'fa fa-remove text-white\'></i>'"
+        on-edit-event-click="eventEdited(calendarEvent)"
+        on-delete-event-click="eventDeleted(calendarEvent)"
+        auto-open="true"
+        day-view-start="06:00"
+        day-view-end="22:00"
+        day-view-split="30">
+</mwl-calendar>

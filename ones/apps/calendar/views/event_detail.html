@@ -1,0 +1,16 @@
+<table class="table table-bordered">
+    <tr>
+        <td colspan="2">
+            <i class="pull-left event event-{{current_event.type}}"></i>
+            <span ng-bind="current_event.subject"></span>
+        </td>
+    </tr>
+    <tr>
+        <th ng-bind="'calendar.Start At'|lang"></th>
+        <th ng-bind="'calendar.End At'|lang"></th>
+    </tr>
+    <tr>
+        <td ng-bind="current_event.startsAt|date:'medium'"></td>
+        <td ng-bind="current_event.endsAt|date:'medium'"></td>
+    </tr>
+</table>

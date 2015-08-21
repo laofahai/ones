@@ -1,0 +1,11 @@
+APP_NAME: 地区选择器
+
+Region: 地区
+Region Select: 地区选择
+
+Region ignore country: 是否忽略国家
+
+Country: 国家
+Province: 省份
+City: 城市
+District: 区域

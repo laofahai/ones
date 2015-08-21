@@ -1,0 +1,35 @@
+APP_NAME: 日程
+
+Calendar: 日程
+
+Events: 日程事件
+
+Subject: 主题
+
+Year: 年
+Month: 月
+Week: 周
+Day: 天
+
+Previous: 上一页
+Next: 下一页
+
+Recurs On: 重复
+No Repeat: 不重复
+Every Year: 每年
+Every Month: 每月
+Every Week: 每周
+Every Day: 每天
+
+Start At: 开始时间
+End At: 结束时间
+
+View Event Content: 查看事件内容
+
+EVENTS_TYPE:
+    Info: 普通
+    Warning: 警告的
+    Important: 重要的
+    Inverse: 反向的
+    Success: 成功的
+    Special: 特殊的

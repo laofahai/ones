@@ -1,0 +1,199 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title ng-bind="'common.ONES - TEam Swift Present'|lang"></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/todc-bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+        <link rel="stylesheet" href="bower_components/chosen/bootstrap-chosen.css" />
+        <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/base.css">
+        <link rel="stylesheet" href="styles/login.css">
+        <!-- endbuild -->
+    </head>
+    <body ng-controller="LoginCtrl" id="animate-area" class="login-layout ones-login-signin">
+        <!--[if lt IE 10]>
+          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="signin-container" id="signin-container">
+
+            <div class="signin-info">
+                <a href="https://ng-erp.com" target="_blank" class="logo">
+                    <img src="images/logo_mini_white.png" />
+                </a>
+                <div class="slogan" ng-bind="'account.login.Simple Strong Flexible'|lang">
+
+                </div>
+                <ul>
+                    <li>
+                        <a onclick="ones.caches.clear();
+                                        window.location.reload()">
+                            <i class="fa fa-warning signin-icon"></i>
+                            <span ng-bind="'account.login.Clear Cache'|lang"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://forum.ng-erp.com" target="_blank">
+                            <i class="fa fa-file-text-o signin-icon"></i> <span ng-bind="'account.login.User Manual'|lang"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://forum.ng-erp.com" target="_blank">
+                            <i class="fa fa-comments signin-icon"></i> <span ng-bind="'account.login.Discussion'|lang"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://forum.ng-erp.com/category/5/" target="_blank">
+                            <i class="fa fa-support signin-icon"></i> <span ng-bind="'account.login.Pro Version Support'|lang"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://ng-erp.com/mobile" target="_blank">
+                            <i class="fa fa-apple signin-icon"></i> <span ng-bind="'account.login.Mobile APP'|lang"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="signin-form">
+                <form name="LoginForm" autocomplete="off" novalidate>
+                    <div class="signin-text">
+                        <span ng-bind="'account.login.Enter Your Login Info'|lang"></span>
+                    </div>
+
+                    <div class="alert alert-danger hide" ng-class="{'hide':!error.is_error}">
+                        <div><span ng-bind-html="error.msg"></span></div>
+                    </div>
+
+                    <div class="form-group w-icon">
+                        <input type="text" name="signin_company_sign"
+                               class="form-control input-lg"
+                               ng-model="loginInfo.company_sign_id"
+                               placeholder="{{'account.login.Company Sign ID'|lang}}"
+                               autocomplete="off" autofocus required>
+                        <span class="fa fa-bank signin-form-icon"></span>
+                    </div>
+
+                    <div class="form-group w-icon">
+                        <input type="text"
+                               class="form-control input-lg"
+                               ng-model="loginInfo.username"
+                               placeholder="{{'account.login.Username'|lang}}"
+                               autocomplete="off" required>
+                        <span class="fa fa-user signin-form-icon"></span>
+                    </div>
+
+                    <div class="form-group w-icon">
+                        <input type="password"
+                               class="form-control input-lg"
+                               ng-model="loginInfo.password"
+                               placeholder="{{'account.login.Password'|lang}}"
+                               autocomplete="off" required>
+                        <span class="fa fa-lock signin-form-icon"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="signin-btn btn-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
+                            <span ng-bind="'account.login.Login' | lang"></span>
+                        </button>
+                        <a href="#" class="forgot-password" id="forgot-password-link">
+                            <span ng-bind="'account.login.Forget Password?' | lang"></span>
+                        </a>
+                    </div>
+                </form>
+
+                <div class="signin-with">
+                    Present by <a href="https://ng-erp.com" target="_blank">TEam Swift</a> Since 2012
+                </div>
+
+                <div class="password-reset-form" id="password-reset-form" style="display: none;">
+                    <div class="header">
+                        <div class="signin-text">
+                            <span>Password reset</span>
+                            <div class="close">×</div>
+                        </div>
+                    </div>
+
+                    <form action="index.html" id="password-reset-form_id" novalidate="novalidate">
+                        <div class="form-group w-icon">
+                            <input type="text" name="password_reset_email" id="p_email_id" class="form-control input-lg" placeholder="{{'account.email'|lang}}">
+                            <span class="icon fa-envelope signin-form-icon"></span>
+                        </div>
+
+                        <div class="form-actions">
+                            <input type="submit" value="SEND PASSWORD RESET LINK" class="signin-btn bg-primary">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <script> var ones = {}; </script>
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/todc-bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script src="bower_components/chosen/chosen.jquery.min.js"></script>
+        <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+        <script src="bower_components/showdown/src/showdown.js"></script>
+        <script src="bower_components/angular-markdown-directive/markdown.js"></script>
+        <script src="bower_components/angular-socket-io/socket.js"></script>
+        <script src="bower_components/socket.io-client/socket.io.js"></script>
+        <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
+        <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
+        <script src="bower_components/jsbarcode/JsBarcode.js"></script>
+        <script src="bower_components/jsbarcode/CODE128.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,ones}) scripts/login.js -->
+        <script src="lib/vendor/sprintf.js"></script>
+        <script src="lib/function.js"></script>
+        <script src="common/config.js"></script>
+        <script src="lib/caches.js"></script>
+        <script src="lib/i18n.js"></script>
+        <script src="lib/plugin.js"></script>
+        <script src="common/service.js"></script>
+        <script src="common/filter.js"></script>
+        <script src="common/login.js"></script>
+
+        <script src="apps/account/main.js"></script>
+        <script src="apps/account/model.js"></script>
+        <!-- endbuild -->
+
+        <script>
+            /**
+             * 启动
+             * */
+            jQuery(function() {
+                bootstrap('ones.login', 'account', function() {
+                    $("#signin-container").animate({
+                        opacity: 1
+                    }, 800);
+                });
+            });
+        </script>
+    </body>
+</html>

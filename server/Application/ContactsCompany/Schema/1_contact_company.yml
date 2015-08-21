@@ -1,0 +1,110 @@
+# 往来单位角色
+contacts_company_role:
+    name:
+        limit: 100
+    alias:
+        limit: 20
+    $meta:
+        indexes:
+            name_and_company:
+                fields: [company_id, name]
+                unique: true
+            alias_and_company:
+                fields: [company_id, alias]
+                unique: true
+        foreign:
+            company: # 所属公司
+                restrict:
+                    delete: CASCADE
+
+# 往来单位与其角色对应表  many to many
+# A公司 是 B公司的客户，是C公司的供应商
+contacts_company:
+    name:
+    master:
+        limit: 50
+        blank: true
+    mobile:
+        limit: 50
+        blank: true
+    phone:
+        limit: 50
+        blank: true
+    address:
+        blank: true
+
+    created:
+        type: datetime # 创建时间
+        default: CURRENT_TIMESTAMP
+
+    $meta:
+        indexes:
+            created:
+        foreign:
+            related_company: # 关联公司
+                options:
+                    blank: true
+                foreign_table: company
+                foreign_key: related_company_id
+                restrict:
+                    delete: SET_NULL
+            company: # 所属公司
+                restrict:
+                    delete: CASCADE
+            contacts_company_role: # 相对当前使用公司其角色
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            user: # 添加用户
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            region:
+                options:
+                    blank: true
+                delete: SET_NULL
+        enable_trash: true
+
+
+# 往来单位联系人与当前使用公司对应关系
+contacts_company_linkman:
+    name:
+        limit: 50
+    gender:
+        type: enum
+        default: 1
+        values: [1, 2]
+    mobile:
+        limit: 50
+    created:
+        type: datetime
+        comment: 创建时间
+        default: CURRENT_TIMESTAMP
+    $meta:
+        indexes:
+            name:
+            gender:
+            mobile:
+            created:
+        foreign:
+            company: # 所属公司
+                restrict:
+                    delete: CASCADE
+            contacts_company:
+                restrict:
+                    delete: CASCADE
+            user: # 添加用户
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            related_user: # 关联公司
+                options:
+                    blank: true
+                foreign_table: user
+                foreign_key: related_user_id
+                restrict:
+                    delete: SET_NULL
+        enable_trash: true

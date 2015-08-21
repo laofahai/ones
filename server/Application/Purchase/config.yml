@@ -1,0 +1,11 @@
+alias: purchase
+author: TEam Swift
+link: https://ng-erp.com
+requirements: product
+
+auth_nodes:
+
+include:
+    js:
+        - apps/purchase/main
+        - apps/purchase/model

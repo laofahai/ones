@@ -1,0 +1,68 @@
+<script src="apps/analytics/echarts-all.js"></script>
+
+<div id="chart-container" style="min-height:400px;"></div>
+
+<script>
+    var myChart = echarts.init(document.getElementById('chart-container'));
+    var option = {
+        title : {
+            text: '漏斗图',
+            subtext: '纯属虚构'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{b} : {c}"
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        legend: {
+            data : ['展现','点击','访问','咨询','订单']
+        },
+        calculable : true,
+        series : [
+            {
+                name:'漏斗图',
+                type:'funnel',
+                width: '40%',
+                data:[
+                    {value:2, name:'访问'},
+                    {value:3, name:'咨询'},
+                    {value:5, name:'订单'},
+                    {value:0, name:'点击'},
+                    {value:20, name:'展现'}
+                ]
+            },
+            {
+                name:'金字塔',
+                type:'funnel',
+                x : '50%',
+                sort : 'ascending',
+                itemStyle: {
+                    normal: {
+                        // color: 各异,
+                        label: {
+                            position: 'left'
+                        }
+                    }
+                },
+                data:[
+                    {value:60, name:'访问'},
+                    {value:40, name:'咨询'},
+                    {value:20, name:'订单'},
+                    {value:80, name:'点击'},
+                    {value:100, name:'展现'}
+                ]
+            }
+        ]
+    };
+
+
+    myChart.setOption(option);
+</script>

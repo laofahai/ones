@@ -1,0 +1,76 @@
+stock_out:
+    subject:
+        limit: 100
+        blank: true
+    bill_no:
+        limit: 20
+    source_model:
+        limit: 100
+        blank: true
+    source_id:
+        type: integer
+        blank: true
+    quantity:
+        type: decimal
+        precision: 14
+        scale: 4
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    status:
+        type: integer
+        limit: 1
+    remark:
+        blank: true
+    $meta:
+        indexes:
+            bill_no:
+            status:
+            source_model:
+            source_id:
+        foreign:
+            workflow:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: CASCADE
+
+stock_out_detail:
+    quantity:
+        type: decimal
+        precision: 14
+        scale: 4
+    already_out:
+        type: decimal
+        precision: 14
+        scale: 4
+        default: 0
+    product_unique_id:
+        type: string
+        limit: 100
+    remark:
+        blank: true
+    $meta:
+        indexes:
+            product_unique_id:
+        foreign:
+            product:
+                restrict:
+                    delete: CASCADE
+            storage:
+                options:
+                    blank: true
+                restrict:
+                    delete: CASCADE
+            stock_out:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

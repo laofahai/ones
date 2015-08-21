@@ -1,0 +1,88 @@
+
+<div class="builder-toolbar">
+    <div class="btn-group pull-left">
+        <a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="window.location.reload();"><i class="fa fa-refresh"></i></a>
+        <a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="window.history.go(-1);">
+            <i class="fa fa-arrow-left"></i>
+            <span ng-bind="'common.Go Back'|lang"></span>
+        </a>
+        <button class="btn btn-sm btn-primary" disabled="disabled" ng-bind="'bpm.Add Widget'|lang"></button>
+
+        <a href="javascript:void(0);"
+           ng-click="add_widget(node_type)"
+           ng-repeat="node_type in node_types"
+           ng-bind="('bpm.NODE_TYPES.'+ node_type)|lang"
+           class="bpm-widget-preview btn btn-sm btn-default"></a>
+        <button class="btn btn-sm btn-primary" ng-bind="'bpm.TO'|lang" disabled></button>
+        <button class="btn btn-sm btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span ng-bind="add_widget_to_role_label"></span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+            <li ng-repeat="role in roles"
+                ng-click="set_add_to_role(role)"
+                    >
+                <a href="javscript:void(0)" ng-bind="role.label"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="pull-right">
+        <button ng-click="clear_bpm_temp()" class="btn btn-danger btn-sm">
+            <i class="fa fa-trash-o"></i>
+        </button>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="bpm-designer-container bpm-shower-container"
+     id="bpm-shower-container"
+     ng-keydown="doMainKeyDown($event)"
+     ng-mousemove="doMainMouseMove($event)"
+     ng-mouseup="doMainMouseUp($event)"
+     ng-click="doMainClick($event)">
+
+    <div class="bpm-role-list" id="bpm-role-list">
+
+        <div class="bpm-role-item" ng-repeat="r in widgets" data-value="{{r.group.value}}">
+            <h3 class="role-title">
+                <label ng-bind="r.group.label"></label>
+            </h3>
+            <div class="bpm-widgets-container">
+                <div ng-repeat="widget in r.widgets"
+                     class="bpm-widget bpm-widget-{{widget.type}}"
+                     style="left:{{widget.position.left}}px;top:{{widget.position.top}}px;width:{{widget.size.width}}px;height:{{widget.size.height}}px"
+                     data-group="{{widget.group}}"
+                     data-widget-id="{{widget.id}}"
+                     id="bpm-widget-{{widget.id}}"
+                     ng-class="{'active': active_widget.id==widget.id}"
+                     ng-right-click="show_widget_actions($event, widget)"
+                     ng-click="do_widget_click($event, widget)"
+                     ng-dblclick="edit_widget_config($event, widget)"
+                     bpm-widget
+                        >
+                    <label ng-bind="widget.label"></label>
+                </div>
+            </div>
+        </div>
+
+        <div ng-repeat="line in lines"
+             id="bpm-line-{{line.id}}"
+             ng-click="do_line_canvas_click($event, line)"
+             draggable="true"
+             class="bpm-line" style="width:{{line.position.width}}px;height:{{line.position.height}}px;left:{{line.position.position_x}}px;top:{{line.position.position_y}}px">
+            <div class="bpm-line-text"></div>
+            <div class="bpm-line-active-item" ng-show="line.id==active_line.id"></div>
+        </div>
+    </div>
+
+    <!--<div class="bpm-line-canvas" id="bpm-line-canvas">-->
+        <!--<div class="bpm-line-container" id="bpm-line-container">-->
+
+        <!--</div>-->
+    <!--</div>-->
+
+</div>
+<hr />
+<div class="text-center">
+    <button ng-click="do_save_workflow()" class="btn btn-primary btn-lg" ng-bind="'common.Save'|lang"></button>
+</div>

@@ -1,0 +1,32 @@
+<div class="dialogs">
+    <div class="no-result alert-container" ng-show="!items.length">
+        <div class="alert alert-info" ng-bind="'common.No data to display'|lang"></div>
+    </div>
+    <div class="itemdiv dialogdiv" ng-repeat="item in items">
+        <div class="user">
+            <img alt="{{item.realname}}" ng-src="{{item.user_id|to_avatar_src}}">
+        </div>
+
+        <div class="body">
+            <div class="time">
+                <i class="icon-time"></i>
+                <span class="text-success" ng-bind="item.created|to_date_object|date:'shortTime'"></span>
+            </div>
+
+            <div class="name">
+                <a href="javascript:void(0)">
+                    <small ng-bind="item.department_name"></small>
+                    <span ng-bind="item.realname"></span>
+                </a>
+            </div>
+            <div class="text" btf-markdown="(item.subject + '\n\n' +item.content)"></div>
+            <div class="calendar-paper">
+                <span class="head">
+                    <em ng-bind="item.created|get_date_item:'year'"></em> -
+                    <em ng-bind="item.created|get_date_item:'month'"></em>
+                </span>
+                <span class="content" ng-bind="item.created|get_date_item:'day'"></span>
+            </div>
+        </div>
+    </div>
+</div>

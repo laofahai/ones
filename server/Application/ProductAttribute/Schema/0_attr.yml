@@ -1,0 +1,51 @@
+product_attribute:
+    name:
+        limit: 50
+        comment: 显示名称
+    alias:
+        limit: 50
+        comment: 字段名称
+    widget:
+        limit: 50
+        comment: 输入控件
+    data_type:
+        limit: 50
+        comment: 数据类型，对应schema.field.type
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+        enable_trash: true
+
+product_attribute_content:
+    content:
+    $meta:
+        foreign:
+            product:
+                restrict:
+                    delete: CASCADE
+            product_attribute:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+        enable_trash: true
+
+product_attribute_map:
+    source_model:
+        comment: 关联源数据模型
+    source_id:
+        comment: 源数据ID
+    $meta:
+        foreign:
+            product_attribute_content:
+                restrict:
+                    delete: CASCADE
+            product_attribute:
+                restirct:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

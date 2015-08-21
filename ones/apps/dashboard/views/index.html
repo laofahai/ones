@@ -1,0 +1,17 @@
+<div gridster="gridster_option" class="dashboard-container">
+    <ul>
+        <li gridster-item="widget" ng-repeat="widget in dashboard_widgets_list">
+            <div class="dashboard-block-item height-100p dragable">
+                <div ng-include="widget.template"
+                     class="height-100p"></div>
+            </div>
+            <a href="javascript:void(0);" ng-click="remove_widget($index)" class="dashboard-widget-remove-btn">
+                &times;
+            </a>
+        </li>
+    </ul>
+</div>
+<a href="javascript:void(0);"
+   class="btn btn-link btn-sm dashboard-add-widget-btn"
+   ng-click="open_widgets_modal()"
+        ><i class="fa fa-plus"></i> </a>

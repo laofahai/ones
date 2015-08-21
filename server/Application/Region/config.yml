@@ -1,0 +1,17 @@
+alias: region
+author: TEam Swift
+link: https://ng-erp.com
+requirements: 
+
+auth_nodes:
+
+include:
+    js:
+        - apps/region/main
+
+global_include:
+    js:
+        - apps/region/model
+        - apps/region/plugin
+    css:
+        - apps/region/static/style

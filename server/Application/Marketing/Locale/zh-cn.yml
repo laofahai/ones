@@ -1,0 +1,40 @@
+APP_NAME: 营销管理
+Marketing: 营销管理
+Sale Opportunities: 销售机会
+Sale Opportunities Product: 销售机会关联产品
+Sale: 销售
+Contract: 合同
+
+METHODS:
+    saleOpportunities:
+        push: 推进
+
+HELP_TEXTS:
+    grid:
+        saleOpportunities: <i class="fa fa-user text-danger"></i> 我负责的  <i class="fa fa-user text-primary"></i> 我创建的
+
+Sale Opportunities Status: 销售机会状态
+Next Contact Time: 下次联系时间
+Next Contact Content: 下次联系内容
+
+Opportunities Push: 推进
+Push Remark: 推进备注
+Push Opportunities To %s Stage: 推进销售机会至 %s 阶段
+
+The Sale Stage: 销售阶段
+
+Opportunities Subject: 机会主题
+
+Date Range: 时间序列
+
+Contract Number: 合同编号
+Sign Time: 签订日期
+Terms: 条款
+
+Belongs To Customer: 所属客户
+Current Contact Time: 本次联系时间
+
+Quote Price: 报价
+Quote Amount: 合计价格
+
+Sale Funnel: 销售漏斗

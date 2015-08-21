@@ -1,0 +1,15 @@
+APP_NAME: 往来单位模块
+APP_DESCRIPTION: 提供往来单位基本信息管理
+
+Contacts Company: 往来单位
+ContactsCompany: 往来单位
+Contacts Company Manage: 往来单位管理
+Contacts Company Linkman: 联系人
+Contacts Company Role: 往来单位角色
+view company info as: 查看往来单位信息通过
+Master: 往来单位负责人
+Basic Data: 基本资料
+Linkman: 联系人
+View ContactsCompany: 查看往来单位
+Company Name: 公司名称
+Role: 角色

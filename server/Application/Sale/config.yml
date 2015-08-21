@@ -1,0 +1,43 @@
+alias: sale
+author: TEam Swift
+link: https://ng-erp.com
+requirements: 
+    - product
+    - bpm
+    - crm
+    - contactsCompany
+
+load_modules:
+    - ones.gridViewModule
+    - ones.app.product.model
+
+auth_nodes:
+    - sale.orders.get|flag
+    - sale.orders.post
+    - sale.orders.put|flag
+    - sale.orders.delete|flag
+
+include:
+    js:
+        - apps/sale/main
+        - apps/sale/model
+        - apps/sale/orders
+        - apps/product/model
+        - apps/storage/model
+        - apps/contactsCompany/model
+        - apps/crm/model
+        - lib/bill
+
+global_include:
+    js:
+        - apps/sale/plugin
+
+navs:
+    Marketing:
+        children:
+            Sale:
+                app: marketing
+                children:
+                    Orders:
+                        app: sale
+                        link: sale/orders

@@ -1,0 +1,11 @@
+notification:
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    status:
+        type: integer
+        limit: 1
+    $meta:
+        foreign:
+            user:
+                field: to_user_id

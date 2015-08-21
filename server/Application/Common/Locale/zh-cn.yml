@@ -1,0 +1,125 @@
+ERRORS:
+    required: 必填
+    unique: 必须唯一
+METHODS:
+    get: 查看
+    post: 新增
+    put: 修改
+    delete: 删除
+    analytics: 统计分析
+DATA_TYPES:
+    Integer: 整数
+    Decimal: 小数
+    Other: 其他
+WIDGETS:
+    Text Widget: 单行文本
+    Textarea Widget: 多行文本
+    Number Widget: 数字
+    Password Widget: 密码
+    Email Widget: 邮件
+    Select Widget: 下拉选择
+    Radio Widget: 单选框
+    Checkbox Widget: 复选框
+    Hidden Widget: 隐藏域
+    Date Widget: 日期选择
+    Datatime Widget: 日期+时间选择
+    Item Select Widget: 项目选择
+
+
+APP_DESCRIPTION: " "
+
+%s items per page: %s 条/页
+%s Items Total: 共 %s 条数据
+Add New: 新增
+Address: 地址
+Alias: 别名
+All: 全部
+Balance Direction: 余额方向
+Base Data Set: 基础数据设置
+Basic Info: 基本信息
+Belongs To App: 从属于应用
+'By %s:': '通过 %s:'
+Common Operation: 常用操作
+"Can't be search": "不用于搜索"
+Cancel: 取消
+Company Address: 公司地址
+Company Fax: 公司传真
+Company Name: 公司名称
+Company Phone: 公司电话
+Confirm Again: 请再次确认
+Confirm delete the %s items?: 确认删除这 %s 项？ <span class="text-danger">所有其相关数据将一并删除！</span>
+Content: 内容
+Cost: 成本价
+Created: 创建时间
+Created Time: 创建时间
+Creator: 创建人
+Current Page %s/%s: 当前第 %s/%s 页
+Decimal Scale: 保留小数位
+Delete: 删除
+Description: 描述
+Edit: 修改
+Email: 邮箱
+End Time: 结束时间
+Everybody: 所有人
+Fax: 传真
+Female: 女士
+Filters: 过滤器
+Fuzzy search: 模糊搜索
+Fuzzy Search By %s: 通过%s模糊检索
+Gender: 性别
+Go Back: 返回
+Head Man: 负责人
+Is Active: 是否可用
+Is Default: 是否默认
+Is Locked: 是否锁定
+Listorder: 排序
+Male: 先生
+Mobile: 手机
+Module: 模块
+Name: 名称
+No: 否
+No data to display: 没有数据可显示
+Num: 数量
+Office: 办公
+Permission Denied: 您没有被授权
+Price: 价格
+Confirm APP supported under this: 以下请确认模块支持
+Phone: 电话
+Please fill out the form correctly: 请正确填写表单
+Please Select: 请选择
+Precision match: 精准匹配
+Precision Searcy By %s: 通过%s精准检索
+Prepared By: 制单人
+Quantity: 数量
+Quick Search: 快速搜索
+Remark: 备注
+Search By %s: 通过%s检索
+Selected %s Items: 选中%s项
+Self and all subordinate: 自己和所有下属
+Self and all subordinate Headed: 自己和所有下属负责
+Self and directly subordinate: 自己和直接下属
+Self and directly subordinate Headed: 自己和直接下属负责
+Self department: 自己部门
+Self department and it's subordinate department: 部门及下属部门
+Self Headed Only: 仅自己负责
+Self only: 仅自己添加
+Source From: 来源
+Source Model: 来源模型
+Start Time: 开始时间
+Status: 状态
+Subject: 主题
+Submit: 提交
+Success delete %s: 成功删除 %s 项
+System Common Data: 系统基础数据
+System Preference: 系统首选项
+This item is locked and can not be edit: 这个项目已经被锁定并且不能再被修改
+Trash: 回收站
+Type: 类型
+User: 用户
+View By %s: 通过%s查看
+View Detail: 查看详情
+View %s Detail: 查看%s详情
+View %s By: 查看%s通过
+Widget: 控件
+Yes: 是
+Yes, I do: 是的，我确认

@@ -1,0 +1,23 @@
+<div class="dialogs">
+    <div class="itemdiv dialogdiv" ng-repeat="item in head_log">
+        <div class="user">
+            <img alt="{{item.realname}}" ng-src="{{(item.avatar||item.email)|to_avatar_src}}">
+        </div>
+
+        <div class="body">
+            <div class="time">
+                <i class="icon-time"></i>
+                <span class="text-success" ng-bind="item.created"></span>
+            </div>
+
+            <div class="name">
+                <a href="javascript:void(0)">
+                    <small ng-bind="item.department_name"></small>
+                    <span ng-bind="item.realname"></span>
+                </a>
+            </div>
+            <div class="text" ng-bind-html="('crm.Customer Head Log Type '+item.type)|lang"></div>
+
+        </div>
+    </div>
+</div>

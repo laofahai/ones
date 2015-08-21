@@ -1,0 +1,57 @@
+$sidebar_width: 180px;
+$focus_color: #4d90fe;
+
+.home-config-container {
+    position: relative;
+}
+.home-config-left {
+    margin-right: $sidebar_width - 1px;
+}
+.home-config-right {
+    position: absolute;
+    right:0;
+    top:0;
+    width: 180px;
+
+    h2.filter-title {
+        height:25px;
+        font-size:12px;
+        line-height:25px;
+        margin:0;
+        padding:0 10px;
+        background:$focus_color;
+        color:#fff;
+    }
+    .filter-content {
+        padding-top:10px;
+        background:#efefef;
+        border:1px solid #ddd;
+        border-top:0;
+        font-size:12px;
+
+        .filter-content-links {
+            line-height:180%;
+            padding:0;
+            margin-top:0;
+            margin-bottom:10px;
+            dd, dt {
+                padding: 0 6px;
+                border-left: 5px solid #efefef;
+                height:20px;line-height:20px;
+            }
+            dd a {
+                color: #666;
+            }
+            dd a:hover {
+                color:#1155cc
+            }
+            dd.active {
+                border-color:#1155cc;
+                a {
+                    color:#1155cc;
+                }
+            }
+        }
+    }
+
+}

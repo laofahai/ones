@@ -1,0 +1,40 @@
+alias: bpm
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - product
+
+auth_nodes:
+    - bpm.workflow.*
+    - bpm.workflowBuilder.put
+auth_dont_need:
+    - bpm.builder.get
+    - bpm.workflowProgress.read
+
+load_all_i18n: true
+include:
+    js:
+        - apps/bpm/main
+        - apps/bpm/service
+        - apps/bpm/statics/vendor/jquery-ui.min
+    css:
+        - apps/bpm/statics/vendor/jquery-ui.min
+        - apps/bpm/statics/vendor/jquery-ui.structure.min
+        - apps/bpm/statics/designer
+global_include:
+    js:
+        - apps/bpm/model
+    css:
+        - apps/bpm/statics/shower
+
+navs:
+    System Preference:
+        children:
+            BPM:
+                app: bpm
+                icon: retweet
+                children:
+                    Workflow:
+                        app: bpm
+                        icon: circle-o-notch
+                        link: bpm/workflow

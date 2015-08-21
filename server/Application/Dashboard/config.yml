@@ -1,0 +1,12 @@
+alias: dashboard
+author: TEam Swift
+link: https://ng-erp.com
+description: ONES 控制面板模块
+load_all_i18n: true
+include:
+    js:
+        - apps/dashboard/main
+        - apps/dashboard/static/angular-gridster.min
+    css:
+        - apps/dashboard/static/angular-gridster.min
+        - apps/dashboard/static/style

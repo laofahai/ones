@@ -1,0 +1,29 @@
+<div class="detail_view_container">
+    <div class="panel panel-default detail_view_main" id="detail_view_main">
+        <div class="panel-heading">
+            <i class="fa fa-building-o"></i>
+            <span ng-bind="basic_info.name"></span>
+            <small ng-bind="current_action_info.label"></small>
+            <div class="pull-right text-right">
+                <a href="javascript:void(0)"
+                   ng-click="typeof(la.action) == 'function ' ? la.action() : $root.link_open_frame(la)"
+                   ng-repeat="la in link_actions">
+                    <i class="fa fa-{{la.icon}}"></i>
+                    <span ng-bind="la.label"></span>
+                </a>
+            </div>
+        </div>
+        <div ng-include="template" class="detail_view_body panel-body" ng-class="{'no-padding': no_padding}"></div>
+    </div>
+
+    <div class="detail_view_nav">
+        <h2 class="title" ng-bind="aside_title"></h2>
+        <div class="content" style="min-height:{{main_height-3}}px">
+            <dl class="links">
+                <dd ng-repeat="act in actions" ng-class="{'active': act.action==active_action}">
+                    <a ng-href="{{act.href}}" ng-bind="act.label"></a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>

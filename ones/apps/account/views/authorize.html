@@ -1,0 +1,46 @@
+<page-actions></page-actions>
+<table class="table table-bordered table-hover table-grid dataTable">
+    <thead>
+        <tr>
+            <th ng-bind="'account.Belongs To App'|lang" width="150"></th>
+            <th ng-bind="'account.Auth Node'|lang"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="app in nodes track by $index">
+            <td>
+                <div class="checkbox" ng-click="check_link(app.app)">
+                    <label>
+                        <input type="checkbox" ng-model="link_checked[app.app]" />
+                        <span ng-bind="app.label"></span>
+                    </label>
+                </div>
+
+            </td>
+            <td>
+                <div class="row">
+                    <div class="col-xs-12 checkbox">
+                        <div class="col-sm-4 auth-node-item" ng-repeat="node in app.items track by $index">
+                            <label>
+                                <input type="checkbox" ng-model="nodes_model[node.node]" />
+                                <span ng-bind="node.label"></span>
+                            </label>
+                            <select ng-options="s.id as s.label for s in flags"
+                                    ng-change="doFlagChange(node.id)"
+                                    ng-model="flag_checked[node.node]"
+                                    ng-disabled="is_flag_disabled(node.node)"
+                                    ng-show="node.flag && !is_flag_disabled(node.node)">
+                                <option value="0" ng-bind="'Please Select'|lang"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <a href="javascript:void(0);" ng-click="save_authorize();" class="btn btn-lg btn-primary" ng-bind="'common.Submit'|lang"></a>
+            </td>
+        </tr>
+    </tbody>
+</table>

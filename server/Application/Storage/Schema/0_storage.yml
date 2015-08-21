@@ -1,0 +1,80 @@
+storage:
+    name:
+    last_check_time:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+        # comment 上次盘点时间
+    phone:
+        blank: true
+    address:
+        blank: true
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+
+stock:
+    product_unique_id:
+        type: string
+        limit: 100
+    balance:
+        type: decimal
+        precision: 14
+        scale: 4
+        comment: 库存余量
+    # in_progress 在产
+    $meta:
+        indexes:
+            product_unique_id:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            product:
+                restrict:
+                    delete: CASCADE
+            storage:
+                restrict:
+                    delete: CASCADE
+
+stock_log:
+    source_model:
+        type: string
+        limit: 100
+    source_id:
+        type: integer
+        limit: 11
+    product_unique_id:
+        type: string
+        limit: 100
+    direction:
+        type: enum
+        values: [in, out]
+    quantity:
+        type: decimal
+        precision: 14
+        scale: 4
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    bill_no:
+        type: string
+        limit: 30
+    $meta:
+        indexes:
+            product_unique_id:
+            bill_no:
+        foreign:
+            storage:
+                restrict:
+                    delete: CASCADE
+            product:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

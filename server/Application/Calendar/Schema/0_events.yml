@@ -1,0 +1,33 @@
+events:
+    subject:
+    type:
+        limit: 10
+        default: info
+    recurs_on:
+        limit: 10
+        blank: true
+    start_at:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    end_at:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    related_model:
+        blank: true
+        limit: 100
+    related_id:
+        type: integer
+        blank: true
+    $meta:
+        indexes:
+            related_model:
+            related_id:
+            start_at:
+            end_at:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: CASCADE

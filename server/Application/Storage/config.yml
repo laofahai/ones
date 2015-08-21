@@ -1,0 +1,61 @@
+alias: storage
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - product
+    - bpm
+
+load_modules:
+    - ones.gridViewModule
+    - ones.app.product.model
+
+auth_nodes:
+    - storage.storage.*
+    - storage.stock.get
+    - storage.stockIn.*
+    - storage.stockOut.*
+    - storage.stockLog.get
+
+include:
+    js:
+        - lib/bill
+        - apps/storage/main
+        - apps/storage/model
+        - apps/storage/stockIn
+        - apps/storage/stockOut
+        - apps/product/model
+
+global_include:
+    js:
+        - apps/storage/plugin
+
+navs:
+    Storage Manage:
+        app: storage
+        icon: inbox
+        children:
+            Storage Manage:
+                app: storage
+                icon: inbox
+                children:
+                    Stock List:
+                        app: storage
+                        icon: list-alt
+                        link: storage/stock
+                    Stock In:
+                        app: storage
+                        icon: sign-in
+                        link: storage/stockIn
+                    Stock Out:
+                        app: storage
+                        icon: sign-out
+                        link: storage/stockOut
+                    Stock Log:
+                        app: storage
+                        icon: file
+                        link: storage/stockLog
+                    Storages List:
+                        app: storage
+                        icon: inbox
+                        link: storage/storage
+

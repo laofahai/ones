@@ -1,0 +1,15 @@
+alias: uploader
+author: TEam Swift
+link: https://ng-erp.com
+requirement:
+
+# 上传文件最大尺寸， byte
+max_upload_size: 8388608
+
+auth_nodes:
+
+global_include:
+    js:
+        - apps/uploader/main
+    css:
+        - apps/uploader/statics/style

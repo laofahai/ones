@@ -1,0 +1,30 @@
+attachment:
+    real_url:
+    source_name:
+    source_model:
+    source_id:
+        blank: true
+    file_size:
+        type: integer
+        limit: 11
+    file_mime:
+        type: string
+        limit: 50
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+
+    $meta:
+        indexes:
+            source_model:
+            source_id:
+            source_name:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: SET_NULL
+                options:
+                    blank: true

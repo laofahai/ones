@@ -1,0 +1,102 @@
+sale_opportunities:
+    name:
+        comment: 商机名称
+    status:
+        type: integer
+        limit: 11
+    last_contact_time:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    next_contact_time:
+        type: datetime
+        blank: true
+    next_contact_content:
+        type: text
+        blank: true
+    remark:
+        type: text
+        blank: true
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    $meta:
+        indexes:
+            last_contact_time:
+            next_contact_time:
+            status:
+            created:
+            name:
+        foreign:
+
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            head_id:
+                options:
+                    blank: true
+                foreign_table: user
+                foreign_key: head_id
+                restrict:
+                    delete: SET_NULL
+            customer:
+                restrict:
+                    delete: CASCADE
+
+
+
+customer_communicate:
+    $meta:
+        foreign:
+            sale_opportunities:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+
+
+contract:
+    contract_number:
+        limit: 50
+    sign_time:
+        type: date
+    start_time:
+        type: date
+    end_time:
+        type: date
+        blank: true
+    terms:
+        type: text
+        limit: text
+        blank: true
+    remark:
+        blank: true
+    $meta:
+        indexes:
+            contract_number:
+                unique: true
+        foreign:
+            sale_opportunities:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            head_id:
+                options:
+                    blank: true
+                foreign_table: user
+                foreign_key: head_id
+                restrict:
+                    delete: SET_NULL

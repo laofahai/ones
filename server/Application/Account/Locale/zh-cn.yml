@@ -1,0 +1,42 @@
+APP_NAME: 用户系统
+login:
+    Simple Strong Flexible: 简单. 灵活. 实用. 强大
+    Clear Cache: 清除本地缓存
+    User Manual: 用户手册
+    Discussion: 交流 & 反馈
+    Pro Version Support: 商业版本用户支持
+    Mobile APP: 移动客户端
+    Company Sign ID: 企业签名ID
+    Username: 用户名
+    Password: 密码
+    Login: 登陆
+    Forget Password?: 忘记密码？
+    Enter Your Login Info: 输入您的登陆信息
+
+Auth Node: 授权节点
+Auth Role: 用户角色
+Account: 账户
+Authorize: 授权
+Belongs To App: 属于模块
+Department: 部门
+department: 部门
+Logout: 安全退出
+My Profile: 个人资料
+Preference: 个人首选项
+User Preference: 个人首选项
+Role Manage: 用户角色管理
+Role Authorize: 角色授权
+Organization Manage: 组织机构管理
+Users List: 用户列表
+User: 用户
+Authorize Success: 授权成功
+Add Child Department: 新增子部门
+Leader: 负责人
+Login Name: 登陆名
+Password: 密码
+Realname: 姓名
+Login Name: 登录名
+
+Company Not Exists: 公司不存在
+User Not Exists: 用户不存在
+Password doesn't match: 密码错误

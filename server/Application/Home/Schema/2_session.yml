@@ -1,0 +1,14 @@
+#session:
+#    session_id:
+#        limit: 255
+#    session_expire:
+#        type: integer
+#    session_data:
+#        type: binary
+
+#    $meta:
+#        indexes:
+#            session_id:
+#                unique: true
+#        truncate_when_migrate: true
+#        primary: session_id

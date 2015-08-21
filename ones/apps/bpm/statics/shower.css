@@ -1,0 +1,16 @@
+.workflow-progress-container .item {
+  position: relative;
+  padding-left: 55px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 10px; }
+  .workflow-progress-container .item .avatar {
+    position: absolute;
+    left: 0;
+    top: 5px; }
+    .workflow-progress-container .item .avatar img {
+      border-color: #ddd; }
+.workflow-progress-container .item:last-child {
+  border: 0; }
+
+/*# sourceMappingURL=shower.css.map */

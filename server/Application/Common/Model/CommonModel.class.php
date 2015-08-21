@@ -1,0 +1,82 @@
+<?php
+namespace Common\Model;
+use \Think\Model;
+
+class CommonModel extends Model {
+
+    public $not_belongs_to_company = false;
+
+    public $real_model_name = '';
+
+    const MSG_NOT_FOUND = 'common.Query Not Match Any Row';
+
+    public function getProperty($name) {
+        return $this->$name;
+    }
+
+    /*
+     * @override
+     *
+     * 默认增加company_id字段
+     * */
+    public function where($map, $parse=null) {
+        if(!$this->not_belongs_to_company && !$map['id']) {
+            $map["company_id"] = get_current_company_id();
+        }
+
+        return parent::where($map, $parse);
+    }
+
+    /*
+     * 「工作流接口」
+     * 更新字段数据
+     *
+     * @param integer $main_row_id 源数据ID
+     * @param string $field 更新字段
+     * @param mixed $data 更新字段数据
+     *
+     * */
+    public function update_field_data($main_row_id, $field, $data) {
+        $row = $this->where(array(
+            'id' => $main_row_id
+        ))->find();
+        if(!$row) {
+            $this->error = __(self::MSG_NOT_FOUND);
+            return false;
+        }
+
+        return $this->where(array(
+            'id' => $main_row_id
+        ))->save(array(
+            $field => $data
+        ));
+    }
+
+    /*
+     * 增加事务忽略外键检测
+     * */
+    public function startTrans() {
+        $this->query('SET FOREIGN_KEY_CHECKS = 0');
+        parent::startTrans();
+    }
+    public function commit() {
+        parent::commit();
+        $this->query('SET FOREIGN_KEY_CHECKS = 1');
+    }
+    public function rollback() {
+        parent::rollback();
+        $this->query('SET FOREIGN_KEY_CHECKS = 1');
+    }
+
+    /*
+     * 设置错误信息
+     * */
+    protected function set_error($error, $include_sql=true) {
+        $this->error = $error;
+
+        if(DEBUG && $include_sql) {
+            $this->error .= ' SQL: '. $this->getLastSql();
+        }
+    }
+
+}

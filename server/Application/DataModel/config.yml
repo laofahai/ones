@@ -1,0 +1,21 @@
+alias: dataModel
+author: TEam Swift
+description: ONES 数据模型模块
+link: https://ng-erp.com
+document: 'http://forum.ng-erp.com/topic/13'
+auth_nodes:
+    - dataModel.dataModelField.*
+include:
+    js:
+        - apps/dataModel/main
+
+load_all_i18n: true
+
+navs:
+    Base Data Set:
+        children:
+            System Common Data:
+                children:
+                    Data Model Field:
+                        app: dataModel
+                        link: dataModel/dataModelField

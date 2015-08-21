@@ -1,0 +1,24 @@
+{
+    "repositories": [
+        {   
+            "packagist": false
+        },  
+        {   
+            "type": "composer", 
+            "url": "http://packagist.cn"
+        }   
+    ],
+    "autoload": {
+        "psr-4": {
+            "Common\\": "Application/Common"
+        }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "topthink/thinkphp": "3.2.2",
+        "robmorgan/phinx": "*",
+        "symfony/config": "*",
+        "workerman/workerman": "*"
+    },
+    "minimum-stability": "dev"
+}

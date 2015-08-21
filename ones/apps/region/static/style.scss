@@ -1,0 +1,87 @@
+$brand_primary: #4d90fe;
+
+.region_select_container {
+    position: relative;
+
+    .region_label {
+        min-width: 180px;
+        border:1px solid #d9d9d9;
+        border-top-color: #c0c0c0;
+        color:#666;
+        height:30px;line-height:30px;
+        padding: 0 10px;
+        position:absolute;
+        z-index:2;
+        background:#fff;
+
+        i.fa {
+            float:right;
+            margin-top:7px;
+            margin-left: 8px;
+        }
+    }
+
+    .region_select_panel {
+        display:none;
+        border: 1px solid $brand_primary;
+        position: absolute;top:29px;left:0;
+        z-index:1;
+        width:100%;
+        background:#fff;
+        padding: 15px 0 10px;
+
+        .region_select_title {
+            border-bottom: 2px solid #ddd;
+            ul {
+                margin: 0;padding:0;
+                li {
+                    float: left;display:inline;
+                    padding:0 10px;
+                    height: 28px;line-height:28px;
+                    margin: 0 10px;
+                    border:2px solid #fff;
+                    border-bottom:0;
+                    font-weight:bold;
+                }
+                li.active {
+                    position: relative;
+                    bottom: -2px;
+                    background:#fff;
+                    border-color:#ddd;
+                    border-bottom:0;
+                }
+            }
+        }
+
+        .region_select_items {
+            padding: 10px 15px;
+            ul {
+                margin:0;padding:0;
+                li {
+                    float: left;display:inline;
+                    min-width: 18%;
+                    height:30px;line-height:30px;
+
+                    a {
+                        padding: 3px 5px;
+                    }
+                    a:hover, a:active, a.active {
+                        background: $brand_primary;
+                        color:#fff;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.region_select_container.active {
+    .region_label {
+        border-color: $brand_primary;
+        border-bottom:0;
+    }
+    .region_select_panel {
+        display: block;
+    }
+}

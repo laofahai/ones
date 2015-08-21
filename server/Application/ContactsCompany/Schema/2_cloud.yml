@@ -1,0 +1,64 @@
+# 往来单位
+cloud_contacts_company:
+    name:
+    master:
+        limit: 50
+        blank: true
+    mobile:
+        limit: 50
+        blank: true
+    phone:
+        limit: 50
+        blank: true
+    fax:
+        limit: 50
+        blank: true
+    address:
+        blank: true
+
+    created:
+        type: datetime # 创建时间
+        default: CURRENT_TIMESTAMP
+
+    $meta:
+        indexes:
+            name:
+                unique: true
+            mobile:
+            phone:
+        foreign:
+            company: # 所属公司
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+        enable_trash: true
+
+
+# 往来单位联系人
+cloud_contacts_company_linkman:
+    name:
+        limit: 50
+    gender:
+        type: enum
+        default: 1
+        values: [1, 2]
+    mobile:
+        limit: 50
+
+    $meta:
+        foreign:
+            cloud_contacts_company:
+                restrict:
+                    delete: CASCADE
+            company: # 创建公司
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            user: # 关联公司中用户
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+        enable_trash: true

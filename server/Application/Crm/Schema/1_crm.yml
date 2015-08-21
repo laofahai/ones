@@ -1,0 +1,209 @@
+crm_clue:
+    company_name:
+        comment: 公司名称
+    linkman:
+        limit: 50
+        comment: 联系人姓名
+    source_from:
+        type: integer
+        comment: 来源
+        blank: true
+    position:
+        limit: 50
+        comment: 职务
+        blank: true
+    address:
+        blank: true
+    phone:
+        limit: 50
+        comment: 联系电话
+    email:
+        limit: 100
+        blank: true
+    next_contact_time:
+        type: datetime
+        blank: true
+    next_contact_content:
+        comment: 下次联系内容
+        blank: true
+    last_contact_time:
+        type: datetime
+        blank: true
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    remark:
+        type: text
+        comment: 备注
+        blank: true
+    $meta:
+        indexes:
+            linkman:
+            company_name:
+            created:
+            source_from:
+            next_contact_time:
+            last_contact_time:
+        foreign:
+            user:
+                restrict:
+                    delete: SET_NULL
+                options:
+                    blank: true
+            head:
+                options:
+                    blank: true
+                foreign_table: user
+                foreign_key: head_id
+                restrict:
+                    delete:
+                        SET_NULL
+            company:
+                restrict:
+                    delete: CASCADE
+            customer:
+                restrict:
+                    delete: CASCADE
+                options:
+                    blank: true
+
+customer:
+    source_from:
+        type: integer
+        blank: true
+    remark:
+        type: text
+        comment: 备注
+        blank: true
+    next_contact_time:
+        type: datetime
+        blank: true
+    last_contact_time:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    next_contact_content:
+        blank: true
+    $meta:
+        indexes:
+            source_from:
+            company:
+                fields: [contacts_company_id, company_id]
+                unique: true
+        foreign:
+            contacts_company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: SET_NULL
+                options:
+                    blank: true
+            crm_clue:
+                restrict:
+                    delete: SET_NULL
+                options:
+                    blank: true
+            head:
+                options:
+                    blank: true
+                foreign_table: user
+                foreign_key: head_id
+                restrict:
+                    delete:
+                        SET_NULL
+            company:
+                restrict:
+                    delete: CASCADE
+
+customer_head_log:
+    type:
+        type: enum
+        values: [1,2,3,4,5,6,7]
+        comment: 1领取，2释放，3分配，4转化，5领取客户，6释放客户，7分配客户
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    $meta:
+        foreign:
+            customer:
+                restrict:
+                    delete: CASCADE
+                options:
+                    blank: true
+            crm_clue:
+                restrict:
+                    delete: CASCADE
+                options:
+                    blank: true
+            user:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+
+customer_communicate:
+    content:
+        type: text
+        limit: text
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    $meta:
+        foreign:
+            contacts_company:
+                options:
+                    blank: true
+                restrict:
+                    delete: CASCADE
+            crm_clue:
+                restrict:
+                    delete: CASCADE
+                options:
+                    blank: true
+            customer:
+                restrict:
+                    delete: CASCADE
+                options:
+                    blank: true
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            company:
+                restrict:
+                    delete: CASCADE
+                options:
+                    unique: true
+
+
+customer_care:
+    subject:
+    type:
+        type: integer
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    $meta:
+        indexes:
+            subject:
+        foreign:
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            executor:
+                foreign_table: user
+                foreign_key: executor_id
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            customer:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

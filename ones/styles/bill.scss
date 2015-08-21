@@ -1,0 +1,177 @@
+$bill_td_height: 34px;
+
+.bill-container {
+    border:1px solid #CFCFCF;
+    box-shadow:0 1px 3px rgba(0, 0, 0, 0.2);
+    padding:10px 20px 20px;
+    margin-bottom:20px;
+
+    .bill-header {
+
+        .bill-subject {
+            height: 70px;
+            margin:0;
+            position:relative;
+            color:#000;
+            border-bottom:1px solid #efefef;
+            margin-bottom:20px;
+
+            .bill-subject-left {
+                position:absolute;left:0;top:0;
+                font-size:12px;
+
+
+                .subject {
+                    border-right: 1px solid #666;
+                    padding: 5px 10px 5px 0;
+                    margin-right:10px;
+                    input {
+                        border:0;
+                        text-align:center;
+                    }
+                    input:focus {
+                        border:0;
+                        outline: none;
+                    }
+                }
+
+                .company-info {
+                    padding-top: 8px;
+                    small {
+                        display: block;
+                        margin:1px 0;
+                    }
+                }
+
+                h1 {
+                    font-size:24px;
+                    margin:0;
+                    padding: 10px 0;
+                }
+            }
+
+        }
+
+        .bill-bar-code {
+            font-size:11px;
+            color:#222;
+            line-height:180%;
+            text-align:right;
+            width: 400px;
+            position:absolute;
+            right:0;top:10px;
+            img {
+                max-width: 100%;
+            }
+        }
+
+    }
+}
+
+.bill-rows {
+    table {
+        th {
+            background: #f2f2f2;
+        }
+
+        .operations-td i {
+            margin:0 3px;
+            cursor:pointer;
+        }
+        th {
+            label {
+                margin-bottom:0;
+            }
+        }
+
+        td[bill-edit-able] {
+            padding:0;
+            position: relative;
+
+            label {
+                z-index:2;
+            }
+            input {
+                z-index:99;
+            }
+            input, label {
+                border:0;
+                width:100%;height: $bill_td_height;
+                margin:0;
+                padding:0 5px;
+                position: absolute;
+                left:0;top:0;
+                color:#000;
+                display:block;
+                font-weight:normal;
+                line-height: $bill_td_height;
+            }
+            input:focus, input:hover {
+                outline: none;
+                box-shadow: none !important;
+                -webkit-appearance: none;
+                -webkit-appearance: caret;
+                -moz-appearance: caret;
+                -o-appearance: caret;
+                appearance: caret;
+            }
+
+            ::-moz-focus-inner {
+                border: 0;
+                padding: 0;
+            }
+
+            // append
+            .bill_cell_append {
+                position:absolute;
+                height: $bill_td_height;
+                line-height:$bill_td_height;
+                top:0;
+                color: gray;
+            }
+            .editable_td_after {
+                right:5px;
+            }
+            .editable_td_before {
+                left:5px;
+                z-index:110;
+            }
+        }
+    }
+
+    /* select 3*/
+    .select3-container {
+        box-shadow: 0 0 10px 3px #7eaffd;
+    }
+}
+
+.bill-container.workflowing {
+    box-shadow:0 1px 3px #4d90fe;
+}
+
+.bill-footer {
+    .bill-footer-meta {
+        margin-bottom:20px;
+        .label {
+            margin-right:5px;
+            padding:5px 5px 4px;
+            font-weight:normal;
+        }
+    }
+}
+
+.bill-footer-input {
+
+    margin-left:0;
+
+    .bill-footer-input-item {
+        margin: 8px 15px 10px 0;
+        float:left;
+        width: 300px;
+
+        .input-group-addon {
+            height:30px;
+        }
+    }
+
+}

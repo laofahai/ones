@@ -1,0 +1,29 @@
+alias: calendar
+author: TEam Swift
+link: https://ng-erp.com
+
+auth_nodes:
+    - calendar.events.get|flag
+    - calendar.events.post|flag
+    - calendar.events.put|flag
+    - calendar.events.delete|flag
+
+load_modules:
+    - mwl.calendar
+global_load_modules:
+    - ones.app.calendar.main
+
+global_include:
+    js:
+        - apps/calendar/main
+    css:
+        - apps/calendar/static/style
+navs:
+    Office:
+        app: office
+        icon: coffee
+        children:
+            Calendar:
+                app: calendar
+                icon: calendar
+                link: calendar/events

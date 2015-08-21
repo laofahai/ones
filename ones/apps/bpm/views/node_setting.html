@@ -1,0 +1,91 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog node-setting-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="$hide()">
+                    &times;
+                </button>
+                <h4 class="modal-title" ng-bind="'bpm.Edit Node Settings'|lang"></h4>
+            </div>
+            <div class="modal-body">
+                <form name="node_edit_form" class="form-horizontal form" novalidate="">
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2" ng-bind="'bpm.Node Name'|lang"></label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="node_settings.label" type="text" required />
+                        </div>
+                        <div class="col-sm-3 help-block"></div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2" ng-bind="'bpm.Node Status Label'|lang"></label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="node_settings.status_label" type="text" required />
+                        </div>
+                        <div class="col-sm-3 help-block"></div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2" ng-bind="'bpm.Action Type'|lang"></label>
+                        <div class="col-sm-7">
+                            <select ng-model="node_settings.action_type"
+                                    ng-options="typ.value as typ.label for typ in action_types"
+                                    chosen
+                                    ></select>
+                        </div>
+                        <div class="col-sm-3 help-block"></div>
+                    </div>
+                    <!--// execute service api-->
+                    <div ng-show="node_settings.action_type=='e'">
+                        <div class="form-group col-sm-12">
+                            <label class="control-label col-sm-2" ng-bind="'bpm.Service API'|lang"></label>
+                            <div class="col-sm-7">
+                                <select ng-model="node_settings.service_api"
+                                        ng-options="api.value as api.label for api in service_apis"
+                                        chosen
+                                        ></select>
+                            </div>
+                            <div class="col-sm-3 help-block"></div>
+                        </div>
+                    </div>
+                    <!--// end-->
+
+                    <!--// edit main row data by field-->
+                    <div ng-show="node_settings.action_type=='u'">
+                        <div class="form-group col-sm-12">
+                            <label class="control-label col-sm-2" ng-bind="'bpm.Edit Field'|lang"></label>
+                            <div class="col-sm-7">
+                                <div ng-repeat="efc in editable_fields_config track by $index" class="row bpm-editable-field-row">
+                                    <div class="col-sm-4" ng-bind="efc.field"></div>
+                                    <div class="col-sm-1">=</div>
+                                    <div class="col-sm-7">
+                                        <input-field config="efc"></input-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 help-block"></div>
+                        </div>
+                    </div>
+                    <!--// end-->
+
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2" ng-bind="'bpm.Notify Type'|lang"></label>
+                        <div class="col-sm-7">
+                            <input class="form-control" ng-model="node_settings.notify" type="text" required />
+                        </div>
+                        <div class="col-sm-3 help-block"></div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2" ng-bind="'bpm.Notify Content'|lang"></label>
+                        <div class="col-sm-7">
+                            <textarea class="form-control" ng-model="node_settings.notify_content" type="text"></textarea>
+                        </div>
+                        <div class="col-sm-3 help-block"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="complete_edit_widget_config();$hide();" ng-bind="'common.Submit'|lang"></button>
+                <button type="button" class="btn btn-default" ng-click="$hide()" ng-bind="'common.Cancel'|lang"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+<section class="actionsBtn clearfix">
+    <div class="pull-left actions-btn-left">
+        <div class="pull-left btn-group">
+            <a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="window.location.reload();"><i class="fa fa-refresh"></i></a>
+            <a class="btn btn-sm btn-info" href="javascript:void(0);" ng-show="back_able===true" onclick="window.history.go(-1);">
+                <i class="fa fa-arrow-left"></i>
+                <span ng-bind="'common.Go Back'|lang"></span>
+            </a>
+
+            <!--// dropdown selected actions  -->
+            <button
+                    ng-show="!$root.display_selected_actions_directly"
+                    data-toggle="dropdown"
+                    class="btn btn-sm btn-primary dropdown-toggle"
+                    ng-hide="selectable!==true"
+                    ng-class="{disabled: !gridSelected.length}">
+                <span ng-bind="'common.Selected %s Items'|lang:gridSelected.length"></span>
+                <i class="fa fa-caret-down fa-on-right"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-primary pull-left"
+                ng-show="selectedActions.length > 0 && !$root.display_selected_actions_directly">
+                <li class="{{sa.class}}"
+                    ng-show="(gridSelected.length === 1 || sa.multiple)"
+                    ng-class="{disabled: !gridSelected.length||(!sa.multiple&&(gridSelected.length!=1))}"
+                    ng-repeat="sa in selectedActions track by $index">
+                    <a ng-click="sa.action($event,gridSelected)">
+                        <i class="fa fa-{{sa.icon}}"></i>
+                        {{sa.label}}
+                    </a>
+                </li>
+            </ul>
+            <!--// end of dropdown selected actions  -->
+            <!--// list selected actions in detail/bill page  -->
+            <button
+                    class="btn btn-sm btn-{{sa.btn_type||'info'}}"
+                    ng-repeat="sa in selectedActions track by $index"
+                    ng-show="$root.display_selected_actions_directly"
+                    ng-click="sa.action($event,gridSelected,$root.current_item)"
+                    >
+                <i class="fa fa-{{sa.icon}}"></i>
+                <span ng-bind="sa.label"></span>
+            </button>
+            <a href="javascript:void(0);"
+               class="btn btn-default btn-sm disabled"
+               ng-show="global_title"
+               ng-bind="global_title"></a>
+            <!--// end of list selected actions  -->
+        </div>
+        <!--//workflow in detail page-->
+        <div class="pull-left btn-group" ng-show="workflow_in_bill !== undefined && !workflowing">
+            <button class="btn btn-sm btn-primary"
+                    ng-click="view_workflow_progress($root.current_item)"
+                    ng-bind="'bpm.Workflow'|lang"></button>
+            <button class="btn btn-sm btn-{{w.btn_class||'info'}}"
+                    ng-repeat="w in workflow_in_bill track by $w.id"
+                    ng-bind="w.label"
+                    ng-click="execute_workflow_node(w.id, w.workflow_id, $root.current_item.id)"
+                    ></button>
+        </div>
+
+        <!--//workflow dropdown -->
+        <div class="pull-left btn-group" ng-hide="false === selectable">
+            <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble">
+                <span ng-bind="'workflow.Workflow'|lang"></span>
+                <span class="fa fa-caret-down fa-on-right"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-success pull-right">
+                <li>
+                    <a ng-click="view_workflow_progress($root.current_item)" ng-bind="'workflow.View Workflow Process'|lang"></a>
+                </li>
+                <li ng-repeat="w in workflowActionList" ng-class="{disabled: workflowActionDisabled(w.id)}">
+                    <a ng-click="execute_workflow_node(w.id, null, $root.current_item.id);">{{w.name}}</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="pull-right btn-group">
+        <a class="btn btn-sm btn-{{pa.class|default:'primary'}}"
+           ng-click="$root.link_open_frame(pa)"
+           ng-repeat="pa in $root.link_actions track by $index"
+           ng-bind="pa.label"></a>
+
+        <button class="btn btn-sm btn-danger"
+                ng-click="doClearCachedData()"
+                ng-show="showClearAutoSaved">
+            <i class="fa fa-trash-o"></i>
+        </button>
+        <a href="javascript:void(0)"
+           class="btn btn-sm btn-info"
+           ng-show="grid_trash_able" ng-click="goTrash()">
+            <i class="fa fa-trash-o"></i>
+            <span ng-bind="'common.Trash'|lang"></span>
+        </a>
+        <a href="javascript:void(0);"
+           class="btn btn-sm"
+           ng-show="has_filters"
+           ng-class="{'btn-default':show_filters, 'btn-info': !show_filters}"
+           ng-click="show_filters = !show_filters">
+            <i class="fa fa-filter"></i>
+            <span ng-bind="'common.Filters'|lang"></span>
+        </a>
+        <a ng-href="{{help_link}}"
+           target="_blank"
+           class="btn btn-default btn-sm">
+            <i class="fa fa-question-circle"></i>
+        </a>
+    </div>
+
+
+</section>

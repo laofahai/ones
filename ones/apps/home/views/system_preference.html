@@ -1,0 +1,37 @@
+<page-actions></page-actions>
+<div class="home-config-container">
+    <div class="home-config-left">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" ng-bind="panel_title"></h3>
+            </div>
+            <div class="panel-body">
+                <form-view config="formConfig"></form-view>
+            </div>
+            <div class="panel-footer text-center">
+                <button class="btn btn-primary btn-lg"
+                        ng-click="doFormSubmit()"
+                        ng-bind="'common.Submit'|lang"
+                        once-click
+                        ></button>
+            </div>
+        </div>
+    </div>
+    <div class="home-config-right">
+        <div class="home-config-filter" id="grid-filter-container">
+            <h2 class="filter-title">
+                <i class="fa fa-filter"></i>
+                <span ng-bind="'common.Filters'|lang"></span>
+            </h2>
+            <div class="filter-content" style="min-height:{{table_height-23}}px">
+                <dl class="filter-content-links">
+                    <dd ng-repeat="app in apps" ng-class="{'active': app==current_app}">
+                        <a href="javascript:void(0)"
+                           ng-click="filter_by_app(app)"
+                           ng-bind="app|to_app_name"></a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

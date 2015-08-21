@@ -1,0 +1,13 @@
+APP_NAME: 销售模块
+
+Orders: 销售订单
+Sale: 销售
+
+Stock Quantity: 库存数量
+
+ORDERS_STATUS_NEW: 新订单
+ORDERS_STATUS_SAVED: 已保存
+ORDERS_STATUS_COMPLETE: 已完成
+
+Orders stock out: 订单出库
+Sale orders stock out workflow: 销售订单出库工作流

@@ -1,0 +1,29 @@
+sale_opportunities_product:
+    quote_price:
+        type: decimal
+        precision: 14
+        scale: 4
+    num:
+        type: decimal
+        precision: 14
+        scale: 4
+    quote_amount:
+        type: decimal
+        precision: 14
+        scale: 4
+    $meta:
+        foreign:
+            sale_opportunities:
+                restrict:
+                    delete: CASCADE
+            product:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL

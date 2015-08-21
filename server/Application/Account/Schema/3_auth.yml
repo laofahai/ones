@@ -1,0 +1,56 @@
+# 所有认证节点
+auth_node:
+    node:
+    app:
+    flagable:
+    $meta:
+        indexes:
+            node:
+                unique: true
+
+# 所用用户角色
+auth_role:
+    name:
+        comment: 角色名称
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+
+# 用户所属角色对应
+auth_user_role:
+    $meta:
+        foreign:
+            user:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+            auth_role:
+                restrict:
+                    delete: CASCADE
+        
+
+# 角色节点授权表
+authorize:
+    flag:
+        default: 1
+        comment: 授权形式 1所有人 2仅自己 3自己及直接下属 4自己及所有下属 5自己部门 6自己部门及部门下属部门
+    $meta:
+        indexes:
+            unqiue_key:
+                fields: [auth_role_id, auth_node_id]
+                unique: true
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            auth_role:
+                restrict:
+                    delete: CASCADE
+            auth_node:
+                restrict:
+                    delete: CASCADE
+

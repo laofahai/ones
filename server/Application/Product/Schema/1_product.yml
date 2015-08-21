@@ -1,0 +1,45 @@
+product_category:
+    name:
+    $meta:
+        indexes:
+            name:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+        enable_trash: true
+            
+product:
+    name:
+    cost:
+        type: decimal
+        default: 0.0000
+        precision: 14
+        scale: 4
+    price:
+        type: decimal
+        default: 0.0000
+        precision: 14
+        scale: 4
+    measure_unit:
+        type: string
+        limit: 20
+        blank: true
+    $meta:
+        # 索引
+        indexes:
+            name:
+        # 外键
+        foreign:
+            product_category:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+        # 记录使用频率
+        record_rate: true
+        # 启用删除回收站
+        enable_trash: true
+
+

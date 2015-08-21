@@ -1,0 +1,29 @@
+alias: productAttribute
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - product
+
+auth_nodes:
+    - productAttribute.productAttribute.*
+    - productAttribute.productAttributeContent.*
+
+include:
+    js:
+        - apps/productAttribute/main
+
+global_include:
+    js:
+        - apps/productAttribute/model
+
+navs:
+    Base Data Set:
+        children:
+            Products Manage:
+                children:
+                    Product Attribute Manage:
+                        app: productAttribute
+                        link: productAttribute/productAttribute
+                    Product Attribute Content Manage:
+                        app: productAttribute
+                        link: productAttribute/productAttributeContent

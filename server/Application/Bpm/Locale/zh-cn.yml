@@ -1,0 +1,41 @@
+APP_NAME: BPM
+APP_DESCRIPTION: 业务过程管理，提供工作流等服务接口，并提供可视化工作流设计器
+
+Data Owner: 数据拥有者
+
+NODE_TYPES:
+    general: 通用节点
+    start: 开始节点
+    end: 结束节点
+    cond: 条件判断节点
+
+Workflow: 工作流
+Workflow Progress: 工作流进程
+Workflow Design: 工作流设计
+
+Add Widget: 新增控件
+TO: 至
+
+Auto Execute: 自动执行
+Wait for outside: 等待外部响应
+
+Execute a service API: 执行一个应用服务接口
+Edit main row data: 修改当前流程数据
+Only 1 start node can be exists: 只可以存在一个开始节点
+
+Node settings: 节点设置
+Edit Node Settings: 修改节点设置
+Next node is: 下一节点是
+Condition True: 条件为真
+Condition False: 条件为假
+Node Name: 节点名称
+Node Status Label: 节点状态标签
+Action Type: 动作类型
+Notify Type: 提醒类型
+Do Nothing: 什么都不做
+Notify Content: 提醒内容
+Service API: 服务API
+Edit Field: 修改字段
+
+Workflow is in progress, please do not re-submit: 工作流已在执行，请勿重复提交
+Not a verified workflow node: 不是合法的工作流节点

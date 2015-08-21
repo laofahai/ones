@@ -1,0 +1,41 @@
+APP_NAME: 仓储管理
+
+STOCK_IN_STATUS_NEW: 新入库单
+STOCK_IN_STATUS_SAVED: 待入库
+STOCK_IN_STATUS_PART: 已部分入库
+STOCK_IN_STATUS_COMPLETE: 已全部入库
+
+STOCK_OUT_STATUS_NEW: 新出库单
+STOCK_OUT_STATUS_SAVED: 待出库
+STOCK_OUT_STATUS_PART: 已部分出库
+STOCK_OUT_STATUS_COMPLETE: 已全部出库
+
+Storage Manage: 仓储管理
+Stock List: 库存清单
+Stock: 库存
+Stock In: 入库
+Stock Out: 出库
+Stock In Bill: 入库单
+Stock Out Bill: 出库单
+Storages List: 仓库列表
+Storage: 仓库
+Stock Balance: 库存余量
+Stock Balance Total: 库存总量
+
+Confirm Stock In: 确认入库
+Check if full stock in: 检测是否已完全入库
+
+Storage Last Check Time: 上次盘点时间
+Already in quantity: 已入库数量
+This time in quantity: 本次入库数量
+Total Quantity: 总数
+
+Already out quantity: 已出库数量
+This time out quantity: 本次出库数量
+Stock Quantity: 库存数量
+
+Trigger error when update stock balance: 更新库存清单时发生错误
+
+Bill No: 单据编号
+
+Stock Log: 库存日志

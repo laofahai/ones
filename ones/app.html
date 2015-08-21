@@ -1,0 +1,207 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title ng-bind="'common.ONES - TEam Swift Present'|lang"></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/todc-bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+        <link rel="stylesheet" href="bower_components/chosen/bootstrap-chosen.css" />
+        <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/base.css">
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+    </head>
+    <body>
+        <!--[if lt IE 11]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div ng-controller="MainCtrl" class="main-control">
+            <header class="main-header" id="main-header">
+                <a href="javascript:void(0);" class="logo" ng-bind="'v'+ones_version"></a>
+                <nav class="header_navs ng-hide" ng-show="$parent.navs" ng-controller="MainTopNavCtrl">
+                    <a href="javascript:void(0);" 
+                        ng-repeat="nav in $parent.navs"
+                        ng-click="toggleLeftNavItems($index, c_nav.alias, nav.children)"
+                        ng-class="{'active': $index==active_nav}"
+                        >
+                        <i class="fa fa-{{nav.icon|default:'file'}}"></i>
+                        <span ng-bind="nav.label||((nav.app||'common')+'.'+nav.alias|lang)"></span>
+                    </a>
+                </nav>
+                <div class="pull-right main-header-right">
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="avatar" data-toggle="dropdown" aria-expanded="true">
+                            <img ng-src="{{user_info.id|to_avatar_src}}" />
+                        </a>
+                        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="javascript:void(0);" ng-click="addFrame(_('account.My Profile'), 'account/profile')">
+                                    <i class="fa fa-user"></i>
+                                    <span ng-bind="'account.My Profile'|lang"></span>
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="javascript:void(0);" ng-click="addFrame(_('account.Preference'), 'account/userPreference')">
+                                    <i class="fa fa-cog"></i>
+                                    <span ng-bind="'account.Preference'|lang"></span>
+                                </a>
+                            </li>
+                            <call-plugin
+                                    hook="main_user_dropdown_menu"
+                                    var="main_user_dropdown_menu"></call-plugin>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="javascript:void(0);" ng-click="doLogout()">
+                                    <i class="fa fa-power-off"></i>
+                                    <span ng-bind="'account.Logout'|lang"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </header>
+            <aside class="sidebar"
+                   ng-class="{'shrinked': left_nav_shrink}"
+                   ng-controller="LeftSidebarCtrl"
+                   id="main-aside"
+                   >
+                <div class="sidebar-inner">
+                    <ul class="left_navs">
+                        <li ng-repeat="nav in $parent.subNavs">
+                            <a href="javascript:void(0);" 
+                               ng-click="addFrame(nav.alias, nav)">
+                                <i class="fa fa-{{nav.icon|default:'caret-right'}} link-icon"></i>
+                                <span ng-bind="nav.label||(nav.app+'.'+nav.alias|lang)"></span>
+                                <span class="right-dropdown" ng-show="nav.children">
+                                    <i class="fa" ng-class="{'fa-angle-down': nav.expand===false, 'fa-angle-up': nav.expand!==false}"></i>
+                                </span>
+                            </a>
+                            <ul ng-show="nav.children && nav.expand !== false">
+                                <li ng-repeat="c_nav in nav.children">
+                                    <a href="javascript:void(0);" 
+                                       ng-click="addFrame(c_nav.alias, c_nav)">
+                                        <i class="fa fa-{{c_nav.icon|default:'caret-right'}} link-icon"></i>
+                                        <span ng-bind="c_nav.label||(c_nav.app+'.'+c_nav.alias|lang)"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </aside>
+        </div>
+        <section id="frames_area" class="frames_area" ng-controller="MainFramesCtrl">
+            <nav id="frames_nav" class="frames_nav">
+                <ul class="clearfix">
+                    <li 
+                        ng-repeat="f in frames track by f.id"
+                        ng-click="switchFrame($index)"
+                        ng-class="{'active': $index==activeFrame}"
+                        class="frames_nav_item"
+                        >
+                        <span ng-bind="f.label"></span>
+                        <a href="javascript:void(0);" 
+                           ng-click="closeFrame($index)"
+                           ng-show="f.closeable"
+                           class="close_btn"
+                            >
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <section id="frames_container" class="frames_container">
+                <iframe
+                    ng-repeat="f in frames track by f.id"
+                    ng-src="{{f.src}}"
+                    ng-show="$index==activeFrame"
+                    id="{{f.id}}"
+                    ></iframe>
+            </section>
+        </section>
+        <div id="alert-container" class="alert-container"></div>
+        <div class="loading-cover" id="loading-cover">
+            <span class="fa fa-circle-o-notch fa-spin"></span>
+        </div>
+        
+        <script> var ones = {}; </script>
+        
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/todc-bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+        <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+        <script src="bower_components/chosen/chosen.jquery.min.js"></script>
+        <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+        <script src="bower_components/showdown/src/showdown.js"></script>
+        <script src="bower_components/angular-markdown-directive/markdown.js"></script>
+        <script src="bower_components/angular-socket-io/socket.js"></script>
+        <script src="bower_components/socket.io-client/socket.io.js"></script>
+        <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
+        <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
+        <script src="bower_components/jsbarcode/JsBarcode.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,ones}) scripts/app.js -->
+        <script src="lib/vendor/sprintf.js"></script>
+        <script src="lib/vendor/md5.js"></script>
+        <script src="lib/require.js"></script>
+        <script src="common/config.js"></script>
+        <script src="lib/function.js"></script>
+        <script src="lib/caches.js"></script>
+        <script src="lib/plugin.js"></script>
+        <script src="lib/i18n.js"></script>
+        <script src="lib/common_view.js"></script>
+        <script src="lib/frames.js"></script>
+        <script src="common/directive.js"></script>
+        <script src="common/service.js"></script>
+        <script src="common/filter.js"></script>
+        <script src="common/app.js"></script>
+
+        <script src="apps/account/main.js"></script>
+        <script src="apps/account/model.js"></script>
+        <!-- endbuild -->
+        
+        <script>
+            jQuery(function() {
+                var set_frame_container_size = function() {
+                    $("#frames_area").css({
+                        width : $('body').width() - $("#main-aside").width(),
+                        height:$('body').height() - $("#main-header").height()
+                    });
+                };
+
+                $(window).resize(function(){
+                    set_frame_container_size();
+                });
+                bootstrap('ones', 'all', function() {
+                    set_frame_container_size();
+                });
+            })
+            
+        </script>
+    </body>
+</html>

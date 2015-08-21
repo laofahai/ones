@@ -1,0 +1,14 @@
+alias: notification
+author: TEam Swift
+link: https://ng-erp.com
+requirements: product
+
+auth_nodes:
+
+global_include:
+    js:
+        - apps/notification/service
+
+main_include:
+    js:
+        - apps/notification/service

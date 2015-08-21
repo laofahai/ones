@@ -1,0 +1,29 @@
+alias: product
+author: TEam Swift
+requirements:
+    - productAttribute
+auth_nodes:
+    - product.product.*
+    - product.productCategory.*
+include: 
+    js:
+        - apps/product/model
+        - apps/product/main
+global_include:
+    js:
+        - apps/product/plugin
+navs:
+    Base Data Set:
+        children:
+            Products Manage:
+                app: product
+                icon: navicon
+                children:
+                    Products: 
+                        app: product
+                        icon: navicon
+                        link: product/product
+                    Product Category: 
+                        app: product
+                        link: product/productCategory
+                        icon: sitemap

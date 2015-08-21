@@ -1,0 +1,13 @@
+alias: messageCenter
+author: TEam Swift
+link: https://ng-erp.com
+
+global_include:
+    js:
+        - apps/messageCenter/plugin
+        - apps/messageCenter/service
+
+main_include:
+    js:
+        - apps/messageCenter/plugin
+        - apps/messageCenter/service

@@ -1,0 +1,11 @@
+alias: office
+author: TEam Swift
+link: https://ng-erp.com
+requirements: product
+
+auth_nodes:
+
+include:
+    js:
+        - apps/office/main
+        - apps/office/model

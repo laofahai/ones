@@ -1,0 +1,58 @@
+alias: marketing
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - crm
+    - product
+
+load_modules:
+    - ones.gridViewModule
+    - ones.detailViewModule
+    - ones.app.product.model
+
+auth_nodes:
+    - marketing.saleOpportunities.post
+    - marketing.saleOpportunities.get|flag
+    - marketing.saleOpportunities.put|flag
+    - marketing.saleOpportunities.delete|flag
+    - marketing.saleOpportunities.push|flag
+    - marketing.contract.post
+    - marketing.contract.get|flag
+    - marketing.contract.put|flag
+    - marketing.contract.delete|flag
+    - marketing.saleOpportunities.analytics|flag
+
+include:
+    js:
+        - apps/marketing/main
+        - apps/marketing/model
+        - apps/crm/model
+        - apps/product/model
+
+global_include:
+    js:
+        - apps/marketing/plugin
+
+navs:
+    Marketing:
+        app: marketing
+        icon: pencil
+        children:
+            Marketing:
+                app: marketing
+                children:
+                    Sale Opportunities:
+                        app: marketing
+                        link: marketing/saleOpportunities
+
+                    Contract:
+                        app: marketing
+                        icon: file-text-o
+                        link: marketing/contract
+            Analytics:
+                app: analytics
+                children:
+                    Sale Funnel:
+                        app: marketing
+                        link: marketing/saleOpportunities/analytics/by/funnel
+                        icon: filter

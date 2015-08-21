@@ -1,0 +1,25 @@
+APP_NAME: ONES基础应用
+
+METHODS:
+    app:
+        put: 启用/禁用
+
+HELP_TEXTS:
+    grid:
+        commonType: <i class="fa fa-lightbulb-o text-success"></i> 通用类型按照排序倒序、添加时间正序排序
+
+Config: 配置
+App: 应用
+App Manage: 应用管理
+Clear Cache: 清除缓存
+Common Type: 通用类型
+Company Manage: 公司管理
+Company Profile: 公司资料
+System Preference: 首选项
+System Operation: 系统操作
+Display date hommization: 人性化显示时间
+
+Price Decimal Scale: 价格保留小数位
+Num Decimal Scale: 数量保留小数位
+
+Edit %s Preference: 修改 %s 首选项

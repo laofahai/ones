@@ -1,0 +1,43 @@
+<div class="bill-rows">
+    <table class="table table-bordered bill-rows-table">
+        <thead>
+            <tr>
+                <th width="60" ng-show="!$parent.is_view">&nbsp;</th>
+                <th width="50" class="text-center">#</th>
+                <th ng-repeat="field in row_fields track by $index"
+                    width="{{column_defs[field].width}}"
+                        >
+                    <label ng-bind="column_defs[field].label"></label>
+                    <div class="dropdown pull-right" ng-show="column_defs[field].batch_select && !$parent.bill_meta_data.locked && !$parent.$parent.is_view">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-toggle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="batch in batch_select[field]">
+                                <a href="javascript:void(0)" ng-bind="batch.label" ng-click="batch_set_value(field, batch)"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in bill_rows track by $index" height="34" data-row-index="{{row.tr_id}}">
+                <td class="text-center operations-td" ng-show="!$parent.$parent.is_view">
+                    <i ng-click="add_row($index, row.tr_id)" class="fa fa-plus"></i>
+                    <i ng-click="del_row($index, row.tr_id)" class="fa fa-trash-o"></i>
+                </td>
+                <td class="text-center"># <span ng-bind="$index+1"></span></td>
+                <td ng-repeat="field in row_fields track by $index"
+                    height="34"
+                    data-field="{{field}}"
+                    bill-edit-able="column_defs['{{field}}']"
+                    data-row-index="{{row.tr_id}}">
+                    <label ng-bind="bill_rows[$parent.$index][field+'__label__']" class="bill_row_td_editable_label"></label>
+                    <span class="editable_td_after bill_cell_append" ng-bind="bill_rows[$parent.$index][field+'__after__']"></span>
+                    <span class="editable_td_before bill_cell_append" ng-bind="bill_rows[$parent.$index][field+'__before__']"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,13 @@
+region:
+    parent_id:
+        type: integer
+        limit: 11
+    name:
+        type: string
+    type:
+        type: integer
+        limit: 1
+    $meta:
+        indexes:
+            parent_id:
+            type:

@@ -1,0 +1,24 @@
+common_type:
+    module:
+        limit: 50
+    alias:
+        blank: true
+    name:
+        limit: 100
+    listorder:
+        type: integer
+        limit: 4
+        default: 99
+    $meta:
+        indexes:
+            type_name:
+                fields: [module, name]
+                unique: true
+            alias:
+            name:
+            module:
+            listorder:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE

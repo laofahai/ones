@@ -1,0 +1,16 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="('common.Please Select'|lang)+' '+$modal_title"></h4>
+            </div>
+            <div class="modal-body">
+                <table-view config="grid_config"></table-view>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="doConfirm();$hide()" ng-bind="'common.OK'|lang"></button>
+            </div>
+        </div>
+    </div>
+</div>

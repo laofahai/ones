@@ -1,0 +1,82 @@
+department:
+    name:
+        comment: 组织机构
+    lft:
+        type: integer
+        commnet: 左值
+    rgt:
+        type: integer
+        comment: 右值
+    leader:
+        type: string
+        comment: 部门负责人
+        blank: true
+    $meta:
+        indexes:
+            lft:
+            rgt:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+user:
+    login:
+        comment: 用户登陆名
+    password:
+        limit: 100
+    realname:
+        comment: 真实姓名
+        limit: 100
+    email:
+        limit: 100
+    avatar:
+        blank: true
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    rand_hash:
+        limit: 6
+    $meta:
+        indexes:
+            login:
+            comuser_login:
+                fields: [login, company_id]
+                unique: true
+            realname:
+            email:
+                unique: true
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            department:
+                restrict:
+                    delete: CASCADE
+        enable_trash: true
+                    
+        #truncate_when_migrate: true
+
+user_preference:
+    name:
+        type: string
+    data:
+        type: text
+        limit: text
+        blank: true
+    data_type:
+        type: string
+        limit: 50
+    app:
+        type: string
+        limit: 50
+        blank: true
+    $meta:
+        indexes:
+            name_and_user:
+                fields: [user_id, name]
+                unique: true
+            app:
+        foreign:
+            user:
+                restrict:
+                    delete: CASCADE

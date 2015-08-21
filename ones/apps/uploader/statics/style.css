@@ -1,0 +1,11 @@
+.input-uploader-container table {
+  margin-top: -1px; }
+  .input-uploader-container table .uploader-thumb {
+    max-height: 40px; }
+    .input-uploader-container table .uploader-thumb img {
+      max-width: 80%;
+      max-height: 60px; }
+.input-uploader-container td {
+  vertical-align: middle !important; }
+
+/*# sourceMappingURL=style.css.map */

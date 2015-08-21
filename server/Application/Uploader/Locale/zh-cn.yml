@@ -1,0 +1,5 @@
+APP_NAME: 文件上传
+WIDGETS:
+    Uploader Widget: 文件上传
+
+File [%s] is too large(%s), max size is %s: 文件 %s 超过最大允许大小 (%s > %s)

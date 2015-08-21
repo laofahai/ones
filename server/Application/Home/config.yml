@@ -1,0 +1,59 @@
+alias: home
+author: TEam Swift
+link: https://ng-erp.com
+
+auth_nodes:
+    - home.common_type.*
+    - home.app.get
+    - home.app.put
+    - home.config.get
+    - home.config.put
+    - home.commonType.*
+auth_dont_need_check:
+    - home.nav.get_nav_info.get
+    - home.app.get_loaded
+include:
+    js:
+        - apps/home/main
+        - apps/home/model
+    css:
+        - apps/home/statics/style
+
+global_include:
+    js:
+        - apps/home/common_type
+        - apps/home/config
+        - apps/home/plugin
+        - apps/home/model
+
+load_all_i18n: true
+navs:
+    Base Data Set:
+        children:
+            System Common Data:
+                app: common
+                children:
+                    Common Type:
+                        app: home
+                        link: home/commonType
+    System Preference:
+        children:
+            Company Manage:
+                app: home
+                children:
+                    App Manage:
+                        app: home
+                        link: home/app
+                    System Preference:
+                        app: home
+                        icon: cog
+                        link: home/config
+
+
+            System Operation:
+                app: home
+                children:
+                    Clear Cache:
+                        app: home
+                        icon: refresh
+                        link: home/clearCache

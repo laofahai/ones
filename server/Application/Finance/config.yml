@@ -1,0 +1,11 @@
+alias: finance
+author: TEam Swift
+link: https://ng-erp.com
+requirements: product
+
+auth_nodes:
+
+include:
+    js:
+        - apps/finance/main
+        - apps/finance/model

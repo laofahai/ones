@@ -1,0 +1,63 @@
+alias: crm
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - contactsCompany
+    - calendar
+    - account
+auth_nodes:
+    - crm.crmClue.get|flag
+    - crm.crmClue.put|flag
+    - crm.crmClue.post
+    - crm.crmClue.delete|flag
+    - crm.crmClue.dispatch|flag
+    - crm.crmClue.collect|flag
+    - crm.crmClue.release|flag
+    - crm.crmClue.transform|flag
+    - crm.customer.get|flag
+    - crm.customer.put|flag
+    - crm.customer.delete|flag
+    - crm.customer.post
+    - crm.customer.dispatch|flag
+    - crm.customer.collect|flag
+    - crm.customer.release|flag
+    - crm.customerCare.post
+    - crm.customerCare.get|flag
+    - crm.customerCare.put|flag
+    - crm.customerCare.delete|flag
+    - crm.customerCommunicate.post
+    - crm.customerCommunicate.get|flag
+    - crm.customerCommunicate.put|flag
+    - crm.customerCommunicate.delete|flag
+include:
+    js:
+        - apps/crm/main
+        - apps/crm/model
+        - apps/contactsCompany/model
+global_include:
+    js:
+        - apps/crm/plugin
+navs:
+    CRM:
+        app: crm
+        icon: share-alt
+        children:
+            CRM:
+                app: crm
+                children:
+                    Clue:
+                        app: crm
+                        icon: paperclip
+                        link: crm/crmClue
+                    Clue Pool:
+                        app: crm
+                        icon: square-o
+                        link: crm/crmClue/filter/pool
+                    Customer:
+                        app: crm
+                        icon: user
+                        link: crm/customer
+                    Customer Pool:
+                        app: crm
+                        icon: square-o
+                        link: crm/customer/filter/pool
