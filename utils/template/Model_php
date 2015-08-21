@@ -1,0 +1,18 @@
+<?php
+
+/*
+ * @app *alias*
+ * @package *alias*.model.*module*
+ * @author laofahai@TEam Swift
+ * @link https://ng-erp.com
+ * */
+namespace *alias*\Model;
+use Common\Model\CommonViewModel;
+
+class *module*Model extends CommonViewModel {
+
+    protected $viewFields = [
+        "*module*" => ['*', '_type'=>'left']
+    ];
+
+}

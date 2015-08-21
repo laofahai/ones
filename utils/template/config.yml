@@ -1,0 +1,11 @@
+alias: *alias*
+author: *author*
+link: *link*
+requirements: *requirements*
+
+auth_nodes:
+
+include:
+    js:
+        - apps/*alias*/main
+        - apps/*alias*/model

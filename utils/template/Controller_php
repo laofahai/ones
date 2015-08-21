@@ -1,0 +1,16 @@
+<?php
+
+/*
+ * @app *alias*
+ * @package *alias*.controller.*module*
+ * @author laofahai@TEam Swift
+ * @link https://ng-erp.com
+ * */
+namespace *alias*\Controller;
+use Common\Controller\BaseRestController;
+
+class *module*Controller extends BaseRestController {
+
+    protected function _filter(&$map) {}
+
+}
