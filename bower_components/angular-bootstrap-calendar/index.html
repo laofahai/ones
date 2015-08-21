@@ -1,0 +1,203 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Angular bootstrap calendar demo</title>
+    <meta name="description" content="Angular bootstrap calendar demo">
+    <meta name="viewport" content="width=device-width">
+    <style type="text/css">
+      [ng-cloak] {
+        display: none;
+      }
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="docs/styles/main.css">
+  </head>
+  <body ng-app="demo" ng-cloak>
+
+    <a href="https://github.com/mattlewis92/angular-bootstrap-calendar" class="hidden-xs"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 2000" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Angular Bootstrap Calendar</a>
+        </div>
+        <ul class="nav navbar-nav hidden-xs">
+          <li><a href="#demo">Demo</a></li>
+          <li><a href="#event-editor">Event editor</a></li>
+          <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#installation">Installation</a></li>
+          <li><a href="https://github.com/mattlewis92/angular-bootstrap-calendar#documentation">Documentation</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+      <div class="row" ng-controller="MainCtrl" id="demo">
+        <div class="col-md-8 col-md-offset-2">
+          <h2 class="text-center">{{ calendarTitle }}</h2>
+
+          <div class="row">
+
+            <div class="col-md-6 text-center">
+              <div class="btn-group">
+
+                <button
+                  class="btn btn-primary"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  decrement="calendarView">
+                  Previous
+                </button>
+                <button
+                  class="btn btn-default"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  set-to-today>
+                  Today
+                </button>
+                <button
+                  class="btn btn-primary"
+                  mwl-date-modifier
+                  date="calendarDay"
+                  increment="calendarView">
+                  Next
+                </button>
+              </div>
+            </div>
+
+            <br class="visible-xs visible-sm">
+
+            <div class="col-md-6 text-center">
+              <div class="btn-group">
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'year'">Year</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Month</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Week</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">Day</label>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+          <mwl-calendar
+            events="events"
+            view="calendarView"
+            view-title="calendarTitle"
+            current-day="calendarDay"
+            on-event-click="eventClicked(calendarEvent)"
+            on-event-drop="eventDropped(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+            edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+            delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+            on-edit-event-click="eventEdited(calendarEvent)"
+            on-delete-event-click="eventDeleted(calendarEvent)"
+            auto-open="true"
+            day-view-start="06:00"
+            day-view-end="22:00"
+            day-view-split="30">
+          </mwl-calendar>
+
+          <br><br><br>
+
+          <script type="text/ng-template" id="modalContent.html">
+            <div class="modal-header">
+              <h3 class="modal-title">Event action occurred!</h3>
+            </div>
+            <div class="modal-body">
+              <p>Action: <pre>{{ action }}</pre></p>
+              <p>Event: <pre>{{ event | json }}</pre></p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="$close()">OK</button>
+            </div>
+          </script>
+
+          <h3 id="event-editor">
+            Edit events
+            <button class="btn btn-primary pull-right" ng-click="events.push({title: 'New event', type: 'important'})">Add new</button>
+            <div class="clearfix"></div>
+          </h3>
+
+          <table class="table table-bordered">
+
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Starts at</th>
+                <th>Ends at</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr ng-repeat="event in events track by $index">
+                <td><input type="text" class="form-control" ng-model="event.title"></td>
+                <td>
+                  <select ng-model="event.type" class="form-control">
+                    <option value="important">Important</option>
+                    <option value="warning">Warning</option>
+                    <option value="info">Info</option>
+                    <option value="inverse">Inverse</option>
+                    <option value="success">Success</option>
+                    <option value="special">Special</option>
+                  </select>
+                </td>
+                <td>
+                  <p class="input-group" style="max-width: 250px">
+                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.startsAt" is-open="event.startOpen" close-text="Close" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="toggle($event, 'startOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <timepicker ng-model="event.startsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                </td>
+                <td>
+                  <p class="input-group" style="max-width: 250px">
+                    <input type="text" class="form-control" readonly datepicker-popup="medium" ng-model="event.endsAt" is-open="event.endOpen" close-text="Close" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="toggle($event, 'endOpen', event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                  <timepicker ng-model="event.endsAt" hour-step="1" minute-step="15" show-meridian="true"></timepicker>
+                </td>
+                <td><button class="btn btn-danger" ng-click="events.splice($index, 1)">Delete</button></td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.0/moment.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="//cdn.jsdelivr.net/angular.bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
+    <script src="src/module.js"></script>
+    <script src="src/directives/mwlCalendar.js"></script>
+    <script src="src/filters/calendarTruncateEventTitle.js"></script>
+    <script src="src/filters/calendarLimitTo.js"></script>
+    <script src="src/services/calendarConfig.js"></script>
+    <script src="src/services/calendarTitle.js"></script>
+    <script src="src/services/calendarHelper.js"></script>
+    <script src="src/services/calendarDebounce.js"></script>
+    <script src="src/services/moment.js"></script>
+    <script src="src/services/interact.js"></script>
+    <script src="src/directives/mwlCollapseFallback.js"></script>
+    <script src="src/directives/mwlDateModifier.js"></script>
+    <script src="src/directives/mwlCalendarYear.js"></script>
+    <script src="src/directives/mwlCalendarMonth.js"></script>
+    <script src="src/directives/mwlCalendarWeek.js"></script>
+    <script src="src/directives/mwlCalendarDay.js"></script>
+    <script src="src/directives/mwlCalendarSlideBox.js"></script>
+    <script src="src/directives/mwlCalendarHourList.js"></script>
+    <script src="src/directives/mwlDraggable.js"></script>
+    <script src="src/directives/mwlDroppable.js"></script>
+    <script src="src/directives/mwlElementDimensions.js"></script>
+    <script src="docs/scripts/demo.js"></script>
+</body>
+</html>

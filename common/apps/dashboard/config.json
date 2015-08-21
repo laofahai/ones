@@ -1,7 +1,0 @@
-{
-    "primary": "true",
-    "alias": "dashboard",
-    "plugins": {
-        "before_check_action_permission": ["ONESDashboardBeforeCheckPermission"]
-    }
-}

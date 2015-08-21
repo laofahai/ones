@@ -1,0 +1,166 @@
+//
+// Navs
+// --------------------------------------------------
+
+
+// Base class
+// --------------------------------------------------
+
+.nav {
+  > li {
+
+    // Disabled state sets text to gray and nukes hover/tab effects
+    &.disabled > a {
+      color: @nav-disabled-link-color;
+
+      &:hover,
+      &:focus {
+        color: @nav-disabled-link-hover-color;
+      }
+    }
+  }
+
+  // Open dropdowns
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: @nav-open-bg;
+      border-color: @nav-open-bg;
+
+      .caret {
+        border-top-color: @nav-open-caret-border-color;
+        border-bottom-color: @nav-open-caret-border-color;
+      }
+    }
+  }
+}
+
+
+// Tabs
+// -------------------------
+
+.nav-tabs {
+  > li {
+
+    // Actual tabs (as links)
+    > a {
+      border-radius: @border-radius-base @border-radius-base 0 0;
+      color: @nav-tabs-link-color;
+      &:hover {
+        border-color: @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+      }
+    }
+
+    // Active state, and it's :hover to override normal :hover
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        font-weight: bold;
+        color: @nav-tabs-active-link-hover-color;
+
+        .caret {
+          border-top-color: @nav-caret-color;
+          border-bottom-color: @nav-caret-color;
+        }
+      }
+    }
+  }
+}
+
+
+// Google Tabs
+// -------------------------
+.nav-tabs-google {
+  > li {
+    margin: 0 -1px 0 0;
+
+    // Actual tabs (as links)
+    > a {
+      padding: @nav-tabs-google-link-padding;
+      line-height: @line-height-base;
+      color: @gray-dark;
+      border: 3px solid transparent;
+      border-width: 3px 0;
+      border-radius: 0;
+      .opacity(.5);
+      &:hover,
+      &:focus {
+        background-color: transparent;
+        border-top-color: transparent;
+      }
+      &:hover {
+        border-bottom-color: @nav-tabs-google-link-hover-border-color;
+        .opacity(1);
+      }
+      &:focus {
+        border-color: @nav-tabs-google-link-focus-border-color;
+        outline: 0;
+      }
+    }
+
+    // Active state, and it's :hover to override normal :hover
+    > a:active,
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        border: 3px solid transparent;
+        border-width: 3px 0;
+        border-bottom-color: @nav-tabs-google-link-hover-border-color;
+        .opacity(1);
+      }
+    }
+    &.active > a:focus {
+      border-color: @nav-tabs-google-link-focus-border-color;
+    }
+  }
+}
+
+// Pills
+// -------------------------
+.nav-pills {
+  > li {
+
+    // Links rendered as pills
+    > a {
+      border-radius: @nav-pills-border-radius;
+    }
+
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @nav-pills-active-link-hover-color;
+        background-color: @nav-pills-active-link-hover-bg;
+
+        .caret {
+          border-top-color: @nav-pills-active-link-hover-color;
+          border-bottom-color: @nav-pills-active-link-hover-color;
+        }
+      }
+    }
+  }
+}
+
+
+// Nav variations
+// --------------------------------------------------
+
+
+
+// Dropdowns
+// -------------------------
+
+// Make dropdown carets use link color in navs
+.nav .caret {
+  border-top-color: @nav-caret-color;
+  border-bottom-color: @nav-caret-color;
+}
+.nav a:hover .caret {
+  border-top-color: @nav-caret-color;
+  border-bottom-color: @nav-caret-color;
+}
