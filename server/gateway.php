@@ -34,11 +34,11 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 ini_set('session.cookie_lifetime', '1800');
 
 // 检测PHP环境
-if(version_compare(PHP_VERSION,'5.3.0','<')) {
+if(version_compare(PHP_VERSION,'5.5.9','<')) {
     header("HTTP/1.1 500");
     $msg = array(
         'error'=> true,
-        'msg'  => 'require php5.3+'
+        'msg'  => 'require php5.5.9+ and MySQL5.6.5+'
     );
     echo json_encode($msg);exit;
 }

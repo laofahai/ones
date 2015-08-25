@@ -15,7 +15,7 @@ ones.default_language = 'zh-cn';
 /*
 * 后端根目录
 * */
-ones.remote_base = 'http://127.0.0.1/lab/ones/server/';
+ones.remote_base = '../server/';
 /*
 * 后端Restful接口地址
 * */
