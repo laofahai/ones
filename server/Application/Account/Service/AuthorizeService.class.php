@@ -32,7 +32,9 @@ class AuthorizeService extends CommonModel {
         $authed_nodes = get_array_to_kv($this->get_authed_nodes_by_role($role_id), 'flag', 'auth_node_id');
         foreach($nodes as $node) {
 
-            $included_id[] = $node['node'];
+            if($node['node']) {
+                $included_id[] = $node['node'];
+            }
 
             // 在已授权列表中
             if(array_key_exists($node['node'], $authed_nodes) && $authed_nodes[$node['node']] == $node['flag']) {
@@ -57,7 +59,19 @@ class AuthorizeService extends CommonModel {
             return true;
         }
 
-        return $this->addAll($data, array(), true);
+
+        foreach($data as $k=>$v) {
+            if(!$v['auth_node_id']) {
+                continue;
+            }
+            if(!$this->add($v)) {
+                $this->error = $this->getLastSql();
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
     /*
