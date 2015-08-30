@@ -1,11 +1,36 @@
 alias: purchase
-author: TEam Swift
-link: https://ng-erp.com
-requirements: product
+author: 
+link: 
+requirements: 
+    - product
+    - store
 
 auth_nodes:
+    - purchase.purchase.*
+
+load_modules:
+    - ones.gridViewModule
+    - ones.app.product.model
 
 include:
     js:
         - apps/purchase/main
         - apps/purchase/model
+        - lib/bill
+        - apps/product/model
+
+navs:
+    Purchase:
+        app: purchase
+        icon: shopping-cart
+        children:
+            Purchase:
+                app: purchase
+                icon: shopping-cart
+                children:
+                    Add New Purchase:
+                        app: purchase
+                        link: purchase/purchase/add/bill
+                    Purchase Bills:
+                        app: purchase
+                        link: purchase/purchase

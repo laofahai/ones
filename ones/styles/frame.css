@@ -518,6 +518,11 @@ form
     .chosen-container .chosen-single div b {
       background-position: 0 5px; }
 
+.chosen-single {
+  background: #fff !important;
+  border-color: #ddd !important;
+  box-shadow: none !important; }
+
 .chosen-drop {
   border-radius: 0; }
   .chosen-drop .chosen-results {

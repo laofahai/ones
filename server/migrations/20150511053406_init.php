@@ -35,7 +35,7 @@ class Init extends BaseMigration
 //        $this->fromYaml("Home");
 //        $this->fromYaml("Account");
 //        $this->fromYaml("Product");
-        $this->fromYaml("ContactsCompany");
+//        $this->fromYaml("ContactsCompany");
 //        $this->fromYaml('DataModel');
 //        $this->fromYaml('Crm');
 //        $this->fromYaml('Calendar');
@@ -51,8 +51,8 @@ class Init extends BaseMigration
 //        $this->fromYaml('Region');
 
 //         同步权限节点
-//        $this->add_auth_node();
-        exit;
+        $this->add_auth_node();
+//        exit;
 
 //        $this->execute("INSERT INTO home_apps(alias)VALUES('goods')");
 //        $this->execute("INSERT INTO home_apps(alias, requirements)VALUES('store', 'goods')");
