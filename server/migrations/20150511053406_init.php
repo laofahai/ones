@@ -50,9 +50,11 @@ class Init extends BaseMigration
 //        $this->fromYaml('Sale');
 //        $this->fromYaml('Region');
 
+        $this->fromYaml('Supplier');
+        $this->fromYaml('Purchase');
 //         同步权限节点
-        $this->add_auth_node();
-//        exit;
+//        $this->add_auth_node();
+        exit;
 
 //        $this->execute("INSERT INTO home_apps(alias)VALUES('goods')");
 //        $this->execute("INSERT INTO home_apps(alias, requirements)VALUES('store', 'goods')");

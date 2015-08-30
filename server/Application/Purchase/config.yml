@@ -1,9 +1,10 @@
 alias: purchase
-author: 
-link: 
+author: TEam Swift
+link: https://ng-erp.com
 requirements: 
     - product
     - store
+    - supplier
 
 auth_nodes:
     - purchase.purchase.*

@@ -1,0 +1,27 @@
+supplier:
+    level:
+        type: integer
+        limit: 1
+    remark:
+        blank: true
+    $meta:
+        indexes:
+            level:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            contacts_company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: CASCADE
+            head:
+                options:
+                    blank: true
+                foreign_table: user
+                foreign_key: head_id
+                restrict:
+                    delete:
+                        SET_NULL

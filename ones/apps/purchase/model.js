@@ -22,7 +22,7 @@
                     bill_row_model: 'Purchase.PurchaseDetailAPI',
                     bill_meta_required: [
                         'subject', 'created'
-                    ],
+                    ]
                 };
             }
         ])

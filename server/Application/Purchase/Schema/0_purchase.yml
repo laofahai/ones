@@ -1,0 +1,71 @@
+purchase:
+    subject:
+        blank: true
+    bill_no:
+    source_model:
+        blank: true
+    source_id:
+        type: integer
+        limit: 11
+        blank: true
+    quantity:
+        type: decimal
+        precision: 14
+        scale: 4
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    remark:
+        blank: true
+    status:
+        type: integer
+        default: 0
+        limit: 11
+    $meta:
+        indexes:
+            subject:
+            bill_no:
+            source_model:
+            source_id:
+            created:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                restrict:
+                    delete: CASCADE
+            workflow:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+
+purchase_detail:
+    quantity:
+        type: decimal
+        precision: 14
+        scale: 4
+    product_unique_id:
+        type: string
+        limit: 100
+    remark:
+        blank: true
+    $meta:
+        indexes:
+            product_unique_id:
+        foreign:
+            product:
+                restrict:
+                    delete: CASCADE
+            orders:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE
+            supplier:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL

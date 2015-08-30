@@ -1,0 +1,28 @@
+alias: supplier
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - contactsCompany
+
+auth_nodes:
+    - supplier.supplier.*
+
+include:
+    js:
+        - apps/supplier/main
+        - apps/supplier/model
+
+navs:
+    Supplier Manage:
+        app: supplier
+        icon: chain
+        children:
+            Supplier Manage:
+                app: supplier
+                children:
+                    Suppliers List:
+                        app: supplier
+                        link: supplier/supplier
+                    Add New Supplier:
+                        app: supplier
+                        link: supplier/supplier/add

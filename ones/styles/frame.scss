@@ -608,16 +608,18 @@ $nav_width: 180px;
             }
         }
     }
+
 }
 .chosen-single {
     background: #fff !important;
-    border-color: #ddd !important;
+    border: 1px solid #d9d9d9 !important;
+    border-top-color: #c0c0c0 !important;
     box-shadow: none !important;
 }
 
 .chosen-drop {
     border-radius: 0;
-
+    border-color:#d9d9d9 !important;
     .chosen-results {
         margin:0 0 5px 0;
         padding:0;
