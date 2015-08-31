@@ -7,7 +7,8 @@
     'use strict';
     angular.module('ones.app.purchase.main', [
         'ones.app.purchase.model',
-        'ones.billModule'
+        'ones.billModule',
+        'ones.app.supplier.model'
     ])
         .config(['$routeProvider', function($route) {
             $route
@@ -21,9 +22,10 @@
             '$scope',
             '$routeParams',
             '$injector',
+            '$parse',
             'Purchase.PurchaseAPI',
             'Purchase.PurchaseDetailAPI',
-            function($scope, $routeParams, $injector, purchase_api, purchase_detail_api) {
+            function($scope, $routeParams, $injector, $parse, purchase_api, purchase_detail_api) {
                 if(!$routeParams.id) {
                     $scope.bill_meta_data = {
                         created: new Date(moment().format()),
@@ -58,15 +60,20 @@
                         break;
                 }
 
-                // 查询当前库存
-                $scope.fetch_stock_quantity = function(row_data, row_scope, row_index) {
-                    if(is_app_loaded('storage')) {
-                        $injector.get('Storage.StockAPI').get_stock_quantity(row_data).then(function(response_data) {
-                            var getter = $parse('bill_rows['+row_index+'].stock_quantity__label__');
-                            getter.assign(row_scope, to_decimal_display(response_data.quantity_balance));
-                        });
+
+                // 计算小计
+                $scope.re_calculate_total = function(rows, row_scope, row_index) {
+                    if(!rows[row_index].quantity || !rows[row_index].unit_price) {
+                        return;
                     }
+                    var sub_total_getter = $parse('bill_rows['+row_index+'].subtotal_amount');
+                    var sub_total_label_getter = $parse('bill_rows['+row_index+'].subtotal_amount__label__');
+                    var sub_total = rows[row_index].quantity * rows[row_index].unit_price;
+                    sub_total_getter.assign(row_scope, to_decimal_display(sub_total));
+                    sub_total_label_getter.assign(row_scope, to_decimal_display(sub_total));
                 };
+
+                // 计算合计
 
                 // 日期输入
                 $scope.date_config = {

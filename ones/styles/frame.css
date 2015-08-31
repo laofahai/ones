@@ -496,7 +496,8 @@ form
       line-height: 30px;
       padding: 0 5px;
       border-top: 1px solid #ddd;
-      cursor: pointer; }
+      cursor: pointer;
+      text-overflow: ellipsis; }
     .select3-container ul.items li:hover, .select3-container ul.items li.active {
       background: #7eaffd;
       color: #fff; }

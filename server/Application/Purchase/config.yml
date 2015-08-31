@@ -5,6 +5,7 @@ requirements:
     - product
     - store
     - supplier
+    - bpm
 
 auth_nodes:
     - purchase.purchase.*
@@ -19,6 +20,7 @@ include:
         - apps/purchase/model
         - lib/bill
         - apps/product/model
+        - apps/supplier/model
 
 navs:
     Purchase:

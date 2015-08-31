@@ -1,19 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nemo <335454250@qq.com>
- * Date: 6/10/15
- * Time: 22:04
- */
 
-namespace Crm\Model;
-
-
+/*
+ * @app Supplier
+ * @package Supplier.model.Supplier
+ * @author laofahai@TEam Swift
+ * @link https://ng-erp.com
+ * */
+namespace Supplier\Model;
 use Common\Model\CommonViewModel;
 
-class CustomerModel extends CommonViewModel {
+class SupplierModel extends CommonViewModel {
 
-    protected $tableName = 'customer';
+    protected $tableName = 'supplier';
 
     protected $viewFields = array(
         'ContactsCompany' => array(
@@ -29,21 +27,16 @@ class CustomerModel extends CommonViewModel {
             'trashed',
             '_type' => 'left'
         ),
-        'Customer' => array(
-            'id'=>'customer_id',
+        'Supplier' => array(
+            'id'=>'supplier_id',
             'contacts_company_id',
             'user_id',
-            'source_from',
-            'crm_clue_id',
             'company_id',
             'head_id',
-            'next_contact_time',
-            'next_contact_content',
-            'last_contact_time',
-            '_on'=>'Customer.contacts_company_id=ContactsCompany.id',
+            'level',
+            '_on'=>'Supplier.contacts_company_id=ContactsCompany.id',
             '_type' => 'left'
-        ),
-        'CommonType' => array('name'=>'source_from_label', '_on'=>'Customer.source_from=CommonType.id', '_type'=>'left')
+        )
     );
 
     public $fuzzy_search = [

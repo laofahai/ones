@@ -119,5 +119,37 @@ angular.module("ones.filtersModule", [])
             return sprintf('<span title="%s">%s</span>', String(time), moment(new Date(time)).fromNow());
         }
     }])
+    // 返回星级
+    .filter('to_stars', [function() {
+        return function(value) {
+            var color;
+            var html = [];
+
+            if(value >= 8) {
+                color = 'primary';
+            } else if(value >= 5) {
+                color = 'success';
+            } else if(value < 3) {
+                color = 'default';
+            } else if(value === 0) {
+                color = 'muted';
+            }
+
+            var fa = '<i class="fa text-'+color+' fa-%s"></i>';
+            if(value === 1) {
+                html.push(sprintf(fa, 'star-o'));
+            } else {
+                var stars = parseInt(value / 2) - 1;
+                for(var i=0;i<stars;i++) {
+                    html.push(sprintf(fa, 'star'));
+                }
+                if(value % 2 === 0) {
+                    html.push(sprintf(fa, 'star-half-empty'));
+                }
+            }
+
+            return html.join(' ');
+        };
+    }])
 
 ;

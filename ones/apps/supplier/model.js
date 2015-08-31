@@ -6,7 +6,85 @@
      * */
     'use strict';
     angular.module('ones.app.supplier.model', [])
+        .service('Supplier.SupplierAPI', [
+            'ones.dataApiFactory',
+            'RootFrameService',
+            '$filter',
+            function(dataAPI, RootFrameService, $filter) {
+                this.resource = dataAPI.getResourceInstance({
+                    uri: 'supplier/supplier',
+                    extra_methods: ['api_get', 'api_query']
+                });
 
+                this.config = {
+                    app: 'supplier',
+                    module: 'supplier',
+                    table: 'supplier',
+                    fields: {
+                        name: {
+                            on_view_item_clicked: function(value, item) {
+                                RootFrameService.open_frame({
+                                    src: 'supplier/supplier/view/split/'+item.id+'/basic',
+                                    label: _('common.View %s Detail', _('supplier.Supplier'))
+                                });
+                            },
+                            search_able: true
+                        },
+                        level: {
+                            widget: 'select',
+                            data_source: ones.stars_data_source,
+                            get_display: function(value) {
+                                return $filter('to_stars')(value);
+                            }
+                        },
+                        head_id: {
+                            map: 'head_id',
+                            widget: 'item_select',
+                            data_source: 'Account.UserAPI',
+                            required: false,
+                            label: _('supplier.Head Man'),
+                            cell_filter: 'to_user_fullname'
+                        },
+                        user_id: {
+                            label: _('supplier.Creator'),
+                            field: 'user_id',
+                            cell_filter: 'to_user_fullname'
+                        },
+                        phone: {
+                            search_able: true
+                        },
+                        master: {
+                            label: _('supplier.Supplier Head Man'),
+                            search_able: true
+                        }
+                    },
+                    unaddable: ['user_id', 'contacts_company_id', 'contacts_company_role_id'],
+                    uneditable: ['user_id', 'contacts_company_id', 'contacts_company_role_id'],
+                    undetailable: ['contacts_company_id', 'contacts_company_role_id'],
+                    list_display: [
+                        'name',
+                        'level',
+                        'phone',
+                        'master',
+                        'user_id',
+                        'head_id'
+                    ],
+                    detailable: true,
+                    filters: {
+                        gt_level: {
+                            label: _('supplier.Level'),
+                            type: 'link',
+                            data_source: [
+                                {value: 3, label: _('supplier.GT %s Star', 1)},
+                                {value: 5, label: _('supplier.GT %s Star', 2)},
+                                {value: 7, label: _('supplier.GT %s Star', 3)},
+                                {value: 9, label: _('supplier.GT %s Star', 4)}
+                            ]
+                        }
+                    }
+                };
+            }
+        ])
     ;
 
 })(window, window.angular, window.ones, window.io);

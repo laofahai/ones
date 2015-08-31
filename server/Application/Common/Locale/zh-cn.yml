@@ -28,12 +28,16 @@ WIDGETS:
 
 APP_DESCRIPTION: " "
 
+%s Star: %s 星
+%s Half Star: %s 星
+
 %s items per page: %s 条/页
 %s Items Total: 共 %s 条数据
 Add New: 新增
 Address: 地址
 Alias: 别名
 All: 全部
+Amount To: 合计
 Balance Direction: 余额方向
 Base Data Set: 基础数据
 Basic Info: 基本信息
@@ -109,12 +113,14 @@ Start Time: 开始时间
 Status: 状态
 Subject: 主题
 Submit: 提交
+Subtotal Amount: 小计
 Success delete %s: 成功删除 %s 项
 System Common Data: 系统基础数据
 System Preference: 系统首选项
 This item is locked and can not be edit: 这个项目已经被锁定并且不能再被修改
 Trash: 回收站
 Type: 类型
+Unit Price: 单价
 User: 用户
 View By %s: 通过%s查看
 View Detail: 查看详情

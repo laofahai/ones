@@ -573,6 +573,7 @@ $nav_width: 180px;
             padding:0 5px;
             border-top: 1px solid #ddd;
             cursor: pointer;
+            text-overflow:ellipsis;
         }
         li:hover, li.active {
             background: #7eaffd;

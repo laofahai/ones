@@ -59,7 +59,8 @@
     padding: 0;
     position: relative; }
     .bill-rows table td[bill-edit-able] label {
-      z-index: 2; }
+      z-index: 2;
+      overflow: hidden; }
     .bill-rows table td[bill-edit-able] input {
       z-index: 99; }
     .bill-rows table td[bill-edit-able] input, .bill-rows table td[bill-edit-able] label {

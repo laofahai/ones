@@ -490,11 +490,13 @@
                         // 绑定单元格前置和后置
                         var bind_before_and_after = function(column_def) {
                             var form_name = column_def.form_name || 'bill_rows[$parent.$index]';
+                            var value = scope.$eval(column_def['ng-model']);
+                            var item = scope.$eval(form_name);
                             // 单元格后置
                             if(typeof column_def.get_bill_cell_after === 'function') {
                                 var after = column_def.get_bill_cell_after(
-                                    scope.$eval(column_def['ng-model']), // value
-                                    scope.$eval(form_name)// row item
+                                    value, // value
+                                    item// row item
                                 );
                                 var getter = $parse(column_def['ng-model'] + '__after__');
                                 if(angular.isObject(after) && 'then' in after) {
@@ -509,8 +511,8 @@
                             // 单元格前置
                             if(typeof column_def.get_bill_cell_before === 'function') {
                                 var before = column_def.get_bill_cell_before(
-                                    scope.$eval(column_def['ng-model']), // value
-                                    scope.$eval(form_name)// row item
+                                    value, // value
+                                    item// row item
                                 );
                                 var getter = $parse(column_def['ng-model'] + '__before__');
                                 if(angular.isObject(before) && 'then' in before) {
@@ -520,6 +522,11 @@
                                 } else {
                                     getter.assign(scope, before);
                                 }
+                            }
+
+                            // 合计
+                            if(column_def.total_able) {
+                                console.log(value, item);
                             }
                         };
 

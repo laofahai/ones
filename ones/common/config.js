@@ -328,5 +328,20 @@ angular.module("ones.configModule", [
             $rootScope.user_info = ones.user_info;
 
 
+            ones.stars_data_source = [
+                {value:1, label: _('common.%s Star', 0)},
+                {value:2, label: _('common.%s Half Star', 0)},
+                {value:3, label: _('common.%s Star', 1)},
+                {value:4, label: _('common.%s Half Star', 1)},
+                {value:5, label: _('common.%s Star', 2)},
+                {value:6, label: _('common.%s Half Star', 2)},
+                {value:7, label: _('common.%s Star', 3)},
+                {value:8, label: _('common.%s Half Star', 3)},
+                {value:9, label: _('common.%s Star', 4)},
+                {value:10, label: _('common.%s Half Star', 4)},
+                {value:11, label: _('common.%s Star', 5)}
+            ];
+
+
         }])
 ;
