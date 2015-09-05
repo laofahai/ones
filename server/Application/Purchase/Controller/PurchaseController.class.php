@@ -7,9 +7,13 @@
  * @link https://ng-erp.com
  * */
 namespace Purchase\Controller;
-use Common\Controller\BaseRestController;
+use Common\Controller\CommonBillController;
 
-class PurchaseController extends BaseRestController {
+class PurchaseController extends CommonBillController {
+
+    protected $main_model = 'Purchase/Purchase';
+
+    protected $detail_model_alias = 'purchase.purchaseDetail';
 
     protected function _filter(&$map) {}
 

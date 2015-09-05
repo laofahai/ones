@@ -25,3 +25,25 @@ supplier:
                 restrict:
                     delete:
                         SET_NULL
+
+
+supplier_supply_product:
+    product_unique_id:
+        limit: 100
+    supply_price:
+        type: decimal
+        precision: 14
+        scale: 4
+    $meta:
+        indexes:
+            product_unique_id:
+        foreign:
+            supplier:
+                restrict:
+                    delete: CASCADE
+            product:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

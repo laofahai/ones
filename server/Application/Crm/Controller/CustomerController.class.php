@@ -38,16 +38,12 @@ class CustomerController extends BaseRestController {
     }
 
     protected function _before_insert() {
-//        $_POST['next_contact_time'] = format_form_js_date($_POST['next_contact_time']);
         if(!$_POST['head_id']) {
             unset($_POST['head_id']);
         } else {
             $_POST['head_id'] = $_POST['head_id'][0];
         }
     }
-//    protected function _before_update() {
-//        $_POST['next_contact_time'] = format_form_js_date($_POST['next_contact_time']);
-//    }
 
 
     public function on_put() {

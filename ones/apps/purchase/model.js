@@ -47,7 +47,8 @@
                             , auto_query: false
                             , get_display: function() {
                                 return false;
-                            }
+                            },
+                            'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
                         }
                         , supplier_id: {
                             label: _('supplier.Supplier'),
@@ -58,7 +59,8 @@
                             //get_display: function(value, item) {
                             //
                             //},
-                            editable_required: 'product_id'
+                            editable_required: 'product_id',
+                            'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
                         }
                         , unit_price: {
                             label: _('common.Unit Price'),
@@ -66,7 +68,7 @@
                             , get_display: function(value, item) {
                                 return to_decimal_display(value);
                             },
-                            'ng-blur': '$parent.$parent.$parent.re_calculate_total(bill_rows, $parent.$parent, $parent.$index)'
+                            'ng-blur': '$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)'
                         }
                         , quantity: {
                             label: _('common.Quantity')
@@ -78,8 +80,9 @@
                             , get_bill_cell_after: function(value, item) {
                                 return to_product_measure_unit(product, $q, item);
                             },
-                            'ng-blur': '$parent.$parent.$parent.re_calculate_total(bill_rows, $parent.$parent, $parent.$index)',
+                            'ng-blur': '$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)',
                             editable_required: 'product_id'
+                            , total_able: true
                         }
                         , subtotal_amount: {
                             editable: false

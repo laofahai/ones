@@ -497,7 +497,8 @@ form
       padding: 0 5px;
       border-top: 1px solid #ddd;
       cursor: pointer;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      overflow: hidden; }
     .select3-container ul.items li:hover, .select3-container ul.items li.active {
       background: #7eaffd;
       color: #fff; }

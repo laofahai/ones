@@ -329,17 +329,17 @@ angular.module("ones.configModule", [
 
 
             ones.stars_data_source = [
-                {value:1, label: _('common.%s Star', 0)},
-                {value:2, label: _('common.%s Half Star', 0)},
-                {value:3, label: _('common.%s Star', 1)},
-                {value:4, label: _('common.%s Half Star', 1)},
-                {value:5, label: _('common.%s Star', 2)},
-                {value:6, label: _('common.%s Half Star', 2)},
-                {value:7, label: _('common.%s Star', 3)},
-                {value:8, label: _('common.%s Half Star', 3)},
-                {value:9, label: _('common.%s Star', 4)},
-                {value:10, label: _('common.%s Half Star', 4)},
-                {value:11, label: _('common.%s Star', 5)}
+                {value:1, label: '-'},
+                {value:2, label: '☆'},
+                {value:3, label: '★'},
+                {value:4, label: '★☆'},
+                {value:5, label: '★★'},
+                {value:6, label: '★★☆'},
+                {value:7, label: '★★★'},
+                {value:8, label: '★★★☆'},
+                {value:9, label: '★★★★'},
+                {value:10, label: '★★★★☆'},
+                {value:11, label: '★★★★★'}
             ];
 
 

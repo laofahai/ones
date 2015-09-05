@@ -17,6 +17,10 @@ class UserService extends CommonRelationModel {
     protected $_auto = array(
         array("company_id", "get_current_company_id", 1, "function")
     );
+
+    public function is_login() {
+        return session('user.id') ? true : false;
+    }
     
     /*
      * 用户登陆认证
@@ -34,6 +38,11 @@ class UserService extends CommonRelationModel {
      * @plugin_param $company
      * **/
     public function authenticate($company_sign_id, $login, $password) {
+
+        if($this->is_login()) {
+            return true;
+        }
+
         $company = D("Account/Company")->where(array('sign_id'=>$company_sign_id))->find();
 
         if(!$company) {

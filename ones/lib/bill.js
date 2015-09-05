@@ -1,7 +1,6 @@
+var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>';
 (function(window, angular, ones, io) {
-
     'use strict';
-
     angular.module('ones.billModule', ['ones.formFieldsModule'])
         .service('BillModule', [
             '$routeParams',
@@ -525,9 +524,9 @@
                             }
 
                             // 合计
-                            if(column_def.total_able) {
-                                console.log(value, item);
-                            }
+                            //if(column_def.total_able) {
+                            //    console.log(value, item);
+                            //}
                         };
 
                         /*

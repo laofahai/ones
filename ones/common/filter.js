@@ -137,14 +137,14 @@ angular.module("ones.filtersModule", [])
 
             var fa = '<i class="fa text-'+color+' fa-%s"></i>';
             if(value === 1) {
-                html.push(sprintf(fa, 'star-o'));
+                html.push(sprintf(fa, ''));
             } else {
                 var stars = parseInt(value / 2) - 1;
                 for(var i=0;i<stars;i++) {
                     html.push(sprintf(fa, 'star'));
                 }
                 if(value % 2 === 0) {
-                    html.push(sprintf(fa, 'star-half-empty'));
+                    html.push(sprintf(fa, 'star-o'));
                 }
             }
 

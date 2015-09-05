@@ -23,9 +23,10 @@
             '$routeParams',
             '$injector',
             '$parse',
+            'Supplier.SupplierAPI',
             'Purchase.PurchaseAPI',
             'Purchase.PurchaseDetailAPI',
-            function($scope, $routeParams, $injector, $parse, purchase_api, purchase_detail_api) {
+            function($scope, $routeParams, $injector, $parse, supplier_api, purchase_api, purchase_detail_api) {
                 if(!$routeParams.id) {
                     $scope.bill_meta_data = {
                         created: new Date(moment().format()),
@@ -60,9 +61,15 @@
                         break;
                 }
 
+                var total_able_fields = [];
+                angular.forEach(purchase_detail_api.config.fields, function(config, field) {
+                    if(config.total_able) {
+                        total_able_fields.push(field);
+                    }
+                });
 
                 // 计算小计
-                $scope.re_calculate_total = function(rows, row_scope, row_index) {
+                $scope.re_calculate_subtotal = function(rows, row_scope, row_index) {
                     if(!rows[row_index].quantity || !rows[row_index].unit_price) {
                         return;
                     }
@@ -71,16 +78,64 @@
                     var sub_total = rows[row_index].quantity * rows[row_index].unit_price;
                     sub_total_getter.assign(row_scope, to_decimal_display(sub_total));
                     sub_total_label_getter.assign(row_scope, to_decimal_display(sub_total));
+
+                    $scope.re_calculate_total(rows, row_scope, row_index);
                 };
 
                 // 计算合计
+                $scope.re_calculate_total = function(rows, row_scope, row_index) {
+                    var totals = {};
+                    angular.forEach(rows, function(row) {
+                        angular.forEach(row, function(v, k) {
+                            if(total_able_fields.indexOf(k) >= 0) {
+                                totals[k] = totals[k] || 0;
+                                totals[k] += Number(v);
+                            }
+                        });
+                    });
+
+                    angular.forEach(totals, function(value, field) {
+                        var getter = $parse('bill_meta_data.' + field + '__total__');
+                        getter.assign($scope, value);
+
+                        var label_getter = $parse('bill_meta_data.' + field + '__total____label__');
+                        label_getter.assign($scope, to_decimal_display(value));
+                    });
+
+                    $scope.bill_meta_data.net_payment = $scope.bill_meta_data.subtotal_amount__total__;
+
+                };
+
+                // 取得商品单价
+                $scope.fetch_unit_price = function(rows, row_scope, row_index) {
+                    if(!rows[row_index].supplier_id) {
+                        return;
+                    }
+                    var params = {
+                        _m: 'fetch_product_unit_price'
+                    };
+                    angular.forEach(rows[row_index], function(v, k) {
+                        if(k.end_with('__') || k == 'tr_id') {
+                            return;
+                        }
+                        params[k] = v;
+                    });
+                    supplier_api.resource.api_get(params).$promise.then(function(response_data) {
+                        var getter = $parse('bill_rows['+row_index+'].unit_price');
+                        var label_getter = $parse('bill_rows['+row_index+'].unit_price__label__');
+                        var price = response_data['supply_price'] || response_data['source_price'];
+                        getter.assign(row_scope, price);
+                        label_getter.assign(row_scope, to_decimal_display(price));
+                    });
+                };
+
 
                 // 日期输入
                 $scope.date_config = {
                     field: 'created',
                     widget: 'datetime',
                     'ng-model': 'bill_meta_data.created',
-                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
+                    group_tpl: BILL_META_INPUT_GROUP_TPL
                 };
 
                 // 客户选择
@@ -97,6 +152,15 @@
                 //    data_source_value_field: 'customer_id'
                 //};
 
+                // 实付金额
+                $scope.net_pay_amount_config = {
+                    label: _('common.Net Total Payment Amount'),
+                    field: 'net_payment',
+                    widget: 'number',
+                    'ng-model': 'bill_meta_data.net_payment',
+                    group_tpl: BILL_META_INPUT_GROUP_TPL
+                };
+
                 // 工作流选择
                 $scope.workflow_config = {
                     label: _('bpm.Workflow'),
@@ -108,7 +172,7 @@
                         _mf: 'module',
                         _mv: 'purchase.purchase'
                     },
-                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
+                    group_tpl: BILL_META_INPUT_GROUP_TPL
                 };
             }
         ])

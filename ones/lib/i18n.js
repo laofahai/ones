@@ -20,7 +20,7 @@
  * debug模式：存入当前页面变量
  * 非debug模式：存入localStorage
  * 
- * @todo 当前语言
+ * @todo 动态切换当前语言
  * */
 function i18n_init(apps, callback) {
 

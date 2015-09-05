@@ -51,6 +51,7 @@ Company Fax: 公司传真
 Company Name: 公司名称
 Company Phone: 公司电话
 Confirm Again: 请再次确认
+Confirm APP supported under this: 以下请确认模块支持
 Confirm delete the %s items?: 确认删除这 %s 项？ <span class="text-danger">所有其相关数据将一并删除！</span>
 Content: 内容
 Cost: 成本价
@@ -61,6 +62,7 @@ Current Page %s/%s: 当前第 %s/%s 页
 Decimal Scale: 保留小数位
 Delete: 删除
 Description: 描述
+Does not match any rows: 未找到匹配项
 Edit: 修改
 Email: 邮箱
 End Time: 结束时间
@@ -81,13 +83,15 @@ Male: 先生
 Mobile: 手机
 Module: 模块
 Name: 名称
+Net Total Payment Amount: 实付金额
+Net Total Receive Amount: 实收金额
 No: 否
 No data to display: 没有数据可显示
 Num: 数量
 Office: 办公
+Operation Success: 操作成功
 Permission Denied: 您没有被授权
 Price: 价格
-Confirm APP supported under this: 以下请确认模块支持
 Phone: 电话
 Please fill out the form correctly: 请正确填写表单
 Please Select: 请选择

@@ -3,6 +3,7 @@ author: TEam Swift
 link: https://ng-erp.com
 requirements:
     - contactsCompany
+    - product
 
 auth_nodes:
     - supplier.supplier.*

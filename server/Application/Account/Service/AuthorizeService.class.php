@@ -16,10 +16,6 @@ class AuthorizeService extends CommonModel {
 
     public $not_belongs_to_company = true;
 
-    // 节点是否已对当前用户授权
-    public function is_node_authed() {
-
-    }
 
     /*
      * 对角色授权

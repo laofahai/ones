@@ -45,7 +45,7 @@
                     <strong ng-bind="'common.Amount To'|lang"></strong>
                 </td>
                 <td ng-repeat="field in row_fields track by $index">
-                    <strong ng-bind="$parent.bill_meta_data[field+'__subtotal__']"></strong>
+                    <strong ng-bind="$parent.$parent.bill_meta_data[field+'__total____label__']"></strong>
                 </td>
             </tr>
         </tfoot>

@@ -4,8 +4,6 @@
      * 数据表格模块
      *
      * @todo 按键监听 上下翻页
-     * @todo 链接按钮(新增等)
-     * @todo 行内点击进入详情或编辑
      * */
     angular.module("ones.gridViewModule", [])
         .service("GridView", [
@@ -434,11 +432,6 @@
                 };
                 /**
                  * 过滤器
-                 * @todo
-                 *  时间段过滤
-                 *  自定义时间段过滤
-                 *  工作流状态过滤 // link
-                 *  用户过滤
                  * */
                 this.makeFilters = function(){
                     var filters = self.options.model.config.filters || {};
