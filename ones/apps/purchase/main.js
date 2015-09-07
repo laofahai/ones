@@ -16,6 +16,18 @@
                     controller : 'PurchaseBillCtrl',
                     templateUrl: appView('purchase_edit.html')
                 })
+                .when('/purchase/purchase/edit/bill/:id', {
+                    controller : 'PurchaseBillCtrl',
+                    templateUrl: appView('purchase_edit.html')
+                })
+                .when('/purchase/purchase/:action/bill/:id', {
+                    controller : 'PurchaseBillCtrl',
+                    templateUrl: appView('purchase_edit.html')
+                })
+                .when('/purchase/purchase/:action/bill/:id/node/:node_id', {
+                    controller : 'PurchaseBillCtrl',
+                    templateUrl: appView('purchase_edit.html')
+                })
             ;
         }])
         .controller('PurchaseBillCtrl', [
@@ -83,7 +95,10 @@
                 };
 
                 // 计算合计
-                $scope.re_calculate_total = function(rows, row_scope, row_index) {
+                $scope.re_calculate_total = function(rows, update_net_payment) {
+
+                    update_net_payment = false === update_net_payment ? false : true;
+
                     var totals = {};
                     angular.forEach(rows, function(row) {
                         angular.forEach(row, function(v, k) {
@@ -102,8 +117,9 @@
                         label_getter.assign($scope, to_decimal_display(value));
                     });
 
-                    $scope.bill_meta_data.net_payment = $scope.bill_meta_data.subtotal_amount__total__;
-
+                    if(update_net_payment) {
+                        $scope.bill_meta_data.net_payment = $scope.bill_meta_data.subtotal_amount__total__;
+                    }
                 };
 
                 // 取得商品单价

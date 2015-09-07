@@ -21,6 +21,10 @@ purchase:
         type: integer
         default: 0
         limit: 11
+    net_payment:
+        type: decimal
+        precision: 14
+        scale: 4
     $meta:
         indexes:
             subject:
@@ -49,6 +53,14 @@ purchase_detail:
     product_unique_id:
         type: string
         limit: 100
+    unit_price:
+        type: decimal
+        precision: 14
+        scale: 4
+    subtotal_amount:
+        type: decimal
+        precision: 14
+        scale: 4
     remark:
         blank: true
     $meta:
@@ -58,7 +70,7 @@ purchase_detail:
             product:
                 restrict:
                     delete: CASCADE
-            orders:
+            purchase:
                 restrict:
                     delete: CASCADE
             company:

@@ -18,7 +18,41 @@
                     module: 'purchase',
                     table: 'purchase',
                     is_bill: true,
-                    fields: {},
+                    detailable: true,
+                    workflow: 'purchase.purchase',
+                    list_display: [
+                        'bill_no',
+                        'subject',
+                        'source_model',
+                        'quantity',
+                        'created',
+                        'workflow_node_status_label',
+                        'user_id'
+                    ],
+                    fields: {
+                        workflow_node_status_label: {
+                            label: _('common.Status'),
+                            addable: false,
+                            editable: false,
+                            data_source: [
+                                {value: 0, label: _('sale.ORDERS_STATUS_NEW')},
+                                {value: 1, label: _('sale.ORDERS_STATUS_SAVED')},
+                                {value: 2, label: _('sale.ORDERS_STATUS_COMPLETE')}
+                            ],
+                            map: 'status'
+                        },
+                        quantity: {
+                            get_display: function(value, item) {
+                                return to_decimal_display(value);
+                            }
+                        },
+                        user_id: {
+                            cell_filter: 'to_user_fullname'
+                        },
+                        created: {
+                            widget: "datetime"
+                        }
+                    },
                     bill_row_model: 'Purchase.PurchaseDetailAPI',
                     bill_meta_required: [
                         'subject', 'created'

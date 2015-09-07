@@ -63,8 +63,8 @@ class CommonBillController extends BaseRestController {
             return parent::on_read();
         }
 
-        $stock_in_service = D($this->main_model);
-        $data = $stock_in_service->get_full_data(I('get.id'));
+        $service = D($this->main_model);
+        $data = $service->get_full_data(I('get.id'));
 
         if(!$data) {
             return $this->httpError(404);

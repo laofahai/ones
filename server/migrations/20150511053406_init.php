@@ -47,11 +47,11 @@ class Init extends BaseMigration
 //        $this->fromYaml('Bpm');
 //        $this->fromYaml('ProductAttribute');
 
-//        $this->fromYaml('Sale');
+        $this->fromYaml('Sale');
 //        $this->fromYaml('Region');
 
-        $this->fromYaml('Supplier');
-//        $this->fromYaml('Purchase');
+//        $this->fromYaml('Supplier');
+        $this->fromYaml('Purchase');
 //         同步权限节点
 //        $this->add_auth_node();
         exit;

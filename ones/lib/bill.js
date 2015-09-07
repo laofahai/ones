@@ -120,6 +120,9 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                 });
                         }
 
+                        // 更新合计
+                        self.parentScope.re_calculate_total(rows);
+
                         generate_bar_code();
                     });
 

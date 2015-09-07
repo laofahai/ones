@@ -2,7 +2,7 @@
     <table class="table table-bordered bill-rows-table">
         <thead>
             <tr>
-                <th width="60" ng-show="!$parent.is_view">&nbsp;</th>
+                <th width="60">&nbsp;</th>
                 <th width="50" class="text-center">#</th>
                 <th ng-repeat="field in row_fields track by $index"
                     width="{{column_defs[field].width}}"
@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="row in bill_rows track by $index" height="34" data-row-index="{{row.tr_id}}">
-                <td class="text-center operations-td" ng-show="!$parent.$parent.is_view">
+                <td class="text-center operations-td">
                     <i ng-click="add_row($index, row.tr_id)" class="fa fa-plus"></i>
                     <i ng-click="del_row($index, row.tr_id)" class="fa fa-trash-o"></i>
                 </td>

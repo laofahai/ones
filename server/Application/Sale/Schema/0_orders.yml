@@ -23,6 +23,10 @@ orders:
     status:
         type: integer
         limit: 1
+    net_receive:
+        type: decimal
+        precision: 14
+        scale: 4
     $meta:
         indexes:
             subject:
@@ -54,6 +58,14 @@ orders_detail:
     product_unique_id:
         type: string
         limit: 100
+    unit_price:
+        type: decimal
+        precision: 14
+        scale: 4
+    subtotal_amount:
+        type: decimal
+        precision: 14
+        scale: 4
     remark:
         blank: true
     $meta:

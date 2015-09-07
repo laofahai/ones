@@ -21,6 +21,9 @@ include:
         - lib/bill
         - apps/product/model
         - apps/supplier/model
+global_include:
+    js:
+        - apps/purchase/plugin
 
 navs:
     Purchase:

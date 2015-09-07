@@ -164,7 +164,7 @@
                         return user_info.avatar;
                     } else {
                         return sprintf(
-                            'http://gravatar.duoshuo.com/avatar/%s?s=%s&d=mm&r=g',
+                            'https://cn.gravatar.com/avatar/%s?s=%s&d=mm&r=g',
                             hex_md5(avatar),
                             size
                         );
@@ -312,7 +312,7 @@
                     return user_info.avatar;
                 } else {
                     return sprintf(
-                        'http://gravatar.duoshuo.com/avatar/%s?s=%s&d=mm&r=g&d=wavatar',
+                        'https://cn.gravatar.com/avatar/%s?s=%s&d=mm&r=g&d=wavatar',
                         hex_md5(user_info.email),
                         size
                     );

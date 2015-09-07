@@ -20,6 +20,7 @@
                     app: 'supplier',
                     module: 'supplier',
                     table: 'supplier',
+                    value_field: 'supplier_id',
                     fields: {
                         name: {
                             on_view_item_clicked: function(value, item) {
