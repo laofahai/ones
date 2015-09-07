@@ -55,6 +55,49 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                 };
 
                 /*
+                * 常用方法
+                * */
+                this.common_methods = {
+                    // 重新计算合计金额
+                    re_calculate_total: function($runtime_scope, rows, total_able_fields, update_net) {
+                        total_able_fields = total_able_fields || [];
+
+                        var totals = {};
+                        angular.forEach(rows, function(row) {
+                            angular.forEach(row, function(v, k) {
+                                if(total_able_fields.indexOf(k) >= 0) {
+                                    totals[k] = totals[k] || 0;
+                                    totals[k] += Number(v);
+                                }
+                            });
+                        });
+
+                        angular.forEach(totals, function(value, field) {
+                            var getter = $parse('bill_meta_data.' + field + '__total__');
+                            getter.assign($runtime_scope, value);
+
+                            var label_getter = $parse('bill_meta_data.' + field + '__total____label__');
+                            label_getter.assign($runtime_scope, to_decimal_display(value));
+                        });
+
+                        if(false !== update_net) {
+                            $runtime_scope.bill_meta_data[update_net] = $runtime_scope.bill_meta_data.subtotal_amount__total__;
+                        }
+                    },
+                    // 重新计算小计
+                    re_calculate_subtotal: function($runtime_scope, rows, row_scope, row_index) {
+                        if(!rows[row_index].quantity || !rows[row_index].unit_price) {
+                            return;
+                        }
+                        var sub_total_getter = $parse('bill_rows['+row_index+'].subtotal_amount');
+                        var sub_total_label_getter = $parse('bill_rows['+row_index+'].subtotal_amount__label__');
+                        var sub_total = rows[row_index].quantity * rows[row_index].unit_price;
+                        sub_total_getter.assign(row_scope, to_decimal_display(sub_total));
+                        sub_total_label_getter.assign(row_scope, to_decimal_display(sub_total));
+                    }
+                };
+
+                /*
                 * 载入编辑数据
                 * @param array|undefined data 默认数据 => {meta: {}, rows: []}
                 * */
@@ -121,7 +164,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         }
 
                         // 更新合计
-                        self.parentScope.re_calculate_total(rows);
+                        self.common_methods.re_calculate_total(self.parentScope, rows);
 
                         generate_bar_code();
                     });

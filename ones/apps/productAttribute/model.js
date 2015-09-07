@@ -80,6 +80,10 @@
                 * */
                 this.assign_attributes = function(model, callback) {
                     this.get_attributes().then(function(attrs) {
+
+                        model.config.bill_fields = model.config.bill_fields || [];
+                        model.config.list_display = model.config.list_display || [];
+
                         angular.forEach(attrs, function(attr) {
                             if(!attr.alias || model.config.bill_fields.indexOf(attr.alias) >= 0) {
                                 return false;
@@ -103,8 +107,14 @@
                                 },
                                 data_source_query_with: 'product_id' // 根据product_id查询
                             };
+
                             model.config.bill_fields.splice(
                                 model.config.bill_fields.indexOf('product_id') + 1,
+                                0,
+                                attr.alias
+                            );
+                            model.config.list_display.splice(
+                                model.config.list_display.indexOf('product_id') + 1,
                                 0,
                                 attr.alias
                             );

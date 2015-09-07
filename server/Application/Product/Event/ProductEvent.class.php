@@ -12,5 +12,12 @@ use Common\Event\BaseRestEvent;
 
 class ProductEvent extends BaseRestEvent {
 
+    public function _EM_fetch_product_unit_price() {
+        $product = D('Product/Product')->where(['id'=>I('get.product_id')])->find();
+
+        $this->response([
+            'sale_price' => $product['price']
+        ]);
+    }
 
 }

@@ -20,6 +20,7 @@ class ProductAttributeContentModel extends CommonViewModel {
         ],
         "ProductAttribute" => [
             "name" => "product_attribute_name",
+            "alias",
             "_on" => "ProductAttribute.id=ProductAttributeContent.product_attribute_id",
             "_type" => "left"
         ]

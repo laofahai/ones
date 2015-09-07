@@ -33,7 +33,8 @@
         .service('Storage.StockAPI', [
             'ones.dataApiFactory',
             '$q',
-            function(dataAPI, $q) {
+            '$injector',
+            function(dataAPI, $q, $injector) {
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'storage/stock',
                     extra_methods: ['api_get']
@@ -85,12 +86,17 @@
                     editable: false
                 };
 
+                // 产品属性
+                if(is_app_loaded('productAttribute')) {
+                    $injector.get('ProductAttribute.ProductAttributeAPI').assign_attributes(this);
+                }
+
                 // 获取某产品当前库存余量
                 this.get_stock_quantity = function(row_data) {
                     var params = {};
                     var ignore = ['tr_id', 'remark', 'quantity'];
                     angular.forEach(row_data, function(v, k) {
-                        if(k.slice(-2) === '__' || ignore.indexOf(k) >= 0) {
+                        if(typeof k !== 'string' || k.slice(-2) === '__' || ignore.indexOf(k) >= 0) {
                             return;
                         }
                         params[k] = v;

@@ -8,6 +8,7 @@
  * */
 namespace Productattribute\Service;
 use Common\Model\CommonModel;
+use Home\Service\AppService;
 
 class ProductAttributeService extends CommonModel {
 
@@ -31,6 +32,11 @@ class ProductAttributeService extends CommonModel {
      * @return array
      * */
     public function assign_to($rows, $source_model) {
+
+        if(!$source_model) {
+            return $this->assign_to_by_product_unique($rows);
+        }
+
         $row_ids = get_array_by_field($rows, 'id');
 
         $map = [
@@ -49,6 +55,53 @@ class ProductAttributeService extends CommonModel {
                 $rows[$k][$field.'__label__'] = $mapping[$row['id']]['content'];
             }
         }
+        return $rows;
+    }
+
+    /*
+     * 根据产品唯一ID
+     * */
+    public function assign_to_by_product_unique($rows) {
+        if(!AppService::is_app_active('productAttribute')) {
+            return [];
+        }
+
+        $attr_content_ids = [];
+        foreach($rows as $k=>$row) {
+            $unique_id = $row['product_unique_id'];
+            if(!$unique_id) {
+                continue;
+            }
+            $tmp = explode('|', $unique_id);
+
+            $rows[$k]['attribute_content_ids'] = [];
+
+            foreach($tmp as $attr) {
+                list($attr_id, $attr_content_id) = explode('_', $attr);
+                array_push($attr_content_ids, $attr_content_id);
+                array_push($rows[$k]['attribute_content_ids'], $attr_content_id);
+            }
+        }
+
+        if(!$attr_content_ids) {
+            return $rows;
+        }
+
+        $attribute_contents = D('ProductAttribute/ProductAttributeContent', 'Model')->where([
+            'id' => ['IN', $attr_content_ids]
+        ])->select();
+        $attribute_contents = get_array_to_ka($attribute_contents, 'id');
+
+        foreach($rows as $k=>$row) {
+            foreach($row['attribute_content_ids'] as $ac_id) {
+                if(array_key_exists($ac_id, $attribute_contents)) {
+                    $attribute_field = $attribute_contents[$ac_id]['alias'];
+                    $attribute_value = $attribute_contents[$ac_id]['content'];
+                    $rows[$k][$attribute_field] = $attribute_value;
+                }
+            }
+        }
+
         return $rows;
     }
 

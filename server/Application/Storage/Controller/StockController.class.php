@@ -2,6 +2,7 @@
 
 namespace Storage\Controller;
 use Common\Controller\BaseRestController;
+use Home\Service\AppService;
 
 class StockController extends BaseRestController {
 
@@ -30,6 +31,10 @@ class StockController extends BaseRestController {
             if(array_key_exists($v['product_unique_id'], $total_balance)) {
                 $list[$k]['total_balance'] = $total_balance[$v['product_unique_id']]['total_balance'];
             }
+        }
+        // 产品属性
+        if(AppService::is_app_active('productAttribute')) {
+            $list = D('ProductAttribute/ProductAttribute')->assign_to($list);
         }
 
         $data[1] = reIndex($list);

@@ -20,6 +20,7 @@
         } else {
             var defer = $q.defer();
             product_api.resource.api_get({id: item.product_id, _fd: 'measure_unit'}).$promise.then(function(product_item){
+                item.measure_unit = product_item.measure_unit;
                 defer.resolve(product_item.measure_unit);
             });
             return defer.promise;

@@ -12,6 +12,9 @@
                 <input type="text" class="form-control" ng-model="bill_meta_data.remark" ng-readonly="bill_meta_data.locked">
             </div>
             <div class="bill-footer-input-item">
+                <input-field config="net_receive_amount_config" ng-readonly="bill_meta_data.locked"></input-field>
+            </div>
+            <div class="bill-footer-input-item">
                 <input-field config="customer_config" ng-readonly="bill_meta_data.locked"></input-field>
             </div>
             <div class="bill-footer-input-item">

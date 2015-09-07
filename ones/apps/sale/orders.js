@@ -39,7 +39,8 @@
             '$injector',
             'RootFrameService',
             '$parse',
-            function($scope, $timeout, order_api, order_detail_api, product_api, workflow_api, bill, $routeParams, $q, $injector, RootFrameService, $parse) {
+            function($scope, $timeout, order_api, order_detail_api, product_api,
+                     workflow_api, bill, $routeParams, $q, $injector, RootFrameService, $parse) {
 
                 if(!$routeParams.id) {
                     $scope.bill_meta_data = {
@@ -78,11 +79,63 @@
                 // 查询当前库存
                 $scope.fetch_stock_quantity = function(row_data, row_scope, row_index) {
                     if(is_app_loaded('storage')) {
-                        $injector.get('Storage.StockAPI').get_stock_quantity(row_data).then(function(response_data) {
+                        $injector.get('Storage.StockAPI').get_stock_quantity(row_data[row_index]).then(function(response_data) {
                             var getter = $parse('bill_rows['+row_index+'].stock_quantity__label__');
                             getter.assign(row_scope, to_decimal_display(response_data.quantity_balance));
+
+                            var unit_measure_result = to_product_measure_unit(product_api, $q, row_data[row_index]);
+                            var after_getter = $parse('bill_rows['+row_index+'].stock_quantity__after__');
+                            if(typeof unit_measure_result === 'object') {
+                                unit_measure_result.then(function(measure) {
+                                    after_getter.assign(row_scope, measure);
+                                });
+                            } else if(typeof unit_measure_result === 'string') {
+                                after_getter.assign(row_scope, unit_measure_result);
+                            }
                         });
                     }
+                };
+
+                var total_able_fields = [];
+                angular.forEach(order_detail_api.config.fields, function(config, field) {
+                    if(config.total_able) {
+                        total_able_fields.push(field);
+                    }
+                });
+
+                // 计算小计
+                $scope.re_calculate_subtotal = function(rows, row_scope, row_index) {
+                    bill.common_methods.re_calculate_subtotal($scope, rows, row_scope, row_index);
+                    $scope.re_calculate_total(rows);
+                };
+
+                // 计算合计
+                $scope.re_calculate_total = function(rows, update_net_receive) {
+                    bill.common_methods.re_calculate_total($scope, rows, total_able_fields,
+                        update_net_receive === false ? false : 'net_receive');
+                };
+
+                // 取得商品单价
+                $scope.fetch_unit_price = function(rows, row_scope, row_index) {
+                    if(!rows[row_index].product_id) {
+                        return;
+                    }
+                    var params = {
+                        _m: 'fetch_product_unit_price'
+                    };
+                    angular.forEach(rows[row_index], function(v, k) {
+                        if(k.end_with('__') || k == 'tr_id') {
+                            return;
+                        }
+                        params[k] = v;
+                    });
+                    product_api.resource.api_get(params).$promise.then(function(response_data) {
+                        var getter = $parse('bill_rows['+row_index+'].unit_price');
+                        var label_getter = $parse('bill_rows['+row_index+'].unit_price__label__');
+                        var price = response_data['sale_price'] || response_data['source_price'];
+                        getter.assign(row_scope, price);
+                        label_getter.assign(row_scope, to_decimal_display(price));
+                    });
                 };
 
                 // 日期输入
@@ -105,6 +158,15 @@
                     group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span><div class="select3-container-box">%(input)s</div></div>',
                     scope: $scope,
                     data_source_value_field: 'customer_id'
+                };
+
+                // 实付金额
+                $scope.net_receive_amount_config = {
+                    label: _('common.Net Total Payment Amount'),
+                    field: 'net_receive',
+                    widget: 'number',
+                    'ng-model': 'bill_meta_data.net_receive',
+                    group_tpl: BILL_META_INPUT_GROUP_TPL
                 };
 
                 // 工作流选择
@@ -155,6 +217,12 @@
                                 return to_decimal_display(value);
                             }
                         },
+                        net_receive: {
+                            get_display: function(value, item) {
+                                return to_decimal_display(value);
+                            },
+                            label: _('common.Net Total Receive Amount')
+                        },
                         user_id: {
                             cell_filter: 'to_user_fullname'
                         },
@@ -167,6 +235,7 @@
                         'subject',
                         'source_model',
                         'quantity',
+                        'net_receive',
                         'created',
                         'workflow_node_status_label',
                         'user_id'
@@ -204,19 +273,7 @@
                             , get_display: function() {
                                 return false;
                             }
-                        }
-                        , quantity: {
-                            label: _('common.Quantity')
-                            , widget: 'number'
-                            , get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            }
-                            // 单元格后置计量单位
-                            , get_bill_cell_after: function(value, item) {
-                                return to_product_measure_unit(product, $q, item);
-                            },
-                            'ng-blur': '$parent.$parent.$parent.fetch_stock_quantity(bill_rows[$parent.$index], $parent.$parent, $parent.$index)',
-                            editable_required: 'product_id'
+                            , 'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
                         }
                         , remark: {
                             label: _('common.Remark')
@@ -236,10 +293,42 @@
                             },
                             editable: false
                         }
+                        , unit_price: {
+                            label: _('common.Unit Price'),
+                            widget: 'number'
+                            , get_display: function(value, item) {
+                                return to_decimal_display(value);
+                            },
+                            'ng-blur': '$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)'
+                        }
+                        , quantity: {
+                            label: _('common.Quantity')
+                            , widget: 'number'
+                            , get_display: function(value, item) {
+                                return to_decimal_display(value);
+                            }
+                            // 单元格后置计量单位
+                            , get_bill_cell_after: function(value, item) {
+                                return to_product_measure_unit(product, $q, item);
+                            },
+                            'ng-blur': '$parent.$parent.$parent.fetch_stock_quantity(bill_rows, $parent.$parent, $parent.$index);$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)',
+                            editable_required: 'product_id'
+                            , total_able: true
+                        }
+                        , subtotal_amount: {
+                            editable: false
+                            , label: _('common.Subtotal Amount')
+                            , get_display: function(value, item) {
+                                return to_decimal_display(value);
+                            }
+                            , total_able: true
+                        }
                     },
                     bill_fields: [
                         'product_id'
+                        , 'unit_price'
                         ,'quantity'
+                        , 'subtotal_amount'
                         ,'remark'
                     ],
 

@@ -33,4 +33,13 @@ class PurchaseService extends CommonBillService {
         self::STATUS_SAVED
     ];
 
+    /*
+     * 「工作流接口」
+     * 转化为入库单
+     * */
+    public function convert_to_stock_in($id) {
+
+    }
+
+
 }

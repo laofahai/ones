@@ -56,14 +56,16 @@ angular.module("ones.directiveModule", [])
     .directive('onceClick', [function() {
         return {
             link: function(scope, element, attr) {
-
                 if(ones.DEBUG) {
                     return;
                 }
-
                 var fa = attr.onceClick || 'spinner';
                 element.click(function() {
                     element.prepend('<i class="fa fa-spin fa-'+fa+'"></i> ').attr('disabled', 'disabled');
+                    setTimeout(function() {
+                        element.removeAttr('disabled');
+                        element.find('i').remove();
+                    }, 5000);
                 });
             }
         };
