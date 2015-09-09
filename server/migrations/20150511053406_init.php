@@ -32,29 +32,31 @@ class Init extends BaseMigration
     public function up()
     {
 //
-//        $this->fromYaml("Home");
-//        $this->fromYaml("Account");
-//        $this->fromYaml("Product");
-//        $this->fromYaml("ContactsCompany");
-//        $this->fromYaml('DataModel');
-//        $this->fromYaml('Crm');
-//        $this->fromYaml('Calendar');
-//        $this->fromYaml('Marketing');
-//        $this->fromYaml('Uploader');
+        $this->fromYaml("Home");
+        $this->fromYaml("Account");
+        $this->fromYaml("Product");
+        $this->fromYaml("ContactsCompany");
+        $this->fromYaml('DataModel');
+        $this->fromYaml('Crm');
+        $this->fromYaml('Calendar');
+        $this->fromYaml('Marketing');
+        $this->fromYaml('Uploader');
 
-//        $this->fromYaml('Storage');
+        $this->fromYaml('Storage');
 
-//        $this->fromYaml('Bpm');
-//        $this->fromYaml('ProductAttribute');
+        $this->fromYaml('Bpm');
+        $this->fromYaml('ProductAttribute');
 
         $this->fromYaml('Sale');
-//        $this->fromYaml('Region');
+        $this->fromYaml('Region');
 
-//        $this->fromYaml('Supplier');
+        $this->fromYaml('Supplier');
         $this->fromYaml('Purchase');
+
+        $this->apply_meta();
 //         同步权限节点
-//        $this->add_auth_node();
-        exit;
+        $this->add_auth_node();
+//        exit;
 
 //        $this->execute("INSERT INTO home_apps(alias)VALUES('goods')");
 //        $this->execute("INSERT INTO home_apps(alias, requirements)VALUES('store', 'goods')");

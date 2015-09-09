@@ -63,6 +63,8 @@ if(!class_exists('RecursiveFileFilterIterator')) {
 class BaseMigration extends AbstractMigration{
     
     protected $app;
+
+    private $all_meta_info = [];
     
     /*
      * 通过schema.yml文件配置数据库
@@ -95,7 +97,7 @@ class BaseMigration extends AbstractMigration{
         if(!$schemas) {
             die(sprintf("Failed to parse schema in: %s\n", $schemaPath));
         }
-//        print_r($schemas);exit;
+
         foreach($schemas as $schema) {
             if(!$schema) {
                 continue;
@@ -110,10 +112,22 @@ class BaseMigration extends AbstractMigration{
                 } else {
                     $this->_createTableForYaml($tableName, $fields);
                 }
-
+                $this->all_meta_info[$tableName] = array_merge((array)$this->all_meta_info[$tableName], $fields['$meta']);
             }
         }
         
+    }
+
+    /*
+     * 应用$meta
+     * */
+    public function apply_meta() {
+        if(!$this->all_meta_info) {
+            return;
+        }
+        foreach($this->all_meta_info as $tableName=>$meta) {
+            $this->_applyMeta($tableName, $meta);
+        }
     }
     
     /*
@@ -150,7 +164,7 @@ class BaseMigration extends AbstractMigration{
         
         $table->save();
         
-        $this->_applyMeta($tableName, $fields['$meta']);
+//        $this->_applyMeta($tableName, $fields['$meta']);
         
         /*
          * 生成ThinkPHP Model文件
