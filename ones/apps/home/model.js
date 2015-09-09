@@ -106,9 +106,7 @@
                 this.config = {
                     app: 'home',
                     module: 'companyActiveApps',
-                    table: 'company_active_apps',
-
-
+                    table: 'company_active_apps'
                 };
 
                 this.unicode = function(item) {

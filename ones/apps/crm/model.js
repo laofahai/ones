@@ -23,12 +23,6 @@
                             addable: false,
                             editable: false
                         },
-                        user_id: {
-                            addable: false,
-                            editable: false,
-                            label: _('crm.Creator'),
-                            cell_filter: 'to_user_fullname'
-                        },
                         company_id: {
                             addable: false,
                             editable: false,

@@ -184,6 +184,8 @@
                         case "redirect":
                             $location.url(response.url);
                             break;
+                        default:
+                            window.location.reload();
                     }
                 };
 

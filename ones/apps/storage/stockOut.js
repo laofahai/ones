@@ -151,8 +151,8 @@
                     bill_fields: [
                         'product_id'
                         ,'quantity'
-                        ,'stock_quantity'
                         ,'storage_id'
+                        ,'stock_quantity'
                         ,'remark'
                     ],
 

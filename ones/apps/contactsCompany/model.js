@@ -44,9 +44,6 @@
                         name: {
                             search_able: true
                         },
-                        master: {
-                            search_able: true
-                        },
                         phone: {
                             search_able: true
                         },
@@ -57,7 +54,8 @@
                             search_able: true
                         },
                         master: {
-                            label: _('contactsCompany.Master')
+                            label: _('contactsCompany.Master'),
+                            search_able: true
                         },
                         region_id: {
                             widget: 'region_select',

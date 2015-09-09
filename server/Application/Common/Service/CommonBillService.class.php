@@ -150,7 +150,10 @@ class CommonBillService extends CommonModel {
          * */
         $detail_service = D($this->detail_model);
         foreach($rows as $row) {
-            $row['product_unique_id'] = $product_unique_id = generate_product_unique_id($row, $attribute_fields);
+            if(!$row['product_unique_id']) {
+                $row['product_unique_id'] = $product_unique_id = generate_product_unique_id($row, $attribute_fields);
+            }
+
             $row[$this->detail_main_foreign] = $id;
 
             if(false === $detail_service->create($row)) {
@@ -373,15 +376,19 @@ class CommonBillService extends CommonModel {
     final protected function merge_same_rows($rows, $attribute_fields) {
         $cleaned_rows = [];
         foreach($rows as $row) {
-            if($attribute_fields) {
-                $unique_key = sprintf(
-                    '%d_%s_%d',
-                    $row['product_id'],
-                    implode('_', filter_array_fields($row, $attribute_fields)),
-                    $row['storage_id']
-                );
+            if($row['product_unique_id']) {
+                $unique_key = sprintf('%s_%s', $row['product_unique_id'], $row['storage_id']);
             } else {
-                $unique_key = $row['product_id'] + '_' + $row['storage_id'];
+                if($attribute_fields) {
+                    $unique_key = sprintf(
+                        '%d_%s_%d',
+                        $row['product_id'],
+                        implode('_', filter_array_fields($row, $attribute_fields)),
+                        $row['storage_id']
+                    );
+                } else {
+                    $unique_key = $row['product_id'] + '_' + $row['storage_id'];
+                }
             }
 
             if(array_key_exists($unique_key, $cleaned_rows)) {

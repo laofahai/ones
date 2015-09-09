@@ -20,7 +20,6 @@ class StockService extends CommonModel {
      *  product_id, quantity, storage_id, product_unique_id ...
      * ]
      *
-     * @todo 包含商品属性
      * */
     public function change_quantity($direction, $rows) {
 
@@ -66,6 +65,7 @@ class StockService extends CommonModel {
 
     /*
      * 获取某产品的库存余量
+     * 前端录入时EVENT方法
      * */
     public function get_quantity_by_product($row_data) {
 
