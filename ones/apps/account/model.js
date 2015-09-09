@@ -192,7 +192,10 @@
                     addable: false,
                     fields: {
                         name: {
-                            width: '20%'
+                            width: '20%',
+                            get_display: function(value, item) {
+                                return item.prefix_name
+                            }
                         },
                         lft: {
                             addable: false,

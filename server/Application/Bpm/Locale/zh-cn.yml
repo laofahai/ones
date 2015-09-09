@@ -1,7 +1,13 @@
 APP_NAME: BPM
 APP_DESCRIPTION: 业务过程管理，提供工作流等服务接口，并提供可视化工作流设计器
 
-Data Owner: 数据拥有者
+Data Creator: 数据创建者
+
+Add Executor: 新增执行者
+Add To Executor: 新增至执行者
+User Role: 用户角色
+Department: 部门
+User: 用户
 
 NODE_TYPES:
     general: 通用节点

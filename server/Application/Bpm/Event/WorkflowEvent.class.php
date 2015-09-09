@@ -62,4 +62,27 @@ class WorkflowEvent extends BaseRestEvent {
         }
     }
 
+    /*
+     * 「扩展方法」
+     * 获得可新增的角色、部门、用户
+     * */
+    public function _EM_get_addable_roles() {
+        $response_data = [
+            'users' => [],
+            'departments' => [],
+            'roles' => []
+        ];
+
+        $users = D('Account/User')->where([])->select();
+        $response_data['users'] = filter_array_fields_multi((array)$users, ['id', 'realname']);
+
+        $departments = D('Account/Department')->get_tree();
+        $response_data['departments'] = filter_array_fields_multi((array)$departments, ['id', 'name']);
+
+        $roles = D('Account/AuthRole')->where([])->select();
+        $response_data['roles'] = filter_array_fields_multi((array)$roles, ['id', 'name']);
+
+        $this->response($response_data);
+    }
+
 }

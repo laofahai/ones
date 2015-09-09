@@ -48,7 +48,7 @@
 
                 // 默认人员
                 $scope.roles = [
-                    {label: _('bpm.Data Owner'), value: 'a:o'}, // auto owner
+                    {label: _('bpm.Data Creator'), value: 'a:o'}, // auto owner
                     {label: _('bpm.Auto Execute'), value: 'a:a'}, // auto, nothing
                     {label: _('bpm.Wait for outside'), value: 'w:o'} // wait, outside
                 ];
@@ -62,6 +62,51 @@
                 angular.forEach($scope.roles, function(role) {
                     renderer.add_group(role);
                 });
+
+                // 新增人员
+                var roles_inited = false;
+                var enabled_roles = ['a:o', 'a:a', 'w:o'];
+                $scope.show_add_role_modal = function() {
+                    if(!roles_inited) {
+                        workflow.resource.api_get({_m: 'get_addable_roles'}).$promise.then(function(response_data) {
+                            $scope.addable_roles = response_data;
+                        });
+                        roles_inited = true;
+                    }
+                    $modal({
+                        scope: $scope,
+                        template: appView('add_role.html')
+                    });
+                };
+                $scope.toggle_role = function(type, label, value) {
+                    var alias = type+":"+value;
+                    if($scope.is_role_enabled(type, value)) {
+                        delete(renderer.widgets[alias]);
+                        delete($scope.widgets[alias]);
+                        for(var i=0;i<$scope.roles.length;i++) {
+                            if($scope.roles[i].value === (alias)) {
+                                enabled_roles.splice(i,1);
+                                $scope.roles.splice(i, 1);
+                                break;
+                            }
+                        }
+                        return;
+                    }
+
+                    var role = {
+                        label: label,
+                        value: alias
+                    };
+                    enabled_roles.push(alias);
+                    $scope.roles.push(role);
+                    renderer.add_group(role);
+
+                };
+                $scope.is_role_enabled = function(type, value) {
+                    var alias = value ? type + ":" + value : type;
+                    return enabled_roles.indexOf(alias) >= 0;
+                };
+
 
                 // 控件
                 $scope.widgets = renderer.widgets;

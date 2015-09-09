@@ -16,6 +16,41 @@ function get_current_user_id() {
     return $user['id'] ? $user['id'] : false;
 }
 
+/**
+ * 检查数组数据是否完整
+ * @param $data 源数据
+ * @param $needed 所需字段
+ * @param $only_check_key 是否仅检测数组索引是否存在
+ */
+function check_params_full($data, $needed, $only_check_key=false) {
+    $not_checked = [];
+    foreach($needed as $v) {
+        if($only_check_key) {
+            if(!array_key_exists($v, $data)) {
+                $not_checked[$v] = $v;
+            }
+        } else {
+            if(!$data[$v]) {
+                $not_checked[$v] = $v;
+            }
+        }
+    }
+
+    if($not_checked) {
+        return $not_checked;
+    }
+    return true;
+}
+function check_params_full_multi($data, $needed, $only_check_key=false) {
+    foreach($data as $row) {
+        $result = checkParamsFull($row, $needed, $only_check_key);
+        if($result !== true) {
+            return $result;
+        }
+    }
+    return true;
+}
+
 /*
  * 处理decimal字段小数位
  * */
@@ -195,8 +230,14 @@ function filter_array_fields($array, $fields) {
             $return[$k] = $v;
         }
     }
-
     return $return;
+}
+
+function filter_array_fields_multi($array, $fields) {
+    foreach($array as $k=>$v) {
+        $array[$k] = filter_array_fields($v, $fields);
+    }
+    return $array;
 }
 
 /*

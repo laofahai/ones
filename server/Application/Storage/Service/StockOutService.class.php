@@ -12,10 +12,6 @@ use Common\Service\CommonBillService;
 
 class StockOutService extends CommonBillService {
 
-    // 新建入库单
-    const STATUS_NEW = 0;
-    // 已保存
-    const STATUS_SAVED = 1;
     // 已部分入库
     const STATUS_PART = 2;
     // 已完全入库
@@ -44,6 +40,26 @@ class StockOutService extends CommonBillService {
     // 包含本次可出库数量
     protected $include_this_time_quantity = true;
 
+    /*
+     * 「工作流接口」
+     * 保存出库单
+     * 检测数据完整
+     * */
+    public function save_stock_out($id) {
+
+        $detail_service = D('Storage/StockOutDetail');
+        $rows = $detail_service->where(['stock_out_id'=>$id])->select();
+        $needed = [
+            'quantity', 'product_id', 'product_unique_id', 'storage_id', 'stock_out_id'
+        ];
+        $result = check_params_full_multi($rows, $needed);
+        if(true !== $result) {
+            $this->error = _('common.Params Error') .':'. implode(',', $result);
+            return false;
+        }
+
+        $this->update_field_data($id, 'status', self::STATUS_SAVED);
+    }
 
     /*
      * 「工作流接口」

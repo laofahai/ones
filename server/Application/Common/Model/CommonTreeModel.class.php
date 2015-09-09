@@ -58,7 +58,7 @@ class CommonTreeModel extends CommonViewModel {
             } else {
                 $row["prefix"] = "";
             }
-            $row['name'] = $row['prefix'].$row['name'];
+            $row['prefix_name'] = $row['prefix'].$row['name'];
             // 是否包含子分类
             if($row["rgt"]-$row["lft"] > 1) {
                 $row["has_child"] = true;

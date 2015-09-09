@@ -47,6 +47,7 @@ Bill No: 单据编号
 Common Operation: 常用操作
 "Can't be search": "不用于搜索"
 Cancel: 取消
+Close: 关闭
 Company Address: 公司地址
 Company Fax: 公司传真
 Company Name: 公司名称
@@ -102,6 +103,7 @@ Prepared By: 制单人
 Quantity: 数量
 Quick Search: 快速搜索
 Remark: 备注
+Save: 保存
 Search By %s: 通过%s检索
 Selected %s Items: 选中%s项
 Self and all subordinate: 自己和所有下属

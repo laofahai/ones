@@ -1,4 +1,4 @@
-$role_item_height: 160px;
+$role_item_height: 120px;
 $role_item_title_width: 40px;
 
 .bpm-shower-container {
@@ -171,5 +171,24 @@ $role_item_title_width: 40px;
     margin-bottom:8px;
     .chosen-container {
         width:100% !important;
+    }
+}
+.ml-10 {
+    margin-left:5px;
+}
+.add_role_modal {
+    .form-group {
+        height:30px;clear:both;
+    }
+    .form-group:after {
+        clear:both;
+        content: " ";
+    }
+    .form-group label {
+        height:30px;line-height:30px;
+    }
+
+    .row {
+        margin-bottom:15px;
     }
 }

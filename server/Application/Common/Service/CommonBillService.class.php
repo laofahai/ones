@@ -338,7 +338,7 @@ class CommonBillService extends CommonModel {
 
         // 产品属性
         if(AppService::is_app_active('productAttribute')) {
-            $rows = D('ProductAttribute/ProductAttribute')->assign_to($rows, $this->detail_model_alias);
+            $rows = D('ProductAttribute/ProductAttribute')->assign_to_by_product_unique($rows, $this->detail_model_alias);
         }
 
         return [
