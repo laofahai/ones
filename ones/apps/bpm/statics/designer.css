@@ -3,7 +3,7 @@
   .bpm-shower-container .bpm-role-item {
     border: 1px solid #ddd;
     position: relative;
-    height: 120px;
+    height: 150px;
     margin-top: -1px;
     padding-left: 40px; }
     .bpm-shower-container .bpm-role-item .role-title {
@@ -14,7 +14,7 @@
       text-align: center;
       left: 0;
       top: 0;
-      height: 120px;
+      height: 150px;
       font-size: 14px;
       width: 40px;
       -webkit-box-align: center;
@@ -56,7 +56,7 @@
     text-align: center;
     margin: 0;
     position: absolute;
-    max-height: 120px;
+    max-height: 150px;
     background: #fff;
     word-break: break-all;
     padding: 3px;
@@ -153,6 +153,6 @@
   height: 30px;
   line-height: 30px; }
 .add_role_modal .row {
-  margin-bottom: 10px; }
+  margin-bottom: 15px; }
 
 /*# sourceMappingURL=designer.css.map */

@@ -28,7 +28,7 @@ class SaleOpportunitiesController extends BaseRestController {
 
     protected function _before_insert() {
         $_POST['customer_id'] = D('Crm/Customer')->where(array(
-            'contacts_company_id' => $_POST['customer_id'][0]
+            'contacts_company_id' => $_POST['customer_id']
         ))->getField('id');
 
         if(I('post.head_id')) {
