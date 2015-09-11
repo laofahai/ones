@@ -65,7 +65,13 @@ class BaseMigration extends AbstractMigration{
     protected $app;
 
     private $all_meta_info = [];
-    
+
+    public function init() {
+        $config = Yaml::parse(file_get_contents(ENTRY_PATH.'/phinx.yml'));
+        $config = $config['environments']['development'];
+        $this->setAdapter(new MysqlAdapter($config));
+    }
+
     /*
      * 通过schema.yml文件配置数据库
      * 1、验证table是否存在 hasTable
@@ -138,7 +144,9 @@ class BaseMigration extends AbstractMigration{
         if(!$fields) {
             return;
         }
-        
+
+        echo "Creating table: ".$tableName;
+
         $table = $this->table($tableName);
         
         foreach($fields as $column=>$options) {
@@ -150,7 +158,7 @@ class BaseMigration extends AbstractMigration{
             if(substr($column, 0, 1) == "$") {
                 continue;
             }
-            
+            printf('Add field %s to table %s', $column, $tableName);
             $table = $table->addColumn(
                     $column,
                     $options['type'] ? $options['type'] : 'string',

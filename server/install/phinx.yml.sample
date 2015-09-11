@@ -1,0 +1,32 @@
+paths:
+    migrations: %%PHINX_CONFIG_DIR%%/migrations
+migration_base_class: Common\Lib\BaseMigration
+environments:
+    default_migration_table: a_phinxlog
+    default_database: %(default_environment)s
+    production:
+        adapter: %(adapter)s
+        host: %(host)s
+        name: %(name)s
+        user: %(user)s
+        pass: %(pass)s
+        port: %(port)s
+        charset: utf8
+
+    development:
+        adapter: %(adapter)s
+        host: %(host)s
+        name: %(name)s
+        user: %(user)s
+        pass: %(pass)s
+        port: %(port)s
+        charset: utf8
+
+    testing:
+        adapter: %(adapter)s
+        host: %(host)s
+        name: %(name)s
+        user: %(user)s
+        pass: %(pass)s
+        port: %(port)s
+        charset: utf8

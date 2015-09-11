@@ -1,15 +1,8 @@
 <?php
 $__ = array(
-    
-    'DB_TYPE'   => 'mysql', // 数据库类型
-    'DB_HOST'   => '127.0.0.1', // 服务器地址
-    'DB_NAME'   => 'ones_lab', // 数据库名
-    'DB_USER'   => 'root', // 用户名
-    'DB_PWD'    => '', // 密码
-    'DB_PORT'   => 3306, // 端口
-    'DB_PREFIX' => '', // 数据库表前缀 
+    'DB_PREFIX' => '', // 数据库表前缀
     'DB_CHARSET'=> 'utf8', // 字符集
-    'DB_DEBUG'  =>  TRUE, 
+    'DB_DEBUG'  =>  false,
     
     'DEFAULT_M_LAYER' => 'Service',
     'SESSION_AUTO_START' =>false,
@@ -26,9 +19,23 @@ $__ = array(
         'expire' => 600,
         'type'   => 'Db'
     )
-    
 );
 
+// 根据migration 设定数据库链接
+$__phinx_config = \Symfony\Component\Yaml\Yaml::parse(file_get_contents(ENTRY_PATH.'/phinx.yml'));
+if(defined('APPLICATION_ENV')) {
+    $__env = APPLICATION_ENV;
+} else {
+    $__env = $__phinx_config['environments']['default_database'];
+    define('APPLICATION_ENV', $__env);
+}
+$__phinx_db_config = $__phinx_config['environments'][$__env];
+$__['DB_TYPE'] = $__phinx_db_config['adapter'];
+$__['DB_HOST'] = $__phinx_db_config['host'];
+$__['DB_NAME'] = $__phinx_db_config['name'];
+$__['DB_USER'] = $__phinx_db_config['user'];
+$__['DB_PWD'] = $__phinx_db_config['pass'];
+$__['DB_PORT'] = $__phinx_db_config['port'];
 
 /*
  * API QUERY/GET 使用Event

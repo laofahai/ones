@@ -2,7 +2,7 @@ paths:
     migrations: %%PHINX_CONFIG_DIR%%/migrations
 migration_base_class: Common\Lib\BaseMigration
 environments:
-    default_migration_table: phinxlog
+    default_migration_table: a_phinxlog
     default_database: development
     production:
         adapter: mysql

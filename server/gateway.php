@@ -16,7 +16,12 @@ define('SUPPORTED_METHOD', 'GET,POST,PUT,DELETE,EVENT,EVENT_GET,REMOVE');
 define('ENTRY_PATH', dirname(__FILE__));
 define('APPLICATION_PATH',ENTRY_PATH.'/Application/');
 define('APP_PATH',ENTRY_PATH.'/Application/');
+
 define('CTS', time());
+
+// 应用环境
+// 可选： development, production, testing 等，在 /server/phinx.yml中可配置相应的数据库连接
+define('APPLICATION_ENV', 'development');
 
 header("Access-Control-Allow-Origin: *");
 
