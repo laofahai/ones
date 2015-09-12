@@ -11,6 +11,7 @@ company:
         comment: 公司唯一编号
     superuser:
         type: integer
+        limit: 11
         blank: true
         comment: 超级用户外键
     address:

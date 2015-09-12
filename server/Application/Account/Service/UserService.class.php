@@ -105,9 +105,7 @@ class UserService extends CommonRelationModel {
      * 根据明文密码生成加密密码
      * **/
     public function generate_password($source, $rand_hash=false) {
-        $rand_hash = $rand_hash ? $rand_hash : random_string(6);
-        $password = sha1(md5($source.$rand_hash));
-        return [$password, $rand_hash];
+        return generate_password($source, $rand_hash);
     }
 
     /*

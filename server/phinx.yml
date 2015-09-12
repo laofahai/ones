@@ -3,30 +3,30 @@ paths:
 migration_base_class: Common\Lib\BaseMigration
 environments:
     default_migration_table: a_phinxlog
-    default_database: development
+    default_database: %(default_environment)s
     production:
         adapter: mysql
-        host: localhost
-        name: ones_lab
+        host: 127.0.0.1
+        name: install_test
         user: root
-        pass: ''
+        pass: 
         port: 3306
         charset: utf8
 
     development:
         adapter: mysql
         host: 127.0.0.1
-        name: ones_lab
+        name: install_test
         user: root
-        pass: ''
+        pass: 
         port: 3306
         charset: utf8
 
     testing:
         adapter: mysql
-        host: localhost
-        name: testing_db
+        host: 127.0.0.1
+        name: install_test
         user: root
-        pass: ''
+        pass: 
         port: 3306
         charset: utf8

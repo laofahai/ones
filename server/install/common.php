@@ -4,9 +4,33 @@
  * 发送终止信号
  * */
 function send_exit_single($msg = '') {
+    $help_info_tip = "\n\nYou can get help here: http://forum.ng-erp.com\n";
     echo $msg;
+    echo $help_info_tip;
     echo "\nQuit\n";
 };
+
+function display_loading($msg='loading', $times=20) {
+    echo $msg;
+    for($i=0;$i<$times;$i++) {
+        sleep(1);
+        echo '.';
+    }
+
+    echo "\n";
+};
+
+/*
+ * 数据库操作失败回滚
+ * */
+function rollback($pdo) {
+    $rollback_table = [
+        'company', 'department' ,'user'
+    ];
+    foreach($rollback_table as $table) {
+        $pdo->exec('DELETE FROM '. $table);
+    }
+}
 
 /*
  * 检测环境
@@ -58,5 +82,5 @@ function check_db_connection($db_config) {
         return;
     }
 
-    return true;
+    return $pdo;
 }

@@ -96,12 +96,15 @@ class BaseMigration extends AbstractMigration{
             $schemas[] = Yaml::parse(file_get_contents($schemaPath.$file));
         } else {
             foreach (new RecursiveFileFilterIterator($schemaPath, '', 'yml') as $item) {
+                if(!is_file($item)) {
+                    continue;
+                }
                 $schemas[] = Yaml::parse(file_get_contents($item));
             }
         }
         
         if(!$schemas) {
-            die(sprintf("Failed to parse schema in: %s\n", $schemaPath));
+            return sprintf("Failed to parse schema in: %s\n", $schemaPath);
         }
 
         foreach($schemas as $schema) {
@@ -145,7 +148,7 @@ class BaseMigration extends AbstractMigration{
             return;
         }
 
-        echo "Creating table: ".$tableName;
+        echo "Creating table: ".$tableName . "\n";
 
         $table = $this->table($tableName);
         
@@ -158,7 +161,7 @@ class BaseMigration extends AbstractMigration{
             if(substr($column, 0, 1) == "$") {
                 continue;
             }
-            printf('Add field %s to table %s', $column, $tableName);
+            printf("Add field %s to table %s\n", $column, $tableName);
             $table = $table->addColumn(
                     $column,
                     $options['type'] ? $options['type'] : 'string',

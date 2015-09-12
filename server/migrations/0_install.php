@@ -34,7 +34,8 @@ class Install extends BaseMigration
 
         $apps = [];
         $ignore = [
-            'Common'
+            'Common',
+            'Dashboard'
         ];
         foreach (new \Common\Lib\RecursiveFileFilterIterator(__APPLICATION__, "config.yml") as $item) {
             $app = basename(dirname($item));
@@ -53,8 +54,6 @@ class Install extends BaseMigration
 
         //同步权限节点
         $this->add_auth_node();
-
-        // 插入默认数据
     }
 
     /**
