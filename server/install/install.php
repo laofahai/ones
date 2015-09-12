@@ -25,7 +25,7 @@ $db_config = [
     'port'    => '3306',
     'user'    => '',
     'pass'    => '',
-    'name'    => 'install_test'
+    'name'    => 'ones_v1'
 ];
 foreach($db_config as $k=>$v) {
     $need_key = $k;
