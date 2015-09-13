@@ -18,37 +18,31 @@
             return;
         }
         ones.included_static.push(path);
-        
-        var __include = function(path, is_last) {
-            $.ajax({
-                url: path+'.js',
-                dataType: "script",
-                success: function(data) {
-                    if(is_last && typeof callback === 'function') {
-                        callback();
-                    }
-                },
-                error: function(event, type, error) {
-                    console.error('cannot load js file: '+path+".js");
-                    console.error(type, error);
+
+        var include_paths = [];
+        angular.forEach(path, function(p) {
+            if(include_paths.indexOf(p) >= 0) {
+                return;
+            }
+            if(p.start_with('apps/')) {
+                p = p.slice(4, p.length);
+            }
+            include_paths.push(p);
+        });
+
+        $.ajax({
+            url: sprintf('%shome/static&t=js&f=%s', ones.remote_entry, include_paths.join()),
+            dataType: "script",
+            success: function(data) {
+                if(typeof callback === 'function') {
+                    callback();
                 }
-            });
-        };
-        
-        if(angular.isArray(path)) {
-            var i = 0;
-            var is_last = false;
-            angular.forEach(path, function(p) {
-                i++;
-                if(i >= path.length) {
-                    is_last = true;
-                }
-                __include(p, is_last);
-            });
-        } else {
-            __include(path, true);
-        }
-        
+            },
+            error: function(event, type, error) {
+                console.error(type, error);
+            }
+        });
+
     };
     
     ones.include_css = function(path) {

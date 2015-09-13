@@ -158,13 +158,18 @@
                         case 'moved':
                             for(var i=0; i<this.lines.length;i++) {
                                 if(self.lines[i].from_widget.id === from.id && self.lines[i].to_widget.id === to.id) {
+                                    alert(1);
                                     self.lines.splice(i, 1);
                                     continue;
                                 }
-                                //if(self.lines[i].to_widget.id == from.id && self.lines[i].from_widget.id == to.id) {
-                                //    self.lines.splice(i, 1);
-                                //    continue;
-                                //}
+                            }
+                            console.log('1111', self.lines[4], from.id, to.id);
+                            for(var i=0; i<this.lines.length;i++) {
+                                if(self.lines[i].to_widget.id == from.id && self.lines[i].from_widget.id == to.id) {
+                                    alert(2);
+                                    self.lines.splice(i, 1);
+                                    continue;
+                                }
                             }
                             break;
                         default:

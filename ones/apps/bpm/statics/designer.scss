@@ -98,17 +98,9 @@ $role_item_title_width: 40px;
         border-radius: 20px;
     }
     .bpm-widget-cond {
-        width:70px;height:70px;
         margin:5px;
-    }
-    .bpm-widget-cond:after {
-        content: ' ';
-        display:block;
-        position:absolute;
-        left:0;top:0;
-        width: 70px;height:70px;
-        border:2px solid #222;
-        transform:rotate(-45deg);
+        width:120px;height:50px;
+        border:2px solid #4d90fe;
     }
 
 }

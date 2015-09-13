@@ -9,4 +9,5 @@ server/Runtime
 server/*.log
 server/vendor
 server/Runtime
-serserver/uploads
+server/uploads
+server/install.lock

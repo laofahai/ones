@@ -7,7 +7,7 @@ environments:
     production:
         adapter: mysql
         host: 127.0.0.1
-        name: install_test
+        name: ones_v1
         user: root
         pass: 
         port: 3306
@@ -16,7 +16,7 @@ environments:
     development:
         adapter: mysql
         host: 127.0.0.1
-        name: install_test
+        name: ones_v1
         user: root
         pass: 
         port: 3306
@@ -25,7 +25,7 @@ environments:
     testing:
         adapter: mysql
         host: 127.0.0.1
-        name: install_test
+        name: ones_v1
         user: root
         pass: 
         port: 3306
