@@ -32,14 +32,16 @@ class WorkflowBuilderController extends BaseRestController {
         $node_service = D('Bpm/WorkflowNode');
 
         // 删除原数据
-        $node_service->where(['workflow_id'=>$workflow_id])->delete();
+        $node_service->where(['workflow_id'=>$workflow_id])->save(['trashed'=>1]);
 
+        $company_id = get_current_company_id();
         $id_map = [];
         $node_ids = [];
         foreach($source_data as $group_value => $data) {
             $nodes = $data['widgets'];
 
             foreach($nodes as $node) {
+
                 $node_data = [];
 
                 $node_data['label'] = $node['label'];
@@ -68,12 +70,15 @@ class WorkflowBuilderController extends BaseRestController {
                 $node_data['notify_content'] = $node['notify_content'];
 
                 $node_data['widget_id'] = $node['id'];
+                $node_data['status_label'] = $node['status_label'];
+
                 $node_data['widget_config'] = serialize($node);
 
 
                 if(!$node_service->create($node_data)) {
                     return $this->error($node_service->getError());
                 }
+
 
                 $node_id = $node_service->add();
 
@@ -93,6 +98,7 @@ class WorkflowBuilderController extends BaseRestController {
                 array_push($node_ids, $node_id);
             }
         }
+
 
 
         /*

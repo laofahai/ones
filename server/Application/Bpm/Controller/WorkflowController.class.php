@@ -31,6 +31,18 @@ class WorkflowController extends BaseRestController {
             $group[$executor]['group'] = [
                 'value' => $executor
             ];
+
+            foreach($nodes_array as $k=>$node) {
+                $nodes_array[$k]['type'] = $node['node_type'];
+                unset($nodes_array[$k]['node_type']);
+
+                $nodes_array[$k] = array_merge($node, (array)unserialize($node['widget_config']));
+
+                $nodes_array[$k]['widget_id'] = (int)$node['widget_id'];
+                $nodes_array[$k]['id'] = (int)$node['widget_id'];
+                $nodes_array[$k]['workflow_id'] = (int)$node['workflow_id'];
+            }
+
             $group[$executor]['widgets'] = $nodes_array;
         }
 

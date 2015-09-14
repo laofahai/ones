@@ -134,14 +134,13 @@
                 * */
                 this.draw_line = function(from, to, unique) {
 
-                    var draw_line_debug = true;
+                    var draw_line_debug = false;
 
                     if(!from || !to) {
                         return;
                     }
 
                     draw_line_debug && console.debug('from and to widgets:', from, to);
-
 
                     var container_height = 160;
                     var to_element = $('#bpm-widget-'+to.id);
