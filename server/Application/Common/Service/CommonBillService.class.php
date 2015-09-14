@@ -266,13 +266,16 @@ class CommonBillService extends CommonModel {
         foreach($rows as $row) {
             $row['product_unique_id'] = $product_unique_id = generate_product_unique_id($row, $attribute_fields);
 
-            if(array_key_exists($product_unique_id, $exists_rows) && $row['storage_id'] === $exists_rows[$product_unique_id]['storage_id']) {
+            if(array_key_exists($product_unique_id, $exists_rows)) {
                 // 存在行
-                $detail_service->where([
-                    'id' => $exists_rows[$product_unique_id]['id']
-                ])->save([
-                    'quantity' => $row['quantity']
-                ]);
+//                $row['id'] = $exists_rows[$product_unique_id]['id'];
+                $detail_service->create($row);
+                $detail_service->save();
+//                $detail_service->where([
+//                    'id' => $exists_rows[$product_unique_id]['id']
+//                ])->save($row);
+//
+//                echo $detail_service->getLastSql();exit;
 
                 array_push($edited_ids, $exists_rows['id']);
                 $row['id'] = $exists_rows[$product_unique_id]['id'];

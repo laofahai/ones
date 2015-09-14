@@ -75,6 +75,8 @@ class StockOutService extends CommonBillService {
             ];
         }
 
+        $meta = $this->where(['id'=>$id])->find();
+
         $detail_service = D('Storage/StockOutDetail');
         $stock_service = D('Storage/Stock');
         $log_service = D('Storage/StockLog');
@@ -96,12 +98,15 @@ class StockOutService extends CommonBillService {
             if(false === $log_service->record([
                     'source_model' => 'storage.stockOut',
                     'source_id'    => $id,
+                    'bill_no'      => $meta['bill_no'],
                     'direction'    => 'out',
                     'product_id'   => $row['product_id'],
                     'product_unique_id' => $row['product_unique_id'],
-                    'quantity'     => $row['this_time_out_quantity']
+                    'quantity'     => $row['this_time_out_quantity'],
+                    'storage_id'   => $row['storage_id']
                 ])) {
-                $this->error = 'storage.Trigger error when record stock log';
+//                echo $log_service->getLastSql();exit;
+                $this->error =__('storage.Trigger error when record stock log');
                 $this->rollback();
                 return false;
             }
@@ -148,8 +153,13 @@ class StockOutService extends CommonBillService {
      * 「工作流接口」
      * 完成出库后的回调，主要作用为通知来源数据工作流
      * */
-    public function complete_callback() {
+    public function complete_callback($id) {
+        $bill = $this->where(['id'=>$id])->find();
+        if(!$bill['source_model'] || !$bill['source_id']) {
+            return;
+        }
 
+        return D('Bpm/Workflow')->response_to_node($bill['source_model'], $bill['source_id'], $bill);
     }
 
 

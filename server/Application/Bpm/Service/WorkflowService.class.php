@@ -20,6 +20,12 @@ class WorkflowService extends CommonModel {
 
     protected $current_node;
 
+    // 自动执行的「用户角色」，将不会出现在用户可见操作中
+    protected $auto_executor = [
+        'a:a' // 自动执行
+        , 'w:o' // 等待外部响应
+    ];
+
 
     /*
      * 获取工作流节点列表，调用Bpm/WorkflowNodeService中的 get_nodes方法
@@ -132,9 +138,9 @@ class WorkflowService extends CommonModel {
             if($node['node_type'] === 'start') {
                 $workflow['start_node'] = $node;
             }
-            $serialized_config = unserialize($node['widget_config']);
-            $serialized_config = $serialized_config ? $serialized_config : [];
-            $nodes[$k] = array_merge($node, $serialized_config);
+//            $serialized_config = unserialize($node['widget_config']);
+//            $serialized_config = $serialized_config ? $serialized_config : [];
+//            $nodes[$k] = array_merge($node, $serialized_config);
         }
 
         $nodes = Schema::data_format($nodes, 'workflow_node', true);
@@ -157,7 +163,6 @@ class WorkflowService extends CommonModel {
             $this->error = __('bpm.Can not found start node of workflow');
             return false;
         }
-
         return $this->exec($source_id, $meta_data, $workflow['start_node'], $workflow);
     }
 
@@ -212,29 +217,19 @@ class WorkflowService extends CommonModel {
         $progress_service = D('Bpm/WorkflowProgress');
         $latest_progress = $progress_service->get_latest_progress($workflow['id'], $source_id);
 
-
-
         if($latest_progress) {
             $latest_node_next_nodes = array_merge(
                 (array)$current_workflow_nodes[$latest_progress['workflow_node_id']]['next_nodes'],
                 (array)$current_workflow_nodes[$latest_progress['workflow_node_id']]['condition_true_nodes'],
                 (array)$current_workflow_nodes[$latest_progress['workflow_node_id']]['condition_false_nodes']
             );
+
             if(!in_array($this->current_node['id'], $latest_node_next_nodes)) {
                 $this->error = __('bpm.Not a verified workflow node');
                 return false;
             }
-
-            /*
-             * 检测上一节点执行时间与当前时间差，包括上一节点是否等于当前节点
-             * */
-//            if($latest_progress['workflow_node_id'] === $node['id']
-//                || (strtotime($latest_progress['created']) + 2 >= CTS && !$auto)
-//            ) {
-//                $this->error = __('bpm.Workflow is in progress, please do not re-submit');
-//                return false;
-//            }
         }
+
         // 获取源数据
         list($app, $module) = explode('.', $workflow['module']);
         $source_model = sprintf('%s/%s', ucfirst($app), ucfirst($module));
@@ -355,7 +350,8 @@ class WorkflowService extends CommonModel {
 
         /*
          * 所有service api接受参数为 [
-         *  $id // 源数据ID
+         *  $id // 源数据ID,
+         *  $node // 当前执行工作流节点对象
          * ]
          * 返回为 false 或 数组 [
          *  type: 'redirect|message|...'
@@ -382,7 +378,7 @@ class WorkflowService extends CommonModel {
      * 更新源数据字段 [U]pdate source row field
      * */
     protected function exec_u($action, $source_model, $source_data) {
-
+        return [];
     }
 
     /*
@@ -391,6 +387,70 @@ class WorkflowService extends CommonModel {
     public function response($data) {
         echo json_encode($data);
         return $data;
+    }
+
+    /*
+     * 对当前执行节点进行权限验证
+     * */
+    public function check_node_permission($node, $source_row) {
+        $current_user_id = get_current_user_id();
+        list($executor_role, $executor) = explode(':', $node['executor']);
+
+        if(in_array($node['executor'], $this->auto_executor)) {
+            return true;
+        }
+        if($node['executor'] == 'a:o' && $source_row['user_id'] == $current_user_id) {
+            return true;
+        }
+
+        switch($executor_role) {
+            case "r":
+
+                break;
+            case "d":
+                break;
+            case "u":
+                return $executor && ($executor == $current_user_id);
+                break;
+        }
+    }
+
+    /*
+     * 响应「等待外部响应节点」
+     * @param $response_to_model 响应模型 eg: sale.orders
+     * @param $response_to_id 响应数据ID
+     * @param $source_data 来源数据
+     * */
+    public function response_to_node($response_to_model, $response_to_id, $source_data=[]) {
+        $model = D(model_alias_to_name($response_to_model));
+        $response_to_data = $model->where(['id'=>$response_to_id])->find();
+        if(!$response_to_data) {
+            return false;
+        }
+
+        $progress_model = D('Bpm/WorkflowProgress');
+        $latest_progress = $progress_model->get_latest_progress($response_to_data['workflow_id'], $response_to_id);
+
+        if(!$latest_progress) {
+            return false;
+        }
+
+        $next_nodes = explode(',', $latest_progress['next_nodes']);
+        $next_nodes = D('Bpm/WorkflowNode')->where([
+            'id' => ['IN', $next_nodes]
+        ])->select();
+        if(!$next_nodes) {
+            return false;
+        }
+
+        foreach($next_nodes as $node) {
+            if($node['executor'] === 'w:o') {
+                return $this->exec($response_to_id, [], $node['id']);
+                break;
+            }
+        }
+
+        return false;
     }
 
 }

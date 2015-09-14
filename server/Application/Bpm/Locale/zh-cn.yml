@@ -45,3 +45,5 @@ Edit Field: 修改字段
 
 Workflow is in progress, please do not re-submit: 工作流已在执行，请勿重复提交
 Not a verified workflow node: 不是合法的工作流节点
+Can not found start node of workflow: 找不到工作流的起始节点
+Workflow node not found: 未找到工作流节点

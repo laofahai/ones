@@ -16,6 +16,11 @@ class WorkflowProgressModel extends CommonViewModel {
         "WorkflowNode" => [
             'status_label' => 'node_status_label',
             'label' => 'node_label',
+            'action_type',
+            'action',
+            'executor',
+            'execute_condition',
+            'next_nodes',
             '_on' => 'WorkflowProgress.workflow_node_id=WorkflowNode.id',
             '_type' => 'left'
         ]

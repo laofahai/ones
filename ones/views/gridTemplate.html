@@ -118,7 +118,7 @@
                 <dd ng-repeat="i in link.items" ng-class="{'active': i.id===filter_actives[link.source_field]}">
                     <a href="javascript:void(0)"
                        ng-click="filter_by_link(link.map_field, link.source_field, i.id)"
-                       ng-bind="i.name"></a>
+                       ng-bind-html="i.name"></a>
                 </dd>
             </dl>
         </div>

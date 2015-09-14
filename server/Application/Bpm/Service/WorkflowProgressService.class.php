@@ -46,7 +46,7 @@ class WorkflowProgressService extends CommonModel {
             'workflow_id' => $workflow_id,
             'source_id'   => $source_id
         ];
-        return $this->where($map)->order('created DESC, id DESC')->find();
+        return D('Bpm/WorkflowProgress', 'Model')->where($map)->order('created DESC, id DESC')->find();
     }
 
     /*

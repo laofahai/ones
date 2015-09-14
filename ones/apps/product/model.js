@@ -19,11 +19,10 @@
                             //search_able_fields: 'name,pinyin'
                         },
                         product_category: {
-                            label: "Product Category",
+                            label: _("Product Category"),
                             map: "product_category_id",
                             widget: 'select',
-                            data_source: "Product.ProductCategoryAPI",
-                            help_text: "Please select"
+                            data_source: "Product.ProductCategoryAPI"
                         },
                         company: {
                             addable: false,
@@ -101,7 +100,7 @@
 
                     fields: {
                         name: {
-                            help_text: 'Please fill'
+
                         },
                         company: {
                             addable: false,

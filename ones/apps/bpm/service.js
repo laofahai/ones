@@ -313,9 +313,9 @@
                             }
 
                             // 箭头
-                            context.moveTo(canvas.line_end.left-6, canvas.line_end.top - 10);
-                            context.lineTo(canvas.line_end.left+6, canvas.line_end.top - 10);
-                            context.lineTo(canvas.line_end.left, canvas.line_end.top);
+                            context.moveTo(canvas.line_end.left-6, canvas.line_end.top - 20);
+                            context.lineTo(canvas.line_end.left+6, canvas.line_end.top - 20);
+                            context.lineTo(canvas.line_end.left, canvas.line_end.top-10);
                             context.fill();
                             context.closePath();
 
@@ -326,7 +326,7 @@
                                 context.lineTo(canvas.line_start.left, canvas.line_end.top/2);
                                 context.lineTo(canvas.line_end.left, canvas.line_end.top/2);
                             }
-                            context.lineTo(canvas.line_end.left, canvas.line_end.top-3);
+                            context.lineTo(canvas.line_end.left, canvas.line_end.top-10);
 
                             break;
                         case "from_top": // 垂直 从下到上 默认从左下起，右上止

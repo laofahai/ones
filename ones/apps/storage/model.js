@@ -113,7 +113,7 @@
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'storage/stockLog'
                 });
-
+                var self = this;
                 this.config = {
                     app: 'storage',
                     module: 'stockLog',
@@ -165,20 +165,28 @@
                         }
                     },
                     list_display: [
-                        'storage_id',
                         'bill_no',
                         'product_name',
                         'direction',
                         'quantity',
+                        'storage_id',
                         'created',
                         'user_id'
                     ],
                     filters: {
                         storage_id: {
                             type: 'link'
+                        },
+                        direction: {
+                            type: 'link'
                         }
                     }
                 };
+
+                self.config.fields.direction.data_source = [
+                    {label: self.config.fields.direction.get_display('in'), value: 'in'},
+                    {label: self.config.fields.direction.get_display('out'), value: 'out'}
+                ]
             }
         ])
 
