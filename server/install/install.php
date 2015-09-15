@@ -278,7 +278,7 @@ foreach($apps as $alias=>$app_config) {
 
 display_loading('initialize company and super-user', 5);
 
-file_put_contents(ENTRY_PATH.'/install.lock', time());
+file_put_contents(ENTRY_PATH.'/Data/install.lock', time());
 
 echo "\n\n";
 echo file_get_contents(INSTALL_PATH.'/Complete.md');

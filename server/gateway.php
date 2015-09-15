@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
-ini_set('session.cookie_lifetime', '1800');
+ini_set('session.cookie_lifetime', '600');
 
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.5.9','<')) {
@@ -57,8 +57,7 @@ try{
 } catch(Exception $e) {}
 
 
-// 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
-define('APP_DEBUG', $ones['DEBUG']);
+define('APP_DEBUG', true);
 
 //修正POST不能正确获取数据问题
 if(in_array($_SERVER["REQUEST_METHOD"], array("POST", "PUT"))

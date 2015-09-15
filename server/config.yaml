@@ -1,4 +1,4 @@
-# 是否DEBUG
+# 是否开启调试模式
 DEBUG: true
 # 当前版本
 version: "1.0"

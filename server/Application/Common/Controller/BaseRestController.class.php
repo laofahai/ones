@@ -197,7 +197,6 @@ class BaseRestController extends RestController {
         }
 
         $this->current_node_auth_flag = (integer)$current_node_auth_flag;
-        
         tag('after_controller_construct');
     }
 
@@ -270,7 +269,7 @@ class BaseRestController extends RestController {
         $model = D($modelName, "Model");
 
         if (empty($model)) {
-            $this->error(__("Server error"));
+            E(__("Server error"));
         }
 
         //fix non-view model
@@ -406,7 +405,7 @@ class BaseRestController extends RestController {
 
         if(!$model->create()) {
             $error = $model->getError();
-            return $this->error($error ? $error : __('common.Data Object Can Not Be Created'));
+            return E($error ? $error : __('common.Data Object Can Not Be Created'));
         }
 
         if(false === $model->add()) {
@@ -415,7 +414,7 @@ class BaseRestController extends RestController {
             if(DEBUG) {
                 $error.= "\n".$model->getLastSql();
             }
-            return $this->error($error ? $error : __('common.Add Failed'));
+            return E($error ? $error : __('common.Add Failed'));
         }
 
         $id = $model->getLastInsID();
@@ -544,11 +543,11 @@ class BaseRestController extends RestController {
 
         unset($_POST['company_id']);
         if(false === $model->create(I('post.'))) {
-            return $this->error($model->getError());
+            return E($model->getError());
         }
         $rs = $model->where(['id'=>I('get.id')])->save();
         if(false === $rs) {
-            return $this->error($model->getError());
+            return E($model->getError());
         }
 
         // 完成更新之后的插件钩子
@@ -593,7 +592,7 @@ class BaseRestController extends RestController {
         }
 
         if(false === $rs) {
-            $this->error(__("common.Operation Failed"). ': ' .$model->getError());
+            E(__("common.Operation Failed"). ': ' .$model->getError());
         }
 
         $params = array(
