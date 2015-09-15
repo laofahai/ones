@@ -79,6 +79,10 @@ class BaseRestController extends RestController {
             $this->is_super_user = $this->user['is_super_user'];
         }
 
+        if(!get_current_company_id() || !get_current_user_id()) {
+            return $this->login_required();
+        }
+
         tag('before_controller_construct');
         
         parent::__construct();

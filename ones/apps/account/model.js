@@ -1,4 +1,13 @@
 (function(window, ones, angular){
+
+    // 注册线索到可支持自定义字段
+    ones.pluginRegister('data_model_supported', function(injector, defered) {
+        ones.pluginScope.append('data_model_supported', {
+            label: _('account.User') + ' ' + _('common.Module'),
+            value: 'account.user'
+        });
+    });
+
     angular.module('ones.app.account.model', [])
         // 认证服务
         .service('Account.AuthorizeAPI', [

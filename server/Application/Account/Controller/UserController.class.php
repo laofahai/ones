@@ -6,8 +6,16 @@ use Common\Controller\BaseRestController;
 class UserController extends BaseRestController {
 
     public function on_read() {
-        $data = parent::on_read(true);
-        $model = D("AuthUserRole");
+        $user_info = parent::on_read(true);
+        $auth_user_role_model = D("AuthUserRole");
+        $roles = $auth_user_role_model->where(['user_id'=>$user_info['id']])->select();
+
+        $user_info['auth_role_id'] = [];
+        foreach($roles as $role) {
+            array_push($user_info['auth_role_id'], (int)$role['auth_role_id']);
+        }
+
+        $this->response($user_info, 'user', true);
     }
 
     /*

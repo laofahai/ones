@@ -14,7 +14,26 @@
                         controller: 'AccountUserPreferenceCtrl',
                         templateUrl: 'views/edit.html'
                     })
+                    .when('/account/profile', {
+                        controller: 'AccountUserProfileCtrl',
+                        templateUrl: 'views/edit.html'
+                    })
                 ;
+            }
+        ])
+        // 个人资料
+        .controller('AccountUserProfileCtrl', [
+            '$scope',
+            'Account.UserAPI',
+            function($scope, user_api) {
+                user_api.config.uneditable = user_api.config.uneditable || [];
+                user_api.config.uneditable.push('department_id', 'auth_role_id');
+                $scope.formConfig = {
+                    resource: user_api.resource,
+                    model   : user_api,
+                    id      : ones.user_info.id,
+                    opts    : {}
+                };
             }
         ])
         // 授权
