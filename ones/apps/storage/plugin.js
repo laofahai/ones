@@ -13,6 +13,12 @@
             value: _('storage.stockIn.check_full_in'),
             module: 'storage.stockIn'
         });
+        // 入库完成回调
+        ones.pluginScope.append('bpm_service_api', {
+            label: _('storage.StockIn Complete Callback Function'),
+            value: _('storage.stockIn.complete_callback'),
+            module: 'storage.stockIn'
+        });
 
         // 确认出库
         ones.pluginScope.append('bpm_service_api', {
@@ -28,7 +34,7 @@
         });
         // 出库完成回调
         ones.pluginScope.append('bpm_service_api', {
-            label: _('storage.Complete Callback Function'),
+            label: _('storage.StockOut Complete Callback Function'),
             value: _('storage.stockOut.complete_callback'),
             module: 'storage.stockOut'
         });

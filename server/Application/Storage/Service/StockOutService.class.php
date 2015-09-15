@@ -149,18 +149,5 @@ class StockOutService extends CommonBillService {
         return true;
     }
 
-    /*
-     * 「工作流接口」
-     * 完成出库后的回调，主要作用为通知来源数据工作流
-     * */
-    public function complete_callback($id) {
-        $bill = $this->where(['id'=>$id])->find();
-        if(!$bill['source_model'] || !$bill['source_id']) {
-            return;
-        }
-
-        return D('Bpm/Workflow')->response_to_node($bill['source_model'], $bill['source_id'], $bill);
-    }
-
 
 }

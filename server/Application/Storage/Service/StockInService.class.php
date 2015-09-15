@@ -66,6 +66,8 @@ class StockInService extends CommonBillService {
             ];
         }
 
+        $meta = $this->where(['id'=>$id])->find();
+
         $detail_service = D('Storage/StockInDetail');
         $stock_service = D('Storage/Stock');
         $log_service = D('Storage/StockLog');
@@ -85,12 +87,14 @@ class StockInService extends CommonBillService {
             $rows[$k]['quantity'] = $row['this_time_in_quantity'];
             // 写库存操作记录
             if(false === $log_service->record([
-                'source_model' => 'storage.stockIn',
-                'source_id'    => $id,
-                'direction'    => 'in',
-                'product_id'   => $row['product_id'],
-                'product_unique_id' => $row['product_unique_id'],
-                'quantity'     => $row['this_time_in_quantity']
+                    'source_model' => 'storage.stockOut',
+                    'source_id'    => $id,
+                    'bill_no'      => $meta['bill_no'],
+                    'direction'    => 'out',
+                    'product_id'   => $row['product_id'],
+                    'product_unique_id' => $row['product_unique_id'],
+                    'quantity'     => $row['this_time_in_quantity'],
+                    'storage_id'   => $row['storage_id']
             ])) {
                 $this->error = 'storage.Trigger error when record stock log';
                 $this->rollback();
@@ -150,5 +154,7 @@ class StockInService extends CommonBillService {
         $this->update_status_to_complete($id);
         return true;
     }
+
+
 
 }

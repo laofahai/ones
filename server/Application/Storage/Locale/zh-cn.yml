@@ -39,3 +39,14 @@ Trigger error when update stock balance: 更新库存清单时发生错误
 Bill No: 单据编号
 
 Stock Log: 库存日志
+
+Confirm Stock In: 确认入库
+Check if full stock in: 检测是否已完全入库
+StockIn Complete Callback Function: 入库完成后回调方法
+
+Confirm Stock Out: 确认出库
+Check if full stock in: 检测是否已完全出库
+StockOut Complete Callback Function: 出库完成后回调方法
+
+Convert to stock out: 转化为出库单
+Convert to stock in: 转化为入库单

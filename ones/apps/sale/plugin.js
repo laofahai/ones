@@ -5,7 +5,7 @@
     ones.pluginRegister('bpm_service_api', function(injector, defered) {
         // 转化为出库单
         ones.pluginScope.append('bpm_service_api', {
-            label: _('sale.Convert to stock out'),
+            label: _('storage.Convert to stock out'),
             value: _('sale.orders.convert_to_stock_out'),
             module: 'sale.orders'
         });
@@ -34,7 +34,7 @@
     // 注册至配置字段
     ones.pluginRegister('common_config_item', function(injector, defered, fields) {
         if(is_app_loaded('storage')) {
-            // 默认客户管理使用的往来单位角色
+            // 销售出库工作流
             ones.pluginScope.append('common_config_item', {
                 alias: 'sale_stock_out_workflow',
                 label: _('sale.Sale orders stock out workflow'),
@@ -44,16 +44,15 @@
                     _mf: 'module',
                     _mv: 'storage.stockOut'
                 },
-                app: 'sale'
+                app: 'storage'
             });
             ones.pluginScope.append('common_config_item', {
                 alias: 'sale_stock_out_workflow_opts',
                 widget: 'hidden',
                 value: 'sale,integer',
-                app: 'sale'
+                app: 'storage'
             });
         }
-
     });
 
 })(window, window.angular, window.ones);

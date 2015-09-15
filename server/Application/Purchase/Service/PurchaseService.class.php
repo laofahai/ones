@@ -8,6 +8,7 @@
  * */
 namespace Purchase\Service;
 use Common\Service\CommonBillService;
+use Home\Service\AppService;
 
 class PurchaseService extends CommonBillService {
 
@@ -38,7 +39,40 @@ class PurchaseService extends CommonBillService {
      * 转化为入库单
      * */
     public function convert_to_stock_in($id) {
+        if(!AppService::is_app_active('storage')) {
+            $this->error = sprintf(__('common.Need %s App Active'), 'storage');
+            return false;
+        }
 
+        $meta_fields = ['quantity', 'subject', 'bill_no', 'remark'];
+        $meta = [];
+
+        $raw_main_data = $this->where(['id'=>$id])->find();
+
+        foreach($raw_main_data as $field=>$value) {
+            if(in_array($field, $meta_fields)) {
+                $meta[$field] = $value;
+            }
+        }
+
+        $meta['subject'] = __('purchase.Purchase stock in') . ' '. $meta['subject'];
+        $meta['source_model'] = 'purchase.purchase';
+        $meta['source_id'] = $id;
+        $meta['workflow_id'] = DBC('purchase_stock_in_workflow');
+
+        $row_model = D('Purchase/PurchaseDetail');
+        $raw_rows_data = $row_model->where([
+            'purchase_id' => $id
+        ])->select();
+
+        $stock_in_service = D('Storage/StockIn');
+        $stock_in_id = $stock_in_service->add_bill($meta, $raw_rows_data);
+        if(!$stock_in_id) {
+            $this->error = $stock_in_service->getError();
+            return false;
+        }
+
+        return $stock_in_id;
     }
 
 

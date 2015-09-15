@@ -444,4 +444,18 @@ class CommonBillService extends CommonModel {
         return implode('|', $product_unique_id);
     }
 
+
+    /*
+     * 「工作流接口」
+     * 完成入库后的回调
+     * */
+    public function complete_callback($id) {
+        $bill = $this->where(['id'=>$id])->find();
+        if(!$bill['source_model'] || !$bill['source_id']) {
+            return;
+        }
+
+        return D('Bpm/Workflow')->response_to_node($bill['source_model'], $bill['source_id'], $bill);
+    }
+
 }

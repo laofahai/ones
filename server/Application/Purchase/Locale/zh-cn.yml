@@ -4,3 +4,11 @@ Purchase: 采购
 Add New Purchase: 新增采购
 Purchase Bills: 采购单列表
 Purchase Bill: 采购单
+
+Purchase stock in: 采购入库
+
+PURCHASE_STATUS_NEW: 新采购单
+PURCHASE_STATUS_SAVED: 已保存
+PURCHASE_STATUS_COMPLETE: 已完成
+
+Purchase stock in workflow: 采购入库工作流
