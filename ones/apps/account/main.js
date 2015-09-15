@@ -25,9 +25,11 @@
         .controller('AccountUserProfileCtrl', [
             '$scope',
             'Account.UserAPI',
-            function($scope, user_api) {
+            '$routeParams',
+            function($scope, user_api, $routeParams) {
                 user_api.config.uneditable = user_api.config.uneditable || [];
                 user_api.config.uneditable.push('department_id', 'auth_role_id');
+                $routeParams.id = ones.user_info.id;
                 $scope.formConfig = {
                     resource: user_api.resource,
                     model   : user_api,

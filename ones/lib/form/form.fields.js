@@ -700,13 +700,13 @@
         ])
 
         // 确认唯一
-        .directive('ensureUnique', ['$http', "$injector", "$timeout","$parse", function($http, $injector, $timeout, $parse) {
+        .directive('ensureUnique', ['$http', "$injector", "$timeout","$parse","$routeParams",
+            function($http, $injector, $timeout, $parse, $routeParams) {
             return {
                 require: 'ngModel',
                 link: function(scope, ele, attrs, c) {
                     var inited = {};
                     scope.$watch(attrs.ngModel, function(newVal, oldVal) {
-
                         if(!inited[attrs.ngModel]) {
                             inited[attrs.ngModel] = true;
                             return;
@@ -718,8 +718,9 @@
                         }
 
                         var res = $injector.get(attrs.ensureUnique);
+                        console.log($routeParams);
                         var queryParams = {
-                            _ei:  $injector.get("$routeParams").id || 0,
+                            _ei:  $routeParams.id || 0,
                             _mf: attrs.name,
                             _fd: attrs.name
                         };
@@ -736,8 +737,6 @@
                         }, function(){
                             c.$setValidity('unique', false);
                         });
-
-
                     });
                 }
             };

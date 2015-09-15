@@ -90,7 +90,7 @@ class StockInService extends CommonBillService {
                     'source_model' => 'storage.stockOut',
                     'source_id'    => $id,
                     'bill_no'      => $meta['bill_no'],
-                    'direction'    => 'out',
+                    'direction'    => 'in',
                     'product_id'   => $row['product_id'],
                     'product_unique_id' => $row['product_unique_id'],
                     'quantity'     => $row['this_time_in_quantity'],

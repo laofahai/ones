@@ -665,7 +665,6 @@ class BaseRestController extends RestController {
 
         /*
          * 关键字模糊搜索
-         * @todo 多表view 字段名称冲突
          * **/
         if(I("get._kw") or I("get.typeahead")) {
             $kw = I("get._kw") ? I("get._kw") : I("get.typeahead");
