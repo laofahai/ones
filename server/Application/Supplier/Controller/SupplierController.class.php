@@ -29,7 +29,7 @@ class SupplierController extends BaseRestController {
         if(!$_POST['head_id']) {
             unset($_POST['head_id']);
         } else {
-            $_POST['head_id'] = $_POST['head_id'][0];
+            $_POST['head_id'] = process_with_item_select_ids('head_id');
         }
     }
 
@@ -38,6 +38,7 @@ class SupplierController extends BaseRestController {
     }
 
     public function on_post() {
+        $this->_before_insert();
         $contacts_company_model = D('ContactsCompany/ContactsCompany');
         if(!$contacts_company_model->create(I('post.'))) {
             return $this->error($contacts_company_model->getError());
@@ -62,8 +63,28 @@ class SupplierController extends BaseRestController {
         if(!$supplier_model->add()) {
             return $this->error($supplier_model->getError());
         }
-
     }
 
-    public function on_put() {}
+    public function on_put() {
+        $this->_before_update();
+
+        $supplier_model = D('Supplier/Supplier');
+
+        $save_data = [
+            'remark' => I('post.remark'),
+            'level' => I('post.level')
+        ];
+        if(I('post.head_id')) {
+            $save_data['head_id'] = I('post.head_id');
+        }
+        $supplier_model->where([
+            'id' => I('get.id')
+        ])->save($save_data);
+
+        $supplier = $supplier_model->where(['id'=>I('get.id')])->find();
+        $contacts_company_model = D('ContactsCompany/ContactsCompany');
+        $contacts_company_model->where([
+            "id" => $supplier['contacts_company_id']
+        ])->save(I('post.'));
+    }
 }

@@ -526,20 +526,24 @@ class BaseRestController extends RestController {
             $this->_before_update();
         }
 
+        if(!$model->not_belongs_to_company) {
+            if(method_exists($model, 'getProperty') && !$model->getProperty('_auto')) {
+                $model = $model->setProperty('_auto', array(
+                    array("company_id", "get_current_company_id", 1, "function")
+                ));
+            }
+        }
+
         // 插入数据之前的插件钩子
         $params = array();
         tag('before_item_update', $params);
 
-
         unset($_POST['company_id']);
-//        print_r($_POST);exit;
         if(false === $model->create(I('post.'))) {
             return $this->error($model->getError());
         }
         $rs = $model->where(['id'=>I('get.id')])->save();
-
         if(false === $rs) {
-            DEBUG && print($model->getLastSql());
             return $this->error($model->getError());
         }
 

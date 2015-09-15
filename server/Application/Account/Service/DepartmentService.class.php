@@ -13,8 +13,10 @@ use Common\Model\CommonTreeModel;
 
 class DepartmentService extends CommonTreeModel {
 
-    protected $viewFields = array(
-        'Department' => array('*', '_type'=>'left')
+    public $not_belongs_to_company = true;
+
+    protected $_auto = array(
+        array("company_id", "get_current_company_id", 1, "function")
     );
 
     /*

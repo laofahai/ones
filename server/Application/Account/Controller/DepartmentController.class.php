@@ -47,7 +47,6 @@ class DepartmentController extends BaseRestController {
         }
 
         $this->success(__('common.Operation Success'));
-
     }
 
 }

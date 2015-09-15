@@ -9,7 +9,7 @@
 namespace Common\Model;
 
 
-class CommonTreeModel extends CommonViewModel {
+class CommonTreeModel extends CommonModel {
 
     /*
      * 获得缩进树形
