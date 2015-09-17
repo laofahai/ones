@@ -21,9 +21,9 @@ python utils/builder/app.py -n appAlias
 
 def build_module(alias, module):
     root_path = os.path.dirname(os.path.dirname(get_current_dir()))
-    app_path = root_path + '/server/Application/' + alias.capitalize()
+    app_path = root_path + '/server/Application/' + alias[0].upper() + alias[1:]
 
-    #module = module.capitalize()
+    #module = module[0].upper() + module[1:]
 
     need_to_write = ['Controller', 'Event', 'Model', 'Service']
 
@@ -34,7 +34,7 @@ def build_module(alias, module):
         tmp_path = '%s/%s/%s%s.class.php' % (
             app_path, ntw, module, ntw
         )
-        content = get_template(root_path, ntw + '_php', alias.capitalize())
+        content = get_template(root_path, ntw + '_php', alias[0].upper() + alias[1:])
         content = content.replace('*module*', module)
 
         write_by_template(tmp_path, content)

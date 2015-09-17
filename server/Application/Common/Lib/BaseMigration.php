@@ -67,6 +67,7 @@ class BaseMigration extends AbstractMigration{
     private $all_meta_info = [];
 
     public function init() {
+        !defined('ENTRY_PATH') && define('ENTRY_PATH', __ROOT__);
         $config = Yaml::parse(file_get_contents(ENTRY_PATH.'/phinx.yml'));
         $config = $config['environments']['development'];
         $this->setAdapter(new MysqlAdapter($config));

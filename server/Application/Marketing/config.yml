@@ -49,10 +49,3 @@ navs:
                         app: marketing
                         icon: file-text-o
                         link: marketing/contract
-            Analytics:
-                app: analytics
-                children:
-                    Sale Funnel:
-                        app: marketing
-                        link: marketing/saleOpportunities/analytics/by/funnel
-                        icon: filter

@@ -1,3 +1,18 @@
 APP_NAME: 统计分析模块
 
 Analytics: 统计分析
+
+Analytics by date: 按时间统计
+
+View by day: 按天查看
+View by month: 按月查看
+View by quarter: 按季度查看
+View by year: 按年查看
+
+Min Value: 最小值
+Max Value: 最大值
+Avg Value: 平均值
+
+Please select time period correctly: 请正确选择时间区间
+
+time_range_warning_message: 按天查看不支持跨月查看，按月查看不支持跨年查看

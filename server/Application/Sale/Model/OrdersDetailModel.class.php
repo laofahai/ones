@@ -20,6 +20,10 @@ class OrdersDetailModel extends CommonViewModel {
             'Product.measure_unit' => 'already_in__after__',
             '_on' => 'Product.id=OrdersDetail.product_id',
             '_type' => 'left'
+        ],
+        "Orders" => [
+            "_on" => "Orders.id=OrdersDetail.id",
+            "_type" => "left"
         ]
     ];
 

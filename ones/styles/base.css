@@ -12,6 +12,9 @@ a, button, input {
 .text-white {
   color: #fff; }
 
+.btn {
+  font-weight: normal; }
+
 .contextMenuDropdown {
   position: absolute;
   margin: 0;

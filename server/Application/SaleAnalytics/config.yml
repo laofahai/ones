@@ -1,0 +1,28 @@
+alias: saleAnalytics
+author: TEam Swift
+link: https://ng-erp.com
+requirements:
+    - crm
+    - sale
+    - marketing
+    - analytics
+
+auth_nodes:
+    # 销售额统计
+    - saleAnalytics.volume.get|flag
+
+include:
+    js:
+        - apps/saleAnalytics/main
+        - apps/saleAnalytics/model
+
+navs:
+    Marketing:
+        children:
+            Sale Analytics:
+                app: saleAnalytics
+                children:
+                    Sale Analytics:
+                        app: saleAnalytics
+                        icon: bar-chart
+                        link: saleAnalytics/saleVolume/by/date

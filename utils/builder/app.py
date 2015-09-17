@@ -11,7 +11,7 @@ from lib.utils import get_template, write_by_template, get_current_dir
 def build_app_path(alias, root_path, author='', link='', requirements=''):
 
     # make backend dirs
-    server_path = root_path + '/server/Application/' + alias.capitalize()
+    server_path = root_path + '/server/Application/' + alias[0].upper() + alias[1:]
 
     print 'Making backend application directory: ' + server_path
     try:

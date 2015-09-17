@@ -77,11 +77,16 @@ class BaseRestController extends RestController {
             session('[start]');
             $this->user = I("session.user");
             $this->is_super_user = $this->user['is_super_user'];
+
+            if(isset($_SESSION['user']) && (!get_current_company_id() || !get_current_user_id())) {
+                return $this->login_required();
+            }
+
         }
 
-        if(!get_current_company_id() || !get_current_user_id()) {
-            return $this->login_required();
-        }
+
+
+
 
         tag('before_controller_construct');
         
