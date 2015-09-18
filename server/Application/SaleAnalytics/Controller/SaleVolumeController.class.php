@@ -96,6 +96,13 @@ class SaleVolumeController extends BaseRestController {
             'status'  => OrdersService::STATUS_COMPLETE
         ];
 
+        // 按部门查看
+        if(I('get.dept')) {
+            $users = D('Account/Department')->get_department_users(I('get.dept'));
+            $user_ids = get_array_by_field($users, 'id');
+            $map['user_id'] = ['IN', (array)$user_ids];
+        }
+
         $orders_tmp = D('Sale/Orders')->where($map)->select();
         $orders_cleaned = [];
         foreach($orders_tmp as $order) {

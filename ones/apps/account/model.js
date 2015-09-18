@@ -307,7 +307,12 @@
                 if(!uid || !ones.all_users[uid]) {
                     return;
                 }
-                return sprintf('%s %s', ones.all_users[uid].department, ones.all_users[uid].realname);
+                if(ones.user_preference.show_username_with_department > 1) {
+                    return ones.all_users[uid].realname;
+                } else {
+                    return sprintf('%s %s', ones.all_users[uid].department, ones.all_users[uid].realname);
+                }
+
             };
         }])
 

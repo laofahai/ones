@@ -18,6 +18,7 @@
             widget: 'hidden',
             value: 'home,integer'
         });
+
     });
 
     // 公司首选项
@@ -93,8 +94,6 @@
             value: 'home,integer',
             app: 'home'
         });
-
-
     });
 
 

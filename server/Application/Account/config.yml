@@ -2,10 +2,13 @@ alias: account
 author: TEam Swift
 link: https://ng-erp.com
 requirements:
+
 load_modules:
     - ones.gridViewModule
     - ones.detailViewModule
+
 load_all_i18n: true
+
 auth_nodes:
     - account.authorize.put
     - account.authRole.*
@@ -24,6 +27,10 @@ include:
         - apps/account/main
     css:
         - apps/account/statics/style
+global_include:
+    js:
+        - apps/account/plugin
+
 force_global_include:
     js:
         - apps/account/main

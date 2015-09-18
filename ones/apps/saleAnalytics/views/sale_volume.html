@@ -3,21 +3,39 @@
         <div class="pull-left btn-group">
             <a class="btn btn-sm btn-info"
                href="javascript:void(0);" onclick="window.location.reload();"><i class="fa fa-refresh"></i></a>
-            <button
-                    data-toggle="dropdown"
-                    class="btn btn-sm btn-default dropdown-toggle"
-                    >
-                <span ng-bind="time_dimensions[active_time_dimension].label"></span>
-                <i class="fa fa-caret-down fa-on-right"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-primary">
-                <li
-                    ng-repeat="dimension in time_dimensions track by $index">
-                    <a ng-click="switch_dimensions($index, dimension)">
-                        <span ng-bind="dimension.label"></span>
-                    </a>
-                </li>
-            </ul>
+            <div class="pull-left ml-10">
+                <button
+                        data-toggle="dropdown"
+                        class="btn btn-sm btn-default dropdown-toggle"
+                        >
+                    <span ng-bind="time_dimensions[active_time_dimension].label"></span>
+                    <i class="fa fa-caret-down fa-on-right"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-primary">
+                    <li ng-repeat="dimension in time_dimensions track by $index">
+                        <a ng-click="switch_dimensions($index, dimension)">
+                            <span ng-bind="dimension.label"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pull-left ml-10">
+                <button
+                        data-toggle="dropdown"
+                        class="btn btn-sm btn-default dropdown-toggle"
+                        >
+                    <span ng-bind="departments[active_department].label"></span>
+                    <i class="fa fa-caret-down fa-on-right"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-primary pull-right">
+                    <li ng-repeat="dept in departments track by $index">
+                        <a ng-click="switch_department($index, dept)">
+                            <span ng-bind="dept.label"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="pull-left analytics-date-ranger">

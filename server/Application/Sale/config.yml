@@ -38,6 +38,9 @@ navs:
             Sale:
                 app: marketing
                 children:
+                    Add New Orders:
+                        app: sale
+                        link: sale/orders/add/bill
                     Orders:
                         app: sale
                         link: sale/orders

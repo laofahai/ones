@@ -26,8 +26,9 @@
             'AnalyticsService',
             '$routeParams',
             'SaleAnalytics.SaleVolumeAPI',
+            'Account.DepartmentAPI',
             'RootFrameService',
-            function($scope, analytics, $routeParams, volume_api, RootFrameService) {
+            function($scope, analytics, $routeParams, volume_api, department_api, RootFrameService) {
                 analytics.init($scope);
 
                 var options = {
@@ -118,6 +119,28 @@
                     }
                     data_query_params.st = $scope.date_start;
                     data_query_params.et = $scope.date_end;
+                    do_query();
+                };
+
+                // 按部门查看
+                $scope.departments = [{id:0,label:_('common.All')}];
+                $scope.active_department = 0;
+                department_api.resource.api_query().$promise.then(function(data) {
+                    angular.forEach(data, function(item) {
+                        $scope.departments.push({
+                            id: item.id,
+                            label: item.prefix_name || item.name
+                        });
+                    });
+                });
+                $scope.switch_department = function(index, department) {
+                    $scope.active_department = index;
+                    if(index > 0) {
+                        data_query_params.dept = department.id;
+                    } else {
+                        data_query_params.dept = undefined;
+                    }
+
                     do_query();
                 };
 

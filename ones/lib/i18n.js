@@ -77,6 +77,7 @@ function _(key, params) {
         var lang = ones.caches.getItem('ones.lang');
         lang = lang[app];
     } catch(e) {
+        console.log(key);
         return apply_sprintf(key_items.pop(), params);
     }
     

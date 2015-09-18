@@ -3,6 +3,8 @@ APP_NAME: 销售模块
 Orders: 销售订单
 Sale: 销售
 
+Add New Orders: 新增销售订单
+
 Stock Quantity: 库存数量
 
 ORDERS_STATUS_NEW: 新订单

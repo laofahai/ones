@@ -116,4 +116,22 @@ class DepartmentService extends CommonTreeModel {
 
     }
 
+    /*
+     * 获取本部门下所有用户
+     * */
+    public function get_department_users($department_id, $include_sub = true) {
+        $department_id_all = ['department_id'];
+        if($include_sub) {
+            $tree = $this->get_tree($department_id);
+            $department_id_all = array_merge((array)get_array_by_field($tree, 'id'), $department_id_all);
+        }
+
+        $map = [
+            'department_id' => ['IN', $department_id_all]
+        ];
+
+        return D('Account/User')->where($map)->select();
+
+    }
+
 }

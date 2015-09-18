@@ -19,8 +19,7 @@
                         last_check_time: {
                             widget: 'datetime',
                             editable: false,
-                            label: _('storage.Storage Last Check Time'),
-                            cell_filter: 'to_human_date'
+                            label: _('storage.Storage Last Check Time')
                         }
                     },
 
