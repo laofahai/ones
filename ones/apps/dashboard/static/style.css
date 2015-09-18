@@ -27,7 +27,8 @@ body {
 .dashboard-add-widget-btn {
   position: absolute;
   right: 0;
-  top: 0; }
+  top: 0;
+  z-index: 99; }
 
 .dashboard-widget-remove-btn {
   position: absolute;
@@ -41,6 +42,16 @@ body {
   line-height: 15px;
   text-align: center;
   display: none; }
+
+.dashboard-add-widget-btn-big {
+  position: fixed;
+  width: 150px;
+  left: 50%;
+  margin-left: -165px;
+  top: 200px; }
+
+.no-widget {
+  height: 600px; }
 
 li:hover .dashboard-widget-remove-btn {
   display: block; }

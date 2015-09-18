@@ -13,10 +13,12 @@ auth_nodes:
     # 销售排行
     - saleAnalytics.saleBoard.get
 
-include:
+global_include:
     js:
         - apps/saleAnalytics/main
         - apps/saleAnalytics/model
+        - apps/saleAnalytics/plugin
+
 
 navs:
     Marketing:

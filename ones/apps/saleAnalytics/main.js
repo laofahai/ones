@@ -6,7 +6,7 @@
      * */
     'use strict';
     angular.module('ones.app.saleAnalytics.main', [
-        'ones.app.saleAnalytics.model'
+
     ])
         .config(['$routeProvider', function($route) {
             $route
@@ -20,7 +20,8 @@
                 })
             ;
         }])
-
+    ;
+    ones.global_module
         // 销售额统计
         .controller('SaleVolumeAnalyticsCtrl', [
             '$scope',

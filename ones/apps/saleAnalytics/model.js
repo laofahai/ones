@@ -5,7 +5,7 @@
      * @link https://ng-erp.com
      * */
     'use strict';
-    angular.module('ones.app.saleAnalytics.model', [])
+    ones.global_module
         .service('SaleAnalytics.SaleVolumeAPI', [
             'ones.dataApiFactory',
             function(dataAPI) {

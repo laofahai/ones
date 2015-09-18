@@ -6,8 +6,9 @@
             alias: 'calendar',
             title: _('calendar.Calendar'),
             template: appView('dashboard_block.html', 'calendar'),
-            sizeX: 2,
-            sizeY: 4
+            sizeX: 5,
+            sizeY: 4,
+            auth_node: 'calendar.events.get'
         });
     });
 

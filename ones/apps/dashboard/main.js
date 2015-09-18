@@ -59,6 +59,15 @@
                 $scope.all_widgets = ones.pluginScope.get('dashboard_widgets') || [];
                 $scope.dashboard_widgets_list = preference.get_preference('dashboard_widgets') || [];
 
+                angular.forEach($scope.dashboard_widgets_list, function(item, k) {
+                    if(false === item.auth_node) {
+                        return true;
+                    }
+                    if(!is_node_authed(item.auth_node)) {
+                        delete($scope.dashboard_widgets_list[k]);
+                    }
+                });
+
                 $scope.dashboard_widgets_list = force_format_data_fields($scope.dashboard_widgets_list, {
                     col: 'Number',
                     row: 'Number',
@@ -68,6 +77,7 @@
 
                 $scope.gridster_option = {
                     rowHeight: 100,
+                    columns: 12,
                     resizable: {
                         stop: function(event, uiWidget, $element) {
                             save_dashboard_config($scope.dashboard_widgets_list);
