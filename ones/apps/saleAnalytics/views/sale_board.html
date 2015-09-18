@@ -1,0 +1,47 @@
+<section class="actionsBtn clearfix">
+    <div class="pull-left actions-btn-left">
+        <div class="pull-left btn-group">
+            <a class="btn btn-sm btn-info"
+               href="javascript:void(0);" onclick="window.location.reload();"><i class="fa fa-refresh"></i></a>
+            <div class="pull-left ml-10">
+                <button
+                        data-toggle="dropdown"
+                        class="btn btn-sm btn-default dropdown-toggle"
+                        >
+                    <span ng-bind="sort_types[active_sort_type].label"></span>
+                    <i class="fa fa-caret-down fa-on-right"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-primary">
+                    <li ng-repeat="sort_type in sort_types track by $index">
+                        <a ng-click="switch_sort_types($index, sort_type)">
+                            <span ng-bind="sort_type.label"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pull-left analytics-date-ranger">
+            <input type="number" ng-model="limit" style="width:80px;" />
+            <input type="date" ng-model="date_start" />
+            <input type="date" ng-model="date_end" />
+            <button class="btn btn-primary btn-sm"
+                    ng-click="change_date_range()"
+                    ng-bind="'common.Submit'|lang"></button>
+        </div>
+    </div>
+
+
+    <div class="pull-right btn-group">
+        <a ng-href="{{help_link}}"
+           target="_blank"
+           class="btn btn-default btn-sm">
+            <i class="fa fa-question-circle"></i>
+        </a>
+    </div>
+</section>
+
+
+<script src="apps/analytics/echarts-all.js"></script>
+
+<div id="chart-container" style="min-height:400px;"></div>

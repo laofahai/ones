@@ -16,6 +16,16 @@
                 this.config = {};
             }
         ])
+        .service('SaleAnalytics.SaleBoardAPI', [
+            'ones.dataApiFactory',
+            function(dataAPI) {
+                this.resource = dataAPI.getResourceInstance({
+                    uri: 'saleAnalytics/saleBoard'
+                });
+
+                this.config = {};
+            }
+        ])
     ;
 
 })(window, window.angular, window.ones, window.io);

@@ -9,7 +9,9 @@ requirements:
 
 auth_nodes:
     # 销售额统计
-    - saleAnalytics.volume.get|flag
+    - saleAnalytics.saleVolume.get
+    # 销售排行
+    - saleAnalytics.saleBoard.get
 
 include:
     js:
@@ -25,4 +27,8 @@ navs:
                     Sale Analytics:
                         app: saleAnalytics
                         icon: bar-chart
-                        link: saleAnalytics/saleVolume/by/date
+                        link: saleAnalytics/saleVolume
+                    Sale Top Board:
+                        app: saleAnalytics
+                        icon: line-chart
+                        link: saleAnalytics/saleBoard
