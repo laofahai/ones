@@ -11,9 +11,6 @@ namespace Analytics\Service;
 
 class AnalyticsService {
 
-    /*
-     * 获取时间序列
-     * */
-    public function get_date_range() {}
+    public function get_date_range_by_input() {}
 
 }

@@ -68,12 +68,17 @@
                     }
                 });
 
-                $scope.dashboard_widgets_list = force_format_data_fields($scope.dashboard_widgets_list, {
-                    col: 'Number',
-                    row: 'Number',
-                    sizeX: 'Number',
-                    sizeY: 'Number'
-                });
+                try {
+                    $scope.dashboard_widgets_list = force_format_data_fields($scope.dashboard_widgets_list, {
+                        col: 'Number',
+                        row: 'Number',
+                        sizeX: 'Number',
+                        sizeY: 'Number'
+                    });
+                } catch (e) {
+                    $scope.dashboard_widgets_list = [];
+                }
+
 
                 $scope.gridster_option = {
                     rowHeight: 100,

@@ -195,6 +195,8 @@
                         trigger: 'axis'
                     },
                     toolbox: {
+                        orient : 'vertical',
+                        x: 'right',
                         show: true,
                         feature: {
                             mark: {show: true},

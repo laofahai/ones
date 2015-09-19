@@ -34,6 +34,7 @@ APP_DESCRIPTION: " "
 %s items per page: %s 条/页
 %s Items Total: 共 %s 条数据
 Add New: 新增
+Add To Common Nav: 添加至常用操作
 Address: 地址
 Alias: 别名
 All: 全部
@@ -104,6 +105,7 @@ Prepared By: 制单人
 Quantity: 数量
 Quick Search: 快速搜索
 Remark: 备注
+Remove From Common Nav: 从常用操作中移除
 Save: 保存
 Search By %s: 通过%s检索
 Selected %s Items: 选中%s项
