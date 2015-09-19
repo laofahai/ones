@@ -96,12 +96,15 @@ class BaseMigration extends AbstractMigration{
         if($file) {
             $schemas[] = Yaml::parse(file_get_contents($schemaPath.$file));
         } else {
-            foreach (new RecursiveFileFilterIterator($schemaPath, '', 'yml') as $item) {
-                if(!is_file($item)) {
-                    continue;
+            try {
+                foreach (new RecursiveFileFilterIterator($schemaPath, '', 'yml') as $item) {
+                    if(!is_file($item)) {
+                        continue;
+                    }
+                    $schemas[] = Yaml::parse(file_get_contents($item));
                 }
-                $schemas[] = Yaml::parse(file_get_contents($item));
-            }
+            } catch(Exception $e) {}
+
         }
         
         if(!$schemas) {
