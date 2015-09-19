@@ -217,7 +217,7 @@ class BaseMigration extends AbstractMigration{
         
         $table->save();
         
-        $this->_applyMeta($tableName, $fields['$meta']);
+        //$this->_applyMeta($tableName, $fields['$meta']);
     }
     
     /*
