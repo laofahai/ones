@@ -63,77 +63,6 @@ module.exports = function (grunt) {
             }
         },
 
-        // The actual grunt server settings
-        connect: {
-            options: {
-                port: 9000,
-                // Change this to '0.0.0.0' to access the server from outside.
-                hostname: 'localhost',
-                livereload: 35729
-            },
-            livereload: {
-                options: {
-                    open: true,
-                    middleware: function (connect) {
-                        return [
-                            connect.static('.tmp'),
-                            connect().use(
-                                '/bower_components',
-                                connect.static('./bower_components')
-                            ),
-                            connect().use(
-                                '/app/styles',
-                                connect.static('./app/styles')
-                            ),
-                            connect.static(appConfig.app)
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    port: 9001,
-                    middleware: function (connect) {
-                        return [
-                            connect.static('.tmp'),
-                            connect.static('test'),
-                            connect().use(
-                                '/bower_components',
-                                connect.static('./bower_components')
-                            ),
-                            connect.static(appConfig.app)
-                        ];
-                    }
-                }
-            },
-            dist: {
-                options: {
-                    open: true,
-                    base: '<%= yeoman.dist %>'
-                }
-            }
-        },
-
-        // Make sure code styles are up to par and there are no obvious mistakes
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },
-            all: {
-                src: [
-                    'Gruntfile.js',
-                    '<%= yeoman.app %>/scripts/{,*/}*.js'
-                ]
-            },
-            test: {
-                options: {
-                    jshintrc: 'test/.jshintrc'
-                },
-                src: ['test/spec/{,*/}*.js']
-            }
-        },
-
         // Empties folders to start fresh
         clean: {
             dist: {
@@ -218,46 +147,19 @@ module.exports = function (grunt) {
             index: {
                 src: '<%= yeoman.dist %>/index.html',
                 options: {
-                    dest: '<%= yeoman.dist %>',
-                    flow: {
-                        html: {
-                            steps: {
-                                js: ['concat', 'uglifyjs'],
-                                css: ['cssmin']
-                            },
-                            post: {}
-                        }
-                    }
+                    dest: '<%= yeoman.dist %>'
                 }
             },
             app: {
                 src: '<%= yeoman.dist %>/app.html',
                 options: {
-                    dest: '<%= yeoman.dist %>',
-                    flow: {
-                        html: {
-                            steps: {
-                                js: ['concat', 'uglifyjs'],
-                                css: ['cssmin']
-                            },
-                            post: {}
-                        }
-                    }
+                    dest: '<%= yeoman.dist %>'
                 }
             },
             frame: {
                 src: '<%= yeoman.dist %>/frame.html',
                 options: {
-                    dest: '<%= yeoman.dist %>',
-                    flow: {
-                        html: {
-                            steps: {
-                                js: ['concat', 'uglifyjs'],
-                                css: ['cssmin']
-                            },
-                            post: {}
-                        }
-                    }
+                    dest: '<%= yeoman.dist %>'
                 }
             }
 
@@ -265,7 +167,7 @@ module.exports = function (grunt) {
 
         // Performs rewrites based on filerev and the useminPrepare configuration
         usemin: {
-            html: ['<%= yeoman.dist %>/index.html', '<%= yeoman.app %>/dist.html', '<%= yeoman.app %>/dist.html'],
+            html: ['<%= yeoman.dist %>/index.html', '<%= yeoman.dist %>/app.html', '<%= yeoman.dist %>/frame.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
             options: {
                 assetsDirs: [
@@ -280,27 +182,198 @@ module.exports = function (grunt) {
         // By default, your `index.html`'s <!-- Usemin block --> will take care of
         // minification. These next options are pre-configured if you do not wish
         // to use the Usemin blocks.
-        // cssmin: {
-        //   dist: {
-        //     files: {
-        //       '<%= yeoman.dist %>/styles/main.css': [
-        //         '.tmp/styles/{,*/}*.css'
-        //       ]
-        //     }
-        //   }
-        // },
-        //uglify: {
-        //   dist: {
-        //     files: {
-        //       '<%= yeoman.dist %>/scripts/scripts.js': [
-        //         '<%= yeoman.dist %>/scripts/scripts.js'
-        //       ]
-        //     }
-        //   }
-        //},
-        // concat: {
-        //   dist: {}
-        // },
+        concat: {
+            vendor: {
+                files: [
+                    {
+                        dest: '.tmp/concat/assets/css/vendor.css',
+                        src: [
+                            "ones/bower_components/font-awesome/css/font-awesome.css",
+                            "ones/bower_components/todc-bootstrap/dist/css/bootstrap.css",
+                            "ones/bower_components/todc-bootstrap/dist/css/todc-bootstrap.css",
+                            "ones/bower_components/angular-motion/dist/angular-motion.css",
+                            "ones/bower_components/chosen/chosen.min.css",
+                            "ones/bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css",
+                            "ones/bower_components/bootstrap-additions/dist/bootstrap-additions.css"
+                        ]
+                    },
+                    {
+                        dest: '.tmp/concat/assets/js/vendor.js',
+                        src: [
+                            "ones/bower_components/jquery/dist/jquery.js",
+                            "ones/bower_components/angular/angular.js",
+                            "ones/bower_components/angular-animate/angular-animate.js",
+                            "ones/bower_components/angular-cookies/angular-cookies.js",
+                            "ones/bower_components/angular-resource/angular-resource.js",
+                            "ones/bower_components/angular-route/angular-route.js",
+                            "ones/bower_components/angular-sanitize/angular-sanitize.js",
+                            "ones/bower_components/angular-touch/angular-touch.js",
+                            "ones/bower_components/todc-bootstrap/dist/js/bootstrap.js",
+                            "ones/bower_components/angular-strap/dist/angular-strap.js",
+                            "ones/bower_components/angular-strap/dist/angular-strap.tpl.js",
+                            "ones/bower_components/chosen/chosen.jquery.min.js",
+                            "ones/bower_components/angular-chosen-localytics/chosen.js",
+                            "ones/bower_components/moment/moment.js",
+                            "ones/bower_components/bootstrap/dist/js/bootstrap.js",
+                            "ones/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js",
+                            "ones/bower_components/showdown/src/showdown.js",
+                            "ones/bower_components/angular-markdown-directive/markdown.js",
+                            "ones/bower_components/angular-socket-io/socket.js",
+                            "ones/bower_components/angular-base64-upload/src/angular-base64-upload.js",
+                            "ones/bower_components/angular-money-directive/angular-money-directive.js",
+                            "ones/bower_components/jsbarcode/JsBarcode.js"
+                        ]
+                    }
+                ]
+            },
+            dev: {
+                files: [
+                    {
+                        dest: '.tmp/concat/assets/css/login.css',
+                        src: [
+                            "ones/styles/animate.css",
+                            "ones/styles/base.css",
+                            "ones/styles/login.css"
+                        ]
+                    },
+                    {
+                        dest: '.tmp/concat/assets/css/app.css',
+                        src: [
+                            "ones/styles/animate.css",
+                            "ones/styles/base.css",
+                            "ones/styles/main.css"
+                        ]
+                    },
+                    {
+                        dest: '.tmp/concat/assets/css/frame.css',
+                        src: [
+                            "ones/styles/animate.css",
+                            "ones/styles/bill.css",
+                            "ones/styles/base.css",
+                            "ones/styles/frame.css"
+                        ]
+                    },
+                    {
+                        dest: '.tmp/concat/assets/js/login.js',
+                        src: [
+                            "ones/lib/vendor/sprintf.js",
+                            "ones/lib/function.js",
+                            "ones/common/config.js",
+                            "ones/lib/caches.js",
+                            "ones/lib/i18n.js",
+                            "ones/lib/plugin.js",
+                            "ones/common/service.js",
+                            "ones/common/filter.js",
+                            "ones/common/login.js",
+                            "ones/apps/account/main.js",
+                            "ones/apps/account/model.js"
+                        ]
+                    },
+                    {
+                        dest: '.tmp/concat/assets/js/app.js',
+                        src: [
+                            "ones/lib/vendor/sprintf.js",
+                            "ones/lib/vendor/md5.js",
+                            "ones/lib/require.js",
+                            "ones/common/config.js",
+                            "ones/lib/function.js",
+                            "ones/lib/caches.js",
+                            "ones/lib/plugin.js",
+                            "ones/lib/i18n.js",
+                            "ones/lib/common_view.js",
+                            "ones/lib/frames.js",
+                            "ones/common/directive.js",
+                            "ones/common/service.js",
+                            "ones/common/filter.js",
+                            "ones/common/app.js",
+                            "ones/apps/account/main.js",
+                            "ones/apps/account/model.js"
+                        ]
+                    },
+                    {
+                        dest: '.tmp/concat/assets/js/frame_lib.js',
+                        src: [
+                            "ones/lib/vendor/sprintf.js",
+                            "ones/lib/vendor/md5.js",
+                            "ones/lib/vendor/accounting.min.js",
+                            "ones/lib/vendor/money.min.js",
+                            "ones/common/config.js",
+                            "ones/lib/function.js",
+                            "ones/lib/caches.js",
+                            "ones/lib/i18n.js",
+                            "ones/lib/plugin.js",
+                            "ones/lib/require.js",
+                            "ones/lib/common_view.js",
+                            "ones/lib/form/form.js",
+                            "ones/lib/form/form.fields.js",
+                            "ones/lib/form/form.fields.tpl.js",
+                            "ones/lib/grid_view.js",
+                            "ones/lib/detail_view/detail_view.js",
+                            "ones/lib/detail_view/detail_view.widget.js",
+                            "ones/common/directive.js",
+                            "ones/common/service.js",
+                            "ones/common/filter.js",
+                            "ones/common/frame.js",
+                            "ones/apps/dataModel/service.js"
+                        ]
+                    }
+                ]
+            }
+        },
+
+        uglify: {
+            generated: {
+                files: [
+                    {
+                        dest: 'dist/scripts/vendor.js',
+                        src: [
+                            '.tmp/concat/assets/js/vendor.js'
+                        ]
+                    },
+                    {
+                        dest: 'dist/scripts/login.js',
+                        src: [
+                            '.tmp/concat/assets/js/login.js'
+                        ]
+                    },
+                    {
+                        dest: 'dist/scripts/app.js',
+                        src: [
+                            '.tmp/concat/assets/js/app.js'
+                        ]
+                    },
+                    {
+                        dest: 'dist/scripts/frame_lib.js',
+                        src: [
+                            '.tmp/concat/assets/js/frame_lib.js'
+                        ]
+                    }
+                ]
+            }
+        },
+
+        cssmin: {
+            generated: {
+                files: [
+                    {
+                        dest: 'dist/styles/vendor.css',
+                        src: [ '.tmp/concat/assets/css/vendor.css' ]
+                    },
+                    {
+                        dest: 'dist/styles/app.css',
+                        src: [ '.tmp/concat/assets/css/app.css' ]
+                    },
+                    {
+                        dest: 'dist/styles/login.css',
+                        src: [ '.tmp/concat/assets/css/login.css' ]
+                    },
+                    {
+                        dest: 'dist/styles/frame.css',
+                        src: [ '.tmp/concat/assets/css/frame.css' ]
+                    }
+                ]
+            }
+        },
 
         //imagemin: {
         //  dist: {
@@ -374,10 +447,10 @@ module.exports = function (grunt) {
                         '*.{ico,png,txt}',
                         '.htaccess',
                         '*.html',
-                        'apps/{,*/}*.*',
+                        'apps/{,**/}*.*',
                         'views/{,*/}*.html',
-                        'images/{,*/}*.{webp}',
-                        'styles/fonts/{,*/}*.*'
+                        'images/{,*/}*.*'
+                        //'styles/fonts/{,*/}*.*'
                     ]
                 }, {
                     expand: true,
@@ -386,14 +459,19 @@ module.exports = function (grunt) {
                     src: ['images/*']
                 }, {
                     expand: true,
-                    cwd: 'bower_components/bootstrap/dist',
+                    cwd: 'ones/bower_components/bootstrap/dist',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
                 },{
                     expand: true,
-                    cwd: 'bower_components/font-awesome',
+                    cwd: 'ones/bower_components/font-awesome',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
+                },{
+                    expand: true,
+                    cwd: 'ones/bower_components/chosen',
+                    src: 'chosen-sprite.png',
+                    dest: '<%= yeoman.dist %>/styles'
                 }]
             },
             styles: {
@@ -467,9 +545,10 @@ module.exports = function (grunt) {
         //'concat',
         'ngAnnotate',
         'copy:dist',
-        'cdnify',
-        'cssmin',
+        //'cdnify',
+        'concat',
         'uglify',
+        'cssmin',
         'filerev',
         'usemin',
         'htmlmin'

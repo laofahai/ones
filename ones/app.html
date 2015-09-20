@@ -5,8 +5,7 @@
         <title ng-bind="'common.ONES - TEam Swift Present'|lang"></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css(.) styles/vendor.css -->
+        <!-- build:css(.tmp) styles/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/bootstrap.css" />
@@ -14,9 +13,11 @@
         <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
         <link rel="stylesheet" href="bower_components/chosen/chosen.min.css" />
         <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+        <!-- build:css(.tmp) styles/app.css -->
+        <link rel="stylesheet" href="styles/animate.css">
         <link rel="stylesheet" href="styles/base.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
@@ -154,18 +155,18 @@
         <script src="bower_components/chosen/chosen.jquery.min.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
         <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
         <script src="bower_components/showdown/src/showdown.js"></script>
         <script src="bower_components/angular-markdown-directive/markdown.js"></script>
         <script src="bower_components/angular-socket-io/socket.js"></script>
-        <script src="bower_components/socket.io-client/socket.io.js"></script>
         <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
         <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
         <script src="bower_components/jsbarcode/JsBarcode.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
-        <!-- build:js({.tmp,ones}) scripts/app.js -->
+        <!-- build:js(.) scripts/app.js -->
         <script src="lib/vendor/sprintf.js"></script>
         <script src="lib/vendor/md5.js"></script>
         <script src="lib/require.js"></script>

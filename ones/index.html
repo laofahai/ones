@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css(.) styles/vendor.css -->
+        <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" href="bower_components/todc-bootstrap/dist/css/bootstrap.css" />
@@ -17,7 +17,9 @@
         <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+
+        <!-- build:css styles/login.css -->
+        <link rel="stylesheet" href="styles/animate.css">
         <link rel="stylesheet" href="styles/base.css">
         <link rel="stylesheet" href="styles/login.css">
         <!-- endbuild -->
@@ -140,7 +142,7 @@
             </div>
         </div>
         <script> var ones = {}; </script>
-        <!-- build:js(.) scripts/vendor.js -->
+        <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
@@ -156,19 +158,18 @@
         <script src="bower_components/chosen/chosen.jquery.min.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
         <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
         <script src="bower_components/showdown/src/showdown.js"></script>
         <script src="bower_components/angular-markdown-directive/markdown.js"></script>
         <script src="bower_components/angular-socket-io/socket.js"></script>
-        <script src="bower_components/socket.io-client/socket.io.js"></script>
         <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
         <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
         <script src="bower_components/jsbarcode/JsBarcode.js"></script>
-        <script src="bower_components/jsbarcode/CODE128.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
-        <!-- build:js({.tmp,ones}) scripts/login.js -->
+        <!-- build:js scripts/login.js -->
         <script src="lib/vendor/sprintf.js"></script>
         <script src="lib/function.js"></script>
         <script src="common/config.js"></script>

@@ -14,10 +14,12 @@
         <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
         <link rel="stylesheet" href="bower_components/chosen/chosen.min.css" />
         <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
-        <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.css" />
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+        <!-- build:css(.tmp) styles/frame.css -->
+        <link rel="stylesheet" href="styles/animate.css">
+        <link rel="stylesheet" href="styles/bill.css">
         <link rel="stylesheet" href="styles/base.css">
         <link rel="stylesheet" href="styles/frame.css">
         <!-- endbuild -->
@@ -82,20 +84,19 @@
         <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
         <script src="bower_components/chosen/chosen.jquery.min.js"></script>
         <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
-        <script src="bower_components/moment/min/moment-with-locales.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
         <script src="bower_components/showdown/src/showdown.js"></script>
         <script src="bower_components/angular-markdown-directive/markdown.js"></script>
         <script src="bower_components/angular-socket-io/socket.js"></script>
-        <script src="bower_components/socket.io-client/socket.io.js"></script>
         <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
         <script src="bower_components/angular-money-directive/angular-money-directive.js"></script>
         <script src="bower_components/jsbarcode/JsBarcode.js"></script>
-        <script src="bower_components/jsbarcode/CODE128.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
-        <!-- build:js({.tmp,ones}) scripts/frame_lib.js -->
+        <!-- build:js(.) scripts/frame_lib.js -->
         <script src="lib/vendor/sprintf.js"></script>
         <script src="lib/vendor/md5.js"></script>
         <script src="lib/vendor/accounting.min.js"></script>
