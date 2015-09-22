@@ -94,7 +94,7 @@ class CommonBillService extends CommonModel {
 
         $check = $this->check_params();
         if(true !== $check) {
-            $this->set_error(__('common.System Error') . ' PARAM ' . $check, false);
+            $this->set_error(__('common.System Error') . ' PARAM ' . $check, 3001, false);
             return false;
         }
 
@@ -117,14 +117,14 @@ class CommonBillService extends CommonModel {
         $this->startTrans();
 
         if(false === $this->create($meta)) {
-            $this->set_error(__('common.Create Data Object Failed') . ':' . $this->main_model_alias);
+            $this->set_error(__('common.Create Data Object Failed') . ':' . $this->main_model_alias, 3002);
             $this->rollback();
             return false;
         }
 
         $id = $this->add();
         if(!$id) {
-            $this->set_error(__('common.Insert Data Failed') . ':' . $this->main_model_alias);
+            $this->set_error(__('common.Insert Data Failed') . ':' . $this->main_model_alias, 3003);
             $this->rollback();
             return false;
         }
@@ -157,14 +157,14 @@ class CommonBillService extends CommonModel {
             $row[$this->detail_main_foreign] = $id;
 
             if(false === $detail_service->create($row)) {
-                $this->set_error(__('common.Create Data Object Failed') . ':' . $this->detail_model_alias);
+                $this->set_error(__('common.Create Data Object Failed') . ':' . $this->detail_model_alias, 3004);
                 $this->rollback();
                 return false;
             }
 
             $row_id = $detail_service->add();
             if(!$row_id) {
-                $this->set_error(__('common.Insert Detail Data Failed') . ':' . $this->detail_model_alias);
+                $this->set_error(__('common.Insert Detail Data Failed') . ':' . $this->detail_model_alias, 3005);
                 $this->rollback();
                 return false;
             }

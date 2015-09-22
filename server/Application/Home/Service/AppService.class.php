@@ -60,6 +60,7 @@ class AppService extends CommonModel {
 
             if(!array_key_exists($app['id'], $buy_history)) {
                 if($company_info['balance'] < $app['price']) {
+                    $this->error_code = 1001;
                     $this->error = __('home.Balance not full');
                     return false;
                 }
@@ -80,7 +81,6 @@ class AppService extends CommonModel {
                     }
                 }
             }
-
             if(!$model->add(array(
                 'company_id' => $company_id,
                 'app_id' => $app['id']

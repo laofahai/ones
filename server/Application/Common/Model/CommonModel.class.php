@@ -8,6 +8,8 @@ class CommonModel extends Model {
 
     public $real_model_name = '';
 
+    public $error_code = null;
+
     const MSG_NOT_FOUND = 'common.Query Not Match Any Row';
 
     public function getProperty($name) {
@@ -71,12 +73,22 @@ class CommonModel extends Model {
     /*
      * 设置错误信息
      * */
-    protected function set_error($error, $include_sql=true) {
+    protected function set_error($error, $error_code=null, $include_sql=true) {
         $this->error = $error;
+        $this->error_code = $error_code;
 
         if(DEBUG && $include_sql) {
             $this->error .= ' SQL: '. $this->getLastSql();
         }
+    }
+
+    protected function setError($error, $error_code=null, $include_sql=true) {
+        return $this->set_error($error, $error, $include_sql);
+    }
+
+    public function getError() {
+        $error_code = $this->error_code ? sprintf('[%s] ', $this->error_code) : '';
+        return $error_code.$this->error;
     }
 
 }
