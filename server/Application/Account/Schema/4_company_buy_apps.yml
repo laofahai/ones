@@ -1,0 +1,12 @@
+company_buy_apps:
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    $meta:
+        foreign:
+            app:
+                restrict:
+                    delete: CASCADE
+            company:
+                restrict:
+                    delete: CASCADE

@@ -9,7 +9,11 @@ app:
         type: text
         blank: true
         comment: 依赖
-        
+    price:
+        type: decimal
+        precision: 14
+        scale: 4
+        default: 0.00
     $meta:
         # truncate_when_migrate: true
         indexes:

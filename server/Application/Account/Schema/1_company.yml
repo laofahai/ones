@@ -26,6 +26,11 @@ company:
     created:
         type: datetime
         default: CURRENT_TIMESTAMP
+    balance:
+        type: decimal
+        precision: 14
+        scale: 4
+        default: 0.00
     $meta:
         indexes:
             name:

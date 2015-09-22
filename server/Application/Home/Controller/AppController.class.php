@@ -36,8 +36,8 @@ class AppController extends BaseRestController {
             return $this->error(__('common.Params Error'));
         }
 
-        if(false !== $service->$method($alias)) {
-            $this->success(__('common.Operation Success'));
+        if($service->$method($alias)) {
+            $this->success(__('common.Operation Success') . $service->getError());
         } else {
             $this->error($service->getError());
         }

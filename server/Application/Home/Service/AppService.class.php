@@ -35,6 +35,13 @@ class AppService extends CommonModel {
         $apps = array_diff($alias, array_diff(self::$activeApps, self::$baseApps));
         $company_id = get_current_company_id();
 
+        $company_service = D('Account/Company');
+        $buyModel = D('Account/CompanyBuyApps');
+
+        $company_info = $company_service->where(['id'=>$company_id])->find();
+        $buy_history = $buyModel->where(['company_id'=>$company_id])->select();
+        $buy_history = get_array_to_ka($buy_history, 'app_id');
+
         if(!$apps) {
             return true;
         }
@@ -48,16 +55,28 @@ class AppService extends CommonModel {
         }
 
         $model = D('Account/CompanyActiveApps');
+
         foreach($apps_info as $app) {
 
-            // 检测依赖
-            // @todo 商业应用
-            if(trim($app['requirements'])) {
+            if(!array_key_exists($app['id'], $buy_history)) {
+                if($company_info['balance'] < $app['price']) {
+                    $this->error = __('home.Balance not full');
+                    return false;
+                }
 
+                $company_service->where(['id'=>$company_id])->setDec('balance', $app['price']);
+            }
+
+
+            // 检测依赖
+            if(trim($app['requirements'])) {
                 $requirements = explode(',', $app['requirements']);
                 foreach($requirements as $req) {
-                    if(!self::is_app_active($req)) {
-                        $this->enable($req);
+                    if($req != $app['alias'] && !self::is_app_active($req)) {
+                        if(!$this->enable($req)) {
+                            $this->error = $this->getError();
+                            return false;
+                        }
                     }
                 }
             }
@@ -68,6 +87,14 @@ class AppService extends CommonModel {
             ))) {
                 return false;
             }
+
+            if(!array_key_exists($app['id'], $buy_history)) {
+                $buyModel->add([
+                    'company_id' => $company_id,
+                    'app_id' => $app['id']
+                ]);
+            }
+
         }
 
         return true;
@@ -92,6 +119,5 @@ class AppService extends CommonModel {
             'company_id' => get_current_company_id()
         ))->delete();
     }
-
 
 }

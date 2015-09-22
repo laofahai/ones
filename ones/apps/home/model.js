@@ -12,12 +12,19 @@
                     fields: {
                         name: {
                             get_display: function(value, item) {
-                                return _(item.alias+'.APP_NAME')+' '+item.alias;
+                                var local_name = _(item.alias+'.APP_NAME');
+                                local_name = local_name === "APP_NAME" ? '' : local_name+' ';
+                                return local_name+item.alias;
                             }
                         },
                         description: {
                             get_display: function(value, item) {
                                 return _(item.alias+'.APP_DESCRIPTION')
+                            }
+                        },
+                        price: {
+                            get_display: function(value){
+                                return value ? to_decimal_display(value) : _('home.Free to use');
                             }
                         },
                         is_active: {
@@ -30,7 +37,7 @@
                             ]
                         }
                     },
-                    list_display: ['name', 'description', 'is_active'],
+                    list_display: ['name', 'description', 'price', 'is_active'],
                     addable: false,
                     editable: false,
                     deleteable: false,
