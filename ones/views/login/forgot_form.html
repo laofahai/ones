@@ -1,0 +1,41 @@
+<form name="RetrieveForm" autocomplete="off" novalidate>
+    <div class="signin-text">
+        <span ng-bind="'account.login.Retrieve Password'|lang"></span>
+    </div>
+
+    <div class="alert hide" ng-class="{'alert-danger': error.is_error||undefined===error.is_error, 'alert-success': !error.is_error&&undefined!==error.is_error, 'hide': !error.msg}">
+        <span ng-bind-html="error.msg"></span>
+    </div>
+
+    <div class="form-group w-icon">
+        <input type="text" name="signin_company_sign"
+               class="form-control input-lg"
+               ng-model="forgot_info.company_sign_id"
+               placeholder="{{'account.login.Company Sign ID'|lang}}"
+               autocomplete="off" autofocus required>
+        <span class="fa fa-bank signin-form-icon"></span>
+    </div>
+
+    <div class="form-group w-icon">
+        <input type="email"
+               class="form-control input-lg"
+               ng-model="forgot_info.email"
+               placeholder="{{'account.login.Email'|lang}}"
+               autocomplete="off" required>
+        <span class="fa fa-user signin-form-icon"></span>
+    </div>
+
+    <p class="forgot-tips alert alert-info" ng-bind="'account.login.forgot_tips'|lang"></p>
+
+    <div class="form-actions">
+        <button class="signin-btn btn-primary" ng-click="doRetrievePassword()" ng-disabled="RetrieveForm.$invalid">
+            <span ng-bind="'common.Submit' | lang"></span>
+        </button>
+        <a href="javascript:void(0);" ng-href="#/" class="forgot-password">
+            <span ng-bind="'account.login.Go back to login' | lang"></span>
+        </a>
+        <a href="#" class="register-new-company">
+            <span ng-bind="'account.login.Register New Company' | lang"></span>
+        </a>
+    </div>
+</form>

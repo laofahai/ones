@@ -69,76 +69,11 @@
             </div>
 
             <div class="signin-form">
-                <form name="LoginForm" autocomplete="off" novalidate>
-                    <div class="signin-text">
-                        <span ng-bind="'account.login.Enter Your Login Info'|lang"></span>
-                    </div>
-
-                    <div class="alert alert-danger hide" ng-class="{'hide':!error.is_error}">
-                        <div><span ng-bind-html="error.msg"></span></div>
-                    </div>
-
-                    <div class="form-group w-icon">
-                        <input type="text" name="signin_company_sign"
-                               class="form-control input-lg"
-                               ng-model="loginInfo.company_sign_id"
-                               placeholder="{{'account.login.Company Sign ID'|lang}}"
-                               autocomplete="off" autofocus required>
-                        <span class="fa fa-bank signin-form-icon"></span>
-                    </div>
-
-                    <div class="form-group w-icon">
-                        <input type="text"
-                               class="form-control input-lg"
-                               ng-model="loginInfo.username"
-                               placeholder="{{'account.login.Username'|lang}}"
-                               autocomplete="off" required>
-                        <span class="fa fa-user signin-form-icon"></span>
-                    </div>
-
-                    <div class="form-group w-icon">
-                        <input type="password"
-                               class="form-control input-lg"
-                               ng-model="loginInfo.password"
-                               placeholder="{{'account.login.Password'|lang}}"
-                               autocomplete="off" required>
-                        <span class="fa fa-lock signin-form-icon"></span>
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="signin-btn btn-primary" ng-click="doLogin()" ng-disabled="LoginForm.$invalid">
-                            <span ng-bind="'account.login.Login' | lang"></span>
-                        </button>
-                        <a href="#" class="forgot-password" id="forgot-password-link">
-                            <span ng-bind="'account.login.Forget Password?' | lang"></span>
-                        </a>
-                    </div>
-                </form>
+                <div class="view-frame" ng-view></div>
 
                 <div class="signin-with">
                     Present by <a href="https://ng-erp.com" target="_blank">TEam Swift</a> Since 2012
                 </div>
-
-                <div class="password-reset-form" id="password-reset-form" style="display: none;">
-                    <div class="header">
-                        <div class="signin-text">
-                            <span>Password reset</span>
-                            <div class="close">×</div>
-                        </div>
-                    </div>
-
-                    <form action="index.html" id="password-reset-form_id" novalidate="novalidate">
-                        <div class="form-group w-icon">
-                            <input type="text" name="password_reset_email" id="p_email_id" class="form-control input-lg" placeholder="{{'account.email'|lang}}">
-                            <span class="icon fa-envelope signin-form-icon"></span>
-                        </div>
-
-                        <div class="form-actions">
-                            <input type="submit" value="SEND PASSWORD RESET LINK" class="signin-btn bg-primary">
-                        </div>
-                    </form>
-                </div>
-
             </div>
         </div>
         <script> var ones = {}; </script>

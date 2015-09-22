@@ -7,6 +7,6 @@
   0% {
     transform: rotate(360deg); }
   100% {
-    transform: rotate(360deg); } }
+    transform: rotate(0deg); } }
 
 /*# sourceMappingURL=animate.css.map */

@@ -718,7 +718,6 @@
                         }
 
                         var res = $injector.get(attrs.ensureUnique);
-                        console.log($routeParams);
                         var queryParams = {
                             _ei:  $routeParams.id || 0,
                             _mf: attrs.name,

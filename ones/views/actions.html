@@ -102,6 +102,14 @@
             <i class="fa fa-filter"></i>
             <span ng-bind="'common.Filters'|lang"></span>
         </a>
+        <a href="javascript:void(0);"
+           class="btn btn-sm btn-{{ela.type||'default'}}"
+           ng-show="extra_link_actions"
+           ng-repeat="ela in extra_link_actions track by $index"
+           ng-click="ela.action()">
+            <i class="fa fa-{{ela.icon}}" ng-show="ela.icon"></i>
+            <span ng-bind="ela.label"></span>
+        </a>
         <a ng-href="{{help_link}}"
            target="_blank"
            class="btn btn-default btn-sm">

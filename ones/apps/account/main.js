@@ -18,7 +18,52 @@
                         controller: 'AccountUserProfileCtrl',
                         templateUrl: 'views/edit.html'
                     })
+                    .when('/account/password', {
+                        controller: 'AccountUserPasswordCtrl',
+                        templateUrl: appView('password.html')
+                    })
                 ;
+            }
+        ])
+        // 修改密码
+        .controller('AccountUserPasswordCtrl', [
+            '$scope',
+            'RootFrameService',
+            'Account.UserAPI',
+            function($scope, RootFrameService, user_api) {
+                $scope.back_able = true;
+                $scope.form_data = {
+                    old_password: '',
+                    new_password: '',
+                    new_password_repeat: ''
+                };
+                $scope.doFormSubmit = function() {
+                    if(!$scope.form_data.old_password || !$scope.form_data.new_password || !$scope.form_data.new_password_repeat) {
+                        return RootFrameService.alert({
+                            content: _('Every item is required')
+                        });
+                    }
+
+                    if($scope.form_data.new_password !== $scope.form_data.new_password_repeat) {
+                        return RootFrameService.alert({
+                            content: _('New password and it\'s repeat must be equal')
+                        });
+                    }
+
+                    var get_param = {
+                        id: ones.user_info.id,
+                        _m: 'change_password'
+                    };
+                    var post_data = {
+                        old_password: $scope.form_data.old_password,
+                        new_password: $scope.form_data.new_password
+                    };
+                    user_api.resource.update(get_param, post_data).$promise.then(function(response_data) {
+                        RootFrameService.confirm(_('Password has been changed, you need to re-login'), function() {
+                            window.top.location.href = 'index.html';
+                        });
+                    });
+                };
             }
         ])
         // 个人资料
@@ -26,9 +71,19 @@
             '$scope',
             'Account.UserAPI',
             '$routeParams',
-            function($scope, user_api, $routeParams) {
+            '$location',
+            function($scope, user_api, $routeParams, $location) {
                 user_api.config.uneditable = user_api.config.uneditable || [];
                 user_api.config.uneditable.push('department_id', 'auth_role_id');
+
+                $scope.extra_link_actions = [{
+                    type: "primary",
+                    label: _("account.Change Password"),
+                    action: function() {
+                        $location.url('/account/password');
+                    }
+                }];
+
                 $routeParams.id = ones.user_info.id;
                 $scope.formConfig = {
                     resource: user_api.resource,

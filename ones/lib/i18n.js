@@ -72,14 +72,20 @@ function i18n_init(apps, callback) {
 function _(key, params) {
     
     var key_items = key.split('.');
+
+    if(key_items.length === 1) {
+        key_items.unshift(ones.app_info.app);
+    }
+
     try{
         var app = key_items.shift();
         var lang = ones.caches.getItem('ones.lang');
         lang = lang[app];
     } catch(e) {
-        console.log(key);
         return apply_sprintf(key_items.pop(), params);
     }
+
+
     
     for(var i=0; i<key_items.length; i++) {
         try {

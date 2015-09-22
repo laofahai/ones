@@ -6,7 +6,7 @@
 /*
 * 是否开启调试模式
 * */
-ones.DEBUG = false;
+ones.DEBUG = true;
 /*
 * 默认语言
 * */

@@ -265,7 +265,8 @@ $apps = [
     ],
     'supplier' => [
         'requirements' => 'contactsCompany'
-    ]
+    ],
+    'smtp' => []
 ];
 $sql = "INSERT INTO app(alias, requirements)VALUES(:alias, :requirements)";
 $prepared = $pdo->prepare($sql);

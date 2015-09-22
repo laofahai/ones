@@ -10,8 +10,13 @@ login:
     Username: 用户名
     Password: 密码
     Login: 登陆
+    Email: 邮箱地址
     Forget Password?: 忘记密码？
+    Retrieve Password: 找回密码
     Enter Your Login Info: 输入您的登陆信息
+    Register New Company: 注册新公司
+    Go back to login: 返回登陆
+    forgot_tips:  请输入您的企业签名ID和您的用户邮箱,点击提交会发送新密码至您的邮箱; 如果不能通过此途径找回密码，建议您联系系统管理员为您重置密码。
 
 Auth Node: 授权节点
 Auth Role: 用户角色
@@ -42,3 +47,12 @@ User Not Exists: 用户不存在
 Password doesn't match: 密码错误
 
 Show username with department: 显示用户名称包含部门名称
+
+Every item is required: 所有的项目都是必填的
+New Password Repeat: 重复新密码
+Change Password: 修改密码
+Old Password: 旧密码
+New Password: 新密码
+New password and it's repeat must be equal: 新密码和重复新密码必须相同
+Old password not equal to saved: 旧密码输入错误
+Password has been changed, you need to re-login: 密码已经被重置，您需要重新登录

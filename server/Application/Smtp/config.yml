@@ -1,0 +1,11 @@
+alias: smtp
+author: TEam Swift
+link: https://ng-erp.com
+requirements: 
+
+auth_nodes:
+
+
+global_include:
+    js:
+        - apps/smtp/service

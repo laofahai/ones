@@ -289,13 +289,21 @@ var frame_init = function() {
                              * confirm
                              * */
                             this.confirm = function(msg, callback) {
-                                window.$emit_root({
+                                window.top.window.$on_frame ? window.$emit_root({
                                     event: "modal_confirm",
                                     data : {
                                         msg: msg,
                                         callback: callback
                                     }
-                                });
+                                }) : do_confirm(msg, callback);
+
+                                var do_confirm = function(msg) {
+                                    if(confirm(msg)) {
+                                        if(typeof callback === 'function') {
+                                            callback();
+                                        }
+                                    }
+                                };
                             };
 
                             this.alert = function(opts) {

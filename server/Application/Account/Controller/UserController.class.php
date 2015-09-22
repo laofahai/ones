@@ -35,6 +35,37 @@ class UserController extends BaseRestController {
         D('Account/User')->change_user_role($uid, $roles);
     }
 
+    // 修改密码
+    public function _EM_change_password() {
+        $old_password = I('post.old_password');
+        $new_password = I('post.new_password');
+        $user_id = I('get.id');
+        if(!$user_id || $user_id != get_current_user_id()) {
+            return $this->error(__('account.Params Error'));
+        }
+
+        if(!$old_password || !$new_password) {
+            return $this->error(__('account.Every item is required'));
+        }
+
+        $user_service = D('Account/User');
+        $user = $user_service->where(['id'=>$user_id])->find();
+
+        list($old_hashed_password) = generate_password($old_password, $user['rand_hash']);
+
+        if($old_hashed_password !== $user['password']) {
+            return $this->error(__('account.Old password not equal to saved'));
+        }
+
+        list($new_password_hashed, $new_hash) = generate_password($new_password);
+        $user_service->where(['id'=>$user_id])->save([
+            'password' => $new_password_hashed,
+            'rand_hash'=> $new_hash
+        ]);
+
+        $this->logout();
+    }
+
     /*
      * 退出登录
      * */
