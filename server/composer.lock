@@ -4,8 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ec1dc07d9dae74ade30d52eca285e6e",
+    "hash": "9c9d601764c7d4fb62494bbf88016b12",
+    "content-hash": "bbe1561d1e3a10d97177bf913fcea04e",
     "packages": [
+        {
+            "name": "phpmailer/phpmailer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPMailer/PHPMailer.git",
+                "reference": "b6f421c5ff02531390d6cb1e4d9780d765b664cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/b6f421c5ff02531390d6cb1e4d9780d765b664cc",
+                "reference": "b6f421c5ff02531390d6cb1e4d9780d765b664cc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "*",
+                "phpunit/phpunit": "4.7.*"
+            },
+            "suggest": {
+                "league/oauth2-client": "Needed for Gmail's XOAUTH2 authentication system"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "class.phpmailer.php",
+                    "class.phpmaileroauth.php",
+                    "class.phpmaileroauthgoogle.php",
+                    "class.smtp.php",
+                    "class.pop3.php",
+                    "extras/EasyPeasyICS.php",
+                    "extras/ntlm_sasl_client.php"
+                ]
+            },
+            "notification-url": "http://packagist.cn/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
+                },
+                {
+                    "name": "Marcus Bointon",
+                    "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Andy Prevost",
+                    "email": "codeworxtech@users.sourceforge.net"
+                },
+                {
+                    "name": "Brent R. Matzelle"
+                }
+            ],
+            "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
+            "time": "2015-09-22 06:16:40"
+        },
         {
             "name": "robmorgan/phinx",
             "version": "dev-master",
@@ -16,7 +77,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/1ffc33feb188966f7b978d8ff86b9a9cb3ed95be",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/1351ca36dd2419d7de02afd1aaa415929112d7f1",
                 "reference": "1ffc33feb188966f7b978d8ff86b9a9cb3ed95be",
                 "shasum": ""
             },
@@ -78,7 +139,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/853f075d4eadaafde97ba75e142724a1c4bf2fb7",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/a1e8e51ed2d591bb1827d04fd1d320cd4f03e5fe",
                 "reference": "853f075d4eadaafde97ba75e142724a1c4bf2fb7",
                 "shasum": ""
             },
@@ -128,7 +189,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/39d6c23c9d2f8d52402c94144c3fc218a9d13cd2",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/2ad5776cd18a443984c243a9bd8bd05470983da9",
                 "reference": "39d6c23c9d2f8d52402c94144c3fc218a9d13cd2",
                 "shasum": ""
             },
@@ -185,7 +246,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/80a0bc4be4c2b037909e9e1a3abefd293a17a1a2",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/062d0c4b01cfd8ab94957ddf2e9598dcbae2b56a",
                 "reference": "80a0bc4be4c2b037909e9e1a3abefd293a17a1a2",
                 "shasum": ""
             },
@@ -234,7 +295,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/2396832f6f9ab2b8f62f00b5d3f2e722fc773d65",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/d196cb1ac36901bde7d7fbed74ee31fdb85fd119",
                 "reference": "2396832f6f9ab2b8f62f00b5d3f2e722fc773d65",
                 "shasum": ""
             },
@@ -320,7 +381,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/Workerman/zipball/54f0c15753ed6681cf9bc9b313d68688ba437cae",
+                "url": "https://api.github.com/repos/walkor/Workerman/zipball/b4431e7187168b6be7211ca93dfc2c3d9d0b1be2",
                 "reference": "54f0c15753ed6681cf9bc9b313d68688ba437cae",
                 "shasum": ""
             },
@@ -361,11 +422,13 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "phpmailer/phpmailer": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.0"
+        "php": ">=5.5.9"
     },
     "platform-dev": []
 }

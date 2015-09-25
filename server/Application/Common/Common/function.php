@@ -69,8 +69,6 @@ function DBC($alias = null) {
         S($cache_key, $cached);
     }
 
-//    print_r($cached);
-
     return $alias ? $cached[$alias] : $cached;
 }
 

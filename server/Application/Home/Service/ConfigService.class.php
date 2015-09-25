@@ -104,7 +104,7 @@ class ConfigService extends CommonModel {
         $cache_key = 'kv_db_configs/'.get_current_company_id();
         $cached = S($cache_key);
         if(DEBUG || !$cached) {
-            $source = $this->select();
+            $source = $this->where([])->select();
 
             $cached = array();
             foreach($source as $row) {
@@ -114,6 +114,25 @@ class ConfigService extends CommonModel {
         }
 
         return $alias ? $cached[$alias] : $cached;
+    }
+
+    /*
+     *
+     * */
+    public function get_kv_config_multi($aliases=[]) {
+        if(!$aliases) {
+            return [];
+        }
+
+        $return = [];
+        $source = $this->where([])->select();
+        foreach($source as $row) {
+            if(in_array($row['alias'], $aliases)) {
+                $return[$row['alias']] = $row['val'];
+            }
+        }
+
+        return $return;
     }
 
 }

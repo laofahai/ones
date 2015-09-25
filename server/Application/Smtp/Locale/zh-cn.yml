@@ -1,0 +1,10 @@
+APP_NAME: SMTP邮件发送
+
+SMTP Host: SMTP服务器
+SMTP Port: 端口
+SMTP Enable SSL: 是否启用SSL
+SMTP User: 用户名
+SMTP Password: 密码
+SMTP From Email: 发件人地址
+SMTP From Name: 发件人名称
+Public Sign Content: 公用邮件签名

@@ -1,0 +1,136 @@
+(function(window, angular, ones, io){
+
+    ones.pluginRegister('common_config_item', function(injector, defered, fields) {
+
+        // SMTP配置
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_host',
+            label: _('smtp.SMTP Host'),
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_host_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_enable_ssl',
+            label: _('smtp.SMTP Enable SSL'),
+            widget: 'select',
+            data_source: [
+                {value: 1, label:_('common.Yes')},
+                {value: -1, label:_('common.No')}
+            ],
+            value: 1,
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_enable_ssl_opts',
+            widget: 'hidden',
+            value: 'smtp,integer',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_port',
+            label: _('smtp.SMTP Port'),
+            value: 25,
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_port_opts',
+            widget: 'hidden',
+            value: 'smtp,integer',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_user',
+            label: _('smtp.SMTP User'),
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_user_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_password',
+            label: _('smtp.SMTP Password'),
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_password_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_host',
+            label: _('smtp.SMTP Host'),
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_host_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_from_address',
+            label: _('smtp.SMTP From Email'),
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_from_address_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_from_name',
+            label: _('smtp.SMTP From Name'),
+            app: 'smtp'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_from_name_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_sign_content',
+            label: _('smtp.Public Sign Content'),
+            app: 'smtp',
+            widget: 'textarea',
+            required: false,
+            style: 'height:100px'
+        });
+        ones.pluginScope.append('common_config_item', {
+            alias: 'smtp_sign_content_opts',
+            widget: 'hidden',
+            value: 'smtp,string',
+            app: 'smtp'
+        });
+
+    });
+
+    /*
+     * @app smtp
+     * @author laofahai@TEam Swift
+     * @link https://ng-erp.com
+     * */
+    'use strict';
+    angular.module('ones.app.smtp.main', [
+
+    ]);
+
+})(window, window.angular, window.ones, window.io);

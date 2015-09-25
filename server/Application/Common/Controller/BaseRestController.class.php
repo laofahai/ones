@@ -3,6 +3,7 @@
 namespace Common\Controller;
 
 use Account\Service\AuthorizeService;
+use Smtp\Service\SendMailService;
 use Think\Controller\RestController;
 use Common\Lib\RecursiveFileFilterIterator;
 use Common\Lib\Schema;
@@ -83,10 +84,6 @@ class BaseRestController extends RestController {
             }
 
         }
-
-
-
-
 
         tag('before_controller_construct');
         

@@ -18,7 +18,8 @@
         "topthink/thinkphp": "3.2.2",
         "robmorgan/phinx": "*",
         "symfony/config": "*",
-        "workerman/workerman": "*"
+        "workerman/workerman": "*",
+        "phpmailer/phpmailer": "dev-master"
     },
     "minimum-stability": "dev"
 }

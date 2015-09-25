@@ -19,6 +19,7 @@
         ];
         ones.pluginScope.set('bpm_editable_fields', fields);
     });
+
     // 注册至工作流服务API
     ones.pluginRegister('bpm_service_api', function(injector, defered) {
         // 转化为入库单
@@ -35,7 +36,7 @@
             // 采购入库工作流
             ones.pluginScope.append('common_config_item', {
                 alias: 'purchase_stock_in_workflow',
-                label: _('sale.Purchase stock in workflow'),
+                label: _('purchase.Purchase stock in workflow'),
                 widget: 'select',
                 data_source: 'Bpm.WorkflowAPI',
                 data_source_query_param: {
