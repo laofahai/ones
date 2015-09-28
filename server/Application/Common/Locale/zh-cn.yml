@@ -22,8 +22,10 @@ WIDGETS:
     Checkbox Widget: 复选框
     Hidden Widget: 隐藏域
     Date Widget: 日期选择
-    Datatime Widget: 日期+时间选择
+    Datetime Widget: 日期+时间选择
     Item Select Widget: 项目选择
+    Select3 Widget: select3选择器
+    Input With Checkbox Widget: 带选择框的文本框
 
 
 APP_DESCRIPTION: " "

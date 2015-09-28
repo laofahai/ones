@@ -158,7 +158,7 @@
             };
         }, 1000);
 
-        factory.fields_maker.region_select = function(config) {
+        factory.fields_maker.region = function(config) {
 
             label_model = config['ng-model'] + '__label__';
             label_getter = $parse(label_model);

@@ -15,6 +15,7 @@ class ProductAttributeContentModel extends CommonViewModel {
         "ProductAttributeContent" => array('*', '_type'=>'left'),
         "Product" => [
             "name" => "product_name",
+            "serial_number",
             "_on" => "Product.id=ProductAttributeContent.product_id",
             "_type" => "left"
         ],

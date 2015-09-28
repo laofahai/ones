@@ -367,6 +367,31 @@
                         var temp_label='';
                         var data_source = $injector.get(config.data_source);
 
+                        self.scope.show_select3_modal = function(t_model, t_label_model) {
+                            var model = angular.copy(data_source);
+                            model.config.multi_select = false;
+                            model.config.list_display = config.data_source_list_display || model.config.list_display;
+
+                            self.scope.grid_config = {
+                                model: model,
+                                resource: model.resource,
+                                opts: {
+                                    ignore_selected_actions: true
+                                }
+                            };
+                            $injector.get("$modal")({
+                                scope: self.scope,
+                                template: 'views/itemSelectModal.html',
+                                show: true
+                            });
+
+                            self.scope.$modal_title = config.label;
+                        };
+
+                        self.scope.doItemSelectConfirm = function(evt, grid_selected) {
+                            var item = item_to_kv(grid_selected[0], data_source);
+                            do_select3_item_select(item);
+                        };
 
                         /*
                         * 失去焦点
@@ -377,31 +402,6 @@
                                 ele.parent().removeClass('active');
                                 ele.parent().find('ul.items').addClass('hide');
                             }, 300);
-
-                            return;
-                            var process_func = function() {
-                                $timeout(function() {
-                                    items_getter.assign(runtime_scope, []);
-
-                                    var selected = runtime_scope.$eval(selected_item_model);
-                                    if(!selected) {
-                                        return;
-                                    }
-                                    // 再次确认
-                                    if(ele.val() && ele.val() === selected.label) {
-                                        do_select3_item_select(selected);
-                                    } else {
-                                        do_select3_item_select({});
-                                    }
-                                    ele.parent().addClass('hide');
-                                }, 50);
-                            };
-
-                            if(runtime_scope.$root.$$phase != '$apply' && runtime_scope.$root.$$phase != '$digest') {
-                                runtime_scope.$apply(process_func);
-                            } else {
-                                process_func();
-                            }
                         });
                         $('body').delegate('#'+config.id, 'focus', function() {
                             var ele = $(this);
@@ -425,11 +425,6 @@
 
                         // 控件初始化
                         var select3_init = function(ele, keyword) {
-                            //if(self.select3_fields.indexOf(model) >= 0) {
-                            //    return;
-                            //}
-                            //self.select3_fields.push(model);
-
                             runtime_scope.active_select3_index = 0;
 
                             if(ele.parent('.select3-container').find('ul.items').length <= 0) {
@@ -453,20 +448,19 @@
 
                         // 选中项目
                         var do_select3_item_select = function(item, auto_hide) {
-
                             if(!item.value || !item.label) {
                                 return;
                             }
-
-                            runtime_scope[selected_item_model] = item;
-                            label_getter.assign(runtime_scope, item.label);
-                            model_getter.assign(runtime_scope, item.value);
-                            selected_getter.assign(runtime_scope, item);
+                            $timeout(function() {
+                                runtime_scope[selected_item_model] = item;
+                                label_getter.assign(runtime_scope, item.label);
+                                model_getter.assign(runtime_scope, item.value);
+                                selected_getter.assign(runtime_scope, item);
+                            });
 
                             if(auto_hide) {
                                 $('#'+config.id).trigger('blur');
                             }
-
                         };
 
                         runtime_scope.do_select3_item_select = do_select3_item_select;
@@ -543,9 +537,7 @@
                                 angular.forEach(data, function(item) {
                                     items.push({
                                         value: item[valueField],
-                                        label: typeof data_source.unicode === 'function' ?
-                                            data_source.unicode(item) :
-                                            item[data_source.config.label_field||'name']
+                                        label: to_item_display(item, data_source)
                                     });
                                 });
                                 items_getter.assign(runtime_scope, items || []);

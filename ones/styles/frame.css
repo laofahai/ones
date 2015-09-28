@@ -479,6 +479,12 @@ form
   z-index: 99;
   width: 100%;
   box-shadow: none; }
+  .select3-container .select3-show-grid-btn {
+    float: right;
+    position: relative;
+    z-index: 101;
+    margin: 8px 8px 0 0;
+    color: #666; }
   .select3-container input.form-control {
     position: relative;
     top: 0;

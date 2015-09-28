@@ -4,8 +4,17 @@ link: https://ng-erp.com
 requirements: 
 
 auth_nodes:
-
+    - smtp.send_mail.*
 
 global_include:
     js:
         - apps/smtp/service
+
+navs:
+    Marketing:
+        children:
+            Marketing:
+                children:
+                    Marketing Mail:
+                        app: smtp
+                        link: smtp/send_mail

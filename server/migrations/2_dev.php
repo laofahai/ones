@@ -33,8 +33,7 @@ class Dev extends BaseMigration
     {
 
         $apps = [
-            'account',
-            'home'
+            'product'
         ];
 
         foreach($apps as $app) {

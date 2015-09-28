@@ -403,6 +403,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         $(self.opts.bill_no.bar_code_container + ' img').JsBarcode(bar_code, {
                             height: self.opts.bill_no.height,
                             displayValue: self.opts.bill_no.display_value
+                            , format:	"CODE128"
                         });
                     });
 

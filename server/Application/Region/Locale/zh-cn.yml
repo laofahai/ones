@@ -1,5 +1,8 @@
 APP_NAME: 地区选择器
 
+WIDGETS:
+    Region Widget: 地区选择器
+
 Region: 地区
 Region Select: 地区选择
 

@@ -11,3 +11,6 @@ server/vendor
 server/Runtime
 server/uploads
 server/Data/install.lock
+
+ones/apps/operationLog
+server/Application/operationLog

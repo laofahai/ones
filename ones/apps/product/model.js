@@ -9,13 +9,24 @@
 
                 var self = this;
 
+                this.unicode = function(item) {
+                    return item.serial_number + ' ' + item.name;
+                };
+
                 this.config = {
                     app: 'product',
                     module: 'product',
                     table: 'product',
                     fields: {
+                        serial_number: {
+                            ensureUnique: 'Product.ProductAPI',
+                            search_able: true
+                        },
                         name: {
-                            search_able: 1
+                            search_able: 1,
+                            get_display: function(value, item) {
+                                return self.unicode(item);
+                            }
                             //search_able_fields: 'name,pinyin'
                         },
                         product_category: {
@@ -72,10 +83,6 @@
                         }
                     });
                 }
-
-                this.unicode = function(item) {
-                    return item.name;
-                };
 
 
                 this.resource = dataAPI.getResourceInstance({

@@ -58,7 +58,7 @@
                             search_able: true
                         },
                         region_id: {
-                            widget: 'region_select',
+                            widget: 'region',
                             label: _('region.Region')
                         }
                     },

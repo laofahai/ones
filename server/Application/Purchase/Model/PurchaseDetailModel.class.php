@@ -16,6 +16,7 @@ class PurchaseDetailModel extends CommonViewModel {
         'Product' => [
             'name'=>'product_id__label__',
             'measure_unit',
+            'serial_number',
             'measure_unit' => 'quantity__after__',
             '_on' => 'Product.id=PurchaseDetail.product_id',
             '_type' => 'left'

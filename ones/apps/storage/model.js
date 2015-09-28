@@ -33,7 +33,8 @@
             'ones.dataApiFactory',
             '$q',
             '$injector',
-            function(dataAPI, $q, $injector) {
+            'Product.ProductAPI',
+            function(dataAPI, $q, $injector, product_api) {
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'storage/stock',
                     extra_methods: ['api_get']
@@ -60,7 +61,10 @@
                         },
                         product_id: {
                             get_display: function(value, item) {
-                                return item.product_name;
+                                return product_api.unicode({
+                                    name: item.product_name,
+                                    serial_number: item.serial_number
+                                });
                             },
                             search_able: true,
                             search_able_fields: 'Product.name',
@@ -108,7 +112,8 @@
         ])
         .service('Storage.StockLogAPI', [
             'ones.dataApiFactory',
-            function(dataAPI) {
+            'Product.ProductAPI',
+            function(dataAPI, product_api) {
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'storage/stockLog'
                 });
@@ -154,7 +159,13 @@
                         },
                         product_name: {
                             label: _('product.Product'),
-                            search_able: true
+                            search_able: true,
+                            get_display: function(value, item) {
+                                return product_api.unicode({
+                                    name: item.product_name,
+                                    serial_number: item.serial_number
+                                });
+                            }
                         },
                         storage_id: {
                             get_display: function(value, item) {

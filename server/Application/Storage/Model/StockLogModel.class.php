@@ -21,6 +21,7 @@ class StockLogModel extends CommonViewModel {
         "Product"  => [
             'name' => 'product_name',
             'measure_unit',
+            'serial_number',
             '_on'  => 'StockLog.product_id=Product.id',
             '_type'=> 'left'
         ]

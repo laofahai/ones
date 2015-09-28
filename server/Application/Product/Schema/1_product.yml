@@ -25,10 +25,15 @@ product:
         type: string
         limit: 20
         blank: true
+    serial_number:
+        type: string
+        limit: 30
     $meta:
         # 索引
         indexes:
             name:
+            serial_number:
+                unique: true
         # 外键
         foreign:
             product_category:

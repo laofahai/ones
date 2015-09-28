@@ -16,6 +16,6 @@ class ProductModel extends CommonViewModel {
 
     public $orderFields = ['id', 'product_category_id'];
 
-    public $fuzzy_search = ['Product.name', 'ProductCategory.name'];
+    public $fuzzy_search = ['Product.name', 'Product.serial_number', 'ProductCategory.name'];
     
 }

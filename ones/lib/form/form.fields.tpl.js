@@ -21,7 +21,11 @@ var FORM_FIELDS_TPL = {
                 '</a>' +
                 '</div>'+
                 '</div>',
-    select3: '<div class="select3-container"><input type="text" ng-model="%(model)s__label__" %(attr)s /><input type="hidden" ng-model="%(model)s" /></div>',
+    select3: '<div class="select3-container">' +
+        '<input type="text" ng-model="%(model)s__label__" %(attr)s />' +
+        '<a href="javascript:void(0)" class="select3-show-grid-btn" ng-click="show_select3_modal(\'%(model)s\', \'%(model)s__label__\')">' +
+        '<i class="fa fa-ellipsis-h"></i></a>' +
+        '<input type="hidden" ng-model="%(model)s" /></div>',
     select3_items: '<ul ng-show="%(items_model)s.length>0" class="items">' +
     '<li ng-repeat="item in %(items_model)s" ng-bind="item.label" ' +
     'ng-click="do_select3_item_select(item)" ng-class="{\'active\':$index===active_select3_index}"></li>' +

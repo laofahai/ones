@@ -9,7 +9,7 @@
                 <table-view config="grid_config"></table-view>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="doConfirm();$hide()" ng-bind="'common.OK'|lang"></button>
+                <button type="button" class="btn btn-primary" ng-click="doItemSelectConfirm($event, gridSelected);$hide()" ng-bind="'common.OK'|lang"></button>
             </div>
         </div>
     </div>

@@ -553,6 +553,13 @@ $nav_width: 180px;
 
     box-shadow: none;
 
+    .select3-show-grid-btn {
+        float: right;
+        position: relative;
+        z-index: 101;
+        margin: 8px 8px 0 0;
+        color:#666;
+    }
 
     input.form-control {
         position:relative;

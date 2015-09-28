@@ -16,6 +16,7 @@ class OrdersDetailModel extends CommonViewModel {
         'Product' => [
             'name'=>'product_id__label__',
             'measure_unit',
+            'serial_number',
             'measure_unit' => 'quantity__after__',
             'Product.measure_unit' => 'already_in__after__',
             '_on' => 'Product.id=OrdersDetail.product_id',

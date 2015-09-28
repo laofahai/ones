@@ -117,6 +117,47 @@ function to_decimal_display(value) {
 }
 
 /*
+* 返回数据的主显
+* */
+function to_item_display(item, data_api) {
+    var label_field='name';
+    data_api = data_api || {config: {}};
+
+    if(data_api.config.label_field) {
+        label_field = data_api.config.label_field;
+    }
+
+    if(typeof data_api.unicode === 'function') {
+        return data_api.unicode(item);
+    } else {
+        return item[label_field] || '';
+    }
+}
+/*
+* 将一个包含多个元素属性的item，返回lable=>'', value=>''格式
+* eg: {label: 'hello', value: 1}
+* */
+function item_to_kv(item, data_api) {
+    var label_field='name', value_field='id', label;
+    data_api = data_api || {config: {}};
+
+    if(data_api.config.label_field) {
+        label_field = data_api.config.label_field;
+    }
+    if(data_api.config.value_field) {
+        value_field = data_api.config.value_field;
+    }
+    if(typeof data_api.unicode === 'function') {
+        label = data_api.unicode(item);
+    } else {
+        label = item[label_field] || '';
+    }
+
+    return {label: label, value: item[value_field]};
+}
+
+
+/*
 * 生成单据编号
 * */
 function generate_bill_no(prefix) {

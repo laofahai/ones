@@ -9,7 +9,7 @@
 namespace Smtp\Service;
 
 
-class SendMailService {
+class MailService {
 
     static public $configs = [];
 
