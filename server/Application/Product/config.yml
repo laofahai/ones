@@ -1,5 +1,6 @@
 alias: product
 author: TEam Swift
+document: http://ones_manual.mydoc.io/?t=35704
 requirements:
     - productAttribute
 auth_nodes:

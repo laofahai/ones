@@ -1,5 +1,6 @@
 alias: productAttribute
 author: TEam Swift
+document: http://ones_manual.mydoc.io/?t=35705
 link: https://ng-erp.com
 requirements:
     - product

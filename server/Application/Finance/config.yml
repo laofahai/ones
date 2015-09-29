@@ -1,7 +1,8 @@
 alias: finance
 author: TEam Swift
 link: https://ng-erp.com
-requirements: product
+document: http://ones_manual.mydoc.io/?t=35708
+requirements:
 
 auth_nodes:
 

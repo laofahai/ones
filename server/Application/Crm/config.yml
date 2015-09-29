@@ -1,6 +1,7 @@
 alias: crm
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35696
 requirements:
     - contactsCompany
     - calendar

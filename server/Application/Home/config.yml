@@ -1,6 +1,7 @@
 alias: home
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io
 
 auth_nodes:
     - home.common_type.*

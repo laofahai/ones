@@ -125,9 +125,12 @@ angular.module('ones.framesModule', [
                 opts.id = 'frame_id_'+opts.index;
                 opts.link = opts.src.slice(12,opts.src.length);
 
-                window.top.frames[this.activeFrame].onload(function() {
-                    plugin.callPlugin('after_frame_add', opts);
+                $timeout(function(){
+                    $(window.top.frames[this.activeFrame]).ready(function() {
+                        plugin.callPlugin('after_frame_add', opts);
+                    });
                 });
+
 
                 self.max_id++;
             };

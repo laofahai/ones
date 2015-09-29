@@ -1,6 +1,7 @@
 alias: marketing
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35699
 requirements:
     - crm
     - product

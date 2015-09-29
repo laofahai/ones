@@ -1,7 +1,7 @@
 alias: smtp
 author: TEam Swift
 link: https://ng-erp.com
-requirements: 
+requirements:
 
 auth_nodes:
     - smtp.send_mail.*

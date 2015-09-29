@@ -161,7 +161,7 @@ var frame_init = function() {
 
                             // 帮助链接
                             var search_link = 'http://ones_manual.mydoc.io/?q=%s %s&p=search';
-                            $scope.help_link = ones.app_info.config.document || sprintf(
+                            $scope.help_link = ones.app_info.config.document || 'http://ones_manual.mydoc.io' || sprintf(
                                 search_link, ones.app_info.app, to_app_name(ones.app_info.app)
                             );
 

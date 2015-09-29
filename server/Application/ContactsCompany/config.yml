@@ -1,7 +1,7 @@
 alias: contactsCompany
-verseion: 0.1
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35956
 requirements:
     - region
 

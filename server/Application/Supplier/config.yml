@@ -1,6 +1,7 @@
 alias: supplier
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35697
 requirements:
     - contactsCompany
     - product

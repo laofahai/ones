@@ -1,6 +1,7 @@
 alias: calendar
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35710
 
 auth_nodes:
     - calendar.events.get|flag

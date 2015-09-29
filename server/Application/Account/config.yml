@@ -1,6 +1,7 @@
 alias: account
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35680
 requirements:
 
 load_modules:

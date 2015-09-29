@@ -87,6 +87,7 @@
                     // 刷新状态
                     self.scope.grid_refershing = false;
 
+
                     /**
                      * 当前应用信息
                      * */
@@ -290,6 +291,7 @@
 
 
                 this.makeLinkActions = function() {
+                    self.link_actions = self.link_actions || [];
                     // 新增
                     if(self.model_config.addable !== false) {
                         self.link_actions.push({

@@ -1,6 +1,7 @@
 alias: dashboard
 author: TEam Swift
 link: https://ng-erp.com
+document: http://ones_manual.mydoc.io/?t=35679
 description: ONES 控制面板模块
 load_all_i18n: true
 include:
