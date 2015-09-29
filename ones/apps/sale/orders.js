@@ -233,7 +233,6 @@
                     list_display: [
                         'bill_no',
                         'subject',
-                        'source_model',
                         'quantity',
                         'net_receive',
                         'created',

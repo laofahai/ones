@@ -53,7 +53,6 @@
                     list_display: [
                         'bill_no',
                         'subject',
-                        'source_model',
                         'quantity',
                         'created',
                         'workflow_node_status_label',

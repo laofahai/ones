@@ -283,7 +283,7 @@
                 * @param string key 首选项key
                 * @param mixed data
                 * */
-                    this.set_preference = function(key, data, append) {
+                this.set_preference = function(key, data, append) {
                     this.resource.update({
                         key: key,
                         data: data,
@@ -304,6 +304,10 @@
             }
         ])
 
+        /*
+        * 返回用户真实姓名/全名
+        * 根据用户首选项控制是否显示部门名称
+        * */
         .filter('to_user_fullname', [function() {
             return function(uid) {
                 if(!uid || !ones.all_users[uid]) {
