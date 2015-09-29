@@ -230,44 +230,6 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
 // 写应用表
-$apps = [
-    'product' => [],
-    'cloud' => [],
-    'contactsCompany' => [
-        'requirements' => 'region'
-    ],
-    'crm' => [
-        'requirements' => 'contactsCompany'
-    ],
-    'calendar' => [],
-    'marketing' => [
-        'requirements' => 'region,crm'
-    ],
-    'messageCenter' => [],
-    'uploader' => [],
-    'storage' => [
-        'requirements' => 'product,bpm'
-    ],
-    'bpm' => [],
-    'productAttribute' => [
-        'requirements' => 'product'
-    ],
-    'notification' => [
-        'requirements' => 'messageCenter'
-    ],
-    'sale' => [
-        'requirements' => "product,bpm,crm"
-    ],
-    'region' => [],
-    'analytics' => [],
-    'purchase' => [
-        'requirements' => 'product,bpm,supplier'
-    ],
-    'supplier' => [
-        'requirements' => 'contactsCompany'
-    ],
-    'smtp' => []
-];
 $sql = "INSERT INTO app(alias, requirements)VALUES(:alias, :requirements)";
 $prepared = $pdo->prepare($sql);
 foreach($apps as $alias=>$app_config) {

@@ -8,6 +8,17 @@ HELP_TEXTS:
     grid:
         commonType: <i class="fa fa-lightbulb-o text-success"></i> 通用类型按照排序倒序、添加时间正序排序
 
+APPS_TYPES:
+    Contacts Company Related: 往来单位相关
+    Marketing Related: 营销相关
+    Storage Related: 仓储相关
+    Product Related: 产品相关
+    Finance Related: 财会相关
+    Purchase Related: 采购相关
+    Office Related: 办公相关
+    Analytics Related: 统计分析相关
+    Other: 其他
+
 Config: 配置
 App: 应用
 App Manage: 应用管理
@@ -18,6 +29,9 @@ Company Profile: 公司资料
 System Preference: 首选项
 System Operation: 系统操作
 Display date hommization: 人性化显示时间
+
+Enable: 启用
+Disable: 禁用
 
 Price Decimal Scale: 价格保留小数位
 Num Decimal Scale: 数量保留小数位

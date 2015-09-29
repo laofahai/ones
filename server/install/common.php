@@ -1,5 +1,59 @@
 <?php
 
+
+$apps = [
+    'product' => [
+        'type' => 'product'
+    ],
+    'cloud' => [],
+    'contactsCompany' => [
+        'requirements' => 'region',
+        'type' => 'contacts'
+    ],
+    'crm' => [
+        'requirements' => 'contactsCompany',
+        'type' => 'contacts'
+    ],
+    'calendar' => [
+        'type' => 'office'
+    ],
+    'marketing' => [
+        'requirements' => 'region,crm',
+        'type' => 'marketing'
+    ],
+    'messageCenter' => [],
+    'uploader' => [],
+    'storage' => [
+        'requirements' => 'product,bpm',
+        'type' => 'storage'
+    ],
+    'bpm' => [],
+    'productAttribute' => [
+        'requirements' => 'product',
+        'type' => 'product'
+    ],
+    'notification' => [
+        'requirements' => 'messageCenter'
+    ],
+    'sale' => [
+        'requirements' => "product,bpm,crm",
+        'type' => 'marketing'
+    ],
+    'region' => [],
+    'analytics' => [
+        'type' => 'analytics'
+    ],
+    'purchase' => [
+        'requirements' => 'product,bpm,supplier',
+        'type' => 'purchase'
+    ],
+    'supplier' => [
+        'requirements' => 'contactsCompany',
+        'type' => 'contacts'
+    ],
+    'smtp' => []
+];
+
 /*
  * 发送终止信号
  * */

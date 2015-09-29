@@ -339,6 +339,8 @@ class BaseRestController extends RestController {
 
         $list = reIndex((array)$list);
 
+        $list = !$list[0] ? [] : $list;
+
         //包含总数
         if(I("get._ic")) {
             $total = $model->where($map)->count();

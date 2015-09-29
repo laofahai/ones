@@ -35,6 +35,19 @@
                                 {value: 1, label: _('common.Yes')},
                                 {value: -1, label: _('common.No')}
                             ]
+                        },
+                        type: {
+                            data_source: [
+                                {value: 'contacts', label: _('home.APPS_TYPES.Contacts Company Related')},
+                                {value: 'marketing', label: _('home.APPS_TYPES.Marketing Related')},
+                                {value: 'storage', label: _('home.APPS_TYPES.Storage Related')},
+                                {value: 'product', label: _('home.APPS_TYPES.Product Related')},
+                                {value: 'purchase', label: _('home.APPS_TYPES.Purchase Related')},
+                                {value: 'finance', label: _('home.APPS_TYPES.Finance Related')},
+                                {value: 'office', label: _('home.APPS_TYPES.Office Related')},
+                                {value: 'analytics', label: _('home.APPS_TYPES.Analytics Related')},
+                                {value: 'null', label: _('home.APPS_TYPES.Other')}
+                            ]
                         }
                     },
                     list_display: ['name', 'description', 'price', 'is_active'],
@@ -43,6 +56,9 @@
                     deleteable: false,
                     filters: {
                         is_active: {
+                            type: 'link'
+                        },
+                        type: {
                             type: 'link'
                         }
                     },

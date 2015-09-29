@@ -484,7 +484,9 @@ form
     position: relative;
     z-index: 101;
     margin: 8px 8px 0 0;
-    color: #666; }
+    color: #666;
+    position: absolute;
+    right: 0; }
   .select3-container input.form-control {
     position: relative;
     top: 0;

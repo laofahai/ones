@@ -14,9 +14,13 @@ app:
         precision: 14
         scale: 4
         default: 0.00
+    type:
+        blank: true
+        limit: 20
     $meta:
         # truncate_when_migrate: true
         indexes:
             alias:
                 unique: true
+            type:
 

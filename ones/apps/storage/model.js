@@ -74,15 +74,25 @@
                             get_display: function(value, item) {
                                 return item.storage_name;
                             }
+                        },
+                        product_category: {
+                            label: _('product.Product Category')
+                        },
+                        product_category_id: {
+                            label: _('product.Product Category')
                         }
                     },
                     list_display: [
-                        'product_id', 'storage_id', 'balance', 'total_balance'
+                        'product_id', 'product_category', 'storage_id', 'balance', 'total_balance'
                     ],
                     filters: {
                         storage_id: {
                             type: 'link',
                             data_source: 'Storage.StorageAPI'
+                        },
+                        product_category_id: {
+                            type: 'link',
+                            data_source: 'Product.ProductCategoryAPI'
                         }
                     },
                     addable: false,

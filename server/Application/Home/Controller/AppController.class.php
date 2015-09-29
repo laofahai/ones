@@ -14,9 +14,16 @@ use Home\Service\AppService;
 
 class AppController extends BaseRestController {
 
+    private $filter_only_active_status = false;
+
     protected function _filter(&$map) {
-        if(I('get._mf') == 'is_active') {
-            $map['is_active'] = (int)I('get._mv') > 0 ? array('EGT', 1) : array('EXP', 'IS NULL');
+        if(isset($map['is_active'])) {
+            $this->filter_only_active_status = (int)$map['is_active'] > 0 ? 1 : 0;
+            unset($map['is_active']);
+        }
+
+        if($map['type'] == 'null') {
+            $map['type'] = ['EXP', 'IS NULL'];
         }
 
     }
@@ -51,13 +58,30 @@ class AppController extends BaseRestController {
         $data = parent::on_list(true);
         $actives = D('Home/CompanyActiveApps')->where(['company_id'=>get_current_company_id()])->select();
         $actives = get_array_by_field($actives, 'app_id');
+
+        $cleared_list = [];
+        $i=0;
         foreach($data[1] as $k=>$v) {
-            if(in_array($v['id'], $actives)) {
-                $data[1][$k]['is_active'] = true;
-            } else {
-                $data[1][$k]['is_active'] = false;
+            // 根据是否启用状态过滤
+            if(false !== $this->filter_only_active_status) {
+                if($this->filter_only_active_status > 0 && !in_array($v['id'], $actives)) {
+                    continue;
+                }
+                if($this->filter_only_active_status < 1 && in_array($v['id'], $actives)) {
+                    continue;
+                }
             }
+
+            $cleared_list[$i] = $v;
+            if(in_array($v['id'], $actives)) {
+                $cleared_list[$i]['is_active'] = true;
+            } else {
+                $cleared_list[$i]['is_active'] = false;
+            }
+            $i++;
         }
+
+        $data[1] = $cleared_list;
         $this->response($data, 'app', true);
     }
 
