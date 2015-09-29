@@ -61,7 +61,7 @@
                     },
                     unaddable: ['user_id', 'contacts_company_id', 'contacts_company_role_id'],
                     uneditable: ['user_id', 'contacts_company_id', 'contacts_company_role_id'],
-                    undetailable: ['contacts_company_id', 'contacts_company_role_id'],
+                    undetail_able: ['contacts_company_id', 'contacts_company_role_id'],
                     list_display: [
                         'name',
                         'level',
@@ -70,7 +70,7 @@
                         'user_id',
                         'head_id'
                     ],
-                    detailable: true,
+                    detail_able: true,
                     filters: {
                         gt_level: {
                             label: _('supplier.Level'),

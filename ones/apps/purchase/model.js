@@ -18,7 +18,7 @@
                     module: 'purchase',
                     table: 'purchase',
                     is_bill: true,
-                    detailable: true,
+                    detail_able: true,
                     workflow: 'purchase.purchase',
                     list_display: [
                         'bill_no',

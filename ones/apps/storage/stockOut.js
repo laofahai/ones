@@ -12,7 +12,7 @@
                     module: 'stockOut',
                     table: 'stock_out',
                     is_bill: true,
-                    detailable: true,
+                    detail_able: true,
                     workflow: 'storage.stockOut',
                     bill_row_model: 'Storage.StockOutDetailAPI',
                     fields: {

@@ -25,12 +25,12 @@
                         related_company_id: {
                             addable: false,
                             editable: false,
-                            detailable: false
+                            detail_able: false
                         },
                         user_id: {
                             addable: false,
                             editable: false,
-                            detailable: false
+                            detail_able: false
                         },
                         contacts_company_role_id: {
                             label: _('contactsCompany.Contacts Company Role'),
@@ -69,7 +69,7 @@
                             type: 'link'
                         }
                     },
-                    detailable: true,
+                    detail_able: true,
                     detail_split: {
                         title: _('crm.View Clue By'),
                         actions: {

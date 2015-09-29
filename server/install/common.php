@@ -1,6 +1,7 @@
 <?php
-
-
+/*
+ * 所有应用列表
+ * */
 $apps = [
     'product' => [
         'type' => 'product'
@@ -51,7 +52,8 @@ $apps = [
         'requirements' => 'contactsCompany',
         'type' => 'contacts'
     ],
-    'smtp' => []
+    'smtp' => [],
+    'printer' => []
 ];
 
 /*

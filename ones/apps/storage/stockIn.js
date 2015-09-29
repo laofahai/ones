@@ -14,7 +14,7 @@
                     module: 'stockIn',
                     table: 'stock_in',
                     is_bill: true,
-                    detailable: true,
+                    detail_able: true,
                     workflow: 'storage.stockOut',
                     bill_row_model: 'Storage.StockInDetailAPI',
                     fields: {

@@ -281,13 +281,13 @@
                             if(!$item_select.config.multiple) {
                                 model.config.multi_select = false;
                             }
-                            model.config.list_display = $item_select.config.data_source_list_display || model.config.list_display;
+                            model.config.list_display = model.config.modal_list_display || $item_select.config.data_source_list_display || model.config.list_display;
 
                             self.scope.grid_config = {
                                 model: model,
                                 resource: model.resource,
                                 opts: {
-                                    ignore_selected_actions: true
+                                    is_modal_grid: true
                                 }
                             };
                             $injector.get("$modal")({
@@ -370,13 +370,13 @@
                         self.scope.show_select3_modal = function(t_model, t_label_model) {
                             var model = angular.copy(data_source);
                             model.config.multi_select = false;
-                            model.config.list_display = config.data_source_list_display || model.config.list_display;
+                            model.config.list_display = model.config.modal_list_display || config.data_source_list_display || model.config.list_display;
 
                             self.scope.grid_config = {
                                 model: model,
                                 resource: model.resource,
                                 opts: {
-                                    ignore_selected_actions: true
+                                    is_modal_grid: true
                                 }
                             };
                             $injector.get("$modal")({

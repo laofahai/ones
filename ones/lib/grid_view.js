@@ -54,11 +54,6 @@
                     self.parentScope.gridSelected = [];
 
                     /**
-                     * 选中项目操作
-                     * */
-                    self.selectedActions = [];
-
-                    /**
                      * 是否默认显示过滤器
                      * */
                     self.parentScope.show_filters = options.show_filters === undefined ? true : options.show_filters;
@@ -78,11 +73,6 @@
                      * */
                     self.scope.column_defs = options.model.config.fields || {};
 
-                    /**
-                     * 右上角链接按钮（新增等）
-                     * */
-                    self.link_actions = [];
-
                     self.parentScope.selectable = true;
 
                     self.scope.model_config = self.model_config = self.options.model.config || {};
@@ -93,6 +83,9 @@
 
                     // 列内搜索
                     self.scope.search_value = {};
+
+                    // 刷新状态
+                    self.scope.grid_refershing = false;
 
                     /**
                      * 当前应用信息
@@ -286,13 +279,13 @@
                         }
                     });
 
+                    if(!self.options.opts.is_modal_grid) {
+                        // 生成选中项目操作
+                        self.makeSelectedActions();
 
-                    // 生成选中项目操作
-                    self.makeSelectedActions();
-
-                    // 生成新增链接
-                    self.makeLinkActions();
-
+                        // 生成新增链接
+                        self.makeLinkActions();
+                    }
                 };
 
 
@@ -332,11 +325,8 @@
 
                 // 选中项操作
                 this.makeSelectedActions = function() {
-
                     self.selectedActions = PageSelectedActions.generate(self.options.model, self.scope);
-
                     self.scope.$root.selectedActions = self.selectedActions = reIndex(self.selectedActions);
-
                 };
 
                 //重置grid选项
@@ -361,6 +351,9 @@
 
                 //设置数据
                 this.setPagingData = function(remoteData, page, pageSize) {
+
+                    self.scope.grid_refershing = false;
+
                     var data = [];
                     if(remoteData && typeof(remoteData[0]) === "object" && ("count" in remoteData[0])) {
                         data = remoteData[1];
@@ -386,6 +379,8 @@
                 };
                 //获取后端数据
                 this.getPagedDataAsync = function(page, extraParams) {
+
+                    self.scope.grid_refershing = true;
                     var pageSize = self.scope.pagingOptions.pageSize;
                     page = page || self.scope.pagingOptions.currentPage;
                     $timeout(function(){
@@ -419,7 +414,6 @@
                         };
 
                         angular.extend(p, self.options.query_params, extraParams || {});
-
 
                         try {
                             self.options.resource.query(p).$promise.then(function(remoteData) {

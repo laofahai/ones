@@ -29,7 +29,7 @@
                             get_display: function(value, item) {
                                 return to_belongs_to_user_icon(item);
                             },
-                            detailable: false,
+                            detail_able: false,
                             addable: false,
                             editable: false,
                             width:30,
@@ -107,7 +107,7 @@
                         }
                     }],
 
-                    detailable: true,
+                    detail_able: true,
                     // 分栏式详情
                     detail_split: {
                         title: _('common.View %s By', _('marketing.Sale Opportunities')),

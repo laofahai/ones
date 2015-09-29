@@ -144,7 +144,7 @@
                                     self.model_config.fields[field] = field;
                                 }
 
-                                if(false === config.detailable || (self.model_config.undetailable && self.model_config.undetailable.indexOf(field) >= 0)) {
+                                if(false === config.detail_able || (self.model_config.undetail_able && self.model_config.undetail_able.indexOf(field) >= 0)) {
                                     return;
                                 }
 

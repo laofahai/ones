@@ -7,6 +7,7 @@ METHODS:
     put: 修改
     delete: 删除
     analytics: 统计分析
+    print: 打印
 DATA_TYPES:
     Integer: 整数
     Decimal: 小数
@@ -99,6 +100,7 @@ Office: 办公
 Operation Success: 操作成功
 Permission Denied: 您没有被授权
 Price: 价格
+Print: 打印
 Phone: 电话
 Please fill out the form correctly: 请正确填写表单
 Please Select: 请选择

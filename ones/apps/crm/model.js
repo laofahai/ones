@@ -26,7 +26,7 @@
                         company_id: {
                             addable: false,
                             editable: false,
-                            detailable: false
+                            detail_able: false
                         },
                         remark: {
                             rows: 20
@@ -52,7 +52,7 @@
                             get_display: function(value, item) {
                                 return to_belongs_to_user_icon(item);
                             },
-                            detailable: false,
+                            detail_able: false,
                             addable: false,
                             editable: false,
                             width:30,
@@ -65,12 +65,12 @@
                         contacts_company_id: {
                             addable: false,
                             editable: false,
-                            detailable: false
+                            detail_able: false
                         },
                         customer_id: {
                             addable: false,
                             editable: false,
-                            detailable: false
+                            detail_able: false
                         },
                         head_id: {
                             widget: 'item_select',
@@ -93,9 +93,12 @@
                     list_display: [
                         'label', 'company_name', 'source_from', 'linkman', 'position', 'phone', 'user_id', 'head_id'
                     ],
+                    modal_list_display: [
+                        'company_name', 'linkman', 'phone'
+                    ],
 
                     filters: {},
-                    detailable: true,
+                    detail_able: true,
                     // 分栏式详情
                     detail_split: {
                         title: _('common.View %s By', _('crm.Clue')),
@@ -419,7 +422,7 @@
                             get_display: function(value, item) {
                                 return to_belongs_to_user_icon(item);
                             },
-                            detailable: false,
+                            detail_able: false,
                             addable: false,
                             editable: false,
                             width:30,
@@ -475,10 +478,13 @@
                     },
                     unaddable: ['label', 'head', 'user_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role'],
                     uneditable: ['label', 'head', 'head_id', 'user_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role_id'],
-                    undetailable: ['clue', 'contacts_company_role', 'contacts_company_id', 'contacts_company_role_id'],
+                    undetail_able: ['clue', 'contacts_company_role', 'contacts_company_id', 'contacts_company_role_id'],
                     list_display: ['label', 'name', 'master', 'phone', 'mobile', 'user_id'],
+                    modal_list_display: [
+                        'name', 'master', 'phone'
+                    ],
                     extra_selected_actions: [],
-                    detailable: true,
+                    detail_able: true,
                     filters: {
                         source_from: {
                             type: 'link'

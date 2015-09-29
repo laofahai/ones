@@ -417,7 +417,7 @@ var frame_init = function() {
                                     }
                                 }
                                 //查看详情
-                                if(model.config.detailable) {
+                                if(model.config.detail_able) {
                                     self.selected_actions.push({
                                         name: "viewDetail",
                                         label: _('common.View Detail'),

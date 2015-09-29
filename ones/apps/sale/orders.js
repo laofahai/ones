@@ -185,9 +185,12 @@
 
             }
         ])
+
         .service('Sale.OrdersAPI', [
             'ones.dataApiFactory',
-            function(dataAPI) {
+            '$injector',
+            function(dataAPI, $injector) {
+
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'sale/orders'
                 });
@@ -197,7 +200,7 @@
                     module: 'orders',
                     table: 'orders',
                     is_bill: true,
-                    detailable: true,
+                    detail_able: true,
                     workflow: 'sale.orders',
                     bill_row_model: 'Sale.OrdersDetailAPI',
                     fields: {
@@ -248,6 +251,12 @@
                         }
                     }
                 };
+
+                if(is_app_loaded('printer')) {
+                    this.config.extra_selected_actions = [];
+                    var printer = $injector.get('ones.printerModule');
+                    printer.generate_selected_print_action(this.config.extra_selected_actions, 'sale', 'orders');
+                }
             }
         ])
         .service('Sale.OrdersDetailAPI', [
