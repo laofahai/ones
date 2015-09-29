@@ -27,7 +27,7 @@ ones.api_version = 'v_1';
 /*
 * 消息中心地址
 * */
-ones.mc_socket = 'ws://127.0.0.1:7610';
+ones.mc_socket = 'ws://localhost:7610';
 
 /*
 * 主框架入口页面

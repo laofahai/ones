@@ -22,11 +22,9 @@
                 });
 
                 // 获得所有已授权节点
-                this.get_authed_nodes = function() {
-
+                this.get_authed_nodes = function(auth_role_id) {
                     var defered = $q.defer();
-
-                    this.resource.api_query().$promise.then(function(data){
+                    this.resource.api_query({auth_role_id: auth_role_id}).$promise.then(function(data){
                         data = data || [];
                         defered.resolve(data);
                     });
@@ -49,7 +47,11 @@
                     app: 'account',
                     module: 'authRole',
                     table: 'auth_role',
-                    fields: {},
+                    fields: {
+                        name: {
+                            ensureUnique: "Account.AuthRoleAPI"
+                        }
+                    },
                     list_display: ['name'],
                     extra_selected_actions: [{
                         label: _('account.Role Authorize'),

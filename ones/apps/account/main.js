@@ -100,7 +100,8 @@
             'Account.AuthorizeAPI',
             'ones.dataApiFactory',
             '$location',
-            function($scope, node_api, authorize, dataAPI, $location) {
+            '$routeParams',
+            function($scope, node_api, authorize, dataAPI, $location, $routeParams) {
                 var nodes_tmp = {};
                 var nodes_map = {};
 
@@ -162,7 +163,7 @@
                 });
 
                 // 已授权节点
-                authorize.get_authed_nodes().promise.then(function(authed){
+                authorize.get_authed_nodes($routeParams.id).promise.then(function(authed){
                     angular.forEach(authed, function(node) {
                         $scope.nodes_model[node.node] = true;
                         $scope.flag_checked[node.node] = node.flag;
@@ -201,7 +202,6 @@
                 });
                 node_flag_api.api_query().$promise.then(function(data){
                     $scope.flags = data;
-                    console.log(data);
                 });
 
             }
