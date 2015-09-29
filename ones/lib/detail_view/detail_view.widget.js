@@ -20,7 +20,6 @@
             var self = this;
 
             /**
-             * @todo cell_filter etc.
              * */
             this.widgets = {
                 static: function(config, scope) {

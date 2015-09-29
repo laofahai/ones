@@ -324,7 +324,6 @@
 
         /*
         * 返回头像地址
-        * @todo 非注册用户邮箱显示头像
         * */
         .filter('to_avatar_src', [function() {
             return function(uid, size) {

@@ -2,8 +2,7 @@
     'use strict';
     /**
      * ONES静态文件异步加载器
-     * @todo 可加入后端远程处理、是否min等选项
-     * 
+     *
      * @param path string 静态文件路径。 eg: apps/goods/main. 如果参数为数组则遍历处理
      * */
 

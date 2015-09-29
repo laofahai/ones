@@ -7,25 +7,7 @@
         });
     });
 
-    /*
-     * ONES提醒接口，接口参数为对象 = {
-     *   subject: 提醒标题
-     *   content: 提醒内容 「必须」
-     *   icon: 图标 桌面提醒专用
-     *   alias: 提醒标识
-     *   to_users: 接受提醒UID数组
-     *   auto_close: 是否自动关闭 桌面提醒等专用
-     * }
-     * */
 
-    // 提醒对象
-    ones.notify = ones.notify || {};
-
-    // 提醒类型
-    ones.notify_types = ones.notify_types || [];
-
-
-    ones.notify_types.push('desktop');
 
     // 桌面提醒
     Notification.requestPermission();
@@ -55,21 +37,50 @@
         }
     };
 
-    ones.notify.by_desktop = function(params, $injector) {
-        angular.extend(params, {
-            sign_id: ones.caches.getItem('company_sign_id'),
-            user_id: params.to_users || [ones.user_info.id]
-        });
-        $injector.get('ones.MessageCenter').emit('desktop_notify', params);
-    };
-
     ones.global_module
         /*
          * angular程序中使用通知接口
+         *
+         * 插件钩子： notification.method, params: [notify_types, notify_methods]
          * */
         .service('ones.notification', [
-            '$injector',
-            function($injector) {
+            'pluginExecutor',
+            'ones.MessageCenter',
+            function(plugin, mc) {
+
+                var self = this;
+
+                this.notify_types = ['desktop'];
+
+                // 具体通知方法
+                this.notify_methods = {
+                    /*
+                     * 桌面提醒方法，接口参数为对象 = {
+                     *   subject: 提醒标题
+                     *   content: 提醒内容 「必须」
+                     *   icon: 图标 桌面提醒专用
+                     *   alias: 提醒标识
+                     *   to_users: 接受提醒UID数组
+                     *   auto_close: 是否自动关闭 桌面提醒等专用
+                     * }
+                     * */
+                    desktop: function(params) {
+                        angular.extend(params, {
+                            sign_id: ones.caches.getItem('company_sign_id'),
+                            user_id: params.to_users || [ones.user_info.id]
+                        });
+                        window._desktop_notify(params);
+                    }
+                };
+
+                plugin.callPlugin('notification.method', this.notify_types, this.notify_methods);
+
+                /*
+                * 接口方法
+                * @param type 通知类型，可为数组
+                * @param to_users 通知至用户ID 可为数组
+                * @param params 通知参数对象
+                * */
                 this.notify = function(type, to_users, params) {
 
                     if(!to_users) {
@@ -80,11 +91,10 @@
                     type = angular.isArray(type) ? type : [type];
                     params.to_users = angular.isArray(to_users) ? to_users: [to_users];
 
-
                     angular.forEach(type, function(t) {
                         var method = 'by_' + t;
-                        if(typeof ones.notify[method] === 'function') {
-                            ones.notify[method](params, $injector);
+                        if(typeof self.notify_methods[method] === 'function') {
+                            self.notify_methods[method](params);
                         }
                     });
                 };

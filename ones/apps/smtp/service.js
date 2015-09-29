@@ -1,5 +1,6 @@
 (function(window, angular, ones, io){
 
+    // 配置项目
     ones.pluginRegister('common_config_item', function(injector, defered, fields) {
 
         // SMTP配置
@@ -123,14 +124,38 @@
 
     });
 
+    // 提醒方式
+    ones.pluginRegister('notification.method', function(injector, defer, types, methods) {
+        types.push('email');
+        methods.by_email = function(params) {
+
+        };
+    });
+
     /*
      * @app smtp
      * @author laofahai@TEam Swift
      * @link https://ng-erp.com
      * */
     'use strict';
-    angular.module('ones.app.smtp.main', [
+    angular.module('ones.app.smtp.main', []);
 
-    ]);
+    ones.global_module
+        .service('ones.SMTP', [
+            'ones.dataApiFactory',
+            function(dataAPI) {
+                this.resource = dataAPI.getResourceInstance({
+                    uri: 'smtp/sendMail',
+                    extra_methods: ['api_get', 'api_query']
+                });
+
+                this.config = {};
+
+                // 发送邮件接口
+                // @todo
+                this.send_mail = function(params) {};
+            }
+        ])
+    ;
 
 })(window, window.angular, window.ones, window.io);
