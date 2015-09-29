@@ -214,7 +214,6 @@ module.exports = function (grunt) {
                             "ones/bower_components/chosen/chosen.jquery.min.js",
                             "ones/bower_components/angular-chosen-localytics/chosen.js",
                             "ones/bower_components/moment/moment.js",
-                            "ones/bower_components/bootstrap/dist/js/bootstrap.js",
                             "ones/bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js",
                             "ones/bower_components/showdown/src/showdown.js",
                             "ones/bower_components/angular-markdown-directive/markdown.js",
