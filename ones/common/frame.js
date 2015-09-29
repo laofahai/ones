@@ -198,6 +198,9 @@ var frame_init = function() {
                                         break;
                                     }
                                 }
+                                if(!ones.frame_info.link || !ones.frame_info.label) {
+                                    return;
+                                }
 
                                 if(!exists_in_common) {
                                     common_nav.push({
@@ -550,7 +553,7 @@ ones.frame_info = {};
  * */
 window.$on_root = function(data) {
     if(data.event === 'frame_link_info') {
-        ones.frame_info = data.opts;
+        ones.frame_info = data.opts || {};
     }
 };
 

@@ -15,6 +15,6 @@ navs:
         children:
             Marketing:
                 children:
-                    Marketing Mail:
+                    Marketing Email:
                         app: smtp
                         link: smtp/send_mail
