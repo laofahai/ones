@@ -4,7 +4,7 @@ define('ENTRY_PATH', dirname(dirname(__FILE__)));
 define('INSTALL_PATH', ENTRY_PATH.'/install');
 
 require ENTRY_PATH."/vendor/autoload.php";
-require ENTRY_PATH."/migrations/0_install.php";
+require ENTRY_PATH."/Data/Migrations/0_install.php";
 require INSTALL_PATH.'/common.php';
 require ENTRY_PATH.'/Application/Common/Common/function.php';
 require ENTRY_PATH.'/Application/Account/Common/function.php';
