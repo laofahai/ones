@@ -1,0 +1,14 @@
+<link href="apps/printer/statics/style.css" rel="stylesheet" type="text/css" />
+<div class="print-container" id="print-container"></div>
+
+<div class="text-center print-btns">
+    <div class="text-left" style="display:inline;">
+        <select ng-model="selected_template"
+                ng-options="tpl.id as tpl.name for tpl in templates"
+                style="width:200px;"
+                chosen
+                ></select>
+    </div>
+
+    <a href="javascript:void(0);" onclick="window.print()" ng-bind="'printer.Print'|lang" class="btn btn-primary"></a>
+</div>

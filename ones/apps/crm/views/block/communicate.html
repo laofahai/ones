@@ -22,8 +22,8 @@
             <div class="text" btf-markdown="(item.subject + '\n\n' +item.content)"></div>
             <div class="calendar-paper">
                 <span class="head">
-                    <em ng-bind="item.created|get_date_item:'year'"></em> -
-                    <em ng-bind="item.created|get_date_item:'month'"></em>
+                    <small ng-bind="item.created|get_date_item:'year'"></small>
+                    <small ng-bind="item.created|get_date_item:'month'"></small>
                 </span>
                 <span class="content" ng-bind="item.created|get_date_item:'day'"></span>
             </div>

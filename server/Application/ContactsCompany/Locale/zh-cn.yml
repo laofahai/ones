@@ -13,3 +13,6 @@ Linkman: 联系人
 View ContactsCompany: 查看往来单位
 Company Name: 公司名称
 Role: 角色
+Discount: 折扣率
+
+discount_help_text: eg: 75折填写 0.75

@@ -9,16 +9,15 @@ class Dev extends BaseMigration {
 
     public function up() {
         $apps = [
-            'home'
+            'printer'
         ];
         foreach($apps as $app) {
             $this->fromYaml($app);
         }
 
         // index, foreign key
-        $this->apply_meta();
+        $this->add_auth_node();
 
-        exit;
     }
 
 }

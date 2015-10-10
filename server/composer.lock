@@ -4,9 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c9d601764c7d4fb62494bbf88016b12",
-    "content-hash": "bbe1561d1e3a10d97177bf913fcea04e",
+    "hash": "7b4a9e00e811a7ac33628a0555a9f95b",
+    "content-hash": "3c689ac29489c7e90fec754a1525081b",
     "packages": [
+        {
+            "name": "horseluke/alibaba-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/HorseLuke/AlibabaSDK.git",
+                "reference": "ddca59d4c2b01b15eab99397d4d912d6ea28601d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/HorseLuke/AlibabaSDK/zipball/ddca59d4c2b01b15eab99397d4d912d6ea28601d",
+                "reference": "ddca59d4c2b01b15eab99397d4d912d6ea28601d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AlibabaSDK\\": "src/"
+                }
+            },
+            "notification-url": "http://packagist.cn/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "horseluke",
+                    "email": "horseluke@126.com"
+                }
+            ],
+            "description": "Unofficial SDK For Alibaba",
+            "homepage": "https://github.com/HorseLuke/AlibabaSDK-php",
+            "keywords": [
+                "alibaba",
+                "aliyun",
+                "api",
+                "sdk",
+                "taobao"
+            ],
+            "time": "2015-10-01 05:05:57"
+        },
         {
             "name": "phpmailer/phpmailer",
             "version": "dev-master",
@@ -17,7 +64,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/b6f421c5ff02531390d6cb1e4d9780d765b664cc",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/8bea0ad20cc5c5d7e8a8ad5a77479d91130e388d",
                 "reference": "b6f421c5ff02531390d6cb1e4d9780d765b664cc",
                 "shasum": ""
             },
@@ -77,7 +124,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/1351ca36dd2419d7de02afd1aaa415929112d7f1",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/43313ad89c0ad1851aeefafc164e2822e49867e3",
                 "reference": "1ffc33feb188966f7b978d8ff86b9a9cb3ed95be",
                 "shasum": ""
             },
@@ -134,12 +181,12 @@
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Config.git",
-                "reference": "853f075d4eadaafde97ba75e142724a1c4bf2fb7"
+                "url": "https://github.com/symfony/config.git",
+                "reference": "91f483a2de7b6c0552f42aa1d4fd1c066bc7ccba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/a1e8e51ed2d591bb1827d04fd1d320cd4f03e5fe",
+                "url": "https://api.github.com/repos/symfony/config/zipball/91f483a2de7b6c0552f42aa1d4fd1c066bc7ccba",
                 "reference": "853f075d4eadaafde97ba75e142724a1c4bf2fb7",
                 "shasum": ""
             },
@@ -184,12 +231,12 @@
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
-                "reference": "39d6c23c9d2f8d52402c94144c3fc218a9d13cd2"
+                "url": "https://github.com/symfony/console.git",
+                "reference": "78c6b2d546adde52807676059cce65c0cadeb430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/2ad5776cd18a443984c243a9bd8bd05470983da9",
+                "url": "https://api.github.com/repos/symfony/console/zipball/78c6b2d546adde52807676059cce65c0cadeb430",
                 "reference": "39d6c23c9d2f8d52402c94144c3fc218a9d13cd2",
                 "shasum": ""
             },
@@ -241,12 +288,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "80a0bc4be4c2b037909e9e1a3abefd293a17a1a2"
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "5b3b4801388d04a9e6d33c72dfb87bf9dde688dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/062d0c4b01cfd8ab94957ddf2e9598dcbae2b56a",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/5b3b4801388d04a9e6d33c72dfb87bf9dde688dd",
                 "reference": "80a0bc4be4c2b037909e9e1a3abefd293a17a1a2",
                 "shasum": ""
             },
@@ -290,12 +337,12 @@
             "version": "2.8.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "2396832f6f9ab2b8f62f00b5d3f2e722fc773d65"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "36ddab7971364b20229155cd972631a2257d7dac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/d196cb1ac36901bde7d7fbed74ee31fdb85fd119",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/36ddab7971364b20229155cd972631a2257d7dac",
                 "reference": "2396832f6f9ab2b8f62f00b5d3f2e722fc773d65",
                 "shasum": ""
             },
@@ -381,7 +428,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/Workerman/zipball/b4431e7187168b6be7211ca93dfc2c3d9d0b1be2",
+                "url": "https://api.github.com/repos/walkor/Workerman/zipball/c92bc9deccc2caad0a767f331389a30d6404717c",
                 "reference": "54f0c15753ed6681cf9bc9b313d68688ba437cae",
                 "shasum": ""
             },
@@ -423,7 +470,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpmailer/phpmailer": 20
+        "phpmailer/phpmailer": 20,
+        "horseluke/alibaba-sdk": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

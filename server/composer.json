@@ -19,7 +19,8 @@
         "robmorgan/phinx": "*",
         "symfony/config": "*",
         "workerman/workerman": "*",
-        "phpmailer/phpmailer": "dev-master"
+        "phpmailer/phpmailer": "dev-master",
+        "horseluke/alibaba-sdk": "dev-master"
     },
     "minimum-stability": "dev"
 }

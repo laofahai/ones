@@ -249,6 +249,7 @@ class BaseRestController extends RestController {
         if(I('get._m') && method_exists($this, $extra_method)) {
             return $this->$extra_method($return);
         }
+
         unset($extra_method);
 
         // 无ID GET时

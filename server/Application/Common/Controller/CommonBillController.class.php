@@ -8,6 +8,7 @@
 
 namespace Common\Controller;
 
+use Printer\Service\PrintTemplateService;
 
 /*
  * 单据父控制器
@@ -30,6 +31,19 @@ class CommonBillController extends BaseRestController {
 //            $source_ids = get_array_by_field($source_ids, 'source_id');
 //            $map[end(explode('/', $this->main_model)).'.id'] = ['IN', $source_ids];
 //        }
+    }
+
+    /*
+     * 返回打印内容
+     * */
+    public function _EM_get_print_html() {
+
+        $data = D($this->main_model)->get_full_data(I('get.id'));
+        $printer = new PrintTemplateService();
+
+        $response = $printer->compile_by_template_id(I('get.template_id'), $data);
+
+        $this->response($response);
     }
 
     /*

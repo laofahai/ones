@@ -282,6 +282,7 @@
                                 return false;
                             }
                             , 'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
+                            , 'ng-keydown': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index, $event)'
                         }
                         , remark: {
                             label: _('common.Remark')

@@ -132,12 +132,12 @@
                     module: 'contactsCompanyRole',
                     table: 'contacts_company_role',
                     fields: {
-                        company: {
-                            addable: false,
-                            editable: false
+                        discount: {
+                            help_text: _('contactsCompany.discount_help_text'),
+                            required: false
                         }
                     },
-                    list_display: ['name', 'alias']
+                    list_display: ['name', 'alias', 'discount']
                 }
             }
         ])

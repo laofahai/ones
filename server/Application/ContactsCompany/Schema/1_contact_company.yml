@@ -4,6 +4,11 @@ contacts_company_role:
         limit: 100
     alias:
         limit: 20
+    discount:
+        type: decimal
+        precision: 5
+        scale: 4
+        default: 1
     $meta:
         indexes:
             name_and_company:

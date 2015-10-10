@@ -1,3 +1,49 @@
+.print-container table {
+  width: 100%; }
+  .print-container table th, .print-container table td {
+    border: 1px solid #ddd;
+    padding: 5px 8px; }
+.print-container h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  padding: 10px; }
+.print-container .float {
+  float: left;
+  display: inline;
+  height: 30px;
+  line-height: 30px; }
 
+.mt-10 {
+  margin-top: 10px; }
 
-/*# sourceMappingURL=preview.css.map */
+.m-10-0 {
+  margin: 10px 0; }
+
+.m-0-10 {
+  margin: 0 10px; }
+
+@media screen {
+  .print-container {
+    border: 1px solid #e2e2e2;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 3px 3px 1px 1px #aaa; } }
+@media print {
+  * {
+    color: #000 !important; }
+
+  .print-container {
+    padding: 0;
+    margin: 0; }
+
+  .print-btns {
+    display: none; }
+
+  .footer-copy {
+    display: none; }
+
+  th, td {
+    border-color: #000 !important; } }
+
+/*# sourceMappingURL=style.css.map */

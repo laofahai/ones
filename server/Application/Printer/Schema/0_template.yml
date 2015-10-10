@@ -1,0 +1,11 @@
+print_template:
+    name:
+    module_alias:
+    content:
+        type: text
+        limit: text
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
