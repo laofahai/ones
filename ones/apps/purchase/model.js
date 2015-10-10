@@ -29,6 +29,12 @@
                         'user_id'
                     ],
                     fields: {
+                        bill_no: {
+                            search_able: true
+                        },
+                        subject: {
+                            search_able: true
+                        },
                         workflow_node_status_label: {
                             label: _('common.Status'),
                             addable: false,
@@ -55,6 +61,9 @@
                     bill_row_model: 'Purchase.PurchaseDetailAPI',
                     bill_meta_required: [
                         'subject', 'created'
+                    ],
+                    sortable: [
+                        'created', 'quantity'
                     ]
                 };
             }

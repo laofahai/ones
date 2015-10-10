@@ -2,7 +2,8 @@
     angular.module('ones.app.storage.stockIn', [])
         .service('Storage.StockInAPI', [
             'ones.dataApiFactory',
-            function(dataAPI) {
+            '$injector',
+            function(dataAPI, $injector) {
 
                 var self = this;
                 this.resource = dataAPI.getResourceInstance({
@@ -65,8 +66,19 @@
                         workflow_node_status_label: {
                             type: 'link'
                         }
-                    }
+                    },
+                    sortable: [
+                        'created'
+                    ]
                 };
+
+                try {
+                    if(is_app_loaded('printer')) {
+                        this.config.extra_selected_actions = [];
+                        var printer = $injector.get('ones.printerModule');
+                        printer.generate_selected_print_action(this.config.extra_selected_actions, 'storage', 'stockIn');
+                    }
+                } catch(e) { }
 
             }
         ])

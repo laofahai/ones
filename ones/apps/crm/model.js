@@ -62,6 +62,12 @@
                             search_able: true,
                             ensureUnique: 'Crm.CrmClueAPI'
                         },
+                        linkman: {
+                            search_able: true
+                        },
+                        phone: {
+                            search_able: true
+                        },
                         contacts_company_id: {
                             addable: false,
                             editable: false,

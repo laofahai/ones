@@ -157,7 +157,7 @@
                             align: 'center'
                         },
                         bill_no: {
-
+                            search_able: true
                         },
                         quantity: {
                             get_display: function(value, item) {
@@ -200,7 +200,10 @@
                         direction: {
                             type: 'link'
                         }
-                    }
+                    },
+                    sortable: [
+                        'id', 'created'
+                    ]
                 };
 
                 self.config.fields.direction.data_source = [

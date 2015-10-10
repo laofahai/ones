@@ -38,7 +38,10 @@
                         module: {
                             type: 'link'
                         }
-                    }
+                    },
+                    sortable: [
+                        'listorder'
+                    ]
                 };
 
                 plugin.callPlugin('common_type_module');

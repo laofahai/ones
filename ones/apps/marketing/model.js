@@ -40,7 +40,8 @@
                             min: moment().format('YYYY-MM-DD')
                         },
                         name: {
-                            label: _('marketing.Opportunities Subject')
+                            label: _('marketing.Opportunities Subject'),
+                            search_able: true
                         },
                         status: {
                             widget: 'select',

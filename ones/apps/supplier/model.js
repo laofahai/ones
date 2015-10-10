@@ -82,7 +82,8 @@
                                 {value: 9, label: _('supplier.GT %s Star', 4)}
                             ]
                         }
-                    }
+                    },
+                    sortable: ['level']
                 };
             }
         ])

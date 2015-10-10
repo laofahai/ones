@@ -110,7 +110,10 @@
                                     $this.scope.$broadcast('gridData.changed', true);
                                 });
                         }
-                    }]
+                    }],
+                    sortable: [
+                        'price'
+                    ]
                 };
 
                 this.resource = dataAPI.getResourceInstance({

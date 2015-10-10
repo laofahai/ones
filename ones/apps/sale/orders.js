@@ -204,6 +204,12 @@
                     workflow: 'sale.orders',
                     bill_row_model: 'Sale.OrdersDetailAPI',
                     fields: {
+                        bill_no: {
+                            search_able: true
+                        },
+                        subject: {
+                            search_able: true
+                        },
                         workflow_node_status_label: {
                             label: _('common.Status'),
                             addable: false,
@@ -249,7 +255,10 @@
                         workflow_node_status_label: {
                             type: 'link'
                         }
-                    }
+                    },
+                    sortable: [
+                        'created', 'net_receive', 'quantity'
+                    ]
                 };
 
                 if(is_app_loaded('printer')) {

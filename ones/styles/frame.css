@@ -53,7 +53,7 @@ a, a:hover, a:active {
 .table-grid th .sorting-icon {
   position: absolute;
   right: 10px;
-  top: 16px; }
+  top: 11px; }
 
 .table-grid th .sorting-icon.fa-sort-desc {
   top: 12px; }

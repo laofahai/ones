@@ -2,7 +2,8 @@
     angular.module('ones.app.storage.stockOut', [])
         .service('Storage.StockOutAPI', [
             'ones.dataApiFactory',
-            function(dataAPI) {
+            '$injector',
+            function(dataAPI, $injector) {
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'storage/stockOut'
                 });
@@ -63,9 +64,19 @@
                         workflow_node_status_label: {
                             type: 'link'
                         }
-                    }
+                    },
+                    sortable: [
+                        'created'
+                    ]
                 };
 
+                try {
+                    if(is_app_loaded('printer')) {
+                        this.config.extra_selected_actions = [];
+                        var printer = $injector.get('ones.printerModule');
+                        printer.generate_selected_print_action(this.config.extra_selected_actions, 'storage', 'stockOut');
+                    }
+                } catch(e) { }
             }
         ])
 

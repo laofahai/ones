@@ -49,11 +49,11 @@ class PrintTemplateService extends CommonModel {
         return ['html' => sprintf(self::$tpls['container'], implode('', $html))];
     }
 
-    /*
-     *
-     * */
     public function compile_by_template_id($id, $data) {
         $template = $this->where()->find($id);
+        if(!$template || !$template['content']) {
+            return '';
+        }
         return self::compile_by_template($template['content'], $data);
     }
 

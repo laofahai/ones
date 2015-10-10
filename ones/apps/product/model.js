@@ -35,10 +35,6 @@
                             widget: 'select',
                             data_source: "Product.ProductCategoryAPI"
                         },
-                        company: {
-                            addable: false,
-                            editable: false
-                        },
                         cost: {
                             get_display: function(value) {
                                 return accounting.format(value, ones.system_preference.decimal_scale);

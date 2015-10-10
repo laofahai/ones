@@ -19,6 +19,8 @@
                         <i class="sorting-icon fa"
                            ng-class="{'fa-sort-asc':sorting == f + ' DESC','fa-sort-desc':sorting == f + ' ASC'}"
                            ng-show="is_sortable(f)"></i>
+                        <i class="sorting-icon fa fa-sort"
+                           ng-show="is_sortable(f) && sortInfo.fields !== f"></i>
                     </th>
                 </tr>
             </thead>

@@ -12,7 +12,13 @@ use Common\Model\CommonViewModel;
 class StockOutModel extends CommonViewModel {
 
     protected $viewFields = [
-        "StockOut" => ['*', '_type'=>'left']
+        "StockOut" => ['*', '_type'=>'left'],
+        "User" => [
+            'login',
+            'realname',
+            '_on'=>"StockOut.user_id=User.id",
+            '_type'=>'left'
+        ]
     ];
 
 }
