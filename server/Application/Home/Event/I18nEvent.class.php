@@ -37,6 +37,13 @@ class I18nEvent extends BaseRestEvent {
             $this->login_required();
         }
 
+        foreach($this->appConfigs as $_app => $_config) {
+            if($_config['i18n_global_loaded']) {
+                array_push($apps, $_app);
+            }
+        }
+        $apps = array_unique($apps);
+
         $cache_key = sprintf('i18n/%s/all', CURRENT_LANGUAGE);
         $langs = S($cache_key);
         if(DEBUG || !$langs) {

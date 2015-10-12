@@ -51,7 +51,7 @@ function i18n_init(apps, callback) {
             error: function(response) {
                 switch(response.status) {
                     case 401:
-                        window.top.location.href = 'index.html';
+                        //window.top.location.href = 'index.html';
                         break;
                 }
             }

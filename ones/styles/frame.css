@@ -202,6 +202,7 @@ form
   text-align: center;
   line-height: 40px;
   opacity: 0.4;
+  z-index: 999;
   font-size: 20px; }
   .add_to_common_nav_btn i {
     color: #888; }

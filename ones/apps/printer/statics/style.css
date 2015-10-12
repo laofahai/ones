@@ -37,11 +37,8 @@
     padding: 0;
     margin: 0; }
 
-  .print-btns {
-    display: none; }
-
-  .footer-copy {
-    display: none; }
+  .print-btns, .actionsBtn, .footer-copy {
+    display: none !important; }
 
   th, td {
     border-color: #000 !important; } }

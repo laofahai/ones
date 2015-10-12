@@ -292,21 +292,27 @@
 
                 this.makeLinkActions = function() {
                     self.link_actions = self.link_actions || [];
+                    self.scope.$root.link_actions = self.scope.$root.link_actions || [];
                     // 新增
-                    if(self.model_config.addable !== false) {
-                        self.link_actions.push({
-                            label: _("common.Add New") + ' ' + _(self.model_config.app+'.'+camelCaseSpace(self.model_config.module)),
-                            src: sprintf('%s/%s/%s%s',
-                                self.model_config.app,
-                                camelCase(self.model_config.module).lcfirst(),
-                                self.model_config.is_bill ? 'add/bill' : 'add',
-                                $routeParams.extra ? '/'+$routeParams.extra : ''
-                            ),
-                            singleton: true
-                        });
+                    var add_btn = {
+                        label: _("common.Add New") + ' ' + _(self.model_config.app+'.'+camelCaseSpace(self.model_config.module)),
+                        src: sprintf('%s/%s/%s%s',
+                            self.model_config.app,
+                            camelCase(self.model_config.module).lcfirst(),
+                            self.model_config.is_bill ? 'add/bill' : 'add',
+                            $routeParams.extra ? '/'+$routeParams.extra : ''
+                        ),
+                        singleton: true
+                    };
+
+                    if(self.model_config.addable !== false && self.link_actions.indexOf(add_btn) < 0) {
+                        self.link_actions.push(add_btn);
                     }
 
                     angular.forEach(self.model_config.extra_link_actions, function(la) {
+                        if(self.link_actions.indexOf(la) >= 0) {
+                            return;
+                        }
                         self.link_actions.push(la);
                     });
 
@@ -314,7 +320,7 @@
                         return;
                     }
 
-                    self.scope.$root.link_actions = self.link_actions;
+                    self.scope.$root.link_actions = array_unique(self.link_actions);
                 };
 
                 this.refresh = function(){
@@ -681,11 +687,8 @@
                             self.scope.$parent.gridSelected = [];
                             self.scope.checked_box = [];
                         }
-
                     }
                 };
-
-
 
             }])
         .directive("tableView", ["$compile", "$timeout", "GridView", "$filter", function($compile, $timeout, GridView, $filter){

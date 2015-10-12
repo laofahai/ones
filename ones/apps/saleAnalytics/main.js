@@ -277,7 +277,6 @@
                 var do_query = function() {
                     board_api.resource.get(data_query_params).$promise.then(function(response_data) {
 
-                        console.log(response_data);
                         options.title.subtext = response_data.subtext;
                         options.xAxis[0].data = response_data.xAxis || [];
                         options.series[0].data = response_data.data.amount;

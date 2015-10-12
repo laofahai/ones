@@ -8,7 +8,8 @@
     angular.module('ones.app.purchase.model', [])
         .service('Purchase.PurchaseAPI', [
             'ones.dataApiFactory',
-            function(dataAPI) {
+            '$injector',
+            function(dataAPI, $injector) {
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'purchase/purchase'
                 });
@@ -66,6 +67,12 @@
                         'created', 'quantity'
                     ]
                 };
+
+                if(is_app_loaded('printer')) {
+                    this.config.extra_selected_actions = [];
+                    var printer = $injector.get('ones.printerModule');
+                    printer.generate_selected_print_action(this.config.extra_selected_actions, 'purchase', 'purchase');
+                }
             }
         ])
         .service('Purchase.PurchaseDetailAPI', [

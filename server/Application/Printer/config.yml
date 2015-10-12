@@ -9,6 +9,7 @@ auth_nodes:
 global_include:
     js:
         - apps/printer/service
+i18n_global_loaded: true
 navs:
     Base Data Set:
         children:

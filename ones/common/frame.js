@@ -326,7 +326,8 @@ var frame_init = function() {
                         '$timeout',
                         '$rootScope',
                         'RootFrameService',
-                        function($timeout, $rootScope, RootFrameService) {
+                        '$injector',
+                        function($timeout, $rootScope, RootFrameService, $injector) {
 
                             var self = this;
                             this.selected_actions = [];
@@ -488,6 +489,12 @@ var frame_init = function() {
                                         self.selected_actions.push(item);
                                     });
                                 }
+
+                                // 插件插入控制菜单
+                                $injector.get('pluginExecutor').callPlugin(
+                                    sprintf('extra.selected.actions.%s.%s', ones.app_info.app, ones.app_info.module),
+                                    model.config.extra_selected_actions
+                                );
 
                                 var exists = [];
                                 var mirror = [];

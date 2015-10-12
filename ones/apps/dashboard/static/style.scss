@@ -29,6 +29,11 @@ body {
     position:absolute;right:0;top:0;
     z-index:99;
 }
+.dashboard-reload-btn {
+    position:absolute;right:20px;top:0;
+    z-index:99;
+}
+
 .dashboard-widget-remove-btn {
     position:absolute;top:10px;right:10px;
     background:#ddd;border-radius: 100%;

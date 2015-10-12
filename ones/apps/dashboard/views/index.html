@@ -20,9 +20,16 @@
        ng-click="open_widgets_modal()"
             ><i class="fa fa-plus"></i> <span ng-bind="'dashboard.Add Widget'|lang"></span> </a>
 
+
     <a href="javascript:void(0);"
        class="btn btn-link btn-sm dashboard-add-widget-btn"
        ng-show="dashboard_widgets_list.length>0"
        ng-click="open_widgets_modal()"
+       title="{{'dashboard.Add Widget'|lang}}"
             ><i class="fa fa-plus"></i> </a>
+    <a href="javascript:void(0);"
+       class="btn btn-link btn-sm dashboard-reload-btn"
+       onclick="window.location.reload()"
+       title="{{'dashboard.Reload'|lang}}"
+            ><i class="fa fa-repeat"></i> </a>
 </div>

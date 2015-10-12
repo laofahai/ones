@@ -20,7 +20,7 @@
             'RootFrameService',
             function($scope, dataAPI, $routeParams, print_template_api, RootFrameService) {
                 var data_api = dataAPI.init($routeParams.app, $routeParams.module);
-
+                $scope.back_able = true;
                 // 获取HTML
                 var fetch_html = function(template_id, id) {
                     var params = {
@@ -41,7 +41,7 @@
                     _mv: sprintf('%s.%s', $routeParams.app, $routeParams.module)
                 }).$promise.then(function(response_data) {
                         if(!response_data.length) {
-                            RootFrameService.alert({content: _('printer.Please create print template first')});
+                            RootFrameService.alert({content: _('printer.Please create print template first'), type: 'danger'});
                             return;
                         }
                         $scope.templates = response_data;
@@ -50,7 +50,6 @@
                     });
 
                 $scope.$watch("selected_template", function(selected_template) {
-                    console.log(selected_template);
                     fetch_html(selected_template);
                 });
             }

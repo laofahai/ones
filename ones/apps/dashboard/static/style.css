@@ -30,6 +30,12 @@ body {
   top: 0;
   z-index: 99; }
 
+.dashboard-reload-btn {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  z-index: 99; }
+
 .dashboard-widget-remove-btn {
   position: absolute;
   top: 10px;
