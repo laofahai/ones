@@ -31,6 +31,7 @@
                 <td ng-repeat="field in row_fields track by $index"
                     height="34"
                     data-field="{{field}}"
+                    ng-class="{'td_editable': column_defs[field].editable !== false}"
                     bill-edit-able="column_defs['{{field}}']"
                     data-row-index="{{row.tr_id}}">
                     <label ng-bind="bill_rows[$parent.$index][field+'__label__']" class="bill_row_td_editable_label"></label>

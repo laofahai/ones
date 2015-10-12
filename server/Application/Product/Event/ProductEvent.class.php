@@ -16,7 +16,7 @@ class ProductEvent extends BaseRestEvent {
         $product = D('Product/Product')->where(['id'=>I('get.product_id')])->find();
 
         $this->response([
-            'sale_price' => $product['price']
+            'sale_price' => (float)$product['price']
         ]);
     }
 

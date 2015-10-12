@@ -526,11 +526,31 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             });
 
                             //回车事件
-                            //ele.delegate('input.form-control', 'keydown', function(event) {
-                            //    if(event.keyCode === KEY_CODES.ENTER) {
-                            //        $(this).trigger('blur');
-                            //    }
-                            //});
+                            ele.delegate('input.form-control', 'keydown', function(event) {
+                                if(event.keyCode === KEY_CODES.ENTER) {
+
+                                    // 自动进入下一可编辑区域
+                                    $timeout(function() {
+                                        // 寻找当前行下一可编辑框
+                                        var ele = $(event.target).parents('td').nextAll('td.td_editable');
+                                        if(ele[0]) {
+                                            $(ele[0]).find('label').trigger('click');
+                                            return;
+                                        } else {
+                                            ele = $(event.target).parents('tr').next();
+                                            if(!ele) {
+                                                // 自动新增一行
+                                                return;
+                                            } else {
+                                                ele = ele.find('td.td_editable');
+                                                if(ele) {
+                                                    $(ele[0]).find('label').trigger('click');
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            });
                         };
 
                         // 绑定单元格前置和后置

@@ -116,26 +116,35 @@
                 };
 
                 // 取得商品单价
-                $scope.fetch_unit_price = function(rows, row_scope, row_index) {
-                    if(!rows[row_index].product_id) {
-                        return;
-                    }
-                    var params = {
-                        _m: 'fetch_product_unit_price'
-                    };
-                    angular.forEach(rows[row_index], function(v, k) {
-                        if(k.end_with('__') || k == 'tr_id') {
+                $scope.fetch_unit_price = function(rows, row_scope, row_index, $event) {
+
+                    $timeout(function() {
+                        if($event && $event.keyCode !== KEY_CODES.enter) {
                             return;
                         }
-                        params[k] = v;
+
+                        if(!rows[row_index].product_id) {
+                            return;
+                        }
+                        var params = {
+                            _m: 'fetch_product_unit_price'
+                        };
+                        angular.forEach(rows[row_index], function(v, k) {
+                            if(k.end_with('__') || k == 'tr_id') {
+                                return;
+                            }
+                            params[k] = v;
+                        });
+
+                        product_api.resource.api_get(params).$promise.then(function(response_data) {
+                            var getter = $parse('bill_rows['+row_index+'].unit_price');
+                            var label_getter = $parse('bill_rows['+row_index+'].unit_price__label__');
+                            var price = response_data['sale_price'] || response_data['source_price'];
+                            getter.assign(row_scope, price);
+                            label_getter.assign(row_scope, to_decimal_display(price));
+                        });
                     });
-                    product_api.resource.api_get(params).$promise.then(function(response_data) {
-                        var getter = $parse('bill_rows['+row_index+'].unit_price');
-                        var label_getter = $parse('bill_rows['+row_index+'].unit_price__label__');
-                        var price = response_data['sale_price'] || response_data['source_price'];
-                        getter.assign(row_scope, price);
-                        label_getter.assign(row_scope, to_decimal_display(price));
-                    });
+
                 };
 
                 // 日期输入
