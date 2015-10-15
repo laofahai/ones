@@ -533,20 +533,33 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                     $timeout(function() {
                                         // 寻找当前行下一可编辑框
                                         var ele = $(event.target).parents('td').nextAll('td.td_editable');
+                                        var tr = $(event.target).parents('tr');
+                                        var focus_next_line = function(next_tr) {
+                                            next_tr = $(next_tr);
+                                            if(!next_tr) {
+                                                return;
+                                            }
+                                            var next_td_ele = next_tr.find('td.td_editable');
+                                            if(next_td_ele) {
+                                                $(next_td_ele[0]).find('label').trigger('click');
+                                            }
+                                        };
                                         if(ele[0]) {
                                             $(ele[0]).find('label').trigger('click');
                                             return;
                                         } else {
-                                            ele = $(event.target).parents('tr').next();
+                                            ele = tr.nextAll('tr.tr_editable')[0];
                                             if(!ele) {
                                                 // 自动新增一行
-                                                return;
+                                                scope.add_row(tr.index()+1);
+                                                $timeout(function() {
+                                                    ele = tr.nextAll('tr.tr_editable')[0];
+                                                    focus_next_line(ele);
+                                                });
                                             } else {
-                                                ele = ele.find('td.td_editable');
-                                                if(ele) {
-                                                    $(ele[0]).find('label').trigger('click');
-                                                }
+                                                focus_next_line(ele);
                                             }
+
                                         }
                                     });
                                 }

@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="styles/frame.css">
         <!-- endbuild -->
     </head>
-    <body ng-controller="MainFrameCtrl">
+    <body ng-controller="MainFrameCtrl" ng-keydown="main_frame_keydown($event)">
         <div ng-view>
             <h1 class="frame_bger" id="frame_bger">Loading app ... </h1>
         </div>

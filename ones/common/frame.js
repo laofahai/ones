@@ -159,6 +159,11 @@ var frame_init = function() {
                                 });
                             });
 
+                            // 全局按键事件
+                            $scope.main_frame_keydown = function($event) {
+
+                            };
+
                             // 帮助链接
                             var search_link = 'http://ones_manual.mydoc.io/?q=%s %s&p=search';
                             $scope.help_link = ones.app_info.config.document || 'http://ones_manual.mydoc.io' || sprintf(
