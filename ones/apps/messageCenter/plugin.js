@@ -27,6 +27,7 @@
             '<span ng-bind="\'messageCenter.Notifications\'|lang"></span>'+
             '</a>'+
             '</li>';
+        return;
         ones.pluginScope.append('main_user_dropdown_menu', html);
     })
 })(window, window.angular, window.ones);

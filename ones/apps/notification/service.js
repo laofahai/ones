@@ -7,8 +7,6 @@
         });
     });
 
-
-
     // 桌面提醒
     Notification.requestPermission();
 
