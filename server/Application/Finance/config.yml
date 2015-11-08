@@ -3,10 +3,44 @@ author: TEam Swift
 link: https://ng-erp.com
 document: http://ones_manual.mydoc.io/?t=35708
 requirements:
+    - crm
+    - contactsCompany
+    - supplier
+    - bpm
 
 auth_nodes:
+    - finance.receivables.*
+    - finance.payables.*
+    - finance.financeAccount.*
+    - finance.financeStreamline.get
 
 include:
     js:
         - apps/finance/main
         - apps/finance/model
+        - apps/crm/model
+        - apps/supplier/model
+        - apps/contactsCompany/model
+global_include:
+    js:
+        - apps/finance/plugin
+navs:
+    Finance:
+        app: finance
+        icon: money
+        children:
+            Streamline:
+                app: finance
+                children:
+                    Accounts:
+                        app: finance
+                        link: finance/financeAccount
+                    Receivables:
+                        app: finance
+                        link: finance/receivables
+                    Payables:
+                        app: finance
+                        link: finance/payables
+                    Finance Streamline:
+                        app: finance
+                        link: finance/financeStreamline

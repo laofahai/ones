@@ -210,5 +210,7 @@ a, button, input {
   border-right-color: #b93524; }
 
 /* end of tag style*/
+.pos-relative {
+  position: relative; }
 
 /*# sourceMappingURL=base.css.map */

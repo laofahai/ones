@@ -53,7 +53,12 @@ $apps = [
         'type' => 'contacts'
     ],
     'smtp' => [],
-    'printer' => []
+    'printer' => [],
+    'currency' => [],
+    'finance' => [
+        'type' => 'finance',
+        'requirements' => 'bpm'
+    ]
 ];
 
 /*

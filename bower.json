@@ -20,7 +20,6 @@
     "angular-socket-io": "~0.7.0",
     "socket.io-client": "~1.3.5",
     "angular-base64-upload": "~0.1.11",
-    "angular-money-directive": "~1.1.0",
     "jsbarcode": "*",
     "bootstrap-additions": "~0.3.1"
   },

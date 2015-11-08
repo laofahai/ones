@@ -27,6 +27,9 @@ orders:
         type: decimal
         precision: 14
         scale: 4
+    currency:
+        limit: 3
+        blank: true
     $meta:
         indexes:
             subject:

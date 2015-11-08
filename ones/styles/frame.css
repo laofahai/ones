@@ -66,51 +66,48 @@ a, a:hover, a:active {
 
 .grid-container {
   position: relative; }
+  .grid-container .table-grid {
+    width: 100%; }
 
-.grid-container.has-filter {
-  padding-right: 177px; }
-  .grid-container.has-filter .grid-table-container {
-    border: 1px solid #ddd; }
-  .grid-container.has-filter .table-grid {
-    margin-top: -1px;
-    margin-left: -1px; }
-  .grid-container.has-filter .grid-filter-container {
-    width: 180px;
-    position: absolute;
-    right: 0;
-    top: 0; }
-    .grid-container.has-filter .grid-filter-container h2.filter-title {
-      height: 25px;
-      font-size: 12px;
-      line-height: 25px;
-      margin: 0;
-      padding: 0 10px;
-      background: #4d90fe;
-      color: #fff; }
-    .grid-container.has-filter .grid-filter-container .filter-content {
-      padding-top: 10px;
-      background: #efefef;
-      border: 1px solid #ddd;
-      border-top: 0;
-      font-size: 12px; }
-      .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links {
-        line-height: 180%;
-        padding: 0;
-        margin-top: 0;
-        margin-bottom: 10px; }
-        .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd, .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dt {
-          padding: 0 6px;
-          border-left: 5px solid #efefef;
-          height: 20px;
-          line-height: 20px; }
-        .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd a {
-          color: #666; }
-        .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd a:hover {
+.grid-container.has-filter .grid-table-container {
+  margin-right: 179px; }
+.grid-container.has-filter .grid-filter-container {
+  width: 180px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+  .grid-container.has-filter .grid-filter-container h2.filter-title {
+    height: 25px;
+    font-size: 12px;
+    line-height: 25px;
+    margin: 0;
+    padding: 0 10px;
+    background: #4d90fe;
+    color: #fff; }
+  .grid-container.has-filter .grid-filter-container .filter-content {
+    padding-top: 10px;
+    background: #efefef;
+    border: 1px solid #ddd;
+    border-top: 0;
+    font-size: 12px; }
+    .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links {
+      line-height: 180%;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 10px; }
+      .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd, .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dt {
+        padding: 0 6px;
+        border-left: 5px solid #efefef;
+        height: 20px;
+        line-height: 20px; }
+      .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd a {
+        color: #666; }
+      .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd a:hover {
+        color: #1155cc; }
+      .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd.active {
+        border-color: #1155cc; }
+        .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd.active a {
           color: #1155cc; }
-        .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd.active {
-          border-color: #1155cc; }
-          .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd.active a {
-            color: #1155cc; }
 
 .table-grid .grid-td-unfound {
   height: 50px;
@@ -483,12 +480,12 @@ form
   box-shadow: none; }
   .select3-container .select3-show-grid-btn {
     float: right;
-    position: relative;
     z-index: 101;
     margin: 8px 8px 0 0;
     color: #666;
     position: absolute;
-    right: 0; }
+    right: 0;
+    top: 0; }
   .select3-container input.form-control {
     position: relative;
     top: 0;
@@ -519,6 +516,12 @@ form
   .select3-container-box .select3-container.active ul.items {
     border: 1px solid #ddd;
     border-top: 0; }
+
+.form-field.select3-container-box .select3-container {
+  left: 15px;
+  max-width: 95%;
+  width: auto;
+  min-width: 70%; }
 
 .chosen-container {
   font-size: 12px; }

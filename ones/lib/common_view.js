@@ -158,7 +158,10 @@
         /*
         * 详情
         * */
-        .controller('ComViewDetailCtrl', [])
+        .controller('ComViewDetailCtrl', [
+            '$scope',
+            function($scope) {}
+        ])
 
         /*
         * 分栏详情

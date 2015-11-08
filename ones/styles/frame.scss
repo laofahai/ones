@@ -67,23 +67,24 @@ a, a:hover, a:active {
 }
 .grid-container {
     position: relative;
+
+    .table-grid {
+        width: 100%;
+    }
 }
 
 .grid-container.has-filter {
-    padding-right: 177px;
 
     .grid-table-container {
-        border: 1px solid #ddd;
+        margin-right:179px;
     }
     .table-grid {
-        margin-top: -1px;
-        margin-left: -1px;
+
     }
     .grid-filter-container {
         width:180px;
         position: absolute;
-        right:0;
-        top:0;
+        right:0;top:0;
 
         h2.filter-title {
             height:25px;
@@ -557,12 +558,12 @@ $nav_width: 180px;
 
     .select3-show-grid-btn {
         float: right;
-        position: relative;
         z-index: 101;
         margin: 8px 8px 0 0;
         color:#666;
         position:absolute;
         right:0;
+        top:0;
     }
 
     input.form-control {
@@ -604,6 +605,12 @@ $nav_width: 180px;
             border-top:0;
         }
     }
+}
+.form-field.select3-container-box .select3-container{
+    left:15px;
+    max-width:95%;
+    width:auto;
+    min-width:70%;
 }
 
 // chosen

@@ -2,7 +2,6 @@
     'use strict';
     angular.module('ones.app.crm.main', [
         'ones.frameInnerModule',
-        'ones.app.crm.model',
         'ones.gridViewModule',
         'ones.detailViewModule'
     ])

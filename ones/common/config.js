@@ -104,7 +104,17 @@ function config_init(apps, callback) {
             if(response.status === 401) {
                 window.location.href = "index.html";
             } else {
-                alert('Something is wrong when loading bootstrap config, please open Developer Tool see more details.');
+                var response_content = {};
+
+                if(response.responseText) {
+                    response_content = angular.fromJson(response.responseText);
+                }
+
+                if(response_content.error && response_content.msg) {
+                    alert(response_content.msg);
+                } else {
+                    alert('Something is wrong when loading bootstrap config, please open Developer Tool see more details.');
+                }
                 console.error('You can get help here: http://forum.ng-erp.com');
             }
         }

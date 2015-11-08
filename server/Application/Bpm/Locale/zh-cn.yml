@@ -3,6 +3,8 @@ APP_DESCRIPTION: 业务过程管理，提供工作流等服务接口，并提供
 
 Data Creator: 数据创建者
 
+Workflow Builder: 工作流设计器
+
 Add Executor: 新增执行者
 Add To Executor: 新增至执行者
 User Role: 用户角色

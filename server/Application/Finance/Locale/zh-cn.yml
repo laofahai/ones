@@ -1,0 +1,30 @@
+APP_NAME: 财务管理
+
+Receivables: 应收款
+Payables: 应付款
+
+Received Amount: 已收金额
+Paid Amount: 已付金额
+
+Streamline: 流水
+
+Finance: 财务
+Amount: 金额
+
+Finance Account: 账户
+Accounts: 账户
+Finance Streamline: 财务流水
+
+Receivables Type: 应收款类型
+Payables Type: 应付款类型
+
+New Receivables: 新应收款
+Portion Received: 已部分收款
+All Received: 已收款
+
+New Payables: 新应付款
+Portion Received: 已部分付款
+All Received: 已付款
+
+Need Receive Amount: 应收金额
+Need Pay Amount: 应付金额

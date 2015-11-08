@@ -1,6 +1,6 @@
 var FORM_GROUP_TPL = '<div class="form-group %(group_class)s" ng-class="%(ng_class)s">' +
     '<label for="%(id)s" class="col-sm-2 control-label">%(label)s</label>' +
-    '<div class="col-sm-6">%(input)s</div>' +
+    '<div class="col-sm-6 form-field">%(input)s</div>' +
     '<div class="help-block col-sm-4"> <span ng-bind="%(form_field)s|toError:%(field_config)s:%(app)s"></span> <span ng-bind-html="%(help_text)s"></span></div>' +
     '</div>';
 var FORM_CONTAINER_TPL = '<form name="%(form_name)s" id="%(form_name)s" class="form-horizontal form %(form_class)s" novalidate="">%(html)s</form>';
@@ -30,5 +30,10 @@ var FORM_FIELDS_TPL = {
     '<li ng-repeat="item in %(items_model)s" ng-bind="item.label" ' +
     'ng-click="do_select3_item_select(item)" ng-class="{\'active\':$index===active_select3_index}"></li>' +
     '</ul>' +
-    '<ul ng-show="%(items_model)s.length<=0" class="items"><li ng-bind="\'common.Does not match any rows\'|lang"></li></ul>'
+    '<ul ng-show="%(items_model)s.length<=0" class="items"><li ng-bind="\'common.Does not match any rows\'|lang"></li></ul>',
+    select3_group_tpl: '<div class="form-group %(group_class)s" ng-class="%(ng_class)s">' +
+    '<label for="%(id)s" class="col-sm-2 control-label">%(label)s</label>' +
+    '<div class="col-sm-6 select3-container-box form-field">%(input)s</div>' +
+    '<div class="help-block col-sm-4"> <span ng-bind="%(form_field)s|toError:%(field_config)s:%(app)s"></span> <span ng-bind-html="%(help_text)s"></span></div>' +
+    '</div>'
 };

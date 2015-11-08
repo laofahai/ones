@@ -13,8 +13,7 @@
                         name: {
                             get_display: function(value, item) {
                                 var local_name = _(item.alias+'.APP_NAME');
-                                local_name = local_name === "APP_NAME" ? '' : local_name+' ';
-                                return local_name+item.alias;
+                                return local_name === "APP_NAME" ? item.alias : local_name;
                             }
                         },
                         description: {

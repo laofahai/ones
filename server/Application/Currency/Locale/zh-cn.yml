@@ -1,0 +1,8 @@
+APP_NAME: 货币管理模块
+
+CURRENCIES:
+    CNY: 人民币
+    USD: 美元
+    HKD: 港币
+
+Base Currency: 本位币

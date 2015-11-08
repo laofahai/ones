@@ -8,7 +8,7 @@
     });
 
     // 桌面提醒
-    Notification.requestPermission();
+    window.Notification && Notification.requestPermission();
 
     window._desktop_notify = function(params) {
         var notification = new Notification(params.subject || _('notification.ONES Notification'), {

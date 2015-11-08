@@ -158,7 +158,7 @@
                                  * */
                                 config.widget = config.widget || 'text';
                                 if(!field_config.widget) {
-                                    if(['decimal', 'integer'].indexOf(config.type) >= 0) {
+                                    if(['decimal', 'integer', 'money'].indexOf(config.type) >= 0) {
                                         config.widget = 'number';
                                     }
                                 } else {

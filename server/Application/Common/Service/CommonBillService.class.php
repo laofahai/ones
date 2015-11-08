@@ -10,6 +10,7 @@ namespace Common\Service;
 use Common\Lib\Schema;
 use Common\Model\CommonModel;
 use Home\Service\AppService;
+use MessageCenter\Service\MessageCenter;
 
 
 /*
@@ -130,6 +131,20 @@ class CommonBillService extends CommonModel {
         }
 
         /*
+         * 通过消息中心广播事件
+         * */
+        $app_alias = lcfirst(MODULE_NAME);
+        $module_alias = lcfirst(CONTROLLER_NAME);
+        MessageCenter::broadcast(['add', 'add_bill'], [
+            "id" => $id,
+            "bill_no" => $meta['bill_no'],
+            "subject" => $meta['subject'] . ' ' . $meta['bill_no'],
+            "user_id" => $meta['user_id'],
+            "module"  => $app_alias.'.'.$module_alias,
+            "link"    => sprintf("%s/%s/view/bill/%d", $app_alias, $module_alias, $id)
+        ]);
+
+        /*
          * 产品属性
          * */
         if(AppService::is_app_active('productAttribute')) {
@@ -239,11 +254,26 @@ class CommonBillService extends CommonModel {
         }
 
         $this->startTrans();
-        if(false === $this->where(['id'=>$id])->save($meta)) {
+        $this->create($meta);
+        if(false === $this->save()) {
             $this->error = __('storage.Trigger when save meta data');
             $this->rollback();
             return false;
         }
+
+        /*
+         * 通过消息中心广播事件
+         * */
+        $app_alias = lcfirst(MODULE_NAME);
+        $module_alias = lcfirst(CONTROLLER_NAME);
+        MessageCenter::broadcast(['edit', 'edit_bill'], [
+            "id" => $id,
+            "bill_no" => $meta['bill_no'],
+            "subject" => $meta['subject'] . ' ' . $meta['bill_no'],
+            "user_id" => $meta['user_id'],
+            "module"  => $app_alias.'.'.$module_alias,
+            "link"    => sprintf("%s/%s/view/bill/%d", $app_alias, $module_alias, $id)
+        ]);
 
         // 获取已存在数据
         $detail_service = D($this->detail_model);

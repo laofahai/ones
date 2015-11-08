@@ -437,8 +437,8 @@
                             $timeout(function() {
                                 ele.parent('.select3-container').css({
                                     //paddingTop: ele.height() + 1,
-                                    top: 0,
-                                    left: 0
+                                    //top: 0,
+                                    //left: 0
                                 }).find('ul.items').css({
                                     marginTop: ele.height()
                                 });

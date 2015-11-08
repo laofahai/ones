@@ -8,4 +8,9 @@ auth_nodes:
 include:
     js:
         - apps/currency/main
+global_include:
+    js:
         - apps/currency/model
+force_global_include:
+    js:
+        - apps/currency/plugin

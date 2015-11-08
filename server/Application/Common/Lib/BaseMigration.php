@@ -166,10 +166,13 @@ class BaseMigration extends AbstractMigration{
                 continue;
             }
             printf("Add field %s to table %s\n", $column, $tableName);
+            $parsed_options = $this->_parseColumnOptions((array)$options);
+            $type = $parsed_options['type'] ? $parsed_options['type'] : 'string';
+            unset($parsed_options['type']);
             $table = $table->addColumn(
-                    $column,
-                    $options['type'] ? $options['type'] : 'string',
-                    $this->_parseColumnOptions((array)$options)
+                $column,
+                $type,
+                $parsed_options
             );
             
         }
@@ -206,10 +209,13 @@ class BaseMigration extends AbstractMigration{
             }
             
             $method = $table->hasColumn($column) ? "changeColumn" : "addColumn";
+            $parsed_options = $this->_parseColumnOptions((array)$options);
+            $type = $parsed_options['type'] ? $parsed_options['type'] : 'string';
+            unset($parsed_options['type']);
             $table = $table->$method(
-                    $column,
-                    $options['type'] ? $options['type'] : 'string',
-                    $this->_parseColumnOptions((array)$options)
+                $column,
+                $type,
+                $parsed_options
             );
         }
         
@@ -238,10 +244,19 @@ class BaseMigration extends AbstractMigration{
         }
 
 
-        
         # 外键
         if($meta['foreign']) {
             foreach($meta['foreign'] as $foreignTable=>$options) {
+                // 兼容省略约束等配置的写法
+                if(is_numeric($foreignTable) || !is_array($options)) {
+                    $foreignTable = $options;
+                    $options = [
+                        'restrict' => [
+                            "delete" => "CASCADE"
+                        ]
+                    ];
+                }
+
                 $relatedColumn = $options['related_column'] ? $options['related_column'] : "id";
                 $foreignTable = $options['foreign_table'] ? $options['foreign_table'] : $foreignTable;
                 $column = $options['foreign_key'] ? $options['foreign_key'] : $foreignTable."_id";
@@ -390,6 +405,7 @@ class BaseMigration extends AbstractMigration{
             'timezone',
             'properties',
             'values',
+            'type'
         );
         
      
@@ -397,10 +413,15 @@ class BaseMigration extends AbstractMigration{
         if(!$options['length'] && !$options['limit']) {
             switch($options['type']) {
                 case "tinytext":
+                    $options['type'] = 'text';
                     $options['limit'] = MysqlAdapter::TEXT_TINY;
                     break;
                 case 'text':
-                    $options['type'] = MysqlAdapter::TEXT_REGULAR;
+                    $options['limit'] = MysqlAdapter::TEXT_REGULAR;
+                    break;
+                case 'money':
+                    $options['type'] = 'decimal';
+                    break;
                 default:
                     $options['limit'] = 255;
                     break;

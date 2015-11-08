@@ -1,5 +1,5 @@
 (function(window, angular, ones) {
-    angular.module('ones.app.crm.model', [])
+    ones.global_module
         .service('Crm.CrmClueAPI', [
             'ones.dataApiFactory',
             '$routeParams',

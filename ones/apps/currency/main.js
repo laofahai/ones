@@ -1,7 +1,5 @@
 (function(window, angular, ones, io){
     'use strict';
-    angular.module('ones.app.currency.main', [
-        'ones.app.currency.model'
-    ]);
+    angular.module('ones.app.currency.main', []);
 
 })(window, window.angular, window.ones, window.io);

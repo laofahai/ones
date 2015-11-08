@@ -3,6 +3,7 @@
 namespace Common\Controller;
 
 use Account\Service\AuthorizeService;
+use MessageCenter\Service\MessageCenter;
 use Smtp\Service\SendMailService;
 use Think\Controller\RestController;
 use Common\Lib\RecursiveFileFilterIterator;
@@ -16,7 +17,7 @@ class BaseRestController extends RestController {
     protected $defaultType = 'json';
 
     //基本应用
-    protected $baseApps = array('home', 'dataModel', 'dashboard', 'account');
+    protected $baseApps = array('home', 'dataModel', 'dashboard', 'account', 'messageCenter');
     //已启用应用
     protected $activeApps = array();
 
@@ -424,6 +425,19 @@ class BaseRestController extends RestController {
 
         $id = $model->getLastInsID();
 
+        /*
+         * 通过消息中心广播事件
+         * */
+        $app_alias = lcfirst(MODULE_NAME);
+        $module_alias = lcfirst(CONTROLLER_NAME);
+        $subject = I('post.subject') ? I('post.subject') : I('post.name');
+        $subject = $subject ? $subject : '#'.$id;
+        MessageCenter::broadcast(['add'], [
+            "id" => $id,
+            "subject" => $subject,
+            "module"  => $app_alias.'.'.$module_alias
+        ]);
+
         // 完成插入之后的插件钩子
         // 配合前置插件参数
         $params['insert_id'] = $id;
@@ -555,6 +569,18 @@ class BaseRestController extends RestController {
             return E($model->getError());
         }
 
+        /*
+         * 通过消息中心广播事件
+         * */
+        $app_alias = lcfirst(MODULE_NAME);
+        $module_alias = lcfirst(CONTROLLER_NAME);
+        $id = I('get.id');
+        MessageCenter::broadcast(['edit'], [
+            "id" => $id,
+            "subject" => '#' . $id,
+            "module"  => $app_alias.'.'.$module_alias
+        ]);
+
         // 完成更新之后的插件钩子
         // 配合前置插件参数
         $params['update_id'] = I('get.id');
@@ -627,6 +653,25 @@ class BaseRestController extends RestController {
         if(method_exists($this, '_after_delete')) {
             $this->_after_delete($ids);
         }
+
+        /*
+         * 通过消息中心广播事件
+         * */
+        $app_alias = lcfirst(MODULE_NAME);
+        $module_alias = lcfirst(CONTROLLER_NAME);
+        $subject = [];
+        foreach($source_rows as $row) {
+            $tmp = $row['subject'] ? $row['subject'] : $row['name'];
+            if(!$tmp) {
+                $tmp = '#' . $row['id'];
+            }
+            array_push($subject, $tmp);
+        }
+        MessageCenter::broadcast(['delete'], [
+            "id" => $ids,
+            "subject" => implode(',', $subject),
+            "module"  => $app_alias.'.'.$module_alias
+        ]);
 
         $msg = sprintf(__('common.Success delete %s'), count($ids))." ";
         $msg .= __(sprintf('%s.%s', lcfirst(MODULE_NAME), camelCaseSpace(CONTROLLER_NAME)));

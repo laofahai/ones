@@ -1,0 +1,168 @@
+finance_account:
+    name:
+    balance:
+        type: money
+        precision: 14
+        scale: 4
+        default: 0
+    currency:
+        blank: true
+        limit: 3
+        comment: 币种
+    $meta:
+        foreign:
+            - company
+
+receivables:
+    subject:
+        blank: true
+    amount:
+        type: money
+        precision: 14
+        scale: 4
+    received:
+        type: money
+        precision: 14
+        scale: 4
+        default: 0
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    source_model:
+        limit: 50
+        blank: true
+    source_id:
+        type: integer
+        limit: 11
+        blank: true
+    status:
+        type: integer
+        limit: 1
+        default: 0
+        comment: 状态
+    remark:
+        blank: true
+    currency:
+        blank: true
+        limit: 3
+        comment: 币种
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            customer:
+                options:
+                    blank: true
+                restrict:
+                    delete: CASCADE
+            common_type:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            workflow:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+
+
+payables:
+    subject:
+        blank: true
+    amount:
+        type: money
+        precision: 14
+        scale: 4
+    paid:
+        type: money
+        precision: 14
+        scale: 4
+        default: 0
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    source_model:
+        limit: 50
+        blank: true
+    source_id:
+        type: integer
+        limit: 11
+        blank: true
+    status:
+        type: integer
+        limit: 1
+        default: 0
+        comment: 状态
+    remark:
+        blank: true
+    currency:
+        blank: true
+        limit: 3
+        comment: 币种
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            supplier:
+                options:
+                    blank: true
+                restrict:
+                    delete: CASCADE
+            common_type:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            workflow:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+
+finance_streamline:
+    direction:
+        type: integer
+        limit: 1
+        default: 1
+        comment: 1收2付
+    amount:
+        type: decimal
+        precisioin: 14
+        scale: 4
+    created:
+        type: datetime
+        default: CURRENT_TIMESTAMP
+    source_id:
+        type: integer
+        limit: 11
+        comment: 源应收/应付ID
+    currency:
+        blank: true
+        limit: 3
+        comment: 币种
+    $meta:
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE
+            user:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
+            finance_account:
+                restrict:
+                    delete: CASCADE

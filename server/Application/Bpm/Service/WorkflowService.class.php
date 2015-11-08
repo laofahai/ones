@@ -11,6 +11,7 @@ namespace Bpm\Service;
 
 use Common\Lib\Schema;
 use Common\Model\CommonModel;
+use MessageCenter\Service\MessageCenter;
 
 class WorkflowService extends CommonModel {
 
@@ -246,6 +247,21 @@ class WorkflowService extends CommonModel {
          * */
         if(false === $exec_result && $node['node_type'] !== 'cond') {
             return false;
+        }
+
+        $ignore_executor = ['a:a', 'w:o'];
+        if(!$auto && !in_array($node['executor'], $ignore_executor)) {
+            $ms_module = $node['label'];
+            $subject = $source_data['subject'] ? $source_data['subject'] : $source_data['name'];
+            $subject = $subject ? $subject : "#" . $source_id;
+            if($source_data['bill_no']) {
+                $subject .= ' ' . $source_data['bill_no'];
+            }
+            MessageCenter::broadcast(['exec'], [
+                "id" => $source_id,
+                "module" => $ms_module,
+                "subject" => $subject
+            ]);
         }
 
         /*

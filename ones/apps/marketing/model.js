@@ -1,9 +1,7 @@
 (function(window, angular, ones){
     'use strict';
 
-    angular.module('ones.app.marketing.model', [
-        'ones.app.crm.model'
-    ])
+    angular.module('ones.app.marketing.model', [])
         .service('Marketing.SaleOpportunitiesAPI', [
             'ones.dataApiFactory',
             '$filter',

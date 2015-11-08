@@ -5,7 +5,7 @@
      * @link https://ng-erp.com
      * */
     'use strict';
-    angular.module('ones.app.sale.orders', ['ones.billModule', 'ones.app.crm.model', 'ones.app.storage.model'])
+    angular.module('ones.app.sale.orders', ['ones.billModule', 'ones.app.storage.model'])
         .config(['$routeProvider', function($route) {
             $route
                 .when('/sale/orders/add/bill', {
@@ -258,7 +258,7 @@
                         'user_id'
                     ],
                     bill_meta_required: [
-                        'subject', 'created'
+                        'subject', 'created', 'customer_id'
                     ],
                     filters: {
                         workflow_node_status_label: {

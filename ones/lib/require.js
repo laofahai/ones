@@ -33,12 +33,13 @@
             url: sprintf('%shome/static&t=js&f=%s', ones.remote_entry, include_paths.join()),
             dataType: "script",
             success: function(data) {
+                ones.DEBUG && console.debug('Load js: ', include_paths);
                 if(typeof callback === 'function') {
                     callback();
                 }
             },
             error: function(event, type, error) {
-                console.error(type, error);
+                console && console.log(type, error);
             }
         });
 

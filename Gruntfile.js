@@ -219,7 +219,6 @@ module.exports = function (grunt) {
                             "ones/bower_components/angular-markdown-directive/markdown.js",
                             "ones/bower_components/angular-socket-io/socket.js",
                             "ones/bower_components/angular-base64-upload/src/angular-base64-upload.js",
-                            "ones/bower_components/angular-money-directive/angular-money-directive.js",
                             "ones/bower_components/jsbarcode/JsBarcode.js",
                             "ones/bower_components/jsbarcode/CODE128.js",
                             "ones/bower_components/socket.io-client/socket.io.js"
