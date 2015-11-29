@@ -401,8 +401,12 @@
                     angular.forEach($scope.widgets, function(config, group) {
 
                         angular.forEach(has_children, function(i) {
+                            var role_tmp = get_role(group);
+                            if(!role_tmp) {
+                                return;
+                            }
                             context_menus[i].children.push({
-                                label: get_role(group).label,
+                                label: role_tmp.label,
                                 is_header: true
                             });
 

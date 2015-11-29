@@ -1,19 +1,31 @@
 (function(window, angular, ones, io){
     'use strict';
-    angular.module('ones.app.finance.model', [
-        'ones.gridViewModule'
-    ])
+    angular.module('ones.app.finance.model', [])
         .service('Finance.FinanceAccountAPI', [
             'ones.dataApiFactory',
             function(dataAPI) {
                 this.resource = dataAPI.getResourceInstance({
-
+                    uri: "finance/financeAccount",
+                    extra_methods: ['api_query']
                 });
+
+                this.config = {
+                    app: "finance",
+                    module: "financeAccount",
+                    table: "finance_account",
+                    fields: {},
+                    list_display: [
+                        "name",
+                        "balance",
+                        "currency"
+                    ]
+                };
             }
         ])
         .service('Finance.ReceivablesAPI', [
             'ones.dataApiFactory',
-            function(dataAPI) {
+            '$routeParams',
+            function(dataAPI, $routeParams) {
 
                 var self = this;
 
@@ -40,18 +52,20 @@
                     workflow: 'finance.receivables',
                     detail_able: true,
                     detail_split: {
-                        title: _('common.View %s By', _('crm.Clue')),
+                        title: _('common.View %s By', _('finance.Receivables')),
                         global_title_field: 'company_name',
                         actions: {
                             basic: {
                                 label: _("finance.Receivables"),
                                 view: 'views/detail.html',
-                                link_actions: [{
-                                    label: _('common.Edit') + ' ' + _('finance.Basic Info'),
-                                    src : 'crm/crmClue/edit/'+$routeParams.id,
-                                    icon: 'edit',
-                                    auth_node: 'crm.crmClue.put'
-                                }],
+                                link_actions: [
+                                    {
+                                        label: _('common.Edit') + ' ' + _('finance.Basic Info'),
+                                        src : 'finance/receivables/edit/'+$routeParams.id,
+                                        icon: 'edit',
+                                        auth_node: 'finance.receivables.put'
+                                    }
+                                ],
                                 init: function(scope, id) {
                                     scope.detail_view_config = {
                                         model: self,
@@ -64,14 +78,23 @@
                                 },
                                 resource: self.resource
                             }
+                        },
+                        customer_need_receive: {
+                            label: _('finance.Customer Receivables'),
+                            view: 'views/grid.html',
+                            init: function(scope, id) {
+
+                            },
+                            no_padding: true,
+                            resource: ''
                         }
                     },
                     fields: {
                         common_type_id: {
-                            label: _('common.Type'),
                             get_display: function(value, item) {
-                                return item.type || '';
+                                return item.common_type_id_label || '';
                             },
+                            label: _('common.Type'),
                             widget: "select",
                             data_source: "Home.CommonTypeAPI",
                             data_source_query_param: {
@@ -109,6 +132,9 @@
                         workflow_id: {
                             label: _('bpm.Workflow'),
                             data_source: 'Bpm.WorkflowAPI',
+                            get_display: function(value, item) {
+                                return item.workflow_id_label;
+                            },
                             widget: "select",
                             data_source_query_param: {
                                 _mf: "module",
@@ -127,6 +153,12 @@
                     ],
                     unaddable: [
                         'source_id', 'source_model', 'user_id', 'customer_id', 'created'
+                    ],
+                    uneditable: [
+                        'source_id', 'source_model', 'user_id', 'customer_id', 'created'
+                    ],
+                    undetail_able: [
+                        'source_id'
                     ],
                     filters: {
                         status: {

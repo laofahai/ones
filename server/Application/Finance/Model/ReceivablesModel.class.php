@@ -14,8 +14,13 @@ class ReceivablesModel extends CommonViewModel {
     protected $viewFields = [
         "Receivables" => ['*', '_type'=>'left'],
         "CommonType" => [
-            "name" => "type",
+            "name" => "common_type_id_label",
             "_on" => "Receivables.common_type_id=CommonType.id",
+            "_type" => "left"
+        ],
+        "Workflow" => [
+            "name" => "workflow_id_label",
+            "_on" => "Receivables.workflow_id=Workflow.id",
             "_type" => "left"
         ]
     ];

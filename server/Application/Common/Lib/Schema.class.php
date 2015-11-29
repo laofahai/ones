@@ -39,6 +39,14 @@ class Schema {
 
             // 处理foreignKey
             foreach($meta["foreign"] as $foreign_table => $foreign_option) {
+                if(is_numeric($foreign_table) && !is_array($foreign_option)) {
+                    $foreign_table = $foreign_option;
+                    $foreign_option = [
+                        'restrict' => [
+                            "delete" => "CASCADE"
+                        ]
+                    ];
+                }
                 $foreign_field = $foreign_option['foreign_key'] ? $foreign_option['foreign_key'] : $foreign_table.'_id';
                 $fields[$foreign_table] = array(
                     "map" => $foreign_field,
@@ -161,6 +169,7 @@ class Schema {
             case "foreign":
                 $value && $value = (int)$value;
                 break;
+            case "money":
             case "float":
             case "decimal":
                 $value = (string)$value;

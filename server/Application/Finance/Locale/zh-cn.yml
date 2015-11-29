@@ -28,3 +28,10 @@ All Received: 已付款
 
 Need Receive Amount: 应收金额
 Need Pay Amount: 应付金额
+
+Balance: 余额
+Currency: 币种
+
+RECEIVABLES_STATUS_NEW: 新应收款
+RECEIVABLES_STATUS_PART: 已部分收款
+RECEIVABLES_STATUS_COMPLETE: 已收款

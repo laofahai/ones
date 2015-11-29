@@ -57,123 +57,122 @@
                     self.scope.$root.link_actions = link_actions;
                 };
 
-                /*
-                * 处理数据
-                * @todo filter 参数中包含动态数据
-                * */
-                var process_for_data = function(data, column_defs) {
-                    angular.forEach(data, function(item, k) {
-                        // 过滤器
-                        var cell_filter = column_defs[k] && (column_defs[k].detail_filter || column_defs[k].cell_filter);
-                        if(cell_filter) {
-                            var filters = cell_filter;
-                            if(!angular.isArray(cell_filter)) {
-                                filters = [cell_filter];
-                            }
-
-                            for(var j=0;j<filters.length;j++) {
-                                var argv = filters[j].split(':');
-                                var filter_name = argv.shift();
-                                argv.unshift(item);
-                                data[k] = $filter(filter_name).call(null, argv);
-                            }
-                        }
-                    });
-
-                    return data;
-                };
 
                 /**
                  * 载入数据
                  * */
-                this.load_data = function(column_defs) {
+                this.load_data = function(column_defs, callback) {
                     ones.DEBUG && console.debug('loading detail data');
                     if(!self.config.data) {
                         self.config.resource[self.config.query_method||'query'](self.config.query_params).$promise.then(function(data){
-                            self.scope[self.config.model_prefix] = process_for_data(data, column_defs);
+                            self.scope[self.config.model_prefix] = data;
+                            callback(data);
                         });
                     } else {
-                        self.scope[self.config.model_prefix] = process_for_data(self.config.data, column_defs);
+                        self.scope[self.config.model_prefix] = self.config.data;
+                        callback(data);
                     }
                 };
 
                 this.run = function() {
-                    /**
-                     * 载入数据结构
-                     * */
-                    schemaAPI.get_schema({
-                        app: self.model_config.app,
-                        table: self.model_config.table,
-                        exclude_meta: true,
-                        callback: function (result) {
-                            result = result[self.model_config.table].structure || {};
+                    self.load_data(self.scope.column_defs, function() {
+                        /**
+                         * 载入数据结构
+                         * */
+                        schemaAPI.get_schema({
+                            app: self.model_config.app,
+                            table: self.model_config.table,
+                            exclude_meta: true,
+                            callback: function (result) {
+                                result = result[self.model_config.table].structure || {};
 
-                            if(!result) {
-                                return false;
+                                if(!result) {
+                                    return false;
+                                }
+
+                                var schema = {};
+                                angular.forEach(result, function(v) {
+                                    schema[v.field] = v;
+                                });
+
+                                angular.deep_extend(schema, self.model_config.fields);
+
+                                var html = [];
+                                var ignore = [
+                                    '_data_model_fields_',
+                                    'company_id'
+                                ];
+
+                                var human_date_display = user_preference.get_preference('human_date_display');
+
+                                angular.forEach(schema, function(config, field) {
+
+                                    if(field === '_data_model_fields_') {
+                                        self.config.query_params._df = config.value;
+                                        return;
+                                    }
+
+                                    if(ignore.indexOf(field) >= 0) {
+                                        return;
+                                    }
+
+                                    if(field in self.model_config.fields) {
+                                        config = angular.deep_extend(config, self.model_config.fields[field] || {})
+                                    } else {
+                                        self.model_config.fields[field] = field;
+                                    }
+
+                                    if(false === config.detail_able || (self.model_config.undetail_able && self.model_config.undetail_able.indexOf(field) >= 0)) {
+                                        return;
+                                    }
+
+                                    if(human_date_display !== 2
+                                        && !config.cell_filter
+                                        && (['datetime', 'date', 'time'].indexOf(config.widget) >= 0
+                                        || config.field == 'created')
+                                    ) {
+                                        config.cell_filter = 'to_human_date';
+                                    }
+
+                                    config.widget = config.detail_widget || 'static';
+                                    config.field = config.map || (config.field ? config.field : field);
+                                    config.bind_model = self.config.model_prefix + '.' + (config.bind_model || config.field);
+                                    config.column_width = 12/(config.detail_columns || self.config.columns || 1);
+
+
+                                    if(!config.label && config.field.slice(-3) === "_id") {
+                                        config.label =
+                                            _(
+                                                sprintf('%s.%s', ones.app_info.app, camelCaseSpace(config.field.slice(0, -3)))
+                                            );
+                                    } else {
+                                        var label_field = config.label || (field ? field : config.field);
+                                        config.label = _(ones.app_info.app+'.'+(config.label||camelCaseSpace(label_field)).ucfirst());
+                                    }
+
+                                    var cell_filter = config && (config.detail_filter || config.cell_filter);
+                                    if(cell_filter) {
+                                        var filters = cell_filter;
+                                        if(!angular.isArray(cell_filter)) {
+                                            filters = [cell_filter];
+                                        }
+
+                                        for(var j=0;j<filters.length;j++) {
+                                            var argv = filters[j].split(':');
+                                            var filter_name = argv.shift();
+                                            argv.unshift(self.scope[self.config.model_prefix][config.field]);
+                                            self.scope[self.config.model_prefix][config.field] = $filter(filter_name).call(null, argv);
+                                        }
+                                    }
+
+                                    self.scope.column_defs[field] = config;
+                                    html.push(detail_widgets.make_widget(self.scope, config));
+                                });
+
+                                self.deferred.resolve(html.join(''));
+
                             }
-
-                            var schema = {};
-                            angular.forEach(result, function(v) {
-                                schema[v.field] = v;
-                            });
-
-                            angular.deep_extend(schema, self.model_config.fields);
-
-                            var html = [];
-                            var ignore = [
-                                '_data_model_fields_',
-                                'company_id'
-                            ];
-
-                            var human_date_display = user_preference.get_preference('human_date_display');
-
-                            angular.forEach(schema, function(config, field) {
-
-                                if(field === '_data_model_fields_') {
-                                    self.config.query_params._df = config.value;
-                                    return;
-                                }
-
-                                if(ignore.indexOf(field) >= 0) {
-                                    return;
-                                }
-
-                                if(field in self.model_config.fields) {
-                                    config = angular.deep_extend(config, self.model_config.fields[field] || {})
-                                } else {
-                                    self.model_config.fields[field] = field;
-                                }
-
-                                if(false === config.detail_able || (self.model_config.undetail_able && self.model_config.undetail_able.indexOf(field) >= 0)) {
-                                    return;
-                                }
-
-                                if(human_date_display !== 2
-                                    && !config.cell_filter
-                                    && (['datetime', 'date', 'time'].indexOf(config.widget) >= 0
-                                    || config.field == 'created')
-                                ) {
-                                    config.cell_filter = 'to_human_date';
-                                }
-
-                                config.widget = config.detail_widget || 'static';
-                                config.field = config.map || (config.field ? config.field : field);
-                                config.bind_model = self.config.model_prefix + '.' + (config.bind_model || config.field);
-                                config.cloumn_width = 12/(config.detail_columns || self.config.columns || 1);
-
-                                var label_field = config.label || (field ? field : config.field);
-                                config.label = _(ones.app_info.app+'.'+(config.label||camelCaseSpace(label_field)).ucfirst());
-
-                                self.scope.column_defs[field] = config;
-                                html.push(detail_widgets.make_widget(self.scope, config));
-
-                            });
-
-                            self.load_data(self.scope.column_defs);
-
-                            self.deferred.resolve(html.join(''));
-
-                        }
+                        });
                     });
                  };
 
