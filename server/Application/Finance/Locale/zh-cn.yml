@@ -35,3 +35,5 @@ Currency: 币种
 RECEIVABLES_STATUS_NEW: 新应收款
 RECEIVABLES_STATUS_PART: 已部分收款
 RECEIVABLES_STATUS_COMPLETE: 已收款
+
+Operation Record: 操作记录

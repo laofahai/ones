@@ -57,6 +57,9 @@ class WorkflowProgressService extends CommonModel {
 
         $items_ids = get_array_by_field($source_data, 'id');
         $workflow_ids = get_array_by_field($source_data, 'workflow_id');
+        if(!$workflow_ids) {
+            return $source_data;
+        }
 
         $model = D('Bpm/WorkflowProgress', 'Model');
         $sub_map = [

@@ -273,7 +273,7 @@ class WorkflowService extends CommonModel {
                 'workflow_id' => $node['workflow_id'],
                 'workflow_node_id' => $node['id']
             ];
-
+            $data['remark'] = $this->exec_remark ? $this->exec_remark : "";
             $data = array_merge($meta_data, $data);
             // 写入进程表
             if(false === $progress_service->create($data)){
@@ -376,6 +376,9 @@ class WorkflowService extends CommonModel {
          * ]
          * */
         $result = $source_model->$action($source_data['id'], $this->current_node);
+
+        $this->exec_remark = $source_model->exec_remark ? $source_model->exec_remark : "";
+
         if(false === $result) {
             $this->error = $source_model->getError();
             return false;
@@ -421,7 +424,6 @@ class WorkflowService extends CommonModel {
 
         switch($executor_role) {
             case "r":
-
                 break;
             case "d":
                 break;

@@ -243,9 +243,6 @@
                         });
                     });
 
-                    // action init
-                    scope.current_action_info.init(scope, $routeParams.id);
-
                     // 基础数据
                     this.actions.basic.resource !== undefined && this.actions.basic.resource.get({
                         id: $routeParams.id
@@ -257,6 +254,9 @@
                                     _(ones.app_info.app+'.'+camelCaseSpace(ones.app_info.module)))+
                                     ' '+scope.$parent.global_title
                                 : undefined;
+
+                            // action init
+                            scope.current_action_info.init(scope, $routeParams.id);
                         });
 
                     // 延迟更新右侧导航高度

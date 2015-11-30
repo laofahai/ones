@@ -49,7 +49,7 @@ class WorkflowBuilderController extends BaseRestController {
                 $node_data['action_type'] = $node['action_type'];
 
                 switch($node['action_type']) {
-                    case "n":
+                    case "n": // nothing
                         break;
                     case "e": //service api
                         $node_data['action'] = $node['service_api'];

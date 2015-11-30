@@ -343,6 +343,9 @@ class BaseRestController extends RestController {
 
         $list = !$list[0] ? [] : $list;
 
+        $progress_model = D('Bpm/WorkflowProgress');
+        $list = $progress_model->assign_last_progress_to_list($list);
+
         //包含总数
         if(I("get._ic")) {
             $total = $model->where($map)->count();
@@ -515,6 +518,12 @@ class BaseRestController extends RestController {
 
         if(!$item) {
             return;
+        }
+
+        // 工作流信息
+        if($item['workflow_id']) {
+            $workflow_progress_service = D('Bpm/WorkflowProgress');
+            $item['last_workflow_progress'] = $workflow_progress_service->get_latest_progress($item['workflow_id'], $item['id']);
         }
 
         if($return) {

@@ -25,7 +25,9 @@
         .service('Finance.ReceivablesAPI', [
             'ones.dataApiFactory',
             '$routeParams',
-            function(dataAPI, $routeParams) {
+            'Bpm.WorkflowAPI',
+            '$timeout',
+            function(dataAPI, $routeParams, workflow_api, $timeout) {
 
                 var self = this;
 
@@ -75,18 +77,27 @@
                                             id: id
                                         }
                                     };
+
+                                    workflow_api.get_next_nodes(scope.basic_data.workflow_id, id)
+                                        .then(function(next_nodes){
+                                            console.log(next_nodes);
+                                        });
                                 },
                                 resource: self.resource
-                            }
-                        },
-                        customer_need_receive: {
-                            label: _('finance.Customer Receivables'),
-                            view: 'views/grid.html',
-                            init: function(scope, id) {
-
                             },
-                            no_padding: true,
-                            resource: ''
+                            operation_log: {
+                                label: _('finance.Operation Record'),
+                                view: appView('operation_log.html', 'finance'),
+                                init: function(scope, id) {
+                                    $timeout(function() {
+                                        workflow_api.get_progress(scope.basic_data.workflow_id, id)
+                                            .then(function(progress){
+                                                scope.operation_log = progress;
+                                            });
+                                    });
+                                },
+                                link_actions: []
+                            }
                         }
                     },
                     fields: {
@@ -124,7 +135,7 @@
                         },
                         status: {
                             get_display: function(value, item) {
-                                return self.receivables_status[value] || '';
+                                return item.workflow_node_status_label || item.last_workflow_progress.node_status_label;
                             },
                             widget: 'select',
                             data_source: self.receivables_status_array
