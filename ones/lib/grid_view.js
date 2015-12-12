@@ -14,11 +14,12 @@
             "ones.dataApiFactory",
             "$timeout",
             "$injector",
+            "$filter",
             "RootFrameService",
             "Home.SchemaAPI",
             "Account.UserPreferenceAPI",
             "PageSelectedActions",
-            function($rootScope, $routeParams, $location, $modal, dataAPI, $timeout, $injector,
+            function($rootScope, $routeParams, $location, $modal, dataAPI, $timeout, $injector, $filter,
                      RootFrameService, SchemaAPI,
                      user_preference,
                      PageSelectedActions
@@ -260,6 +261,8 @@
 
                             self.scope.schema_display = self.scope.schema_display.concat(schema[self.model_config.table].list_display || []);
                             self.scope.schema_display = array_unique(self.scope.schema_display);
+                            self.scope.schema_display_fixed = $filter('get_grid_fields')(self.scope.schema_display, self.scope.column_defs, 1);
+                            self.scope.schema_display_not_fixed = $filter('get_grid_fields')(self.scope.schema_display, self.scope.column_defs, 2);
 
                             self.scope.column_defs._data_model_fields_ = self.scope.column_defs._data_model_fields_ || {};
                             self.data_model_fields = self.scope.column_defs._data_model_fields_.value || null;
@@ -808,6 +811,43 @@
                 return data;
 
 
+            };
+        }])
+        /*
+         * 返回需显示的数据列
+         * @param [] schema_display 全部需显示的列
+         * @param {} column_defs 列配置
+         * @param enum(0, 1, 2) type
+         *   1: 仅返回固定左侧列字段
+         *   2: 仅返回非fixed字段
+         *   3: 返回全部字段
+         *
+         *  默认为首字段固定左侧显示
+         * */
+        .filter('get_grid_fields', [function() {
+            return function(schema_display, column_defs, type) {
+                type = type || 3;
+                if(type == 3 || !schema_display) {
+                    return schema_display;
+                }
+
+                var fixed = [], not_fixed = [], first_fixed = [schema_display[0]];
+
+                for(var i=0; i<schema_display.length; i++) {
+                    var t = schema_display[i];
+                    if(column_defs[t].grid_fixed) {
+                        fixed.push(t);
+                    } else {
+                        not_fixed.push(t);
+                    }
+                }
+
+                // 默认首列固定
+                if(fixed.length <= 0) {
+                    fixed = first_fixed;
+                    not_fixed = not_fixed.splice(1);
+                }
+                return type == 1 ? fixed : not_fixed;
             };
         }])
     ;

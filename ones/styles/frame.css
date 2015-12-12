@@ -26,7 +26,8 @@ a, a:hover, a:active {
   margin-bottom: -1px !important; }
 
 .table-grid td {
-  vertical-align: middle !important; }
+  vertical-align: middle !important;
+  white-space: nowrap; }
 
 .table-grid .grid-loading-icon {
   font-size: 16px; }
@@ -35,10 +36,14 @@ a, a:hover, a:active {
   background: #f2f2f2;
   vertical-align: middle;
   padding: 0 8px 18px;
-  position: relative; }
+  position: relative;
+  white-space: nowrap; }
 
-.table-grid td label {
-  margin: 0; }
+.table-grid td.grid-select-td label {
+  margin: 0;
+  display: block;
+  overflow: hidden;
+  height: 16px; }
 
 .grid-page-select-box {
   width: 120px;
@@ -108,6 +113,35 @@ a, a:hover, a:active {
         border-color: #1155cc; }
         .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links dd.active a {
           color: #1155cc; }
+
+.grid-table-container {
+  position: relative; }
+
+.grid-fixed-fields-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  min-width: 170px;
+  z-index: 99; }
+
+.grid-not-fixed-fields-container {
+  position: relative; }
+
+.grid-not-fixed-fields-container-box {
+  width: 100%;
+  overflow-y: auto;
+  _overflow: auto;
+  margin: 0 0 1em; }
+
+.grid-not-fixed-fields-container-box::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px; }
+
+.grid-not-fixed-fields-container-box::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 3px solid #fff;
+  background-color: rgba(0, 0, 0, 0.3); }
 
 .table-grid .grid-td-unfound {
   height: 50px;

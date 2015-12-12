@@ -1,18 +1,19 @@
 <div class="grid-container" ng-class="{'has-filter': $parent.show_filters && $parent.has_filters}">
     <div class="grid-table-container">
-        <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
-            <thead>
+        <div class="grid-fixed-fields-container" style="width:{{schema_display_fixed.length * 120 + 62}}px">
+            <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
+                <thead>
                 <tr>
-                    <th width="40" class="text-center">
+                    <th width="40" class="text-center grid-select-td">
                         <!--<input type="checkbox"-->
-                               <!--ng-change="selectAll()"-->
-                               <!--ng-model="all_checked" />-->
+                        <!--ng-change="selectAll()"-->
+                        <!--ng-model="all_checked" />-->
                         <i class="fa fa-spin fa-spinner text-primary grid-loading-icon ng-hide" ng-show="grid_refershing"></i>
                     </th>
                     <th
                             class="th-{{f}}"
                             ng-class="{sortable: is_sortable(f) || f == 'id', sorting: sortInfo.fields == f}"
-                            ng-repeat="f in schema_display"
+                            ng-repeat="f in schema_display_fixed"
                             ng-click="is_sortable(f) && doGridSortBy(f)"
                             width="{{column_defs[f].width}}">
                         <span ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"></span>
@@ -23,24 +24,24 @@
                            ng-show="is_sortable(f) && sortInfo.fields !== f"></i>
                     </th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr ng-repeat="item in itemsList"
                     ng-dblclick="doGridDblClick(item, null, $event)"
                     ng-click="doGridClick($index, $event)"
                     ng-touch="doAlert($event,item,config)"
                     ng-right-click="doContextMenu($event,item,config)">
-                    <td align="center" class="hidden-480">
+                    <td align="center" class="grid-select-td">
                         <label>
                             <input type="checkbox"
                                    ng-change="recordSelected(result)"
-                                   ng-true-value="{{$index + 1}}"
+                                   ng-true-value="{{$index}}"
                                    ng-checked="checked_box[('index_'+$index)]"
-                                   ng-false-value="{{-($index + 1)}}" ng-model="result" />
+                                   ng-false-value="{{-($index)}}" ng-model="result" />
                             <span class="lbl"></span>
                         </label>
                     </td>
-                    <td ng-repeat="field in schema_display"
+                    <td ng-repeat="field in schema_display_fixed"
                         class="td-{{field}} {{column_defs[field].class}}"
                         ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
                         ui-event="{{column_defs[field].ui_event}}"
@@ -48,17 +49,13 @@
                         ng-bind-html="(column_defs[field].get_display && column_defs[field].get_display(item[field], item)) || item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index"
                             ></td>
                 </tr>
-                <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">
-                    <td colspan="{{schema_display.length + 1}}"
-                        class="grid-td-unfound" align="center" ng-bind="'common.No data to display' | lang"></td>
-                </tr>
-            </tbody>
-            <tfoot>
+                </tbody>
+                <tfoot>
                 <tr ng-show="count_object_size(search_able)>0">
-                    <th width="40" class="grid-th-search"></th>
+                    <th> </th>
                     <th
                             class="th-{{f}} grid-th-search"
-                            ng-repeat="f in schema_display"
+                            ng-repeat="f in schema_display_fixed"
                             width="{{column_defs[f].width}}">
                         <input type="text"
                                class="grid-search-input"
@@ -67,17 +64,85 @@
                                placeholder="{{('common.'+(search_able[f].type == 2 ? 'Precision ': 'Fuzzy')+' Search By %s')|lang:(app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang)}}"
                                ng-focus="doResetSearchValue(f)"
                                ng-model-options="{ debounce: 500 }" />
-                        <span
-                                ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"
-                                ng-show="!search_able[f]"
-                                ></span>
+                            <span
+                                    ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"
+                                    ng-show="!search_able[f]"
+                                    ></span>
                     </th>
                 </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="grid-not-fixed-fields-container" style="margin-left:{{schema_display_fixed.length*120 + 61}}px">
+            <div class="grid-not-fixed-fields-container-box">
+                <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
+                    <thead>
+                    <tr>
+                        <th
+                                class="th-{{f}}"
+                                ng-class="{sortable: is_sortable(f) || f == 'id', sorting: sortInfo.fields == f}"
+                                ng-repeat="f in schema_display_not_fixed"
+                                ng-click="is_sortable(f) && doGridSortBy(f)"
+                                width="{{column_defs[f].width}}">
+                            <span ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"></span>
+                            <i class="sorting-icon fa"
+                               ng-class="{'fa-sort-asc':sorting == f + ' DESC','fa-sort-desc':sorting == f + ' ASC'}"
+                               ng-show="is_sortable(f)"></i>
+                            <i class="sorting-icon fa fa-sort"
+                               ng-show="is_sortable(f) && sortInfo.fields !== f"></i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in itemsList"
+                        ng-dblclick="doGridDblClick(item, null, $event)"
+                        ng-click="doGridClick($index, $event)"
+                        ng-touch="doAlert($event,item,config)"
+                        ng-right-click="doContextMenu($event,item,config)">
+                        <td ng-repeat="field in schema_display_not_fixed"
+                            class="td-{{field}} {{column_defs[field].class}}"
+                            ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
+                            ui-event="{{column_defs[field].ui_event}}"
+                            ng-click="{{column_defs[field].ng_click}}"
+                            ng-bind-html="(column_defs[field].get_display && column_defs[field].get_display(item[field], item)) || item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index"
+                                ></td>
+                    </tr>
+                    <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">
+                        <td colspan="{{schema_display_not_fixed.length}}"
+                            class="grid-td-unfound" align="center" ng-bind="'common.No data to display' | lang"></td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr ng-show="count_object_size(search_able)>0">
+                        <th
+                                class="th-{{f}} grid-th-search"
+                                ng-repeat="f in schema_display_not_fixed"
+                                width="{{column_defs[f].width}}">
+                            <input type="text"
+                                   class="grid-search-input"
+                                   ng-show="search_able[f].type>0"
+                                   ng-model="search_value[f]"
+                                   placeholder="{{('common.'+(search_able[f].type == 2 ? 'Precision ': 'Fuzzy')+' Search By %s')|lang:(app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang)}}"
+                                   ng-focus="doResetSearchValue(f)"
+                                   ng-model-options="{ debounce: 500 }" />
+                            <span
+                                    ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"
+                                    ng-show="!search_able[f]"
+                                    ></span>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid-table-footer">
+            <table class="table table-bordered">
                 <tr ng-show="(model_config.app +'.HELP_TEXTS.grid.'+model_config.module|lang) != model_config.module ">
-                    <td colspan="{{schema_display.length + 1}}" ng-bind-html="model_config.app +'.HELP_TEXTS.grid.'+model_config.module|lang"></td>
+                    <td colspan="{{schema_display.length}}" ng-bind-html="model_config.app +'.HELP_TEXTS.grid.'+model_config.module|lang"></td>
                 </tr>
                 <tr>
-                    <td colspan="{{schema_display.length + 1}}" valign="middle">
+                    <td colspan="{{schema_display.length}}" valign="middle">
                         <div class="row">
                             <div class="col-sm-4">
                                 <span ng-bind="'common.%s Items Total'|lang:(totalServerItems||0)"></span><br />
@@ -107,8 +172,8 @@
                         </div>
                     </td>
                 </tr>
-            </tfoot>
-        </table>
+            </table>
+        </div>
     </div>
     <div class="grid-filter-container" id="grid-filter-container" ng-show="$parent.show_filters && $parent.has_filters">
         <h2 class="filter-title">
