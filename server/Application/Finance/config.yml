@@ -18,6 +18,7 @@ include:
     js:
         - apps/finance/main
         - apps/finance/model
+        - apps/finance/receivables
         - apps/crm/model
         - apps/supplier/model
         - apps/contactsCompany/model

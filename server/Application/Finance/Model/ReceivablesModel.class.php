@@ -22,6 +22,16 @@ class ReceivablesModel extends CommonViewModel {
             "name" => "workflow_id_label",
             "_on" => "Receivables.workflow_id=Workflow.id",
             "_type" => "left"
+        ],
+        "Customer" => [
+            'contacts_company_id',
+            '_on' => 'Receivables.customer_id=Customer.id',
+            '_type' => 'left'
+        ],
+        "ContactsCompany" => [
+            'name' => 'customer_id__label__',
+            '_on' => 'Customer.contacts_company_id=ContactsCompany.id',
+            '_type' => 'left'
         ]
     ];
 

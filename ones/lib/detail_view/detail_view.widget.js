@@ -5,10 +5,10 @@
             '<label class="col-sm-3 text-right detail-view-label">%(label)s</label>' +
             '<div class="col-sm-9 detail-view-content">%(html)s</div>' +
         '</div>',
-        static: '<div ng-bind-html="(column_defs.%(field)s.get_display && column_defs.%(field)s.get_display(%(bind)s, %(item_data)s)) || %(bind)s_label || %(bind)s"></div>',
+        static: '<div class="%(class)s" ng-bind-html="(column_defs.%(field)s.get_display && column_defs.%(field)s.get_display(%(bind)s, %(item_data)s)) || %(bind)s__label__ || %(bind)s"></div>',
         frame_link: '<a href="javascript:void(0)" ' +
                     'ng-click="%(click_func)s(%(bind)s, %(item_data)s)" ' +
-                    'ng-bind-html="(column_defs.%(field)s.get_display && column_defs.%(field)s.get_display(%(bind)s, %(item_data)s)) || %(bind)s_label || %(bind)s"></a>'
+                    'ng-bind-html="(column_defs.%(field)s.get_display && column_defs.%(field)s.get_display(%(bind)s, %(item_data)s)) || %(bind)s__label__ || %(bind)s"></a>'
     };
 
     angular.module('ones.detailViewWidgetModule', [])
@@ -26,7 +26,8 @@
                     return sprintf(DETAIL_VIEW_WIDGETS_TPL.static, {
                         bind: config.bind_model,
                         field: config.field,
-                        item_data: scope.model_prefix
+                        item_data: scope.model_prefix,
+                        'class': config.highlight ? 'text-'+config.highlight : 'text-default'
                     });
                 },
                 frame_link: function(config, scope) {

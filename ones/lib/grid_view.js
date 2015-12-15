@@ -418,6 +418,8 @@
                             var key = self.scope.schema_display[j];
                             var value = data[i][key];
 
+                            value = data[i][key+"__label__"] === undefined ? value : data[i][key+"__label__"];
+
                             if(self.scope.column_defs[key]) {
                                 if(typeof self.scope.column_defs[key].get_display === 'function') {
                                     value = self.scope.column_defs[key].get_display(value, data[i]);
@@ -437,26 +439,6 @@
                     }
 
                     return cleared_data;
-                    //
-                    //for(var i=0; i<data.length; i++) {
-                    //    var item = data[i];
-                    //
-                    //    angular.forEach(item, function(value, key) {
-                    //        if(self.scope.column_defs[key]) {
-                    //            if(typeof self.scope.column_defs[key].get_display === 'function') {
-                    //                value = self.scope.column_defs[key].get_display(value, item);
-                    //            } else {
-                    //                //value = $filter('tryGridEval')(value, key, i); ?????????
-                    //                if(self.scope.column_defs[key].cell_filter) {
-                    //                    value = $filter('tryGridFilter')(value, self.scope.column_defs[key].cell_filter, i);
-                    //                }
-                    //            }
-                    //            data[i][key] = value;
-                    //        }
-                    //    });
-                    //}
-                    //
-                    //return data;
 
                 };
 
