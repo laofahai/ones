@@ -163,6 +163,7 @@
                     list_display: [
                         'subject',
                         'common_type_id',
+                        'customer_id',
                         'amount',
                         'received',
                         'created',
@@ -170,16 +171,19 @@
                         'status'
                     ],
                     unaddable: [
-                        'source_id', 'source_model', 'user_id', 'customer_id', 'created'
+                        'source_id', 'source_model', 'user_id', 'created'
                     ],
                     uneditable: [
-                        'source_id', 'source_model', 'user_id', 'customer_id', 'created'
+                        'source_id', 'source_model', 'user_id', 'created', 'status'
                     ],
                     undetail_able: [
                         'source_id'
                     ],
                     filters: {
                         status: {
+                            type: "link"
+                        },
+                        common_type_id: {
                             type: "link"
                         }
                     }

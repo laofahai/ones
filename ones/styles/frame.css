@@ -22,10 +22,14 @@ a, a:hover, a:active {
     数据表格
 */
 .table-grid {
-  background: #fff; }
+  background: #fff;
+  margin-bottom: -1px !important; }
 
 .table-grid td {
   vertical-align: middle !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100px;
   white-space: nowrap; }
 
 .table-grid .grid-loading-icon {
@@ -133,7 +137,8 @@ a, a:hover, a:active {
   width: 100%;
   overflow-y: auto;
   _overflow: auto;
-  margin: 0 0 1em; }
+  margin: 0 0 1em;
+  border-bottom: 1px solid #ddd; }
 
 .grid-not-fixed-fields-container-box::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -528,10 +533,18 @@ form
   .select3-container .select3-show-grid-btn {
     float: right;
     z-index: 101;
-    margin: 8px 8px 0 0;
+    margin: 7px 8px 0 0;
     color: #666;
     position: absolute;
     right: 0;
+    top: 0; }
+  .select3-container .select3-add-btn {
+    float: right;
+    z-index: 101;
+    margin: 7px 8px 0 0;
+    color: #666;
+    position: absolute;
+    right: 18px;
     top: 0; }
   .select3-container input.form-control {
     position: relative;

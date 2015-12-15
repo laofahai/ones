@@ -1,6 +1,6 @@
 <div class="grid-container" ng-class="{'has-filter': $parent.show_filters && $parent.has_filters}">
     <div class="grid-table-container">
-        <div class="grid-fixed-fields-container" id="grid-fixed-fields-container" style="width:{{schema_display_fixed.length * 120 + 62}}px">
+        <div class="grid-fixed-fields-container" id="grid-fixed-fields-container" style="max-width:{{(schema_display_fixed.length-2) * 120 + 120}}px">
             <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
                 <thead>
                 <tr>
@@ -35,7 +35,7 @@
                     <td align="center" class="grid-select-td">
                         <label>
                             <input type="checkbox"
-                                   ng-change="recordSelected(result)"
+                                   ng-change="$root.recordSelected(result)"
                                    ng-true-value="{{$index}}"
                                    ng-checked="checked_box[('index_'+$index)]"
                                    ng-false-value="{{-($index)}}" ng-model="result" />
@@ -47,7 +47,8 @@
                         ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
                         ui-event="{{column_defs[field].ui_event}}"
                         ng-click="{{column_defs[field].ng_click}}"
-                        ng-bind-html="(column_defs[field].get_display && column_defs[field].get_display(item[field], item)) || item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index"
+                        ng-bind-html="item[field]"
+                        width="{{column_defs[field].width}}"
                             ></td>
                 </tr>
                 <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">
@@ -103,6 +104,7 @@
                         ng-dblclick="doGridDblClick(item, null, $event)"
                         ng-click="doGridClick($index, $event)"
                         ng-touch="doAlert($event,item,config)"
+                        width="{{column_defs[field].width}}"
                         ng-right-click="doContextMenu($event,item,config)">
                         <td ng-repeat="field in schema_display_not_fixed"
                             class="td-{{field}} {{column_defs[field].class}}"

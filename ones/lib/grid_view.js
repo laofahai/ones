@@ -278,7 +278,6 @@
 
                             self.scope.column_defs._data_model_fields_ = self.scope.column_defs._data_model_fields_ || {};
                             self.data_model_fields = self.scope.column_defs._data_model_fields_.value || null;
-
                             // 初始载入数据
                             self.refresh();
 
@@ -410,25 +409,54 @@
                     // column_defs[field].get_display(item[field], item) :
                     // item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index
 
-                    for(var i=0; i<data.length; i++) {
-                        var item = data[i];
+                    var cleared_data = [];
 
-                        angular.forEach(item, function(value, key) {
-                            self.scope.column_defs;
+                    for(var i=0; i<data.length; i++) {
+
+                        var cleared_single_row = {};
+                        for(var j=0; j<self.scope.schema_display.length; j++) {
+                            var key = self.scope.schema_display[j];
+                            var value = data[i][key];
 
                             if(self.scope.column_defs[key]) {
                                 if(typeof self.scope.column_defs[key].get_display === 'function') {
-                                    value = self.scope.column_defs[key].get_display(value, item);
-                                } else if(self.scope.column_defs[key].cell_filter) {
-                                    value = $filter('tryGridFilter')(value, self.scope.column_defs[key].cell_filter);
+                                    value = self.scope.column_defs[key].get_display(value, data[i]);
+                                } else {
+                                    //value = $filter('tryGridEval')(value, key, i); ?????????
+                                    if(self.scope.column_defs[key].cell_filter) {
+                                        value = $filter('tryGridFilter')(value, self.scope.column_defs[key].cell_filter, i);
+                                    }
                                 }
 
-                                data[i][key] = value;
                             }
-                        });
+
+                            cleared_single_row[key] = value;
+                        }
+
+                        cleared_data.push(cleared_single_row);
                     }
 
-                    return data;
+                    return cleared_data;
+                    //
+                    //for(var i=0; i<data.length; i++) {
+                    //    var item = data[i];
+                    //
+                    //    angular.forEach(item, function(value, key) {
+                    //        if(self.scope.column_defs[key]) {
+                    //            if(typeof self.scope.column_defs[key].get_display === 'function') {
+                    //                value = self.scope.column_defs[key].get_display(value, item);
+                    //            } else {
+                    //                //value = $filter('tryGridEval')(value, key, i); ?????????
+                    //                if(self.scope.column_defs[key].cell_filter) {
+                    //                    value = $filter('tryGridFilter')(value, self.scope.column_defs[key].cell_filter, i);
+                    //                }
+                    //            }
+                    //            data[i][key] = value;
+                    //        }
+                    //    });
+                    //}
+                    //
+                    //return data;
 
                 };
 
@@ -690,8 +718,8 @@
                     },
                     //记录选中项
                     recordSelected: function(index){
-                        var absIndex = Math.abs(index)-1;
-
+                        //var absIndex = Math.abs(index)-1;
+                        var absIndex = Math.abs(index);
                         if(self.model_config.multi_select === false) {
                             self.selected = {};
                             self.selected["index_"+absIndex] = self.scope.itemsList[absIndex];
@@ -743,70 +771,72 @@
                 };
 
             }])
-        .directive("tableView", ["$compile", "$timeout", "GridView", "$filter", function($compile, $timeout, GridView, $filter){
-            return {
-                restrict: "E",
-                replace: true,
-                transclusion: true,
-                templateUrl: "views/gridTemplate.html",
-                scope: {
-                    config: "="
-                },
-                compile: function(element, attrs, transclude){
-                    return {
-                        pre: function($scope, iElement, iAttrs, controller) {
-                            var fetchData = function(){
-                                var gridOptions = $scope.$parent.$eval(iAttrs.config);
+        .directive("tableView", [
+            "$compile", "$timeout", "GridView", "$filter",
+            "$rootScope",
+            function($compile, $timeout, GridView, $filter, $rootScope){
+                return {
+                    restrict: "E",
+                    replace: true,
+                    transclusion: true,
+                    templateUrl: "views/gridTemplate.html",
+                    scope: {
+                        config: "="
+                    },
+                    compile: function(element, attrs, transclude){
+                        return {
+                            pre: function($scope, iElement, iAttrs, controller) {
+                                var fetchData = function(){
+                                    var gridOptions = $scope.$parent.$eval(iAttrs.config);
 
 
-                                GridView.init($scope, gridOptions);
+                                    GridView.init($scope, gridOptions);
 
-                                var scope_method = [
-                                    'setPage', 'recordSelected'
-                                ];
-                                angular.forEach(GridView.methodsList, function(method, k){
-                                    $scope[k] = method;
+                                    angular.forEach(GridView.methodsList, function(method, k){
+                                        $scope[k] = method;
+                                    });
+                                    $rootScope.recordSelected = GridView.methodsList.recordSelected;
+
+                                    GridView.doResetGridOptions();
+
+                                    //每页显示条数
+                                    var pageSize = ones.caches.getItem("ones.pageSize");
+
+                                    if(!pageSize || "undefined" === pageSize) {
+                                        pageSize = $scope.pagingOptions.pageSize;
+                                        ones.caches.setItem("ones.pageSize", pageSize, 1);
+                                    }
+                                    $scope.pagingOptions.pageSize = pageSize;
+                                    $scope.pageSizes = $scope.pagingOptions.pageSizes;
+                                };
+
+                                var fetched = false;
+                                $scope.$on("commonGrid.ready", function(){
+                                    if(!fetched) {
+                                        fetchData();
+                                        fetched = true;
+                                    }
                                 });
+                                $timeout(function(){
+                                    if(!fetched) {
+                                        fetchData();
+                                        fetched = true;
+                                    }
+                                }, 300);
 
-                                GridView.doResetGridOptions();
+                                ones.GridScope = $scope;
 
-                                //每页显示条数
-                                var pageSize = ones.caches.getItem("ones.pageSize");
+                                $scope.itemsList = [];
 
-                                if(!pageSize || "undefined" === pageSize) {
-                                    pageSize = $scope.pagingOptions.pageSize;
-                                    ones.caches.setItem("ones.pageSize", pageSize, 1);
-                                }
-                                $scope.pagingOptions.pageSize = pageSize;
-                                $scope.pageSizes = $scope.pagingOptions.pageSizes;
-                            };
-
-                            var fetched = false;
-                            $scope.$on("commonGrid.ready", function(){
-                                if(!fetched) {
-                                    fetchData();
-                                    fetched = true;
-                                }
-                            });
-                            $timeout(function(){
-                                if(!fetched) {
-                                    fetchData();
-                                    fetched = true;
-                                }
-                            }, 300);
-
-                            ones.GridScope = $scope;
-
-                            $scope.itemsList = [];
-
-                        }
-                    };
-                }
-            };
-        }])
+                            }
+                        };
+                    }
+                };
+            }
+        ])
         //尝试使用$eval
         .filter("tryGridEval", [function(){
-            return function(item, index, key){
+            return function(item, key, index){
                 if(item) {
                     return item;
                 } else {
@@ -896,6 +926,9 @@
                     fixed = first_fixed;
                     not_fixed = not_fixed.splice(1);
                 }
+
+                console.debug('grid fixed fields:', fixed);
+                console.debug('grid not fixed fields:', not_fixed);
                 return type == 1 ? fixed : not_fixed;
             };
         }])

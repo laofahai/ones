@@ -391,6 +391,7 @@
                                     is_modal_grid: true
                                 }
                             };
+
                             $injector.get("$modal")({
                                 scope: self.scope,
                                 template: 'views/itemSelectModal.html',
@@ -401,7 +402,7 @@
                         };
 
                         self.scope.doItemSelectConfirm = function(evt, grid_selected) {
-                            var item = item_to_kv(grid_selected[0], data_source);
+                            var item = item_to_kv(grid_selected[0] || {}, data_source);
                             do_select3_item_select(item);
                         };
 
