@@ -389,6 +389,9 @@
                     }
 
                     data = reIndex(data);
+
+                    data = self.parseData(data);
+
                     self.scope.$broadcast("gridData.changed", data);
 
                     self.scope.checked_box = [];
@@ -400,6 +403,35 @@
                     }, 300);
 
                 };
+
+                // 格式化后端数据
+                this.parseData = function(data) {
+                    //$root.typeof(column_defs[field].get_display) === 'function' ?
+                    // column_defs[field].get_display(item[field], item) :
+                    // item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index
+
+                    for(var i=0; i<data.length; i++) {
+                        var item = data[i];
+
+                        angular.forEach(item, function(value, key) {
+                            self.scope.column_defs;
+
+                            if(self.scope.column_defs[key]) {
+                                if(typeof self.scope.column_defs[key].get_display === 'function') {
+                                    value = self.scope.column_defs[key].get_display(value, item);
+                                } else if(self.scope.column_defs[key].cell_filter) {
+                                    value = $filter('tryGridFilter')(value, self.scope.column_defs[key].cell_filter);
+                                }
+
+                                data[i][key] = value;
+                            }
+                        });
+                    }
+
+                    return data;
+
+                };
+
                 //获取后端数据
                 this.getPagedDataAsync = function(page, extraParams) {
 

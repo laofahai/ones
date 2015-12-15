@@ -109,7 +109,7 @@
                             ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
                             ui-event="{{column_defs[field].ui_event}}"
                             ng-click="{{column_defs[field].ng_click}}"
-                            ng-bind-html="(column_defs[field].get_display && column_defs[field].get_display(item[field], item)) || item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index"
+                            ng-bind-html="item[field]"
                                 ></td>
                     </tr>
                     <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">

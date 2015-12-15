@@ -32,6 +32,17 @@
         'Home.NavAPI',
         function ($scope, $timeout, frames, dataAPI, $injector, nav) {
 
+            $scope.safeApply = function(fn){
+                var phase = this.$root.$$phase;
+                if (phase == '$apply' || phase == '$digest') {
+                    if (fn && ( typeof (fn) === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+
             /**
              * 向frame广播事件
              * */
@@ -51,12 +62,12 @@
              * */
             window.$on_frame = function(opts) {
                 if(opts.event) {
-                    $scope.$apply(function() {
+                    $scope.safeApply(function() {
                         $scope.$broadcast(opts.event, opts.data);
                     });
                 } else {
                     angular.forEach(opts.data, function(item, k) {
-                        $scope.$apply(function(){
+                        $scope.safeApply(function(){
                             $scope[k] = item;
                         });
                     });

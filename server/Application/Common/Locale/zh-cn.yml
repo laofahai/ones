@@ -77,6 +77,7 @@ Everybody: 所有人
 Fax: 传真
 Female: 女士
 Filters: 过滤器
+Form is dirty, close will lost everything: 您已经填写表单，关闭后会丢失所有表单中的数据。确认要关闭吗？
 Fuzzy search: 模糊搜索
 Fuzzy Search By %s: 通过%s模糊检索
 Gender: 性别
@@ -111,7 +112,9 @@ Quantity: 数量
 Quick Search: 快速搜索
 Remark: 备注
 Remove From Common Nav: 从常用操作中移除
+Reset form: 重置表单
 Save: 保存
+Save and add another one: 保存并新增
 Search By %s: 通过%s检索
 Selected %s Items: 选中%s项
 Self and all subordinate: 自己和所有下属

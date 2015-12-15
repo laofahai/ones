@@ -114,13 +114,19 @@ var frame_init = function() {
                      * */
                     .controller('MainFrameCtrl', [
                         "$scope",
+                        "$rootScope",
                         "$timeout",
                         "$injector",
                         "$aside",
 
                         "RootFrameService",
                         "Account.UserPreferenceAPI",
-                        function($scope, $timeout, $injector, $aside, RootFrameService, preference) {
+                        function($scope, $rootScope, $timeout, $injector, $aside, RootFrameService, preference) {
+
+                            $rootScope.typeof = function(cond) {
+                                return typeof cond;
+                            };
+
                             //监听全局事件
                             $scope.$on("event:loginRequired", function() {
                                 window.top.location.href = "./";

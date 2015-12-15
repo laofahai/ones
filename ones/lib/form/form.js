@@ -251,9 +251,28 @@
 
                             // 重置
                             self.parentScope.doFormReset = function() {
+                                var form = self.scope[self.config.form_name];
+                                if(!form.$dirty) {
+                                    return;
+                                }
                                 angular.forEach(fields_define, function(config) {
                                     fields_factory.set_default_value(config, self.scope, true);
                                 });
+
+                                // 设置状态
+                                form.$setPristine(true);
+                            };
+
+                            // 关闭
+                            self.parentScope.doFormClose = function() {
+                                var form = self.scope[self.config.form_name];
+                                if(!form.$pristine) {
+                                    RootFrameService.confirm(_('common.Form is dirty, close will lost everything'), function() {
+                                        RootFrameService.close(window.current_frame);
+                                    });
+                                } else {
+                                    RootFrameService.close(window.current_frame);
+                                }
                             };
 
                          }

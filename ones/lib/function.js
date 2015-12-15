@@ -113,6 +113,7 @@ function get_random_int(min, max) {
 * 格式化数字显示
 * */
 function to_decimal_display(value) {
+    value = value === undefined ? 0 : value;
     return value ? accounting.formatNumber(Number(value), ones.system_preference.decimal_scale) : value;
 }
 

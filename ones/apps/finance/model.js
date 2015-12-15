@@ -13,7 +13,14 @@
                     app: "finance",
                     module: "financeAccount",
                     table: "finance_account",
-                    fields: {},
+                    fields: {
+                        balance: {
+                            get_display: function(value, item) {
+                                console.log(to_decimal_display(value));
+                                return to_decimal_display(value);
+                            }
+                        }
+                    },
                     list_display: [
                         "name",
                         "balance",
