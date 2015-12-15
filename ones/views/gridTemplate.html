@@ -1,14 +1,15 @@
 <div class="grid-container" ng-class="{'has-filter': $parent.show_filters && $parent.has_filters}">
     <div class="grid-table-container">
-        <div class="grid-fixed-fields-container" style="width:{{schema_display_fixed.length * 120 + 62}}px">
+        <div class="grid-fixed-fields-container" id="grid-fixed-fields-container" style="width:{{schema_display_fixed.length * 120 + 62}}px">
             <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
                 <thead>
                 <tr>
                     <th width="40" class="text-center grid-select-td">
+                        &nbsp;
                         <!--<input type="checkbox"-->
                         <!--ng-change="selectAll()"-->
                         <!--ng-model="all_checked" />-->
-                        <i class="fa fa-spin fa-spinner text-primary grid-loading-icon ng-hide" ng-show="grid_refershing"></i>
+                        <!--<i class="fa fa-spin fa-spinner text-primary grid-loading-icon ng-hide" ng-show="grid_refershing"></i>-->
                     </th>
                     <th
                             class="th-{{f}}"
@@ -16,7 +17,7 @@
                             ng-repeat="f in schema_display_fixed"
                             ng-click="is_sortable(f) && doGridSortBy(f)"
                             width="{{column_defs[f].width}}">
-                        <span ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"></span>
+                        <span ng-bind="(app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang)">&nbsp;</span>
                         <i class="sorting-icon fa"
                            ng-class="{'fa-sort-asc':sorting == f + ' DESC','fa-sort-desc':sorting == f + ' ASC'}"
                            ng-show="is_sortable(f)"></i>
@@ -49,6 +50,10 @@
                         ng-bind-html="(column_defs[field].get_display && column_defs[field].get_display(item[field], item)) || item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index"
                             ></td>
                 </tr>
+                <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">
+                    <td colspan="{{schema_display_fixed.length+1}}"
+                        class="grid-td-unfound" align="center" ng-bind="'common.No data to display' | lang"></td>
+                </tr>
                 </tbody>
                 <tfoot>
                 <tr ng-show="count_object_size(search_able)>0">
@@ -73,7 +78,7 @@
                 </tfoot>
             </table>
         </div>
-        <div class="grid-not-fixed-fields-container" style="margin-left:{{schema_display_fixed.length*120 + 61}}px">
+        <div class="grid-not-fixed-fields-container" id="grid-not-fixed-fields-container" style="margin-left:{{schema_display_fixed.length*120 + 68}}px">
             <div class="grid-not-fixed-fields-container-box">
                 <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
                     <thead>

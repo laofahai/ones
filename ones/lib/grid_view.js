@@ -31,6 +31,18 @@
 
                 this.init = function($scope, options){
 
+                    // 列表第一个字段加入ID
+                    if(options.model.config.list_display.indexOf('id') <= 0) {
+                        options.model.config.list_display.unshift('id');
+                    }
+                    if(!options.model.config.fields.id) {
+                        options.model.config.fields.id = {
+                            label: "ID",
+                            grid_fixed: true,
+                            width: 50
+                        };
+                    }
+
                     self.scope = $scope;
                     // 父作用域
                     self.parentScope = self.scope.$parent;
@@ -429,6 +441,11 @@
                         try {
                             self.options.resource.query(p).$promise.then(function(remoteData) {
                                 self.setPagingData(remoteData, page, pageSize);
+
+                                // 设置非固定列容器宽度
+                                $('#grid-not-fixed-fields-container').css({
+                                    marginLeft: $('#grid-fixed-fields-container').width() - 1
+                                });
                             });
                         } catch(e) {
                             console.log(e);
@@ -831,7 +848,7 @@
                     return schema_display;
                 }
 
-                var fixed = [], not_fixed = [], first_fixed = [schema_display[0]];
+                var fixed = [], not_fixed = [], first_fixed = schema_display.slice(0, 2);
 
                 for(var i=0; i<schema_display.length; i++) {
                     var t = schema_display[i];
@@ -843,10 +860,13 @@
                 }
 
                 // 默认首列固定
-                if(fixed.length <= 0) {
+                if(fixed.length <= 1) {
                     fixed = first_fixed;
                     not_fixed = not_fixed.splice(1);
                 }
+
+                console.log(fixed, not_fixed);
+
                 return type == 1 ? fixed : not_fixed;
             };
         }])

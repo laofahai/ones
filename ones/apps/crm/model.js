@@ -56,11 +56,13 @@
                             addable: false,
                             editable: false,
                             width:30,
-                            'class': 'text-center'
+                            'class': 'text-center',
+                            grid_fixed: true
                         },
                         company_name: {
                             search_able: true,
-                            ensureUnique: 'Crm.CrmClueAPI'
+                            ensureUnique: 'Crm.CrmClueAPI',
+                            grid_fixed: true
                         },
                         linkman: {
                             search_able: true
@@ -422,7 +424,8 @@
                                     src: 'crm/customer/view/split/'+item.id+'/basic',
                                     label: _('common.View %s Detail', _('crm.Customer'))
                                 });
-                            }
+                            },
+                            grid_fixed: true
                         },
                         label: {
                             get_display: function(value, item) {
@@ -432,7 +435,8 @@
                             addable: false,
                             editable: false,
                             width:30,
-                            'class': 'text-center'
+                            'class': 'text-center',
+                            grid_fixed: true
                         },
                         source_from: {
                             widget: 'select',

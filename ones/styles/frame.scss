@@ -24,7 +24,6 @@ a, a:hover, a:active {
 */
 .table-grid {
     background:#fff;
-    margin-bottom: -1px !important;
 }
 .table-grid td {
     vertical-align: middle !important;
@@ -39,6 +38,9 @@ a, a:hover, a:active {
     padding:0 8px 18px;
     position:relative;
     white-space:nowrap;
+}
+.table-grid thead th {
+    height:35px;
 }
 .table-grid td.grid-select-td label {
     margin: 0;

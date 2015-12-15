@@ -71,10 +71,11 @@
                     },
                     detail_able: true,
                     detail_split: {
-                        title: _('crm.View Clue By'),
+                        title: _('common.View %s By', _('contactsCompany.Contacts Company')),
                         actions: {
                             basic: {
                                 label: _("crm.Basic Info"),
+                                view: 'views/detail.html',
                                 link_actions: [{
                                     src: 'contactsCompany/contactsCompany/edit/'+$routeParams.id,
                                     label: _('common.Edit')+' '+_('contactsCompany.Contacts Company'),
@@ -82,14 +83,15 @@
                                 }],
                                 init: function(scope, id) {
                                     scope.detail_view_config = {
-                                        model: dataAPI.model,
-                                        resource: dataAPI.resource,
+                                        model: self,
+                                        resource: self.resource,
                                         query_method: 'get',
                                         query_params: {
                                             id: id
                                         }
                                     };
-                                }
+                                },
+                                resource: self.resource
                             },
                             linkman: {
                                 label: _('contactsCompany.Linkman'),

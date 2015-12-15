@@ -38,6 +38,7 @@
                     this.scope.model_prefix = this.config.model_prefix;
 
                     this.parentScope = scope.$parent;
+
                     this.model_config = self.config.model.config;
 
                     this.make_link_actions();
