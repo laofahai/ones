@@ -113,11 +113,16 @@ angular.module("ones.filtersModule", [])
             );
         };
     }])
-
+    .filter('to_locale_date', [function(){
+        return function(time_object, type) {
+            type = type || 'lll';
+            return moment(time_object).format(type);
+        };
+    }])
     .filter('to_human_date', [function() {
         return function(time) {
             return sprintf('<span title="%s">%s</span>', String(time), moment(new Date(time)).fromNow());
-        }
+        };
     }])
     // 返回星级
     .filter('to_stars', [function() {

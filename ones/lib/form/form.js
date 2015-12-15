@@ -214,7 +214,7 @@
                              * */
                             if(self.config.isEdit) {
                                 self.load_edit_data();
-                            };
+                            }
 
 
                             // 修改源数据
@@ -248,6 +248,14 @@
                             self.defer.resolve(html);
 
                             self.makeSubmitAction(fields_define);
+
+                            // 重置
+                            self.parentScope.doFormReset = function() {
+                                angular.forEach(fields_define, function(config) {
+                                    fields_factory.set_default_value(config, self.scope, true);
+                                });
+                            };
+
                          }
                     });
                 };
@@ -260,7 +268,7 @@
                      * 提交
                      * @todo 覆盖默认方法
                      * */
-                    self.parentScope.doFormSubmit = function() {
+                    self.parentScope.doFormSubmit = function(add_another) {
                         var form = self.scope[self.config.form_name];
 
                         if(!form.$valid) {
@@ -298,7 +306,11 @@
                                 });
                             }
 
-                            RootFrameService.close();
+                            if(add_another) {
+                                self.parentScope.doFormReset();
+                            } else {
+                                RootFrameService.close();
+                            }
                         };
                         var get_params = self.config.isEdit ? {id: self.config.id} : {};
                         angular.extend(get_params, self.config.opts && self.config.opts.extra_params || {});

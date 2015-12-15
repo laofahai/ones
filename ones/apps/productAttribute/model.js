@@ -147,17 +147,22 @@
                     fields: {
                         product_attribute_id: {
                             widget: 'select',
+                            label: _('productAttribute.Product Attribute'),
                             data_source: 'ProductAttribute.ProductAttributeAPI',
                             get_display: function(value, item) {
                                 return item.product_attribute_name;
                             }
                         },
                         product_id: {
-                            addable: false,
-                            editable: false
+                            widget: "select3",
+                            data_source: "Product.ProductAPI",
+                            group_tpl: FORM_FIELDS_TPL.select3_group_tpl,
+                            label: _('product.Product')
                         },
                         product_name: {
                             label: _('product.Product'),
+                            addable: false,
+                            editable: false,
                             search_able: true
                         }
                     },

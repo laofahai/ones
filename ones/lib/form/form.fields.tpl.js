@@ -23,6 +23,7 @@ var FORM_FIELDS_TPL = {
                 '</div>',
     select3: '<div class="select3-container">' +
         '<input type="text" ng-model="%(model)s__label__" %(attr)s />' +
+        '<a href="javascript:void(0)" class="select3-add-btn" ng-hide="cant_be_dynamic_add" ng-click="select_dynamic_add(\'%(model)s\')"><i class="fa fa-plus"></i></a>' +
         '<a href="javascript:void(0)" class="select3-show-grid-btn" ng-click="show_select3_modal(\'%(model)s\', \'%(model)s__label__\')">' +
         '<i class="fa fa-ellipsis-h"></i></a>' +
         '<input type="hidden" ng-model="%(model)s" /></div>',

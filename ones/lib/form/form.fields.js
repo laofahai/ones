@@ -17,7 +17,8 @@
             "$parse",
             "$timeout",
             "$routeParams",
-            function(plugin, $injector, $compile, $parse, $timeout, $routeParams) {
+            "RootFrameService",
+            function(plugin, $injector, $compile, $parse, $timeout, $routeParams, RootFrameService) {
 
                 var self = this;
 
@@ -91,11 +92,13 @@
 
                 /*
                 * 设置默认值方法
+                * @param config 字段配置
+                * @param scope 可选作用于
+                * @param force_set_undefined 强制设为空值
                 * */
-                this.set_default_value = function(config) {
+                this.set_default_value = function(config, scope, force_set_undefined) {
                     var value = config.value !== undefined ? config.value : config.default;
-
-                    if(undefined === value || null === value) {
+                    if(!force_set_undefined && (undefined === value || null === value)) {
                         return;
                     }
 
@@ -106,7 +109,7 @@
 
                     $timeout(function(){
                         var gt = $parse(config['ng-model']);
-                        gt.assign(self.scope, value);
+                        gt.assign(scope || self.scope, value || undefined);
                     });
                 };
 
@@ -366,7 +369,16 @@
 
                         var temp_label='';
                         var data_source = $injector.get(config.data_source);
-
+                        // 动态新增
+                        self.scope.cant_be_dynamic_add = config.dynamic_add === false ? false : true;
+                        self.scope.select_dynamic_add = function() {
+                            RootFrameService.open_frame({
+                                src: sprintf('%s/%s/add', data_source.config.app, data_source.config.module),
+                                label: _("common.Add New") + config.label,
+                                singleton: true
+                            });
+                        };
+                        // 显示grid选择
                         self.scope.show_select3_modal = function(t_model, t_label_model) {
                             var model = angular.copy(data_source);
                             model.config.multi_select = false;

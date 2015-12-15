@@ -864,9 +864,6 @@
                     fixed = first_fixed;
                     not_fixed = not_fixed.splice(1);
                 }
-
-                console.log(fixed, not_fixed);
-
                 return type == 1 ? fixed : not_fixed;
             };
         }])
@@ -894,6 +891,6 @@
         }
 
         return ids;
-    }
+    };
 
 })(window.angular, window.ones);

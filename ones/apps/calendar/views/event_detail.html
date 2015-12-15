@@ -10,7 +10,7 @@
         <th ng-bind="'calendar.End At'|lang"></th>
     </tr>
     <tr>
-        <td ng-bind="current_event.startsAt|date:'medium'"></td>
-        <td ng-bind="current_event.endsAt|date:'medium'"></td>
+        <td ng-bind="current_event.startsAt|to_locale_date"></td>
+        <td ng-bind="current_event.endsAt|to_locale_date"></td>
     </tr>
 </table>
