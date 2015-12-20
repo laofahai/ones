@@ -178,14 +178,14 @@
                 *
                 * @param object response
                 * */
-                this.parse_response = function(response) {
+                this.parse_response = function(response, callback) {
                     switch(response.type) {
                         // 跳转
                         case "redirect":
                             $location.url(response.url);
                             break;
                         default:
-                            window.location.reload();
+                            typeof callback === 'function' ? callback() : window.location.reload();
                     }
                 };
 

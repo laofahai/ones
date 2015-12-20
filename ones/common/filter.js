@@ -30,6 +30,24 @@ angular.module("ones.filtersModule", [])
             return apply_sprintf(str, params);
         }
     }])
+    // 返回余额方向符号
+    .filter("to_balance_direction_icon", [function() {
+        return function(direction) {
+            var $class = 'fa fa-';
+            switch(direction) {
+                case 1:
+                    $class += 'plus-square text-success';
+                    break;
+                case 2:
+                    $class += 'minus-square text-danger';
+                    break;
+                default:
+                    return direction;
+            }
+
+            return sprintf('<i class="%s"></i> ', $class);
+        }
+    }])
     /*
     * 返回应用locale name
     * */

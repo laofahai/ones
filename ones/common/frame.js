@@ -167,7 +167,13 @@ var frame_init = function() {
 
                             // 全局按键事件
                             $scope.main_frame_keydown = function($event) {
-
+                                switch($event.keyCode) {
+                                    case 82: // ctrl + r 刷新frame
+                                        if($event.ctrlKey) {
+                                            location.reload();
+                                        }
+                                        break;
+                                }
                             };
 
                             // 帮助链接

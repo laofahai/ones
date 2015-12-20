@@ -5,11 +5,19 @@ Payables: 应付款
 
 Received Amount: 已收金额
 Paid Amount: 已付金额
+Unreceived Amount: 未收金额
+Total Amount: 合计金额
+Total Need Receive: 合计应收
+Total Need Payment: 合计应付
+This time received: 本次收款
+This time paid: 本次付款
 
 Streamline: 流水
 
 Finance: 财务
 Amount: 金额
+
+Balance Direction: 余额方向
 
 Finance Account: 账户
 Accounts: 账户
@@ -21,7 +29,6 @@ Payables Type: 应付款类型
 New Receivables: 新应收款
 Portion Received: 已部分收款
 All Received: 已收款
-Unreceived Amount: 未收金额
 
 New Payables: 新应付款
 Portion Received: 已部分付款
@@ -38,3 +45,7 @@ RECEIVABLES_STATUS_PART: 已部分收款
 RECEIVABLES_STATUS_COMPLETE: 已收款
 
 Operation Record: 操作记录
+
+Confirm Receivable: 确认收款
+
+Please input the amount: 请输入金额

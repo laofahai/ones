@@ -18,6 +18,8 @@ class ReceivablesService extends CommonModel {
 
     /*
      * 「工作流」 确认收款
+     *
+     * @todo 错误处理
      * */
     public function confirm($id, $current_node) {
         if(!I('get.workflow_submit')) {
@@ -27,6 +29,27 @@ class ReceivablesService extends CommonModel {
                 'url' => '/finance/receivables/confirm/' . $id . '/node/' . $current_node['id']
             ];
         }
+
+        if(!I('post.amount')) {
+            $this->error = __('common.Please fill out the form correctly');
+            return false;
+        }
+
+        $this->exec_remark = trim(strip_tags(I('post.remark')));
+
+        // 更新记录
+        $this->where(['id'=>$id])->setInc('received', I('post.amount'));
+
+        // 更新账户余额
+        D('Finance/FinanceAccount')->update_balance(I('post.account_id'), I('post.amount'));
+
+        // 写流水日志
+        D('Finance/FinanceStreamline')->record([
+            'direction' => 1,
+            'amount'    => I('post.amount'),
+            'source_id' => $id,
+            'finance_account_id' => I('post.account_id')
+        ]);
     }
 
     /*
@@ -34,11 +57,12 @@ class ReceivablesService extends CommonModel {
      * */
     public function check_full_received($id) {
         $data = $this->where(['id'=>$id])->find();
+
         if(!$data) {
             return false;
         }
 
-        return $data['amount'] >= $data['received'];
+        return $data['received'] >= $data['amount'] ? true : false;
     }
 
 }

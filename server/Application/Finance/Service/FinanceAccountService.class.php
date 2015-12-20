@@ -15,4 +15,17 @@ class FinanceAccountService extends CommonModel {
         ["company_id", "get_current_company_id", 1, "function"]
     ];
 
+    /*
+     * 更新账户余额
+     * @param $account_id 更新的账户ID
+     * @param $amount  更新的金额
+     * */
+    public function update_balance($account_id, $amount, $direction = '+') {
+
+        $method = $direction === '+' ? 'setInc' : 'setDec';
+        $result = $this->where(['id'=>$account_id])->$method('balance', $amount);
+
+        return $result === false ? false : true;
+    }
+
 }

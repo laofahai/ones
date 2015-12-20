@@ -98,6 +98,7 @@
                 * */
                 this.set_default_value = function(config, scope, force_set_undefined) {
                     var value = config.value !== undefined ? config.value : config.default;
+
                     if(!force_set_undefined && (undefined === value || null === value)) {
                         return;
                     }
@@ -109,7 +110,7 @@
 
                     $timeout(function(){
                         var gt = $parse(config['ng-model']);
-                        gt.assign(scope || self.scope, value || undefined);
+                        gt.assign(scope || self.scope, value === undefined ? undefined : value);
                     });
                 };
 

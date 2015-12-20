@@ -71,7 +71,7 @@
                         });
                     } else {
                         self.scope[self.config.model_prefix] = self.config.data;
-                        callback(data);
+                        callback(self.config.data);
                     }
                 };
 
@@ -162,7 +162,7 @@
                                             var argv = filters[j].split(':');
                                             var filter_name = argv.shift();
                                             argv.unshift(self.scope[self.config.model_prefix][config.field]);
-                                            self.scope[self.config.model_prefix][config.field] = $filter(filter_name).call(null, argv);
+                                            self.scope[self.config.model_prefix][config.field + '__label__'] = $filter(filter_name).call(null, argv);
                                         }
                                     }
 

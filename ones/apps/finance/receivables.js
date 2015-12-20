@@ -1,11 +1,20 @@
 (function(window, ones, angular) {
     angular.module('ones.app.finance.receivables', [])
+
+        .config(['$routeProvider', function($routeProvider) {
+            $routeProvider.when('/finance/receivables/confirm/:id/node/:node_id', {
+                templateUrl: appView('receivables/confirm.html'),
+                controller: "Finance.ConfirmReceivableCtrl"
+            });
+        }])
         .service('Finance.ReceivablesAPI', [
             'ones.dataApiFactory',
             '$routeParams',
             'Bpm.WorkflowAPI',
+            'Finance.FinanceStreamlineAPI',
             '$timeout',
-            function(dataAPI, $routeParams, workflow_api, $timeout) {
+            '$filter',
+            function(dataAPI, $routeParams, workflow_api, streamline_api, $timeout, $filter) {
 
                 var self = this;
 
@@ -68,9 +77,13 @@
                                 view: appView('operation_log.html', 'finance'),
                                 init: function(scope, id) {
                                     $timeout(function() {
-                                        workflow_api.get_progress(scope.basic_data.workflow_id, id)
-                                            .then(function(progress){
-                                                scope.operation_log = progress;
+                                        var query_param = {
+                                            _mf: 'source_id,direction',
+                                            _mv: [id, 1].join()
+                                        };
+                                        streamline_api.resource.api_query(query_param).$promise
+                                            .then(function(logs){
+                                                scope.logs = logs;
                                             });
                                     });
                                 },
@@ -95,18 +108,21 @@
                         amount: {
                             label: _('Need Receive Amount'),
                             cell_filter: "to_money_display",
-                            highlight: "primary"
+                            highlight: "primary",
+                            widget: 'number'
                         },
                         received: {
                             label: _('Received Amount'),
                             cell_filter: "to_money_display",
                             editable: false,
-                            highlight: "success"
+                            highlight: "success",
+                            widget: 'number',
+                            value: 0
                         },
                         unreceived: {
                             label: _('Unreceived Amount'),
                             get_display: function(value, item) {
-                                return to_decimal_display(item.amount - item.received);
+                                return $filter('to_money_display')(item.amount - item.received);
                             },
                             highlight: 'danger'
                         },
@@ -122,7 +138,7 @@
                         },
                         status: {
                             get_display: function(value, item) {
-                                return item.workflow_node_status_label || (item.last_workflow_progress && item.last_workflow_progress.node_status_label);
+                                return item.workflow_node_status_label || (item.last_workflow_progress && (item.last_workflow_progress.node_status_label || item.last_workflow_progress.node_label));
                             },
                             widget: 'select',
                             data_source: self.receivables_status_array
@@ -151,7 +167,7 @@
                         'status'
                     ],
                     unaddable: [
-                        'source_id', 'source_model', 'user_id', 'created', 'status', '', '', ''
+                        'source_id', 'source_model', 'user_id', 'created', 'status', 'unreceived', '', ''
                     ],
                     uneditable: [
                         'source_id', 'source_model', 'user_id', 'created', 'status', 'received', 'unreceived'
@@ -172,6 +188,85 @@
                 if(is_app_loaded('crm')) {
                     self.config.unaddable.splice('customer_id'.indexOf(self.config.unaddable)-1, 1);
                 }
+
+            }
+        ])
+        .service('Finance.ConfirmReceivablesAPI', [
+            'ones.dataApiFactory',
+            'Finance.ReceivablesAPI',
+            function(dataAPI, receivables_api) {
+
+                this.resource = receivables_api.resource;
+
+                this.config = {
+                    app: "finance",
+                    module: "receivables",
+                    table: "receivables",
+                    fields: {
+
+                    }
+                };
+            }
+        ])
+        .controller('Finance.ConfirmReceivableCtrl', [
+            '$scope',
+            'Finance.ConfirmReceivablesAPI',
+            'Finance.ReceivablesAPI',
+            'Finance.FinanceAccountAPI',
+            'Bpm.WorkflowAPI',
+            '$routeParams',
+            'RootFrameService',
+            function($scope, confirm_receivables_api, receivables_api, account_api, workflow_api, $routeParams, RootFrameService) {
+                $scope.back_able = true;
+
+                $scope.panel_title = _('finance.Confirm Receivable');
+
+                $scope.bill_info = {};
+                $scope.confirm_form = {};
+                $scope.all_accounts = [];
+
+                var params = {
+                    id: $routeParams.id,
+                    _fd: [
+                        'customer_id__label__',
+                        'amount',
+                        'received'
+                    ].join()
+                };
+
+                receivables_api.resource.get(params).$promise.then(function(data) {
+                    $scope.bill_info = data;
+                });
+
+                account_api.resource.api_query({_fd: 'id,name'}).$promise.then(function(data) {
+                    $scope.all_accounts = data;
+                });
+
+                $scope.formConfig = {
+                    resource: confirm_receivables_api.resource,
+                    model   : confirm_receivables_api,
+                    id      : $routeParams.id
+                };
+
+                $scope.doSubmit = function() {
+                    if(Number($scope.confirm_form.this_time_received || 0) <= 0) {
+                        RootFrameService.alert({
+                            content: _('finance.Please input the amount'),
+                            type: 'danger'
+                        });
+                        return;
+                    }
+
+                    workflow_api.post($routeParams.node_id, $routeParams.id, {
+                        amount: $scope.confirm_form.this_time_received,
+                        remark: $scope.confirm_form.remark,
+                        account_id: $scope.confirm_form.account_id
+                    }, function() {
+                        alert(123);
+                    });
+
+                };
+
 
             }
         ])

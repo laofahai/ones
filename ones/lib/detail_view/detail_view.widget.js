@@ -1,5 +1,10 @@
 (function(window, angular, ones){
 
+    /*
+    * @todo
+    *
+    * cell_filter, __label__字段, get_display() 方法 三种显示优先级
+    * */
     var DETAIL_VIEW_WIDGETS_TPL = {
         CONTAINER: '<div class="col-md-%(column_width)s detail-view-group">' +
             '<label class="col-sm-3 text-right detail-view-label">%(label)s</label>' +
@@ -43,6 +48,7 @@
                     });
                 }
             };
+
 
             angular.extend(this.widgets, ones.pluginScope.get('detail_view.widgets') || {});
 
