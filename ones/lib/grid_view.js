@@ -413,7 +413,7 @@
 
                     for(var i=0; i<data.length; i++) {
 
-                        var cleared_single_row = {};
+                        var cleared_single_row = data[i];
                         for(var j=0; j<self.scope.schema_display.length; j++) {
                             var key = self.scope.schema_display[j];
                             var value = data[i][key];
