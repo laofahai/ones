@@ -122,15 +122,19 @@ class Schema {
             $table = $model;
         }
 
-        $schemas = SchemaService::getSchemaByApp($app);
-
+        $module_service = D(ucfirst($app).'/'.camelCase($table));
+        if(method_exists($module_service, 'get_schema')) {
+            $schemas = $module_service->get_schema();
+            $schema = get_array_to_ka($schemas['structure'], 'field');
+        } else {
+            $schemas = SchemaService::getSchemaByTable($table);
+            $schema = get_array_to_ka($schemas['structure'], 'field');
+        }
         $is_single = is_assoc($data);
-
-        $schema = get_array_to_ka($schemas[$table]['structure'], 'field');
 
         // 单条数据
         if($is_single) {
-            $data = array($data);
+            $data = [$data];
         }
 
         foreach($data as $k=>$item) {
@@ -176,7 +180,7 @@ class Schema {
                 $value = round($value, DBC('decimal_scale'));
                 break;
             case "boolean":
-                $value = (boolean)$value ? 1 : -1;
+                $value = (boolean)$value ? 1 : 0;
                 break;
             case "enum":
                 $value = (string)$value;
@@ -218,6 +222,15 @@ class Schema {
                     break;
                 case "string":
                     $result['widget'] = 'text';
+                    break;
+                case "date":
+                    $result['widget'] = 'date';
+                    break;
+                case "datetime":
+                    $result['widget'] = 'datetime';
+                    break;
+                case "boolean":
+                    $result['widget'] = 'select';
                     break;
             }
         }

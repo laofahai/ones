@@ -27,7 +27,7 @@
                         'quantity',
                         'created',
                         'workflow_node_status_label',
-                        'user_id'
+                        'user_info_id'
                     ],
                     fields: {
                         bill_no: {
@@ -52,7 +52,7 @@
                                 return to_decimal_display(value);
                             }
                         },
-                        user_id: {
+                        user_info_id: {
                             cell_filter: 'to_user_fullname'
                         },
                         created: {

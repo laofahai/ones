@@ -1,23 +1,4 @@
 @charset "UTF-8";
-body {
-  padding: 10px; }
-
-a, a:hover, a:active {
-  text-decoration: none;
-  cursor: pointer; }
-
-.frame_bger {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  top: 50%;
-  height: 150px;
-  line-height: 150px;
-  margin-top: -150px;
-  text-align: center;
-  color: #ddd;
-  text-shadow: 1px 1px 1px #fff; }
-
 /**
     数据表格
 */
@@ -93,7 +74,7 @@ a, a:hover, a:active {
     line-height: 25px;
     margin: 0;
     padding: 0 10px;
-    background: #4d90fe;
+    background: blue;
     color: #fff; }
   .grid-container.has-filter .grid-filter-container .filter-content {
     padding-top: 10px;
@@ -175,6 +156,134 @@ a, a:hover, a:active {
     color: #bbb;
     text-shadow: 1px 1px 1px #fff; }
 
+.actionsBtn {
+  margin-bottom: 10px; }
+
+/* select 3*/
+.select3-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+  box-shadow: none; }
+  .select3-container .select3-show-grid-btn {
+    float: right;
+    z-index: 101;
+    margin: 7px 8px 0 0;
+    color: #666;
+    position: absolute;
+    right: 0;
+    top: 0; }
+  .select3-container .select3-add-btn {
+    float: right;
+    z-index: 101;
+    margin: 7px 8px 0 0;
+    color: #666;
+    position: absolute;
+    right: 18px;
+    top: 0; }
+  .select3-container input.form-control {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%; }
+  .select3-container ul.items {
+    background: #fff;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    padding-bottom: 3px;
+    margin-top: 0 !important; }
+    .select3-container ul.items li {
+      height: 30px;
+      line-height: 30px;
+      padding: 0 5px;
+      border-top: 1px solid #ddd;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      overflow: hidden; }
+    .select3-container ul.items li:hover, .select3-container ul.items li.active {
+      background: #7eaffd;
+      color: #fff; }
+
+.chosen-container {
+  font-size: 12px; }
+  .chosen-container .chosen-single {
+    height: 30px;
+    line-height: 30px;
+    border-radius: 0; }
+    .chosen-container .chosen-single div b {
+      background-position: 0 5px; }
+
+.chosen-single {
+  background: #fff !important;
+  border: 1px solid #d9d9d9 !important;
+  border-top-color: #c0c0c0 !important;
+  box-shadow: none !important; }
+
+.chosen-drop {
+  border-radius: 0;
+  border-color: #d9d9d9 !important; }
+  .chosen-drop .chosen-results {
+    margin: 0 0 5px 0;
+    padding: 0; }
+    .chosen-drop .chosen-results .highlighted {
+      background: #e5e6e7 !important;
+      color: #fff; }
+
+.chosen-container-active .chosen-single {
+  box-shadow: none !important;
+  border-color: #e5e6e7; }
+
+.chosen-container-active.chosen-with-drop .chosen-single div b {
+  background-position: -18px 5px !important; }
+
+.item_select_input_container {
+  position: relative; }
+  .item_select_input_container .item_select_input_selected_container {
+    position: absolute;
+    left: 0;
+    top: 0; }
+    .item_select_input_container .item_select_input_selected_container a {
+      float: left;
+      display: inline;
+      height: 22px;
+      line-height: 22px;
+      padding: 0 5px;
+      margin: 4px 3px 0 4px;
+      font-size: 12px;
+      border-radius: 3px; }
+
+.form-panel .panel-heading {
+  position: relative; }
+
+.form-field-groups {
+  position: absolute;
+  right: 15px;
+  top: 10px; }
+  .form-field-groups .label {
+    margin-left: 3px; }
+
+body {
+  padding: 10px; }
+
+a, a:hover, a:active {
+  text-decoration: none;
+  cursor: pointer; }
+
+.frame_bger {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 50%;
+  height: 150px;
+  line-height: 150px;
+  margin-top: -150px;
+  text-align: center;
+  color: #ddd;
+  text-shadow: 1px 1px 1px #fff; }
+
 .actions-search-box {
   width: 160px; }
 
@@ -210,9 +319,6 @@ form
 /**
 页面操作
 */
-.actionsBtn {
-  margin-bottom: 10px; }
-
 .actions-search-box input:focus {
   outline: none;
   box-shadow: none; }
@@ -292,7 +398,7 @@ form
       line-height: 25px;
       margin: 0;
       padding: 0 10px;
-      background: #4d90fe;
+      background: #e5e6e7;
       color: #fff; }
     .detail_view_container .detail_view_nav .content {
       padding: 10px 0;
@@ -503,116 +609,7 @@ form
       border: 1px solid #ddd;
       border-top: 0; }
 
-.item_select_input_container {
-  position: relative; }
-  .item_select_input_container .item_select_input_selected_container {
-    position: absolute;
-    left: 0;
-    top: 0; }
-    .item_select_input_container .item_select_input_selected_container a {
-      float: left;
-      display: inline;
-      height: 22px;
-      line-height: 22px;
-      padding: 0 5px;
-      margin: 4px 3px 0 4px;
-      font-size: 12px;
-      border-radius: 3px; }
-
 .input_widget_user_select {
   background: #fff; }
-
-/* select 3*/
-.select3-container {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 99;
-  width: 100%;
-  box-shadow: none; }
-  .select3-container .select3-show-grid-btn {
-    float: right;
-    z-index: 101;
-    margin: 7px 8px 0 0;
-    color: #666;
-    position: absolute;
-    right: 0;
-    top: 0; }
-  .select3-container .select3-add-btn {
-    float: right;
-    z-index: 101;
-    margin: 7px 8px 0 0;
-    color: #666;
-    position: absolute;
-    right: 18px;
-    top: 0; }
-  .select3-container input.form-control {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%; }
-  .select3-container ul.items {
-    background: #fff;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    padding-bottom: 3px; }
-    .select3-container ul.items li {
-      height: 30px;
-      line-height: 30px;
-      padding: 0 5px;
-      border-top: 1px solid #ddd;
-      cursor: pointer;
-      text-overflow: ellipsis;
-      overflow: hidden; }
-    .select3-container ul.items li:hover, .select3-container ul.items li.active {
-      background: #7eaffd;
-      color: #fff; }
-
-.select3-container-box {
-  position: relative; }
-  .select3-container-box ul.items {
-    margin-top: -1px !important; }
-  .select3-container-box .select3-container.active ul.items {
-    border: 1px solid #ddd;
-    border-top: 0; }
-
-.form-field.select3-container-box .select3-container {
-  left: 15px;
-  max-width: 95%;
-  width: auto;
-  min-width: 70%; }
-
-.chosen-container {
-  font-size: 12px; }
-  .chosen-container .chosen-single {
-    height: 30px;
-    line-height: 30px;
-    border-radius: 0; }
-    .chosen-container .chosen-single div b {
-      background-position: 0 5px; }
-
-.chosen-single {
-  background: #fff !important;
-  border: 1px solid #d9d9d9 !important;
-  border-top-color: #c0c0c0 !important;
-  box-shadow: none !important; }
-
-.chosen-drop {
-  border-radius: 0;
-  border-color: #d9d9d9 !important; }
-  .chosen-drop .chosen-results {
-    margin: 0 0 5px 0;
-    padding: 0; }
-    .chosen-drop .chosen-results .highlighted {
-      background: #4d90fe !important;
-      color: #fff; }
-
-.chosen-container-active .chosen-single {
-  box-shadow: none !important;
-  border-color: #4d90fe; }
-
-.chosen-container-active.chosen-with-drop .chosen-single div b {
-  background-position: -18px 5px !important; }
 
 /*# sourceMappingURL=frame.css.map */

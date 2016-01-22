@@ -75,6 +75,7 @@ Edit: 修改
 Email: 邮箱
 End Time: 结束时间
 Everybody: 所有人
+Extend Info: 扩展信息
 Fax: 传真
 Female: 女士
 Filters: 过滤器
@@ -85,8 +86,10 @@ Gender: 性别
 Go Back: 返回
 Head Man: 负责人
 Is Active: 是否可用
+Is Available: 是否可用
 Is Default: 是否默认
 Is Locked: 是否锁定
+License Info: 证照信息
 Listorder: 排序
 Male: 先生
 Mobile: 手机
@@ -101,6 +104,7 @@ Num: 数量
 Office: 办公
 Operation Success: 操作成功
 Permission Denied: 您没有被授权
+Pinyin: 拼音
 Price: 价格
 Print: 打印
 Phone: 电话
@@ -126,10 +130,12 @@ Self department: 自己部门
 Self department and it's subordinate department: 部门及下属部门
 Self Headed Only: 仅自己负责
 Self only: 仅自己添加
+Serial Number: 序号
 Source From: 来源
 Source Model: 来源模型
 Start Time: 开始时间
 Status: 状态
+Sub Category: 子分类
 Subject: 主题
 Submit: 提交
 Subtotal Amount: 小计
@@ -148,3 +154,4 @@ View %s By: 查看%s通过
 Widget: 控件
 Yes: 是
 Yes, I do: 是的，我确认
+Zipcode: 邮政编码

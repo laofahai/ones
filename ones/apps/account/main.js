@@ -1,6 +1,6 @@
 (function(window, ones, angular){
     angular.module('ones.app.account.main', [
-        'ones.app.account.model'
+
     ])
         .config([
             "$routeProvider",
@@ -22,6 +22,10 @@
                         controller: 'AccountUserPasswordCtrl',
                         templateUrl: appView('password.html')
                     })
+                    .when('/account/companyProfile', {
+                        controller: 'AccountCompanyProfileCtrl',
+                        templateUrl: get_view_path('views/edit.html')
+                    })
                 ;
             }
         ])
@@ -29,7 +33,7 @@
         .controller('AccountUserPasswordCtrl', [
             '$scope',
             'RootFrameService',
-            'Account.UserAPI',
+            'Account.UserInfoAPI',
             function($scope, RootFrameService, user_api) {
                 $scope.back_able = true;
                 $scope.form_data = {
@@ -69,7 +73,7 @@
         // 个人资料
         .controller('AccountUserProfileCtrl', [
             '$scope',
-            'Account.UserAPI',
+            'Account.UserInfoAPI',
             '$routeParams',
             '$location',
             function($scope, user_api, $routeParams, $location) {
@@ -206,6 +210,8 @@
 
             }
         ])
+
+        // 个人首选项
         .controller('AccountUserPreferenceCtrl', [
             '$scope',
             'Account.UserPreferenceAPI',
@@ -214,6 +220,23 @@
                     resource: preference_api.resource,
                     model   : preference_api,
                     id      : 1
+                };
+            }
+        ])
+        // 公司资料
+        .controller('AccountCompanyProfileCtrl', [
+            '$scope',
+            '$routeParams',
+            'Account.CompanyProfileAPI',
+            function($scope, $routeParams, model) {
+                $routeParams.id = parseInt(ones.user_info.company.id);
+
+                $scope.is_edit = true;
+                $scope.formConfig = {
+                    resource: model.resource,
+                    model   : model,
+                    id      : $routeParams.id,
+                    isEdit  : true
                 };
             }
         ])

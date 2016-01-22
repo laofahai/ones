@@ -41,14 +41,14 @@
                         head_id: {
                             map: 'head_id',
                             widget: 'item_select',
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             required: false,
                             label: _('supplier.Head Man'),
                             cell_filter: 'to_user_fullname'
                         },
-                        user_id: {
+                        user_info_id: {
                             label: _('supplier.Creator'),
-                            field: 'user_id',
+                            field: 'user_info_id',
                             cell_filter: 'to_user_fullname'
                         },
                         phone: {
@@ -59,15 +59,15 @@
                             search_able: true
                         }
                     },
-                    unaddable: ['user_id', 'contacts_company_id', 'contacts_company_role_id'],
-                    uneditable: ['user_id', 'contacts_company_id', 'contacts_company_role_id'],
+                    unaddable: ['user_info_id', 'contacts_company_id', 'contacts_company_role_id'],
+                    uneditable: ['user_info_id', 'contacts_company_id', 'contacts_company_role_id'],
                     undetail_able: ['contacts_company_id', 'contacts_company_role_id'],
                     list_display: [
                         'name',
                         'level',
                         'phone',
                         'master',
-                        'user_id',
+                        'user_info_id',
                         'head_id'
                     ],
                     detail_able: true,

@@ -1,6 +1,6 @@
 <div class="grid-container" ng-class="{'has-filter': $parent.show_filters && $parent.has_filters}">
     <div class="grid-table-container">
-        <div class="grid-fixed-fields-container" id="grid-fixed-fields-container" style="width:{{(schema_display_fixed.length-2) * 120 + 120}}px">
+        <div class="grid-fixed-fields-container" id="grid-fixed-fields-container" style="width:{{schema_display_fixed.length * 120}}px">
             <table class="table table-bordered table-hover table-grid dataTable" id="dataGridTable">
                 <thead>
                 <tr>
@@ -17,7 +17,7 @@
                             ng-repeat="f in schema_display_fixed"
                             ng-click="is_sortable(f) && doGridSortBy(f)"
                             width="{{column_defs[f].width}}">
-                        <span ng-bind="(app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang)">&nbsp;</span>
+                        <span ng-bind="column_defs[f].label||(f|camelSpace)">&nbsp;</span>
                         <i class="sorting-icon fa"
                            ng-class="{'fa-sort-asc':sorting == f + ' DESC','fa-sort-desc':sorting == f + ' ASC'}"
                            ng-show="is_sortable(f)"></i>
@@ -90,7 +90,7 @@
                                 ng-repeat="f in schema_display_not_fixed"
                                 ng-click="is_sortable(f) && doGridSortBy(f)"
                                 width="{{column_defs[f].width}}">
-                            <span ng-bind="app_info.app+'.'+(column_defs[f].label||f|camelSpace)|lang"></span>
+                            <span ng-bind="column_defs[f].label||(f|camelSpace)">&nbsp;</span>
                             <i class="sorting-icon fa"
                                ng-class="{'fa-sort-asc':sorting == f + ' DESC','fa-sort-desc':sorting == f + ' ASC'}"
                                ng-show="is_sortable(f)"></i>
@@ -111,7 +111,7 @@
                             ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
                             ui-event="{{column_defs[field].ui_event}}"
                             ng-click="{{column_defs[field].ng_click}}"
-                            ng-bind-html="item[field]"
+                            ng-bind-html="item[field] + '&nbsp;'"
                                 ></td>
                     </tr>
                     <tr ng-class="{'ng-show':itemsList.length<1,'ng-hide':itemsList.length>0}">

@@ -24,17 +24,19 @@
             function(schemaAPI, fields_factory, $q, $timeout, $parse, $routeParams, RootFrameService, $injector, form_api) {
 
                 var self = this;
-                this.config = {
-                    app_info: ones.app_info,
-                    columns : 1,
-                    model_prefix: 'form_'+randomString(6)
-                };
 
                 /**
                  * 表单配置初始化
                  * */
                 this.init = function($scope, config) {
-                    angular.extend(this.config, config);
+
+                    self.config = {
+                        app_info: ones.app_info,
+                        columns : 1,
+                        model_prefix: 'form_'+randomString(6)
+                    };
+
+                    angular.extend(self.config, config);
 
                     self.defer = $q.defer();
 
@@ -44,14 +46,46 @@
                     this.data_model_fields = undefined;
 
                     // 是否是编辑表单
-                    this.config.isEdit = this.config.id ? true : false;
+                    this.config.isEdit = this.config.isEdit === undefined ? (this.config.id ? true : false) : this.config.isEdit;
 
                     this.config.form_name = this.scope.form_name = 'id_'+this.config.model_prefix;
 
                     this.model_config = this.config.model.config;
                     this.model_config.fields = this.model_config.fields || {};
 
-                    angular.extend(this.config, this.model_config);
+                    // 是否字段分组
+                    if(this.model_config.fields_groups) {
+                        this.scope.$parent.has_fields_groups = true;
+                        this.scope.$parent.fields_groups = this.model_config.fields_groups;
+                        this.scope.$parent.active_fields_group = this.model_config.fields_groups[0].name;
+                    }
+
+                    // 检测是否有分组或者是否字段在分组中可显示
+                    this.scope.check_is_in_active_group = function(field) {
+                        // 未分组情况全部显示
+                        if(!self.scope.$parent.has_fields_groups) {
+                            return true;
+                        }
+                        var field_config = self.scope.$parent.form_fields_define[field];
+                        if(!field_config) {
+                            return true;
+                        }
+                        // 字段未明确指定分组则默认为第一分组
+                        if(!field_config.group && self.model_config.fields_groups[0].name === self.scope.$parent.active_fields_group) {
+                            return true;
+                        }
+                        if(field_config.group && field_config.group === self.scope.$parent.active_fields_group) {
+                            return true;
+                        }
+                        return false;
+                    };
+
+                    // 切换字段分组
+                    this.scope.$parent.switch_form_fields_group = function(group_name) {
+                        self.scope.$parent.active_fields_group = group_name;
+                    };
+
+                    angular.extend(self.config, this.model_config);
 
                     this.scope.edit_data_source = {};
 
@@ -108,7 +142,7 @@
                                 }
                             });
 
-                            var fields_define = {};
+                            var fields_define = self.scope.$parent.form_fields_define = {};
                             angular.forEach(schema, function(config, field) {
 
                                 //console.log(field, config);
@@ -136,6 +170,9 @@
                                 // label
                                 if(!config.label) {
                                     config.label = _(ones.app_info.app+'.'+ camelCaseSpace(field));
+                                    if(config.label === camelCaseSpace(field) && config.comment) {
+                                        config.label = config.comment;
+                                    }
                                 }
 
                                 field = field_config.map || field;
@@ -150,6 +187,10 @@
                                 if(field_config[ablename] === false
                                     || (self.model_config['un'+ablename]
                                     && self.model_config['un'+ablename].indexOf(field) >= 0)) {
+                                    return;
+                                }
+
+                                if(['id', '_data_model_fields_'].indexOf(field) >= 0) {
                                     return;
                                 }
 
@@ -308,13 +349,15 @@
 
                             // message center
                             if(is_app_loaded('messageCenter')) {
-                                var mc = $injector.get('ones.MessageCenter');
-                                mc.emit('some_data_changed', {
-                                    sign_id: ones.caches.getItem('company_sign_id'),
-                                    user_id: ones.user_info.id,
-                                    app: ones.app_info.app,
-                                    module: ones.app_info.module
-                                });
+                                try {
+                                    var mc = $injector.get('ones.MessageCenter');
+                                    mc.emit('some_data_changed', {
+                                        sign_id: ones.caches.getItem('company_sign_id'),
+                                        user_id: ones.user_info.id,
+                                        app: ones.app_info.app,
+                                        module: ones.app_info.module
+                                    });
+                                } catch(e) {}
                             }
 
 

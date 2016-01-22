@@ -8,7 +8,7 @@
         });
     });
 
-    angular.module('ones.app.account.model', [])
+    ones.global_module
         // 认证服务
         .service('Account.AuthorizeAPI', [
             'ones.dataApiFactory',
@@ -52,7 +52,6 @@
                             ensureUnique: "Account.AuthRoleAPI"
                         }
                     },
-                    list_display: ['name'],
                     extra_selected_actions: [{
                         label: _('account.Role Authorize'),
                         icon: 'key',
@@ -80,25 +79,24 @@
                 });
             }
         ])
-        .service('Account.UserAPI', [
+        .service('Account.UserInfoAPI', [
             'ones.dataApiFactory',
             '$q',
             function(dataAPI, $q) {
 
                 this.resource = dataAPI.getResourceInstance({
-                    uri: 'account/user',
+                    uri: 'account/userInfo',
                     extra_methods: ['api_get', 'api_query']
                 });
 
                 this.config = {
                     app: 'account',
-                    module: 'user',
-                    table: 'user',
-                    list_display: ['id', 'login', 'email', 'realname'],
+                    module: 'userInfo',
+                    table: 'user_info',
                     fields: {
                         login: {
                             label: _('account.Login Name'),
-                            ensureUnique: 'Account.UserAPI',
+                            ensureUnique: 'Account.UserInfoAPI',
                             search_able: true
                         },
                         password: {
@@ -219,7 +217,7 @@
                         leader: {
                             widget: 'item_select',
                             multiple: 'multiple',
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             get_display: function(value, item) {
                                 if(!value) {
                                     return;
@@ -269,8 +267,8 @@
                     module: 'userPreference',
                     table: 'user_preference',
                     fields: {},
-                    unaddable: ['name', 'data', 'data_type', 'user_id', 'app'],
-                    uneditable: ['name', 'data', 'data_type', 'user_id', 'app']
+                    unaddable: ['name', 'data', 'data_type', 'user_info_id', 'app'],
+                    uneditable: ['name', 'data', 'data_type', 'user_info_id', 'app']
                 };
 
                 plugin.callPlugin('user_preference_item');
@@ -341,6 +339,52 @@
                 }
             };
         }])
+	.service('Account.CompanyProfileAPI', [
+            'ones.dataApiFactory',
+            '$q',
+            function(dataAPI, $q) {
+
+                var self = this;
+
+                this.resource = dataAPI.getResourceInstance({
+                    uri: 'account/companyProfile',
+                    extra_methods: ['api_get', 'api_query']
+                });
+
+                this.config = {
+                    app: 'account',
+                    module: 'companyProfile',
+                    table: 'company_profile',
+                    fields: {},
+                    fields_groups: window.COMMON_FIELDS_GROUPS
+                };
+
+                /**
+                 * 返回公司资料中的某项或者多项
+                 * @param []|string key 需要获取的项目,可为项目别名或者别名数组
+                 * */
+                this.get_company_profile = function(key) {
+                    var is_single = angular.isArray(key) ? false : true;
+                    var params = {
+                        _m: 'get_profile',
+                        items: angular.isArray(key) ? key : [key]
+                    };
+                    var profiles = [];
+                    var defered = $q.defer();
+                    var need_response;
+                    self.resource.api_get(params).$promise.then(function(response_data) {
+                        response_data = response_data || {};
+                        if(is_single) {
+                            defered.resolve(response_data[key]);
+                        } else {
+                            defered.resolve(response_data);
+                        }
+                    });
+
+                    return defered.promise;
+                };
+            }
+        ])
 
     ;
 })(window, window.ones, window.angular);

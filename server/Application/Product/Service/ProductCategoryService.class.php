@@ -1,19 +1,12 @@
 <?php
 
 namespace Product\Service;
-use Common\Model\CommonRelationModel;
+use Common\Model\CommonTreeModel;
 
-class ProductCategoryService extends CommonRelationModel {
+class ProductCategoryService extends CommonTreeModel {
 
     protected $_auto = [
-        array("company_id", "get_current_company_id", 1, "function")
+        ["company_id", "get_current_company_id", 1, "function"]
     ];
-    
-    protected $_link = array(
-        "products" => array(
-            "mapping_type" => self::HAS_MANY,
-            "class_name"   => "Product/Product"
-        )
-    );
 
 }

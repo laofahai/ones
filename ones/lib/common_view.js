@@ -1,5 +1,5 @@
-(function(ones, angular){
-    
+(function(ones, angular, window){
+
     angular.module('ones.commonViewModule', [
         'ngResource',
         'ngRoute',
@@ -7,52 +7,52 @@
 
         'ones.formModule'
     ])
-    
+
         .config(['$routeProvider', function($route){
             $route
                 // 列表 grid
                 .when('/:app', {
                     controller : 'ComViewIndexCtrl',
-                    templateUrl: 'views/list.html'
+                    templateUrl: get_view_path('views/list.html')
                 })
                 .when('/:app/:module', {
                     controller : 'ComViewIndexCtrl',
-                    templateUrl: 'views/list.html'
+                    templateUrl: get_view_path('views/list.html')
                 })
                 // 带action过滤
                 .when('/:app/:module/filter/:action', {
                     controller : 'ComViewIndexCtrl',
-                    templateUrl: 'views/list.html'
+                    templateUrl: get_view_path('views/list.html')
                 })
                 // 修改
                 .when('/:app/:module/edit/:id', {
                     controller : 'ComViewEditCtrl',
-                    templateUrl: 'views/edit.html'
+                    templateUrl: get_view_path('views/edit.html')
                 })
 
                 // 新增
                 .when('/:app/:module/add/:extra*', {
                     controller : 'ComViewEditCtrl',
-                    templateUrl: 'views/edit.html'
+                    templateUrl: get_view_path('views/edit.html')
                 })
                 .when('/:app/:module/add', {
                     controller : 'ComViewEditCtrl',
-                    templateUrl: 'views/edit.html'
+                    templateUrl: get_view_path('views/edit.html')
                 })
 
                 // 详情
                 .when('/:app/:module/view/:id', {
                     controller: 'ComViewDetailCtrl',
-                    templateUrl: 'views/detail.html'
+                    templateUrl: get_view_path('views/detail.html')
                 })
                 // 分栏详情
                 .when('/:app/:module/view/split/:id', {
                     controller: 'ComViewDetailSplitCtrl',
-                    templateUrl: 'views/detailSplit.html'
+                    templateUrl: get_view_path('views/detailSplit.html')
                 })
                 .when('/:app/:module/view/split/:id/:action', {
                     controller: 'ComViewDetailSplitCtrl',
-                    templateUrl: 'views/detailSplit.html'
+                    templateUrl: get_view_path('views/detailSplit.html')
                 })
             ;
         }])
@@ -106,6 +106,10 @@
             "RootFrameService",
             function($scope, $location, dataAPI, $routeParams, RootFrameService) {
                 ones.DEBUG && console.debug('Common view detected: '+ $location.url());
+
+                if($routeParams.id) {
+                    $scope.is_edit = true;
+                }
 
                 var extra_params = parse_arguments($routeParams.extra);
                 angular.forEach(extra_params, function(v, k) {
@@ -183,4 +187,4 @@
 
     ;
     
-})(window.ones, window.angular);
+})(window.ones, window.angular, window);

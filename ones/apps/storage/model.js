@@ -164,7 +164,7 @@
                                 return to_decimal_display(value) + ' ' + (item.measure_unit || '');
                             }
                         },
-                        user_id: {
+                        user_info_id: {
                             cell_filter: 'to_user_fullname'
                         },
                         product_name: {
@@ -191,7 +191,7 @@
                         'quantity',
                         'storage_id',
                         'created',
-                        'user_id'
+                        'user_info_id'
                     ],
                     filters: {
                         storage_id: {

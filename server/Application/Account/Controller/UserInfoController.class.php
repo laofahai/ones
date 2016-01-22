@@ -3,7 +3,7 @@
 namespace Account\Controller;
 use Common\Controller\BaseRestController;
 
-class UserController extends BaseRestController {
+class UserInfoController extends BaseRestController {
 
     public function on_read() {
         $user_info = parent::on_read(true);

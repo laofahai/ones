@@ -2,9 +2,12 @@
     <div class="pull-left actions-btn-left">
         <div class="pull-left btn-group">
             <a class="btn btn-sm btn-info" href="javascript:void(0);" onclick="window.location.reload();"><i class="fa fa-refresh"></i></a>
-            <a class="btn btn-sm btn-info" href="javascript:void(0);" ng-show="back_able===true" onclick="window.history.go(-1);">
+            <a class="btn btn-sm btn-info" href="javascript:void(0);" ng-show="back_able===true||$root.back_able==true" onclick="window.history.go(-1);">
                 <i class="fa fa-arrow-left"></i>
                 <span ng-bind="'common.Go Back'|lang"></span>
+            </a>
+            <a class="btn btn-sm btn-info" href="javascript:void(0);" ng-show="front_able===true||$root.front_able==true" onclick="window.history.go(1);">
+                <i class="fa fa-arrow-right"></i>
             </a>
 
             <!--// dropdown selected actions  -->

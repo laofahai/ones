@@ -14,8 +14,10 @@ auth_nodes:
     - account.authorize.put
     - account.authRole.*
     - account.authNode.get
-    - account.user.*
+    - account.userInfo.*
     - account.department.*
+    - account.companyProfile.put
+    - account.companyProfile.get
 auth_dont_need_login:
     - account.login.post
     - account.register.post
@@ -55,4 +57,9 @@ navs:
                     Users List:
                         app: account
                         icon: users
-                        link: account/user
+                        link: account/userInfo
+            Company Manage:
+                children:
+                    Company Profile:
+                        app: account
+                        link: account/companyProfile

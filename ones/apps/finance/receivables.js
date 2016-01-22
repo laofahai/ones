@@ -126,7 +126,7 @@
                             },
                             highlight: 'danger'
                         },
-                        user_id: {
+                        user_info_id: {
                             cell_filter: "to_user_fullname"
                         },
                         customer_id: {
@@ -163,14 +163,14 @@
                         'amount',
                         'received',
                         'created',
-                        'user_id',
+                        'user_info_id',
                         'status'
                     ],
                     unaddable: [
-                        'source_id', 'source_model', 'user_id', 'created', 'status', 'unreceived', '', ''
+                        'source_id', 'source_model', 'user_info_id', 'created', 'status', 'unreceived', '', ''
                     ],
                     uneditable: [
-                        'source_id', 'source_model', 'user_id', 'created', 'status', 'received', 'unreceived'
+                        'source_id', 'source_model', 'user_info_id', 'created', 'status', 'received', 'unreceived'
                     ],
                     undetail_able: [
                         'source_id'

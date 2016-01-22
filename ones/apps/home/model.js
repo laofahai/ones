@@ -76,6 +76,11 @@
                                     id.push(item.alias);
                                 });
                             }
+
+                            if(!id) {
+                                return;
+                            }
+
                             var $this = this;
                             self.resource.update({
                                 aliases: id,
@@ -99,7 +104,9 @@
                                     id.push(item.alias);
                                 });
                             }
-
+                            if(!id) {
+                                return;
+                            }
 
                             var $this = this;
                             self.resource.update({

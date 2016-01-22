@@ -1,31 +1,40 @@
 <page-actions></page-actions>
-<div class="panel panel-default">
+<div class="panel panel-default form-panel">
     <div class="panel-heading">
         <h3 class="panel-title" ng-bind="panel_title"></h3>
+        <div class="form-field-groups" ng-show="has_fields_groups">
+            <a href="javascript:void(0);"
+               class="label label-default"
+               ng-click="switch_form_fields_group(g.name)"
+               ng-repeat="g in fields_groups track by g.name"
+               ng-class="{'label-primary': active_fields_group===g.name}"
+               ng-bind="g.label"
+                    ></a>
+        </div>
     </div>
     <div class="panel-body">
         <form-view config="formConfig"></form-view>
     </div>
     <div class="panel-footer text-center">
         <div class="pull-left">
-            <button class="btn btn-default btn-lg"
+            <button class="btn btn-default"
                     ng-click="doFormReset()"
                     ng-show="!is_edit"
                     ng-bind="'common.Reset form'|lang"
                     ></button>
-            <button class="btn btn-danger btn-lg"
+            <button class="btn btn-danger"
                     ng-click="doFormClose()"
                     ng-show="!is_edit"
                     ng-bind="'common.Close'|lang"
                     ></button>
         </div>
         <div class="pull-right">
-            <button class="btn btn-primary btn-lg"
+            <button class="btn btn-primary"
                     ng-click="doFormSubmit()"
                     ng-bind="'common.Save'|lang"
                     once-click
                     ></button>
-            <button class="btn btn-success btn-lg"
+            <button class="btn btn-success"
                     ng-click="doFormSubmit(true)"
                     ng-show="!is_edit"
                     ng-bind="'common.Save and add another one'|lang"

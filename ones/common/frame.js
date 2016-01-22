@@ -80,6 +80,7 @@ var frame_init = function() {
                     'ones.commonViewModule'
                 ];
 
+
                 if(config.load_modules) {
                     angular.forEach(config.load_modules, function(m) {
                         boot_strap_module.push(m);
@@ -98,8 +99,6 @@ var frame_init = function() {
                     'ones.i18nModule',
                     'ones.dataModelModule',
                     'ones.directiveModule',
-
-                    'ones.app.account.model',
 
                     'btford.markdown',
 

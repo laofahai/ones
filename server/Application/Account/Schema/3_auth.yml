@@ -12,6 +12,8 @@ auth_node:
 auth_role:
     name:
         comment: 角色名称
+    description:
+        blank: true
     $meta:
         foreign:
             company:

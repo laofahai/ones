@@ -57,7 +57,7 @@
                         finance_account_id: {
                             data_source: 'Finance.FinanceAccountAPI'
                         },
-                        user_id: {
+                        user_info_id: {
                             cell_filter: "to_user_fullname"
                         }
                     },
@@ -66,7 +66,7 @@
                         'amount',
                         'finance_account_id',
                         'created',
-                        'user_id'
+                        'user_info_id'
                     ],
                     filters: {
                         finance_account_id: {

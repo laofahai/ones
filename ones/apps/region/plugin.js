@@ -44,7 +44,7 @@
         if(!ones.DEBUG && cached) {
             tpl = cached;
         } else {
-            $.get('apps/region/views/select_area.html', function(html) {
+            $.get(get_view_path('apps/region/views/select_area.html'), function(html) {
                 tpl = html;
             });
         }

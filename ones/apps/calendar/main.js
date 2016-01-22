@@ -84,7 +84,7 @@
                             ],
                             value: 'null'
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false
                         },

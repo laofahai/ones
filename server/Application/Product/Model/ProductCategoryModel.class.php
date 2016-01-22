@@ -8,8 +8,12 @@
 
 namespace Product\Model;
 
-use Common\Model\CommonViewModel;
+use Common\Model\CommonTreeModel;
 
-class ProductCategoryModel extends CommonViewModel {
+class ProductCategoryModel extends CommonTreeModel {
+
+    protected $viewFields = [
+        "ProductCategory" => ['*', '_type'=>'left']
+    ];
 
 }

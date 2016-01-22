@@ -50,3 +50,21 @@ company_active_apps:
             app:
                 restrict:
                     delete: CASCADE
+
+company_profile:
+    name:
+        comment: 公司名称
+    address:
+        comment: 公司地址
+        blank: true
+    phone:
+        comment: 公司电话
+        blank: true
+    fax:
+        comment: 公司传真
+        blank: true
+
+    $meta:
+        company:
+            restrict:
+                delete: DELETE

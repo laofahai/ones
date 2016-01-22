@@ -65,7 +65,7 @@
                     desktop: function(params) {
                         angular.extend(params, {
                             sign_id: ones.caches.getItem('company_sign_id'),
-                            user_id: params.to_users || [ones.user_info.id]
+                            user_info_id: params.to_users || [ones.user_info.id]
                         });
                         window._desktop_notify(params);
                     }

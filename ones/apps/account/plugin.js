@@ -19,4 +19,12 @@
         });
     });
 
+    // 注册到可支持自定义字段
+    ones.pluginRegister('data_model_supported', function(injector, defered) {
+        ones.pluginScope.append('data_model_supported', {
+            label: _('account.Company Profile') + ' ' + _('common.Module'),
+            value: 'account.companyProfile'
+        });
+    });
+
 })(window, window.angular, window.ones);

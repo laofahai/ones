@@ -159,6 +159,18 @@ function is_assoc($array){
 }
 
 /*
+ * 删除数组元素
+ * */
+function remove_array_items(&$array, $items) {
+    $items = is_array($items) ? $items : [$items];
+    foreach($array as $k=>$v) {
+        if(in_array($v, $items)) {
+            unset($array[$k]);
+        }
+    }
+}
+
+/*
  * 返回数组中某字段的数组
  * @param array $array
  * @param string $field
@@ -166,7 +178,9 @@ function is_assoc($array){
 function get_array_by_field($array, $field) {
     $data = array();
     foreach($array as $a) {
-        $data[] = $a[$field];
+        if(isset($a[$field])) {
+            $data[] = $a[$field];
+        }
     }
     return $data;
 }
@@ -271,7 +285,7 @@ function camelCase($str){
             '-'
         );
         return strtoupper(str_replace($search, '', $matches[0]));
-    },$str);
+    }, ucfirst($str));
 }
 function camelCaseSpace($str){
     return preg_replace_callback('/[-_]+(.)?/', function($matches) {

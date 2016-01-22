@@ -25,7 +25,7 @@
                         subject: {
                             search_able: true
                         },
-                        user_id: {
+                        user_info_id: {
                             label: _('common.Creator'),
                             cell_filter: 'to_user_fullname'
                         },
@@ -57,7 +57,7 @@
                         'quantity',
                         'created',
                         'workflow_node_status_label',
-                        'user_id'
+                        'user_info_id'
                     ],
                     bill_meta_required: [
                         'subject', 'created'
@@ -181,7 +181,7 @@
                 if(!$routeParams.id) {
                     $scope.bill_meta_data = {
                         created: new Date(moment().format()),
-                        user_id: ones.user_info.id
+                        user_info_id: ones.user_info.id
                     };
                 } else {
                     $scope.bill_meta_data = {};

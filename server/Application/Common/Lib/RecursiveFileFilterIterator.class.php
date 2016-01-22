@@ -19,6 +19,10 @@ class RecursiveFileFilterIterator extends \FilterIterator {
             $this->_ext = $ext;
             $this->_name = null;
         }
+
+        if(!is_dir($path)) {
+            return [];
+        }
         
         parent::__construct(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)));
     }

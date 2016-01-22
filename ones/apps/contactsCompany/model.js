@@ -27,7 +27,7 @@
                             editable: false,
                             detail_able: false
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false,
                             detail_able: false
@@ -177,7 +177,7 @@
                             addable: false,
                             editable: false
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false
                         },

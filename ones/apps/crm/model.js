@@ -82,12 +82,12 @@
                         },
                         head_id: {
                             widget: 'item_select',
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             required: false,
                             label: _('crm.Head Man'),
                             cell_filter: 'to_user_fullname'
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false,
                             label: _('crm.Creator'),
@@ -99,7 +99,7 @@
                         }
                     },
                     list_display: [
-                        'label', 'company_name', 'source_from', 'linkman', 'position', 'phone', 'user_id', 'head_id'
+                        'label', 'company_name', 'source_from', 'linkman', 'position', 'phone', 'user_info_id', 'head_id'
                     ],
                     modal_list_display: [
                         'company_name', 'linkman', 'phone'
@@ -368,7 +368,7 @@
                             addable: false,
                             editable: false
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false
                         }
@@ -466,14 +466,14 @@
                         head_id: {
                             map: 'head_id',
                             widget: 'item_select',
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             required: false,
                             label: _('crm.Head Man'),
                             cell_filter: 'to_user_fullname'
                         },
-                        user_id: {
+                        user_info_id: {
                             label: _('crm.Creator'),
-                            field: 'user_id',
+                            field: 'user_info_id',
                             cell_filter: 'to_user_fullname'
                         },
                         master: {
@@ -486,10 +486,10 @@
                             widget: 'datetime'
                         }
                     },
-                    unaddable: ['label', 'head', 'user_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role'],
-                    uneditable: ['label', 'head', 'head_id', 'user_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role_id'],
+                    unaddable: ['label', 'head', 'user_info_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role'],
+                    uneditable: ['label', 'head', 'head_id', 'user_info_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role_id'],
                     undetail_able: ['clue', 'contacts_company_role', 'contacts_company_id', 'contacts_company_role_id'],
-                    list_display: ['label', 'name', 'master', 'phone', 'mobile', 'user_id'],
+                    list_display: ['label', 'name', 'master', 'phone', 'mobile', 'user_info_id'],
                     modal_list_display: [
                         'name', 'master', 'phone'
                     ],
@@ -762,13 +762,13 @@
                         created: {
                             widget: 'datetime'
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false
                         },
                         executor: {
                             widget: 'item_select',
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             value: ones.user_info.id,
                             map: 'executor_id'
                         },

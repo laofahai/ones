@@ -54,14 +54,14 @@
                             },
                             label: _('marketing.The Sale Stage')
                         },
-                        user_id: {
+                        user_info_id: {
                             label: _('marketing.Creator'),
                             cell_filter: 'to_user_fullname'
                         },
                         head_id: {
                             widget: 'item_select',
                             multiple: false,
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             label: _('marketing.Head Man'),
                             value: userinfo.id,
                             cell_filter: 'to_user_fullname'
@@ -89,8 +89,8 @@
                         }
                     },
                     list_display: ['label', 'name', 'status', 'customer_id', 'next_contact_time', 'head_id'],
-                    unaddable: ['user_id', 'created'],
-                    uneditable: ['user_id', 'created', 'last_contact_time'],
+                    unaddable: ['user_info_id', 'created'],
+                    uneditable: ['user_info_id', 'created', 'last_contact_time'],
                     filters: {
                         status: {
                             type: 'link'
@@ -274,8 +274,8 @@
                             }
                         }
                     },
-                    unaddable: ['sale_opportunities_id', 'user_id'],
-                    uneditable: ['sale_opportunities_id', 'user_id'],
+                    unaddable: ['sale_opportunities_id', 'user_info_id'],
+                    uneditable: ['sale_opportunities_id', 'user_info_id'],
                     list_display: [
                         'name', 'cost', 'price', 'quote_price', 'num', 'quote_amount'
                     ]
@@ -325,7 +325,7 @@
                             widget: 'date',
                             blank: true
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false
                         },
@@ -343,7 +343,7 @@
                         head_id: {
                             label: _('common.Head Man'),
                             widget: 'item_select',
-                            data_source: 'Account.UserAPI',
+                            data_source: 'Account.UserInfoAPI',
                             cell_filter: 'to_user_fullname'
                         }
                     },

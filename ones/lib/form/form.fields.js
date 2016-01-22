@@ -63,6 +63,15 @@
                 this.set_field_data_source = function(config, data_source_key) {
                     var getter = $parse(config['ng-model']);
 
+                    // 布尔选项时，默认使用yes_or_no数据源
+                    if(config.data_source === undefined && config.type === 'boolean') {
+                        $timeout(function() {
+                            self.scope[data_source_key] = YES_OR_NO_DATA_SOURCE;
+                            getter.assign(self.scope, config.value);
+                        });
+                        return;
+                    }
+
                     if(angular.isArray(config.data_source)) {
                         // 数组数据源
                         self.scope[data_source_key] = config.data_source;
@@ -236,8 +245,7 @@
                          * 编辑时 默认值
                          * */
                         self.scope.$on('form.dataLoaded', function(evt, data) {
-
-                            if(!data[$item_select.config.field]) {
+                            if(undefined === data[$item_select.config.field]) {
                                 return;
                             }
 
@@ -249,7 +257,7 @@
                             if(!selected_ids) {
                                 return;
                             }
-                            $item_select.data_source.unicode_lazy(selected_ids).then(function(data) {
+                            $item_select.data_source.unicode_lazy(selected_ids, data).then(function(data) {
                                 if(!data) {
                                     return;
                                 }
@@ -296,7 +304,7 @@
                             };
                             $injector.get("$modal")({
                                 scope: self.scope,
-                                template: 'views/itemSelectModal.html',
+                                template: get_view_path('views/itemSelectModal.html'),
                                 show: true
                             });
 
@@ -395,7 +403,7 @@
 
                             $injector.get("$modal")({
                                 scope: self.scope,
-                                template: 'views/itemSelectModal.html',
+                                template: get_view_path('views/itemSelectModal.html'),
                                 show: true
                             });
 
@@ -595,7 +603,7 @@
                     }
 
                     // 默认ng-model
-                    config['ng-model'] = config['ng-model'] || self.global_opts.form_name+'.'+config.field;
+                    config['ng-model'] = config['ng-model'] || self.global_opts.model_prefix+'.'+config.field;
 
                     angular.forEach(config, function(v, k) {
 

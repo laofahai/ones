@@ -1,8 +1,18 @@
 product_category:
     name:
+    lft:
+        type: integer
+        limit: 6
+    rgt:
+        type: integer
+        limit: 6
+    remark:
+        blank: true
     $meta:
         indexes:
             name:
+            lft:
+            rgt:
         foreign:
             company:
                 restrict:

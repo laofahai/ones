@@ -41,7 +41,7 @@
                             },
                             label: _('common.Belongs To App')
                         },
-                        user_id: {
+                        user_info_id: {
                             addable: false,
                             editable: false
                         },

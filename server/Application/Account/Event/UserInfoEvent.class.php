@@ -11,7 +11,7 @@ namespace Account\Event;
 
 use Common\Event\BaseRestEvent;
 
-class UserEvent extends BaseRestEvent {
+class UserInfoEvent extends BaseRestEvent {
 
     /*
      * 获取当前用户信息

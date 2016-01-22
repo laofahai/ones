@@ -16,11 +16,8 @@ class CommonTreeModel extends CommonModel {
      * */
     public function get_tree($pid = null) {
 
-        $company_id = get_current_company_id();
         if(!$pid) {
-            $parent = $this->where(array(
-                'company_id' => $company_id
-            ))->order('id ASC')->find();
+            $parent = $this->where([])->order('id ASC')->find();
         } else {
             $parent = $this->find($pid);
         }
@@ -30,8 +27,7 @@ class CommonTreeModel extends CommonModel {
         }
 
         $map = array(
-            "lft" => array("between", array($parent["lft"], $parent["rgt"])),
-            "company_id" => $company_id
+            "lft" => array("between", array($parent["lft"], $parent["rgt"]))
         );
         $data = $this->where($map)->order("lft ASC")->select();
         $items = array();
@@ -89,9 +85,12 @@ class CommonTreeModel extends CommonModel {
          * 更新右值
          */
         $map = array(
-            "rgt" => array("EGT", $parent["rgt"]),
-            "company_id" => $company_id
+            "rgt" => array("EGT", $parent["rgt"])
         );
+        if(!$this->not_belongs_to_company) {
+            $map['company_id'] = $company_id;
+        }
+
         $this->startTrans();
         $rs = $this->where($map)->setInc('rgt', 2);
         if(false === $rs) {
@@ -103,9 +102,11 @@ class CommonTreeModel extends CommonModel {
          * 更新左值
          */
         $map = array(
-            "lft" => array("EGT", $parent["rgt"]),
-            "company_id" => $company_id
+            "lft" => array("EGT", $parent["rgt"])
         );
+        if(!$this->not_belongs_to_company) {
+            $map['company_id'] = $company_id;
+        }
         $rs = $this->where($map)->setInc('rgt', 2);
         if(false === $rs) {
             $this->rollback();
@@ -117,9 +118,11 @@ class CommonTreeModel extends CommonModel {
          */
         $data = array(
             "lft" => $parent["rgt"],
-            "rgt" => $parent["rgt"]+1,
-            "company_id" => $company_id
+            "rgt" => $parent["rgt"]+1
         );
+        if(!$this->not_belongs_to_company) {
+            $data['company_id'] = $company_id;
+        }
 
         foreach($source_data as $k=>$v) {
             $data[$k] = $v;
@@ -135,6 +138,45 @@ class CommonTreeModel extends CommonModel {
 
         $this->commit();
         return $rs;
+    }
+
+    /*
+     * 删除节点
+     * */
+    public function delete_node($id) {
+        $node = $this->where(['id'=>$id])->find();
+
+        if(!$node) {
+            return true;
+        }
+
+        if($node["lft"] == 1) {
+            $this->error = __("common.Root node can't be deleted");
+            return false;
+        }
+
+        $fields = $this->getDbFields();
+        if(in_array('trashed', $fields)) {
+            $result = $this->where([
+                'lft' => ['BETWEEN', [$node['lft'], $node['rgt']]]
+            ])->save(['trashed'=>'1']);
+            return $result;
+        }
+
+        $this->startTrans();
+
+        $this->where([
+            'lft' => ['BETWEEN', [$node['lft'], $node['rgt']]]
+        ])->delete();
+
+        // 右侧需减去
+        $need_minus = $node['rgt'] - $node['lft'] + 1;
+
+        $this->where(['rgt' => ['GT', $node['rgt']]])->setDec('rgt', $need_minus);
+        $this->where(['lft' => ['GT', $node['rgt']]])->setDec('lft', $need_minus);
+
+        $this->commit();
+
     }
 
 }

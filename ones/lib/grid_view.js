@@ -17,12 +17,8 @@
             "$filter",
             "RootFrameService",
             "Home.SchemaAPI",
-            "Account.UserPreferenceAPI",
-            "PageSelectedActions",
             function($rootScope, $routeParams, $location, $modal, dataAPI, $timeout, $injector, $filter,
-                     RootFrameService, SchemaAPI,
-                     user_preference,
-                     PageSelectedActions
+                     RootFrameService, SchemaAPI
             ){
                 var self = this;
                 this.scope = {};
@@ -30,6 +26,11 @@
 
 
                 this.init = function($scope, options){
+
+                    options.model.config = options.model.config || {fields:{}, list_display: []};
+                    options.model.config.fields = options.model.config.fields || {};
+                    options.model.config.list_display = options.model.config.list_display || [];
+                    options.model.config.list_hide = options.model.config.list_hide || [];
 
                     // 列表第一个字段加入ID
                     if(options.model.config.list_display.indexOf('id') <= 0) {
@@ -110,13 +111,15 @@
                     };
 
                     if(is_app_loaded('messageCenter')) {
-                        var mc = $injector.get('ones.MessageCenter');
-                        mc.on('data_changed', function(data) {
-                            ones.DEBUG && console.debug('grid detcted data_changed event', data);
-                            if(data.app === self.app_info.app && data.module === self.app_info.module) {
-                                self.refresh();
-                            }
-                        });
+                        try {
+                            var mc = $injector.get('ones.MessageCenter');
+                            mc.on('data_changed', function(data) {
+                                ones.DEBUG && console.debug('grid detcted data_changed event', data);
+                                if(data.app === self.app_info.app && data.module === self.app_info.module) {
+                                    self.refresh();
+                                }
+                            });
+                        } catch(e) {}
                     }
 
                     /**
@@ -206,6 +209,8 @@
                         callback: function (schema) {
                             self.schema = schema;
 
+                            schema[self.model_config.table] = schema[self.model_config.table] || {};
+
                             self.parentScope.grid_trash_able = schema[self.model_config.table].enable_trash || false;
 
                             var structure = {};
@@ -216,10 +221,43 @@
 
                             angular.deep_extend(structure, self.scope.column_defs);
 
-                            var human_date_display = user_preference.get_preference('human_date_display');
+                            var human_date_display = false;
+                            try {
+                                var user_preference = $injector.get('Account.UserPreferenceAPI');
+                                human_date_display = user_preference.get_preference('human_date_display');
+                            } catch(e) {}
+
+                            // 默认显示全部字段
+                            var list_display_all = false;
+                            if(!self.options.model.config.list_display || self.options.model.config.list_display.length < 2 || self.options.model.config.list_display_all) {
+                                list_display_all = true;
+                            }
+
                             angular.forEach(structure, function(field, field_name) {
 
+                                if(!field.label) {
+
+                                    // 默认_id label
+                                    if(field_name.slice(-3) === "_id") {
+                                        field.label =
+                                            _(
+                                                sprintf('%s.%s', self.app_info.app, camelCaseSpace(field_name.slice(0, -3)))
+                                            );
+                                    } else {
+                                        field.label = _(ones.app_info.app+'.'+camelCaseSpace(field_name));
+                                    }
+                                    if(field.label === camelCaseSpace(field_name)) {
+                                        field.label = field.comment;
+                                    }
+
+                                }
+
                                 field.field = field.field || field_name;
+
+                                // 显示全部字段
+                                if(list_display_all && self.options.model.config.list_hide.indexOf(field.field) < 0) {
+                                    self.options.model.config.list_display.push(field.field);
+                                }
 
                                 if(field.field in self.scope.column_defs) {
                                     angular.deep_extend(field, self.scope.column_defs[field.field] || {})
@@ -248,19 +286,14 @@
                                 var config = self.scope.column_defs[field.field];
                                 if(human_date_display !== 2
                                     && !config.cell_filter
+                                    && false !== config.human_date_display
                                     && (['datetime', 'date', 'time'].indexOf(config.widget) >= 0
                                     || config.field == 'created')
                                 ) {
                                     self.scope.column_defs[field.field].cell_filter = 'to_human_date';
                                 }
 
-                                // 默认_id label
-                                if(!self.scope.column_defs[field.field].label && field.field.slice(-3) === "_id") {
-                                    self.scope.column_defs[field.field].label =
-                                        _(
-                                            sprintf('%s.%s', self.app_info.app, camelCaseSpace(field.field.slice(0, -3)))
-                                        );
-                                }
+
 
                                 // 点击事件
                                 if(typeof field.on_view_item_clicked === "function") {
@@ -271,11 +304,13 @@
 
                             });
 
-                            self.scope.schema_display = self.scope.schema_display.concat(schema[self.model_config.table].list_display || []);
+                            self.options.model.config.list_display.remove('company_id');
+                            self.scope.schema_display = self.scope.schema_display.concat(self.options.model.config.list_display || []);
                             self.scope.schema_display = array_unique(self.scope.schema_display);
                             self.scope.schema_display_fixed = $filter('get_grid_fields')(self.scope.schema_display, self.scope.column_defs, 1);
                             self.scope.schema_display_not_fixed = $filter('get_grid_fields')(self.scope.schema_display, self.scope.column_defs, 2);
 
+                            self.scope.column_defs = structure;
                             self.scope.column_defs._data_model_fields_ = self.scope.column_defs._data_model_fields_ || {};
                             self.data_model_fields = self.scope.column_defs._data_model_fields_.value || null;
                             // 初始载入数据
@@ -305,7 +340,7 @@
 
 
                 this.makeLinkActions = function() {
-                    self.link_actions = self.link_actions || [];
+                    self.link_actions = [];
                     self.scope.$root.link_actions = self.scope.$root.link_actions || [];
                     // 新增
                     var add_btn = {
@@ -316,7 +351,8 @@
                             self.model_config.is_bill ? 'add/bill' : 'add',
                             $routeParams.extra ? '/'+$routeParams.extra : ''
                         ),
-                        singleton: true
+                        singleton: true,
+                        id: 'add_new_item'
                     };
 
                     if(self.model_config.addable !== false && self.link_actions.indexOf(add_btn) < 0) {
@@ -347,7 +383,11 @@
 
                 // 选中项操作
                 this.makeSelectedActions = function() {
-                    self.selectedActions = PageSelectedActions.generate(self.options.model, self.scope);
+                    self.selectedAction = [];
+                    try {
+                        var PageSelectedActions = $injector.get('PageSelectedActions');
+                        self.selectedActions = PageSelectedActions.generate(self.options.model, self.scope);
+                    } catch(e) { }
                     self.scope.$root.selectedActions = self.selectedActions = reIndex(self.selectedActions);
                 };
 
@@ -425,7 +465,10 @@
                                     value = self.scope.column_defs[key].get_display(value, data[i]);
                                 } else {
                                     //value = $filter('tryGridEval')(value, key, i); ?????????
-                                    if(self.scope.column_defs[key].cell_filter) {
+
+                                    if(value === null || value === 'null') {
+                                        value = undefined;
+                                    } else if(self.scope.column_defs[key].cell_filter) {
                                         value = $filter('tryGridFilter')(value, self.scope.column_defs[key].cell_filter, i);
                                     }
                                 }
@@ -564,6 +607,9 @@
 
                     angular.forEach(filters, function(item, field) {
                         var data_source;
+
+                        item = item || {};
+
                         if(item.type) {
                             data_source = item.data_source || self.model_config.fields[field].data_source;
                         }
@@ -761,7 +807,7 @@
                     restrict: "E",
                     replace: true,
                     transclusion: true,
-                    templateUrl: "views/gridTemplate.html",
+                    templateUrl: get_view_path("views/gridTemplate.html"),
                     scope: {
                         config: "="
                     },
@@ -896,7 +942,7 @@
 
                 for(var i=0; i<schema_display.length; i++) {
                     var t = schema_display[i];
-                    if(column_defs[t].grid_fixed) {
+                    if(column_defs[t] && column_defs[t].grid_fixed) {
                         fixed.push(t);
                     } else {
                         not_fixed.push(t);
@@ -904,13 +950,12 @@
                 }
 
                 // 默认首列固定
-                if(fixed.length <= 1) {
+                if(fixed.length <= 1 && not_fixed.length > 1) {
                     fixed = first_fixed;
                     not_fixed = not_fixed.splice(1);
                 }
 
-                console.debug('grid fixed fields:', fixed);
-                console.debug('grid not fixed fields:', not_fixed);
+
                 return type == 1 ? fixed : not_fixed;
             };
         }])

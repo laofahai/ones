@@ -12,9 +12,19 @@ function bootstrap(angular_app, apps, callback) {
                 angular.bootstrap(document, angular_app);
             } catch(e) {
                 ones.DEBUG && console.error(e);
-                frame_app_load_failed("bootstrap");
+                try {
+                    frame_app_load_failed("bootstrap");
+                } catch (e) {}
+
                 return false;
             }
+
+            // 通用字段分组
+            window.COMMON_FIELDS_GROUPS = [
+                {name: 'basic', label: _('common.Basic Info')},
+                {name: 'extend', label: _('common.Extend Info')}
+            ];
+
             //回调
             if (typeof(callback) === 'function') {
                 callback();
@@ -23,6 +33,9 @@ function bootstrap(angular_app, apps, callback) {
     });
 }
 
+window.get_view_path = function(view_name) {
+    return typeof window.get_view_path_override === 'function' ? window.get_view_path_override(view_name) : view_name;
+};
 
 /**
  * 返回应用视图url
@@ -296,7 +309,14 @@ var format_data_form_rest = function(data, fieldsDefine, scope, $parse) {
         }
 
         var getter = $parse(config['ng-model']);
-        getter.assign(scope, data[config.field_model] || undefined);
+        getter.assign(scope, data[config.field_model]);
+
+        // __label__ 字段
+        var label_value = data[config.field_model + '__label__'];
+        if(label_value !== undefined && label_value !== null) {
+            getter = $parse(config['ng-model'] + '__label__');
+            getter.assign(scope, label_value);
+        }
 
     });
 
@@ -391,6 +411,30 @@ var to_link_style = function(label) {
     return sprintf('<a>%s</a>', label);
 };
 
+/*
+* 返回选中项操作中「新增子项」
+* */
+var get_selected_action_for_add_child = function(RootFrameService, link, label) {
+
+    label = label || _('common.Sub Category');
+    link = link || ones.app_info.app + '/' + ones.app_info.module;
+
+    return {
+        multi: false,
+        label: _('common.Add New') + ' ' + label,
+        icon: 'plus',
+        auth_node: false,
+        action: function(evt, selected, item) {
+            item = item || selected[0];
+            RootFrameService.open_frame({
+                label: _('common.Add New')+ ' ' + label,
+                src: link + '/add/pid/'+item.id,
+                singleton: true
+            });
+        }
+    };
+};
+
 /**
  * 对象成员数量
  * */
@@ -406,7 +450,8 @@ count_object_size = function(obj) {
 * 返回对号/叉号
 * */
 var to_boolean_icon = function(bool) {
-    var cls = bool ? 'check-circle text-success' : 'minus-circle text-danger';
+    bool = bool == '0' ? 0 : bool;
+    var cls = Boolean(bool) ? 'check-circle text-success' : 'minus-circle text-danger';
     return '<i class="fa fa-'+cls+'"></i>';
 };
 
@@ -536,6 +581,34 @@ Number.prototype.div = function (arg){
         return (r1/r2)*pow(10,t2-t1);
     }
 };
+
+// 将一个一维数组转化为数据源格式
+function convert_array_to_data_source(items) {
+    var response = [];
+    for(var i=0;i<items.length;i++) {
+        response.push({
+            label: items[i],
+            value: i+1
+        });
+    }
+
+    return response;
+}
+/**
+ * 返回model中「数组数据源」字段配置
+ * @param data_source 数组数据源
+ * @param need_convert 是否需要将一维数组转化为数据源格式
+ * */
+function get_array_data_source_field_config(data_source, need_convert) {
+    data_source = need_convert ? convert_array_to_data_source(data_source) : data_source;
+    return {
+        widget: 'select',
+        data_source: data_source,
+        get_display: function(value) {
+            return get_data_source_display(data_source, value);
+        }
+    };
+}
 
 
 /**

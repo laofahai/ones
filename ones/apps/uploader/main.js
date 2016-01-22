@@ -89,7 +89,11 @@
             });
 
             factory.scope.$watch(config['ng-model'], function(files) {
+                if(!files) {
+                    return;
+                }
 
+                files = angular.isArray(files) ? files : [files];
                 angular.forEach(files, function(file) {
                     // 检测文件大小
                     if(file.filesize > max_size) {
@@ -122,9 +126,14 @@
 
             });
 
-            injector.get('Home.ConfigAPI').get_app_config('uploader').promise.then(function(data) {
-                max_size = data.max_upload_size || max_size;
-            });
+            try {
+                injector.get('Home.ConfigAPI').get_app_config('uploader').promise.then(function(data) {
+                    max_size = data.max_upload_size || max_size;
+                });
+            } catch(e) {
+                max_size = 5242880;
+            }
+
 
             this.html = sprintf(tpl, {
                 attr: factory.make_field_attr(config),

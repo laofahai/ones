@@ -34,6 +34,7 @@ Role Authorize: 角色授权
 Organization Manage: 组织机构管理
 Users List: 用户列表
 User: 用户
+User Info: 用户信息
 Authorize Success: 授权成功
 Add Child Department: 新增子部门
 Leader: 负责人
@@ -56,3 +57,5 @@ New Password: 新密码
 New password and it's repeat must be equal: 新密码和重复新密码必须相同
 Old password not equal to saved: 旧密码输入错误
 Password has been changed, you need to re-login: 密码已经被重置，您需要重新登录
+
+Company Profile: 公司资料

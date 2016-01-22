@@ -42,7 +42,7 @@
                 if(!$routeParams.id) {
                     $scope.bill_meta_data = {
                         created: new Date(moment().format()),
-                        user_id: ones.user_info.id
+                        user_info_id: ones.user_info.id
                     };
                 } else {
                     $scope.bill_meta_data = {};

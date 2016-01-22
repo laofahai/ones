@@ -24,59 +24,6 @@
     // 公司首选项
     ones.pluginRegister('common_config_item', function(injector, defered, fields) {
 
-        // 公司信息
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_name',
-            label: _('home.Company Name'),
-            widget: 'text',
-            required: false,
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_name_opts',
-            widget: 'hidden',
-            value: 'home,string',
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_address',
-            label: _('home.Company Address'),
-            widget: 'text',
-            required: false,
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_address_opts',
-            widget: 'hidden',
-            value: 'home,string',
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_phone',
-            label: _('home.Company Phone'),
-            widget: 'text',
-            required: false,
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_phone_opts',
-            widget: 'hidden',
-            value: 'home,string',
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_fax',
-            label: _('home.Company Fax'),
-            widget: 'text',
-            required: false,
-            app: 'home'
-        });
-        ones.pluginScope.append('common_config_item', {
-            alias: 'company_fax_opts',
-            widget: 'hidden',
-            value: 'home,string',
-            app: 'home'
-        });
 
         // decimal 保留小数位
         ones.pluginScope.append('common_config_item', {

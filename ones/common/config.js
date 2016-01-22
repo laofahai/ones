@@ -197,7 +197,9 @@ angular.module("ones.configModule", [
         'ones.pluginsModule',
         'ones.configModule',
 
-        'ones.app.account.main'
+        'ones.app.account.main',
+
+        'ones.global'
     ])
     .config([
         "$httpProvider",
