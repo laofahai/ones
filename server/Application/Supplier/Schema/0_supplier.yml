@@ -14,13 +14,13 @@ supplier:
             contacts_company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 restrict:
                     delete: CASCADE
             head:
                 options:
                     blank: true
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: head_id
                 restrict:
                     delete:

@@ -13,10 +13,10 @@ class StockOutModel extends CommonViewModel {
 
     protected $viewFields = [
         "StockOut" => ['*', '_type'=>'left'],
-        "User" => [
+        "UserInfo" => [
             'login',
             'realname',
-            '_on'=>"StockOut.user_id=User.id",
+            '_on'=>"StockOut.user_info_id=UserInfo.id",
             '_type'=>'left'
         ]
     ];

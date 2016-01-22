@@ -61,7 +61,7 @@ contacts_company:
                     blank: true
                 restrict:
                     delete: SET_NULL
-            user: # 添加用户
+            user_info: # 添加用户
                 options:
                     blank: true
                 restrict:
@@ -100,7 +100,7 @@ contacts_company_linkman:
             contacts_company:
                 restrict:
                     delete: CASCADE
-            user: # 添加用户
+            user_info: # 添加用户
                 options:
                     blank: true
                 restrict:
@@ -108,7 +108,7 @@ contacts_company_linkman:
             related_user: # 关联公司
                 options:
                     blank: true
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: related_user_id
                 restrict:
                     delete: SET_NULL

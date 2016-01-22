@@ -8,7 +8,7 @@ class UserController extends BaseRestController {
     public function on_read() {
         $user_info = parent::on_read(true);
         $auth_user_role_model = D("AuthUserRole");
-        $roles = $auth_user_role_model->where(['user_id'=>$user_info['id']])->select();
+        $roles = $auth_user_role_model->where(['user_info_id'=>$user_info['id']])->select();
 
         $user_info['auth_role_id'] = [];
         foreach($roles as $role) {
@@ -22,7 +22,7 @@ class UserController extends BaseRestController {
      * 新增用户插入
      * */
     protected function _before_insert() {
-        list($hashed_password, $rand_hash) = D('Account/User')->generate_password($_POST['password']);
+        list($hashed_password, $rand_hash) = D('Account/UserInfo')->generate_password($_POST['password']);
         $_POST['password'] = $hashed_password;
         $_POST['rand_hash'] = $rand_hash;
     }
@@ -32,7 +32,7 @@ class UserController extends BaseRestController {
         if(!is_array($roles)) {
             $roles = explode(',', $roles);
         }
-        D('Account/User')->change_user_role($uid, $roles);
+        D('Account/UserInfo')->change_user_role($uid, $roles);
     }
 
     // 修改密码
@@ -48,7 +48,7 @@ class UserController extends BaseRestController {
             return $this->error(__('account.Every item is required'));
         }
 
-        $user_service = D('Account/User');
+        $user_service = D('Account/UserInfo');
         $user = $user_service->where(['id'=>$user_id])->find();
 
         list($old_hashed_password) = generate_password($old_password, $user['rand_hash']);

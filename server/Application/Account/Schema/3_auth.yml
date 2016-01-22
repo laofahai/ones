@@ -22,7 +22,7 @@ auth_role:
 auth_user_role:
     $meta:
         foreign:
-            user:
+            user_info:
                 restrict:
                     delete: CASCADE
             company:

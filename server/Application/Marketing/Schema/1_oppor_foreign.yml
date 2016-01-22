@@ -22,7 +22,7 @@ sale_opportunities_product:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:

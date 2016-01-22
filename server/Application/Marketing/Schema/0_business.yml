@@ -31,7 +31,7 @@ sale_opportunities:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
@@ -39,7 +39,7 @@ sale_opportunities:
             head_id:
                 options:
                     blank: true
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: head_id
                 restrict:
                     delete: SET_NULL
@@ -88,7 +88,7 @@ contract:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
@@ -96,7 +96,7 @@ contract:
             head_id:
                 options:
                     blank: true
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: head_id
                 restrict:
                     delete: SET_NULL

@@ -13,10 +13,10 @@ class OrdersModel extends CommonViewModel {
 
     protected $viewFields = [
         "Orders" => ['*', '_type'=>'left'],
-        "User" => [
+        "UserInfo" => [
             'login',
             'realname',
-            '_on'=>"Orders.user_id=User.id",
+            '_on'=>"Orders.user_info_id=UserInfo.id",
             '_type'=>'left'
         ],
         "Customer" => [

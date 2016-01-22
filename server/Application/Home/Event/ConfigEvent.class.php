@@ -1,7 +1,7 @@
 <?php
 namespace Home\Event;
 use Account\Service\AuthorizeService;
-use Account\Service\UserService;
+use Account\Service\UserInfoService;
 use Common\Event\BaseRestEvent;
 use Common\Lib\Schema;
 use Home\Service\AppService;
@@ -35,10 +35,10 @@ class ConfigEvent extends BaseRestEvent {
         $data['authed_nodes'] = get_array_to_kv(AuthorizeService::$authed_nodes, "flag", "node");
 
         // 用户信息
-        $data['all_users'] = UserService::get_all_basic_data();
+        $data['all_users'] = UserInfoService::get_all_basic_data();
 
         // 当前用户信息
-        $data['user_info'] = D('Account/User')->get_current_user();
+        $data['user_info'] = D('Account/UserInfo')->get_current_user();
 
         // 系统首选项
         $system_preference = D('Home/Config', 'Service')->get_kv_config();

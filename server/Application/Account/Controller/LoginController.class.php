@@ -8,7 +8,7 @@ class LoginController extends BaseRestController {
     protected $not_belongs_to_company = true;
     
     public function on_post() {
-        $user = D("User");
+        $user = D("Account/UserInfo");
         $result = $user->authenticate(
                 I("post.company_sign_id"),
                 I("post.username"),

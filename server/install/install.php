@@ -50,7 +50,7 @@ foreach($db_config as $k=>$v) {
 }
 
 // 检测数据库链接
-$pdo = check_db_connection($db_config);
+$pdo = check_db_connection($db_config, $db_config['adapter']);
 if(!$pdo) {
     return;
 }
@@ -155,7 +155,7 @@ $department_id = $pdo->lastInsertId();
 
 // 超级管理用户
 list($password, $hash) = generate_password($user_info['password']);
-$sql = "INSERT INTO user(login, password, realname, email, rand_hash, department_id, company_id)
+$sql = "INSERT INTO user_info(login, password, realname, email, rand_hash, department_id, company_id)
         VALUE(:login, :password, :realname, :email, :rand_hash, :department_id, :company_id)";
 $prepared = $pdo->prepare($sql);
 $prepared->bindParam(':login', $user_info['login']);
@@ -191,7 +191,7 @@ if(!$prepared->execute()) {
 }
 $auth_role_id = $pdo->lastInsertId();
 
-$sql = "INSERT INTO auth_user_role(user_id, company_id, auth_role_id)VALUE(:user_id, :company_id, :auth_role_id)";
+$sql = "INSERT INTO auth_user_role(user_info_id, company_id, auth_role_id)VALUE(:user_id, :company_id, :auth_role_id)";
 $prepared = $pdo->prepare($sql);
 $prepared->bindParam(":user_id", $user_id);
 $prepared->bindParam(":company_id", $company_id);

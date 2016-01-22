@@ -18,17 +18,17 @@ class CommonFilter {
         $uid = get_current_user_id();
         switch($map['by_user']) {
             case "i_created":
-                $map['user_id'] = $uid;
+                $map['user_info_id'] = $uid;
                 break;
             case "i_headed":
                 $map['head_id'] = $uid;
                 break;
             case "sub_created":
-                $subs = D('Account/User')->get_all_subordinates();
-                $map['user_id'] = ['IN', get_array_by_field($subs, 'id')];
+                $subs = D('Account/UserInfo')->get_all_subordinates();
+                $map['user_info_id'] = ['IN', get_array_by_field($subs, 'id')];
                 break;
             case "sub_headed":
-                $subs = D('Account/User')->get_all_subordinates();
+                $subs = D('Account/UserInfo')->get_all_subordinates();
                 $map['head_id'] = ['IN', get_array_by_field($subs, 'id')];
                 break;
         }

@@ -48,7 +48,7 @@ class CommonBillModel extends CommonModel {
     protected $detail_model;
 
     protected $_auto = [
-        array("user_id", "get_current_user_id", 1, "function"),
+        array("user_info_id", "get_current_user_id", 1, "function"),
         array("company_id", "get_current_company_id", 1, "function")
     ];
 

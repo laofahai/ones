@@ -1,4 +1,8 @@
 <?php
+
+// 应用数据库环境
+define('DB_ENVIRONMENT', 'development');
+
 $__ = array(
     'DB_PREFIX' => '', // 数据库表前缀
     'DB_CHARSET'=> 'utf8', // 字符集

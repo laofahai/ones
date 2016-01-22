@@ -70,7 +70,7 @@ class SaleOpportunitiesController extends BaseRestController {
                 'sale_opportunities_id' => I('get.id'),
                 'customer_id' => $source['customer_id'],
                 'company_id' => get_current_company_id(),
-                'user_id' => get_current_user_id()
+                'user_info_id' => get_current_user_id()
             ));
 
 //            echo $model->getLastSql();

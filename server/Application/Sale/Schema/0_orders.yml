@@ -41,7 +41,7 @@ orders:
             customer:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 restrict:
                     delete: CASCADE
             company:

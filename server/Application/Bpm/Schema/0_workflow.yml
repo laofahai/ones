@@ -26,7 +26,7 @@ workflow:
             app:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
@@ -127,6 +127,6 @@ workflow_progress:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 restrict:
                     delete: CASCADE

@@ -56,7 +56,7 @@ cloud_contacts_company_linkman:
                     blank: true
                 restrict:
                     delete: SET_NULL
-            user: # 关联公司中用户
+            user_info: # 关联公司中用户
                 options:
                     blank: true
                 restrict:

@@ -14,7 +14,7 @@ use Common\Model\CommonModel;
 class CustomerService extends CommonModel {
 
     protected $_auto = array(
-        array("user_id", "get_current_user_id", 1, "function"),
+        array("user_info_id", "get_current_user_id", 1, "function"),
         array("company_id", "get_current_company_id", 1, "function")
     );
 
@@ -34,7 +34,7 @@ class CustomerService extends CommonModel {
         $source = array();
         if(!$uid) {
             $source = $this->where(array('id'=>array("IN", $ids)))->select();
-            $source = get_array_to_kv($source, 'user_id', 'id');
+            $source = get_array_to_kv($source, 'user_info_id', 'id');
         }
 
         // 往来单位
@@ -57,7 +57,7 @@ class CustomerService extends CommonModel {
                 $data = array(
                     'contacts_company_id' => $id,
                     'head_id' => $uid,
-                    'user_id' => $uid,
+                    'user_info_id' => $uid,
                     'crm_clue_id' => null,
                     'company_id'  => $company_id,
                     'source_from' => $contacts_company[$id]['source_form']
@@ -76,7 +76,7 @@ class CustomerService extends CommonModel {
                 'type' => $type,
                 'company_id' => $company_id,
                 'customer_id'=> $id,
-                'user_id' => $user_id
+                'user_info_id' => $user_id
             ));
         }
         return true;

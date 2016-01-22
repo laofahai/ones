@@ -100,7 +100,7 @@ class SaleVolumeController extends BaseRestController {
         if(I('get.dept')) {
             $users = D('Account/Department')->get_department_users(I('get.dept'));
             $user_ids = get_array_by_field($users, 'id');
-            $map['user_id'] = ['IN', (array)$user_ids];
+            $map['user_info_id'] = ['IN', (array)$user_ids];
         }
 
         $orders_tmp = D('Sale/Orders')->where($map)->select();

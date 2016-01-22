@@ -53,7 +53,7 @@ class CommonBillService extends CommonModel {
     protected $balance_direction;
 
     protected $_auto = [
-        array("user_id", "get_current_user_id", 1, "function"),
+        array("user_info_id", "get_current_user_id", 1, "function"),
         array("company_id", "get_current_company_id", 1, "function")
     ];
 
@@ -139,7 +139,7 @@ class CommonBillService extends CommonModel {
             "id" => $id,
             "bill_no" => $meta['bill_no'],
             "subject" => $meta['subject'] . ' ' . $meta['bill_no'],
-            "user_id" => $meta['user_id'],
+            "user_info_id" => $meta['user_info_id'],
             "module"  => $app_alias.'.'.$module_alias,
             "link"    => sprintf("%s/%s/view/bill/%d", $app_alias, $module_alias, $id)
         ]);
@@ -270,7 +270,7 @@ class CommonBillService extends CommonModel {
             "id" => $id,
             "bill_no" => $meta['bill_no'],
             "subject" => $meta['subject'] . ' ' . $meta['bill_no'],
-            "user_id" => $meta['user_id'],
+            "user_info_id" => $meta['user_info_id'],
             "module"  => $app_alias.'.'.$module_alias,
             "link"    => sprintf("%s/%s/view/bill/%d", $app_alias, $module_alias, $id)
         ]);

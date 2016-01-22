@@ -6,7 +6,7 @@ use Common\Model\CommonModel;
 class AttachmentService extends CommonModel {
 
     protected $_auto = [
-        array("user_id", "get_current_user_id", 1, "function"),
+        array("user_info_id", "get_current_user_id", 1, "function"),
         array("company_id", "get_current_company_id", 1, "function")
     ];
 
@@ -53,7 +53,7 @@ class AttachmentService extends CommonModel {
                 'source_model' => $data['source_model'],
                 'source_id' => $data['source_id'],
                 'company_id' => $company_id,
-                'user_id' => $user_id
+                'user_info_id' => $user_id
             ));
             if(!$id) {
                 continue;

@@ -19,7 +19,7 @@ department:
             company:
                 restrict:
                     delete: CASCADE
-user:
+user_info:
     login:
         comment: 用户登陆名
     password:
@@ -73,10 +73,10 @@ user_preference:
     $meta:
         indexes:
             name_and_user:
-                fields: [user_id, name]
+                fields: [user_info_id, name]
                 unique: true
             app:
         foreign:
-            user:
+            user_info:
                 restrict:
                     delete: CASCADE

@@ -14,7 +14,7 @@ use Common\Model\CommonModel;
 class CrmClueService extends CommonModel {
 
     protected $_auto = array(
-        array("user_id", "get_current_user_id", 1, "function"),
+        array("user_info_id", "get_current_user_id", 1, "function"),
         array("company_id", "get_current_company_id", 1, "function")
     );
 
@@ -32,7 +32,7 @@ class CrmClueService extends CommonModel {
         $source = array();
         if(!$uid) {
             $source = $this->where(array('id'=>array("IN", $ids)))->select();
-            $source = get_array_to_kv($source, 'user_id', 'id');
+            $source = get_array_to_kv($source, 'user_info_id', 'id');
         }
 
         $result = $this->where(array(
@@ -54,7 +54,7 @@ class CrmClueService extends CommonModel {
                 'type' => $type,
                 'company_id' => $company_id,
                 'crm_clue_id'=> $id,
-                'user_id' => $user_id
+                'user_info_id' => $user_id
             ));
         }
         return $result;

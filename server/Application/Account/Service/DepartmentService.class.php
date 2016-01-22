@@ -45,7 +45,7 @@ class DepartmentService extends CommonTreeModel {
             return $data;
         }
 
-        $users = D('Account/User')->where(array(
+        $users = D('Account/UserInfo')->where(array(
             'id' => array("IN", array_filter($leaders))
         ))->select();
 
@@ -130,7 +130,7 @@ class DepartmentService extends CommonTreeModel {
             'department_id' => ['IN', $department_id_all]
         ];
 
-        return D('Account/User')->where($map)->select();
+        return D('Account/UserInfo')->where($map)->select();
 
     }
 

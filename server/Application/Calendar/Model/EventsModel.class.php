@@ -15,8 +15,8 @@ class EventsModel extends CommonViewModel {
 
     protected $viewFields = array(
         'Events' => array('*', '_type'=>'left'),
-        'User' => array('realname', 'avatar', 'email', '_on'=>'Events.user_id=User.id', '_type'=>'left'),
-        'Department' => array('name'=>'department_name', '_on'=>'User.department_id=Department.id', '_type'=>'left')
+        'UserInfo' => array('realname', 'avatar', 'email', '_on'=>'Events.user_info_id=UserInfo.id', '_type'=>'left'),
+        'Department' => array('name'=>'department_name', '_on'=>'UserInfo.department_id=Department.id', '_type'=>'left')
     );
 
 }

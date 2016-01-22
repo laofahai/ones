@@ -30,7 +30,7 @@ class SupplierModel extends CommonViewModel {
         'Supplier' => array(
             'id'=>'supplier_id',
             'contacts_company_id',
-            'user_id',
+            'user_info_id',
             'company_id',
             'head_id',
             'level',

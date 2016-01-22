@@ -7,5 +7,5 @@ notification:
         limit: 1
     $meta:
         foreign:
-            user:
+            user_info:
                 field: to_user_id

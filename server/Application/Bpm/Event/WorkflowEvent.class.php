@@ -73,7 +73,7 @@ class WorkflowEvent extends BaseRestEvent {
             'roles' => []
         ];
 
-        $users = D('Account/User')->where([])->select();
+        $users = D('Account/UserInfo')->where([])->select();
         $response_data['users'] = filter_array_fields_multi((array)$users, ['id', 'realname']);
 
         $departments = D('Account/Department')->get_tree();

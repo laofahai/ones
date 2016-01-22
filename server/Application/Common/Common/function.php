@@ -4,7 +4,7 @@
  * 返回当前登录用户所属公司ID
  * **/
 function get_current_company_id() {
-    $company = D('Account/User')->get_current_company();
+    $company = D('Account/UserInfo')->get_current_company();
     return $company ? $company['id'] : false;
 }
 
@@ -12,7 +12,7 @@ function get_current_company_id() {
  *
  * */
 function get_current_user_id() {
-    $user = D('Account/User')->get_current_user();
+    $user = D('Account/UserInfo')->get_current_user();
     return $user['id'] ? $user['id'] : false;
 }
 

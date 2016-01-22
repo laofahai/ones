@@ -3,11 +3,13 @@ namespace Account\Service;
 
 use Common\Model\CommonRelationModel;
 
-class UserService extends CommonRelationModel {
+class UserInfoService extends CommonRelationModel {
 
     public $not_belongs_to_company = true;
 
-    public $real_model_name = 'User';
+    public $real_model_name = 'UserInfo';
+
+    public $tableName = 'user_info';
     
     protected $_link = array(
         'Company' => self::BELONGS_TO,
@@ -126,8 +128,9 @@ class UserService extends CommonRelationModel {
      * 获得所有用户的基本不敏感信息
      * */
     static public function get_all_basic_data() {
-        $users = D('Account/User','Model')->where(array(
-            'User.company_id' => get_current_company_id()
+        $model = D('Account/UserInfo','Model');
+        $users = $model->where(array(
+            'UserInfo.company_id' => get_current_company_id()
         ))->select();
 
         $available = array('id', 'login', 'email', 'avatar', 'department', 'realname');
@@ -207,13 +210,13 @@ class UserService extends CommonRelationModel {
 
         $auth_role_service = D('Account/AuthUserRole');
         $auth_role_service->where([
-            'user_id' => $uid
+            'user_info_id' => $uid
         ])->delete();
 
         $company_id = get_current_company_id();
         foreach($role_ids as $role_id) {
             $auth_role_service->add([
-                'user_id' => $uid,
+                'user_info_id' => $uid,
                 'company_id' => $company_id,
                 'auth_role_id' => $role_id
             ]);

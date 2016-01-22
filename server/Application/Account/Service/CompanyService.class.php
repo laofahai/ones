@@ -10,7 +10,7 @@ class CompanyService extends CommonRelationModel {
     protected $_link = array(
         "users" => array(
             "mapping_type" => self::HAS_MANY,
-            "class_name"    => "Account/User",
+            "class_name"    => "Account/UserInfo",
             "foreign_key"   => "id"
         ),
         "apps" => array(

@@ -32,7 +32,7 @@ class CustomerModel extends CommonViewModel {
         'Customer' => array(
             'id'=>'customer_id',
             'contacts_company_id',
-            'user_id',
+            'user_info_id',
             'source_from',
             'crm_clue_id',
             'company_id',

@@ -33,7 +33,7 @@ class UserPreferenceService extends CommonModel {
             }
 
             $rs = $this->add(array(
-                'user_id' => get_current_user_id(),
+                'user_info_id' => get_current_user_id(),
                 'name' => $key,
                 'data' => $data,
                 'data_type' => $data_type
@@ -61,7 +61,7 @@ class UserPreferenceService extends CommonModel {
         $cached = S($cache_key);
         if(DEBUG || !$cached) {
             $source = $this->where(array(
-                'user_id' => get_current_user_id()
+                'user_info_id' => get_current_user_id()
             ))->select();
 
             $cached = array();
@@ -88,7 +88,7 @@ class UserPreferenceService extends CommonModel {
         $uid = get_current_user_id();
 
         $exists = $this->where(array(
-            'user_id' => $uid
+            'user_info_id' => $uid
         ))->select();
         $exists_id = get_array_to_kv($exists, 'id', 'name');
         $exists = get_array_to_kv($exists, 'data', 'name');
@@ -107,7 +107,7 @@ class UserPreferenceService extends CommonModel {
                 ));
                 continue;
             }
-            $row['user_id'] = $uid;
+            $row['user_info_id'] = $uid;
             $this->add($row);
 
         }

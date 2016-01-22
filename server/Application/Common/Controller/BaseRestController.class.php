@@ -876,7 +876,7 @@ class BaseRestController extends RestController {
      * **/
     protected function check_permission($node=false) {
 
-        if(D('Account/User', 'Service')->is_super_user()) {
+        if(D('Account/UserInfo', 'Service')->is_super_user()) {
             return true;
         }
 

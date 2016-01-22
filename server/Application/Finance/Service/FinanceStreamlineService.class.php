@@ -12,7 +12,7 @@ use Common\Model\CommonModel;
 class FinanceStreamlineService extends CommonModel {
 
     protected $_auto = [
-        ["user_id", "get_current_user_id", 1, "function"],
+        ["user_info_id", "get_current_user_id", 1, "function"],
         ["company_id", "get_current_company_id", 1, "function"]
     ];
 
@@ -34,7 +34,7 @@ class FinanceStreamlineService extends CommonModel {
             return false;
         }
 
-        $params['user_id'] = $params['user_id'] ? $params['user_id'] : get_current_user_id();
+        $params['user_info_id'] = $params['user_info_id'] ? $params['user_info_id'] : get_current_user_id();
         $params['direction'] = $params['direction'] == 1 ? 1 : 2;
 
         $this->create($params);

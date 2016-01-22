@@ -45,7 +45,7 @@ crm_clue:
             next_contact_time:
             last_contact_time:
         foreign:
-            user:
+            user_info:
                 restrict:
                     delete: SET_NULL
                 options:
@@ -53,7 +53,7 @@ crm_clue:
             head:
                 options:
                     blank: true
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: head_id
                 restrict:
                     delete:
@@ -93,7 +93,7 @@ customer:
             contacts_company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 restrict:
                     delete: SET_NULL
                 options:
@@ -106,7 +106,7 @@ customer:
             head:
                 options:
                     blank: true
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: head_id
                 restrict:
                     delete:
@@ -135,7 +135,7 @@ customer_head_log:
                     delete: CASCADE
                 options:
                     blank: true
-            user:
+            user_info:
                 restrict:
                     delete: CASCADE
             company:
@@ -166,7 +166,7 @@ customer_communicate:
                     delete: CASCADE
                 options:
                     blank: true
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
@@ -189,13 +189,13 @@ customer_care:
         indexes:
             subject:
         foreign:
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
                     delete: SET_NULL
             executor:
-                foreign_table: user
+                foreign_table: user_info
                 foreign_key: executor_id
                 options:
                     blank: true

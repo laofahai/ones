@@ -23,7 +23,7 @@ attachment:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 restrict:
                     delete: SET_NULL
                 options:

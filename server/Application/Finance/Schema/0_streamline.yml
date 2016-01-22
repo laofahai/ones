@@ -51,7 +51,7 @@ receivables:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
@@ -111,7 +111,7 @@ payables:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:
@@ -158,7 +158,7 @@ finance_streamline:
             company:
                 restrict:
                     delete: CASCADE
-            user:
+            user_info:
                 options:
                     blank: true
                 restrict:

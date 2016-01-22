@@ -116,7 +116,7 @@ function check_env() {
  * */
 function check_input_for_adapter($adapter) {
     $adapter = $adapter ? strtolower($adapter) : 'mysql';
-    $supported_adapter = ['mysql'];
+    $supported_adapter = ['mysql', 'pgsql'];
     if(!in_array($adapter, $supported_adapter)) {
         return 'Unsupported adapter: '. $adapter;
     }
@@ -127,8 +127,10 @@ function check_input_for_adapter($adapter) {
 /*
  * 测试数据库链接
  * */
-function check_db_connection($db_config) {
-    $dsn = sprintf('mysql:host=%s;dbname=%s;port=%s', $db_config['host'], $db_config['name'], $db_config['port']);
+function check_db_connection($db_config, $adapter='mysql') {
+    $dsn = sprintf($adapter.':host=%s;dbname=%s;port=%s', $db_config['host'], $db_config['name'], $db_config['port']);
+
+    echo "DSN: ".$dsn."\n";
 
     try {
         $pdo = new PDO($dsn, $db_config['user'], $db_config['pass']);
@@ -137,10 +139,12 @@ function check_db_connection($db_config) {
         return;
     }
 
-    $mysql_version = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
-    if(version_compare($mysql_version, '5.6.5', '<')) {
-        send_exit_single('need mysql version >= 5.6.5');
-        return;
+    if($adapter === 'mysql') {
+        $mysql_version = $pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+        if(version_compare($mysql_version, '5.6.5', '<')) {
+            send_exit_single('need mysql version >= 5.6.5');
+            return;
+        }
     }
 
     return $pdo;

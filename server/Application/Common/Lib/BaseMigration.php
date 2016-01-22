@@ -2,6 +2,7 @@
 
 namespace Common\Lib;
 
+use Phinx\Db\Adapter\AdapterFactory;
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 use Symfony\Component\Yaml\Yaml;
@@ -66,11 +67,19 @@ class BaseMigration extends AbstractMigration{
 
     private $all_meta_info = [];
 
+    private $adapter_name = 'mysql';
+
     public function init() {
         !defined('ENTRY_PATH') && define('ENTRY_PATH', __ROOT__);
+        !defined('DB_ENVIRONMENT') && define('DB_ENVIRONMENT', 'development');
         $config = Yaml::parse(file_get_contents(ENTRY_PATH.'/phinx.yml'));
-        $config = $config['environments']['development'];
-        $this->setAdapter(new MysqlAdapter($config));
+        $config = $config['environments'][DB_ENVIRONMENT];
+
+        $this->adapter_name = $config['adapter'];
+
+        $adapter = AdapterFactory::instance()->getAdapter($config['adapter'], $config);
+
+        $this->setAdapter($adapter);
     }
 
     /*
@@ -325,8 +334,7 @@ class BaseMigration extends AbstractMigration{
                 array(
                     "values"=> array(0,1),
                     "default"=> '0'
-                ),
-                $this->_parseColumnOptions((array)$options)
+                )
             )
                 ->addIndex('trashed')
                 ->save();
@@ -388,6 +396,7 @@ class BaseMigration extends AbstractMigration{
         'timezone',
         'properties',
         'values',
+    @todo 不同数据库类型处理
      * **/
     private function _parseColumnOptions(array $options) {
         
@@ -414,10 +423,15 @@ class BaseMigration extends AbstractMigration{
             switch($options['type']) {
                 case "tinytext":
                     $options['type'] = 'text';
-                    $options['limit'] = MysqlAdapter::TEXT_TINY;
+                    if($this->adapter_name === 'mysql') {
+                        $options['limit'] = MysqlAdapter::TEXT_TINY;
+                    }
+
                     break;
                 case 'text':
-                    $options['limit'] = MysqlAdapter::TEXT_REGULAR;
+                    if($this->adapter_name === 'mysql') {
+                        $options['limit'] = MysqlAdapter::TEXT_REGULAR;
+                    }
                     break;
                 case 'money':
                     $options['type'] = 'decimal';
@@ -425,6 +439,13 @@ class BaseMigration extends AbstractMigration{
                 default:
                     $options['limit'] = 255;
                     break;
+            }
+        } else {
+            if(in_array($options['type'], ['text', 'tinytext'])) {
+                if($this->adapter_name === 'pgsql') {
+                    unset($options['limit']);
+                    unset($options['length']);
+                }
             }
         }
         

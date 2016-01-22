@@ -13,7 +13,7 @@ use Home\Service\AppService;
 class PurchaseService extends CommonBillService {
 
     protected $_auto = [
-        ["user_id", "get_current_user_id", 1, "function"],
+        ["user_info_id", "get_current_user_id", 1, "function"],
         ["company_id", "get_current_company_id", 1, "function"]
     ];
 

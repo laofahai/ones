@@ -418,7 +418,7 @@ class WorkflowService extends CommonModel {
         if(in_array($node['executor'], $this->auto_executor)) {
             return true;
         }
-        if($node['executor'] == 'a:o' && $source_row['user_id'] == $current_user_id) {
+        if($node['executor'] == 'a:o' && $source_row['user_info_id'] == $current_user_id) {
             return true;
         }
 

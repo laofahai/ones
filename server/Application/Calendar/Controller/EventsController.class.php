@@ -15,7 +15,7 @@ class EventsController extends BaseRestController {
 
     protected function _filter(&$map) {
         if(!I('get._ia')) {
-            $map['user_id'] = get_current_user_id();
+            $map['user_info_id'] = get_current_user_id();
         }
     }
 
@@ -26,7 +26,7 @@ class EventsController extends BaseRestController {
     protected function _before_insert() {
         $_POST['start_at'] = format_form_js_date($_POST['start_at']);
         $_POST['end_at'] = format_form_js_date($_POST['end_at']);
-        $_POST['user_id'] = get_current_user_id();
+        $_POST['user_info_id'] = get_current_user_id();
 
     }
     protected function _before_update() {

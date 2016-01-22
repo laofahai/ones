@@ -85,7 +85,7 @@ class AuthorizeService extends CommonModel {
         }
 
         $role_map_model = D('Account/AuthUserRole');
-        $user_roles = $role_map_model->where(array('user_id'=>$user_id))->select();
+        $user_roles = $role_map_model->where(array('user_info_id'=>$user_id))->select();
 
         $roles = get_array_by_field($user_roles, "auth_role_id");
 
@@ -130,7 +130,7 @@ class AuthorizeService extends CommonModel {
      * 为查询条件map 根据node 授权flag的条件
      * */
     static public function get_map_by_flag($flag, $map, $model_name=null) {
-        $field_name = $model_name ? $model_name.'.user_id' : 'user_id';
+        $field_name = $model_name ? $model_name.'.user_info_id' : 'user_info_id';
 
         $user_service = D('Account/Department', 'Service');
         switch($flag) {
