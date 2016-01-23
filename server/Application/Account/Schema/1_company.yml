@@ -52,8 +52,6 @@ company_active_apps:
                     delete: CASCADE
 
 company_profile:
-    name:
-        comment: 公司名称
     address:
         comment: 公司地址
         blank: true

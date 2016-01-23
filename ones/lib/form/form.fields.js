@@ -380,6 +380,7 @@
                         var data_source = $injector.get(config.data_source);
                         // 动态新增
                         self.scope.cant_be_dynamic_add = config.dynamic_add === false ? false : true;
+                        console.log('dynamic add', self.scope.cant_be_dynamic_add);
                         self.scope.select_dynamic_add = function() {
                             RootFrameService.open_frame({
                                 src: sprintf('%s/%s/add', data_source.config.app, data_source.config.module),

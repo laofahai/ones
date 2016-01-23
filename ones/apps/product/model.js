@@ -30,7 +30,7 @@
                             //search_able_fields: 'name,pinyin'
                         },
                         product_category: {
-                            label: _("Product Category"),
+                            label: _("product.Product Category"),
                             map: "product_category_id",
                             widget: 'select',
                             data_source: "Product.ProductCategoryAPI"
@@ -90,29 +90,37 @@
         ])
         .service("Product.ProductCategoryAPI", [
             'ones.dataApiFactory',
-            'Home.SchemaAPI',
-            function(dataAPI, schemaAPI) {
-                var self = this;
-
+            'RootFrameService',
+            function(dataAPI, RootFrameService) {
                 this.config = {
                     app: 'product',
                     module: 'product_category',
                     table: 'product_category',
                     label_field: "name",
                     value_field: "id",
+                    addable: false,
 
                     fields: {
                         name: {
-
+                            get_display: function(value, item) {
+                                return item.prefix_name;
+                            }
                         },
-                        company: {
+                        lft: {
+                            addable: false,
+                            editable: false
+                        },
+                        rgt: {
                             addable: false,
                             editable: false
                         }
                     },
 
-                    list_display: ['name'],
-                    columns: 1
+                    list_hide: ['lft', 'rgt'],
+                    columns: 1,
+                    extra_selected_actions: [
+                        get_selected_action_for_add_child(RootFrameService)
+                    ]
                 };
 
 

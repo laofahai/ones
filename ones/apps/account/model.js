@@ -235,19 +235,9 @@
                     },
                     list_display: ['name', 'leader'],
                     // 扩展选中项操作
-                    extra_selected_actions: [{
-                        multi: false,
-                        label: _('account.Add Child Department'),
-                        icon: 'plus',
-                        auth_node: 'account.department.post',
-                        action: function(evt, selected, item) {
-                            RootFrameService.open_frame({
-                                label: _('common.Add New')+ ' ' + _('account.Department'),
-                                src: 'account/department/add/pid/'+item.id,
-                                singleton: true
-                            });
-                        }
-                    }]
+                    extra_selected_actions: [
+                        get_selected_action_for_add_child(RootFrameService)
+                    ]
                 };
             }
         ])
