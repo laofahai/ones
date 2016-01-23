@@ -24,6 +24,11 @@ class CompanyProfileController extends BaseRestController {
         $service = D('Account/CompanyProfile');
         $service->init_profile();
 
+        $company_service = D('Account/Company');
+        $company_service->where(['id'=>I('get.id')])->save([
+            'name' => I('post.name')
+        ]);
+
         return parent::on_put();
     }
 

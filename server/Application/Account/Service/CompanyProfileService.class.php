@@ -14,7 +14,7 @@ class CompanyProfileService extends CommonModel {
 
     public $not_belongs_to_company = true;
 
-    static public $need_merge = ['name', 'short_name', 'help_code'];
+    static public $need_merge = ['name'];
 
     /*
      * 初始化公司资料条目信息
@@ -27,7 +27,6 @@ class CompanyProfileService extends CommonModel {
 
         if(!$exists) {
             $data = [
-                'platform_reviewed' => 0,
                 'company_id' => $company_id
             ];
             $this->create($data);

@@ -65,6 +65,7 @@ company_profile:
         blank: true
 
     $meta:
-        company:
-            restrict:
-                delete: DELETE
+        foreign:
+            company:
+                restrict:
+                    delete: CASCADE

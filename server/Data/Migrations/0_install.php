@@ -31,7 +31,7 @@ class Install extends BaseMigration
      */
     public function up()
     {
-
+        return;
         $apps = [];
         $ignore = [
             'Common',
