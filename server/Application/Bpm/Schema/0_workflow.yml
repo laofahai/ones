@@ -5,6 +5,8 @@ workflow:
     is_default:
         type: boolean
         default: true
+    process:
+        type: text
     last_update:
         type: datetime
         default: CURRENT_TIMESTAMP
@@ -43,9 +45,6 @@ workflow_node:
     node_type:
         limit: 10
         comment: 节点类型
-    action_type:
-        limit: 5
-        comment: 节点执行动作类型
     action:
         comment: 执行动作
         blank: true
@@ -53,26 +52,6 @@ workflow_node:
     executor:
         comment: 执行人
         limit: 20
-    execute_condition:
-        comment: 执行条件
-        blank: true
-        limit: 100
-    prev_nodes:
-        comment: 当前节点来源节点ID
-        blank: true
-        limit: 100
-    next_nodes:
-        comment: 当前节点后续节点ID
-        blank: true
-        limit: 100
-    condition_true_nodes:
-        comment: 如果是条件判断节点，条件真时的下一节点IDS
-        blank: true
-        limit: 100
-    condition_false_nodes:
-        comment: 如果是条件判断节点，条件假时的下一节点IDS
-        blank: true
-        limit: 100
     notify:
         type: string
         limit: 100
@@ -82,14 +61,6 @@ workflow_node:
         type: string
         comment: 提醒内容
         blank: true
-    widget_id:
-        type: integer
-        limit: 3
-        comment: widget在builder中的ID
-    widget_config:
-        type: text
-        limit: text
-        comment: widget的其他配置，位置/尺寸等
     $meta:
         enable_trash: true
         foreign:

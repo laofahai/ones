@@ -339,10 +339,12 @@ form
   min-width: 0; }
 
 .footer-copy {
-  text-align: center;
-  margin-left: -90px;
   height: 50px;
-  line-height: 50px; }
+  line-height: 50px;
+  position: fixed;
+  bottom: 25px;
+  left: 10px;
+  opacity: 0.6; }
 
 .add_to_common_nav_btn {
   position: fixed;
