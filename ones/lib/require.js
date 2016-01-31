@@ -19,29 +19,46 @@
         ones.included_static.push(path);
 
         var include_paths = [];
+        var inited = false;
+
+        path = array_unique(path);
         angular.forEach(path, function(p) {
+
             if(include_paths.indexOf(p) >= 0) {
                 return;
             }
-            if(p.start_with('apps/')) {
-                p = p.slice(4, p.length);
-            }
-            include_paths.push(p);
+
+            $.ajax({
+                url: p+'.js',
+                dataType: "script",
+                success: function(data) {
+                    include_paths.push(p);
+                    if(!inited && include_paths.length === path.length && typeof callback === 'function') {
+                        inited = true;
+                        callback();
+                    }
+                },
+                error: function(event, type, error) {
+                    console && console.log(type, error);
+                }
+            });
         });
 
-        $.ajax({
-            url: sprintf('%shome/static&t=js&f=%s', ones.remote_entry, include_paths.join()),
-            dataType: "script",
-            success: function(data) {
-                ones.DEBUG && console.debug('Load js: ', include_paths);
-                if(typeof callback === 'function') {
-                    callback();
-                }
-            },
-            error: function(event, type, error) {
-                console && console.log(type, error);
-            }
-        });
+        ones.DEBUG && console.debug('Load js: ', include_paths);
+
+        //$.ajax({
+        //    url: sprintf('%shome/static&t=js&f=%s', ones.remote_entry, include_paths.join()),
+        //    dataType: "script",
+        //    success: function(data) {
+        //        ones.DEBUG && console.debug('Load js: ', include_paths);
+        //        if(typeof callback === 'function') {
+        //            callback();
+        //        }
+        //    },
+        //    error: function(event, type, error) {
+        //        console && console.log(type, error);
+        //    }
+        //});
 
     };
     

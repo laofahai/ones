@@ -1,12 +1,13 @@
 workflow:
     name:
     module:
-        limit: 50
+        limit: 100
     is_default:
         type: boolean
         default: true
     process:
         type: text
+        blank: true
     last_update:
         type: datetime
         default: CURRENT_TIMESTAMP
@@ -35,6 +36,9 @@ workflow:
                     delete: SET_NULL
 
 workflow_node:
+    alias:
+        comment: 节点别名
+        limit: 100
     label:
         comment: 节点名称
         limit: 100
@@ -51,7 +55,7 @@ workflow_node:
         limit: 100
     executor:
         comment: 执行人
-        limit: 20
+        limit: 255
     notify:
         type: string
         limit: 100
@@ -63,6 +67,8 @@ workflow_node:
         blank: true
     $meta:
         enable_trash: true
+        indexes:
+            alias:
         foreign:
             workflow:
                 restrict:

@@ -1,0 +1,42 @@
+.bpm-builder-container {
+    position:relative;
+}
+#bpm-show-container {
+    background:
+        -webkit-linear-gradient(top, transparent 19px, #ddd 20px),
+        -webkit-linear-gradient(left, transparent 19px, #ddd 20px)
+;
+    background-color: #f2f2f2;
+    background-size: 20px 20px;
+    min-height:600px;
+    position:relative;
+    border: 1px solid #ddd;
+}
+
+.reload-icon {
+    display: none;
+    position: absolute; left:15px; top:0;
+    z-index:9;
+    background: red;
+    padding: 3px 8px;color:#fff;
+}
+.reloading {
+    position: relative;
+}
+.reloading .reload-icon {
+    display: block;
+}
+
+.bpm-builder-footer {
+    margin-top: 20px;
+}
+
+.bpm-editor-container {
+    position:absolute;
+    right:0;top:0;
+    width: 50%;
+
+    .bpm-edit-area {
+        min-height:600px;
+    }
+}

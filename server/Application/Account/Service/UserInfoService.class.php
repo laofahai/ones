@@ -127,7 +127,7 @@ class UserInfoService extends CommonRelationModel {
     /*
      * 获得所有用户的基本不敏感信息
      * */
-    static public function get_all_basic_data() {
+    static public function get_all_basic_data($user_id=null) {
         $model = D('Account/UserInfo','Model');
         $users = $model->where(array(
             'UserInfo.company_id' => get_current_company_id()
@@ -146,7 +146,7 @@ class UserInfoService extends CommonRelationModel {
             $return[$v['id']] = $tmp;
         }
 
-        return $return;
+        return $user_id ? $return[$user_id] : $return;
     }
 
     /*

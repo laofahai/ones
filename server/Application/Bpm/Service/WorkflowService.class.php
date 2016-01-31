@@ -4,167 +4,236 @@
  * User: nemo <335454250@qq.com>
  * Date: 7/7/15
  * Time: 08:56
+ *
+ *
  */
 
 namespace Bpm\Service;
 
-
-use Common\Lib\Schema;
 use Common\Model\CommonModel;
 use MessageCenter\Service\MessageCenter;
 
+
+/*
+    start=>start: 新入库单:> m:Storage/StockOut::check_full_in| past
+    end=>end:> auto:auto 通知等待节点
+    save_bill=>operation: 保存入库单|past
+    confirm=>operation: 确认入库
+    check_if_all_in=>condition: 已完全入库|approved
+    continue_in=>operation: 可以继续入库|future
+
+    start->save_bill(right)->confirm->check_if_all_in
+    check_if_all_in(no, right)->continue_in->confirm
+    check_if_all_in(yes)->end
+    check_if_all_in(ok)->end
+
+    start=>u:1,2|d:1
+*/
 class WorkflowService extends CommonModel {
 
     protected $_auto = array(
         array("company_id", "get_current_company_id", self::MODEL_INSERT, "function")
     );
 
-    protected $current_node;
+    /*
+     * 当前执行节点
+     * */
+    protected $current_node = [];
 
     // 自动执行的「用户角色」，将不会出现在用户可见操作中
     protected $auto_executor = [
-        'a:a' // 自动执行
-        , 'w:o' // 等待外部响应
+        'auto: auto' // 自动执行
+        , 'auto:waiting' // 等待外部响应
     ];
 
 
     /*
-     * 获取工作流节点列表，调用Bpm/WorkflowNodeService中的 get_nodes方法
-     * @param integer $workflow_id 所属工作流ID
-     * @return array
+     * 解析工作流程描述语言
+     * @param string $str 完整工作流描述
+     * @return [] 所有节点定义
      * */
-    public function get_nodes($workflow_id) {
-        $map = [
-            'workflow_id' => $workflow_id
-        ];
+    public function parse_process_language($str) {
+        list($nodes_config, , $executors) = explode("\n\n", $str);
 
-        $nodes = D('Bpm/WorkflowNode')->where($map)->select();
-        foreach($nodes as $k=>$node) {
-            if($node['next_nodes']) {
-                $nodes[$k]['next_nodes'] = explode(',', $node['next_nodes']);
-            }
-            if($node['condition_true_nodes']) {
-                $nodes[$k]['condition_true_nodes'] = explode(',', $node['condition_true_nodes']);
-            }
-            if($node['condition_false_nodes']) {
-                $nodes[$k]['condition_false_nodes'] = explode(',', $node['condition_false_nodes']);
-            }
+        $nodes_config = explode("\n", trim($nodes_config));
+        $executors = explode("\n", trim($executors));
+
+        $nodes = [];
+        foreach($nodes_config as $node_config) {
+            list($node_alias, $config) = explode("=>", $node_config);
+            list($node_type, $more_config) = explode(": ", $config);
+            list($node_label, $flow_state) = explode("| ", $more_config);
+            list($node_label, $node_action) = explode(':> ', $node_label);
+            $nodes[$node_alias] = [
+                "alias" => $node_alias,
+                "label" => $node_label,
+                "type"  => $node_type,
+                "state" => $flow_state,
+                "action"=> $node_action
+            ];
         }
+
+        foreach($executors as $executor) {
+            list($node_alias, $executor_content) = explode("=>", $executor);
+            $nodes[$node_alias]["executor"] = $executor_content;
+        }
+
         return $nodes;
     }
 
     /*
-     * 获得某一数据的下一工作流节点
-     * @param mixed $workflow_id_or_module
-     * @param integer $source_id 源数据ID
-     * @param boolean $check_permission 是否顺路检测执行权限
-     * @return array
+     * 将工作流节点及流程还原为描述语言
+     * @param integer $workflow_id 工作流ID
+     * @return []
      * */
-    public function get_next_nodes($workflow_id_or_module, $source_id, $check_permission=false) {
+    public function to_language($workflow_id) {
 
-        if($workflow_id_or_module > 0) {
-            $workflow = $this->where(['id'=>$workflow_id_or_module])->find();
-        } else {
-            $workflow = $this->get_workflow('', $workflow_id_or_module);
+        $workflow = $this->where(['id'=>$workflow_id])->find();
+
+        $all_nodes = D('Bpm/WorkflowNode')->where(['workflow_id'=>$workflow_id])->select();
+        $all_nodes = get_array_to_ka($all_nodes, "alias");
+
+        $node_tpl = "%(alias)s:=>%(type)s: %(label)s:> %(action)s";
+        $search = ['%(alias)s','%(type)s','%(label)s','%(action)s'];
+        $nodes = [];
+        foreach($all_nodes as $alias => $node) {
+            $replace = [
+                $alias,
+                $node['type'],
+                $node['label'],
+                $node['action']
+            ];
+            $node = str_replace($search, $replace, $node_tpl);
+            if($node['flow_type']) {
+                $node.= "| ".$node['flow_type'];
+            }
+            array_push($nodes, $node);
         }
 
-        $progress = D('Bpm/WorkflowProgress');
-        $latest_progress = $progress->get_latest_progress($workflow['id'], $source_id);
+        return implode("\n", $nodes)."\n\n".$workflow['process'];
+    }
 
-        if(!$latest_progress) {
-            return [];
+    /*
+     * 返回某节点的下一可执行节点
+     * @param integer $workflow_id
+     * @param [] $node_alias 节点别名
+     * @return 下一个/多个可执行节点  二维数组
+     *
+     * @todo 节点类型判断
+     * */
+    public function get_next_nodes_by_alias($workflow_id, $node_alias) {
+
+        // 根据多个节点获取
+        $node_alias = is_array($node_alias) ? $node_alias : [$node_alias];
+
+        $workflow = $this->where(['id'=>$workflow_id])->find();
+
+        $all_nodes = D('Bpm/WorkflowNode')->where(['workflow_id'=>$workflow_id])->select();
+        $all_nodes = get_array_to_ka($all_nodes, "alias");
+
+        $processes = explode("\n", $workflow['process']);
+
+        $next_nodes = [];
+
+        /*
+         * 遍历所有的流程描述
+         * */
+        foreach($processes as $process_in_line) {
+            $process_in_line = explode("->", $process_in_line);
+            foreach($process_in_line as $process_config) {
+                list($process_node_alias, $config) = explode("(", $process_config);
+                $process_node_alias = trim($process_node_alias);
+                if(in_array($process_node_alias, $node_alias)) {
+                    array_push($next_nodes, $all_nodes[$process_node_alias]);
+                }
+            }
         }
-
-        // 最近执行节点
-        $node_service = D('Bpm/WorkflowNode');
-        $latest_node = $node_service->where(['id'=>$latest_progress['workflow_node_id']])->find();
-
-        if(!$latest_node) {
-            return [];
-        }
-
-        $next_nodes_id = explode(',', $latest_node['next_nodes']);
-        if(!$next_nodes_id) {
-            return [];
-        }
-
-        $next_nodes = $node_service->where([
-            'id' => ['IN', $next_nodes_id]
-        ])->select();
-
-        $next_nodes = $next_nodes ? $next_nodes : [];
 
         return $next_nodes;
     }
 
-
-    /*
-     * 获得工作流
-     * @param string $module 模块
-     * @param integer|null $workflow_id 工作流ID，如果为空返回默认工作流，如无默认，返回第一条
-     * */
-    public function get_workflow($workflow_id=null, $module=null) {
-
-        if(!$module && !$workflow_id) {
-            return false;
-        }
-
-        $map = [];
-
-        if($module) {
-            $map['module'] = $module;
-        }
-
-        if($workflow_id) {
-            $map['id'] = $workflow_id;
-        } else {
-            $map['is_default'] = 1;
-        }
-
-        $workflow = $this->where($map)->find();
-
-        if(!$workflow && $module) {
-            $workflow = $this->where(['module'=>$module])->find();
-        }
-
-        if(!$workflow) {
-            $this->error = __('bpm.Can not find workflow');
-            return false;
-        }
-        $workflow = Schema::data_format($workflow, 'workflow', true);
-
-        $nodes = $this->get_nodes($workflow['id']);
-
-        foreach($nodes as $k=> $node) {
-            if($node['node_type'] === 'start') {
-                $workflow['start_node'] = $node;
-            }
-//            $serialized_config = unserialize($node['widget_config']);
-//            $serialized_config = $serialized_config ? $serialized_config : [];
-//            $nodes[$k] = array_merge($node, $serialized_config);
-        }
-
-        $nodes = Schema::data_format($nodes, 'workflow_node', true);
-
-        $workflow['nodes'] = $nodes;
-
-        return $workflow;
+    public function get_next_nodes_by_id($workflow_id, $node_id) {
+        $node_id = is_array($node_id) ? $node_id : [$node_id];
+        $map = [
+            "workflow_id" => $workflow_id,
+            "node_id" => ['IN', $node_id]
+        ];
+        $nodes = D('Bpm/WorkflowNode')->where($map)->select();
+        return $this->get_next_nodes_by_alias($workflow_id, get_array_by_field($nodes, 'alias'));
     }
 
     /*
-     * 工作流启动
-     * 获取开始节点，写入工作流进程表
+     * 保存工作流
+     * @param string $str 工作流详情
+     * @param integer $workflow_id 工作流ID
      *
-     * @param integer $workflow 工作流ID
-     * @param integer $source_id 源数据ID
+     * 工作流会在被使用时变为锁定状态,此时不可再进行修改
+     *
      * */
-    public function start_progress($workflow_id, $source_id, $meta_data=[]) {
-        $workflow = $this->get_workflow($workflow_id);
-        if(!$workflow_id['start_node']) {
-            $this->error = __('bpm.Can not found start node of workflow');
-            return false;
+    public function save_workflow($str, $workflow_id) {
+
+        $workflow = $this->where(['id'=>$workflow_id])->find();
+
+        if(!$workflow['locked']) {
+            list($nodes_config, $process, $executors) = explode("\n\n", $str);
+            $nodes = $this->parse_process_language($nodes_config);
+
+            $cleared_executors = [];
+            foreach($executors as $executor) {
+                list($node_alias, $executor_config) = explode("=>", $executor);
+                $cleared_executors[trim($node_alias)] = trim($executor_config);
+            }
+
+            $this->where([
+                'id' => $workflow_id
+            ])->save(
+                [
+                    'last_update' => CTS,
+                    'process' => $process
+                ]
+            );
+
+            $node_service = D('Bpm/WorkflowNode');
+            $node_service->where([
+                'workflow_id' => $workflow_id
+            ])->delete();
+            foreach($nodes as $node) {
+                $node_service->create($node);
+                if(!$node_service->add()) {
+                    // @todo error
+                    return false;
+                }
+            }
+        } else { // 已锁定的工作流,仅能修改执行者等信息
+
         }
-        return $this->exec($source_id, $meta_data, $workflow['start_node'], $workflow);
+
+
+
+
+        return $workflow_id;
+
+    }
+
+    /*
+     * 工作流开始执行
+     * */
+    public function start_progress($workflow_id, $source_id, $meta_data) {
+        $workflow = $this->where(['id'=>$workflow_id])->find();
+
+        // 将工作流锁定,不可再修改
+        if(!$workflow['locked']) {
+            $this->where(['id'=>$workflow_id])->save([
+                'locked' => 1
+            ]);
+        }
+
+        $start_node_alias = array_shift(explode('->', $workflow['process']));
+        $node_id = D('Bpm/WorkflowNode')->where([
+            'workflow_id' => $workflow_id,
+            'alias' => $start_node_alias
+        ])->getField('id');
+        return $this->exec($workflow_id, $source_id, $node_id, $meta_data);
     }
 
     /*
@@ -181,76 +250,44 @@ class WorkflowService extends CommonModel {
      * @todo 提醒接口
      * @todo 同步分支节点，考虑可做分支互相下级，并设定最大执行次数
      * */
-    public function exec($source_id, $meta_data=[], $node=null, $workflow=null, $auto=false) {
-        if(!is_array($node) and $node > 0) {
-            $node = D('Bpm/WorkflowNode')->where(['id'=>$node])->find();
-        } else if(!$node) {
-            // 自动获取下一节点 @todo
-        }
+    public function exec($workflow_id, $source_id, $node_id, $meta_data=[]) {
 
-        if(!$node) {
-            $this->error = __('bpm.Workflow node not found');
-            return false;
-        }
-
-        if(!is_array($workflow) || !$workflow['nodes']) {
-            $workflow = $this->get_workflow($node['workflow_id']);
-        }
-
-        if(!$workflow) {
-            $this->error = __('bpm.Workflow not found') . ': ' . $node['workflow_id'];
-            return false;
-        }
-
-        /*
-         * 当前执行节点
-         * */
-        $this->current_node = $node;
-
-        /*
-         * 当前工作流所有节点
-         * */
-        $current_workflow_nodes = get_array_to_ka($workflow['nodes']);
-
-        /*
-         * 检测当前执行节点是否为上一节点的next_nodes/condition_true_nodes/condition_false_nodes
-         * */
         $progress_service = D('Bpm/WorkflowProgress');
-        $latest_progress = $progress_service->get_latest_progress($workflow['id'], $source_id);
+        $node_service = D('Bpm/WorkflowNode');
 
-        if($latest_progress) {
-            $latest_node_next_nodes = array_merge(
-                (array)$current_workflow_nodes[$latest_progress['workflow_node_id']]['next_nodes'],
-                (array)$current_workflow_nodes[$latest_progress['workflow_node_id']]['condition_true_nodes'],
-                (array)$current_workflow_nodes[$latest_progress['workflow_node_id']]['condition_false_nodes']
-            );
-
-            if(!in_array($this->current_node['id'], $latest_node_next_nodes)) {
-                $this->error = __('bpm.Not a verified workflow node');
-                return false;
-            }
-        }
+        $workflow = $this->where(['id'=>$workflow_id])->find();
 
         // 获取源数据
         list($app, $module) = explode('.', $workflow['module']);
-        $source_model = sprintf('%s/%s', ucfirst($app), ucfirst($module));
-        $source_data = D($source_model)->where(['id'=>$source_id])->find();
+        $source_model = D(sprintf('%s/%s', ucfirst($app), ucfirst($module)));
+        $source_data = $source_model->where(['id'=>$source_id])->find();
 
-        $method = 'exec_'.$node['action_type'];
+        $this->current_node = $node = $node_service->where([
+            'id' => $node_id,
+            'workflow_id' => $workflow_id
+        ])->find();
+
+        // @todo 检测节点可执行合法性,节点可执行权限检测
+
+        list($action_type, $action_content) = explode(':', $node['action']);
+
+        $method = 'exec_'.$action_type;
+
         /*
          * 根据不同动作类型执行
          * */
-        $exec_result = $this->$method($node['action'], $source_model, $source_data);
+        $exec_result = $this->$method($action_content, $source_model, $source_data);
 
         /*
          * 非条件判断节点执行结果为false时，判定执行失败，中断。
          * */
-        if(false === $exec_result && $node['node_type'] !== 'cond') {
+        if(false === $exec_result && $node['node_type'] !== 'condition') {
             return false;
         }
 
-        $ignore_executor = ['a:a', 'w:o'];
-        if(!$auto && !in_array($node['executor'], $ignore_executor)) {
+        $ignore_executor = ['auto:auto', 'auto:wait'];
+        // 广播事件
+        if($node['action'] !== 'auto:auto' && !in_array($node['executor'], $ignore_executor)) {
             $ms_module = $node['label'];
             $subject = $source_data['subject'] ? $source_data['subject'] : $source_data['name'];
             $subject = $subject ? $subject : "#" . $source_id;
@@ -265,13 +302,19 @@ class WorkflowService extends CommonModel {
         }
 
         /*
-         * 执行结果中不包含中断信号
+         * 执行结果中包含中断信号则直接返回,通常用作页面跳转或消息提示等
          * */
-        if(!$exec_result['pause']) {
+        if(isset($exec_result['pause'])) {
+            if(!$exec_result['return']) {
+                return $this->response($exec_result);
+            } else {
+                return $exec_result;
+            }
+        } else {
             $data = [
                 'source_id' => $source_id,
-                'workflow_id' => $node['workflow_id'],
-                'workflow_node_id' => $node['id']
+                'workflow_id' => $workflow_id,
+                'workflow_node_id' => $node_id
             ];
             $data['remark'] = $this->exec_remark ? $this->exec_remark : "";
             $data = array_merge($meta_data, $data);
@@ -285,71 +328,19 @@ class WorkflowService extends CommonModel {
                 $this->error = __('bpm.Log workflow progress failed');
                 return false;
             }
+        }
+
+        $next_nodes = $this->get_next_nodes_by_id($workflow_id, $node_id);
+        foreach($next_nodes as $node_info) {
+            if($node_info['executor'] === 'auto:auto') {
+                $this->exec($workflow_id, $source_id, $node_info['id'], $meta_data);
+            }
+        }
+
+        if(!$exec_result['return']) {
+            return $this->response($exec_result);
         } else {
-            $response = $exec_result;
-            if(is_array($response) && $response) {
-                return $this->response($response);
-            } else {
-                return $response;
-            }
-        }
-
-        /*
-         * 不同的节点类型
-         * */
-        // 条件判断节点
-        if($node['node_type'] === 'cond') {
-            if($exec_result === true) { // 条件为真时，执行condition_true_nodes
-                $condition_next_nodes = $node['condition_true_nodes'];
-            } else { // 否则执行condition_true_nodes
-                $condition_next_nodes = $node['condition_false_nodes'];
-            }
-
-            // 自动执行下一节点
-            if($condition_next_nodes) {
-                $condition_next_nodes = explode(',', $condition_next_nodes);
-                foreach($condition_next_nodes as $nid) {
-                    $this->exec($source_id, $meta_data, $nid, null, true);
-                }
-            }
-        }
-
-
-        /*
-         * 执行结果类型
-         *
-         *  「1」 redirect 跳转至某一页面 uri: storage/stockIn/confirm/:id
-         *  「2」 message 显示一个提示信息  level=info|success|danger..., content
-         *
-         * $exec_result = [
-         *  type: 类型
-         *  pause: 是否中断
-         *  other_params
-         * ];
-         * */
-        $response = $exec_result;
-
-        /*
-         * 检测后续节点是否自动执行
-         * */
-        $next_nodes_ids = explode(',', $node['next_nodes']);
-        $next_nodes = [];
-        foreach($current_workflow_nodes as $node_id=>$node_info) {
-            if(in_array($node_id, $next_nodes_ids)) {
-                $next_nodes[$node_id] = $node_info;
-            }
-        }
-        foreach($next_nodes as $node_id=>$node_info) {
-            if($node_info['executor'] === 'a:a') {
-                $this->exec($source_id, $meta_data, $node_id);
-            }
-        }
-
-
-        if(is_array($response) && $response) {
-            return $this->response($response);
-        } else {
-            return $response;
+            return $exec_result;
         }
 
     }
@@ -358,7 +349,6 @@ class WorkflowService extends CommonModel {
      * 执行service api [E]xecute service api
      * */
     protected function exec_e($action, $source_model, $source_data) {
-        $source_model = D($source_model, 'Service');
         if(!method_exists($source_model, $action)) {
             $this->error = __('bpm.Service API not found'). ': '. $action;
             return false;
@@ -394,43 +384,50 @@ class WorkflowService extends CommonModel {
     }
 
     /*
-     * 更新源数据字段 [U]pdate source row field
-     * */
-    protected function exec_u($action, $source_model, $source_data) {
-        return [];
-    }
-
-    /*
-     * 工作流中直接返回数据
-     * */
-    public function response($data) {
-        echo json_encode($data);
-        return $data;
-    }
-
-    /*
      * 对当前执行节点进行权限验证
      * */
     public function check_node_permission($node, $source_row) {
+
         $current_user_id = get_current_user_id();
-        list($executor_role, $executor) = explode(':', $node['executor']);
+        $user_info = D('Account/UserInfo')->where(['id'=>$current_user_id])->find();
+        $user_role_map = D('Account/AuthUserRole')->where(['user_info_id'=>$current_user_id])->select();
 
-        if(in_array($node['executor'], $this->auto_executor)) {
-            return true;
-        }
-        if($node['executor'] == 'a:o' && $source_row['user_info_id'] == $current_user_id) {
-            return true;
+        $executor_rules = explode('|', $node['executor']);
+        foreach($executor_rules as $rule) {
+            list($executor_role, $executor) = explode(':', $rule);
+
+            if(in_array($rule, $this->auto_executor)) {
+                return true;
+            }
+
+            // 数据创建者
+            if(false !== strpos($rule, 'auto:owner') && $source_row['user_info_id'] == $current_user_id) {
+                return true;
+            }
+
+            switch($executor_role) {
+                case "r": // role
+                    foreach($user_role_map as $role_map) {
+                        if(in_array($role_map['auth_role_id'], explode(',', $executor))) {
+                            return true;
+                        }
+                    }
+                    break;
+                case "d": // department
+                    if(in_array($user_info['department_id'], explode(',', $executor))) {
+                        return true;
+                    }
+                    break;
+                case "u": // user
+                    if(in_array($current_user_id, explode(',', $executor))) {
+                        return true;
+                    }
+                    break;
+            }
         }
 
-        switch($executor_role) {
-            case "r":
-                break;
-            case "d":
-                break;
-            case "u":
-                return $executor && ($executor == $current_user_id);
-                break;
-        }
+        return false;
+
     }
 
     /*
@@ -469,6 +466,14 @@ class WorkflowService extends CommonModel {
         }
 
         return false;
+    }
+
+    /*
+     * 工作流中直接返回数据
+     * */
+    public function response($data) {
+        echo json_encode($data);
+        return $data;
     }
 
 }

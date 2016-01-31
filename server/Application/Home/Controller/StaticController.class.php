@@ -52,6 +52,9 @@ class StaticController extends Controller
     }
 
     private function format_js($content) {
+        $content = preg_replace("/(\/\/)(.*)[\S]/i", "", $content);
+//        $content = preg_replace("/\/\*[\s\S]*\*\//U", "", $content);
+
         $search = [
             '    ',
             '	',
@@ -63,6 +66,7 @@ class StaticController extends Controller
             "\n"
         ];
         $content = str_replace($search, $replace, $content);
+
         return $content;
     }
 

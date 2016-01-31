@@ -16,17 +16,14 @@ load_all_i18n: true
 include:
     js:
         - apps/bpm/main
-        - apps/bpm/service
-        - apps/bpm/statics/vendor/jquery-ui.min
+        - apps/bpm/model
+        - apps/bpm/static/raphael-min
+        - apps/bpm/static/flowchart
     css:
-        - apps/bpm/statics/vendor/jquery-ui.min
-        - apps/bpm/statics/vendor/jquery-ui.structure.min
-        - apps/bpm/statics/designer
+        - apps/bpm/static/style
 global_include:
     js:
         - apps/bpm/model
-    css:
-        - apps/bpm/statics/shower
 
 navs:
     System Preference:

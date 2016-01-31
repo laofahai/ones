@@ -59,9 +59,9 @@
                             value: -1
                         }
                     },
-                    list_display: ['name', 'module', 'is_default', 'locked', 'app_id'],
-                    uneditable: ['module','app_id','created','last_update'],
-                    unaddable: ['created','last_update'],
+                    list_hide: ['process'],
+                    uneditable: ['module','app_id','created','last_update', 'process'],
+                    unaddable: ['created','last_update', 'process'],
                     filters: {
                         is_default: {
                             type: 'link'
@@ -186,6 +186,41 @@
                             break;
                         default:
                             typeof callback === 'function' ? callback() : window.location.reload();
+                    }
+                };
+
+
+                this.shower_config = {
+                    'x': 0,
+                    'y': 0,
+                    'line-width': 3,
+                    'line-length': 50,
+                    'text-margin': 10,
+                    'font-size': 14,
+                    'font-color': 'black',
+                    'line-color': 'black',
+                    'element-color': 'black',
+                    'fill': 'white',
+                    'yes-text': _('common.Yes'),
+                    'no-text': _('common.No'),
+                    'arrow-end': 'block',
+                    'scale': 1,
+                    'symbols': {
+                        'start': {
+                            'class': 'start-element'
+                        },
+                        'end':{
+                            'class': 'end-element'
+                        }
+                    },
+                    'flowstate' : {
+                        'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
+                        'current' : {'fill' : '#fff', 'font-color' : 'red', 'font-weight' : 'bold'},
+                        'future' : { 'fill' : '#fff'},
+                        'request' : { 'fill' : 'blue'},
+                        'invalid': {'fill' : '#444444'},
+                        'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : _('common.Yes'), 'no-text' : _('common.No') },
+                        'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : _('common.Yes'), 'no-text' : _('common.No') }
                     }
                 };
 
