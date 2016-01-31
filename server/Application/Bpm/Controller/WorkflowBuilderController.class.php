@@ -16,7 +16,9 @@ class WorkflowBuilderController extends BaseRestController {
 
     public function on_put() {
         $service = D('Bpm/Workflow');
-        $service->save_workflow(I('post.'), I('get.id'));
+        if(false === $service->save_workflow(I('post.data'), I('post.id'))) {
+            $this->error('E: '.$service->getError());
+        }
     }
 
 }

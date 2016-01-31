@@ -95,6 +95,10 @@
                     extra_methods: ['api_get', 'api_query']
                 });
 
+                this.builder_resource = dataAPI.getResourceInstance({
+                    uri: 'bpm/workflowBuilder'
+                });
+
                 /*
                 * 获取工作流信息，包括基本信息和节点信息
                 *
@@ -215,8 +219,8 @@
                     },
                     'flowstate' : {
                         'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
-                        'current' : {'fill' : '#fff', 'font-color' : 'red', 'font-weight' : 'bold'},
-                        'future' : { 'fill' : '#fff'},
+                        'current' : {'fill' : 'yellow', 'font-color' : 'red', 'font-weight' : 'bold'},
+                        'future' : { 'fill' : '#FFFF99'},
                         'request' : { 'fill' : 'blue'},
                         'invalid': {'fill' : '#444444'},
                         'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : _('common.Yes'), 'no-text' : _('common.No') },

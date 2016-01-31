@@ -56,6 +56,10 @@ workflow_node:
     executor:
         comment: 执行人
         limit: 255
+        blank: true
+    flow_type:
+        blank: true
+        limit: 20
     notify:
         type: string
         limit: 100

@@ -27,11 +27,13 @@
                         $scope.reloading = true;
                         // Clear out old diagram
 
+
                         $timeout(function() {
                             diagram_div.html('');
                             $scope.reloading = false;
                             diagram.drawSVG('bpm-show-container', workflow_api.shower_config);
-                        }, 1000);
+                            diagram_div.find('a').attr("href", "javascript:void(0);");
+                        }, 500);
                     } catch(err) {
                         throw err;
                     }
@@ -50,9 +52,16 @@
                     $scope.show_editor = !$scope.show_editor;
                 };
 
+                $scope.submit = function() {
+                    workflow_api.builder_resource.update({
+                        id: $routeParams.id,
+                        data: $scope.bpm_description_language
+                    });
+                };
+
 
                 workflow_api.get_full_data($routeParams.id).then(function(response_data) {
-                    console.log(response_data);
+                    $scope.bpm_description_language = response_data.workflow;
                 });
 
             }

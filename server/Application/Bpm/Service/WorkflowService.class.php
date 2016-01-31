@@ -60,22 +60,30 @@ class WorkflowService extends CommonModel {
 
         $nodes = [];
         foreach($nodes_config as $node_config) {
-            list($node_alias, $config) = explode("=>", $node_config);
+            list($node_alias, $config) = explode("=&gt;", $node_config);
             list($node_type, $more_config) = explode(": ", $config);
             list($node_label, $flow_state) = explode("| ", $more_config);
-            list($node_label, $node_action) = explode(':> ', $node_label);
+            list($node_label, $node_action) = explode(':&gt; ', $node_label);
             $nodes[$node_alias] = [
                 "alias" => $node_alias,
                 "label" => $node_label,
-                "type"  => $node_type,
-                "state" => $flow_state,
+                "node_type"  => $node_type,
+                "flow_type" => $flow_state,
                 "action"=> $node_action
             ];
         }
 
+        $cleared_executors = [];
         foreach($executors as $executor) {
-            list($node_alias, $executor_content) = explode("=>", $executor);
-            $nodes[$node_alias]["executor"] = $executor_content;
+            list($node_alias, $executor_config) = explode("=&gt;", $executor);
+            $cleared_executors[trim($node_alias)] = trim($executor_config);
+        }
+
+        foreach($nodes as $k=>$node) {
+            if(!$node) {
+                unset($nodes[$k]);
+            }
+            $nodes[$k]['executor'] = $cleared_executors[$node['alias']];
         }
 
         return $nodes;
@@ -93,24 +101,24 @@ class WorkflowService extends CommonModel {
         $all_nodes = D('Bpm/WorkflowNode')->where(['workflow_id'=>$workflow_id])->select();
         $all_nodes = get_array_to_ka($all_nodes, "alias");
 
-        $node_tpl = "%(alias)s:=>%(type)s: %(label)s:> %(action)s";
+        $node_tpl = "%(alias)s=>%(type)s: %(label)s:> %(action)s";
         $search = ['%(alias)s','%(type)s','%(label)s','%(action)s'];
         $nodes = [];
         foreach($all_nodes as $alias => $node) {
             $replace = [
                 $alias,
-                $node['type'],
+                $node['node_type'],
                 $node['label'],
-                $node['action']
+                $node['action'] ? $node['action'] : ""
             ];
-            $node = str_replace($search, $replace, $node_tpl);
+            $node_line = str_replace($search, $replace, $node_tpl);
             if($node['flow_type']) {
-                $node.= "| ".$node['flow_type'];
+                $node_line.= "| ".$node['flow_type'];
             }
-            array_push($nodes, $node);
+            array_push($nodes, $node_line);
         }
 
-        return implode("\n", $nodes)."\n\n".$workflow['process'];
+        return implode("\n", $nodes)."\n\n".str_replace('&gt;', '>', $workflow['process']);
     }
 
     /*
@@ -167,23 +175,24 @@ class WorkflowService extends CommonModel {
      * @param string $str 工作流详情
      * @param integer $workflow_id 工作流ID
      *
-     * 工作流会在被使用时变为锁定状态,此时不可再进行修改
+     * 工作流会在被使用时变为锁定状态,此时不可再进行修改,仅对工作流可执行者进行调整
      *
      * */
     public function save_workflow($str, $workflow_id) {
 
         $workflow = $this->where(['id'=>$workflow_id])->find();
 
+        if(!$workflow) {
+            $this->error = _('common.Object not found');
+            return false;
+        }
+
+        list($nodes_config, $process, $executors) = explode("\n\n", $str);
+        $nodes = $this->parse_process_language($str);
+
+        $node_service = D('Bpm/WorkflowNode');
+
         if(!$workflow['locked']) {
-            list($nodes_config, $process, $executors) = explode("\n\n", $str);
-            $nodes = $this->parse_process_language($nodes_config);
-
-            $cleared_executors = [];
-            foreach($executors as $executor) {
-                list($node_alias, $executor_config) = explode("=>", $executor);
-                $cleared_executors[trim($node_alias)] = trim($executor_config);
-            }
-
             $this->where([
                 'id' => $workflow_id
             ])->save(
@@ -192,23 +201,32 @@ class WorkflowService extends CommonModel {
                     'process' => $process
                 ]
             );
-
-            $node_service = D('Bpm/WorkflowNode');
             $node_service->where([
                 'workflow_id' => $workflow_id
             ])->delete();
             foreach($nodes as $node) {
+                $node['workflow_id'] = $workflow_id;
                 $node_service->create($node);
                 if(!$node_service->add()) {
                     // @todo error
+                    $this->error = _('bpm.Add node failed');
                     return false;
                 }
+
             }
         } else { // 已锁定的工作流,仅能修改执行者等信息
-
+            $can_be_update = ['executor', 'label'];
+            foreach($nodes as $node) {
+                $saved_data = [];
+                foreach($can_be_update as $cbu) {
+                    $saved_data[$cbu] = $node[$cbu];
+                }
+                $node_service->where([
+                    'workflow_id' => $workflow_id,
+                    'id' => $node['id']
+                ])->save($saved_data);
+            }
         }
-
-
 
 
         return $workflow_id;
