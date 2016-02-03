@@ -37,7 +37,7 @@ Can not found start node of workflow: 找不到工作流的起始节点
 Workflow node not found: 未找到工作流节点
 Only 1 start node can exists: 仅能存在一个开始节点
 
-Hide Editor: 隐藏编辑器
+Hide or show editor: 隐藏/显示编辑器
 Special Roles: 特殊的角色
 
 Auto execute: 自动执行

@@ -159,16 +159,16 @@ class WorkflowService extends CommonModel {
          * 遍历所有的流程描述
          * */
         foreach($processes as $process_in_line) {
-            $process_in_line = explode("->", $process_in_line);
-            foreach($process_in_line as $process_config) {
-                list($process_node_alias, $config) = explode("(", $process_config);
-                $process_node_alias = trim($process_node_alias);
-                if(in_array($process_node_alias, $node_alias)) {
-                    array_push($next_nodes, $all_nodes[$process_node_alias]);
+            $process_in_line = preg_replace('/\(.*\)/', '', $process_in_line);
+            $process_in_line = str_replace('&gt;', '>', $process_in_line);
+            foreach($node_alias as $na) {
+                $regex = '/'.$na.'->([\w\d\_]+)/';
+                preg_match($regex, $process_in_line, $matches);
+                if($matches[1]) {
+                    array_push($next_nodes, $all_nodes[$matches[1]]);
                 }
             }
         }
-
         return $next_nodes;
     }
 
@@ -176,10 +176,24 @@ class WorkflowService extends CommonModel {
         $node_id = is_array($node_id) ? $node_id : [$node_id];
         $map = [
             "workflow_id" => $workflow_id,
-            "node_id" => ['IN', $node_id]
+            "id" => ['IN', $node_id]
         ];
+
         $nodes = D('Bpm/WorkflowNode')->where($map)->select();
+
         return $this->get_next_nodes_by_alias($workflow_id, get_array_by_field($nodes, 'alias'));
+    }
+
+    /*
+     * 获得某项当前工作的下一/N可执行节点
+     * */
+    public function get_next_nodes_by_source($workflow_id, $source_id) {
+        $latest_progress = D('Bpm/WorkflowProgress')->get_latest_progress($workflow_id, $source_id);
+        if(!$latest_progress) {
+            return [];
+        }
+
+        return $this->get_next_nodes_by_id($workflow_id, $latest_progress['workflow_node_id']);
     }
 
     /*
@@ -258,11 +272,13 @@ class WorkflowService extends CommonModel {
             ]);
         }
 
-        $start_node_alias = array_shift(explode('->', $workflow['process']));
+        $start_node_alias = array_shift(explode('-&gt;', $workflow['process']));
+        $start_node_alias = array_shift(explode('(', $start_node_alias));
         $node_id = D('Bpm/WorkflowNode')->where([
             'workflow_id' => $workflow_id,
             'alias' => $start_node_alias
         ])->getField('id');
+
         return $this->exec($workflow_id, $source_id, $node_id, $meta_data);
     }
 
@@ -306,7 +322,12 @@ class WorkflowService extends CommonModel {
         /*
          * 根据不同动作类型执行
          * */
-        $exec_result = $this->$method($action_content, $source_model, $source_data);
+        if(method_exists($this, $method)) {
+            $exec_result = $this->$method($action_content, $source_model, $source_data);
+        } else {
+            $exec_result = true;
+        }
+
 
         /*
          * 非条件判断节点执行结果为false时，判定执行失败，中断。
@@ -373,6 +394,10 @@ class WorkflowService extends CommonModel {
             return $exec_result;
         }
 
+    }
+
+    protected function exec_($action, $source_model, $source_data) {
+        return $this->exec_n($action, $source_model, $source_data);
     }
 
     /*

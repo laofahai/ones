@@ -13,8 +13,6 @@ use Common\Model\CommonTreeModel;
 
 class DepartmentService extends CommonTreeModel {
 
-    public $not_belongs_to_company = true;
-
     protected $_auto = array(
         array("company_id", "get_current_company_id", 1, "function")
     );

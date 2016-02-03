@@ -198,7 +198,8 @@ class CommonBillService extends CommonModel {
             'remark' => $meta['remark']
         ];
         $workflow_service = D('Bpm/Workflow');
-        if(false === $workflow_service->start_progress($meta['workflow_id'], $id, $meta_data)) {
+        $workflow_result = $workflow_service->start_progress($meta['workflow_id'], $id, $meta_data);
+        if(false === $workflow_result) {
             $this->error = $workflow_service->getError();
             $this->rollback();
             return false;

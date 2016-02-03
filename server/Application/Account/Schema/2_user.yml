@@ -11,6 +11,9 @@ department:
         type: string
         comment: 部门负责人
         blank: true
+    description:
+        blank: true
+        comment: 描述
     $meta:
         indexes:
             lft:

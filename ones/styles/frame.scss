@@ -397,3 +397,20 @@ $nav_width: 180px;
 .input_widget_user_select {
     background: #fff;
 }
+
+
+.select3-container ul.items {
+    margin-top:34px !important;
+}
+
+.workflow-progress-container {
+    > div {
+        :after {
+            content: " ";
+            clear: both;
+        }
+    }
+    .avatar {
+        float: left
+    }
+}

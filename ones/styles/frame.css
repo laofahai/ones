@@ -617,4 +617,13 @@ form
 .input_widget_user_select {
   background: #fff; }
 
+.select3-container ul.items {
+  margin-top: 34px !important; }
+
+.workflow-progress-container > div :after {
+  content: " ";
+  clear: both; }
+.workflow-progress-container .avatar {
+  float: left; }
+
 /*# sourceMappingURL=frame.css.map */

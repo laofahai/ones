@@ -245,7 +245,7 @@
                          * 编辑时 默认值
                          * */
                         self.scope.$on('form.dataLoaded', function(evt, data) {
-                            if(undefined === data[$item_select.config.field]) {
+                            if(!data[$item_select.config.field] || undefined === data[$item_select.config.field]) {
                                 return;
                             }
 

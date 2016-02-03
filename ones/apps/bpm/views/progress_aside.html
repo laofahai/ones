@@ -1,0 +1,15 @@
+<div class="workflow-progress-container">
+    <div class="item"
+         ng-repeat="p in workflow_progress"
+    >
+        <div class="avatar">
+            <img ng-src="{{p.user_info_id|to_avatar_src}}" class="user-avatar" width="40" />
+        </div>
+        <small ng-bind="p.user_info_id|to_user_fullname"></small>
+        <small ng-bind="p.created"></small>
+        <div class="node-label">
+            <label ng-bind="p.node_label"></label>
+        </div>
+        <em class="node-remark" ng-bind="p.remark"></em>
+    </div>
+</div>

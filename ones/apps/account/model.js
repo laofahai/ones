@@ -233,6 +233,7 @@
                             }
                         }
                     },
+                    list_hide: ['lft', 'rgt'],
                     // 扩展选中项操作
                     extra_selected_actions: [
                         get_selected_action_for_add_child(RootFrameService)
