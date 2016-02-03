@@ -104,6 +104,7 @@ class WorkflowService extends CommonModel {
         $node_tpl = "%(alias)s=>%(type)s: %(label)s:> %(action)s";
         $search = ['%(alias)s','%(type)s','%(label)s','%(action)s'];
         $nodes = [];
+        $executors = [];
         foreach($all_nodes as $alias => $node) {
             $replace = [
                 $alias,
@@ -116,9 +117,20 @@ class WorkflowService extends CommonModel {
                 $node_line.= "| ".$node['flow_type'];
             }
             array_push($nodes, $node_line);
+            if($node['executor']) {
+                array_push($executors, sprintf('%s=>%s', $alias, $node['executor']));
+            }
         }
 
-        return implode("\n", $nodes)."\n\n".str_replace('&gt;', '>', $workflow['process']);
+        $response = [];
+        array_push(
+            $response,
+            implode("\n", $nodes),
+            str_replace('&gt;', '>', $workflow['process']),
+            implode("\n", $executors)
+        );
+
+        return implode("\n\n", $response);
     }
 
     /*

@@ -193,6 +193,87 @@
                     }
                 };
 
+                /**
+                 * 根据描述语言返回节点执行者
+                 * */
+                this.get_executor = function(str, node_alias) {
+                    str = str.split("\n\n");
+
+                    if(node_alias) {
+                        node_alias = angular.isArray(node_alias) ? node_alias : [node_alias];
+                    } else {
+                        node_alias = [];
+                    }
+
+                    var node_config, process, executor_line, cleared_executor={};
+
+                    executor_line = str[2] ? str[2].split("\n") : {};
+
+                    for(var i=0; i<executor_line.length; i++) {
+                        var tmp = executor_line[i].split('=>');
+                        cleared_executor[tmp[0]] = {};
+                        var each_executor_group = tmp[1].split('|');
+
+                        for(var j=0; j<each_executor_group.length; j++) {
+                            var s = each_executor_group[j].split(':');
+                            cleared_executor[tmp[0]][s[0]] = cleared_executor[tmp[0]][s[0]] || [];
+                            if(!s[1]) {
+                                continue;
+                            }
+                            var ids = s[1].split(',');
+                            for(var h=0; h<ids.length; h++) {
+                                if(ids[h] > 0) {
+                                    cleared_executor[tmp[0]][s[0]].push(parseInt(ids[h]));
+                                } else {
+                                    cleared_executor[tmp[0]][s[0]].push(ids[h]);
+                                }
+                            }
+                        }
+                    }
+
+                    if(node_alias.length > 0) {
+                        var r = {};
+                        angular.forEach(cleared_executor, function(item, key) {
+                            if(node_alias.indexOf(key) >= 0) {
+                                r[key] = item;
+                            }
+                        });
+                        return r;
+                    } else {
+                        return cleared_executor;
+                    }
+
+
+                };
+
+                this.to_executor_str = function(executors) {
+                    var tpl = "%(node_alias)s=>%(content)s";
+                    var lines = [];
+                    var roles_items;
+                    angular.forEach(executors, function(content, node_alias) {
+                        roles_items = [];
+                        angular.forEach(content, function(ids, role) {
+                            if(ids.length < 1) {
+                                return;
+                            }
+                            roles_items.push(role + ':' + ids.join());
+                        });
+                        lines.push(sprintf(tpl, {
+                            node_alias: node_alias,
+                            content: roles_items.join('|')
+                        }));
+                    });
+
+                    return lines.join("\n");
+                };
+
+                this.get_define_str = function(desc_language) {
+                    if(!desc_language) {
+                        return desc_language;
+                    }
+                    return desc_language.split("\n\n").splice(0, 2).join("\n\n");
+                };
+
 
                 this.shower_config = {
                     'x': 0,

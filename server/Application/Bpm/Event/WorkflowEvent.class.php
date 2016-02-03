@@ -82,6 +82,12 @@ class WorkflowEvent extends BaseRestEvent {
         $roles = D('Account/AuthRole')->where([])->select();
         $response_data['roles'] = filter_array_fields_multi((array)$roles, ['id', 'name']);
 
+        foreach($response_data as $r=>$items) {
+            foreach($items as $k=>$v) {
+                $response_data[$r][$k]['id'] = (int)$v['id'];
+            }
+        }
+
         $this->response($response_data);
     }
 

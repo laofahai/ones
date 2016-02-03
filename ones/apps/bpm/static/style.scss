@@ -8,7 +8,8 @@
 ;
     background-color: #f2f2f2;
     background-size: 20px 20px;
-    min-height:600px;
+    height:800px;
+    width:100%;
     position:relative;
     border: 1px solid #ddd;
 }
@@ -37,6 +38,6 @@
     width: 50%;
 
     .bpm-edit-area {
-        min-height:600px;
+        height:800px;
     }
 }

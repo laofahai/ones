@@ -5,37 +5,23 @@ Data Creator: 数据创建者
 
 Workflow Builder: 工作流设计器
 
-Add Executor: 新增执行者
+Executor: 新增执行者
 Add To Executor: 新增至执行者
 User Role: 用户角色
 Department: 部门
 User: 用户
 
-NODE_TYPES:
-    general: 通用节点
-    start: 开始节点
-    end: 结束节点
-    cond: 条件判断节点
+Data owner: 数据拥有者
 
 Workflow: 工作流
 Workflow Progress: 工作流进程
 Workflow Design: 工作流设计
 
-Add Widget: 新增控件
-TO: 至
-
-Auto Execute: 自动执行
-Wait for outside: 等待外部响应
-
 Execute a service API: 执行一个应用服务接口
 Edit main row data: 修改当前流程数据
 Only 1 start node can be exists: 只可以存在一个开始节点
 
-Node settings: 节点设置
-Edit Node Settings: 修改节点设置
-Next node is: 下一节点是
-Condition True: 条件为真
-Condition False: 条件为假
+Node Setting: 节点设置
 Node Name: 节点名称
 Node Status Label: 节点状态标签
 Action Type: 动作类型
@@ -52,3 +38,8 @@ Workflow node not found: 未找到工作流节点
 Only 1 start node can exists: 仅能存在一个开始节点
 
 Hide Editor: 隐藏编辑器
+Special Roles: 特殊的角色
+
+Auto execute: 自动执行
+Waiting for outside response: 等待外部响应
+

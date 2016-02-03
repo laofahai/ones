@@ -239,6 +239,9 @@
 .chosen-container-active.chosen-with-drop .chosen-single div b {
   background-position: -18px 5px !important; }
 
+.chosen-results .highlighted {
+  background-color: #4d90fe; }
+
 .item_select_input_container {
   position: relative; }
   .item_select_input_container .item_select_input_selected_container {

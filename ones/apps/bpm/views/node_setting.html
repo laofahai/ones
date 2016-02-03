@@ -1,0 +1,85 @@
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog add_role_modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="$hide()">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    <span ng-bind="'bpm.Node Setting'|lang"></span>
+                    <span> - </span>
+                    <span ng-bind="current_node_label"></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <ul class="nav nav-tabs nav-tabs-google">
+                    <li role="presentation" class="active"><a href="javascript:void(0);" ng-bind="'bpm.Executor'|lang"></a></li>
+                </ul>
+                <div class="tab-content">
+                    <p> </p>
+                    <div class="row">
+                        <div class="col-sm-2 text-right">
+                            <label ng-bind="'bpm.Special Roles'|lang"></label>
+                        </div>
+                        <div class="col-sm-8 tag-style">
+                            <a href="javascript:void(0);"
+                               ng-repeat="role in special_roles"
+                               ng-bind="role.name"
+                               ng-class="{'tag-primary': is_role_enabled('auto', role.id), 'tag-default': !is_role_enabled('auto', role.id)}"
+                               ng-click="toggle_role('auto', role.name, role.id)"
+                            ></a>
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 text-right">
+                            <label ng-bind="'bpm.User Role'|lang"></label>
+                        </div>
+                        <div class="col-sm-8 tag-style">
+                            <a href="javascript:void(0);"
+                               ng-repeat="role in addable_roles.roles"
+                               ng-bind="role.name"
+                               ng-class="{'tag-primary': is_role_enabled('r', role.id), 'tag-default': !is_role_enabled('r', role.id)}"
+                               ng-click="toggle_role('r', role.name, role.id)"
+                            ></a>
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 text-right">
+                            <label ng-bind="'bpm.Department'|lang"></label>
+                        </div>
+                        <div class="col-sm-8 tag-style">
+                            <a href="javascript:void(0);"
+                               ng-repeat="dep in addable_roles.departments"
+                               ng-bind="dep.name"
+                               ng-class="{'tag-primary': is_role_enabled('d', dep.id), 'tag-default': !is_role_enabled('d', dep.id)}"
+                               ng-click="toggle_role('d', dep.name, dep.id)"
+                            ></a>
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 text-right">
+                            <label ng-bind="'bpm.User'|lang"></label>
+                        </div>
+                        <div class="col-sm-8 tag-style">
+                            <a href="javascript:void(0);"
+                               ng-repeat="user in addable_roles.users"
+                               ng-bind="user.realname"
+                               ng-class="{'tag-primary': is_role_enabled('u', user.id), 'tag-default': !is_role_enabled('u', user.id)}"
+                               ng-click="toggle_role('u', user.realname, user.id)"
+                            ></a>
+                        </div>
+                        <div class="col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="$hide();" ng-bind="'common.Close'|lang"></button>
+            </div>
+        </div>
+    </div>
+</div>
