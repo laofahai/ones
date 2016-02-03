@@ -1,7 +1,11 @@
 var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>';
 (function(window, angular, ones, io) {
     'use strict';
-    angular.module('ones.billModule', ['ones.formFieldsModule'])
+    angular.module('ones.billModule', ['ones.formFieldsModule', 'ngClipboard',])
+        .config(["ngClipProvider", function(ngClipProvider) {
+            // ng-click to copy
+            ngClipProvider.setPath("lib/ZeroClipboard.swf");
+        }])
         .service('BillModule', [
             '$routeParams',
             '$timeout',
@@ -389,6 +393,14 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                     if($routeParams.id) {
                         self.load_edit_data();
                     }
+
+                    // 复制条码
+                    this.parentScope.on_clip_click = function() {
+                        RootFrameService.alert({
+                            type: 'info',
+                            content: _('common.Bar code has been copy to your clip-board')
+                        });
+                    };
                 };
 
                 // 生成单据条码
@@ -408,6 +420,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         });
                     });
 
+                    self.parentScope.bar_code_field = self.opts.bill_no.field;
                     self.parentScope.bill_meta_data[self.opts.bill_no.field] = bar_code;
                 };
 

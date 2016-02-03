@@ -27,6 +27,6 @@
                 <small ng-bind="company_profile.address" ng-show="company_profile.address"></small>
             </div>
         </div>
-        <div class="bill-bar-code" id="bar-code"></div>
+        <div class="bill-bar-code" clip-copy="bill_meta_data[bar_code_field]"  clip-click="on_clip_click()" id="bar-code"></div>
     </div>
 </div>

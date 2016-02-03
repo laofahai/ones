@@ -221,7 +221,9 @@ module.exports = function (grunt) {
                             "ones/bower_components/angular-base64-upload/src/angular-base64-upload.js",
                             "ones/bower_components/jsbarcode/JsBarcode.js",
                             "ones/bower_components/jsbarcode/CODE128.js",
-                            "ones/bower_components/socket.io-client/socket.io.js"
+                            "ones/bower_components/socket.io-client/socket.io.js",
+                            "bower_components/zeroclipboard/dist/ZeroClipboard.min.js",
+                            "bower_components/ng-clip/dest/ng-clip.min.js"
                         ]
                     }
                 ]
