@@ -98,9 +98,6 @@
                             value: new Date(moment().format())
                         }
                     },
-                    list_display: [
-                        'label', 'company_name', 'source_from', 'linkman', 'position', 'phone', 'user_info_id', 'head_id'
-                    ],
                     modal_list_display: [
                         'company_name', 'linkman', 'phone'
                     ],

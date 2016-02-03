@@ -21,14 +21,6 @@
                     is_bill: true,
                     detail_able: true,
                     workflow: 'purchase.purchase',
-                    list_display: [
-                        'bill_no',
-                        'subject',
-                        'quantity',
-                        'created',
-                        'workflow_node_status_label',
-                        'user_info_id'
-                    ],
                     fields: {
                         bill_no: {
                             search_able: true

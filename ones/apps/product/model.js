@@ -46,7 +46,6 @@
                             }
                         }
                     },
-                    list_display: ['name', 'product_category', 'cost', 'price'],
                     sortable: ['id', 'product_category'],
                     filters: {
                         product_category: {

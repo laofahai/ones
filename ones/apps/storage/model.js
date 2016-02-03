@@ -21,9 +21,7 @@
                             editable: false,
                             label: _('storage.Storage Last Check Time')
                         }
-                    },
-
-                    list_display: ['name', 'last_check_time', 'phone']
+                    }
                 };
 
             }
@@ -82,9 +80,6 @@
                             label: _('product.Product Category')
                         }
                     },
-                    list_display: [
-                        'product_id', 'product_category', 'storage_id', 'balance', 'total_balance'
-                    ],
                     filters: {
                         storage_id: {
                             type: 'link',
@@ -184,15 +179,6 @@
                             data_source: 'Storage.StorageAPI'
                         }
                     },
-                    list_display: [
-                        'bill_no',
-                        'product_name',
-                        'direction',
-                        'quantity',
-                        'storage_id',
-                        'created',
-                        'user_info_id'
-                    ],
                     filters: {
                         storage_id: {
                             type: 'link'

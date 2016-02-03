@@ -22,7 +22,6 @@
                     module: 'dataModelField',
                     table: 'data_model_field',
 
-                    list_display: ['label', 'alias', 'belongs_to_module', 'widget', 'data_type', 'search_able'],
                     columns: 1,
                     fields: {
                         alias: {

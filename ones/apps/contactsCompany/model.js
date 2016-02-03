@@ -62,7 +62,6 @@
                             label: _('region.Region')
                         }
                     },
-                    list_display: ['name', 'master', 'phone', 'mobile', 'address'],
                     sortable: ['id'],
                     filters: {
                         contacts_company_role_id: {
@@ -138,8 +137,7 @@
                             help_text: _('contactsCompany.discount_help_text'),
                             required: false
                         }
-                    },
-                    list_display: ['name', 'alias', 'discount']
+                    }
                 }
             }
         ])
@@ -205,8 +203,7 @@
                         gender: {
                             type: 'link'
                         }
-                    },
-                    list_display: ['name', 'gender', 'mobile', 'company_name', 'created']
+                    }
                 }
             }
         ])

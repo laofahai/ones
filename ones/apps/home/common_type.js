@@ -33,7 +33,6 @@
                             }
                         }
                     },
-                    list_display: ['name', 'alias', 'module', 'listorder'],
                     filters: {
                         module: {
                             type: 'link'

@@ -13,18 +13,18 @@
                 </h1>
             </div>
             <div class="company-info pull-left">
-                <small ng-bind="system_preference.company_name" ng-show="system_preference.company_name"></small>
+                <small ng-bind="company_profile.company_name" ng-show="company_profile.company_name"></small>
                 <small>
-                    <span ng-show="system_preference.company_phone">
+                    <span ng-show="company_profile.phone">
                         <span ng-bind="('common.Phone'|lang) + ':'"></span>
-                        <span ng-bind="system_preference.company_phone"></span>
+                        <span ng-bind="company_profile.phone"></span>
                     </span>
-                    <span ng-show="system_preference.company_fax">
+                    <span ng-show="company_profile.fax">
                         <span ng-bind="('common.Fax'|lang) + ':'"></span>
-                        <span ng-bind="system_preference.company_fax"></span>
+                        <span ng-bind="company_profile.fax"></span>
                     </span>
                 </small>
-                <small ng-bind="system_preference.company_address" ng-show="system_preference.company_address"></small>
+                <small ng-bind="company_profile.address" ng-show="company_profile.address"></small>
             </div>
         </div>
         <div class="bill-bar-code" id="bar-code"></div>

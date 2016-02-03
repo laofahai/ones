@@ -51,14 +51,6 @@
                             map: 'status'
                         }
                     },
-                    list_display: [
-                        'bill_no',
-                        'subject',
-                        'quantity',
-                        'created',
-                        'workflow_node_status_label',
-                        'user_info_id'
-                    ],
                     bill_meta_required: [
                         'subject', 'created'
                     ],

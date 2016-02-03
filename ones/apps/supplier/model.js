@@ -62,14 +62,6 @@
                     unaddable: ['user_info_id', 'contacts_company_id', 'contacts_company_role_id'],
                     uneditable: ['user_info_id', 'contacts_company_id', 'contacts_company_role_id'],
                     undetail_able: ['contacts_company_id', 'contacts_company_role_id'],
-                    list_display: [
-                        'name',
-                        'level',
-                        'phone',
-                        'master',
-                        'user_info_id',
-                        'head_id'
-                    ],
                     detail_able: true,
                     filters: {
                         gt_level: {

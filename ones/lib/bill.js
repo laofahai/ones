@@ -50,6 +50,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                     this.scope.bill_rows = [];
 
                     this.parentScope.system_preference = ones.system_preference;
+                    this.parentScope.company_profile = ones.company_profile;
 
                     this.run();
                 };

@@ -30,8 +30,7 @@
                     columns: 1,
                     fields: {},
                     unaddable: ['val', 'alias', 'data_type', 'app'],
-                    uneditable: ['val', 'alias', 'data_type', 'app'],
-                    list_display: ['name', 'val']
+                    uneditable: ['val', 'alias', 'data_type', 'app']
                 };
 
                 var self = this;

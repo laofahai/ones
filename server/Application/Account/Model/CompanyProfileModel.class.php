@@ -12,7 +12,8 @@ use Common\Model\CommonViewModel;
 class CompanyProfileModel extends CommonViewModel {
 
     protected $viewFields = [
-        "CompanyProfile" => ['*', '_type'=>'left']
+        "CompanyProfile" => ['*', '_type'=>'left'],
+        "Company" => ['name'=>"company_name", '_on'=>'CompanyProfile.company_id=Company.id', '_type'=>"left"]
     ];
 
 }

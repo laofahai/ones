@@ -275,10 +275,7 @@
                         }
                     },
                     unaddable: ['sale_opportunities_id', 'user_info_id'],
-                    uneditable: ['sale_opportunities_id', 'user_info_id'],
-                    list_display: [
-                        'name', 'cost', 'price', 'quote_price', 'num', 'quote_amount'
-                    ]
+                    uneditable: ['sale_opportunities_id', 'user_info_id']
                 };
 
             }
@@ -346,8 +343,7 @@
                             data_source: 'Account.UserInfoAPI',
                             cell_filter: 'to_user_fullname'
                         }
-                    },
-                    list_display: ['contract_number', 'sign_time', 'customer', 'sale_opportunities_id', 'head_id']
+                    }
                 };
 
                 $timeout(function() {

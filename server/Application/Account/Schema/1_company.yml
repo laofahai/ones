@@ -14,15 +14,6 @@ company:
         limit: 11
         blank: true
         comment: 超级用户外键
-    address:
-        comment: 地址
-        blank: true
-    phone:
-        comment: 公司电话
-        blank: true
-    description:
-        blank: true
-        comment: 公司简介
     created:
         type: datetime
         default: CURRENT_TIMESTAMP

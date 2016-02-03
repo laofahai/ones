@@ -96,10 +96,7 @@
                             widget: 'textarea',
                             style: 'height:500px'
                         }
-                    },
-                    list_display: [
-                        'name', 'module_alias'
-                    ]
+                    }
                 };
 
                 this.resource = dataAPI.getResourceInstance({

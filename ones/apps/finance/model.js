@@ -21,12 +21,7 @@
                                 return to_decimal_display(value);
                             }
                         }
-                    },
-                    list_display: [
-                        "name",
-                        "balance",
-                        "currency"
-                    ]
+                    }
                 };
             }
         ])
@@ -61,13 +56,6 @@
                             cell_filter: "to_user_fullname"
                         }
                     },
-                    list_display: [
-                        'direction',
-                        'amount',
-                        'finance_account_id',
-                        'created',
-                        'user_info_id'
-                    ],
                     filters: {
                         finance_account_id: {
                             type: 'link'

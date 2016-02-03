@@ -47,6 +47,10 @@ class ConfigEvent extends BaseRestEvent {
         }
         $data['system_preference'] = $system_preference;
 
+        // 公司资料
+        $company_profile = D('Account/CompanyProfile', 'Model')->where([])->find();
+        $data['company_profile'] = $company_profile;
+
         // 个人首选项
         $user_preference = D('Account/UserPreference', 'Service')->get_preference();
 

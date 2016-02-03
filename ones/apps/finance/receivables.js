@@ -156,16 +156,6 @@
                             }
                         }
                     },
-                    list_display: [
-                        'subject',
-                        'common_type_id',
-                        'customer_id',
-                        'amount',
-                        'received',
-                        'created',
-                        'user_info_id',
-                        'status'
-                    ],
                     unaddable: [
                         'source_id', 'source_model', 'user_info_id', 'created', 'status', 'unreceived', '', ''
                     ],

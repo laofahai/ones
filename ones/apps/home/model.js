@@ -49,7 +49,6 @@
                             ]
                         }
                     },
-                    list_display: ['name', 'description', 'price', 'is_active'],
                     addable: false,
                     editable: false,
                     deleteable: false,

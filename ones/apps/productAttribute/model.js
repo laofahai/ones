@@ -44,7 +44,6 @@
                             }
                         }
                     },
-                    list_display: ['name', 'alias', 'widget'],
                     filters: {
                         widget: {
                             type: "link"
@@ -166,9 +165,6 @@
                             search_able: true
                         }
                     },
-                    list_display: [
-                        'product_name', 'product_attribute_id', 'content'
-                    ],
                     filters: {
                         product_attribute_id: {
                             type: "link"
