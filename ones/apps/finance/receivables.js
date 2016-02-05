@@ -165,6 +165,7 @@
                     undetail_able: [
                         'source_id'
                     ],
+                    list_hide: ['source_id'],
                     filters: {
                         status: {
                             type: "link"

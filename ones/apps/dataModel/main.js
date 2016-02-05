@@ -70,10 +70,6 @@
                             help_text: _('dataModel.help_text_search_able'),
                             editable: false
                         },
-                        company: {
-                            addable: false,
-                            editable: false
-                        },
                         config: {
                             label: _('dataModel.Extra Config'),
                             style: 'height:200px;',
@@ -88,7 +84,8 @@
                         belongs_to_module: {
                             type: 'link'
                         }
-                    }
+                    },
+                    list_hide: ['alias', 'config']
                 };
 
                 // 支持自定义字段的模块

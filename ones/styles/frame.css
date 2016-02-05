@@ -625,5 +625,7 @@ form
   clear: both; }
 .workflow-progress-container .avatar {
   float: left; }
+.workflow-progress-container .item {
+  min-height: 50px; }
 
 /*# sourceMappingURL=frame.css.map */

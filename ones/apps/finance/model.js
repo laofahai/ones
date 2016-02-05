@@ -1,7 +1,8 @@
 (function(window, angular, ones, io){
     'use strict';
     angular.module('ones.app.finance.model', [
-        'ones.app.finance.receivables'
+        'ones.app.finance.receivables',
+            'ones.app.finance.payables'
     ])
         .service('Finance.FinanceAccountAPI', [
             'ones.dataApiFactory',
@@ -40,14 +41,16 @@
                     module: "financeStreamline",
                     table: "finance_streamline",
                     fields: {
+                        amount: {
+                            cell_filter: "to_money_display",
+                            grid_fixed: true
+                        },
                         direction: {
                             cell_filter: 'to_balance_direction_icon',
                             width: 80,
                             label: _('finance.Balance Direction'),
-                            align: 'center'
-                        },
-                        amount: {
-                            cell_filter: "to_money_display"
+                            align: 'center',
+                            grid_fixed: true
                         },
                         finance_account_id: {
                             data_source: 'Finance.FinanceAccountAPI'
@@ -65,7 +68,8 @@
                         }
                     },
                     addable: false,
-                    editable: false
+                    editable: false,
+                    list_hide: ['source_id']
                 };
 
                 this.config.fields.direction.data_source =  [

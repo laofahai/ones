@@ -52,6 +52,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                     // 行model
                     this.row_model = $injector.get(opts.model.config.bill_row_model);
                     this.scope.bill_rows = [];
+                    this.scope.row_fields = [];
 
                     this.parentScope.system_preference = ones.system_preference;
                     this.parentScope.company_profile = ones.company_profile;
@@ -242,8 +243,10 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                 });
                             });
                         }
-
                     });
+
+                    console.log(this.row_model);
+
 
                     // 批量设定
                     this.scope.batch_set_value = function(field, batch) {
@@ -423,8 +426,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                     self.parentScope.bar_code_field = self.opts.bill_no.field;
                     self.parentScope.bill_meta_data[self.opts.bill_no.field] = bar_code;
                 };
-
-
 
             }
         ])

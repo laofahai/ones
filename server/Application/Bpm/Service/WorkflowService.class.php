@@ -305,8 +305,6 @@ class WorkflowService extends CommonModel {
 
         // 获取源数据
         list($app, $module) = explode('.', $workflow['module']);
-        $source_model = D(sprintf('%s/%s', ucfirst($app), ucfirst($module)));
-        $source_data = $source_model->where(['id'=>$source_id])->find();
 
         $this->current_node = $node = $node_service->where([
             'id' => $node_id,
@@ -315,7 +313,19 @@ class WorkflowService extends CommonModel {
 
         // @todo 检测节点可执行合法性,节点可执行权限检测
 
-        list($action_type, $action_content) = explode(':', $node['action']);
+        preg_match('/([a-zA-Z]{1}):(.*)/', $node['action'], $action_contents);
+
+        $action_type = $action_contents[1];
+        $action_content = $action_contents[2];
+
+        // 动作类型为Class::method类型时
+        if(strpos($action_content, "::") !== false) {
+            list($action_model, $action_method) = explode("::", $action_content);
+            $action_model = D($action_model);
+        }
+
+        $source_model = D(sprintf('%s/%s', ucfirst($app), ucfirst($module)));
+        $source_data = $source_model->where(['id'=>$source_id])->find();
 
         $method = 'exec_'.$action_type;
 
@@ -323,11 +333,14 @@ class WorkflowService extends CommonModel {
          * 根据不同动作类型执行
          * */
         if(method_exists($this, $method)) {
-            $exec_result = $this->$method($action_content, $source_model, $source_data);
+            $exec_result = $this->$method(
+                isset($action_method) ? $action_method : $action_content,
+                isset($action_model) ? $action_model : $source_model,
+                $source_data
+            );
         } else {
             $exec_result = true;
         }
-
 
         /*
          * 非条件判断节点执行结果为false时，判定执行失败，中断。
@@ -382,13 +395,14 @@ class WorkflowService extends CommonModel {
         }
 
         $next_nodes = $this->get_next_nodes_by_id($workflow_id, $node_id);
+
         foreach($next_nodes as $node_info) {
-            if($node_info['executor'] === 'auto:auto') {
+            if($this->executors_has_some($node_info['executor'], 'auto:auto')) {
                 $this->exec($workflow_id, $source_id, $node_info['id'], $meta_data);
             }
         }
 
-        if(!$exec_result['return']) {
+        if(is_array($exec_result) && !$exec_result['return']) {
             return $this->response($exec_result);
         } else {
             return $exec_result;
@@ -403,9 +417,9 @@ class WorkflowService extends CommonModel {
     /*
      * 执行service api [E]xecute service api
      * */
-    protected function exec_e($action, $source_model, $source_data) {
+    protected function exec_m($action, $source_model, $source_data) {
         if(!method_exists($source_model, $action)) {
-            $this->error = __('bpm.Service API not found'). ': '. $action;
+            $this->error = __('bpm.Service API not found'). ': '. sprintf('%s::%s', $source_model->getModelName(), $action);
             return false;
         }
 
@@ -428,6 +442,7 @@ class WorkflowService extends CommonModel {
             $this->error = $source_model->getError();
             return false;
         }
+
         return $result;
     }
 
@@ -435,7 +450,7 @@ class WorkflowService extends CommonModel {
      * 什么都不做 Do [N]othing
      * */
     protected function exec_n($action, $source_model, $source_data) {
-        return [];
+        return;
     }
 
     /*
@@ -483,6 +498,28 @@ class WorkflowService extends CommonModel {
 
         return false;
 
+    }
+
+    /*
+     * 验证执行者中是否包含某个角色/用户/部门
+     * @param string $executors_string 源节点执行者定义字符串
+     * @param string $will_be_checked_executor 需认证的执行者字符串
+     * */
+    public function executors_has_some($executors_string, $will_be_checked_executor) {
+        list($type, $need_check_id) = explode(':', $will_be_checked_executor);
+        $executor_rules = explode('|', $executors_string);
+        foreach($executor_rules as $rule) {
+            list($executor_role, $executor_ids) = explode(':', $rule);
+
+            if($type === $executor_role) {
+                $executor_ids = explode(',', $executor_ids);
+                if(in_array($need_check_id, $executor_ids)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /*

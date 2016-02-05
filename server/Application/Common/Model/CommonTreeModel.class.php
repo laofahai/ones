@@ -29,6 +29,13 @@ class CommonTreeModel extends CommonModel {
         $map = array(
             "lft" => array("between", array($parent["lft"], $parent["rgt"]))
         );
+
+        if(!isset($_GET['_ot'])) {
+            $map['trashed'] = "0";
+        } else {
+            $map['trashed'] = "1";
+        }
+
         $data = $this->where($map)->order("lft ASC")->select();
         $items = array();
         $right = array();

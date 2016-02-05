@@ -28,12 +28,14 @@ class WorkflowController extends BaseRestController {
         $source_id = I('get.source_id');
         $node_id   = I('get.node_id');
         $workflow = D('Bpm/Workflow');
-        $result = $workflow->exec($source_id, [], $node_id);
+
+        $node = D('Bpm/WorkflowNode')->where(['id'=>$node_id])->find();
+
+        $result = $workflow->exec($node['workflow_id'], $source_id, $node_id);
+
         if(false === $result) {
             $this->error($workflow->getError());
         }
     }
-
-
 
 }

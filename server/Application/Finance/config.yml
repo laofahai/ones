@@ -19,6 +19,7 @@ include:
         - apps/finance/main
         - apps/finance/model
         - apps/finance/receivables
+        - apps/finance/payables
         - apps/crm/model
         - apps/supplier/model
         - apps/contactsCompany/model

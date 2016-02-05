@@ -34,7 +34,6 @@ class WorkflowProgressService extends CommonModel {
             ->where($map)
             ->order('WorkflowProgress.created ASC')
             ->select();
-
     }
 
     /*

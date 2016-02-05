@@ -36,5 +36,6 @@ var FORM_FIELDS_TPL = {
     '<label for="%(id)s" class="col-sm-3 control-label">%(label)s</label>' +
     '<div class="col-sm-5 select3-container-box form-field">%(input)s</div>' +
     '<div class="help-block text-info col-sm-4"> <span ng-bind="%(form_field)s|toError:%(field_config)s:%(app)s"></span> <span ng-bind-html="%(help_text)s"></span></div>' +
-    '</div>'
+    '</div>',
+    with_addon_before_group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
 };

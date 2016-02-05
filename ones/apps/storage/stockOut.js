@@ -59,7 +59,8 @@
                     },
                     sortable: [
                         'created'
-                    ]
+                    ],
+                    list_hide: ['source_id', 'remark', 'status']
                 };
 
                 try {
@@ -207,19 +208,22 @@
                     }
                 };
 
+                var cleared_bill_fields = angular.copy(stock_out_detail_api.config.bill_fields);
                 switch($routeParams.action) {
                     case "view":
                         $scope.is_view = true;
                         $scope.bill_meta_data.locked = true;
+
+                        stock_out_detail_api.config.bill_fields = cleared_bill_fields;
+                        stock_out_detail_api.config.bill_fields.splice(
+                            stock_out_detail_api.config.bill_fields.indexOf('quantity')+1,
+                            0,
+                            'already_out'
+                        );
+
                         if(stock_out_detail_api.config.bill_fields.indexOf('already_out') < 0) {
                             stock_out_detail_api.config.fields.quantity.label = _('storage.Total Quantity');
-                            stock_out_detail_api.config.bill_fields.splice(
-                                stock_out_detail_api.config.bill_fields.indexOf('quantity')+1,
-                                0,
-                                'already_out'
-                            );
                         }
-                        stock_out_detail_api.config.bill_fields.splice(stock_out_detail_api.config.bill_fields.indexOf('this_time_out_quantity'), 1);
                         break;
                     case "confirm":
                         $scope.back_able             = true;
@@ -228,41 +232,36 @@
                         $scope.workflowing           = true;
                         $scope.is_confirm            = true;
 
-                        if(stock_out_detail_api.config.bill_fields.indexOf('this_time_out_quantity') < 0) {
-                            // 新增本次入库/已入库数量控件，及修改仓库控件可编辑
-                            stock_out_detail_api.config.fields.this_time_out_quantity = {
-                                label: _('storage.This time out quantity'),
-                                width: 180,
-                                widget: 'number',
-                                force_editable: true,
-                                value: 0,
-                                get_display: function(value) {
-                                    return to_decimal_display(value);
-                                },
-                                get_bill_cell_after: function(value, item) {
-                                    return to_product_measure_unit(product_api, $q, item);
-                                }
-                            };
+                        stock_out_detail_api.config.bill_fields = cleared_bill_fields;
 
-                            stock_out_detail_api.config.fields.storage_id.force_editable = true;
-                            stock_out_detail_api.config.fields.quantity.label = _('storage.Total Quantity');
-                            stock_out_detail_api.config.fields.quantity.width = 180;
-                            stock_out_detail_api.config.bill_fields.splice(
-                                stock_out_detail_api.config.bill_fields.indexOf('quantity')+1,
-                                0,
-                                'this_time_out_quantity'
-                            );
-                        }
+                        stock_out_detail_api.config.bill_fields.splice(
+                            stock_out_detail_api.config.bill_fields.indexOf('quantity')+1,
+                            0,
+                            'already_out'
+                        );
 
-                        if(stock_out_detail_api.config.bill_fields.indexOf('already_out') < 0) {
-                            stock_out_detail_api.config.fields.quantity.label = _('storage.Total Quantity');
-                            stock_out_detail_api.config.bill_fields.splice(
-                                stock_out_detail_api.config.bill_fields.indexOf('quantity')+1,
-                                0,
-                                'already_out'
-                            );
-                        }
+                        stock_out_detail_api.config.bill_fields.splice(
+                            stock_out_detail_api.config.bill_fields.indexOf('quantity')+1,
+                            0,
+                            'this_time_out_quantity'
+                        );
 
+                        // 新增本次入库/已入库数量控件，及修改仓库控件可编辑
+                        stock_out_detail_api.config.fields.this_time_out_quantity = {
+                            label: _('storage.This time out quantity'),
+                            widget: 'number',
+                            force_editable: true,
+                            value: 0,
+                            get_display: function(value) {
+                                return to_decimal_display(value);
+                            },
+                            get_bill_cell_after: function(value, item) {
+                                return to_product_measure_unit(product_api, $q, item);
+                            }
+                        };
+
+                        stock_out_detail_api.config.fields.storage_id.force_editable = true;
+                        stock_out_detail_api.config.fields.quantity.label = _('storage.Total Quantity');
 
                         // 确认出库提交方法
                         $scope.do_confirm = function() {
@@ -293,7 +292,7 @@
                     field: 'created',
                     widget: 'datetime',
                     'ng-model': 'bill_meta_data.created',
-                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
+                    group_tpl: FORM_FIELDS_TPL.with_addon_before_group_tpl
                 };
 
                 // 工作流选择
@@ -307,7 +306,7 @@
                         _mf: 'module',
                         _mv: 'storage.stockOut'
                     },
-                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
+                    group_tpl: FORM_FIELDS_TPL.with_addon_before_group_tpl
                 };
             }
         ])

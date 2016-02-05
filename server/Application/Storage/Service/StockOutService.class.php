@@ -105,7 +105,7 @@ class StockOutService extends CommonBillService {
                     'quantity'     => $row['this_time_out_quantity'],
                     'storage_id'   => $row['storage_id']
                 ])) {
-//                echo $log_service->getLastSql();exit;
+
                 $this->error =__('storage.Trigger error when record stock log');
                 $this->rollback();
                 return false;
@@ -132,7 +132,7 @@ class StockOutService extends CommonBillService {
      * 「工作流接口」
      * 检测是否已完全出库
      * */
-    public function check_full_out($id) {
+    public function check_if_all_out($id) {
         $rows = D('Storage/StockOutDetail')->where(['stock_out_id'=>$id])->select();
         if(!$rows) {
             return false;
