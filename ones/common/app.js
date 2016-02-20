@@ -151,7 +151,7 @@
 
             // logout
             $scope.doLogout = function() {
-                dataAPI.init('account', 'user/logout');
+                dataAPI.init('account', 'userInfo/logout');
                 dataAPI.resource.get().$promise.then(function(data) {
                     ones.caches.removeItem('user.session_token');
                     window.location.href = 'index.html';

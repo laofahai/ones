@@ -11,6 +11,8 @@ namespace Common\Model;
 
 class CommonTreeModel extends CommonModel {
 
+    protected $enable_trash = true;
+
     /*
      * 获得缩进树形
      * */
@@ -30,11 +32,14 @@ class CommonTreeModel extends CommonModel {
             "lft" => array("between", array($parent["lft"], $parent["rgt"]))
         );
 
-        if(!isset($_GET['_ot'])) {
-            $map['trashed'] = "0";
-        } else {
-            $map['trashed'] = "1";
+        if(false !== $this->enable_trash) {
+            if(!isset($_GET['_ot'])) {
+                $map['trashed'] = "0";
+            } else {
+                $map['trashed'] = "1";
+            }
         }
+
 
         $data = $this->where($map)->order("lft ASC")->select();
         $items = array();

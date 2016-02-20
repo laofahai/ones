@@ -478,15 +478,16 @@ class CommonBillService extends CommonModel {
 
     /*
      * 「工作流接口」
-     * 完成入库后的回调
+     * 完成单据操作后的回调,响应至[等待相应节点]
      * */
-    public function complete_callback($id) {
+    public function response_to_outside($id) {
         $bill = $this->where(['id'=>$id])->find();
         if(!$bill['source_model'] || !$bill['source_id']) {
             return;
         }
 
-        return D('Bpm/Workflow')->response_to_node($bill['source_model'], $bill['source_id'], $bill);
+        $result = D('Bpm/Workflow')->response_to_node($bill['source_model'], $bill['source_id'], $bill);
+        return false === $result ? "" : $result;
     }
 
 }

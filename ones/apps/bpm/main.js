@@ -32,7 +32,6 @@
                         $scope.reloading = true;
                         // Clear out old diagram
 
-
                         $timeout(function() {
                             diagram_div.html('');
                             $scope.reloading = false;

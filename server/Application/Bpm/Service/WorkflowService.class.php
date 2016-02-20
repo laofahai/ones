@@ -223,7 +223,7 @@ class WorkflowService extends CommonModel {
                 'id' => $workflow_id
             ])->save(
                 [
-                    'last_update' => CTS,
+                    'last_update' => CURRENT_DATE_TIME,
                     'process' => $process
                 ]
             );
@@ -551,7 +551,7 @@ class WorkflowService extends CommonModel {
         }
 
         foreach($next_nodes as $node) {
-            if($node['executor'] === 'w:o') {
+            if($this->executor_has_some($node['executor'], 'auto:waiting')) {
                 return $this->exec($response_to_id, [], $node['id']);
                 break;
             }

@@ -17,6 +17,8 @@ class DepartmentService extends CommonTreeModel {
         array("company_id", "get_current_company_id", 1, "function")
     );
 
+    protected $enable_trash = false;
+
     /*
      * 某用户是否为某部门负责人
      * @param integer $department_id

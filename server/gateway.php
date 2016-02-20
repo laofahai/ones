@@ -18,6 +18,7 @@ define('APPLICATION_PATH',ENTRY_PATH.'/Application/');
 define('APP_PATH',ENTRY_PATH.'/Application/');
 
 define('CTS', time());
+define('CURRENT_DATE_TIME', date('Y-m-d H:i:s'));
 
 // 应用环境
 // 可选： development, production, testing 等，在 /server/phinx.yml中可配置相应的数据库连接

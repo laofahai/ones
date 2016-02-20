@@ -133,7 +133,7 @@ $company_id = $pdo->lastInsertId();
 
 
 // config中公司名称
-$sql = "INSERT INTO company_profile(:company_id)VALUE(:company_id)";
+$sql = "INSERT INTO company_profile(company_id)VALUE(:company_id)";
 $prepared = $pdo->prepare($sql);
 $prepared->bindParam(':company_id', $company_id);
 if(!$prepared->execute()) {

@@ -11,6 +11,7 @@ workflow:
     last_update:
         type: datetime
         default: CURRENT_TIMESTAMP
+        blank: true
     created:
         type: datetime
         default: CURRENT_TIMESTAMP
@@ -47,7 +48,7 @@ workflow_node:
         blank: true
         limit: 100
     node_type:
-        limit: 10
+        limit: 20
         comment: 节点类型
     action:
         comment: 执行动作
