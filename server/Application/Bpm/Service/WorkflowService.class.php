@@ -64,9 +64,13 @@ class WorkflowService extends CommonModel {
             list($node_type, $more_config) = explode(": ", $config);
             list($node_label, $flow_state) = explode("| ", $more_config);
             list($node_label, $node_action) = explode(':&gt; ', $node_label);
+            list($node_label, $status_label) = explode(":", $node_label);
+
+            $status_label = $status_label ? $status_label : null;
             $nodes[$node_alias] = [
                 "alias" => $node_alias,
                 "label" => $node_label,
+                "status_label" => $status_label,
                 "node_type"  => $node_type,
                 "flow_type" => $flow_state,
                 "action"=> $node_action
@@ -241,7 +245,7 @@ class WorkflowService extends CommonModel {
 
             }
         } else { // 已锁定的工作流,仅能修改执行者等信息
-            $can_be_update = ['executor', 'label'];
+            $can_be_update = ['executor', 'label', 'status_label'];
             foreach($nodes as $node) {
                 $saved_data = [];
                 foreach($can_be_update as $cbu) {
@@ -249,7 +253,7 @@ class WorkflowService extends CommonModel {
                 }
                 $node_service->where([
                     'workflow_id' => $workflow_id,
-                    'id' => $node['id']
+                    'alias' => $node['alias']
                 ])->save($saved_data);
             }
         }
@@ -257,6 +261,32 @@ class WorkflowService extends CommonModel {
 
         return $workflow_id;
 
+    }
+
+    /*
+     * 获取可被用户执行的节点
+     * */
+    public function get_executable_nodes($workflow_id) {
+        $node_service = D('Bpm/WorkflowNode');
+        $all_nodes = $node_service->where([
+            'workflow_id' => $workflow_id
+        ])->select();
+
+        $response = [];
+        $ignore_executor = ['auto:auto', 'auto:waiting'];
+        foreach($all_nodes as $node) {
+            foreach($ignore_executor as $ie) {
+                if($this->executors_has_some($node['executor'], $ie)) {
+                    break;
+                }
+                if(array_key_exists($node['alias'], $response)) {
+                    break;
+                }
+                $response[$node['alias']] = $node;
+            }
+        }
+
+        return $response;
     }
 
     /*
