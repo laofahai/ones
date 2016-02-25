@@ -245,8 +245,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         }
                     });
 
-                    console.log(this.row_model);
-
 
                     // 批量设定
                     this.scope.batch_set_value = function(field, batch) {
@@ -368,7 +366,8 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             return false;
                         }
                         var callback = function(response_data) {
-                            if(!response_data.error) {
+
+                            if(!response_data || !response_data.error) {
                                 RootFrameService.close();
                             }
 

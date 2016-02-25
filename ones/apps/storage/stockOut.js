@@ -39,14 +39,7 @@
                         workflow_node_status_label: {
                             label: _('common.Status'),
                             addable: false,
-                            editable: false,
-                            data_source: [
-                                {value: 0, label: _('storage.STOCK_OUT_STATUS_NEW')},
-                                {value: 1, label: _('storage.STOCK_OUT_STATUS_SAVED')},
-                                {value: 2, label: _('storage.STOCK_OUT_STATUS_PART')},
-                                {value: 3, label: _('storage.STOCK_OUT_STATUS_COMPLETE')}
-                            ],
-                            map: 'status'
+                            editable: false
                         }
                     },
                     bill_meta_required: [

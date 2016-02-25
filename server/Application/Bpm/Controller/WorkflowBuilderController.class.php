@@ -18,6 +18,8 @@ class WorkflowBuilderController extends BaseRestController {
         $service = D('Bpm/Workflow');
         if(false === $service->save_workflow(I('post.data'), I('post.id'))) {
             $this->error('E: '.$service->getError());
+        } else {
+            $this->success(__('common.Operation Success'));
         }
     }
 

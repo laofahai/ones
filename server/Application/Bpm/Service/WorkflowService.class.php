@@ -245,6 +245,14 @@ class WorkflowService extends CommonModel {
 
             }
         } else { // 已锁定的工作流,仅能修改执行者等信息
+            $this->where([
+                'id' => $workflow_id
+            ])->save(
+                [
+                    'last_update' => CURRENT_DATE_TIME,
+                    'locked' => 1
+                ]
+            );
             $can_be_update = ['executor', 'label', 'status_label'];
             foreach($nodes as $node) {
                 $saved_data = [];
@@ -474,6 +482,23 @@ class WorkflowService extends CommonModel {
         }
 
         return $result;
+    }
+
+    /*
+     * 更新原始数据status字段
+     * */
+    protected function exec_u($action, $source_model, $source_data) {
+        $save_data = [];
+
+        $action = explode(',', $action);
+        foreach($action as $a) {
+            list($k, $v) = explode('=');
+            $save_data[trim($k)] = trim($v);
+        }
+
+        return $source_model->where([
+            'id' => $source_data['id']
+        ])->save($save_data) === false ? false : true;
     }
 
     /*

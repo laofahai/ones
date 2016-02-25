@@ -20,5 +20,4 @@ class WorkflowProgressModel extends CommonViewModel {
             '_type' => 'left'
         ]
     ];
-
 }

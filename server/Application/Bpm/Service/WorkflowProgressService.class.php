@@ -61,14 +61,25 @@ class WorkflowProgressService extends CommonModel {
         }
 
         $model = D('Bpm/WorkflowProgress', 'Model');
-        $sub_map = [
-            'source_id' => ['IN', $items_ids],
-            'workflow_id' => ['IN', $workflow_ids]
+        $map = [
+            'WorkflowProgress.source_id' => ['IN', $items_ids],
+            'WorkflowProgress.workflow_id' => ['IN', $workflow_ids]
         ];
-        $sub_query = $model->field('id,node_label,node_status_label,source_id,created,workflow_node_id')->where($sub_map)->order('created DESC, id DESC')->buildSql();
-
-        $progress_data = $this->table($sub_query.' temp')->group('source_id')->select();
-        $progress_data = get_array_to_ka($progress_data, 'source_id');
+        $all_progress = $model
+            ->where($map)
+            ->order('WorkflowProgress.created DESC, WorkflowProgress.id DESC')
+            ->select();
+        $progress_data = [];
+        foreach($all_progress as $ap) {
+            $source_id = $ap['source_id'];
+            if(!$progress_data[$source_id]) {
+                $progress_data[$source_id] = $ap;
+            } else {
+                if($progress_data[$source_id]['id'] < $ap['id']) {
+                    $progress_data[$source_id] = $ap;
+                }
+            }
+        }
 
         foreach($source_data as $k=>$v) {
             $source_data[$k]['workflow_node_label'] = $progress_data[$v['id']]['node_label'];
