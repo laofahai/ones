@@ -96,7 +96,8 @@
                             widget: 'textarea',
                             style: 'height:500px'
                         }
-                    }
+                    },
+                    list_hide: ['content']
                 };
 
                 this.resource = dataAPI.getResourceInstance({

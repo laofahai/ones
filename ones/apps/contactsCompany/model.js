@@ -19,8 +19,7 @@
                     fields: {
                         created: {
                             addable: false,
-                            editable: false,
-                            label: 'Created Time'
+                            editable: false
                         },
                         related_company_id: {
                             addable: false,
@@ -30,7 +29,8 @@
                         user_info_id: {
                             addable: false,
                             editable: false,
-                            detail_able: false
+                            detail_able: false,
+                            cell_filter: "to_user_fullname"
                         },
                         contacts_company_role_id: {
                             label: _('contactsCompany.Contacts Company Role'),
@@ -68,6 +68,7 @@
                             type: 'link'
                         }
                     },
+                    list_hide: ['related_company_id'],
                     detail_able: true,
                     detail_split: {
                         title: _('common.View %s By', _('contactsCompany.Contacts Company')),
@@ -167,7 +168,6 @@
                             }
                         },
                         created: {
-                            label: 'Created Time',
                             addable: false,
                             editable: false
                         },
@@ -177,7 +177,8 @@
                         },
                         user_info_id: {
                             addable: false,
-                            editable: false
+                            editable: false,
+                            cell_filter: 'to_user_fullname'
                         },
                         related_user_id: {
                             addable: false,
@@ -203,7 +204,8 @@
                         gender: {
                             type: 'link'
                         }
-                    }
+                    },
+                    list_hide: ['related_user_id', 'related_company_id', 'contacts_company_id']
                 }
             }
         ])

@@ -44,11 +44,7 @@
                         },
                         data_type: {
                             widget: 'select',
-                            data_source: [
-                                {value: 'integer', label: _('common.DATA_TYPES.Integer')},
-                                {value: 'decimal', label: _('common.DATA_TYPES.Decimal')},
-                                {value: 'string', label: _('common.DATA_TYPES.Other')}
-                            ],
+                            data_source: DATA_TYPES_DATASOURCE,
                             value: 'string',
                             get_display: function(value) {
                                 return get_data_source_display(this.data_source, value);

@@ -21,10 +21,6 @@
                     module: 'commonType',
                     table: 'common_type',
                     fields: {
-                        company: {
-                            addable: false,
-                            editable: false
-                        },
                         module: {
                             widget: 'select',
                             data_source: [],

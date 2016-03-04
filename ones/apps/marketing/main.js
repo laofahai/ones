@@ -24,15 +24,13 @@
                     'name',
                     'remark',
                     'customer_id',
-                    'head_id',
-                    '_data_model_fields_'
+                    'head_id'
                 );
                 api.config.uneditable.push(
                     'name',
                     'remark',
                     'customer_id',
-                    'head_id',
-                    '_data_model_fields_'
+                    'head_id'
                 );
                 api.config.fields.push_remark = {
                     label: _('marketing.Push Remark'),

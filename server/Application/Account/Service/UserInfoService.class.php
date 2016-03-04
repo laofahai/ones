@@ -133,7 +133,7 @@ class UserInfoService extends CommonRelationModel {
             'UserInfo.company_id' => get_current_company_id()
         ))->select();
 
-        $available = array('id', 'login', 'email', 'avatar', 'department', 'realname');
+        $available = array('id', 'login', 'email', 'avatar', 'department_id__label__', 'realname');
         $return = array();
         foreach($users as $k=>$v) {
             $tmp = array();

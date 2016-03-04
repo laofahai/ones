@@ -90,7 +90,7 @@
                     self.parentScope.selectable = true;
 
                     self.scope.model_config = self.model_config = self.options.model.config || {};
-                    self.model_config.sortable = self.model_config.sortable || [];
+                    self.model_config.sortable = self.model_config.sortable || ['id'];
                     self.scope.search_able = self.model_config.search_able = self.model_config.search_able || {};
 
                     self.parentScope.quickSearchText = '';
@@ -313,6 +313,9 @@
                             self.scope.schema_display_fixed = $filter('get_grid_fields')(self.scope.schema_display, self.scope.column_defs, 1);
                             self.scope.schema_display_not_fixed = $filter('get_grid_fields')(self.scope.schema_display, self.scope.column_defs, 2);
 
+                            console.debug('grid fixed fields:', self.scope.schema_display_fixed);
+                            console.debug('grid not fixed fields:', self.scope.schema_display_not_fixed);
+
                             self.scope.column_defs = structure;
                             self.scope.column_defs._data_model_fields_ = self.scope.column_defs._data_model_fields_ || {};
                             self.data_model_fields = self.scope.column_defs._data_model_fields_.value || null;
@@ -460,6 +463,7 @@
                         for(var j=0; j<self.scope.schema_display.length; j++) {
                             var key = self.scope.schema_display[j];
                             var value = data[i][key];
+                            cleared_single_row[key+'__source__'] = data[i][key];
 
                             value = data[i][key+"__label__"] === undefined ? value : data[i][key+"__label__"];
 
@@ -526,6 +530,9 @@
 
                         angular.extend(p, self.options.query_params, extraParams || {});
 
+                        p._mf = self.scope.filterOptions.matchField || undefined;
+                        p._mv = self.scope.filterOptions.matchFieldValue || undefined;
+
                         try {
                             self.options.resource.query(p).$promise.then(function(remoteData) {
                                 self.setPagingData(remoteData, page, pageSize);
@@ -581,7 +588,12 @@
 
                         var mf = self.scope.filterOptions.matchField ? self.scope.filterOptions.matchField.split(',') : [];
                         var mv = self.scope.filterOptions.matchFieldValue ? self.scope.filterOptions.matchFieldValue.split(',') : [];
-                        //console.log(id);
+
+                        if(self.options.query_params._mf && self.options.query_params._mv !== undefined) {
+                            angular.extend(mf, self.options.query_params._mf.split(','));
+                            angular.extend(mv, self.options.query_params._mv.split(','));
+                        }
+
                         if(id === -9) {
                             for(var i=0;i<mf.length;i++) {
                                 if(mf[i] == field) {
@@ -958,6 +970,7 @@
                     not_fixed = not_fixed.splice(1);
                 }
 
+                not_fixed.remove('_data_model_fields_');
 
                 return type == 1 ? fixed : not_fixed;
             };

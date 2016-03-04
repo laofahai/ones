@@ -188,6 +188,9 @@ class Schema {
                     $value = (int)$value;
                 }
                 break;
+            case "date":
+                $value = date('Y-m-d', strtotime($value));
+                break;
         }
 
         return $value;

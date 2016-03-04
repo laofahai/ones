@@ -25,6 +25,13 @@ function bootstrap(angular_app, apps, callback) {
                 {name: 'extend', label: _('common.Extend Info')}
             ];
 
+            window.DATA_TYPES_DATASOURCE = [
+                {value: 'integer', label: _('common.DATA_TYPES.Integer')},
+                {value: 'decimal', label: _('common.DATA_TYPES.Decimal')},
+                {value: 'date', label: _('common.DATA_TYPES.Date')},
+                {value: 'string', label: _('common.DATA_TYPES.Other')}
+            ];
+
             //回调
             if (typeof(callback) === 'function') {
                 callback();
@@ -473,10 +480,10 @@ var to_belongs_to_user_icon = function(item) {
     }
 
     var user_info = ones.user_info;
-    if(("head_id" in item) &&  item.head_id == user_info.id) {
+    if(("head_id__source__" in item) &&  item.head_id__source__ == user_info.id) {
         return sprintf('<i class="fa fa-user text-danger"></i>');
     }
-    if(("user_id" in item && item.user_id == user_info.id)) {
+    if(("user_id__source__" in item && item.user_id__source__ == user_info.id)) {
         return sprintf('<i class="fa fa-user text-primary"></i>');
     }
 };

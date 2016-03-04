@@ -85,7 +85,8 @@
                             data_source: 'Account.UserInfoAPI',
                             required: false,
                             label: _('crm.Head Man'),
-                            cell_filter: 'to_user_fullname'
+                            cell_filter: 'to_user_fullname',
+                            value: ones.user_info.id
                         },
                         user_info_id: {
                             addable: false,
@@ -99,8 +100,9 @@
                         }
                     },
                     modal_list_display: [
-                        'company_name', 'linkman', 'phone'
+                        'company_name', 'linkman', 'phone', 'id'
                     ],
+                    list_hide: ['contacts_company_id', 'customer_id', 'remark'],
 
                     filters: {},
                     detail_able: true,
@@ -215,8 +217,6 @@
                         }
                     );
 
-
-                    this.config.list_display.splice(this.config.list_display.indexOf('head_id'), 1);
 
                     // 过滤器
                     angular.deep_extend(this.config.filters, {
@@ -466,7 +466,8 @@
                             data_source: 'Account.UserInfoAPI',
                             required: false,
                             label: _('crm.Head Man'),
-                            cell_filter: 'to_user_fullname'
+                            cell_filter: 'to_user_fullname',
+                            value: ones.user_info.id
                         },
                         user_info_id: {
                             label: _('crm.Creator'),
@@ -486,7 +487,8 @@
                     unaddable: ['label', 'head', 'user_info_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role'],
                     uneditable: ['label', 'head', 'head_id', 'user_info_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role_id'],
                     undetail_able: ['clue', 'contacts_company_role', 'contacts_company_id', 'contacts_company_role_id'],
-                    list_display: ['label', 'name', 'master', 'phone', 'mobile', 'user_info_id'],
+                    //list_display: ['label', 'name', 'master', 'phone', 'mobile', 'user_info_id'],
+                    list_hide: ['remark', 'next_contact_content', 'contacts_company_id', 'related_company_id'],
                     modal_list_display: [
                         'name', 'master', 'phone'
                     ],
@@ -672,7 +674,7 @@
                         }
                     };
 
-                    this.config.list_display.push('head_id');
+                    //this.config.list_display.push('head_id');
                 }
 
                 angular.deep_extend(this.config.filters, the_filters);

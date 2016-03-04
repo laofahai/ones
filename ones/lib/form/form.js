@@ -143,6 +143,7 @@
                             });
 
                             var fields_define = self.scope.$parent.form_fields_define = {};
+
                             angular.forEach(schema, function(config, field) {
 
                                 //console.log(field, config);
@@ -190,7 +191,7 @@
                                     return;
                                 }
 
-                                if(['id', '_data_model_fields_'].indexOf(field) >= 0) {
+                                if(['id'].indexOf(field) >= 0) {
                                     return;
                                 }
 
@@ -230,6 +231,8 @@
 
                                 fields_define[field] = config;
                             });
+
+
 
                             // 扩展字段
                             if($routeParams.extra) {

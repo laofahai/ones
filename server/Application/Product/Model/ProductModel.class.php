@@ -8,7 +8,7 @@ class ProductModel extends CommonViewModel {
     protected $viewFields = array(
         "Product" => array("*", '_type'=>"left"),
         "ProductCategory" => array(
-            "name" => "product_category", 
+            "name" => "product_category_id__label__",
             "_on"=>"Product.product_category_id=ProductCategory.id",
             "_type" => "left"
         )

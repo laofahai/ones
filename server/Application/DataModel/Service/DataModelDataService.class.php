@@ -52,6 +52,7 @@ class DataModelDataService extends CommonModel{
 
             $table = $config['search_able'] > 0 ? 'data_model_data_search' : 'data_model_data';
             $this->table($table)->add($insert_data_model_data, array(), true);
+
         }
     }
 

@@ -229,12 +229,12 @@
     margin: 0 0 5px 0;
     padding: 0; }
     .chosen-drop .chosen-results .highlighted {
-      background: #e5e6e7 !important;
+      background: #438ED1 !important;
       color: #fff; }
 
 .chosen-container-active .chosen-single {
   box-shadow: none !important;
-  border-color: #e5e6e7; }
+  border-color: #438ED1; }
 
 .chosen-container-active.chosen-with-drop .chosen-single div b {
   background-position: -18px 5px !important; }
@@ -403,7 +403,7 @@ form
       line-height: 25px;
       margin: 0;
       padding: 0 10px;
-      background: #e5e6e7;
+      background: #438ED1;
       color: #fff; }
     .detail_view_container .detail_view_nav .content {
       padding: 10px 0;
@@ -469,7 +469,7 @@ form
 
 .itemdiv > .body > .name {
   display: block;
-  color: #999; }
+  margin-bottom: 5px; }
 
 .itemdiv > .body > .name > b {
   color: #777777; }

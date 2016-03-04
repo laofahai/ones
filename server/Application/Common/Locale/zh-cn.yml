@@ -12,6 +12,7 @@ DATA_TYPES:
     Integer: 整数
     Decimal: 小数
     Other: 其他
+    Date: 日期
 WIDGETS:
     Text Widget: 单行文本
     Textarea Widget: 多行文本

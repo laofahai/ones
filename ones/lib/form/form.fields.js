@@ -275,14 +275,6 @@
                                 }
                             });
 
-                            //angular.forEach(selected_ids, function(id) {
-                            //    selected.push({
-                            //        realname: $filter('to_user_fullname')(id),
-                            //        id: id
-                            //    });
-                            //});
-                            //selected_getter.assign(self.scope, selected);
-                            //value_getter.assign(self.scope, selected_ids);
                         });
 
                         /*

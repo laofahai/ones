@@ -346,6 +346,10 @@ class BaseRestController extends RestController {
         $progress_model = D('Bpm/WorkflowProgress');
         $list = $progress_model->assign_last_progress_to_list($list);
 
+        if(method_exists($this, '_before_list_response_')) {
+            $list = $this->_before_list_response_($list);
+        }
+
         //包含总数
         if(I("get._ic")) {
             $total = $model->where($map)->count();
@@ -524,6 +528,10 @@ class BaseRestController extends RestController {
         if($item['workflow_id']) {
             $workflow_progress_service = D('Bpm/WorkflowProgress');
             $item['last_workflow_progress'] = $workflow_progress_service->get_latest_progress($item['workflow_id'], $item['id']);
+        }
+
+        if(method_exists($this, '_before_list_response_')) {
+            $item = $this->_before_item_response_($item);
         }
 
         if($return) {
@@ -834,7 +842,13 @@ class BaseRestController extends RestController {
             // 虚拟视图模型
             $viewFields[$field_table] = array(
                 'data' => $field['alias'],
-                '_on' => sprintf('%s.source_id=%s.id AND %s.data_model_field_id=%d', $field_table, end(explode('/', $modelName)), $field_table, $field['id']),
+                '_on' => sprintf(
+                    '%s.source_id=%s.id AND %s.data_model_field_id=%d',
+                    $field_table,
+                    end(explode('/', $modelName)),
+                    $field_table,
+                    $field['id']
+                ),
                 '_type' => 'left'
             );
             // 模糊匹配

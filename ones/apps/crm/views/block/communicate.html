@@ -14,10 +14,7 @@
             </div>
 
             <div class="name">
-                <a href="javascript:void(0)">
-                    <small ng-bind="item.department_name"></small>
-                    <span ng-bind="item.realname"></span>
-                </a>
+                <label class="label label-primary" ng-bind="item.user_info_id|to_user_fullname"></label>
             </div>
             <div class="text" btf-markdown="(item.subject + '\n\n' +item.content)"></div>
             <div class="calendar-paper">

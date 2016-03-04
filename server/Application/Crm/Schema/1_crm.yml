@@ -1,8 +1,10 @@
 crm_clue:
+    subject:
+        limit: 100
     company_name:
         comment: 公司名称
     linkman:
-        limit: 50
+        limit: 100
         comment: 联系人姓名
     source_from:
         type: integer
@@ -182,6 +184,10 @@ customer_care:
     subject:
     type:
         type: integer
+    content:
+        type: text
+        limit: text
+        blank: true
     created:
         type: datetime
         default: CURRENT_TIMESTAMP

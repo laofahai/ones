@@ -82,7 +82,8 @@
         .service('Account.UserInfoAPI', [
             'ones.dataApiFactory',
             '$q',
-            function(dataAPI, $q) {
+            '$filter',
+            function(dataAPI, $q, $filter) {
 
                 this.resource = dataAPI.getResourceInstance({
                     uri: 'account/userInfo',
@@ -105,7 +106,6 @@
                         department_id: {
                             data_source: 'Account.DepartmentAPI',
                             widget: 'select',
-                            map: 'department_id',
                             label: _('account.Department')
                         },
                         realname: {
@@ -140,7 +140,8 @@
                         department_id: {
                             type: 'link'
                         }
-                    }
+                    },
+                    list_hide: ['rand_hash', 'avatar', 'password']
                 };
 
                 this.unicode = function(item){
@@ -160,11 +161,7 @@
                     if(angular.isObject(uid)) {
                         uid = uid.id;
                     }
-
-                    if(!ones.all_users[uid]) {
-                        return;
-                    }
-                    return sprintf('%s %s', ones.all_users[uid].department, ones.all_users[uid].realname);
+                    return $filter('to_user_fullname')(uid);
                 };
 
                 this.get_avatar = function(uid) {
@@ -233,6 +230,7 @@
                             }
                         }
                     },
+                    label_field: 'prefix_name',
                     list_hide: ['lft', 'rgt'],
                     // 扩展选中项操作
                     extra_selected_actions: [
@@ -301,10 +299,11 @@
                 if(!uid || !ones.all_users[uid]) {
                     return;
                 }
+
                 if(ones.user_preference.show_username_with_department > 1) {
                     return ones.all_users[uid].realname;
                 } else {
-                    return sprintf('%s %s', ones.all_users[uid].department, ones.all_users[uid].realname);
+                    return sprintf('%s %s', ones.all_users[uid].department_id__label__, ones.all_users[uid].realname);
                 }
 
             };

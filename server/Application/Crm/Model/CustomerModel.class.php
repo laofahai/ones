@@ -43,6 +43,11 @@ class CustomerModel extends CommonViewModel {
             '_on'=>'Customer.contacts_company_id=ContactsCompany.id',
             '_type' => 'left'
         ),
+        'ContactsCompanyRole'=>[
+            'name' => 'contacts_company_role_id__label__',
+            '_on' => 'ContactsCompany.contacts_company_role_id=ContactsCompanyRole.id',
+            '_type' => 'left'
+        ],
         'CommonType' => array('name'=>'source_from_label', '_on'=>'Customer.source_from=CommonType.id', '_type'=>'left')
     );
 

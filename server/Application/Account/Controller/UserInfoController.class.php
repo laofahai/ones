@@ -5,8 +5,8 @@ use Common\Controller\BaseRestController;
 
 class UserInfoController extends BaseRestController {
 
-    public function on_read() {
-        $user_info = parent::on_read(true);
+    public function _before_item_response_($user_info) {
+
         $auth_user_role_model = D("AuthUserRole");
         $roles = $auth_user_role_model->where(['user_info_id'=>$user_info['id']])->select();
 
@@ -15,7 +15,33 @@ class UserInfoController extends BaseRestController {
             array_push($user_info['auth_role_id'], (int)$role['auth_role_id']);
         }
 
-        $this->response($user_info, 'user', true);
+        return $user_info;
+    }
+
+    public function _before_list_response_($list) {
+        $users_id = get_array_by_field($list, 'id');
+
+        $model = D('Account/AuthUserRole', 'Model');
+        $all = $model->where([
+            'AuthUserRole.user_info_id' => ['IN', $users_id]
+        ])->select();
+
+        $cleared_user_roles = [];
+        foreach($all as $user_role) {
+            if(!$cleared_user_roles[$user_role['user_info_id']]) {
+                $cleared_user_roles[$user_role['user_info_id']] = [];
+            }
+            array_push($cleared_user_roles[$user_role['user_info_id']], $user_role['name']);
+        }
+
+        foreach($list as $k=>$v) {
+            if(array_key_exists($v['id'], $cleared_user_roles)) {
+                $list[$k]['auth_role'] = implode(',', $cleared_user_roles[$v['id']]);
+            }
+        }
+
+        return $list;
+
     }
 
     /*

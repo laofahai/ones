@@ -19,7 +19,7 @@ class UserInfoModel extends CommonViewModel {
 
     protected $viewFields = array(
         'UserInfo' => array('id', 'login', 'email', 'realname', 'avatar', 'created', 'department_id', '_type'=>'left'),
-        'Department' => array('name' => 'department', '_on'=>'UserInfo.department_id=Department.id', '_type'=>'left')
+        'Department' => array('name' => 'department_id__label__', '_on'=>'UserInfo.department_id=Department.id', '_type'=>'left')
     );
 
 }

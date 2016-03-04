@@ -23,15 +23,11 @@
                             search_able: true
                         },
                         name: {
-                            search_able: 1,
-                            get_display: function(value, item) {
-                                return self.unicode(item);
-                            }
+                            search_able: 1
                             //search_able_fields: 'name,pinyin'
                         },
-                        product_category: {
+                        product_category_id: {
                             label: _("product.Product Category"),
-                            map: "product_category_id",
                             widget: 'select',
                             data_source: "Product.ProductCategoryAPI"
                         },
@@ -46,9 +42,9 @@
                             }
                         }
                     },
-                    sortable: ['id', 'product_category'],
+                    sortable: ['id'],
                     filters: {
-                        product_category: {
+                        product_category_id: {
                             type: 'link'
                         }
                     },
