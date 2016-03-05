@@ -93,4 +93,17 @@ class WorkflowProgressService extends CommonModel {
 
     }
 
+    /*
+     * 获取用户相关的工作流记录
+     * @param array $map = [
+     *
+     * ]
+     *
+     * */
+    public function get_user_related_progress($map) {
+        $model = D('Bpm/WorkflowProgress', 'Model');
+        $result = $model->where($map)->select();
+        return $result;
+    }
+
 }

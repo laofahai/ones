@@ -42,14 +42,25 @@
                             label: _('common.Status'),
                             addable: false,
                             editable: false
+                        },
+                        workflow: {
+                            data_source: 'Bpm.WorkflowAPI',
+                            data_source_param: {
+                                module: 'storage.stockOut'
+                            }
                         }
                     },
                     bill_meta_required: [
                         'subject', 'created'
                     ],
                     filters: {
-                        workflow_node_status_label: {
+                        workflow: {
                             type: 'link'
+                        },
+                        by_user: {
+                            label: _('common.User'),
+                            type: 'link',
+                            data_source: window.DEAL_USER_DATASOURCE
                         }
                     },
                     sortable: [

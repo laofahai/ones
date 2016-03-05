@@ -75,13 +75,15 @@
     margin: 0;
     padding: 0 10px;
     background: blue;
-    color: #fff; }
+    color: #fff;
+    margin-left: -1px; }
   .grid-container.has-filter .grid-filter-container .filter-content {
     padding-top: 10px;
     background: #efefef;
     border: 1px solid #ddd;
     border-top: 0;
-    font-size: 12px; }
+    font-size: 12px;
+    margin-left: -1px; }
     .grid-container.has-filter .grid-filter-container .filter-content .filter-content-links {
       line-height: 180%;
       padding: 0;

@@ -25,11 +25,20 @@ function bootstrap(angular_app, apps, callback) {
                 {name: 'extend', label: _('common.Extend Info')}
             ];
 
+            // 数据类型数据源
             window.DATA_TYPES_DATASOURCE = [
                 {value: 'integer', label: _('common.DATA_TYPES.Integer')},
                 {value: 'decimal', label: _('common.DATA_TYPES.Decimal')},
                 {value: 'date', label: _('common.DATA_TYPES.Date')},
                 {value: 'string', label: _('common.DATA_TYPES.Other')}
+            ];
+
+            // 经手人数据源
+            window.DEAL_USER_DATASOURCE =  [
+                {value: 'i_created', label: _('common.I Created')},
+                {value: 'i_headed', label: _('common.I Headed')},
+                {value: 'sub_created', label: _('common.My Subordinates Created')},
+                {value: 'sub_headed', label: _('common.My Subordinates Headed')}
             ];
 
             //回调

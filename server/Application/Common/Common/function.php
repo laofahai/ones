@@ -312,6 +312,11 @@ function model_alias_to_name($alias) {
 
     return sprintf('%s/%s', ucfirst($app), ucfirst($module));
 }
+function model_name_to_alias($name) {
+    list($app, $module) = explode('/', $name);
+
+    return sprintf('%s.%s', lcfirst($app), lcfirst($module));
+}
 
 /*
  * 转关联数组

@@ -8,6 +8,7 @@
 
 namespace Common\Controller;
 
+use Common\Lib\CommonFilter;
 use Printer\Service\PrintTemplateService;
 
 /*
@@ -31,6 +32,32 @@ class CommonBillController extends BaseRestController {
 //            $source_ids = get_array_by_field($source_ids, 'source_id');
 //            $map[end(explode('/', $this->main_model)).'.id'] = ['IN', $source_ids];
 //        }
+
+        // 通过用户过滤
+        if($map['by_user']) {
+            $map = CommonFilter::by_user($map);
+
+            if($map['head_id']) {
+                $service = D('Bpm/WorkflowProgress');
+                $progress_map = [
+                    'Workflow.module' => model_name_to_alias($this->main_model),
+                    'WorkflowProgress.user_info_id' => $map['head_id']
+                ];
+                $progresses = $service->get_user_related_progress($progress_map);
+
+                if($progresses) {
+                    $table = end(explode('/', $this->main_model));
+                    $map[$table.'.id'] = [
+                        'IN',
+                        array_unique(get_array_by_field($progresses, 'source_id'))
+                    ];
+                }
+
+                unset($map['head_id']);
+            }
+            unset($map['by_user']);
+        }
+
     }
 
     /*
