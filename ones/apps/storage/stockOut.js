@@ -18,10 +18,12 @@
                     bill_row_model: 'Storage.StockOutDetailAPI',
                     fields: {
                         bill_no: {
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
                         subject: {
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
                         user_info_id: {
                             label: _('common.Creator'),

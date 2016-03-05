@@ -44,6 +44,11 @@ purchase:
                     blank: true
                 restrict:
                     delete: SET_NULL
+            supplier:
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL
 
 purchase_detail:
     quantity:
@@ -76,8 +81,3 @@ purchase_detail:
             company:
                 restrict:
                     delete: CASCADE
-            supplier:
-                options:
-                    blank: true
-                restrict:
-                    delete: SET_NULL

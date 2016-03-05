@@ -12,4 +12,8 @@ class StockModel extends CommonViewModel {
         "ProductCategory" => ['name'=>'product_category', '_on'=>'Product.product_category_id=ProductCategory.id', '_type'=>'left']
     );
 
+    public $fuzzy_search = [
+        'Product.name', 'Product.serial_number'
+    ];
+
 }

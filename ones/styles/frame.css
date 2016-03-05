@@ -617,8 +617,24 @@ form
 .input_widget_user_select {
   background: #fff; }
 
-.select3-container ul.items {
-  margin-top: 34px !important; }
+.select3-container ul {
+  border: 1px solid #438ED1;
+  border-top: 0; }
+
+.form-group .select3-container {
+  padding: 0 15px; }
+  .form-group .select3-container .select3-add-btn {
+    right: 33px; }
+  .form-group .select3-container .select3-show-grid-btn {
+    right: 15px; }
+
+.bill-footer-input-item .select3-container-box {
+  position: relative;
+  width: 100%; }
+
+.bill-rows .select3-container ul {
+  margin-top: 34px !important;
+  border: 0; }
 
 .workflow-progress-container > div :after {
   content: " ";

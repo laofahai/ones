@@ -64,22 +64,18 @@
                                     serial_number: item.serial_number
                                 });
                             },
+                            grid_fixed: true,
                             search_able: true,
-                            search_able_fields: 'Product.name',
                             label: _('product.Product')
                         },
                         storage_id: {
                             get_display: function(value, item) {
                                 return item.storage_name;
-                            }
-                        },
-                        product_category: {
-                            label: _('product.Product Category')
-                        },
-                        product_category_id: {
-                            label: _('product.Product Category')
+                            },
+                            grid_fixed: true
                         }
                     },
+                    list_hide: ['product_unique_id'],
                     filters: {
                         storage_id: {
                             type: 'link',
@@ -162,9 +158,10 @@
                         user_info_id: {
                             cell_filter: 'to_user_fullname'
                         },
-                        product_name: {
+                        product_id: {
                             label: _('product.Product'),
                             search_able: true,
+                            grid_fixed: true,
                             get_display: function(value, item) {
                                 return product_api.unicode({
                                     name: item.product_name,
@@ -179,6 +176,7 @@
                             data_source: 'Storage.StorageAPI'
                         }
                     },
+                    list_hide: ['source_id', 'source_model', 'product_unique_id'],
                     filters: {
                         storage_id: {
                             type: 'link'
