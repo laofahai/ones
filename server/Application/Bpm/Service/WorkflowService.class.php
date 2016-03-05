@@ -163,13 +163,18 @@ class WorkflowService extends CommonModel {
          * 遍历所有的流程描述
          * */
         foreach($processes as $process_in_line) {
-            $process_in_line = preg_replace('/\(.*\)/', '', $process_in_line);
             $process_in_line = str_replace('&gt;', '>', $process_in_line);
             foreach($node_alias as $na) {
-                $regex = '/'.$na.'->([\w\d\_]+)/';
+                $regex = '/'.$na.'([\(\)\w]*)->([\w\d\_]+)/';
                 preg_match($regex, $process_in_line, $matches);
-                if($matches[1]) {
-                    array_push($next_nodes, $all_nodes[$matches[1]]);
+
+                // 条件判断节点
+                if(in_array($matches[1], ['(yes)', '(no)'])) {
+                    $all_nodes[$matches[2]]['condition'] = $matches[1] === '(yes)' ? true : false;
+                }
+
+                if($matches[2]) {
+                    array_push($next_nodes, $all_nodes[$matches[2]]);
                 }
             }
         }
@@ -436,7 +441,19 @@ class WorkflowService extends CommonModel {
 
         foreach($next_nodes as $node_info) {
             if($this->executors_has_some($node_info['executor'], 'auto:auto')) {
+
+                // 条件判断节点
+                if(isset($node_info['condition'])) {
+                    if($exec_result && $node_info['condition']) {
+                        $this->exec($workflow_id, $source_id, $node_info['id'], $meta_data);
+                    } else if(!$exec_result && !$node_info['condition']) {
+                        $this->exec($workflow_id, $source_id, $node_info['id'], $meta_data);
+                    }
+                    continue;
+                }
+
                 $this->exec($workflow_id, $source_id, $node_info['id'], $meta_data);
+
             }
         }
 
@@ -496,9 +513,11 @@ class WorkflowService extends CommonModel {
             $save_data[trim($k)] = trim($v);
         }
 
+        $source_model->create($save_data);
+
         return $source_model->where([
             'id' => $source_data['id']
-        ])->save($save_data) === false ? false : true;
+        ])->save() === false ? false : true;
     }
 
     /*
@@ -587,14 +606,14 @@ class WorkflowService extends CommonModel {
         $model = D(model_alias_to_name($response_to_model));
         $response_to_data = $model->where(['id'=>$response_to_id])->find();
         if(!$response_to_data) {
-            return false;
+            return;
         }
 
         $progress_model = D('Bpm/WorkflowProgress');
         $latest_progress = $progress_model->get_latest_progress($response_to_data['workflow_id'], $response_to_id);
 
         if(!$latest_progress) {
-            return false;
+            return;
         }
 
         $next_nodes = explode(',', $latest_progress['next_nodes']);
@@ -602,7 +621,7 @@ class WorkflowService extends CommonModel {
             'id' => ['IN', $next_nodes]
         ])->select();
         if(!$next_nodes) {
-            return false;
+            return;
         }
 
         foreach($next_nodes as $node) {
@@ -612,7 +631,7 @@ class WorkflowService extends CommonModel {
             }
         }
 
-        return false;
+        return;
     }
 
     /*

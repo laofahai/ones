@@ -224,7 +224,6 @@
                             // 新增本次入库/已入库数量控件，及修改仓库控件可编辑
                             stock_in_detail_api.config.fields.this_time_in_quantity = {
                                 label: _('storage.This time in quantity'),
-                                width: 180,
                                 widget: 'number',
                                 force_editable: true,
                                 value: 0,

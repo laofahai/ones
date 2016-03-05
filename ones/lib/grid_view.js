@@ -270,9 +270,9 @@
 
                                 self.scope.column_defs[field.field].field = field.field;
 
-                                // 可搜索字段
+                                // 可排序字段
                                 if(field.sortable) {
-                                    self.model_config.sortable.push(field.field);
+                                    self.model_config.sortable.push(field.map || field.field);
                                 }
 
                                 // model指定可搜索 或者数据模型字段支持模糊搜索
@@ -334,6 +334,7 @@
                             self.makeFilters();
                         }
                     });
+
 
                     if(!self.options.opts.is_modal_grid) {
                         // 生成选中项目操作
@@ -715,10 +716,12 @@
                     //排序
                     doGridSortBy: function(field){
                         var source_field = field;
-                        var direction = self.scope.sortInfo.direction == "ASC" ? "DESC" : "ASC"
-                        field = self.model_config.fields
-                                        && self.model_config.fields[field]
-                                        && self.model_config.fields[field].map || field
+                        var direction = self.scope.sortInfo.direction == "ASC" ? "DESC" : "ASC";
+
+                        if(self.model_config.fields[field] && self.model_config.fields[field].map) {
+                            field = self.model_config.fields[field].map;
+                        }
+
                         self.scope.sortInfo = {
                             fields: field,
                             directions: direction

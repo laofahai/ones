@@ -38,12 +38,14 @@
                                 return value ? accounting.formatNumber(Number(value), ones.system_preference.decimal_scale) : value;
                             }
                         },
-                        workflow_node_status_label: {
-                            label: _('common.Status'),
+                        status: {
                             addable: false,
-                            editable: false
+                            editable: false,
+                            get_display: function(value, item) {
+                                return item.workflow_node_status_label;
+                            }
                         },
-                        workflow: {
+                        workflow_id: {
                             data_source: 'Bpm.WorkflowAPI',
                             data_source_param: {
                                 module: 'storage.stockOut'
@@ -54,7 +56,7 @@
                         'subject', 'created'
                     ],
                     filters: {
-                        workflow: {
+                        workflow_id: {
                             type: 'link'
                         },
                         by_user: {
@@ -64,9 +66,9 @@
                         }
                     },
                     sortable: [
-                        'created'
+                        'created', 'status'
                     ],
-                    list_hide: ['source_id', 'remark', 'status']
+                    list_hide: ['source_id', 'remark']
                 };
 
                 try {
@@ -119,7 +121,6 @@
                         , stock_quantity: {
                             widget: 'static',
                             label: _('storage.Stock Quantity'),
-                            width: 180,
                             get_display: function(value, item) {
                                 return to_decimal_display(value);
                             },
@@ -130,7 +131,6 @@
                         }
                         , already_out: {
                             label: _('storage.Already out quantity'),
-                            width: 180,
                             get_display: function(value, item) {
                                 return to_decimal_display(value);
                             },

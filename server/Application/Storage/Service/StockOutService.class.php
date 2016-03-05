@@ -93,6 +93,7 @@ class StockOutService extends CommonBillService {
                 continue;
             }
             $detail_service->where(['id'=>$row['id']])->setInc('already_out', $row['this_time_out_quantity']);
+
             $rows[$k]['quantity'] = $row['this_time_out_quantity'];
             // 写库存操作记录
             if(false === $log_service->record([
