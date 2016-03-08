@@ -22,7 +22,7 @@ class WorkflowEvent extends BaseRestEvent {
         $source_id   = I('get.source_id');
 
         $check_permission = true;
-        $next_nodes = D('Bpm/Workflow')->get_next_nodes_by_source($workflow_id, $source_id);
+        $next_nodes = D('Bpm/Workflow')->get_next_nodes_by_source($workflow_id, $source_id, true);
 
         $fields = explode(',', I('get._fd'));
         if($fields) {

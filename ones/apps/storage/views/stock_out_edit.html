@@ -19,24 +19,7 @@
             </div>
         </div>
 
-        <div class="bill-footer-meta">
-            <span class="label label-primary">
-                <span ng-bind="'common.Prepared By'|lang"></span>
-                <span ng-bind="bill_meta_data.user_info_id|to_user_fullname"></span>
-            </span>
-            <div class="pull-right">
-                <button class="btn btn-primary btn-lg"
-                        ng-show="!bill_meta_data.locked && !is_view"
-                        ng-click="do_bill_submit()"
-                        ng-bind="'common.Submit'|lang"
-                        once-click></button>
-                <button class="btn btn-primary btn-lg"
-                        ng-show="workflowing && is_confirm"
-                        ng-click="do_confirm()"
-                        ng-bind="'common.Submit'|lang"
-                        once-click></button>
-            </div>
-        </div>
+        <div ng-include="'views/billFooter.html'"></div>
 
     </div>
 </div>

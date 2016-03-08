@@ -120,4 +120,9 @@
     .bill-footer-input .bill-footer-input-item .input-group-addon {
       height: 30px; }
 
+.bill-related {
+  padding-top: 10px; }
+  .bill-related h2 {
+    font-size: 20px; }
+
 /*# sourceMappingURL=bill.css.map */

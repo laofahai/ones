@@ -288,15 +288,17 @@ function camelCase($str){
     }, ucfirst($str));
 }
 function camelCaseSpace($str){
-    return preg_replace_callback('/[-_]+(.)?/', function($matches) {
+    $result = ucfirst(preg_replace_callback('/[-_]+(.)?/', function($matches) {
         $search = array(
             '_',
             ' ',
             '-'
         );
-        $matches[0] = preg_replace("/([A-Z])/", " \$1", $matches[0]);
-        return strtoupper(' '.str_replace($search, ' ', $matches[0]));
-    },$str);
+        preg_replace("/([A-Z])/", " \$1", $matches[0]);
+        return $matches[0];
+    },$str));
+
+    return preg_replace("/(.+)([A-Z])/U", "$1 \$2", $result);
 }
 
 /*

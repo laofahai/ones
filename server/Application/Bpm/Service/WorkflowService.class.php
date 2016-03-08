@@ -43,7 +43,7 @@ class WorkflowService extends CommonModel {
     // 自动执行的「用户角色」，将不会出现在用户可见操作中
     protected $auto_executor = [
         'auto: auto' // 自动执行
-        , 'auto:waiting' // 等待外部响应
+        , 'auto:wait' // 等待外部响应
     ];
 
 
@@ -196,13 +196,32 @@ class WorkflowService extends CommonModel {
     /*
      * 获得某项当前工作的下一/N可执行节点
      * */
-    public function get_next_nodes_by_source($workflow_id, $source_id) {
+    public function get_next_nodes_by_source($workflow_id, $source_id, $only_executable=false) {
         $latest_progress = D('Bpm/WorkflowProgress')->get_latest_progress($workflow_id, $source_id);
         if(!$latest_progress) {
             return [];
         }
 
-        return $this->get_next_nodes_by_id($workflow_id, $latest_progress['workflow_node_id']);
+        $nodes = $this->get_next_nodes_by_id($workflow_id, $latest_progress['workflow_node_id']);
+
+        if($only_executable) {
+            $tmp = $nodes;
+            $nodes = [];
+
+            foreach($tmp as $k=>$v) {
+                if(
+                    $this->executors_has_some($v['executor'], 'auto:auto') ||
+                    $this->executors_has_some($v['executor'], 'auto:wait')
+                ) {
+                    continue;
+                }
+
+                array_push($nodes, $v);
+            }
+        }
+
+        return $nodes;
+
     }
 
     /*
@@ -286,7 +305,7 @@ class WorkflowService extends CommonModel {
         ])->select();
 
         $response = [];
-        $ignore_executor = ['auto:auto', 'auto:waiting'];
+        $ignore_executor = $this->auto_executor;
         foreach($all_nodes as $node) {
             foreach($ignore_executor as $ie) {
                 if($this->executors_has_some($node['executor'], $ie)) {
@@ -625,7 +644,7 @@ class WorkflowService extends CommonModel {
         }
 
         foreach($next_nodes as $node) {
-            if($this->executor_has_some($node['executor'], 'auto:waiting')) {
+            if($this->executor_has_some($node['executor'], 'auto:wait')) {
                 return $this->exec($response_to_id, [], $node['id']);
                 break;
             }

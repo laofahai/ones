@@ -98,6 +98,7 @@ Is Available: 是否可用
 Is Default: 是否默认
 Is Locked: 是否锁定
 Last Update: 最后更新
+Last Update User: 最后操作员
 License Info: 证照信息
 Listorder: 排序
 Male: 先生
@@ -111,6 +112,7 @@ No: 否
 No data to display: 没有数据可显示
 Num: 数量
 Office: 办公
+Operation: 操作
 Operation Success: 操作成功
 Permission Denied: 您没有被授权
 Pinyin: 拼音
@@ -124,6 +126,7 @@ Precision Searcy By %s: 通过%s精准检索
 Prepared By: 制单人
 Quantity: 数量
 Quick Search: 快速搜索
+Related Bills: 相关单据
 Remark: 备注
 Remove From Common Nav: 从常用操作中移除
 Reset form: 重置表单

@@ -1,0 +1,51 @@
+<div class="bill-footer-meta">
+    <span class="label label-primary">
+        <span ng-bind="'common.Prepared By'|lang"></span>
+        <span ng-bind="bill_meta_data.user_info_id|to_user_fullname"></span>
+    </span>
+
+    <span class="label label-info">
+        <span ng-bind="bill_meta_data.workflow_latest_progress.node_status_label||bill_meta_data.workflow_latest_progress.node_label"></span>
+    </span>
+
+    <div class="pull-right">
+        <button class="btn btn-primary btn-lg"
+                ng-show="!bill_meta_data.locked && !is_view"
+                ng-click="do_bill_submit()"
+                ng-bind="'common.Submit'|lang"
+                once-click></button>
+        <button class="btn btn-primary btn-lg"
+                ng-show="workflowing && is_confirm"
+                ng-click="do_confirm()"
+                ng-bind="'common.Submit'|lang"
+                once-click></button>
+    </div>
+</div>
+
+<div class="bill-related" ng-show="bill_meta_data.related_bill">
+    <h2 ng-bind="'common.Related Bills'|lang"></h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th ng-bind="'common.Module'|lang"></th>
+                <th ng-bind="'common.Serial Number'|lang"></th>
+                <th ng-bind="'common.Subject'|lang"></th>
+                <th ng-bind="'common.Status'|lang"></th>
+                <th ng-bind="'common.Last Update'|lang"></th>
+                <th ng-bind="'common.Last Update User'|lang"></th>
+                <th ng-bind="'common.Operation'|lang"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="related_bill in bill_meta_data.related_bill">
+                <td ng-bind="related_bill.bill_type_label"></td>
+                <td ng-bind="related_bill.bill_no||related_bill.id"></td>
+                <td ng-bind="related_bill.subject"></td>
+                <td ng-bind="related_bill.workflow_latest_progress.node_status_label||related_bill.workflow_latest_progress.node_label"></td>
+                <td ng-bind="related_bill.workflow_latest_progress.created"></td>
+                <td ng-bind="related_bill.workflow_latest_progress.user_info_id|to_user_fullname"></td>
+                <td> </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

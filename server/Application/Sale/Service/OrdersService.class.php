@@ -29,6 +29,12 @@ class OrdersService extends CommonBillService {
         self::STATUS_SAVED
     ];
 
+    // 相关单据模型
+    protected $related_model = [
+        'storage.stockOut',
+        'finance.receivables'
+    ];
+
     /*
      * 「工作流接口」
      * 转化为出库单

@@ -49,6 +49,9 @@ class CommonBillService extends CommonModel {
     protected $main_model;
     protected $detail_model;
 
+    // 相关的单据模型
+    protected $related_model = [];
+
     protected $include_this_time_quantity = false;
     protected $balance_direction;
 
@@ -333,7 +336,7 @@ class CommonBillService extends CommonModel {
     }
 
     /*
-     * 获取单据所有信息，包括基本信息、明细信息、工作流进程明细、下一流程节点
+     * 获取单据所有信息，包括基本信息、明细信息、工作流进程明细, 以及相关单据
      * */
     public function get_full_data($id) {
 
@@ -369,6 +372,56 @@ class CommonBillService extends CommonModel {
         // 工作流进程
         $progress_service = D('Bpm/WorkflowProgress');
         $meta['workflow_progress'] = $progress_service->get_progress($meta['workflow_id'], $meta['id']);
+
+        $meta['workflow_latest_progress'] = end($meta['workflow_progress']);
+
+        /*
+         * 获取相关单据
+         *
+         * 正反向获得
+         * 正向: 当前meta数据中包含source_model和source_id, 则通过此信息进行查询
+         * 反向: 当前子类包含$related_model属性, 通过$related_model.source_model=$this->main_model_alias && $related_model.source_id==$id进行查询
+         * */
+        $meta['related_bill'] = [];
+        if($meta['source_model'] && $meta['source_id']) {
+            $related_model_name = model_alias_to_name($meta['source_model']);
+            $related_model = D($related_model_name);
+            $related_bill = $related_model->where([
+                'id' => $meta['source_id']
+            ])->find();
+
+            list($app, $module) = explode('.', $related_model_name);
+            $related_bill['bill_type_label'] = __($app.'.'.camelCaseSpace($module));
+            if($related_bill) {
+                array_push($meta['related_bill'], $related_bill);
+            }
+        }
+        foreach($this->related_model as $rm) {
+            list($app, $module) = explode('.', $rm);
+            if(!AppService::is_app_active($app)) {
+                continue;
+            }
+            $related_model_name = model_alias_to_name($rm);
+            $related_model = D($related_model_name);
+
+            $related_bills = $related_model->where([
+                'source_model' => $this->main_model_alias,
+                'source_id' => $id
+            ])->select();
+
+            if($related_bills) {
+                foreach($related_bills as $bill) {
+                    $bill['bill_type_label'] = __($app.'.'.camelCaseSpace($module));
+                    array_push($meta['related_bill'], $bill);
+                }
+            }
+        }
+
+        foreach($meta['related_bill'] as $k=>$rb) {
+            $meta['related_bill'][$k]['workflow_latest_progress'] =
+                $progress_service->get_latest_progress($rb['workflow_id'], $rb['id']);
+
+        }
 
         // 产品属性
         if(AppService::is_app_active('productAttribute')) {
