@@ -66,7 +66,7 @@
                     // 布尔选项时，默认使用yes_or_no数据源
                     if(config.data_source === undefined && config.type === 'boolean') {
                         $timeout(function() {
-                            self.scope[data_source_key] = YES_OR_NO_DATA_SOURCE;
+                            self.scope[data_source_key] = BOOLEAN_DATASOURCE;
                             getter.assign(self.scope, config.value);
                         });
                         return;

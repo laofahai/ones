@@ -20,10 +20,7 @@
             alias: 'smtp_enable_ssl',
             label: _('smtp.SMTP Enable SSL'),
             widget: 'select',
-            data_source: [
-                {value: 1, label:_('common.Yes')},
-                {value: -1, label:_('common.No')}
-            ],
+            data_source: window.BOOLEAN_DATASOURCE,
             value: 1,
             app: 'smtp'
         });

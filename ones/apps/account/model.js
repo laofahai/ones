@@ -300,7 +300,7 @@
                     return;
                 }
 
-                if(ones.user_preference.show_username_with_department > 1) {
+                if(!ones.user_preference.show_username_with_department) {
                     return ones.all_users[uid].realname;
                 } else {
                     return sprintf('%s %s', ones.all_users[uid].department_id__label__, ones.all_users[uid].realname);

@@ -7,10 +7,7 @@
             alias: 'human_date_display',
             label: _('home.Display date hommization'),
             widget: 'select',
-            data_source: [
-                {value: 1, label: _('common.Yes')},
-                {value: 2, label: _('common.No')}
-            ],
+            data_source: window.BOOLEAN_DATASOURCE,
             value: 1
         });
         ones.pluginScope.append('user_preference_item', {

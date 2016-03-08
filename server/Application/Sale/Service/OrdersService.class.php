@@ -71,4 +71,11 @@ class OrdersService extends CommonBillService {
         return $stock_out_id;
     }
 
+
+    /*
+     * [工作流接口]
+     * 生成应收款
+     * */
+    public function make_receivable($id) {}
+
 }

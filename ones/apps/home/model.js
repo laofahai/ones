@@ -30,10 +30,7 @@
                             get_display: function(value) {
                                 return to_boolean_icon(value > 0);
                             },
-                            data_source: [
-                                {value: 1, label: _('common.Yes')},
-                                {value: -1, label: _('common.No')}
-                            ]
+                            data_source: window.BOOLEAN_DATASOURCE
                         },
                         type: {
                             data_source: [

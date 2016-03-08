@@ -28,9 +28,10 @@
                 function re_drawing() {
                     var diagram_div = $("#bpm-show-container");
                     try {
-                        var diagram = flowchart.parse($scope.bpm_description_language);
+                        var language = $scope.bpm_description_language.split("\n\n");
+                        language = language[0]+"\n\n"+language[1];
+                        var diagram = flowchart.parse(language);
                         $scope.reloading = true;
-                        // Clear out old diagram
 
                         $timeout(function() {
                             diagram_div.html('');

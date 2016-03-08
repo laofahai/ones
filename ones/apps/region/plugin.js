@@ -13,10 +13,7 @@
             label: _('region.Region ignore country'),
             widget: 'radio',
             required: false,
-            data_source: [
-                {value: -1, label: _('common.No')},
-                {value: 1, label: _('common.Yes')}
-            ],
+            data_source: window.BOOLEAN_DATASOURCE,
             app: 'region'
         });
         ones.pluginScope.append('common_config_item', {

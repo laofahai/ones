@@ -19,6 +19,9 @@ function bootstrap(angular_app, apps, callback) {
                 return false;
             }
 
+            // boolean 数据源
+            window.BOOLEAN_DATASOURCE = window.BOOLEAN_DATASOURCE;
+
             // 通用字段分组
             window.COMMON_FIELDS_GROUPS = [
                 {name: 'basic', label: _('common.Basic Info')},

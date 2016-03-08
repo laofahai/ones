@@ -27,11 +27,8 @@
                             get_display: function(value, item) {
                                 return to_boolean_icon(value > 0);
                             },
-                            data_source: [
-                                {value: 1, label: _('common.Yes')},
-                                {value: -1, label: _('common.No')}
-                            ],
-                            value: -1
+                            data_source: window.BOOLEAN_DATASOURCE,
+                            value: 0
                         },
                         app_id: {
                             widget: 'select',
@@ -52,11 +49,8 @@
                             get_display: function(value, item) {
                                 return to_boolean_icon(value > 0);
                             },
-                            data_source: [
-                                {value: 1, label: _('common.Yes')},
-                                {value: -1, label: _('common.No')}
-                            ],
-                            value: -1
+                            data_source: window.BOOLEAN_DATASOURCE,
+                            value: 0
                         }
                     },
                     list_hide: ['process'],
@@ -302,10 +296,9 @@
                         'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
                         'current' : {'fill' : 'yellow', 'font-color' : 'red', 'font-weight' : 'bold'},
                         'future' : { 'fill' : '#FFFF99'},
-                        'request' : { 'fill' : 'blue'},
                         'invalid': {'fill' : '#444444'},
-                        'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : _('common.Yes'), 'no-text' : _('common.No') },
-                        'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : _('common.Yes'), 'no-text' : _('common.No') }
+                        'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : 'APPROVED', 'no-text' : 'n/a' },
+                        'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : 'n/a', 'no-text' : 'REJECTED' }
                     }
                 };
 
@@ -314,8 +307,6 @@
         .service('Bpm.WorkflowNodeAPI', [
             'ones.dataApiFactory',
             function(dataAPI) {
-                var self = this;
-
                 this.config = {
                     app: 'bpm',
                     module: 'workflowNode',
