@@ -13,12 +13,6 @@ class OrdersModel extends CommonViewModel {
 
     protected $viewFields = [
         "Orders" => ['*', '_type'=>'left'],
-        "UserInfo" => [
-            'login',
-            'realname',
-            '_on'=>"Orders.user_info_id=UserInfo.id",
-            '_type'=>'left'
-        ],
         "Customer" => [
             'contacts_company_id',
             '_on' => 'Orders.customer_id=Customer.id',
@@ -27,6 +21,11 @@ class OrdersModel extends CommonViewModel {
         "ContactsCompany" => [
             'name' => 'customer_id__label__',
             '_on' => 'Customer.contacts_company_id=ContactsCompany.id',
+            '_type' => 'left'
+        ],
+        "Workflow" => [
+            'name' => 'workflow_id__label__',
+            '_on' => 'Orders.workflow_id=Workflow.id',
             '_type' => 'left'
         ]
     ];

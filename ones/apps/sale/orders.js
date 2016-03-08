@@ -214,21 +214,19 @@
                     bill_row_model: 'Sale.OrdersDetailAPI',
                     fields: {
                         bill_no: {
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
                         subject: {
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
-                        workflow_node_status_label: {
-                            label: _('common.Status'),
+                        status: {
                             addable: false,
                             editable: false,
-                            data_source: [
-                                {value: 0, label: _('sale.ORDERS_STATUS_NEW')},
-                                {value: 1, label: _('sale.ORDERS_STATUS_SAVED')},
-                                {value: 2, label: _('sale.ORDERS_STATUS_COMPLETE')}
-                            ],
-                            map: 'status'
+                            get_display: function(value, item) {
+                                return item.workflow_node_status_label;
+                            }
                         },
                         quantity: {
                             get_display: function(value, item) {
@@ -246,19 +244,36 @@
                         },
                         created: {
                             widget: 'datetime'
+                        },
+                        workflow_id: {
+                            data_source: 'Bpm.WorkflowAPI',
+                            data_source_query_param: {
+                                _mf: 'module',
+                                _mv: 'sale.orders',
+                                _fd: 'id,name'
+                            }
+                        },
+                        customer_id: {
+                            label: _('crm.Customer')
                         }
                     },
                     bill_meta_required: [
                         'subject', 'created', 'customer_id'
                     ],
                     filters: {
-                        workflow_node_status_label: {
+                        workflow_id: {
                             type: 'link'
+                        },
+                        by_user: {
+                            label: _('common.User'),
+                            type: 'link',
+                            data_source: window.DEAL_USER_DATASOURCE
                         }
                     },
                     sortable: [
-                        'created', 'net_receive', 'quantity'
-                    ]
+                        'created', 'net_receive', 'quantity', 'status'
+                    ],
+                    list_hide: ['source_id', 'remark', 'currency']
                 };
 
                 if(is_app_loaded('printer')) {
