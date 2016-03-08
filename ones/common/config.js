@@ -210,9 +210,11 @@ angular.module("ones.configModule", [
             var reqInterceptor = ['$q', '$rootScope', function ($q, $rootScope) {
                 return {
                     'request': function (config) {
+                        $rootScope.ajax_ing = window.ajax_ing = true;
                         return config;
                     },
                     'response': function (response) {
+                        $rootScope.ajax_ing = window.ajax_ing = false;
                         if (response.data.error || parseInt(response.data.error) > 0) {
                             $rootScope.$broadcast('event:serverError', response.data.msg);
                             return $q.reject(response);
@@ -228,7 +230,6 @@ angular.module("ones.configModule", [
                         } else {
                             return response;
                         }
-
                         return response;
                     },
                     'responseError': function (response) {
@@ -248,6 +249,7 @@ angular.module("ones.configModule", [
                             default:
                                 break;
                         }
+                        $rootScope.ajax_ing = window.ajax_ing = false;
                         return $q.reject(response);
                     }
                 };

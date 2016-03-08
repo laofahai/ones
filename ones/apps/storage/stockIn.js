@@ -40,30 +40,37 @@
                                 return value ? accounting.formatNumber(Number(value), ones.system_preference.decimal_scale) : value;
                             }
                         },
-                        workflow_node_status_label: {
-                            label: _('common.Status'),
+                        status: {
                             addable: false,
                             editable: false,
-                            data_source: [
-                                {value: 0, label: _('storage.STOCK_IN_STATUS_NEW')},
-                                {value: 1, label: _('storage.STOCK_IN_STATUS_SAVED')},
-                                {value: 2, label: _('storage.STOCK_IN_STATUS_PART')},
-                                {value: 3, label: _('storage.STOCK_IN_STATUS_COMPLETE')}
-                            ],
-                            map: 'status'
+                            get_display: function(value, item) {
+                                return item.workflow_node_status_label;
+                            }
+                        },
+                        workflow_id: {
+                            data_source: 'Bpm.WorkflowAPI',
+                            data_source_param: {
+                                module: 'storage.stockIn'
+                            }
                         }
                     },
                     bill_meta_required: [
                         'subject', 'created'
                     ],
                     filters: {
-                        workflow_node_status_label: {
+                        workflow_id: {
                             type: 'link'
+                        },
+                        by_user: {
+                            label: _('common.User'),
+                            type: 'link',
+                            data_source: window.DEAL_USER_DATASOURCE
                         }
                     },
                     sortable: [
-                        'created'
-                    ]
+                        'created', 'status'
+                    ],
+                    list_hide: ['source_id', 'remark']
                 };
 
                 try {

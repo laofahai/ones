@@ -354,6 +354,8 @@
 
                         var runtime_scope = config.scope || self.scope;
 
+                        var enter_ing = false;
+
                         self.select3_fields = self.select3_fields || [];
 
                         delete(config['ng-model']);
@@ -463,7 +465,7 @@
 
                         // 选中项目
                         var do_select3_item_select = function(item, auto_hide) {
-                            if(!item.value || !item.label) {
+                            if(!item || !item.value || !item.label) {
                                 return;
                             }
                             $timeout(function() {
@@ -471,6 +473,8 @@
                                 label_getter.assign(runtime_scope, item.label);
                                 model_getter.assign(runtime_scope, item.value);
                                 selected_getter.assign(runtime_scope, item);
+
+                                enter_ing = false;
                             });
 
                             if(auto_hide) {
@@ -498,7 +502,12 @@
                                     selected_getter.assign(runtime_scope, runtime_scope.$eval(items_model)[runtime_scope.active_select3_index]);
                                     break;
                                 case KEY_CODES.ENTER:
-                                    do_select3_item_select(runtime_scope.$eval(items_model)[runtime_scope.active_select3_index], true);
+                                    window.ajax_ing = true;
+                                    var the_item = runtime_scope.$eval(items_model) || [];
+                                    do_select3_item_select(
+                                        the_item[runtime_scope.active_select3_index],
+                                        true);
+                                    enter_ing = true;
                                     break;
                                 default:
                                     return;
@@ -555,13 +564,23 @@
                                         label: to_item_display(item, data_source)
                                     });
                                 });
-                                items_getter.assign(runtime_scope, items || []);
+
+                                items = items || [];
+                                items_getter.assign(runtime_scope, items);
+
+                                if(enter_ing) {
+                                    do_select3_item_select(items[0], false);
+                                }
+
+                                enter_ing = false;
 
                             });
                         };
 
                         // 输入时后端查询
-                        runtime_scope.$watch(label_model, do_select3_query);
+                        runtime_scope.$watch(label_model, function(keyword){
+                            do_select3_query(keyword);
+                        });
                     }
                 };
 

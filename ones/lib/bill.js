@@ -452,7 +452,8 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
             '$parse',
             '$routeParams',
             'ones.form_fields_factory',
-            function($timeout, $compile, $parse, $routeParams, field_factory) {
+            '$rootScope',
+            function($timeout, $compile, $parse, $routeParams, field_factory, $rootScope) {
                 return {
                     link: function(scope, ele, attrs) {
 
@@ -462,8 +463,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         // 字段配置
                         var column_def = {};
 
-                        var bind_element_event = function(element, is_td) {
-
+                        var bind_element_event = function(column_def, element, is_td) {
                             if(is_td) {
                                 td = $(element);
                             } else {
@@ -476,16 +476,20 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             }
 
                             // 依赖其他字段时
-                            if(column_def.editable_required) {
+                            if(column_def.editable_required && !self.inited) {
                                 if(!angular.isArray(column_def.editable_required)) {
                                     column_def.editable_required = [column_def.editable_required];
                                 }
 
+                                var model_prefix = column_def['ng-model'].split('.').slice(0, -1).join('.');
+                                model_prefix = model_prefix === 'undefined' ? 'bill_rows[$parent.$index]' : model_prefix;
+
                                 for(var i=0;i<column_def.editable_required.length;i++) {
                                     var req = column_def.editable_required[i];
-                                    var required_model = column_def['ng-model'].split('.').slice(0, -1).join('.') + '.' + req;
+                                    var required_model = model_prefix + '.' + req;
+                                    console.log(required_model);
                                     var required_val = scope.$eval(required_model);
-                                    if(!required_val) {
+                                    if(undefined === required_val) {
                                         return;
                                     }
                                 }
@@ -542,12 +546,12 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             //回车事件
                             ele.delegate('input.form-control', 'keydown', function(event) {
                                 if(event.keyCode === KEY_CODES.ENTER) {
-
                                     // 自动进入下一可编辑区域
-                                    $timeout(function() {
+                                    var find_next = function() {
                                         // 寻找当前行下一可编辑框
                                         var ele = $(event.target).parents('td').nextAll('td.td_editable');
                                         var tr = $(event.target).parents('tr');
+
                                         var focus_next_line = function(next_tr) {
                                             next_tr = $(next_tr);
                                             if(!next_tr) {
@@ -574,6 +578,21 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                                 focus_next_line(ele);
                                             }
 
+                                        }
+                                    };
+
+                                    $timeout(function() {
+                                        if(!window.ajax_ing) {
+                                            find_next();
+                                        } else {
+                                            var i = 0;
+                                            var t = setInterval(function() {
+                                                if(!window.ajax_ing || i >= 30) {
+                                                    find_next();
+                                                    clearInterval(t);
+                                                }
+                                                i++;
+                                            }, 100);
                                         }
                                     });
                                 }
@@ -648,9 +667,9 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             //    bind_element_event(ele);
                             //});
                             ele.bind('click', function() {
-                                bind_element_event(ele, true);
+                                bind_element_event(column_def, ele, true);
                             });
-                        }, 800);
+                        });
 
                     }
                 };
