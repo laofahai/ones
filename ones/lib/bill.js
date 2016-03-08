@@ -487,7 +487,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                 for(var i=0;i<column_def.editable_required.length;i++) {
                                     var req = column_def.editable_required[i];
                                     var required_model = model_prefix + '.' + req;
-                                    console.log(required_model);
                                     var required_val = scope.$eval(required_model);
                                     if(undefined === required_val) {
                                         return;

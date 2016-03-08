@@ -47,8 +47,10 @@
                         },
                         workflow_id: {
                             data_source: 'Bpm.WorkflowAPI',
-                            data_source_param: {
-                                module: 'storage.stockOut'
+                            data_source_query_param: {
+                                _mf: 'module',
+                                _mv: 'storage.stockOut',
+                                _fd: 'id,name'
                             }
                         }
                     },
