@@ -35,10 +35,12 @@
             '$routeParams',
             '$injector',
             '$parse',
+            '$timeout',
             'Supplier.SupplierAPI',
+            'Product.ProductAPI',
             'Purchase.PurchaseAPI',
             'Purchase.PurchaseDetailAPI',
-            function($scope, $routeParams, $injector, $parse, supplier_api, purchase_api, purchase_detail_api) {
+            function($scope, $routeParams, $injector, $parse, $timeout, supplier_api, product_api, purchase_api, purchase_detail_api) {
                 if(!$routeParams.id) {
                     $scope.bill_meta_data = {
                         created: new Date(moment().format()),
@@ -123,26 +125,35 @@
                 };
 
                 // 取得商品单价
-                $scope.fetch_unit_price = function(rows, row_scope, row_index) {
-                    if(!rows[row_index].supplier_id) {
-                        return;
-                    }
-                    var params = {
-                        _m: 'fetch_product_unit_price'
-                    };
-                    angular.forEach(rows[row_index], function(v, k) {
-                        if(k.end_with('__') || k == 'tr_id') {
+                $scope.fetch_unit_price = function(rows, row_scope, row_index, $event) {
+
+                    $timeout(function() {
+                        if($event && $event.keyCode !== KEY_CODES.enter) {
                             return;
                         }
-                        params[k] = v;
+
+                        if(!rows[row_index].product_id) {
+                            return;
+                        }
+                        var params = {
+                            _m: 'fetch_product_unit_price'
+                        };
+                        angular.forEach(rows[row_index], function(v, k) {
+                            if(k.end_with('__') || k == 'tr_id') {
+                                return;
+                            }
+                            params[k] = v;
+                        });
+
+                        product_api.resource.api_get(params).$promise.then(function(response_data) {
+                            var getter = $parse('bill_rows['+row_index+'].unit_price');
+                            var label_getter = $parse('bill_rows['+row_index+'].unit_price__label__');
+                            var price = response_data['purchase_price'] || response_data['source_price'];
+                            getter.assign(row_scope, price);
+                            label_getter.assign(row_scope, to_decimal_display(price));
+                        });
                     });
-                    supplier_api.resource.api_get(params).$promise.then(function(response_data) {
-                        var getter = $parse('bill_rows['+row_index+'].unit_price');
-                        var label_getter = $parse('bill_rows['+row_index+'].unit_price__label__');
-                        var price = response_data['supply_price'] || response_data['source_price'];
-                        getter.assign(row_scope, price);
-                        label_getter.assign(row_scope, to_decimal_display(price));
-                    });
+
                 };
 
 
@@ -154,19 +165,19 @@
                     group_tpl: BILL_META_INPUT_GROUP_TPL
                 };
 
-                // 客户选择
-                //$scope.customer_config = {
-                //    label: _('crm.Customer'),
-                //    field: 'customer_id',
-                //    widget: 'select3',
-                //    'ng-model': 'bill_meta_data.customer_id',
-                //    data_source: 'Crm.CustomerAPI',
-                //    value_field: 'customer_id',
-                //    id: 'sale_orders_customer_id_input',
-                //    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span><div class="select3-container-box">%(input)s</div></div>',
-                //    scope: $scope,
-                //    data_source_value_field: 'customer_id'
-                //};
+                // 供应商选择
+                $scope.supplier_config = {
+                    label: _('supplier.Supplier'),
+                    field: 'supplier_id',
+                    widget: 'select3',
+                    'ng-model': 'bill_meta_data.supplier_id',
+                    data_source: 'Supplier.SupplierAPI',
+                    value_field: 'supplier_id',
+                    id: 'purchase_purchase_supplier_id_input',
+                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span><div class="select3-container-box">%(input)s</div></div>',
+                    scope: $scope,
+                    data_source_value_field: 'supplier_id'
+                };
 
                 // 实付金额
                 $scope.net_pay_amount_config = {

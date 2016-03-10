@@ -391,6 +391,7 @@ class WorkflowService extends CommonModel {
 
         $method = 'exec_'.$action_type;
 
+
         /*
          * 根据不同动作类型执行
          * */
@@ -628,24 +629,15 @@ class WorkflowService extends CommonModel {
             return;
         }
 
-        $progress_model = D('Bpm/WorkflowProgress');
-        $latest_progress = $progress_model->get_latest_progress($response_to_data['workflow_id'], $response_to_id);
+        $next_nodes = $this->get_next_nodes_by_source($response_to_data['workflow_id'], $response_to_id);
 
-        if(!$latest_progress) {
-            return;
-        }
-
-        $next_nodes = explode(',', $latest_progress['next_nodes']);
-        $next_nodes = D('Bpm/WorkflowNode')->where([
-            'id' => ['IN', $next_nodes]
-        ])->select();
         if(!$next_nodes) {
             return;
         }
 
         foreach($next_nodes as $node) {
-            if($this->executor_has_some($node['executor'], 'auto:wait')) {
-                return $this->exec($response_to_id, [], $node['id']);
+            if($this->executors_has_some($node['executor'], 'auto:wait')) {
+                return $this->exec($response_to_data['workflow_id'], $response_to_id, $node['id']);
                 break;
             }
         }

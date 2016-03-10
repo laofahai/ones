@@ -4,7 +4,7 @@
         <span ng-bind="bill_meta_data.user_info_id|to_user_fullname"></span>
     </span>
 
-    <span class="label label-info">
+    <span class="label label-info" ng-show="bill_meta_data.workflow_latest_progress">
         <span ng-bind="bill_meta_data.workflow_latest_progress.node_status_label||bill_meta_data.workflow_latest_progress.node_label"></span>
     </span>
 
@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="bill-related" ng-show="bill_meta_data.related_bill">
+<div class="bill-related" ng-show="bill_meta_data.related_bill.length>0">
     <h2 ng-bind="'common.Related Bills'|lang"></h2>
     <table class="table table-striped">
         <thead>
@@ -41,7 +41,10 @@
                 <td ng-bind="related_bill.bill_type_label"></td>
                 <td ng-bind="related_bill.bill_no||related_bill.id"></td>
                 <td ng-bind="related_bill.subject"></td>
-                <td ng-bind="related_bill.workflow_latest_progress.node_status_label||related_bill.workflow_latest_progress.node_label"></td>
+                <td>
+                    <label class="label label-info"
+                           ng-bind="related_bill.workflow_latest_progress.node_status_label||related_bill.workflow_latest_progress.node_label"></label>
+                </td>
                 <td ng-bind="related_bill.workflow_latest_progress.created"></td>
                 <td ng-bind="related_bill.workflow_latest_progress.user_info_id|to_user_fullname"></td>
                 <td> </td>

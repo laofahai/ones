@@ -20,7 +20,10 @@ function bootstrap(angular_app, apps, callback) {
             }
 
             // boolean 数据源
-            window.BOOLEAN_DATASOURCE = window.BOOLEAN_DATASOURCE;
+            window.BOOLEAN_DATASOURCE = [
+                {value: 1, label: _('common.Yes')},
+                {value: 0, label: _('common.No')}
+            ];
 
             // 通用字段分组
             window.COMMON_FIELDS_GROUPS = [

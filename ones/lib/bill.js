@@ -51,6 +51,13 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                     // 行model
                     this.row_model = $injector.get(opts.model.config.bill_row_model);
+                    this.total_able_fields = [];
+                    angular.forEach(this.row_model.config.fields, function(config, field) {
+                        if(config.total_able) {
+                            self.total_able_fields.push(field);
+                        }
+                    });
+
                     this.scope.bill_rows = [];
                     this.scope.row_fields = [];
 
@@ -66,7 +73,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                 this.common_methods = {
                     // 重新计算合计金额
                     re_calculate_total: function($runtime_scope, rows, total_able_fields, update_net) {
-                        total_able_fields = total_able_fields || [];
+                        total_able_fields = total_able_fields || this.total_able_fields || [];
 
                         var totals = {};
                         angular.forEach(rows, function(row) {
@@ -170,7 +177,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         }
 
                         // 更新合计
-                        self.common_methods.re_calculate_total(self.parentScope, rows);
+                        self.common_methods.re_calculate_total(self.parentScope, rows, self.total_able_fields, false);
 
                         generate_bar_code();
                     });

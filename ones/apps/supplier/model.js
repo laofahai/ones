@@ -29,14 +29,16 @@
                                     label: _('common.View %s Detail', _('supplier.Supplier'))
                                 });
                             },
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
                         level: {
                             widget: 'select',
                             data_source: ones.stars_data_source,
                             get_display: function(value) {
                                 return $filter('to_stars')(value);
-                            }
+                            },
+                            grid_fixed: true
                         },
                         head_id: {
                             map: 'head_id',
@@ -44,7 +46,8 @@
                             data_source: 'Account.UserInfoAPI',
                             required: false,
                             label: _('supplier.Head Man'),
-                            cell_filter: 'to_user_fullname'
+                            cell_filter: 'to_user_fullname',
+                            value: ones.user_info.id
                         },
                         user_info_id: {
                             label: _('supplier.Creator'),
@@ -63,6 +66,7 @@
                     uneditable: ['user_info_id', 'contacts_company_id', 'contacts_company_role_id'],
                     undetail_able: ['contacts_company_id', 'contacts_company_role_id'],
                     detail_able: true,
+                    list_hide: ['contacts_company_id', 'remark'],
                     filters: {
                         gt_level: {
                             label: _('supplier.Level'),
@@ -73,6 +77,11 @@
                                 {value: 7, label: _('supplier.GT %s Star', 3)},
                                 {value: 9, label: _('supplier.GT %s Star', 4)}
                             ]
+                        },
+                        by_user: {
+                            label: _('common.User'),
+                            type: 'link',
+                            data_source: DEAL_USER_DATASOURCE
                         }
                     },
                     sortable: ['level']

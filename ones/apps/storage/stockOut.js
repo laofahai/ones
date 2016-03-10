@@ -118,7 +118,8 @@
                             , get_bill_cell_after: function(value, item) {
                                 return to_product_measure_unit(product, $q, item);
                             },
-                            editable_required: 'product_id'
+                            editable_required: 'product_id',
+                            total_able: true
                         }
                         , stock_quantity: {
                             widget: 'static',

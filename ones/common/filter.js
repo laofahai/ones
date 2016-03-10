@@ -171,7 +171,7 @@ angular.module("ones.filtersModule", [])
                 }
             }
 
-            return html.join(' ');
+            return html.join('');
         };
     }])
 

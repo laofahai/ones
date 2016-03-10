@@ -34,6 +34,12 @@ class PurchaseService extends CommonBillService {
         self::STATUS_SAVED
     ];
 
+    // 相关单据模型
+    protected $related_model = [
+        'storage.stockIn',
+        'finance.payments'
+    ];
+
     /*
      * 「工作流接口」
      * 转化为入库单
@@ -74,6 +80,13 @@ class PurchaseService extends CommonBillService {
 
         return $stock_in_id;
     }
+
+    /*
+     * [工作流接口]
+     * 生成应付款
+     * @todo
+     * */
+    public function make_payment($id) {}
 
 
 }

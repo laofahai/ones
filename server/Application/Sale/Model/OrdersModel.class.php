@@ -30,4 +30,9 @@ class OrdersModel extends CommonViewModel {
         ]
     ];
 
+    public $fuzzy_search = [
+        'Orders.bill_no', 'Orders.subject',
+        'ContactsCompany.name'
+    ];
+
 }

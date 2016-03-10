@@ -23,21 +23,19 @@
                     workflow: 'purchase.purchase',
                     fields: {
                         bill_no: {
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
                         subject: {
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
-                        workflow_node_status_label: {
-                            label: _('common.Status'),
+                        status: {
                             addable: false,
                             editable: false,
-                            data_source: [
-                                {value: 0, label: _('sale.ORDERS_STATUS_NEW')},
-                                {value: 1, label: _('sale.ORDERS_STATUS_SAVED')},
-                                {value: 2, label: _('sale.ORDERS_STATUS_COMPLETE')}
-                            ],
-                            map: 'status'
+                            get_display: function(value, item) {
+                                return item.workflow_node_status_label;
+                            }
                         },
                         quantity: {
                             get_display: function(value, item) {
@@ -49,15 +47,44 @@
                         },
                         created: {
                             widget: "datetime"
+                        },
+                        supplier_id: {
+                            label: _('supplier.Supplier'),
+                            widget: 'select3',
+                            data_source: 'Supplier.SupplierAPI',
+                            editable_required: 'product_id',
+                            search_able: true,
+                            search_able_fields: 'ContactsCompany.name'
+                        },
+                        workflow_id: {
+                            data_source: 'Bpm.WorkflowAPI',
+                            data_source_query_param: {
+                                _mf: 'module',
+                                _mv: 'purchase.purchase',
+                                _fd: 'id,name'
+                            }
                         }
                     },
+                    list_hide: [
+                        'source_id', 'remark'
+                    ],
                     bill_row_model: 'Purchase.PurchaseDetailAPI',
                     bill_meta_required: [
-                        'subject', 'created'
+                        'subject', 'created', 'supplier_id'
                     ],
                     sortable: [
                         'created', 'quantity'
-                    ]
+                    ],
+                    filters: {
+                        workflow_id: {
+                            type: 'link'
+                        },
+                        by_user: {
+                            label: _('common.User'),
+                            type: 'link',
+                            data_source: window.DEAL_USER_DATASOURCE
+                        }
+                    }
                 };
 
                 if(is_app_loaded('printer')) {
@@ -89,20 +116,10 @@
                             , get_display: function() {
                                 return false;
                             },
-                            'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
+                            'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index, $event)',
+                            'ng-keydown': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index, $event)'
                         }
-                        , supplier_id: {
-                            label: _('supplier.Supplier'),
-                            widget: 'select3',
-                            data_source: 'Supplier.SupplierAPI',
-                            data_source_query_with: 'product_id',
-                            auto_query: false,
-                            //get_display: function(value, item) {
-                            //
-                            //},
-                            editable_required: 'product_id',
-                            'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
-                        }
+
                         , unit_price: {
                             label: _('common.Unit Price'),
                             widget: 'number'
@@ -142,7 +159,6 @@
                     },
                     bill_fields: [
                         'product_id'
-                        , 'supplier_id'
                         , 'unit_price'
                         , 'quantity'
                         , 'subtotal_amount'

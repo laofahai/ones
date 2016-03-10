@@ -152,7 +152,7 @@
                     field: 'created',
                     widget: 'datetime',
                     'ng-model': 'bill_meta_data.created',
-                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
+                    group_tpl: BILL_META_INPUT_GROUP_TPL
                 };
 
                 // 客户选择
@@ -189,7 +189,7 @@
                         _mf: 'module',
                         _mv: 'sale.orders'
                     },
-                    group_tpl: '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>'
+                    group_tpl: BILL_META_INPUT_GROUP_TPL
                 };
 
             }

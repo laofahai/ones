@@ -81,6 +81,7 @@ class OrdersService extends CommonBillService {
     /*
      * [工作流接口]
      * 生成应收款
+     * @todo
      * */
     public function make_receivable($id) {}
 

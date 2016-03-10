@@ -12,3 +12,5 @@ PURCHASE_STATUS_SAVED: 已保存
 PURCHASE_STATUS_COMPLETE: 已完成
 
 Purchase stock in workflow: 采购入库工作流
+
+Net Payment: 实收

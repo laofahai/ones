@@ -390,7 +390,8 @@ class CommonBillService extends CommonModel {
                 'id' => $meta['source_id']
             ])->find();
 
-            list($app, $module) = explode('.', $related_model_name);
+            list($app, $module) = explode('.', $meta['source_model']);
+
             $related_bill['bill_type_label'] = __($app.'.'.camelCaseSpace($module));
             if($related_bill) {
                 array_push($meta['related_bill'], $related_bill);
