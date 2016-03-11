@@ -158,6 +158,8 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                         rows[k][field+'__label__'] = value;
                                     }
                                 }
+
+                                rows[k][field+'__label__'] = filter_invalid_value(rows[k][field+'__label__']);
                             });
                         });
 
@@ -165,15 +167,24 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                         self.scope.bill_rows = rows;
 
+                        var workflow_api = $injector.get('Bpm.WorkflowAPI');
                         // 获取工作流按钮
                         if(self.opts.model.config.workflow) {
                             var _fd = [
                                 'id', 'label'
                             ];
-                            $injector.get('Bpm.WorkflowAPI').get_next_nodes(response_data.meta.workflow_id, response_data.meta.id, _fd)
+                            workflow_api.get_next_nodes(response_data.meta.workflow_id, response_data.meta.id, _fd)
                                 .then(function(next_nodes){
-                                    self.parentScope.$parent.workflow_in_bill = next_nodes;
+                                    self.parentScope.$parent.workflow_node_in_bill = next_nodes;
                                 });
+                        }
+
+                        // 未开始的工作流
+                        if(!response_data.meta.workflow_id) {
+                            self.parentScope.$parent.workflow_not_started = true;
+                            workflow_api.get_all_workflow(self.opts.model.config.app + '.' + self.opts.model.config.module).then(function(all_workflow) {
+                                self.parentScope.$parent.all_workflows = all_workflow;
+                            });
                         }
 
                         // 更新合计
@@ -534,9 +545,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                             scope.$eval(column_def['ng-model']), // value
                                             scope.$eval(form_name)// row item
                                         );
-                                        if(label_value === false) {
-                                            return;
-                                        }
+                                        label_value = filter_invalid_value(label_value);
                                         var getter = $parse(column_def['label-model']);
                                         getter.assign(scope, label_value || old_label_value);
                                     } else {

@@ -352,7 +352,6 @@
                         }
 
                         var callback = function(response_data) {
-                            console.log(2);
                             // message center
                             if(is_app_loaded('messageCenter')) {
                                 try {
@@ -367,7 +366,6 @@
                             }
 
                             if(typeof self.parentScope.form_submit_callback === 'function') {
-                                console.log(3);
                                 self.parentScope.form_subnmit_callback(response_data);
                                 return;
                             }
@@ -378,7 +376,6 @@
                                     content: _('common.Operation Success')
                                 });
                             }
-                            console.log(1);
                             if(add_another) {
                                 self.parentScope.doFormReset();
                             } else {

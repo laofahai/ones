@@ -50,33 +50,31 @@
             <!--// end of list selected actions  -->
         </div>
         <!--//workflow in detail page-->
-        <div class="pull-left btn-group" ng-show="workflow_in_bill !== undefined && !workflowing">
+        <div class="pull-left btn-group" ng-show="workflow_node_in_bill !== undefined && !workflowing">
             <button class="btn btn-sm btn-primary"
                     ng-click="view_workflow_progress($root.current_item)"
                     ng-bind="'bpm.Workflow'|lang"></button>
+            <!--未开始的工作流-->
+            <button class="btn btn-sm btn-success"
+                    ng-show="workflow_not_started"
+                    data-toggle="dropdown"
+                    >
+                <span ng-bind="'bpm.Start workflow'|lang"></span>
+                <i class="fa fa-caret-down fa-on-right"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-primary pull-left"
+                ng-show="workflow_not_started">
+                <li ng-repeat="aw in all_workflows">
+                    <a href="javascript:void(0);" ng-bind="aw.name"
+                       ng-click="start_workflow(aw.id, $root.current_item.id)"></a>
+                </li>
+            </ul>
             <button class="btn btn-sm btn-{{w.btn_class||'info'}}"
-                    ng-repeat="w in workflow_in_bill track by $w.id"
+                    ng-repeat="w in workflow_node_in_bill track by $w.id"
                     ng-bind="w.label"
                     ng-click="execute_workflow_node(w.id, w.workflow_id, $root.current_item.id)"
                     ></button>
         </div>
-
-        <!--//workflow dropdown -->
-        <div class="pull-left btn-group" ng-hide="false === selectable">
-            <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" ng-show="workflowAble">
-                <span ng-bind="'workflow.Workflow'|lang"></span>
-                <span class="fa fa-caret-down fa-on-right"></span>
-            </button>
-            <ul class="dropdown-menu dropdown-success pull-right">
-                <li>
-                    <a ng-click="view_workflow_progress($root.current_item)" ng-bind="'workflow.View Workflow Process'|lang"></a>
-                </li>
-                <li ng-repeat="w in workflowActionList" ng-class="{disabled: workflowActionDisabled(w.id)}">
-                    <a ng-click="execute_workflow_node(w.id, null, $root.current_item.id);">{{w.name}}</a>
-                </li>
-            </ul>
-        </div>
-
     </div>
 
 

@@ -452,10 +452,6 @@
 
                 // 格式化后端数据
                 this.parseData = function(data) {
-                    //$root.typeof(column_defs[field].get_display) === 'function' ?
-                    // column_defs[field].get_display(item[field], item) :
-                    // item[field]|tryGridEval:$parent.$index:field.field|tryGridFilter:column_defs[field].cell_filter:$parent.$index
-
                     var cleared_data = [];
 
                     for(var i=0; i<data.length; i++) {
@@ -483,7 +479,7 @@
 
                             }
 
-                            cleared_single_row[key] = value;
+                            cleared_single_row[key] = filter_invalid_value(value);
                         }
 
                         cleared_data.push(cleared_single_row);
@@ -656,7 +652,7 @@
 
                                                 // 过滤器支持自定义显示结果
                                                 if(typeof item.get_display === 'function') {
-                                                    d[data_source.config.label_field||'name'] = item.get_display(d);
+                                                    d[data_source.config.label_field||'name'] = filter_invalid_value(item.get_display(d));
                                                 }
 
                                                 link_filter_items.push({

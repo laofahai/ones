@@ -60,6 +60,17 @@ window.get_view_path = function(view_name) {
 };
 
 /**
+ * 检测null, undefined值
+ * */
+function filter_invalid_value(value) {
+    var ignore = ['null', 'false', 'undefined', null, false, undefined];
+    if(ignore.indexOf(value) >= 0) {
+        return '';
+    }
+    return value;
+}
+
+/**
  * 返回应用视图url
  * */
 function appView(view, app) {

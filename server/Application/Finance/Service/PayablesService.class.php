@@ -71,5 +71,18 @@ class PayablesService extends CommonModel {
      * */
     public function response_to_outside() {}
 
+    /*
+     * 提供转化为单据的接口
+     * @todo 标题自动生成
+     *       来源模型/ID
+     *       默认类型
+     *       默认工作流(手动选择)
+     * */
+    public function make_bill($data) {
+        $this->create($data);
+
+        return $this->add();
+    }
+
 
 }

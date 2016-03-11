@@ -67,7 +67,7 @@
                                     scope.$root.current_item = scope.basic_data;
                                     workflow_api.get_next_nodes(scope.basic_data.workflow_id, id, ['id', 'label'])
                                         .then(function(next_nodes){
-                                            scope.$root.workflow_in_bill = next_nodes;
+                                            scope.$root.workflow_node__in_bill = next_nodes;
                                         });
                                 },
                                 resource: self.resource

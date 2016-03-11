@@ -93,9 +93,20 @@
                     uri: 'bpm/workflowBuilder'
                 });
 
+                /**
+                 * 获得某模块的所有可用工作流
+                 * */
+                this.get_all_workflow = function(module, _fd) {
+                    _fd = _fd || 'id,name';
+                    return self.resource.query({
+                        _mf: 'module',
+                        _mv: module,
+                        _fd: _fd
+                    }).$promise;
+                };
+
                 /*
                 * 获取工作流信息，包括基本信息和节点信息
-                *
                 * */
                 this.get_full_data = function(id) {
                     var params = {
