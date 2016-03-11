@@ -2,7 +2,7 @@
     'use strict';
     angular.module('ones.app.finance.model', [
         'ones.app.finance.receivables',
-            'ones.app.finance.payables'
+        'ones.app.finance.payables'
     ])
         .service('Finance.FinanceAccountAPI', [
             'ones.dataApiFactory',

@@ -5,7 +5,7 @@
      * @link https://ng-erp.com
      * */
     'use strict';
-    angular.module('ones.app.supplier.model', [])
+    ones.global_module
         .service('Supplier.SupplierAPI', [
             'ones.dataApiFactory',
             'RootFrameService',

@@ -3,7 +3,7 @@
 
         .config(['$routeProvider', function($routeProvider) {
             $routeProvider.when('/finance/receivables/confirm/:id/node/:node_id', {
-                templateUrl: appView('receivables/confirm.html'),
+                templateUrl: appView('confirm.html'),
                 controller: "Finance.ConfirmReceivableCtrl"
             });
         }])

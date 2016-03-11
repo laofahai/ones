@@ -6,7 +6,6 @@
      * */
     'use strict';
     angular.module('ones.app.supplier.main', [
-        'ones.app.supplier.model',
         'ones.gridViewModule'
     ]);
 
