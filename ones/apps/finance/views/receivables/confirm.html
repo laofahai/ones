@@ -4,51 +4,11 @@
         <h3 class="panel-title" ng-bind="panel_title"></h3>
     </div>
     <div class="panel-body">
-        <form name="confirm_form" class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label" ng-bind="'crm.Customer'|lang"></label>
-                <div class="col-sm-6">
-                    <input type="text" ng-model="bill_info.customer_id__label__" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" ng-bind="'finance.Total Need Receive'|lang"></label>
-                <div class="col-sm-6">
-                    <input type="text" ng-model="bill_info.amount" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" ng-bind="'finance.Finance Account'|lang"></label>
-                <div class="col-sm-6">
-                    <select class="form-control chosen"
-                            chosen
-                            ng-model="bill_info.account_id"
-                            ng-options="value.id as value.name for value in all_accounts"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" ng-bind="'finance.Received Amount'|lang"></label>
-                <div class="col-sm-6">
-                    <input type="text" ng-model="bill_info.received" class="form-control" readonly />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="received" class="col-sm-2 control-label" ng-bind="'finance.This time received'|lang"></label>
-                <div class="col-sm-6">
-                    <input type="number" ng-model="confirm_form.this_time_received" required class="form-control" id="received">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="remark" class="col-sm-2 control-label" ng-bind="'common.Remark'|lang"></label>
-                <div class="col-sm-6">
-                    <textarea id="remark" class="form-control" ng-model="confirm_form.remark"></textarea>
-                </div>
-            </div>
-        </form>
+        <form-view config="formConfig"></form-view>
     </div>
     <div class="panel-footer text-center">
         <button class="btn btn-primary btn-lg"
-                ng-click="doSubmit()"
+                ng-click="doFormSubmit()"
                 ng-bind="'common.Confirm'|lang"
                 once-click
                 ></button>

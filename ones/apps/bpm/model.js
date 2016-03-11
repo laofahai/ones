@@ -165,7 +165,11 @@
                     };
 
                     this.resource.save(params, data).$promise.then(function(response) {
-                        self.parse_response(response);
+                        if(typeof callback === 'function') {
+                            callback(response);
+                        } else {
+                            self.parse_response(response);
+                        }
                     });
 
                 };

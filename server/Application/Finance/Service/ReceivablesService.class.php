@@ -48,7 +48,8 @@ class ReceivablesService extends CommonModel {
             'direction' => 1,
             'amount'    => I('post.amount'),
             'source_id' => $id,
-            'finance_account_id' => I('post.account_id')
+            'finance_account_id' => I('post.account_id'),
+            'remark' => I('post.remark')
         ]);
     }
 
@@ -64,5 +65,10 @@ class ReceivablesService extends CommonModel {
 
         return $data['received'] >= $data['amount'] ? true : false;
     }
+
+    /*
+     * [工作流] 通知外部等待响应节点
+     * */
+    public function response_to_outside() {}
 
 }

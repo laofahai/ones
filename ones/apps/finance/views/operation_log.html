@@ -20,6 +20,7 @@
                 <strong ng-bind="item.finance_account_id__label__"></strong>
                 <span ng-bind-html="item.direction|to_balance_direction_icon"></span>
                 <label ng-bind="item.amount|to_money_display"></label>
+                <div ng-bind="item.remark"></div>
             </div>
             <div class="calendar-paper">
                 <span class="head">

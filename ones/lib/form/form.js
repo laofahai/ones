@@ -46,7 +46,9 @@
                     this.data_model_fields = undefined;
 
                     // 是否是编辑表单
-                    this.config.isEdit = this.config.isEdit === undefined ? (this.config.id ? true : false) : this.config.isEdit;
+                    if(this.config.isEdit !== false) {
+                        this.config.isEdit = this.config.isEdit === undefined ? (this.config.id ? true : false) : this.config.isEdit;
+                    }
 
                     this.config.form_name = this.scope.form_name = 'id_'+this.config.model_prefix;
 
@@ -122,6 +124,7 @@
                         app: self.model_config.app,
                         table: self.model_config.table,
                         exclude_meta: true,
+                        schema: self.config.schema,
                         callback: function(result) {
 
                             result = result[self.model_config.table].structure || {};
@@ -349,7 +352,7 @@
                         }
 
                         var callback = function(response_data) {
-
+                            console.log(2);
                             // message center
                             if(is_app_loaded('messageCenter')) {
                                 try {
@@ -363,6 +366,11 @@
                                 } catch(e) {}
                             }
 
+                            if(typeof self.parentScope.form_submit_callback === 'function') {
+                                console.log(3);
+                                self.parentScope.form_subnmit_callback(response_data);
+                                return;
+                            }
 
                             if(!response_data.error && !response_data.msg) {
                                 RootFrameService.alert({
@@ -370,7 +378,7 @@
                                     content: _('common.Operation Success')
                                 });
                             }
-
+                            console.log(1);
                             if(add_another) {
                                 self.parentScope.doFormReset();
                             } else {
@@ -382,18 +390,20 @@
 
                         var data = angular.copy(self.scope[self.config.model_prefix]) || {};
 
-                        //console.log(self.scope[self.config.model_prefix]);
                         data = post_data_format(data, fields_define, $injector);
-                        //console.log(data);return;
 
-                        //console.log(data); return;
-                        //.toISOString().slice(0, 19).replace('T', ' ');
-                        if(self.config.isEdit) {
-                            self.config.resource.update(get_params, data).$promise.then(callback);
+                        if(self.parentScope.form_submit_action) {
+                            var result = self.parentScope.form_submit_action(get_params, data);
+                            if(result && typeof result.then === 'function') {
+                                result.then(callback)
+                            }
                         } else {
-                            self.config.resource.save(get_params, data).$promise.then(callback);
+                            if(self.config.isEdit) {
+                                self.config.resource.update(get_params, data).$promise.then(callback);
+                            } else {
+                                self.config.resource.save(get_params, data).$promise.then(callback);
+                            }
                         }
-
                     };
 
                 }

@@ -53,7 +53,8 @@
                             grid_fixed: true
                         },
                         finance_account_id: {
-                            data_source: 'Finance.FinanceAccountAPI'
+                            data_source: 'Finance.FinanceAccountAPI',
+                            grid_fixed: true
                         },
                         user_info_id: {
                             cell_filter: "to_user_fullname"

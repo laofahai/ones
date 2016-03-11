@@ -462,7 +462,9 @@ class WorkflowService extends CommonModel {
         foreach($next_nodes as $node_info) {
             if($this->executors_has_some($node_info['executor'], 'auto:auto')) {
 
-                // 条件判断节点
+                /*
+                 * 条件判断节点
+                 * */
                 if(isset($node_info['condition'])) {
                     if($exec_result && $node_info['condition']) {
                         $this->exec($workflow_id, $source_id, $node_info['id'], $meta_data);

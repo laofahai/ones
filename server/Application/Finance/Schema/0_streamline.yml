@@ -153,6 +153,8 @@ finance_streamline:
         blank: true
         limit: 3
         comment: 币种
+    remark:
+        blank: true
     $meta:
         foreign:
             company:
