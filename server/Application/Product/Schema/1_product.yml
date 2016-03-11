@@ -38,12 +38,17 @@ product:
     serial_number:
         type: string
         limit: 30
+        blank: true
+    bar_code:
+        type: string
+        limit: 30
+        blank: true
     $meta:
         # 索引
         indexes:
             name:
+            bar_code:
             serial_number:
-                unique: true
         # 外键
         foreign:
             product_category:

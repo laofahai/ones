@@ -531,8 +531,10 @@
 
                         angular.extend(p, self.options.query_params, extraParams || {});
 
-                        p._mf = self.scope.filterOptions.matchField || undefined;
-                        p._mv = self.scope.filterOptions.matchFieldValue || undefined;
+                        if(self.scope.filterOptions && !p._kw) {
+                            p._mf = self.scope.filterOptions.matchField || undefined;
+                            p._mv = self.scope.filterOptions.matchFieldValue || undefined;
+                        }
 
                         try {
                             self.options.resource.query(p).$promise.then(function(remoteData) {

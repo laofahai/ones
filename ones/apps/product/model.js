@@ -10,7 +10,8 @@
                 var self = this;
 
                 this.unicode = function(item) {
-                    return item.serial_number + ' ' + item.name;
+                    return item.name;
+                    //return item.serial_number + ' ' + item.name;
                 };
 
                 this.config = {
@@ -20,10 +21,12 @@
                     fields: {
                         serial_number: {
                             ensureUnique: 'Product.ProductAPI',
-                            search_able: true
+                            search_able: true,
+                            grid_fixed: true
                         },
                         name: {
-                            search_able: 1
+                            search_able: 1,
+                            grid_fixed: true
                             //search_able_fields: 'name,pinyin'
                         },
                         product_category_id: {
@@ -39,7 +42,11 @@
                         price: {
                             get_display: function(value) {
                                 return accounting.format(value, ones.system_preference.decimal_scale);
-                            }
+                            },
+                            grid_fixed: true
+                        },
+                        bar_code: {
+                            search_able: true
                         }
                     },
                     sortable: ['id'],
