@@ -9,6 +9,12 @@ require INSTALL_PATH.'/common.php';
 require ENTRY_PATH.'/Application/Common/Common/function.php';
 require ENTRY_PATH.'/Application/Account/Common/function.php';
 
+if((php_sapi_name() !== 'cli')) {
+    echo '<pre>';
+    send_exit_single("\ncli-mode only, follow: http://ones.mydoc.io/?t=17436\n");
+    exit;
+}
+
 echo file_get_contents(INSTALL_PATH.'/Guide.md');
 echo "\n";
 
