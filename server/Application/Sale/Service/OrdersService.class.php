@@ -60,7 +60,6 @@ class OrdersService extends CommonBillService {
         $meta['subject'] = __('sale.Orders stock out') . ' '. $meta['subject'];
         $meta['source_model'] = 'sale.orders';
         $meta['source_id'] = $id;
-        $meta['workflow_id'] = DBC('sale_stock_out_workflow');
 
         $row_model = D('Sale/OrdersDetail');
         $raw_rows_data = $row_model->where([

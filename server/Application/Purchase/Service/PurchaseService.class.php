@@ -64,7 +64,6 @@ class PurchaseService extends CommonBillService {
         $meta['subject'] = __('purchase.Purchase stock in') . ' '. $meta['subject'];
         $meta['source_model'] = 'purchase.purchase';
         $meta['source_id'] = $id;
-        $meta['workflow_id'] = DBC('purchase_stock_in_workflow');
 
         $row_model = D('Purchase/PurchaseDetail');
         $raw_rows_data = $row_model->where([
