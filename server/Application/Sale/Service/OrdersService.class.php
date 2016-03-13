@@ -85,6 +85,15 @@ class OrdersService extends CommonBillService {
      * */
     public function make_receivable($id) {
 
+        $bill_info = $this->where(['id'=>$id])->find();
+
+        $service = D('Finance/Receivables');
+        return $service->make_bill([
+            'source_model' => 'sale.orders',
+            'source_id' => $id,
+            'amount'=>$bill_info['net_receive'],
+            'customer_id' => $bill_info['customer_id']
+        ]);
     }
 
 }

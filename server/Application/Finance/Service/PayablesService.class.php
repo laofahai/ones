@@ -79,6 +79,9 @@ class PayablesService extends CommonModel {
      *       默认工作流(手动选择)
      * */
     public function make_bill($data) {
+
+        auto_make_bill_subject($data);
+
         $this->create($data);
 
         return $this->add();

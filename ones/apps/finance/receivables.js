@@ -22,18 +22,6 @@
                     uri: 'finance/receivables'
                 });
 
-                this.receivables_status = {
-                    0: _('New Receivables'),
-                    1: _('Portion Received'),
-                    2: _('All Received')
-                };
-
-                this.receivables_status_array = [
-                    {value: 0, label: this.receivables_status[0]},
-                    {value: 1, label: this.receivables_status[1]},
-                    {value: 2, label: this.receivables_status[2]}
-                ];
-
                 this.config = {
                     app: 'finance',
                     module: 'receivables',
@@ -65,10 +53,19 @@
                                         }
                                     };
                                     scope.$root.current_item = scope.basic_data;
-                                    workflow_api.get_next_nodes(scope.basic_data.workflow_id, id, ['id', 'label'])
-                                        .then(function(next_nodes){
-                                            scope.$root.workflow_node__in_bill = next_nodes;
+
+                                    scope.$root.workflow_node_in_bill = [];
+                                    if(!scope.basic_data.workflow_id) {
+                                        scope.$parent.workflow_not_started = true;
+                                        workflow_api.get_all_workflow('finance.receivables').then(function(all_workflow) {
+                                            scope.$parent.all_workflows = all_workflow;
                                         });
+                                    } else {
+                                        workflow_api.get_next_nodes(scope.basic_data.workflow_id, id, ['id', 'label'])
+                                            .then(function(next_nodes){
+                                                scope.$root.workflow_node_in_bill = next_nodes;
+                                            });
+                                    }
                                 },
                                 resource: self.resource
                             },
@@ -145,9 +142,7 @@
                         status: {
                             get_display: function(value, item) {
                                 return item.workflow_node_status_label || (item.last_workflow_progress && (item.last_workflow_progress.node_status_label || item.last_workflow_progress.node_label));
-                            },
-                            widget: 'select',
-                            data_source: self.receivables_status_array
+                            }
                         },
                         workflow_id: {
                             label: _('bpm.Workflow'),

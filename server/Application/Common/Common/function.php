@@ -319,6 +319,35 @@ function model_name_to_alias($name) {
 
     return sprintf('%s.%s', lcfirst($app), lcfirst($module));
 }
+/*
+ * 根据模块别名返回其I18N名称
+ * */
+function model_alias_to_label($alias) {
+
+    if(!$alias) {
+        return '';
+    }
+
+    list($app, $module) = explode('.', $alias);
+
+    return __($app.'.'.camelCaseSpace($module));
+}
+
+/*
+ * 自动生成单据标题
+ * */
+function auto_make_bill_subject(&$data) {
+    if($data['subject']) {
+        return $data['subject'];
+    }
+
+    $data['subject'] = model_alias_to_label($data['source_model']);
+    if($data['bill_no']) {
+        $data['subject'] .= ' '.$data['bill_no'];
+    }
+
+    return $data['subject'];
+}
 
 /*
  * 转关联数组

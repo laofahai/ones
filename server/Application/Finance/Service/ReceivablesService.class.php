@@ -71,4 +71,12 @@ class ReceivablesService extends CommonModel {
      * */
     public function response_to_outside() {}
 
+    public function make_bill($data) {
+
+        auto_make_bill_subject($data);
+
+        $this->create($data);
+        return $this->add();
+    }
+
 }

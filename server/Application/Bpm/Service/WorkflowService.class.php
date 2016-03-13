@@ -360,6 +360,11 @@ class WorkflowService extends CommonModel {
      * */
     public function exec($workflow_id, $source_id, $node_id, $meta_data=[]) {
 
+        if(!$workflow_id || !$source_id || !$node_id) {
+            $this->error = __('common.Params Error');
+            return false;
+        }
+
         $progress_service = D('Bpm/WorkflowProgress');
         $node_service = D('Bpm/WorkflowNode');
 
@@ -445,6 +450,7 @@ class WorkflowService extends CommonModel {
             ];
             $data['remark'] = $this->exec_remark ? $this->exec_remark : "";
             $data = array_merge($meta_data, $data);
+            unset($data['id']);
             // 写入进程表
             if(false === $progress_service->create($data)){
                 $this->error = __('bpm.Unverified Progress Object');

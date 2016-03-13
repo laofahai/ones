@@ -52,6 +52,7 @@
         <!--//workflow in detail page-->
         <div class="pull-left btn-group" ng-show="workflow_node_in_bill !== undefined && !workflowing">
             <button class="btn btn-sm btn-primary"
+                    ng-show="!workflow_not_started"
                     ng-click="view_workflow_progress($root.current_item)"
                     ng-bind="'bpm.Workflow'|lang"></button>
             <!--未开始的工作流-->
@@ -59,14 +60,14 @@
                     ng-show="workflow_not_started"
                     data-toggle="dropdown"
                     >
-                <span ng-bind="'bpm.Start workflow'|lang"></span>
+                <span ng-bind="'bpm.Start Workflow'|lang"></span>
                 <i class="fa fa-caret-down fa-on-right"></i>
             </button>
             <ul class="dropdown-menu dropdown-primary pull-left"
                 ng-show="workflow_not_started">
                 <li ng-repeat="aw in all_workflows">
                     <a href="javascript:void(0);" ng-bind="aw.name"
-                       ng-click="start_workflow(aw.id, $root.current_item.id)"></a>
+                       ng-click="$root.bpm_start_workflow(aw.id, $root.current_item.id)"></a>
                 </li>
             </ul>
             <button class="btn btn-sm btn-{{w.btn_class||'info'}}"

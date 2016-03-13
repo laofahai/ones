@@ -6,7 +6,8 @@
             'ones.dataApiFactory',
             '$location',
             'Bpm.WorkflowNodeAPI',
-            function(dataAPI, $location, node_service) {
+            '$rootScope',
+            function(dataAPI, $location, node_service, $rootScope) {
 
                 var self = this;
 
@@ -103,6 +104,24 @@
                         _mv: module,
                         _fd: _fd
                     }).$promise;
+                };
+
+                /**
+                 * 开始执行工作流
+                 * */
+                $rootScope.bpm_start_workflow = this.start_workflow = function(workflow_id, source_id) {
+                    var params = {
+                        _m: 'start_workflow'
+                    };
+                    var data = {
+                        workflow_id: workflow_id,
+                        source_id: source_id,
+                        source_model: ones.app_info.app + '.' + ones.app_info.module
+                    };
+                    self.resource.save(params, data).$promise.then(function(response_data) {
+                        console.log(123123);
+                        $location.reload();
+                    });
                 };
 
                 /*
