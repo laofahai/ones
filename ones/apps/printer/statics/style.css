@@ -5,7 +5,6 @@
     padding: 5px 8px; }
 .print-container h1 {
   margin: 0;
-  padding: 0;
   font-size: 20px;
   padding: 10px; }
 .print-container .float {
@@ -13,6 +12,10 @@
   display: inline;
   height: 30px;
   line-height: 30px; }
+.print-container .print-header {
+  position: relative; }
+  .print-container .print-header h1 {
+    text-align: center; }
 
 .mt-10 {
   margin-top: 10px; }

@@ -276,6 +276,26 @@ var is_app_loaded = function(app) {
     return ones.loaded_apps && ones.loaded_apps.indexOf(app) >= 0;
 };
 
+/*
+* 获得当前页面模块的Data API
+* */
+var get_current_data_api = function($routeParams) {
+
+    var app, module;
+    if($routeParams) {
+        app = $routeParams.app;
+        module = $routeParams.module;
+    } else {
+        app = ones.app_info.app;
+        module = ones.app_info.module;
+    }
+
+    return sprintf('%(app)s.%(module)sAPI', {
+        app: app.ucfirst(),
+        module: module.ucfirst()
+    });
+};
+
 /**
  * sprintf 变量
  * */

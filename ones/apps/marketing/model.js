@@ -25,7 +25,8 @@
                     fields: {
                         label: {
                             get_display: function(value, item) {
-                                return to_belongs_to_user_icon(item);
+                                return to_b
+                                elongs_to_user_icon(item);
                             },
                             detail_able: false,
                             addable: false,
