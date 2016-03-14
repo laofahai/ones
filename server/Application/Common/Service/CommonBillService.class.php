@@ -50,7 +50,7 @@ class CommonBillService extends CommonModel {
     protected $detail_model;
 
     // 相关的单据模型
-    protected $related_model = [];
+    public $related_module = [];
 
     protected $include_this_time_quantity = false;
     protected $balance_direction;
@@ -397,7 +397,7 @@ class CommonBillService extends CommonModel {
                 array_push($meta['related_bill'], $related_bill);
             }
         }
-        foreach($this->related_model as $rm) {
+        foreach($this->related_module as $rm) {
             list($app, $module) = explode('.', $rm);
             if(!AppService::is_app_active($app)) {
                 continue;

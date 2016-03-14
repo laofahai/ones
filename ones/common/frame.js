@@ -32,7 +32,8 @@ var frame_init = function() {
             app: app,
             module: module,
             action: action,
-            params: params
+            params: params,
+            alias: app + '.' + module
         };
 
         /**
@@ -354,7 +355,8 @@ var frame_init = function() {
 
                                 self.app_info = {
                                     app: model.config.app,
-                                    module: model.config.module
+                                    module: model.config.module,
+                                    alias: model.config.app + '.' + model.config.module
                                 };
 
                                 model = model || self.options.model;

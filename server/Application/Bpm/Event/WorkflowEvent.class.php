@@ -42,7 +42,8 @@ class WorkflowEvent extends BaseRestEvent {
         $workflow_id = I('get.workflow_id');
         $source_id   = I('get.source_id');
 
-        $progresses = D('Bpm/WorkflowProgress')->get_progress($workflow_id, $source_id);
+        $source_module = I('get.module');
+        $progresses = D('Bpm/WorkflowProgress')->get_progress($workflow_id, $source_id, true, $source_module);
         $this->response($progresses, 'workflow_progress', true);
     }
 

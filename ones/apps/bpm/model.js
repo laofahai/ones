@@ -162,7 +162,8 @@
                     var params = {
                         _m: 'get_progress',
                         workflow_id: workflow_id,
-                        source_id: source_id
+                        source_id: source_id,
+                        module: ones.app_info.alias
                     };
                     return this.resource.api_query(params).$promise;
                 };

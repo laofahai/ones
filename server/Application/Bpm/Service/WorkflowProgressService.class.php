@@ -21,19 +21,72 @@ class WorkflowProgressService extends CommonModel {
      *
      * @param integer $workflow_id 工作流ID
      * @param integer $source_id 原始数据ID
+     * @param boolean $include_related 是否包含相关单据的工作流
+     * @param string $source_module_alias 源模块别名
      * */
-    public function get_progress($workflow_id, $source_id) {
+    public function get_progress($workflow_id, $source_id, $include_related=false, $source_module_alias=null) {
+
+        $map = [];
+        $where_template = 'WorkflowProgress.workflow_id=%d AND WorkflowProgress.source_id=%d';
+        $where = [
+            '_logic' => 'OR'
+        ];
+
+        array_push($where,
+            sprintf($where_template, $workflow_id, $source_id)
+        );
+
+        if($include_related && $source_module_alias) {
+
+            $source_service = D(model_alias_to_name($source_module_alias));
+            $source_data = $source_service->where(['id'=>$source_id])->find();
+
+            // 包含source_model 和 source_id情况
+            if($source_data['source_model'] && $source_data['source_id']) {
+                $source_source_service = D(model_alias_to_name($source_data['source_model']));
+                $source_source_workflow_id = $source_source_service->where(['id'=>$source_data['source_id']])->getField('workflow_id');
+                array_push($where,
+                    sprintf($where_template, $source_source_workflow_id, $source_data['source_id'])
+                );
+            }
+
+
+            // 包含相关单据情况
+            if($source_service->related_module) {
+                foreach($source_service->related_module as $rm) {
+                    $related_service = D(model_alias_to_name($rm));
+                    $related_bills = $related_service->where([
+                        'source_model' => $source_module_alias,
+                        'source_id' => $source_id
+                    ])->select();
+
+                    foreach($related_bills as $rb) {
+                        array_push($where,
+                            sprintf($where_template, $rb['workflow_id'], $rb['id'])
+                        );
+                    }
+                }
+            }
+        }
+
+        $map['_complex'] = $where;
 
         $model = D('Bpm/WorkflowProgress', 'Model');
 
-        $map = [
-            'WorkflowProgress.workflow_id' => $workflow_id,
-            'WorkflowProgress.source_id' => $source_id
-        ];
-        return $model
-            ->where($map)
-            ->order('WorkflowProgress.created ASC')
-            ->select();
+        $progresses = $model->where($map)->order('WorkflowProgress.created ASC, WorkflowProgress.id ASC')->select();
+
+        foreach($progresses as $k=>$v) {
+            if(
+                (WorkflowService::executors_has_some($v['executor'], 'auto:wait') ||
+                WorkflowService::executors_has_some($v['executor'], 'auto:auto')) &&
+                !in_array($v['node_type'], ['start', 'end'])
+            ) {
+                unset($progresses[$k]);
+            }
+        }
+
+        return reIndex($progresses);
+
     }
 
     /*

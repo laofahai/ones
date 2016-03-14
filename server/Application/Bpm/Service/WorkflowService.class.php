@@ -210,8 +210,8 @@ class WorkflowService extends CommonModel {
 
             foreach($tmp as $k=>$v) {
                 if(
-                    $this->executors_has_some($v['executor'], 'auto:auto') ||
-                    $this->executors_has_some($v['executor'], 'auto:wait')
+                    self::executors_has_some($v['executor'], 'auto:auto') ||
+                    self::executors_has_some($v['executor'], 'auto:wait')
                 ) {
                     continue;
                 }
@@ -308,7 +308,7 @@ class WorkflowService extends CommonModel {
         $ignore_executor = $this->auto_executor;
         foreach($all_nodes as $node) {
             foreach($ignore_executor as $ie) {
-                if($this->executors_has_some($node['executor'], $ie)) {
+                if(self::executors_has_some($node['executor'], $ie)) {
                     break;
                 }
                 if(array_key_exists($node['alias'], $response)) {
@@ -466,7 +466,7 @@ class WorkflowService extends CommonModel {
         $next_nodes = $this->get_next_nodes_by_id($workflow_id, $node_id);
 
         foreach($next_nodes as $node_info) {
-            if($this->executors_has_some($node_info['executor'], 'auto:auto')) {
+            if(self::executors_has_some($node_info['executor'], 'auto:auto')) {
 
                 /*
                  * 条件判断节点
@@ -607,7 +607,7 @@ class WorkflowService extends CommonModel {
      * @param string $executors_string 源节点执行者定义字符串
      * @param string $will_be_checked_executor 需认证的执行者字符串
      * */
-    public function executors_has_some($executors_string, $will_be_checked_executor) {
+    static public function executors_has_some($executors_string, $will_be_checked_executor) {
         list($type, $need_check_id) = explode(':', $will_be_checked_executor);
         $executor_rules = explode('|', $executors_string);
         foreach($executor_rules as $rule) {
@@ -644,7 +644,7 @@ class WorkflowService extends CommonModel {
         }
 
         foreach($next_nodes as $node) {
-            if($this->executors_has_some($node['executor'], 'auto:wait')) {
+            if(self::executors_has_some($node['executor'], 'auto:wait')) {
                 return $this->exec($response_to_data['workflow_id'], $response_to_id, $node['id']);
                 break;
             }

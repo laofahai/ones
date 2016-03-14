@@ -30,7 +30,7 @@ class OrdersService extends CommonBillService {
     ];
 
     // 相关单据模型
-    protected $related_model = [
+    public $related_module = [
         'storage.stockOut',
         'finance.receivables'
     ];
