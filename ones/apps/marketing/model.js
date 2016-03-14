@@ -144,15 +144,14 @@
                                 }],
                                 init: function(scope, id) {
                                     var model = $injector.get('Marketing.ContractAPI');
-                                    model.config.list_display = [
-                                        'contract_number',
-                                        'sign_time',
-                                        'head_id'
-                                    ];
                                     model.config.addable = false;
                                     scope.contract_config = {
                                         model: model,
-                                        resource: model.resource
+                                        resource: model.resource,
+                                        query_params: {
+                                            _mf: 'sale_opportunities_id',
+                                            _mv: id
+                                        }
                                     };
                                 }
                             },
@@ -324,7 +323,8 @@
                         },
                         user_info_id: {
                             addable: false,
-                            editable: false
+                            editable: false,
+                            cell_filter: 'to_user_fullname'
                         },
                         customer: {
                             addable: false,
@@ -343,7 +343,8 @@
                             data_source: 'Account.UserInfoAPI',
                             cell_filter: 'to_user_fullname'
                         }
-                    }
+                    },
+                    list_hide: ['remark', 'terms']
                 };
 
                 $timeout(function() {

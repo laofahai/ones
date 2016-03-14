@@ -222,7 +222,7 @@
                     if(scope.current_action_info.view) {
                         scope.template = scope.current_action_info.view.indexOf('/') >=0
                             ? scope.current_action_info.view
-                            : appView(ones.app_info.module+'_detail_view/'+scope.current_action_info.view+".html");;
+                            : appView(ones.app_info.module+'_detail_view/'+scope.current_action_info.view+".html");
                     } else {
                         scope.template = appView(ones.app_info.module+'_detail_view/'+current_action+".html");
                     }

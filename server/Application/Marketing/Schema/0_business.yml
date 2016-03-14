@@ -60,6 +60,7 @@ customer_communicate:
 
 
 contract:
+    subject:
     contract_number:
         limit: 50
     sign_time:
@@ -77,6 +78,7 @@ contract:
         blank: true
     $meta:
         indexes:
+            subject:
             contract_number:
                 unique: true
         foreign:

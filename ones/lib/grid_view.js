@@ -833,7 +833,6 @@
                                 var fetchData = function(){
                                     var gridOptions = $scope.$parent.$eval(iAttrs.config);
 
-
                                     GridView.init($scope, gridOptions);
 
                                     angular.forEach(GridView.methodsList, function(method, k){
