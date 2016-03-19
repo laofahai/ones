@@ -77,7 +77,7 @@ payables:
     subject:
         blank: true
     amount:
-        type: money
+        type: decimal
         precision: 14
         scale: 4
     paid:
@@ -139,8 +139,8 @@ finance_streamline:
         default: 1
         comment: 1收2付
     amount:
-        type: decimal
-        precisioin: 14
+        type: money
+        precision: 14
         scale: 4
     created:
         type: datetime
@@ -168,3 +168,10 @@ finance_streamline:
             finance_account:
                 restrict:
                     delete: CASCADE
+            payment_method:
+                foreign_table: common_type
+                foreign_key: payment_method
+                options:
+                    blank: true
+                restrict:
+                    delete: SET_NULL

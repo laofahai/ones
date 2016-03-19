@@ -255,6 +255,15 @@
                                     label: _('finance.Finance Account')
                                 },
                                 {
+                                    field: 'payment_method',
+                                    widget: 'select',
+                                    data_source: 'Home.CommonTypeAPI',
+                                    data_source_query_param: {
+                                        _mf: 'module',
+                                        _mv: 'finance_payment_method'
+                                    }
+                                },
+                                {
                                     field: 'this_time_paid',
                                     widget: 'number',
                                     value: 0
@@ -283,7 +292,8 @@
                     workflow_api.post($routeParams.node_id, $routeParams.id, {
                         amount: data.this_time_paid,
                         remark: data.remark,
-                        account_id: data.account_id
+                        account_id: data.account_id,
+                        payment_method: data.payment_method
                     }, function(response) {
                         $location.url('/finance/payables/view/split/'+$routeParams.id);
                     });

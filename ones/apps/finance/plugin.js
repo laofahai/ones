@@ -10,6 +10,10 @@
             label: _('finance.Payables Type'),
             value: 'finance_payables_type'
         });
+        ones.pluginScope.append('common_type_module', {
+            label: _('finance.Payment Method'),
+            value: 'finance_payment_method'
+        });
     });
 
 })(window, window.angular, window.ones);

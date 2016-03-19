@@ -37,6 +37,10 @@ class FinanceStreamlineService extends CommonModel {
         $params['user_info_id'] = $params['user_info_id'] ? $params['user_info_id'] : get_current_user_id();
         $params['direction'] = $params['direction'] == 1 ? 1 : 2;
 
+        if(!$params['payment_method']) {
+            unset($params['payment_method']);
+        }
+
         $this->create($params);
 
         $id = $this->add();

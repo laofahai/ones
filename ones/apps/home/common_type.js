@@ -21,6 +21,9 @@
                     module: 'commonType',
                     table: 'common_type',
                     fields: {
+                        name: {
+                            grid_fixed: true
+                        },
                         module: {
                             widget: 'select',
                             data_source: [],

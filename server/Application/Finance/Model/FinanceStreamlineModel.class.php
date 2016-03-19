@@ -18,6 +18,11 @@ class FinanceStreamlineModel extends CommonViewModel {
             'name',
             '_on' => 'FinanceStreamline.finance_account_id=FinanceAccount.id',
             '_type' => 'left'
+        ],
+        "CommonType" => [
+            'name' => 'payment_method__label__',
+            '_on' => 'FinanceStreamline.payment_method=CommonType.id',
+            '_type' => 'left'
         ]
     ];
 

@@ -49,7 +49,8 @@ class PayablesService extends CommonModel {
             'amount'    => I('post.amount'),
             'source_id' => $id,
             'finance_account_id' => I('post.account_id'),
-            'remark' => I('post.remark')
+            'remark' => I('post.remark'),
+            'payment_method' => I('post.payment_method')
         ]);
     }
 

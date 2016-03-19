@@ -435,6 +435,8 @@ class BaseMigration extends AbstractMigration{
                     break;
                 case 'money':
                     $options['type'] = 'decimal';
+                    $options['precision'] = 14;
+                    $options['scale'] = 4;
                     break;
                 default:
                     $options['limit'] = 255;

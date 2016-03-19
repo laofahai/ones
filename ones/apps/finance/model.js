@@ -45,6 +45,14 @@
                             cell_filter: "to_money_display",
                             grid_fixed: true
                         },
+                        payment_method: {
+                            grid_fixed: true,
+                            data_source: 'Home.CommonTypeAPI',
+                            data_source_query_param: {
+                                _mf: 'module',
+                                _mv: 'finance_payment_method'
+                            }
+                        },
                         direction: {
                             cell_filter: 'to_balance_direction_icon',
                             width: 80,
@@ -65,6 +73,9 @@
                             type: 'link'
                         },
                         direction: {
+                            type: 'link'
+                        },
+                        payment_method: {
                             type: 'link'
                         }
                     },
