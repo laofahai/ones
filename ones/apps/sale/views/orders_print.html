@@ -4,7 +4,22 @@
 <div class="print-body">
     <table>
         <tr>
-            <th ng-bind="line"></th>
+            <th ng-if="print_config.bill_row_fields.indexOf('_sn')>=0">#</th>
+            <th
+                    ng-bind="fields_define[row_field].label||(row_field|camelSpace|lang)"
+                    ng-repeat="row_field in print_config.bill_row_fields track by row_field"
+                    ng-if="row_field!=='_sn'">
+
+            </th>
+        </tr>
+        <tr ng-repeat="item in print_data.rows track by item.id">
+            <th ng-if="print_config.bill_row_fields.indexOf('_sn')>=0" ng-bind="$index+1"></th>
+            <th
+                    ng-bind="item[row_field]"
+                    ng-repeat="row_field in print_config.bill_row_fields track by row_field"
+                    ng-if="row_field!=='_sn'">
+
+            </th>
         </tr>
     </table>
 </div>

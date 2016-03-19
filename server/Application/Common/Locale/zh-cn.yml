@@ -103,6 +103,7 @@ Last Update User: 最后操作员
 License Info: 证照信息
 Listorder: 排序
 Male: 先生
+Measure Unit: 计量单位
 Mobile: 手机
 Module: 模块
 Name: 名称
@@ -150,7 +151,7 @@ Start Time: 开始时间
 Status: 状态
 Sub Category: 子分类
 Subject: 主题
-Submit: 提交
+Submit: 提交ww
 Subtotal Amount: 小计
 Success delete %s: 成功删除 %s 项
 System Common Data: 系统基础数据

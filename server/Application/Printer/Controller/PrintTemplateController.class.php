@@ -12,6 +12,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class PrintTemplateController extends BaseRestController {
 
-    protected function _filter(&$map) {}
+
+
 
 }

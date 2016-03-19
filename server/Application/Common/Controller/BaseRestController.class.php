@@ -530,7 +530,7 @@ class BaseRestController extends RestController {
             $item['last_workflow_progress'] = $workflow_progress_service->get_latest_progress($item['workflow_id'], $item['id']);
         }
 
-        if(method_exists($this, '_before_list_response_')) {
+        if(method_exists($this, '_before_item_response_')) {
             $item = $this->_before_item_response_($item);
         }
 

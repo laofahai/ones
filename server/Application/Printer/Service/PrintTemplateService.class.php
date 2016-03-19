@@ -16,45 +16,30 @@ class PrintTemplateService extends CommonModel {
         ["company_id", "get_current_company_id", 1, "function"]
     ];
 
-    static protected $tpls = [
-        'container' => '%s'
-    ];
+    static public function parse_config($config_string) {
+        if(!$config_string) {
+            return [];
+        }
 
-    /*
-     * 将模板解析为HTML
-     * */
-    static public function compile_by_template($template, $data) {
+        $config_string = explode("\n", $config_string);
 
-        $html = [];
-        $template = Yaml::parse($template);
-        foreach($template as $template_config) {
-            $template_config['layout'] = $template_config['layout'] ? $template_config['layout'] : "common";
-            $layout_parser_name = sprintf('Printer\Service\Parser\Layout\%s', ucfirst($template_config['layout']));
+        $cleared_config = [];
+        foreach($config_string as $line) {
+            $line = explode(':', $line);
 
-            if(!class_exists($layout_parser_name)) {
-                $layout_parser_name = 'Printer\Service\Parser\Layout\Common';
+            $k = array_shift($line);
+            $v = implode(":", $line);
+
+            switch($k) {
+                case "bill_row_fields":
+                    $v = explode(',', $v);
+                    break;
             }
 
-            try {
-                $parser = new $layout_parser_name();
-                if($template_config['template']) {
-                    $parser->set_config("template", $template_config['template']);
-                }
-                array_push($html, $parser->compile_to_html($template_config, $data));
-
-            } finally {}
-
+            $cleared_config[$k] = $v;
         }
 
-        return ['html' => sprintf(self::$tpls['container'], implode('', $html))];
-    }
+        return $cleared_config;
 
-    public function compile_by_template_id($id, $data) {
-        $template = $this->where()->find($id);
-        if(!$template || !$template['content']) {
-            return '';
-        }
-        return self::compile_by_template($template['content'], $data);
     }
-
 }
