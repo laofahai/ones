@@ -1,5 +1,21 @@
+<style type="text/css">
+    .print-header .customer-info{
+        margin: 10px 0;
+    }
+</style>
 <div class="print-header">
     <h1 ng-bind="print_data.meta.subject"></h1>
+    <span class="bill-no" ng-bind="print_data.meta.bill_no"></span>
+    <table class="customer-info">
+        <tr>
+            <th ng-bind="'crm.Customer'|lang" width="100"></th>
+            <td ng-bind="print_data.meta.customer_id__label__"></td>
+            <th ng-bind="'crm.Address'|lang" width="100"></th>
+            <td ng-bind="print_data.meta.customer_address"></td>
+            <th ng-bind="'crm.Phone'|lang" width="100"></th>
+            <td ng-bind="print_data.meta.customer_phone"></td>
+        </tr>
+    </table>
 </div>
 <div class="print-body">
     <table>

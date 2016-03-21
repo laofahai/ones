@@ -20,6 +20,8 @@ class OrdersModel extends CommonViewModel {
         ],
         "ContactsCompany" => [
             'name' => 'customer_id__label__',
+            'address' => 'customer_address',
+            'phone' => 'customer_phone',
             '_on' => 'Customer.contacts_company_id=ContactsCompany.id',
             '_type' => 'left'
         ],

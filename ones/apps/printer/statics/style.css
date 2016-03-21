@@ -16,6 +16,10 @@
   position: relative; }
   .print-container .print-header h1 {
     text-align: center; }
+  .print-container .print-header .bill-no {
+    position: absolute;
+    right: 10px;
+    top: 10px; }
 
 .mt-10 {
   margin-top: 10px; }
