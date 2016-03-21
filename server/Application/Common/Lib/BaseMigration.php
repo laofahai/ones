@@ -60,6 +60,27 @@ if(!class_exists('RecursiveFileFilterIterator')) {
     }
 }
 
+if(!class_exists('RecursiveFolderFilterIterator')) {
+    /*
+ * 遍历目录，并获取所有目录
+ * **/
+    class RecursiveFolderFilterIterator extends \FilterIterator {
+
+        public function __construct($path) {
+            parent::__construct(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)));
+        }
+
+        public function accept() {
+
+            $item = $this->getInnerIterator();
+            if ($item->isDir()) {
+                return true;
+            }
+            return false;
+        }
+    }
+}
+
 
 class BaseMigration extends AbstractMigration{
     
@@ -94,6 +115,18 @@ class BaseMigration extends AbstractMigration{
      * @todo 添加外键在析构函数或回调执行，保证所有字段已添加
      * **/
     public function fromYaml($app) {
+
+        if($app === '*') {
+            $ignore_dir = ['.', '..', '__MACOS', '.DS_Store'];
+            $fh = opendir(__APPLICATION__);
+            while($dir = readdir($fh)) {
+                if(is_dir(__APPLICATION__.$dir) && !in_array($dir, $ignore_dir)) {
+                    $this->fromYaml($dir);
+                }
+            }
+            closedir($fh);
+            return;
+        }
         
         list($app, $file) = explode('/', $app);
         
@@ -134,7 +167,7 @@ class BaseMigration extends AbstractMigration{
                 } else {
                     $this->_createTableForYaml($tableName, $fields);
                 }
-                $this->all_meta_info[$tableName] = array_merge((array)$this->all_meta_info[$tableName], $fields['$meta']);
+                $this->all_meta_info[$tableName] = array_merge((array)$this->all_meta_info[$tableName], (array)$fields['$meta']);
             }
         }
         

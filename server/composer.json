@@ -18,9 +18,7 @@
         "topthink/thinkphp": "3.2.2",
         "robmorgan/phinx": "*",
         "symfony/config": "*",
-        "workerman/workerman": "*",
-        "phpmailer/phpmailer": "dev-master",
-        "horseluke/alibaba-sdk": "dev-master"
+        "phpmailer/phpmailer": "dev-master"
     },
     "minimum-stability": "dev"
 }
