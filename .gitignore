@@ -10,6 +10,7 @@ server/*.log
 server/vendor
 server/uploads
 server/Data/install.lock
+server/composer.lock
 
 ones/apps/operationLog
 server/Application/OperationLog
