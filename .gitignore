@@ -10,6 +10,8 @@ server/*.log
 server/vendor
 server/uploads
 server/Data/install.lock
+server/composer.lock
+server/phinx.yml
 
 ones/apps/operationLog
 server/Application/OperationLog
