@@ -16,6 +16,9 @@ class PrintTemplateService extends CommonModel {
         ["company_id", "get_current_company_id", 1, "function"]
     ];
 
+    /*
+     * 解析模板配置
+     * */
     static public function parse_config($config_string) {
         if(!$config_string) {
             return [];
@@ -40,6 +43,17 @@ class PrintTemplateService extends CommonModel {
         }
 
         return $cleared_config;
-
     }
+
+    /*
+     * 解析模板内容
+     * */
+    static public function parse_content($content) {
+        if(substr($content, 0, 4) === 'apps/') { // 路径模式
+            return $content;
+        } else {
+            return base64_decode($content);
+        }
+    }
+
 }

@@ -99,6 +99,12 @@
 
                 // 获取单据数据
                 this.get_data_by_bill = function(service, template, callback) {
+
+                    if($scope.print_data) {
+                        callback($scope.print_data);
+                        return;
+                    }
+
                     var p = {
                         id: $routeParams.id,
                         _ir: true
@@ -116,6 +122,7 @@
                     });
 
                     $scope.fields_define = row_model.config.fields;
+                    $scope.total_items = {};
 
                     service.resource.get(p).$promise.then(function(response_data) {
 
@@ -134,8 +141,14 @@
                                 } else {
                                     cleared_row[field] = row[field + '__label__'];
                                 }
-                            });
 
+                                if(row_model.config.fields[field] && row_model.config.fields[field].total_able) {
+                                    if(!$scope.total_items[field]) {
+                                        $scope.total_items[field] = 0;
+                                    }
+                                    $scope.total_items[field] += Number(cleared_row[field]);
+                                }
+                            });
                             cleared_rows.push(cleared_row);
                         });
 

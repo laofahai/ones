@@ -1,17 +1,17 @@
 <style type="text/css">
-    .print-header .customer-info{
-        margin-top: 10px;
-        border:0;
-        table-layout: fixed;
+    .customer-info{
+        border:0 !important;
     }
-    .print-header .customer-info td, .print-header .customer-info th {
-        border: 0;
+    .customer-info td, .customer-info th {
+        border: 0 !important;
     }
 </style>
 <div class="print-header">
-    <span class="bill-date" ng-bind="print_data.meta.created"></span>
     <span class="bill-no" ng-bind="print_data.meta.bill_no"></span>
-    <h1 ng-bind="print_data.meta.subject"></h1>
+    <h1>
+        <span ng-bind="'company_profile.company_name'|to_ones_var"></span>
+        <span ng-bind="print_data.meta.subject"></span>
+    </h1>
     <table class="customer-info" border="0">
         <tr>
             <td>
@@ -33,7 +33,7 @@
     <table>
         <thead>
             <tr>
-                <th ng-if="print_config.bill_row_fields.indexOf('_sn')>=0" align="center" style="text-align:center" width="50">#</th>
+                <th ng-if="print_config.bill_row_fields.indexOf('_sn')>=0" class="text-center" width="100">#</th>
                 <th
                         ng-bind="fields_define[row_field].label||(row_field|camelSpace|lang)"
                         ng-repeat="row_field in print_config.bill_row_fields track by row_field"
@@ -53,18 +53,42 @@
                 </td>
             </tr>
             <tr class="amount_to">
-                <td ng-bind="'common.Amount To'|lang" align="center"></td>
-                <td
-                        ng-bind="item[row_field]"
+                <th ng-bind="'common.Amount To'|lang" class="text-center"></th>
+                <th
+                        ng-bind="total_items[row_field]"
                         ng-repeat="row_field in print_config.bill_row_fields track by row_field"
                         ng-if="row_field!=='_sn'">
-                </td>
+                </th>
             </tr>
         </tbody>
         <tfoot>
             <tr>
+                <th class="text-center" ng-bind="'sale.Net Total Receive Amount'|lang"></th>
+                <td ng-bind="print_data.meta.net_receive"></td>
+                <th class="text-center" align="center">大写</th>
+                <td ng-bind="print_data.meta.net_receive|money_to_cny" colspan="20"></td>
             </tr>
         </tfoot>
+    </table>
+    <table class="customer-info" border="0">
+        <tr>
+            <td>
+                <strong ng-bind="('sale.Sales People'|lang)+':'"></strong>
+                <span ng-bind="print_data.meta.user_info_id|to_user_fullname"></span>
+            </td>
+            <td>
+                <strong ng-bind="('common.Originator'|lang)+':'"></strong>
+                <span ng-bind="'user_info.id'|to_ones_var|to_user_fullname"></span>
+            </td>
+            <td>
+                <strong ng-bind="('common.Address'|lang)+':'"></strong>
+                <span ng-bind="'company_profile.address'|to_ones_var"></span>
+            </td>
+            <td>
+                <strong ng-bind="('common.Phone'|lang)+':'"></strong>
+                <span ng-bind="'company_profile.phone'|to_ones_var"></span>
+            </td>
+        </tr>
     </table>
 </div>
 <div class="print-footer"></div>

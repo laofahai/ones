@@ -13,6 +13,4 @@ use Symfony\Component\Yaml\Yaml;
 class PrintTemplateController extends BaseRestController {
 
 
-
-
 }

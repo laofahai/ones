@@ -18,10 +18,6 @@
     text-align: center; }
   .print-container .print-header .bill-no {
     position: absolute;
-    right: 10px;
-    top: 10px; }
-  .print-container .print-header .bill-date {
-    position: absolute;
     left: 10px;
     top: 10px; }
 

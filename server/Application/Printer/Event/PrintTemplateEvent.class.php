@@ -19,9 +19,16 @@ class PrintTemplateEvent extends BaseRestEvent {
 
         foreach($list as $k=>$v) {
             $list[$k]['config'] = PrintTemplateService::parse_config($v['config']);
+            $list[$k]['content'] = PrintTemplateService::parse_content($v['content']);
         }
 
         return $list;
     }
+
+    public function _before_item_response_($data) {
+        $data['content'] = base64_decode($data['content']);
+        return $data;
+    }
+
 
 }
