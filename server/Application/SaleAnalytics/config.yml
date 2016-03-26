@@ -20,6 +20,11 @@ global_include:
         - apps/saleAnalytics/model
         - apps/saleAnalytics/plugin
 
+include:
+    js:
+        - apps/analytics/service
+    css:
+        - apps/analytics/statics/style
 
 navs:
     Marketing:

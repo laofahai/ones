@@ -197,15 +197,17 @@ class CommonBillService extends CommonModel {
         /*
          * 开始执行工作流
          * */
-        $meta_data = [
-            'remark' => $meta['remark']
-        ];
-        $workflow_service = D('Bpm/Workflow');
-        $workflow_result = $workflow_service->start_progress($meta['workflow_id'], $id, $meta_data);
-        if(false === $workflow_result) {
-            $this->error = $workflow_service->getError();
-            $this->rollback();
-            return false;
+        if($meta['workflow_id']) {
+            $meta_data = [
+                'remark' => $meta['remark']
+            ];
+            $workflow_service = D('Bpm/Workflow');
+            $workflow_result = $workflow_service->start_progress($meta['workflow_id'], $id, $meta_data);
+            if(false === $workflow_result) {
+                $this->error = $workflow_service->getError();
+                $this->rollback();
+                return false;
+            }
         }
 
         $this->commit();

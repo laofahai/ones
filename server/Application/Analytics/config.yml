@@ -7,8 +7,3 @@ requirements:
 auth_nodes:
 
 
-global_include:
-    js:
-        - apps/analytics/service
-    css:
-        - apps/analytics/statics/style

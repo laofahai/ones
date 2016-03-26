@@ -537,7 +537,7 @@ class WorkflowService extends CommonModel {
 
         $action = explode(',', $action);
         foreach($action as $a) {
-            list($k, $v) = explode('=');
+            list($k, $v) = explode('=', $a);
             $save_data[trim($k)] = trim($v);
         }
 

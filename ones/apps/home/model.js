@@ -14,7 +14,8 @@
                             get_display: function(value, item) {
                                 var local_name = _(item.alias+'.APP_NAME');
                                 return local_name === "APP_NAME" ? item.alias : local_name;
-                            }
+                            },
+                            grid_fixed: true
                         },
                         description: {
                             get_display: function(value, item) {
@@ -30,7 +31,8 @@
                             get_display: function(value) {
                                 return to_boolean_icon(value > 0);
                             },
-                            data_source: window.BOOLEAN_DATASOURCE
+                            data_source: window.BOOLEAN_DATASOURCE,
+                            grid_fixed: true
                         },
                         type: {
                             data_source: [

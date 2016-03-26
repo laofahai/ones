@@ -40,6 +40,10 @@ $apps = [
         'requirements' => "product,bpm,crm",
         'type' => 'marketing'
     ],
+    'saleAnalytics' => [
+        'requirements' => "sale,crm,analytics,marketing",
+        'type' => 'analytics'
+    ],
     'region' => [],
     'analytics' => [
         'type' => 'analytics'
