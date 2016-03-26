@@ -5,7 +5,7 @@
      * @link https://ng-erp.com
      * */
     'use strict';
-    angular.module('ones.app.*alias*.model', [])
+    ones.global_module
 
     ;
 

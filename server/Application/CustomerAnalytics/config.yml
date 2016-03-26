@@ -1,0 +1,11 @@
+alias: customerAnalytics
+author: 
+link: 
+requirements: 
+
+auth_nodes:
+
+include:
+    js:
+        - apps/customerAnalytics/main
+        - apps/customerAnalytics/model

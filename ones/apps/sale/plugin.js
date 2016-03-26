@@ -5,7 +5,9 @@
      * 额外加载文件
      * */
     ones.pluginRegister('after_js_loaded', function() {
-        ones.pluginScope.append('need_include_js', 'apps/sale/orders');
+        if(ones.app_info.app == 'crm' && ones.app_info.module == 'customer' && ones.app_info.action == 'view') {
+            ones.pluginScope.append('need_include_js', 'apps/sale/orders');
+        }
     });
 
     /* 客户明细中加入订单列表 */
