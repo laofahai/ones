@@ -17,7 +17,7 @@ class I18nEvent extends BaseRestEvent {
 
         $apps_get = I('get.apps');
 
-        if($apps_get === "all") {
+        if($apps_get === "all" or true) {
             $apps = array_merge((array)get_array_to_kv(D('Home/App')->select(), 'alias'), $this->baseApps);
         } else {
             $apps = explode(',', $apps_get);

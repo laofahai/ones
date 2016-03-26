@@ -528,8 +528,8 @@
                         angular.extend(p, self.options.query_params, extraParams || {});
 
                         if(self.scope.filterOptions && !p._kw) {
-                            p._mf = self.scope.filterOptions.matchField || undefined;
-                            p._mv = self.scope.filterOptions.matchFieldValue || undefined;
+                            p._mf = self.scope.filterOptions.matchField || p._mf;
+                            p._mv = self.scope.filterOptions.matchFieldValue || p._mv;
                         }
 
                         try {

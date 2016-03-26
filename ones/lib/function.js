@@ -121,6 +121,17 @@ function array_unique(arr) {
     return result;
 }
 /*
+* 带数组检测的push
+* */
+function array_push(arr, item) {
+    if(!angular.isArray(arr)) {
+        arr = [];
+    }
+
+    arr.push(item);
+}
+
+/*
 * 根据某字段值过滤数组
 * */
 function filter_array_by_field(array, field, value) {

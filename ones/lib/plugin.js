@@ -78,6 +78,17 @@
         ones.pluginHooks[hookName].push(funcName);
     };
 
+    /**
+     * 插件调用
+     * */
+    ones.pluginExecutor = function(hookName) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        var p = ones.pluginHooks[hookName] || [];
+        for (var i = 0; i < p.length; i++) {
+            ones.plugins[p[i]].apply(null, args);
+        }
+    };
+
 
     /**
      * angular服务方式调用插件

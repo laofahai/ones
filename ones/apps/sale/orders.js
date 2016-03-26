@@ -194,187 +194,189 @@
 
             }
         ])
-
-        .service('Sale.OrdersAPI', [
-            'ones.dataApiFactory',
-            '$injector',
-            function(dataAPI, $injector) {
-
-                this.resource = dataAPI.getResourceInstance({
-                    uri: 'sale/orders'
-                });
-
-                this.config = {
-                    app: 'sale',
-                    module: 'orders',
-                    table: 'orders',
-                    is_bill: true,
-                    detail_able: true,
-                    workflow: 'sale.orders',
-                    bill_row_model: 'Sale.OrdersDetailAPI',
-                    fields: {
-                        bill_no: {
-                            search_able: true,
-                            grid_fixed: true
-                        },
-                        subject: {
-                            search_able: true,
-                            grid_fixed: true
-                        },
-                        status: {
-                            addable: false,
-                            editable: false,
-                            get_display: function(value, item) {
-                                return item.workflow_node_status_label;
-                            }
-                        },
-                        quantity: {
-                            get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            }
-                        },
-                        net_receive: {
-                            get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            },
-                            label: _('common.Net Total Receive Amount')
-                        },
-                        user_info_id: {
-                            cell_filter: 'to_user_fullname'
-                        },
-                        created: {
-                            widget: 'datetime'
-                        },
-                        workflow_id: {
-                            data_source: 'Bpm.WorkflowAPI',
-                            data_source_query_param: {
-                                _mf: 'module',
-                                _mv: 'sale.orders',
-                                _fd: 'id,name'
-                            }
-                        },
-                        customer_id: {
-                            label: _('crm.Customer')
-                        }
-                    },
-                    bill_meta_required: [
-                        'subject', 'created', 'customer_id'
-                    ],
-                    filters: {
-                        workflow_id: {
-                            type: 'link'
-                        },
-                        by_user: {
-                            label: _('common.User'),
-                            type: 'link',
-                            data_source: window.DEAL_USER_DATASOURCE
-                        }
-                    },
-                    sortable: [
-                        'created', 'net_receive', 'quantity', 'status'
-                    ],
-                    list_hide: ['source_id', 'remark', 'currency']
-                };
-
-                if(is_app_loaded('printer')) {
-                    this.config.extra_selected_actions = [];
-                    var printer = $injector.get('ones.printerModule');
-                    printer.generate_selected_print_action(this.config.extra_selected_actions, 'sale', 'orders');
-                }
-            }
-        ])
-        .service('Sale.OrdersDetailAPI', [
-            'ones.dataApiFactory',
-            'Product.ProductAPI',
-            '$q',
-            function(dataAPI, product, $q) {
-                this.resource = dataAPI.getResourceInstance({
-                    uri: 'sale/ordersDetail'
-                });
-
-                this.config = {
-                    app: 'sale',
-                    module: 'ordersDetail',
-                    table: 'orders_detail',
-                    fields: {
-                        product_id: {
-                            label: _('product.Product')
-                            , widget: 'select3'
-                            , data_source: 'Product.ProductAPI'
-                            , auto_query: false
-                            , get_display: function() {
-                                return false;
-                            }
-                            , 'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
-                            , 'ng-keydown': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index, $event)'
-                        }
-                        , remark: {
-                            label: _('common.Remark')
-                            , blank: true
-                            , editable_required: 'product_id'
-                            , force_editable: true
-                        }
-                        , stock_quantity: {
-                            widget: 'static',
-                            width:200,
-                            label: _('sale.Stock Quantity'),
-                            get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            },
-                            get_bill_cell_after: function(value, item) {
-                                return to_product_measure_unit(product, $q, item);
-                            },
-                            editable: false
-                        }
-                        , unit_price: {
-                            label: _('common.Unit Price'),
-                            widget: 'number'
-                            , get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            },
-                            'ng-blur': '$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)'
-                        }
-                        , quantity: {
-                            label: _('common.Quantity')
-                            , widget: 'number'
-                            , get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            }
-                            // 单元格后置计量单位
-                            , get_bill_cell_after: function(value, item) {
-                                return to_product_measure_unit(product, $q, item);
-                            },
-                            'ng-blur': '$parent.$parent.$parent.fetch_stock_quantity(bill_rows, $parent.$parent, $parent.$index);$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)',
-                            editable_required: 'product_id'
-                            , total_able: true
-                        }
-                        , subtotal_amount: {
-                            editable: false
-                            , label: _('common.Subtotal Amount')
-                            , get_display: function(value, item) {
-                                return to_decimal_display(value);
-                            }
-                            , total_able: true
-                        }
-                    },
-                    bill_fields: [
-                        'product_id'
-                        , 'unit_price'
-                        ,'quantity'
-                        , 'subtotal_amount'
-                        ,'remark'
-                    ],
-
-                    bill_row_required: [
-                        'product_id', 'quantity'
-                    ]
-                };
-
-                if(is_app_loaded('storage')) {
-                    this.config.bill_fields.splice(this.config.bill_fields.indexOf('quantity')+1, 0, 'stock_quantity');
-                }
-            }
-        ])
     ;
+
+ones.global_module
+    .service('Sale.OrdersAPI', [
+        'ones.dataApiFactory',
+        '$injector',
+        function(dataAPI, $injector) {
+
+            this.resource = dataAPI.getResourceInstance({
+                uri: 'sale/orders'
+            });
+
+            this.config = {
+                app: 'sale',
+                module: 'orders',
+                table: 'orders',
+                is_bill: true,
+                detail_able: true,
+                workflow: 'sale.orders',
+                bill_row_model: 'Sale.OrdersDetailAPI',
+                fields: {
+                    bill_no: {
+                        search_able: true,
+                        grid_fixed: true
+                    },
+                    subject: {
+                        search_able: true,
+                        grid_fixed: true
+                    },
+                    status: {
+                        addable: false,
+                        editable: false,
+                        get_display: function(value, item) {
+                            return item.workflow_node_status_label;
+                        }
+                    },
+                    quantity: {
+                        get_display: function(value, item) {
+                            return to_decimal_display(value);
+                        }
+                    },
+                    net_receive: {
+                        get_display: function(value, item) {
+                            return to_decimal_display(value);
+                        },
+                        label: _('common.Net Total Receive Amount')
+                    },
+                    user_info_id: {
+                        cell_filter: 'to_user_fullname'
+                    },
+                    created: {
+                        widget: 'datetime'
+                    },
+                    workflow_id: {
+                        data_source: 'Bpm.WorkflowAPI',
+                        data_source_query_param: {
+                            _mf: 'module',
+                            _mv: 'sale.orders',
+                            _fd: 'id,name'
+                        }
+                    },
+                    customer_id: {
+                        label: _('crm.Customer')
+                    }
+                },
+                bill_meta_required: [
+                    'subject', 'created', 'customer_id'
+                ],
+                filters: {
+                    workflow_id: {
+                        type: 'link'
+                    },
+                    by_user: {
+                        label: _('common.User'),
+                        type: 'link',
+                        data_source: window.DEAL_USER_DATASOURCE
+                    }
+                },
+                sortable: [
+                    'created', 'net_receive', 'quantity', 'status'
+                ],
+                list_hide: ['source_id', 'remark', 'currency']
+            };
+
+            if(is_app_loaded('printer')) {
+                this.config.extra_selected_actions = [];
+                var printer = $injector.get('ones.printerModule');
+                printer.generate_selected_print_action(this.config.extra_selected_actions, 'sale', 'orders');
+            }
+        }
+    ])
+    .service('Sale.OrdersDetailAPI', [
+        'ones.dataApiFactory',
+        'Product.ProductAPI',
+        '$q',
+        function(dataAPI, product, $q) {
+            this.resource = dataAPI.getResourceInstance({
+                uri: 'sale/ordersDetail'
+            });
+
+            this.config = {
+                app: 'sale',
+                module: 'ordersDetail',
+                table: 'orders_detail',
+                fields: {
+                    product_id: {
+                        label: _('product.Product')
+                        , widget: 'select3'
+                        , data_source: 'Product.ProductAPI'
+                        , auto_query: false
+                        , get_display: function() {
+                            return false;
+                        }
+                        , 'ng-blur': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index)'
+                        , 'ng-keydown': '$parent.$parent.$parent.fetch_unit_price(bill_rows, $parent.$parent, $parent.$index, $event)'
+                    }
+                    , remark: {
+                        label: _('common.Remark')
+                        , blank: true
+                        , editable_required: 'product_id'
+                        , force_editable: true
+                    }
+                    , stock_quantity: {
+                        widget: 'static',
+                        width:200,
+                        label: _('sale.Stock Quantity'),
+                        get_display: function(value, item) {
+                            return to_decimal_display(value);
+                        },
+                        get_bill_cell_after: function(value, item) {
+                            return to_product_measure_unit(product, $q, item);
+                        },
+                        editable: false
+                    }
+                    , unit_price: {
+                        label: _('common.Unit Price'),
+                        widget: 'number'
+                        , get_display: function(value, item) {
+                            return to_decimal_display(value);
+                        },
+                        'ng-blur': '$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)'
+                    }
+                    , quantity: {
+                        label: _('common.Quantity')
+                        , widget: 'number'
+                        , get_display: function(value, item) {
+                            return to_decimal_display(value);
+                        }
+                        // 单元格后置计量单位
+                        , get_bill_cell_after: function(value, item) {
+                            return to_product_measure_unit(product, $q, item);
+                        },
+                        'ng-blur': '$parent.$parent.$parent.fetch_stock_quantity(bill_rows, $parent.$parent, $parent.$index);$parent.$parent.$parent.re_calculate_subtotal(bill_rows, $parent.$parent, $parent.$index)',
+                        editable_required: 'product_id'
+                        , total_able: true
+                    }
+                    , subtotal_amount: {
+                        editable: false
+                        , label: _('common.Subtotal Amount')
+                        , get_display: function(value, item) {
+                            return to_decimal_display(value);
+                        }
+                        , total_able: true
+                    }
+                },
+                bill_fields: [
+                    'product_id'
+                    , 'unit_price'
+                    ,'quantity'
+                    , 'subtotal_amount'
+                    ,'remark'
+                ],
+
+                bill_row_required: [
+                    'product_id', 'quantity'
+                ]
+            };
+
+            if(is_app_loaded('storage')) {
+                this.config.bill_fields.splice(this.config.bill_fields.indexOf('quantity')+1, 0, 'stock_quantity');
+            }
+        }
+    ])
+;
 
 })(window, window.angular, window.ones, window.io);

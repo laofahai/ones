@@ -487,7 +487,6 @@
                     unaddable: ['label', 'head', 'user_info_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role'],
                     uneditable: ['label', 'head', 'head_id', 'user_info_id', 'contacts_company_id', 'crm_clue_id', 'contacts_company_role_id'],
                     undetail_able: ['clue', 'contacts_company_role', 'contacts_company_id', 'contacts_company_role_id'],
-                    //list_display: ['label', 'name', 'master', 'phone', 'mobile', 'user_info_id'],
                     list_hide: ['remark', 'next_contact_content', 'contacts_company_id', 'related_company_id'],
                     modal_list_display: [
                         'name', 'master', 'phone'

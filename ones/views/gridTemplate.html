@@ -46,7 +46,7 @@
                         class="td-{{field}} {{column_defs[field].class}}"
                         ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
                         ui-event="{{column_defs[field].ui_event}}"
-                        ng-click="{{column_defs[field].ng_click}}"
+                        ng-click="column_defs[field].ng_click"
                         ng-bind-html="item[field]"
                         width="{{column_defs[field].width}}"
                             ></td>
@@ -110,7 +110,7 @@
                             class="td-{{field}} {{column_defs[field].class}}"
                             ng-class="{sorting: sortInfo.fields == field, 'text-center': column_defs[field].align=='center'}"
                             ui-event="{{column_defs[field].ui_event}}"
-                            ng-click="{{column_defs[field].ng_click}}"
+                            ng-click="column_defs[field].ng_click"
                             ng-bind-html="item[field] + '&nbsp;'"
                                 ></td>
                     </tr>

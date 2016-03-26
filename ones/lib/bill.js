@@ -437,7 +437,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             height: self.opts.bill_no.height,
                             displayValue: self.opts.bill_no.display_value
                             , format:	"CODE128"
-                        });
+                        }).height(self.opts.bill_no.height);
                     });
 
                     self.parentScope.bar_code_field = self.opts.bill_no.field;

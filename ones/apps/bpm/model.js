@@ -119,8 +119,7 @@
                         source_model: ones.app_info.app + '.' + ones.app_info.module
                     };
                     self.resource.save(params, data).$promise.then(function(response_data) {
-                        console.log(123123);
-                        $location.reload();
+                        window.location.reload();
                     });
                 };
 

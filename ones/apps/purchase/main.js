@@ -7,8 +7,7 @@
     'use strict';
     angular.module('ones.app.purchase.main', [
         'ones.app.purchase.model',
-        'ones.billModule',
-        'ones.app.supplier.model'
+        'ones.billModule'
     ])
         .config(['$routeProvider', function($route) {
             $route

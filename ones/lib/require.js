@@ -8,7 +8,7 @@
 
     ones.included_static = [];
 
-    ones.include_js = function(path, callback) {
+    ones.include_js = function(path, outer_callback, check_other_include) {
         
         if(!path) {
             return;
@@ -20,6 +20,16 @@
 
         var include_paths = [];
         var inited = false;
+
+        var callback = function() {
+            ones.pluginExecutor('after_js_loaded');
+            var need_load_other = ones.pluginScope.get('need_include_js');
+            if(need_load_other && false !== check_other_include) {
+                ones.include_js(need_load_other, outer_callback, false);
+            } else {
+                outer_callback();
+            }
+        };
 
         path = array_unique(path);
         angular.forEach(path, function(p) {
@@ -42,6 +52,7 @@
                     console && console.log(type, error);
                 }
             });
+
         });
 
         ones.DEBUG && console.debug('Load js: ', include_paths);
@@ -62,7 +73,7 @@
 
     };
     
-    ones.include_css = function(path) {
+    ones.include_css = function(path, check_other_include) {
         
         if(!path) {
             return;
@@ -81,6 +92,7 @@
         var element = "";
         
         var tpl = '<link href="%s.css%s" type="text/css" rel="stylesheet" data-path="%s" />';
+
         
         var __include = function(path) {
             element = sprintf(tpl,
@@ -96,6 +108,12 @@
             });
         } else {
             __include(path);
+        }
+
+        ones.pluginExecutor('after_css_loaded');
+        var need_load_other = ones.pluginScope.get('need_include_css');
+        if(need_load_other && false !== check_other_include) {
+            ones.include_css(need_load_other, false);
         }
         
     };

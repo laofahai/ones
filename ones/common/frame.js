@@ -41,9 +41,8 @@ var frame_init = function() {
          * */
         LoadConfig(app, function() {
             var config = C(app);
+            ones.pluginExecutor('after_base_config_loaded', config);
 
-            ones.DEBUG && console.debug('loding frame config', config);
-            
             if(!config || !angular.isObject(config)) {
                 // 不能加载应用配置， 输出错误信息
                 frame_app_load_failed('load_config');
@@ -68,8 +67,6 @@ var frame_init = function() {
             }
 
             ones.load_all_i18n = config.load_all_i18n;
-
-
 
             var include_callback = function() {
                 var angular_app_name = 'ones.app.'+app+ (app.indexOf('.') >= 0 ? '' : '.main'); // 支持导入非main模块

@@ -206,6 +206,7 @@
                     // 调用插件 扩展操作
                     var plugin_key = sprintf('extend_%s_%s_detail_split_actions', ones.app_info.app, ones.app_info.module);
                     plugin.callPlugin(plugin_key);
+
                     angular.deep_extend(this.actions, ones.pluginScope.get(plugin_key) || {});
 
                     // 当前action
@@ -257,7 +258,7 @@
                                 : undefined;
 
                             // action init
-                            scope.current_action_info.init(scope, $routeParams.id);
+                            scope.current_action_info.init(scope, $routeParams.id, data);
                         });
 
                     // 延迟更新右侧导航高度
