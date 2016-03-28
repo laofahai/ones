@@ -32,10 +32,9 @@ class I18nEvent extends BaseRestEvent {
 
         array_unshift($apps, 'common');
         $apps = array_unique($apps);
-
-        if($apps !== array("common", "account") && !$this->is_login()) {
-            $this->login_required();
-        }
+//        if($apps !== array("common", "account") && !$this->is_login()) {
+//            $this->login_required();
+//        }
 
         foreach($this->appConfigs as $_app => $_config) {
             if($_config['i18n_global_loaded']) {

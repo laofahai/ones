@@ -51,7 +51,11 @@ function i18n_init(apps, callback) {
             error: function(response) {
                 switch(response.status) {
                     case 401:
-                        window.top.location.href = 'index.html';
+                        if(location.hash !== '#redirected') {
+                            window.top.location.href = 'index.html#redirected';
+                        } else {
+                            alert('Error when load I18N: unauthed');
+                        }
                         break;
                 }
             }
