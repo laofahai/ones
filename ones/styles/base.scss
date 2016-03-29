@@ -292,3 +292,19 @@ a, button, input {
 .pos-relative {
     position:relative;
 }
+
+
+.ysf-online-kefu {
+    img {
+        max-width: 70px !important;
+        opacity: 0.8;
+        transform:scale(0.8);
+        transition:all 0.2s ease-in-out;
+    }
+}
+.ysf-online-kefu:hover {
+    img {
+        opacity: 1;
+        transform:scale(1);
+    }
+}
