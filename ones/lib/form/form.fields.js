@@ -374,7 +374,6 @@
                         var data_source = $injector.get(config.data_source);
                         // 动态新增
                         self.scope.cant_be_dynamic_add = config.dynamic_add === false ? false : true;
-                        console.log('dynamic add', self.scope.cant_be_dynamic_add);
                         self.scope.select_dynamic_add = function() {
                             RootFrameService.open_frame({
                                 src: sprintf('%s/%s/add', data_source.config.app, data_source.config.module),
@@ -422,6 +421,7 @@
                         });
                         $('body').delegate('#'+config.id, 'focus', function() {
                             var ele = $(this);
+                            ele.select();
                             $timeout(function() {
                                 var keyword = $.trim(ele.val());
 
@@ -440,13 +440,29 @@
                             });
                         });
 
+                        // 设置当前使用的model
+                        var set_runtime_model = function(origin_model) {
+                            model = origin_model;
+                            //config.id = origin_model.replace('.', '_');
+                            label_model = model + '__label__';
+                            items_model = model + '__select3_items__';
+                            selected_item_model = model+'__select3_selected__';
+
+                            label_getter = $parse(label_model);
+                            model_getter = $parse(origin_model);
+                            items_getter = $parse(items_model);
+                            selected_getter = $parse(selected_item_model);
+                        };
+
                         // 控件初始化
                         var select3_init = function(ele, keyword) {
                             runtime_scope.active_select3_index = 0;
+                            set_runtime_model($(ele).data('origin-model'));
 
                             if(ele.parent('.select3-container').find('ul.items').length <= 0) {
                                 var tpl = sprintf(FORM_FIELDS_TPL.select3_items, {
-                                    items_model: items_model
+                                    items_model: items_model,
+                                    origin_model: model
                                 });
                                 ele.parent('.select3-container').append($compile(tpl)(runtime_scope));
                             }
@@ -464,15 +480,22 @@
                         };
 
                         // 选中项目
-                        var do_select3_item_select = function(item, auto_hide) {
-                            if(!item || !item.value || !item.label) {
+                        var do_select3_item_select = function(item, auto_hide, origin_model, $event) {
+
+                            if(!config.select3_auto_add && (!item || !item.value || !item.label)) {
                                 return;
                             }
-                            $timeout(function() {
-                                runtime_scope[selected_item_model] = item;
-                                label_getter.assign(runtime_scope, item.label);
-                                model_getter.assign(runtime_scope, item.value);
-                                selected_getter.assign(runtime_scope, item);
+                            if(origin_model) {
+                                set_runtime_model(origin_model);
+                            }
+
+                            var select_real_method = function(item) {
+                                item = item || {};
+                                $timeout(function() {
+                                    runtime_scope[selected_item_model] = item;
+                                    label_getter.assign(runtime_scope, item.label);
+                                    model_getter.assign(runtime_scope, item.value);
+                                    selected_getter.assign(runtime_scope, item);
 
                                 enter_ing = false;
                             });
@@ -486,6 +509,7 @@
 
                         // 上下键索引
                         runtime_scope.do_select3_keydown = function($event) {
+                            set_runtime_model($($event.target).data('origin-model'));
                             switch($event.keyCode) {
                                 case KEY_CODES.DOWN:
                                     runtime_scope.active_select3_index =
@@ -502,11 +526,15 @@
                                     selected_getter.assign(runtime_scope, runtime_scope.$eval(items_model)[runtime_scope.active_select3_index]);
                                     break;
                                 case KEY_CODES.ENTER:
-                                    window.ajax_ing = true;
-                                    var the_item = runtime_scope.$eval(items_model) || [];
-                                    do_select3_item_select(
-                                        the_item[runtime_scope.active_select3_index],
-                                        true);
+                                    if(!enter_ing) {
+                                        var the_item = runtime_scope.$eval(items_model) || [];
+                                        do_select3_item_select(
+                                            the_item[runtime_scope.active_select3_index],
+                                            true,
+                                            undefined,
+                                            $event
+                                        );
+                                    }
                                     enter_ing = true;
                                     break;
                                 default:
@@ -530,25 +558,39 @@
                             var query_params = {_kw: temp_label};
                             var valueField = config.data_source_value_field||data_source.config.value_field||'id';
 
+                            var _mf = [];
+                            var _mv = [];
+
+                            // 其他查询条件
+                            if(config.data_source_query_param) {
+                                _mf = angular.isArray(config.data_source_query_param._mf) ? config.data_source_query_param._mf : config.data_source_query_param._mf.split(',');
+                                _mv = angular.isArray(config.data_source_query_param._mv) ? config.data_source_query_param._mv : String(config.data_source_query_param._mv).split(',');
+                            }
+
                             // 根据已有数据查询
                             if(config.data_source_query_with) {
-                                var _mf = [];
-                                var _mv = [];
+
                                 if(!angular.isArray(config.data_source_query_with)) {
                                     config.data_source_query_with = [config.data_source_query_with];
                                 }
                                 for(var i=0;i<config.data_source_query_with.length;i++) {
                                     var req = config.data_source_query_with[i];
-                                    var exists_model = config['ng-model'].split('.').slice(0, -1).join('.') + '.' + req;
+                                    var exists_model = model.split('.').slice(0, -1).join('.') + '.' + req;
 
-                                    _mf.push(req);
-                                    _mv.push(runtime_scope.$eval(exists_model));
+                                    var exists_index = _mf.indexOf(req);
+
+                                    if(exists_index >= 0) {
+                                        _mv[exists_index] = runtime_scope.$eval(exists_model);
+                                    } else {
+                                        _mf.push(req);
+                                        _mv.push(runtime_scope.$eval(exists_model));
+                                    }
+
                                 }
-
-                                query_params._mf = _mf.join();
-                                query_params._mv = _mv.join();
                             }
 
+                            query_params._mf = _mf.join();
+                            query_params._mv = _mv.join();
 
                             data_source.resource.api_query(query_params).$promise.then(function(data) {
                                 if(!data) {

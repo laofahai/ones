@@ -73,22 +73,28 @@ class CommonModel extends Model {
     /*
      * 设置错误信息
      * */
-    protected function set_error($error, $error_code=null, $include_sql=true) {
+    protected function set_error($error, $error_code=null, $include_sql=true, $model=null) {
         $this->error = $error;
         $this->error_code = $error_code;
 
+        $obj = $model ? $model : $this;
+
         if(DEBUG && $include_sql) {
-            $this->error .= ' SQL: '. $this->getLastSql();
+            $this->error .= ' SQL: '. $obj->getLastSql();
         }
     }
 
-    protected function setError($error, $error_code=null, $include_sql=true) {
-        return $this->set_error($error, $error, $include_sql);
+    protected function setError($error, $error_code=null, $include_sql=true, $model=null) {
+        return $this->set_error($error, $error_code, $include_sql, $model);
     }
 
     public function getError() {
         $error_code = $this->error_code ? sprintf('[%s] ', $this->error_code) : '';
         return $error_code.$this->error;
+    }
+
+    public function set($k, $v) {
+        $this->$k = $v;
     }
 
 }

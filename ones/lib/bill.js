@@ -1,11 +1,14 @@
 var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-group-addon">%(label)s</span>%(input)s</div>';
 (function(window, angular, ones, io) {
     'use strict';
-    angular.module('ones.billModule', ['ones.formFieldsModule', 'ngClipboard',])
-        .config(["ngClipProvider", function(ngClipProvider) {
-            // ng-click to copy
-            ngClipProvider.setPath("lib/ZeroClipboard.swf");
-        }])
+    angular.module('ones.billModule', ['ones.formFieldsModule', 'ngClipboard'])
+        .config([
+            "ngClipProvider",
+            function(ngClipProvider) {
+                // ng-click to copy
+                ngClipProvider.setPath("lib/ZeroClipboard.swf");
+            }
+        ])
         .service('BillModule', [
             '$routeParams',
             '$timeout',
@@ -80,7 +83,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             angular.forEach(row, function(v, k) {
                                 if(total_able_fields.indexOf(k) >= 0) {
                                     totals[k] = totals[k] || 0;
-                                    totals[k] += Number(v);
+                                    totals[k] += to_decimal_display(v);
                                 }
                             });
                         });
@@ -90,7 +93,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             getter.assign($runtime_scope, value);
 
                             var label_getter = $parse('bill_meta_data.' + field + '__total____label__');
-                            label_getter.assign($runtime_scope, to_decimal_display(value));
+                            label_getter.assign($runtime_scope, to_decimal_display(value, false, true));
                         });
 
                         if(false !== update_net) {
@@ -104,9 +107,9 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         }
                         var sub_total_getter = $parse('bill_rows['+row_index+'].subtotal_amount');
                         var sub_total_label_getter = $parse('bill_rows['+row_index+'].subtotal_amount__label__');
-                        var sub_total = rows[row_index].quantity * rows[row_index].unit_price;
+                        var sub_total = to_decimal_display(rows[row_index].quantity) * to_decimal_display(rows[row_index].unit_price);
                         sub_total_getter.assign(row_scope, to_decimal_display(sub_total));
-                        sub_total_label_getter.assign(row_scope, to_decimal_display(sub_total));
+                        sub_total_label_getter.assign(row_scope, to_decimal_display(sub_total, false, true));
                     }
                 };
 
@@ -196,6 +199,11 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                 };
 
                 this.run = function() {
+
+                    this.scope.$watch('column_defs', function(updated_column_defs) {
+                        self.scope.column_defs = updated_column_defs;
+                    });
+
                     // 编辑模式
                     if($routeParams.id) {
                         this.opts.isEdit = true;
@@ -288,7 +296,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                     // 单元格初始化
                     this.scope.cell_init = function(column_def, td, form_name, td_scope) {
-
 
                         var tr_id = td.data('row-index');
 
@@ -481,7 +488,13 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         // 字段配置
                         var column_def = {};
 
+                        // 是否已绑定时间
+                        var event_binded = [];
+
                         var bind_element_event = function(column_def, element, is_td) {
+
+
+
                             if(is_td) {
                                 td = $(element);
                             } else {
@@ -528,90 +541,102 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                 //$(element).find('input.form-control').select();
                             });
 
-                            // 失去焦点事件
-                            ele.delegate('input.form-control', 'blur', function() {
-                                // 隐藏输入框
-                                setTimeout(function() {
-                                    ele.find('.bill_editable_widget').addClass('hide');
-                                    ele.find('label.bill_row_td_editable_label').removeClass('hide');
-                                }, 50);
+                            if(event_binded.indexOf(element) < 0) {
+                                event_binded.push(element);
+                                // 失去焦点事件
+                                ele.delegate('input.form-control', 'blur', function() {
+                                    // 隐藏输入框
+                                    setTimeout(function() {
+                                        ele.find('.bill_editable_widget').addClass('hide');
+                                        ele.find('label.bill_row_td_editable_label').removeClass('hide');
+                                    }, 50);
 
-                                // 检测label model 是否已正确
-                                $timeout(function(){
-                                    var label_value = scope.$eval(column_def['label-model']);
-                                    var old_label_value = angular.copy(label_value);
-                                    if(typeof column_def.get_display === 'function') {
-                                        label_value = column_def.get_display(
-                                            scope.$eval(column_def['ng-model']), // value
-                                            scope.$eval(form_name)// row item
-                                        );
-                                        label_value = filter_invalid_value(label_value);
-                                        var getter = $parse(column_def['label-model']);
-                                        getter.assign(scope, label_value || old_label_value);
-                                    } else {
-                                        var getter = $parse(column_def['label-model']);
-                                        getter.assign(scope, old_label_value || scope.$eval(column_def['ng-model']));
+                                    // 检测label model 是否已正确
+                                    $timeout(function(){
+
+                                        // 小数保留
+                                        if (column_def.widget === 'number') {
+                                            var getter = $parse(column_def['ng-model']);
+                                            getter.assign(scope, to_decimal_display(scope.$eval(column_def['ng-model'])));
+                                        }
+
+                                        var label_value = scope.$eval(column_def['label-model']);
+                                        var old_label_value = angular.copy(label_value);
+                                        if(typeof column_def.get_display === 'function') {
+                                            label_value = column_def.get_display(
+                                                scope.$eval(column_def['ng-model']), // value
+                                                scope.$eval(form_name)// row item
+                                            );
+                                            label_value = filter_invalid_value(label_value);
+                                            var getter = $parse(column_def['label-model']);
+                                            getter.assign(scope, label_value || old_label_value);
+                                        } else {
+                                            var getter = $parse(column_def['label-model']);
+                                            getter.assign(scope, old_label_value || scope.$eval(column_def['ng-model']));
+                                        }
+                                    });
+
+                                    bind_before_and_after(column_def);
+                                });
+
+                                //回车事件
+                                ele.delegate('input.form-control', 'keydown', function(event) {
+                                    if(event.keyCode === KEY_CODES.ENTER) {
+                                        // 自动进入下一可编辑区域
+                                        var find_next = function() {
+                                            // 寻找当前行下一可编辑框
+                                            var ele = $(event.target).parents('td').nextAll('td.td_editable');
+                                            var tr = $(event.target).parents('tr');
+
+                                            var focus_next_line = function(next_tr) {
+                                                next_tr = $(next_tr);
+                                                if(!next_tr) {
+                                                    return;
+                                                }
+                                                var next_td_ele = next_tr.find('td.td_editable');
+                                                if(next_td_ele) {
+                                                    $(next_td_ele[0]).find('label').trigger('click');
+                                                }
+                                            };
+                                            if(ele[0]) {
+                                                $(ele[0]).find('label').trigger('click');
+                                                return;
+                                            } else {
+                                                ele = tr.nextAll('tr.tr_editable')[0];
+                                                if(!ele) {
+                                                    // 自动新增一行
+                                                    scope.add_row(tr.index()+1);
+                                                    $timeout(function() {
+                                                        ele = tr.nextAll('tr.tr_editable')[0];
+                                                        focus_next_line(ele);
+                                                    });
+                                                } else {
+                                                    focus_next_line(ele);
+                                                }
+
+                                            }
+                                        };
+
+                                        $timeout(function() {
+                                            if(!window.ajax_ing) {
+                                                find_next();
+                                            } else {
+                                                var i = 0;
+                                                var t = setInterval(function() {
+                                                    if(!window.ajax_ing || i >= 30) {
+                                                        find_next();
+                                                        clearInterval(t);
+                                                    }
+                                                    i++;
+                                                }, 100);
+                                            }
+                                        });
                                     }
                                 });
 
-                                bind_before_and_after(column_def);
+                            }
 
-                            });
 
-                            //回车事件
-                            ele.delegate('input.form-control', 'keydown', function(event) {
-                                if(event.keyCode === KEY_CODES.ENTER) {
-                                    // 自动进入下一可编辑区域
-                                    var find_next = function() {
-                                        // 寻找当前行下一可编辑框
-                                        var ele = $(event.target).parents('td').nextAll('td.td_editable');
-                                        var tr = $(event.target).parents('tr');
-
-                                        var focus_next_line = function(next_tr) {
-                                            next_tr = $(next_tr);
-                                            if(!next_tr) {
-                                                return;
-                                            }
-                                            var next_td_ele = next_tr.find('td.td_editable');
-                                            if(next_td_ele) {
-                                                $(next_td_ele[0]).find('label').trigger('click');
-                                            }
-                                        };
-                                        if(ele[0]) {
-                                            $(ele[0]).find('label').trigger('click');
-                                            return;
-                                        } else {
-                                            ele = tr.nextAll('tr.tr_editable')[0];
-                                            if(!ele) {
-                                                // 自动新增一行
-                                                scope.add_row(tr.index()+1);
-                                                $timeout(function() {
-                                                    ele = tr.nextAll('tr.tr_editable')[0];
-                                                    focus_next_line(ele);
-                                                });
-                                            } else {
-                                                focus_next_line(ele);
-                                            }
-
-                                        }
-                                    };
-
-                                    $timeout(function() {
-                                        if(!window.ajax_ing) {
-                                            find_next();
-                                        } else {
-                                            var i = 0;
-                                            var t = setInterval(function() {
-                                                if(!window.ajax_ing || i >= 30) {
-                                                    find_next();
-                                                    clearInterval(t);
-                                                }
-                                                i++;
-                                            }, 100);
-                                        }
-                                    });
-                                }
-                            });
                         };
 
                         // 绑定单元格前置和后置

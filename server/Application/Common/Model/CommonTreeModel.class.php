@@ -13,6 +13,10 @@ class CommonTreeModel extends CommonModel {
 
     protected $enable_trash = true;
 
+    public function set($k, $v) {
+        $this->$k = $v;
+    }
+
     /*
      * 获得缩进树形
      * */

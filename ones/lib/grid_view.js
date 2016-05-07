@@ -351,7 +351,7 @@
                     self.scope.$root.link_actions = self.scope.$root.link_actions || [];
                     // 新增
                     var add_btn = {
-                        label: _("common.Add New") + ' ' + _(self.model_config.app+'.'+camelCaseSpace(self.model_config.module)),
+                        label: _("common.Add New") + ' ' + _(self.model_config.app+'.'+camelCaseSpace(self.model_config.module||'')),
                         src: sprintf('%s/%s/%s%s',
                             self.model_config.app,
                             camelCase(self.model_config.module).lcfirst(),
@@ -394,7 +394,9 @@
                     try {
                         var PageSelectedActions = $injector.get('PageSelectedActions');
                         self.selectedActions = PageSelectedActions.generate(self.options.model, self.scope);
-                    } catch(e) { }
+                    } catch(e) {
+                        console.log(e);
+                    }
                     self.scope.$root.selectedActions = self.selectedActions = reIndex(self.selectedActions);
                 };
 
@@ -588,7 +590,7 @@
                         var mf = self.scope.filterOptions.matchField ? self.scope.filterOptions.matchField.split(',') : [];
                         var mv = self.scope.filterOptions.matchFieldValue ? self.scope.filterOptions.matchFieldValue.split(',') : [];
 
-                        if(self.options.query_params._mf && self.options.query_params._mv !== undefined) {
+                        if(self.options.query_params && self.options.query_params._mf && self.options.query_params._mv !== undefined) {
                             angular.extend(mf, self.options.query_params._mf.split(','));
                             angular.extend(mv, self.options.query_params._mv.split(','));
                         }

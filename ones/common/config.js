@@ -40,7 +40,7 @@ ones.APP_ENTRY = 'app.html';
 ones.global_module = angular.module("ones.global", []);
 
 // 常用按键
-KEY_CODES = {
+window.KEY_CODES = {
     DOWN: 40
     , UP: 38
     , ENTER: 13
@@ -102,6 +102,7 @@ function config_init(apps, callback) {
         },
         error: function(response) {
             if(response.status === 401) {
+                ones.caches.removeItem('user.session_token');
                 window.location.href = "index.html";
             } else {
                 var response_content = {};
@@ -337,8 +338,7 @@ angular.module("ones.configModule", [
 
     .run([
         "$http", "$rootScope", "ones.dataApiFactory",
-        "Account.UserPreferenceAPI",
-        function($http, $rootScope, dataAPI, user_preference_api) {
+        function($http, $rootScope, dataAPI) {
             $http.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
             //$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
             $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
@@ -348,7 +348,10 @@ angular.module("ones.configModule", [
             $http.defaults.headers.common["Client-Language"] = ones.caches.getItem('user.client_language') || ones.default_language;
             
             // session key
-            $http.defaults.headers.common["Token"] = ones.caches.getItem('user.session_token');
+            var session_token = ones.caches.getItem('user.platform_session_token') || ones.caches.getItem('user.session_token');
+            if(session_token) {
+                $http.defaults.headers.common["Token"] = session_token;
+            }
 
             // API接口版本
             $http.defaults.headers.common['API-Version'] = ones.api_version;

@@ -28,4 +28,8 @@ class CommonRelationModel extends RelationModel {
         return parent::where($map, $parse);
     }
 
+    public function set($k, $v) {
+        $this->$k = $v;
+    }
+
 }

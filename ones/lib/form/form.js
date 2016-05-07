@@ -55,12 +55,15 @@
                     this.model_config = this.config.model.config;
                     this.model_config.fields = this.model_config.fields || {};
 
+                    ones.DEBUG  && console.debug('model_config: ', this.model_config);
                     // 是否字段分组
                     if(this.model_config.fields_groups) {
                         this.scope.$parent.has_fields_groups = true;
                         this.scope.$parent.fields_groups = this.model_config.fields_groups;
                         this.scope.$parent.active_fields_group = this.model_config.fields_groups[0].name;
                     }
+
+                    ones.DEBUG && console.debug('fields_group', this.scope.$parent.has_fields_groups, this.scope.$parent.fields_groups);
 
                     // 检测是否有分组或者是否字段在分组中可显示
                     this.scope.check_is_in_active_group = function(field) {

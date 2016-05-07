@@ -57,6 +57,7 @@
                         icon: 'key',
                         auth_node: 'account.authorize.put',
                         action: function(evt, selected, item) {
+                            item = item || selected[0];
                             $location.url('/account/accountRole/authorize/'+item.id);
                         }
                     }]

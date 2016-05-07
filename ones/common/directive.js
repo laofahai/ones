@@ -22,7 +22,7 @@ angular.module("ones.directiveModule", [])
     .directive("pageActions", ["$compile", function($compile) {
         return {
             restrict: "E",
-            templateUrl: 'views/actions.html',
+            templateUrl: get_view_path('views/actions.html'),
             replace: true,
             transclude: true,
             scope: false

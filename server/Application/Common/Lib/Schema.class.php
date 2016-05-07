@@ -122,7 +122,8 @@ class Schema {
             $table = $model;
         }
 
-        $module_service = D(ucfirst($app).'/'.camelCase($table));
+        $module_service_name = ucfirst($app).'/'.camelCase($table);
+        $module_service = D($module_service_name);
         if(method_exists($module_service, 'get_schema')) {
             $schemas = $module_service->get_schema();
             $schema = get_array_to_ka($schemas['structure'], 'field');
@@ -165,6 +166,7 @@ class Schema {
      * @param $is_foreign_exists
      * */
     static public function data_field_format($value, $type) {
+        $scale = DBC('decimal_scale') ? DBC('decimal_scale') : 2;
         switch($type) {
             case "integer":
                 $value = (string)$value;
@@ -177,7 +179,7 @@ class Schema {
             case "float":
             case "decimal":
                 $value = (string)$value;
-                $value = round($value, DBC('decimal_scale'));
+                $value = round($value, $scale);
                 break;
             case "boolean":
                 $value = (boolean)$value ? 1 : 0;

@@ -54,6 +54,11 @@ class UserInfoController extends BaseRestController {
     }
     // 处理用户角色
     protected function _after_insert($uid) {
+
+        if(!$uid) {
+            return false;
+        }
+
         $roles = I('post.auth_role_id');
         if(!is_array($roles)) {
             $roles = explode(',', $roles);

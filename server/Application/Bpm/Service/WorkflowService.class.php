@@ -334,11 +334,11 @@ class WorkflowService extends CommonModel {
             ]);
         }
 
-        $start_node_alias = array_shift(explode('-&gt;', $workflow['process']));
-        $start_node_alias = array_shift(explode('(', $start_node_alias));
+//        $start_node_alias = array_shift(explode('-&gt;', $workflow['process']));
+//        $start_node_alias = array_shift(explode('(', $start_node_alias));
         $node_id = D('Bpm/WorkflowNode')->where([
             'workflow_id' => $workflow_id,
-            'alias' => $start_node_alias
+            'node_type' => 'start'
         ])->getField('id');
 
         return $this->exec($workflow_id, $source_id, $node_id, $meta_data);
@@ -361,7 +361,7 @@ class WorkflowService extends CommonModel {
     public function exec($workflow_id, $source_id, $node_id, $meta_data=[]) {
 
         if(!$workflow_id || !$source_id || !$node_id) {
-            $this->error = __('common.Params Error');
+            $this->error = __('common.Params Error') .': ' .'workflow exec';
             return false;
         }
 

@@ -53,10 +53,19 @@
                                         }
                                     };
                                     scope.$root.current_item = scope.basic_data;
-                                    workflow_api.get_next_nodes(scope.basic_data.workflow_id, id, ['id', 'label'])
-                                        .then(function(next_nodes){
-                                            scope.$root.workflow_in_bill = next_nodes;
+
+                                    scope.$root.workflow_node_in_bill = [];
+                                    if(!scope.basic_data.workflow_id) {
+                                        scope.$parent.workflow_not_started = true;
+                                        workflow_api.get_all_workflow('finance.receivables').then(function(all_workflow) {
+                                            scope.$parent.all_workflows = all_workflow;
                                         });
+                                    } else {
+                                        workflow_api.get_next_nodes(scope.basic_data.workflow_id, id, ['id', 'label'])
+                                            .then(function(next_nodes){
+                                                scope.$root.workflow_node_in_bill = next_nodes;
+                                            });
+                                    }
                                 },
                                 resource: self.resource
                             },

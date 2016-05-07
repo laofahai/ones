@@ -16,8 +16,8 @@ class CompanyProfileController extends BaseRestController {
      * @override 更新公司资料
      * */
     public function on_put() {
-        $_GET['id'] = get_current_company_id();
-        if(!$_GET['id']) {
+        $_GET['company_id'] = get_current_company_id();
+        if(!$_GET['company_id']) {
             return $this->login_required();
         }
 
@@ -25,11 +25,17 @@ class CompanyProfileController extends BaseRestController {
         $service->init_profile();
 
         $company_service = D('Account/Company');
-        $company_service->where(['id'=>I('get.id')])->save([
+        $company_service->where()->save([
             'name' => I('post.name')
         ]);
 
-        return parent::on_put();
+        $_GET['company_id'] = get_current_company_id();
+
+        $_GET['id'] = $service->where([
+            'company_id' => $_GET['company_id']
+        ])->getField('id');
+
+        parent::on_put();
     }
 
     /*

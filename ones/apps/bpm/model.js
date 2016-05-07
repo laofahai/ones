@@ -31,14 +31,6 @@
                             data_source: window.BOOLEAN_DATASOURCE,
                             value: 0
                         },
-                        app_id: {
-                            widget: 'select',
-                            data_source: 'Home.CompanyActiveApps',
-                            get_display: function(value, item) {
-                                return to_app_name(item.app_alias);
-                            },
-                            label: _('common.Belongs To App')
-                        },
                         user_info_id: {
                             addable: false,
                             editable: false

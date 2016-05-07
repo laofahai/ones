@@ -24,6 +24,9 @@ $__ = array(
         'type'   => 'Db'
     ),
 
+    'URL_MODEL' => 3,
+    'URL_HTML_SUFFIX' => '',
+
     'SHOW_ERROR_MSG' => true,
     'TMPL_EXCEPTION_FILE' => ENTRY_PATH.'/Data/exception.tpl'
 );

@@ -124,6 +124,10 @@
                     uri: "home/app",
                     extra_methods: ['api_get', 'api_query']
                 });
+
+                this.unicode = function(item) {
+                    return _(item.alias+".APP_NAME");
+                }
             }
         ])
         .service('Home.CompanyActiveApps', [

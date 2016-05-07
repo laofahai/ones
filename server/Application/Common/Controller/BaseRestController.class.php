@@ -69,7 +69,7 @@ class BaseRestController extends RestController {
         }
 
         //session token
-        if(I('server.HTTP_TOKEN')) {
+        if(I('server.HTTP_TOKEN') && strtolower(I('server.HTTP_TOKEN')) !== 'null') {
             session(
                 array(
                     'id'=>I("server.HTTP_TOKEN"),
@@ -99,7 +99,7 @@ class BaseRestController extends RestController {
         );
         
         //当前用户所属公司
-        if($this->user or true) {
+        if($this->user) {
             $this->company = D("Account/Company")->relation(true)->find(get_current_company_id());
         }
 
@@ -201,6 +201,10 @@ class BaseRestController extends RestController {
 
         $this->current_node_auth_flag = (integer)$current_node_auth_flag;
         tag('after_controller_construct');
+    }
+
+    public function parent_construct() {
+        return parent::__construct();
     }
 
     public function index() {
