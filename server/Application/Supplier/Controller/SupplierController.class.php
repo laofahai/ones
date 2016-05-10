@@ -77,14 +77,17 @@ class SupplierController extends BaseRestController {
         if(I('post.head_id')) {
             $save_data['head_id'] = I('post.head_id');
         }
+
+        $supplier_model->create($save_data);
         $supplier_model->where([
             'id' => I('get.id')
-        ])->save($save_data);
+        ])->save();
 
         $supplier = $supplier_model->where(['id'=>I('get.id')])->find();
         $contacts_company_model = D('ContactsCompany/ContactsCompany');
+        $contacts_company_model->create(I('post.'));
         $contacts_company_model->where([
             "id" => $supplier['contacts_company_id']
-        ])->save(I('post.'));
+        ])->save();
     }
 }

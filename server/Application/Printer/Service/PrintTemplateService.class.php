@@ -49,7 +49,7 @@ class PrintTemplateService extends CommonModel {
      * 解析模板内容
      * */
     static public function parse_content($content) {
-        if(substr($content, 0, 4) === 'apps/') { // 路径模式
+        if(substr($content, 0, 5) === 'apps/') { // 路径模式
             return $content;
         } else {
             return base64_decode($content);

@@ -491,14 +491,15 @@
 
                             var select_real_method = function(item) {
                                 item = item || {};
-                                $timeout(function() {
+                                $timeout(function () {
                                     runtime_scope[selected_item_model] = item;
                                     label_getter.assign(runtime_scope, item.label);
                                     model_getter.assign(runtime_scope, item.value);
                                     selected_getter.assign(runtime_scope, item);
 
-                                enter_ing = false;
-                            });
+                                    enter_ing = false;
+                                });
+                            };
 
                             if(auto_hide) {
                                 $('#'+config.id).trigger('blur');

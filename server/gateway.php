@@ -26,6 +26,9 @@ define('APPLICATION_ENV', 'development');
 
 header("Access-Control-Allow-Origin: *");
 
+// 返回信息包含调试信息
+define("RESPONSE_WITH_DEBUG_INFO", true);
+
 /**
  * CORS非简单跨域请求第一次讯问是否支持跨域
  * 输出支持的method，header

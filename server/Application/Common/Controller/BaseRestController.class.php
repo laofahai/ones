@@ -3,12 +3,15 @@
 namespace Common\Controller;
 
 use Account\Service\AuthorizeService;
+use Common\Lib\CommonLog;
 use MessageCenter\Service\MessageCenter;
 use Smtp\Service\SendMailService;
 use Think\Controller\RestController;
 use Common\Lib\RecursiveFileFilterIterator;
 use Common\Lib\Schema;
 use Home\Service\AppService;
+use Think\Log;
+use Think\Think;
 
 class BaseRestController extends RestController {
 
@@ -333,6 +336,7 @@ class BaseRestController extends RestController {
             }
 
             $list = $model->select();
+
 //            echo $model->getLastSql();exit;
 
             $this->queryMeta = array(
@@ -958,6 +962,9 @@ class BaseRestController extends RestController {
         if($model) {
             $data = Schema::data_format($data, $model, $is_table);
         }
+
+        $data = self::append_log_to_data($data);
+
         return parent::response($data, 'json');
     }
 
@@ -994,6 +1001,43 @@ class BaseRestController extends RestController {
             "error" => 0,
             "msg"   => $msg
         ));
+    }
+
+    /*
+     * 日志 附加在返回的数据中
+     * */
+    protected static function append_log_to_data($data) {
+
+        if(!RESPONSE_WITH_DEBUG_INFO) {
+            return $data;
+        }
+
+        $debug_info = [];
+
+        $logs = CommonLog::get_log();
+
+        foreach($logs as $log_row) {
+
+            $tmp = explode(": ", $log_row);
+            $type = array_shift($tmp);
+            $log_info = implode(": ", $tmp);
+
+            if(!is_array($debug_info[$type])) {
+                $debug_info[$type] = [];
+            }
+
+            array_push($debug_info[$type], $log_info);
+        }
+
+
+        // 索引数组
+        if(is_assoc($data)) {
+            $data['__DEBUG__'] = $debug_info;
+        } else {
+            $data[0]['__DEBUG__'] = $debug_info;
+        }
+
+        return $data;
     }
     
 }

@@ -108,12 +108,12 @@ class CustomerController extends BaseRestController {
 
         $model = D('Crm/Customer', 'Service');
 
-        //角色
-        $_POST['contacts_company_role_id'] = D('Home/Config', 'Service')->get_kv_config('crm_customer_role');
-
-        if(!$_POST['contacts_company_role_id']) {
-            return $this->error(__('crm.Please set the default customer role first'));
-        }
+//        //角色
+//        $_POST['contacts_company_role_id'] = D('Home/Config', 'Service')->get_kv_config('crm_customer_role');
+//
+//        if(!$_POST['contacts_company_role_id']) {
+//            return $this->error(__('crm.Please set the default customer role first'));
+//        }
 
         // 新增往来单位
         $com_model = D('ContactsCompany/ContactsCompany', 'Service');
