@@ -371,7 +371,7 @@ class BaseRestController extends RestController {
 
             $returnData = array(
                 array("count" => $total, "totalPages"=>$totalPages),
-                $list,
+                $list ? $list : [],
             );
 
             if($return) {
@@ -383,7 +383,7 @@ class BaseRestController extends RestController {
             if($return) {
                 return $list;
             }
-            $this->response($list, $model);
+            $this->response($list ? $list : [], $model);
         }
 
     }
@@ -1008,7 +1008,7 @@ class BaseRestController extends RestController {
      * */
     protected static function append_log_to_data($data) {
 
-        if(!RESPONSE_WITH_DEBUG_INFO) {
+        if(!RESPONSE_WITH_DEBUG_INFO || !$data) {
             return $data;
         }
 
@@ -1029,6 +1029,7 @@ class BaseRestController extends RestController {
             array_push($debug_info[$type], $log_info);
         }
 
+        $debug_info['REQUEST_URI'] = I('server.REQUEST_URI');
 
         // 索引数组
         if(is_assoc($data)) {
@@ -1036,6 +1037,8 @@ class BaseRestController extends RestController {
         } else {
             $data[0]['__DEBUG__'] = $debug_info;
         }
+
+
 
         return $data;
     }

@@ -49,7 +49,7 @@ if(defined('APPLICATION_ENV')) {
 }
 $__phinx_db_config = $__phinx_config['environments'][$__env];
 
-$__['DB_TYPE'] = $__phinx_db_config['adapter'];
+//$__['DB_TYPE'] = $__phinx_db_config['adapter'];
 $__['DB_HOST'] = $__phinx_db_config['host'];
 $__['DB_NAME'] = $__phinx_db_config['name'];
 $__['DB_USER'] = $__phinx_db_config['user'];

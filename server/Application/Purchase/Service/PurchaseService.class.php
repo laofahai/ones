@@ -85,7 +85,20 @@ class PurchaseService extends CommonBillService {
      * 生成应付款
      * @todo
      * */
-    public function make_payment($id) {}
+    public function make_payment($id) {
+        $bill_info = $this->where(['id'=>$id])->find();
+
+        $service = D('Finance/Payables');
+
+        $result = $service->make_bill([
+            'source_model' => 'purchase.purchase',
+            'source_id' => $id,
+            'amount'=>$bill_info['net_pay'],
+            'supplier_id' => $bill_info['supplier_id']
+        ]);
+
+        return $result;
+    }
 
 
 }

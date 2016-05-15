@@ -36,7 +36,6 @@ ones.APP_ENTRY = 'app.html';
 
 /*------可配置项目结束------*/
 
-
 ones.global_module = angular.module("ones.global", []);
 
 // 常用按键
@@ -67,9 +66,12 @@ ones.user_info = {};
 * bootstrap config
 * */
 function config_init(apps, callback) {
+
+    var uri = ones.remote_entry+'home/config/bootstrap';
+
     $.ajax({
         type: "EVENT",
-        url: ones.remote_entry+'home/config/bootstrap',
+        url: uri,
         beforeSend: function(request) {
             request.setRequestHeader("Client-Language", ones.caches.getItem('user.client_language') || ones.default_language);
             request.setRequestHeader("Token", ones.caches.getItem('user.session_token'));
@@ -77,8 +79,13 @@ function config_init(apps, callback) {
         },
         success: function(data) {
             for(var k in data) {
+                if(k == '__DEBUG__') {
+                    continue;
+                }
                 ones[k] = data[k];
             }
+
+            window.set_debugger_info(uri, data.__DEBUG__);
 
             // app.html
             if(window.location.href.indexOf(ones.APP_ENTRY) >= 0 && ones.main_include) {
@@ -162,7 +169,6 @@ function C(key) {
 * */
 function LoadConfig(app, callback) {
     var config_path = sprintf('%shome/config/app/app_name/%s', ones.remote_entry, app);
-    
     $.ajax({
         type: "EVENT",
         url: config_path,
@@ -172,13 +178,13 @@ function LoadConfig(app, callback) {
             request.setRequestHeader("API-Version", ones.api_version);
         },
         success: function(data) {
+            window.set_debugger_info(config_path, data.__DEBUG__);
             ones.caches.setItem('ones.app.config.' + app, data);
             if(typeof(callback) === 'function') {
                 callback();
             }
         }
     });
-    
 }
 
 angular.module("ones.configModule", [
@@ -215,6 +221,16 @@ angular.module("ones.configModule", [
                         return config;
                     },
                     'response': function (response) {
+
+                        var __DEBUG__ = {};
+                        if(angular.isArray(response.data)) {
+                            __DEBUG__ = (response.data[0] && response.data[0].__DEBUG__) || {};
+                        } else {
+                            __DEBUG__ = response.__DEBUG__ || {};
+                        }
+
+                        window.set_debugger_info(__DEBUG__.REQUEST_URI, __DEBUG__);
+
                         $rootScope.ajax_ing = window.ajax_ing = false;
                         if (response.data.error || parseInt(response.data.error) > 0) {
                             $rootScope.$broadcast('event:serverError', response.data.msg);
@@ -234,6 +250,9 @@ angular.module("ones.configModule", [
                         return response;
                     },
                     'responseError': function (response) {
+
+                        // @todo
+
                         var status = response.status;
                         switch (status) {
                             case 401:
