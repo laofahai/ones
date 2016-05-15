@@ -300,3 +300,81 @@ aside.sidebar {
         margin-top:300px;
     }
 }
+
+.debugger-container {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width:100%;
+    background: #efefef;
+    z-index: 9999;
+    border-top: 1px solid #aaa;
+    padding: 0 8px;
+    height: 0px;
+
+    a, a:visited {
+        color:#999;
+        text-decoration: none;
+    }
+    a:hover {
+        color:#000;
+        text-decoration:none;
+    }
+
+    .__uris {
+        width:300px;
+        position:absolute;
+
+        li {
+            list-style:none;
+            margin:0; padding:0;
+            border-bottom: 1px dashed #ddd;
+            line-height:180%;
+            width:280px;
+            white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow:hidden;
+        }
+
+        ul {
+            padding:5px 0 0;
+            margin:0;
+            height:400px;
+            overflow-y: scroll;
+        }
+    }
+
+    .__info {
+        margin-left: 300px;
+        .__info_content {
+            padding:5px 8px;
+            border-left: 1px solid #aaa;
+            height:400px;
+            overflow-y:scroll;
+        }
+    }
+
+    .__debug_nav {
+        margin-top:-30px;
+        height: 30px;
+
+        a {
+            border: 1px solid #aaa;
+            float: left;
+            padding: 0 10px;
+            height: 30px;
+            background: #efefef;
+            border-bottom: 0;
+            line-height: 30px;
+            overflow: hidden;
+            margin-right:8px;
+        }
+
+
+    }
+
+    .active {
+        color: #000;
+    }
+}
+.is_show_debugger {
+    height: 400px !important;
+}

@@ -1,0 +1,38 @@
+<div id="debugger-container"
+     class="debugger-container"
+     ng-class="{is_show_debugger: show_debugger}"
+     ng-controller="ONES_DEBUGGER_CONTROLLER">
+    <div class="__uris">
+        <div class="__debug_nav">
+            <a href="javascript:void(0);"
+               ng-click="show_debugger=!show_debugger">
+                <i class="fa" ng-class="{'fa-angle-double-down': show_debugger, 'fa-angle-double-up': !show_debugger}"></i>
+                DEBUGGER
+            </a>
+        </div>
+        <ul>
+            <li ng-repeat="uri in debug_uris">
+                <a href="javascript:void(0);"
+                   ng-click="switch_info($index)"
+                   ng-bind="{{uri}}"
+                   ng-class="{active: $index==active_index}"
+                   title="uri"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="__info">
+        <div class="__debug_nav">
+            <a href="javascript:void(0)"
+               ng-class="{active: info_option.key == current_info_option}"
+               ng-repeat="info_option in info_options"
+               ng-bind="info_option.label"
+               ng-click="switch_info_option(info_option.key)">INFO</a>
+        </div>
+        <div class="__info_content">
+            <p>
+                REQUEST URI: <span ng-bind="current_info.REQUEST_URI"></span>
+            </p>
+            <div ng-bind-html="current_info[current_info_option].join('<br />')"></div>
+        </div>
+    </div>
+</div>

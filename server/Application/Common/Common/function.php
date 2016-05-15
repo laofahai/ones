@@ -63,13 +63,17 @@ function decimal_scale($value) {
 function DBC($alias = null) {
     $cache_key = "db_config_".get_current_company_id();
     $cached = S($cache_key);
-    if(DEBUG || !$cached) {
+    if(!$cached) {
         $cached = D('Home/Config', 'Service')->get_kv_config();
         $cached = get_array_to_kv($cached, 'val', 'alias');
         S($cache_key, $cached);
     }
 
-    return $alias ? $cached[$alias] : $cached;
+    if($alias) {
+        return array_key_exists($alias, $cached) ? $cached[$alias] : '';
+    } else {
+        return $cached;
+    }
 }
 
 // 生成随机字符串
@@ -110,10 +114,10 @@ function __($msgid) {
         $app = 'common';
     }
 
-    $lang = $lang[$app];
+    $lang = $lang[$app] ? $lang[$app] : [];
 
     for($i=0;$i<count($msgIds);$i++) {
-        if($lang[$msgIds[$i]]) {
+        if(array_key_exists($msgIds[$i], $lang)) {
             $lang = $lang[$msgIds[$i]];
         } else {
             if($app == 'common') {

@@ -14,7 +14,7 @@
 
     });
 
-    angular.module('ones', ['ones.framesModule', 'ones.configModule', 'ones.global'])
+    angular.module('ones', ['ones.framesModule', 'ones.configModule', 'ones.global', 'ones.debuggerModule'])
     .run(['$timeout', function($timeout) {
             $timeout(function() {
                 $('#loading-cover').hide();

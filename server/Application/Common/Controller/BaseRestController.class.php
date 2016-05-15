@@ -65,6 +65,27 @@ class BaseRestController extends RestController {
     protected $deleteModel;
 
     public function __construct() {
+
+        //基本运行配置
+        $this->bootstrapConfigs = parse_yml(ENTRY_PATH.'/config.yaml');
+
+        $this->bootstrapConfigs = $this->bootstrapConfigs ? $this->bootstrapConfigs : [];
+        //当前接口版本
+        if(I('server.HTTP_API_VERSION')) {
+            define('API_VERSION', I('server.HTTP_API_VERSION'));
+        } else {
+            define('API_VERSION', false);
+        }
+
+        //当前语言
+        $this->currentLanguage = $this->bootstrapConfigs["default_language"] ? $this->bootstrapConfigs["default_language"] : 'zh-cn' ;
+        if(I("server.HTTP_CLIENT_LANGUAGE")) {
+            $this->currentLanguage = I("server.HTTP_CLIENT_LANGUAGE");
+        }
+        if(I('get.lang')) {
+            $this->currentLanguage = I('get.lang');
+        }
+        define('CURRENT_LANGUAGE', $this->currentLanguage);
         
         //支持方法
         if(!$this->allowMethod) {
@@ -121,7 +142,7 @@ class BaseRestController extends RestController {
         //导入非当前应用的插件及函数等信息
         foreach($this->activeApps as $app) {
             $app = ucfirst($app);
-            if($app == APP_NAME or $app == "common") {
+            if($app == MODULE_NAME or $app == "common") {
                 continue;
             }
 
@@ -135,26 +156,6 @@ class BaseRestController extends RestController {
                 require_once APPLICATION_PATH.$app.'/Common/function.php';
             }
         }
-
-        //基本运行配置
-        $this->bootstrapConfigs = parse_yml(ENTRY_PATH.'/config.yaml');
-
-        //当前接口版本
-        if(I('server.HTTP_API_VERSION')) {
-            define('API_VERSION', I('server.HTTP_API_VERSION'));
-        } else {
-            define('API_VERSION', false);
-        }
-
-        //当前语言
-        $this->currentLanguage = $this->bootstrapConfigs["default_language"] ? $this->bootstrapConfigs["default_language"] : 'zh-cn' ;
-        if(I("server.HTTP_CLIENT_LANGUAGE")) {
-            $this->currentLanguage = I("server.HTTP_CLIENT_LANGUAGE");
-        }
-        if(I('get.lang')) {
-            $this->currentLanguage = I('get.lang');
-        }
-        define('CURRENT_LANGUAGE', $this->currentLanguage);
         
         /*
          * 解析应用配置
@@ -984,10 +985,10 @@ class BaseRestController extends RestController {
     /*
      * error
      * **/
-    protected function error($msg) {
+    protected function error($message='',$jumpUrl='',$ajax=false) {
         return $this->response(array(
             'error'=> 1,
-            'msg'  => $msg
+            'msg'  => $message
         ));
     }
     
@@ -996,10 +997,10 @@ class BaseRestController extends RestController {
         exit($msg ? $msg : 'HTTP '.$code);
     }
     
-    protected function success($msg) {
+    protected function success($message='', $jumpUrl = '', $ajax = false) {
         $this->response(array(
             "error" => 0,
-            "msg"   => $msg
+            "msg"   => $message
         ));
     }
 

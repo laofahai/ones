@@ -56,6 +56,7 @@ class ConfigService extends CommonModel {
                 continue;
             }
 
+            $app_config['main_include'] = array_key_exists('main_include', $app_config) ? $app_config['main_include'] : [];
             $main_include = array_merge_recursive($main_include, (array)$app_config['main_include']);
 
         }
