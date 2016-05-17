@@ -46,8 +46,18 @@
                 $scope.open_widgets_modal = function() {
                     $modal({
                         scope: $scope,
-                        template: appView('add_widget.html')
+                        templateUrl: appView('add_widget.html'),
+                        show: true
                     });
+
+                    //$modal(
+                    //    {
+                    //        title: _('calendar.View Event Content'),
+                    //        contentTemplate: appView('event_detail.html', 'calendar'),
+                    //        show: true,
+                    //        scope: $scope
+                    //    }
+                    //);
                 };
 
                 $scope.remove_widget = function($index) {

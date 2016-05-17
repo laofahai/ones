@@ -5,8 +5,11 @@
     height: 60px;
 }
 .cal-context {
-    margin: 0 70px;
+    margin: 0 50px;
     width: auto;
+}
+.dashboard-block-item .cal-context {
+    margin: 0;
 }
 .cal-row-head {
     background: #f2f2f2;

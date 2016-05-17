@@ -319,7 +319,7 @@ form
   clear: both; }
 
 /**
-椤甸潰鎿嶄綔
+页面操作
 */
 .actions-search-box input:focus {
   outline: none;
@@ -350,24 +350,19 @@ form
 
 .add_to_common_nav_btn {
   position: fixed;
-  right: 10px;
+  right: 60px;
   bottom: 50px;
-  background: #ccddee;
+  background: #438ED1;
   border-radius: 100%;
-  border: 1px solid #eee;
   display: block;
   width: 40px;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  opacity: 0.4;
   z-index: 999;
   font-size: 20px; }
   .add_to_common_nav_btn i {
-    color: #888; }
-
-.add_to_common_nav_btn:hover {
-  opacity: 1; }
+    color: #fff; }
 
 .detail_view_container {
   position: relative;

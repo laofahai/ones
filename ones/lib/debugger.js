@@ -30,7 +30,7 @@
                 $scope.active_index = 0;
                 $scope.current_info_option = 'DEBUG';
                 $scope.current_info = {};
-                $scope.show_debugger = true;
+                $scope.show_debugger = false;
 
                 $scope.info_options = [
                     {label: 'EMERG', key: 'EMERG'},
@@ -44,13 +44,13 @@
                     {label: 'DEBUG', key: 'DEBUG'}
                 ];
 
-                $scope.$watch(function() {
-                    return $scope.debug_uris;
-                }, function(value) {
-                    $timeout(function() {
-                        $('.__debug_nav a.active').trigger('click');
-                    }, 1000);
-                });
+                //$scope.$watch(function() {
+                //    return $scope.debug_uris;
+                //}, function(value) {
+                //    $timeout(function() {
+                //        $('.__debug_nav a.active').trigger('click');
+                //    }, 1000);
+                //});
 
                 $scope.switch_info = function(index) {
                     var uri = $scope.debug_uris[index];
@@ -60,7 +60,10 @@
                     $scope.current_info = $scope.debug_info[uri];
                 };
 
-                $scope.switch_info_option = function(option) {
+                $scope.switch_info_option = function(option, not_clicked) {
+                    if(!not_clicked) {
+                        $scope.show_debugger = true;
+                    }
                     $scope.current_info_option = option;
                 };
 

@@ -49,7 +49,12 @@ class UserPreferenceService extends CommonModel {
 
         $exists['data'] = $data_type === 'serialize' ? serialize($data) : $data;
 
-        return false === $this->save($exists);
+        $result = $this->save($exists);
+
+        $cache_key = 'user_preference_/'.get_current_user_id();
+        S($cache_key, null);
+
+        return false === $result;
     }
 
     /*
@@ -109,7 +114,6 @@ class UserPreferenceService extends CommonModel {
             }
             $row['user_info_id'] = $uid;
             $this->add($row);
-
         }
 
         S('user_preference_'.$uid, null);
