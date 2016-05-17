@@ -11,7 +11,7 @@
             </a>
         </div>
         <ul>
-            <li ng-repeat="uri in debug_uris">
+            <li ng-repeat="uri in debug_uris track by $index">
                 <a href="javascript:void(0);"
                    ng-click="switch_info($index)"
                    ng-bind="uri"

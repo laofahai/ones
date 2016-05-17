@@ -2,6 +2,7 @@
     // REST请求调试信息
     window.top.__DEBUG_REMOTE_INFO = window.top.__DEBUG_REMOTE_INFO || {};
     window.top.__DEBUG_REMOTE_URIS = window.top.__DEBUG_REMOTE_URIS || [];
+    window.top.__DEBUG_INDEX = window.top.__DEBUG_INDEX || 0;
 
     window.set_debugger_info = function(uri, info) {
         if(!ones.DEBUG || !uri || !info) {
@@ -11,19 +12,12 @@
         uri = uri.replace('/ones/server/gateway.php?s=', '');
         uri = uri.replace('../server/gateway.php?s=', '');
         uri = uri.replace(/&amp;/ig, '&');
+        uri = '['+window.top.__DEBUG_INDEX + '] ' + uri;
 
-        if(window.top.__DEBUG_REMOTE_URIS.indexOf(uri) >= 0) {
-            window.top.__DEBUG_REMOTE_URIS.remove(uri);
-        }
         window.top.__DEBUG_REMOTE_URIS.push(uri);
         window.top.__DEBUG_REMOTE_INFO[uri] = info;
+        window.top.__DEBUG_INDEX++;
     };
-    //
-    //if(!ones.DEBUG) {
-    //    angular.module('ones.debuggerModule', [])
-    //        .controller('ONES_DEBUGGER_CONTROLLER', [function() {}]);
-    //    return;
-    //}
 
     angular.module('ones.debuggerModule', [])
         .controller('ONES_DEBUGGER_CONTROLLER', [
@@ -62,6 +56,8 @@
                 $scope.switch_info = function(index) {
                     var uri = $scope.debug_uris[index];
                     $scope.active_index = index;
+
+                    $scope.debug_info[uri].REQUEST_URI = $scope.debug_info[uri].REQUEST_URI.replace(/&amp;/g, '&');
                     $scope.current_info = $scope.debug_info[uri];
                 };
 
