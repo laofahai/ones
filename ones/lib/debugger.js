@@ -47,7 +47,6 @@
                 $scope.$watch(function() {
                     return $scope.debug_uris;
                 }, function(value) {
-                    console.log(123);
                     $timeout(function() {
                         $('.__debug_nav a.active').trigger('click');
                     }, 1000);
