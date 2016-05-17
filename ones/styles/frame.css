@@ -1,7 +1,4 @@
 @charset "UTF-8";
-/**
-    数据表格
-*/
 .table-grid {
   background: #fff;
   margin-bottom: -1px !important; }
@@ -322,7 +319,7 @@ form
   clear: both; }
 
 /**
-页面操作
+椤甸潰鎿嶄綔
 */
 .actions-search-box input:focus {
   outline: none;
@@ -354,7 +351,7 @@ form
 .add_to_common_nav_btn {
   position: fixed;
   right: 10px;
-  bottom: 45px;
+  bottom: 50px;
   background: #ccddee;
   border-radius: 100%;
   border: 1px solid #eee;
