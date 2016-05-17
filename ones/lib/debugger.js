@@ -28,20 +28,36 @@
     angular.module('ones.debuggerModule', [])
         .controller('ONES_DEBUGGER_CONTROLLER', [
             '$scope',
-            function($scope) {
+            '$timeout',
+            function($scope, $timeout) {
                 $scope.debug_uris = window.top.__DEBUG_REMOTE_URIS;
                 $scope.debug_info = window.top.__DEBUG_REMOTE_INFO;
 
                 $scope.active_index = 0;
-                $scope.current_info_option = 'INFO';
+                $scope.current_info_option = 'DEBUG';
                 $scope.current_info = {};
-                $scope.show_debugger = false;
+                $scope.show_debugger = true;
 
                 $scope.info_options = [
+                    {label: 'EMERG', key: 'EMERG'},
+                    {label: 'ALERT', key: 'ALERT'},
+                    {label: 'CRIT', key: 'CRIT'},
+                    {label: 'WARN', key: 'WARN'},
+                    {label: 'ERR', key: 'ERR'},
                     {label: 'INFO', key: 'INFO'},
                     {label: 'NOTICE', key: 'NOTIC'},
-                    {label: 'SQL', key: 'SQL'}
+                    {label: 'SQL', key: 'SQL'},
+                    {label: 'DEBUG', key: 'DEBUG'}
                 ];
+
+                $scope.$watch(function() {
+                    return $scope.debug_uris;
+                }, function(value) {
+                    console.log(123);
+                    $timeout(function() {
+                        $('.__debug_nav a.active').trigger('click');
+                    }, 1000);
+                });
 
                 $scope.switch_info = function(index) {
                     var uri = $scope.debug_uris[index];

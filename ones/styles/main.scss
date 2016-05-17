@@ -347,13 +347,15 @@ aside.sidebar {
         .__info_content {
             padding:5px 8px;
             border-left: 1px solid #aaa;
+            margin-top:1px;
             height:400px;
             overflow-y:scroll;
+            background:#fefefe;
         }
     }
 
     .__debug_nav {
-        margin-top:-30px;
+        margin-top:-31px;
         height: 30px;
 
         a {
@@ -366,6 +368,12 @@ aside.sidebar {
             line-height: 30px;
             overflow: hidden;
             margin-right:8px;
+            position: relative;
+        }
+
+        .active {
+            background:#fefefe;
+            margin-top: 1px;
         }
 
 

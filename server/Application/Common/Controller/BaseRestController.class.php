@@ -1008,13 +1008,11 @@ class BaseRestController extends RestController {
      * 日志 附加在返回的数据中
      * */
     protected static function append_log_to_data($data) {
-
-        if(!RESPONSE_WITH_DEBUG_INFO || !$data) {
+        if(true !== RESPONSE_WITH_DEBUG_INFO || !$data) {
             return $data;
         }
 
         $debug_info = [];
-
         $logs = CommonLog::get_log();
 
         foreach($logs as $log_row) {
@@ -1038,8 +1036,6 @@ class BaseRestController extends RestController {
         } else {
             $data[0]['__DEBUG__'] = $debug_info;
         }
-
-
 
         return $data;
     }

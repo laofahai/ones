@@ -425,6 +425,10 @@
 
                     self.scope.grid_refershing = false;
 
+                    if(!remoteData) {
+                        return;
+                    }
+
                     var data = [];
                     if(remoteData && typeof(remoteData[0]) === "object" && ("count" in remoteData[0])) {
                         data = remoteData[1];

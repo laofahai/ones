@@ -129,7 +129,6 @@
                         exclude_meta: true,
                         schema: self.config.schema,
                         callback: function(result) {
-
                             result = result[self.model_config.table].structure || {};
 
                             if(!result) {

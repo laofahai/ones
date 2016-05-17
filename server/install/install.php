@@ -226,6 +226,15 @@ if(!$prepared->execute()) {
     return send_exit_single('user role authorize failed (authorize).');
 }
 
+// 商品分类ROOT节点
+$sql = "INSERT INTO product_category(name, lft, rgt, company_id)VALUES('ROOT', 1, 2, :company_id)";
+$prepared = $pdo->prepare($sql);
+$prepared->bindParam(':company_id', $company_id);
+if(!$prepared->execute()) {
+    rollback($pdo);
+    return send_exit_single('create product root category failed.');
+}
+
 // 创建session表
 $pdo->exec("CREATE TABLE IF NOT EXISTS `session` (
   `session_id` varchar(255) NOT NULL,

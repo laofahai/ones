@@ -311,10 +311,12 @@ aside.sidebar {
     .debugger-container .__info .__info_content {
       padding: 5px 8px;
       border-left: 1px solid #aaa;
+      margin-top: 1px;
       height: 400px;
-      overflow-y: scroll; }
+      overflow-y: scroll;
+      background: #fefefe; }
   .debugger-container .__debug_nav {
-    margin-top: -30px;
+    margin-top: -31px;
     height: 30px; }
     .debugger-container .__debug_nav a {
       border: 1px solid #aaa;
@@ -325,7 +327,11 @@ aside.sidebar {
       border-bottom: 0;
       line-height: 30px;
       overflow: hidden;
-      margin-right: 8px; }
+      margin-right: 8px;
+      position: relative; }
+    .debugger-container .__debug_nav .active {
+      background: #fefefe;
+      margin-top: 1px; }
   .debugger-container .active {
     color: #000; }
 

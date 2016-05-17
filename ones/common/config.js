@@ -221,15 +221,16 @@ angular.module("ones.configModule", [
                         return config;
                     },
                     'response': function (response) {
-
                         var __DEBUG__ = {};
                         if(angular.isArray(response.data)) {
                             __DEBUG__ = (response.data[0] && response.data[0].__DEBUG__) || {};
                         } else {
-                            __DEBUG__ = response.__DEBUG__ || {};
+                            __DEBUG__ = response.data.__DEBUG__ || {};
                         }
 
-                        window.set_debugger_info(__DEBUG__.REQUEST_URI, __DEBUG__);
+                        if(__DEBUG__) {
+                            window.set_debugger_info(__DEBUG__.REQUEST_URI, __DEBUG__);
+                        }
 
                         $rootScope.ajax_ing = window.ajax_ing = false;
                         if (response.data.error || parseInt(response.data.error) > 0) {
@@ -251,7 +252,7 @@ angular.module("ones.configModule", [
                     },
                     'responseError': function (response) {
 
-                        // @todo
+                        // @todo debug
 
                         var status = response.status;
                         switch (status) {

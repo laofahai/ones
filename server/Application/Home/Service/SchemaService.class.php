@@ -17,9 +17,9 @@ class SchemaService {
      * **/
     static public function getSchemaByApp($app, $tables = []) {
 
-        $cache_key = "schema/".$app;
-
-        $schemas = (array)S($cache_key);
+        $cache_key = "schema_".$app.'_'.implode(',', $tables);
+        trace($cache_key);
+        $schemas = S($cache_key);
         if(DEBUG || !$schemas) {
 
             $schemas = [];
@@ -37,9 +37,9 @@ class SchemaService {
             $tables = $tables ? $tables : (I("get.table") ? explode(".", I("get.table")) : array_keys($schemas));
 
             $schemas = Schema::parse($app, $schemas, $tables);
-
             S($cache_key, $schemas);
         }
+
         return $schemas;
     }
 

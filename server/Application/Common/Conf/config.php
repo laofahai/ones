@@ -32,11 +32,11 @@ $__ = array(
 
     'LOG_RECORD' => true,
     'LOG_TYPE'   =>  'File',
-    'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR',
-    'LOG_PATH' => APP_PATH.'/Data/Log/___',
+    'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR,WARN,NOTICE,INFO,DEBUG,SQL',
+    'LOG_PATH' => APP_PATH.'Data/Log/___',
 
     'SHOW_ERROR_MSG' => true,
-    'SHOW_PAGE_TRACE' => true,
+    'SHOW_PAGE_TRACE' => false,
     'TMPL_EXCEPTION_FILE' => ENTRY_PATH.'/Data/exception.tpl'
 );
 // 根据migration 设定数据库链接
