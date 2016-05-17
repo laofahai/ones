@@ -25,12 +25,15 @@
             <a href="javascript:void(0)"
                ng-class="{active: info_option.key == current_info_option}"
                ng-repeat="info_option in info_options"
-               ng-bind="info_option.label"
-               ng-click="switch_info_option(info_option.key)">INFO</a>
+               ng-click="switch_info_option(info_option.key)">
+                <span ng-bind="info_option.label"></span>
+                <small class="badge" ng-bind="current_info[info_option.key].length"></small>
+            </a>
         </div>
         <div class="__info_content">
             <p>
-                REQUEST URI: <span ng-bind="current_info.REQUEST_URI"></span>
+                REQUEST URI: <span ng-bind="current_info.REQUEST_URI"></span><br />
+                REQUEST METHOD: <span ng-bind="current_info.REQUEST_METHOD"></span>
             </p>
             <div ng-bind-html="current_info[current_info_option].join('<br />')"></div>
         </div>

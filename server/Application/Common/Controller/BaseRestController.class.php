@@ -964,7 +964,7 @@ class BaseRestController extends RestController {
             $data = Schema::data_format($data, $model, $is_table);
         }
 
-        $data = self::append_log_to_data($data);
+        $data = $this->append_log_to_data($data);
 
         return parent::response($data, 'json');
     }
@@ -1007,7 +1007,7 @@ class BaseRestController extends RestController {
     /*
      * 日志 附加在返回的数据中
      * */
-    protected static function append_log_to_data($data) {
+    protected function append_log_to_data($data) {
         if(true !== RESPONSE_WITH_DEBUG_INFO || !$data) {
             return $data;
         }
@@ -1029,6 +1029,7 @@ class BaseRestController extends RestController {
         }
 
         $debug_info['REQUEST_URI'] = I('server.REQUEST_URI');
+        $debug_info['REQUEST_METHOD'] = strtoupper($this->_method);
 
         // 索引数组
         if(is_assoc($data)) {
