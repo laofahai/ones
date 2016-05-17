@@ -31,6 +31,8 @@ define("RESPONSE_WITH_DEBUG_INFO", true);
 
 define('DEBUG', false);
 
+//define('BUILD_LITE_FILE',true);
+
 /**
  * CORS非简单跨域请求第一次讯问是否支持跨域
  * 输出支持的method，header
@@ -80,5 +82,8 @@ define('RUNTIME_PATH','./Runtime/');
 
 define('CURRENT_TIMESTAMP', time());
 
-// 引入ThinkPHP入口文件
-require './vendor/topthink/thinkphp/ThinkPHP/ThinkPHP.php';
+if(is_file(RUNTIME_PATH.'lite.php')) {
+    require RUNTIME_PATH.'lite.php';
+} else {
+    require './vendor/topthink/thinkphp/ThinkPHP/ThinkPHP.php';
+}

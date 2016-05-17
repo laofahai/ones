@@ -270,6 +270,9 @@
 body {
   padding: 10px; }
 
+div[ng-view] {
+  padding-bottom: 80px; }
+
 a, a:hover, a:active {
   text-decoration: none;
   cursor: pointer; }
