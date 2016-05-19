@@ -126,7 +126,7 @@ foreach($user_info as $k=>$v) {
     }
 }
 
-$sql = 'INSERT INTO company(name, sign_id)VALUE(:company_name, :sign_id)';
+$sql = 'INSERT INTO company(name, sign_id, is_active)VALUE(:company_name, :sign_id, 1)';
 $prepared = $pdo->prepare($sql);
 $prepared->bindParam(':company_name', $company_name);
 $prepared->bindParam(':sign_id', $sign_id);

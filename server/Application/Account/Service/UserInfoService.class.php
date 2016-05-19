@@ -47,7 +47,7 @@ class UserInfoService extends CommonRelationModel {
 
         $company = D("Account/Company")->where(array('sign_id'=>$company_sign_id))->find();
 
-        if(!$company) {
+        if(!$company || !$company['is_active']) {
             return -1;
         }
         $user = $this->where(array(
@@ -99,8 +99,10 @@ class UserInfoService extends CommonRelationModel {
     /*
      * 是否本公司的超级管理
      * **/
-    public function is_super_user() {
-        return session('user.is_super_user') === true;
+    public function is_super_user($id = null) {
+        $company_info = D('Account/Company')->find(get_current_company_id());
+        $id = $id ? $id : get_current_user_id();
+        return $company_info['superuser'] == $id;
     }
     
     /*

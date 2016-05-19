@@ -235,7 +235,7 @@
                 $scope.formConfig = {
                     resource: model.resource,
                     model   : model,
-                    id      : $routeParams.id,
+                    //id      : $routeParams.id,
                     isEdit  : true
                 };
             }

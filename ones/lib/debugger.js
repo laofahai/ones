@@ -3,6 +3,7 @@
     window.top.__DEBUG_REMOTE_INFO = window.top.__DEBUG_REMOTE_INFO || {};
     window.top.__DEBUG_REMOTE_URIS = window.top.__DEBUG_REMOTE_URIS || [];
     window.top.__DEBUG_INDEX = window.top.__DEBUG_INDEX || 0;
+    window.top.__DEBUGGER_ENABLE_FOR = window.top.__DEBUGGER_ENABLE_FOR || [1];
 
     window.set_debugger_info = function(uri, info) {
         if(!ones.DEBUG || !uri || !info) {
@@ -31,6 +32,13 @@
                 $scope.current_info_option = 'DEBUG';
                 $scope.current_info = {};
                 $scope.show_debugger = false;
+                $scope.debugger_enable = false;
+
+                if(ones.DEBUG && window.top.__DEBUGGER_ENABLE_FOR.indexOf(parseInt(ones.company_profile.id)) >= 0) {
+                    $scope.debugger_enable = true;
+                } else {
+                    return false;
+                }
 
                 $scope.info_options = [
                     {label: 'EMERG', key: 'EMERG'},

@@ -7,6 +7,13 @@
 * 是否开启调试模式
 * */
 ones.DEBUG = true;
+
+
+/*
+* 哪些公司可显示DEBUG BAR
+* */
+window.top.__DEBUGGER_ENABLE_FOR = [1];
+
 /*
 * 默认语言
 * */

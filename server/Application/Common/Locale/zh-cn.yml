@@ -89,12 +89,14 @@ Extend Info: 扩展信息
 Fax: 传真
 Female: 女士
 Filters: 过滤器
+Forever Delete: 永久删除
 Form is dirty, close will lost everything: 您已经填写表单，关闭后会丢失所有表单中的数据。确认要关闭吗？
 Fuzzy search: 模糊搜索
 Fuzzy Search By %s: 通过%s模糊检索
 Gender: 性别
 Go Back: 返回
 Head Man: 负责人
+Initialize: 初始化
 Is Active: 是否可用
 Is Available: 是否可用
 Is Default: 是否默认
@@ -134,6 +136,7 @@ Related Bills: 相关单据
 Remark: 备注
 Remove From Common Nav: 从常用操作中移除
 Reset form: 重置表单
+Root node can't be deleted: 根节点不能被删除
 Save: 保存
 Save and add another one: 保存并新增
 Search By %s: 通过%s检索
@@ -162,6 +165,7 @@ This item is locked and can not be edit: 这个项目已经被锁定并且不能
 Trash: 回收站
 Type: 类型
 Unit Price: 单价
+Untrash: 从回收站中还原
 User: 用户
 User Info: 用户信息
 View By %s: 通过%s查看
@@ -173,3 +177,8 @@ Workflow: 工作流
 Yes: 是
 Yes, I do: 是的，我确认
 Zipcode: 邮政编码
+
+Audited: 审核
+Not Audited: 未审核
+
+Can not edit item which not you added: 不能修改或删除不是您添加的项目

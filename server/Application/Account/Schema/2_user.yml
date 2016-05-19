@@ -15,6 +15,7 @@ department:
         blank: true
         comment: 描述
     $meta:
+        enable_trash: true
         indexes:
             lft:
             rgt:

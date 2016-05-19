@@ -22,9 +22,10 @@ class AuthorizeService extends CommonModel {
      * @param $role_id 被授权角色ID
      * @param $nodes 授权数组 [ {node:x, flag:x} ]
      * */
-    public function authorize($role_id, $nodes) {
+    public function authorize($role_id, $nodes, $company=null) {
         $data = array();
         $included_id = array(0);
+        $nodes = is_array($nodes) ? $nodes : [$nodes];
         $authed_nodes = get_array_to_kv($this->get_authed_nodes_by_role($role_id), 'flag', 'auth_node_id');
         foreach($nodes as $node) {
 
@@ -41,15 +42,10 @@ class AuthorizeService extends CommonModel {
                 'auth_node_id' => $node['node'],
                 'flag' => $node['flag'],
                 'auth_role_id' => $role_id,
-                'company_id' => get_current_company_id()
+                'company_id' => $company ? $company : get_current_company_id()
             ));
 
         }
-
-        $this->where(array(
-            'auth_node_id' => array('NOT IN', $included_id),
-            'auth_role_id' => $role_id
-        ))->delete();
 
         if(!$data) {
             return true;
@@ -61,10 +57,16 @@ class AuthorizeService extends CommonModel {
                 continue;
             }
             if(!$this->add($v)) {
-                $this->error = $this->getLastSql();
+                $this->error = __('account.Authorize Failed');
+                $this->error.= $this->getLastSql();
                 return false;
             }
         }
+
+        $this->where(array(
+            'auth_node_id' => array('NOT IN', $included_id),
+            'auth_role_id' => $role_id
+        ))->delete();
 
         return true;
 

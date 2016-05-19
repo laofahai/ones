@@ -38,6 +38,11 @@ class CompanyProfileController extends BaseRestController {
         parent::on_put();
     }
 
+    public function on_list() {
+        $_GET['id'] = get_current_company_id();
+        return $this->on_read();
+    }
+
     /*
      * @override 获取公司资料
      * */

@@ -32,4 +32,8 @@ class CommonRelationModel extends RelationModel {
         $this->$k = $v;
     }
 
+    public function get($k) {
+        return $this->$k;
+    }
+
 }

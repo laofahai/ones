@@ -391,11 +391,57 @@
                 // 选中项操作
                 this.makeSelectedActions = function() {
                     self.selectedAction = [];
-                    try {
-                        var PageSelectedActions = $injector.get('PageSelectedActions');
-                        self.selectedActions = PageSelectedActions.generate(self.options.model, self.scope);
-                    } catch(e) {
-                        console.log(e);
+
+                    if(self.options.query_params._ot) {
+                        self.selectedActions = [
+                            {
+                                name: "untrash",
+                                label: _('common.Untrash'),
+                                icon: "retweet",
+                                action: function (evt, selected, theItem) {
+                                    var ids = [];
+                                    var items = theItem ? [theItem] : selected;
+
+                                    angular.forEach(items, function(item) {
+                                        ids.push(item.id);
+                                    });
+
+                                    self.options.resource.update({id: ids, _m: "untrash"}, {}).$promise.then(function() {
+                                        self.scope.$broadcast('gridData.changed', true);
+                                    });
+                                },
+                                auth_node: "put"
+                            },
+                            {
+                                name: "forever_delete",
+                                label: _('common.Forever Delete'),
+                                icon: "trash-o",
+                                action: function (evt, selected, theItem) {
+                                    var ids = [];
+                                    var items = theItem ? [theItem] : selected;
+
+                                    RootFrameService.confirm(_("common.Confirm delete the %s items?", items.length), function() {
+
+                                        angular.forEach(items, function(item) {
+                                            ids.push(item.id);
+                                        });
+
+                                        self.options.resource.delete({id: ids, forever_delete: true}).$promise.then(function() {
+                                            self.scope.$broadcast('gridData.changed', true);
+                                        });
+                                    });
+
+                                },
+                                auth_node: "delete"
+                            }
+                        ];
+                    } else {
+                        try {
+                            var PageSelectedActions = $injector.get('PageSelectedActions');
+                            self.selectedActions = PageSelectedActions.generate(self.options.model, self.scope);
+                        } catch(e) {
+                            console.log(e);
+                        }
                     }
                     self.scope.$root.selectedActions = self.selectedActions = reIndex(self.selectedActions);
                 };
