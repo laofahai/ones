@@ -66,6 +66,10 @@ class UserInfoController extends BaseRestController {
         D('Account/UserInfo')->change_user_role($uid, $roles);
     }
 
+    protected function _after_update($uid) {
+        return $this->_after_insert($uid);
+    }
+
     // 修改密码
     public function _EM_change_password() {
         $old_password = I('post.old_password');
@@ -95,6 +99,16 @@ class UserInfoController extends BaseRestController {
         ]);
 
         $this->logout();
+    }
+
+    public function on_delete() {
+        $service = D('Account/UserInfo');
+        $id = I('get.id');
+        if($service->is_super_user($id)) {
+            return $this->error(__('account.Can not delete super user'));
+        }
+
+        return parent::on_delete();
     }
 
     /*

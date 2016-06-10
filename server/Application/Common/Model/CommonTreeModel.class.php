@@ -20,7 +20,7 @@ class CommonTreeModel extends CommonModel {
     /*
      * 获得缩进树形
      * */
-    public function get_tree($pid = null) {
+    public function get_tree($pid = null, $include_parent=true) {
 
         if(!$pid) {
             $parent = $this->where([])->order('id ASC')->find();
@@ -30,6 +30,11 @@ class CommonTreeModel extends CommonModel {
 
         if(!$parent) {
             return;
+        }
+
+        if(!$include_parent) {
+            $parent['lft'] += 1;
+            $parent['rgt'] -= 1;
         }
 
         $map = array(
@@ -70,6 +75,7 @@ class CommonTreeModel extends CommonModel {
             } else {
                 $row["prefix"] = "";
             }
+            $row["id"] = intval($row['id']);
             $row['prefix_name'] = $row['prefix'].$row['name'];
             // 是否包含子分类
             if($row["rgt"]-$row["lft"] > 1) {
@@ -118,12 +124,12 @@ class CommonTreeModel extends CommonModel {
          * 更新左值
          */
         $map = array(
-            "lft" => array("EGT", $parent["rgt"])
+            "lft" => array("GT", $parent["rgt"])
         );
         if(!$this->not_belongs_to_company) {
             $map['company_id'] = $company_id;
         }
-        $rs = $this->where($map)->setInc('rgt', 2);
+        $rs = $this->where($map)->setInc('lft', 2);
         if(false === $rs) {
             $this->rollback();
             return false;
@@ -171,8 +177,7 @@ class CommonTreeModel extends CommonModel {
             return false;
         }
 
-        $fields = $this->getDbFields();
-        if(in_array('trashed', $fields)) {
+        if($this->enable_trash and !I('get.forever_delete')) {
             $result = $this->where([
                 'lft' => ['BETWEEN', [$node['lft'], $node['rgt']]]
             ])->save(['trashed'=>'1']);
@@ -193,6 +198,41 @@ class CommonTreeModel extends CommonModel {
 
         $this->commit();
 
+    }
+
+    public function do_delete($ids) {
+        foreach($ids as $id) {
+            $result = $this->delete_node($id);
+            if(false === $result) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /*
+     * 获得当前分类的所有父分类
+     * @param $catid
+     * @param $include_parent
+     * */
+    public function get_all_parents($category, $include_self=false) {
+
+        if(!is_array($category)) {
+            $category = $this->where([
+                "id" => $category
+            ])->find();
+        }
+
+        $map = [
+            "lft" => array($include_self ? "ELT" : "LT", $category['lft']),
+            "rgt" => array($include_self ? "EGT" : "GT", $category['rgt'])
+        ];
+        if(!$this->not_belongs_to_company) {
+            $map['company_id'] = get_current_company_id();
+        }
+
+        return $this->where($map)->select();
     }
 
 }

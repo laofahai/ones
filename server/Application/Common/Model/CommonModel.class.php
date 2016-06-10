@@ -97,7 +97,7 @@ class CommonModel extends Model {
         $this->$k = $v;
     }
 
-    public function __get($k) {
+    public function get($k) {
         return $this->$k;
     }
 

@@ -59,3 +59,5 @@ Old password not equal to saved: 旧密码输入错误
 Password has been changed, you need to re-login: 密码已经被重置，您需要重新登录
 
 Company Profile: 公司资料
+
+Can not delete super user: 超级管理用户不能被删除

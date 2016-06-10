@@ -12,7 +12,7 @@ common_type:
     $meta:
         indexes:
             type_name:
-                fields: [module, name]
+                fields: [module, name, company_id]
                 unique: true
             alias:
             name:

@@ -93,9 +93,11 @@ class NavEvent extends BaseRestEvent {
         if(!$nav['link']) {
             return true;
         }
-        $node = implode('.', array_slice(explode('/', $nav['link']), 0, 2));
-        $node .= '.get';
-
+        $node = $nav['auth_node'];
+        if(!$node) {
+            $node = implode('.', array_slice(explode('/', $nav['link']), 0, 2));
+            $node .= '.get';
+        }
 
         return in_array($node, $this->_authed_nodes);
     }

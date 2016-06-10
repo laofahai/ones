@@ -4,6 +4,7 @@ namespace Common\Controller;
 
 use Account\Service\AuthorizeService;
 use Common\Lib\CommonLog;
+use Home\Service\SchemaService;
 use MessageCenter\Service\MessageCenter;
 use Smtp\Service\SendMailService;
 use Think\Controller\RestController;
@@ -372,7 +373,7 @@ class BaseRestController extends RestController {
 
             $returnData = array(
                 array("count" => $total, "totalPages"=>$totalPages),
-                $list ? $list : [],
+                $list,
             );
 
             if($return) {
@@ -384,7 +385,7 @@ class BaseRestController extends RestController {
             if($return) {
                 return $list;
             }
-            $this->response($list ? $list : [], $model);
+            $this->response($list, $model);
         }
 
     }
@@ -560,6 +561,8 @@ class BaseRestController extends RestController {
             return $this->$api_method();
         }
 
+        $id = I('get.id');
+
         $extra_method = '_EM_'.I('get._m');
         if(I('get._m') && method_exists($this, $extra_method)) {
             return $this->$extra_method();
@@ -582,6 +585,11 @@ class BaseRestController extends RestController {
             }
         }
 
+        $source = $model->find($id);
+        if(array_key_exists('company_id', $source) && $source['company_id'] != get_current_company_id()) {
+            return $this->error(__('common.Can not edit item which not you added'));
+        }
+
         // 插入数据之前的插件钩子
         $params = array();
         tag('before_item_update', $params);
@@ -600,7 +608,7 @@ class BaseRestController extends RestController {
          * */
         $app_alias = lcfirst(MODULE_NAME);
         $module_alias = lcfirst(CONTROLLER_NAME);
-        $id = I('get.id');
+
         MessageCenter::broadcast(['edit'], [
             "id" => $id,
             "subject" => '#' . $id,
@@ -616,6 +624,10 @@ class BaseRestController extends RestController {
 
         $data_model = D('DataModel/DataModelData', 'Service');
         $data_model->insert(I('get.id'), I('post.'), $data_model_fields, $modelName);
+
+        if(method_exists($this, '_after_update')) {
+            $this->_after_update($id);
+        }
 
         return $rs;
     }
@@ -640,16 +652,35 @@ class BaseRestController extends RestController {
             return false;
         }
 
+        $company_id = get_current_company_id();
+//        print_r($source_rows);
+        foreach($source_rows as $row) {
+            if(!array_key_exists('company_id', $row)) {
+                break;
+            }
+            if($row['company_id'] != $company_id) {
+                return $this->error(__('common.Can not edit item which not you added'));
+            }
+        }
+
         if(method_exists($model, "do_delete")) {
             $rs = $model->do_delete($ids);
         } else {
-            $rs = $model->where(array(
-                "id" => array("IN", $ids)
-            ))->delete();
+            $schema = SchemaService::getSchemaByApp(lcfirst(MODULE_NAME), $model->get('tableName'));
+
+            if($schema[$model->get('tableName')]['enable_trash']) {
+                $rs = $model->where(["id" => array("IN", $ids)])->save([
+                    "trashed" => "1"
+                ]);
+            } else {
+                $rs = $model->where(array(
+                    "id" => array("IN", $ids)
+                ))->delete();
+            }
         }
 
         if(false === $rs) {
-            E(__("common.Operation Failed"). ': ' .$model->getError());
+            return $this->error(__("common.Operation Failed"). ': ' .$model->getError());
         }
 
         $params = array(
@@ -749,7 +780,8 @@ class BaseRestController extends RestController {
                     $map[$_mf[0]] = array('LIKE', "%{$kw}%");
                 } else {
                     foreach($_mf as $m) {
-                        $where[$this->model_name.'.'.trim($m)] = array('LIKE', "%{$kw}%");
+                        $tmp_mf_field = strpos($m, '.') === false ? $this->model_name.'.'.trim($m) : $m;
+                        $where[$tmp_mf_field] = array('LIKE', "%{$kw}%");
                     }
                 }
 
@@ -782,6 +814,12 @@ class BaseRestController extends RestController {
         // only trash
         if(I("get._ot")) {
             $map[$this->model_name.'.trashed'] = '1';
+        } else {
+            $schema = SchemaService::getSchemaByApp(lcfirst(MODULE_NAME), $model->get('tableName'));
+
+            if($schema[$model->get('tableName')]['enable_trash']) {
+                $map[$this->model_name.'.trashed'] = '0';
+            }
         }
 
         /*
@@ -942,6 +980,17 @@ class BaseRestController extends RestController {
     protected function login_required($node=null) {
         return $this->httpError(401, __("account.Login Required").($node ? ": ".$node : ""));
     }
+
+    public function _EM_untrash($ids) {
+        $modelName = $this->deleteModel ? $this->deleteModel : sprintf("%s/%s", MODULE_NAME, CONTROLLER_NAME);
+        $model = D($modelName);
+        $model->real_model_name = $this->model_name;
+        $ids = explode(',', I('get.id'));
+
+        $model->where([
+            'id' => ["in", $ids]
+        ])->save(['trashed'=>'0']);
+    }
     
     /*
      * 应用是否启用
@@ -956,12 +1005,12 @@ class BaseRestController extends RestController {
      * @param $data 返回数据
      * @param $model 可选参数，传递此参数将对返回数据根据数据表定义进行强制类型转换处理
      * */
-    protected function response($data, $model=null, $is_table=false) {
+    protected function response($data, $model=null, $is_table=false, $app=MODULE_NAME) {
         /*
          * 格式化数据
          * **/
         if($model) {
-            $data = Schema::data_format($data, $model, $is_table);
+            $data = Schema::data_format($data, $model, $is_table, $app);
         }
 
         $data = $this->append_log_to_data($data);

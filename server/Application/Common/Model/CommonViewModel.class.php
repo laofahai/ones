@@ -28,7 +28,11 @@ class CommonViewModel extends ViewModel {
         return parent::where($map, $parse);
     }
 
-    public function __get($k) {
+    public function set($k, $v) {
+        $this->$k = $v;
+    }
+
+    public function get($k) {
         return $this->$k;
     }
 

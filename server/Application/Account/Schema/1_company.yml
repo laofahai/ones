@@ -22,11 +22,15 @@ company:
         precision: 14
         scale: 4
         default: 0.00
+    is_active:
+        type: boolean
+        default: false
     $meta:
         indexes:
             name:
             sign_id: 
                 unique: true
+            is_active:
 
 company_active_apps:
     $meta:

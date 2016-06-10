@@ -9,7 +9,9 @@ class Dev extends BaseMigration {
 
     public function up() {
         $apps = [
-            'Platform',
+            'Product',
+            'Account',
+            'Bpm'
         ];
         foreach($apps as $app) {
             $this->fromYaml($app);
