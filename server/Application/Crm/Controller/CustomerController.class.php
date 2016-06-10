@@ -41,6 +41,7 @@ class CustomerController extends BaseRestController {
         if(!$_POST['head_id']) {
             unset($_POST['head_id']);
         } else {
+            $_POST['head_id'] = is_array($_POST['head_id']) ? $_POST['head_id'] : explode(',', $_POST['head_id']);
             $_POST['head_id'] = $_POST['head_id'][0];
         }
     }

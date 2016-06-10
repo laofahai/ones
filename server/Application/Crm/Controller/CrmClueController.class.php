@@ -51,7 +51,7 @@ class CrmClueController extends BaseRestController {
 
     public function _before_insert() {
         if($_POST['head_id']) {
-            $_POST['head_id'] = $_POST['head_id'][0] ? $_POST['head_id'][0] : null;
+            $_POST['head_id'] = is_array($_POST['head_id']) ? $_POST['head_id'][0] : $_POST['head_id'];
         }
 
     }
