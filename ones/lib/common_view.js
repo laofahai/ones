@@ -65,7 +65,9 @@
             "$location",
             "ones.dataApiFactory",
             "$routeParams",
-            function($scope, $location, dataAPI, $routeParams) {
+            "$rootScope",
+            "PageSelectedActions",
+            function($scope, $location, dataAPI, $routeParams, $rootScope, PageSelectedActions) {
                 ones.DEBUG && console.debug('Common view detected: '+ $location.url());
 
                 var query_params = {};

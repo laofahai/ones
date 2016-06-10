@@ -42,7 +42,7 @@
     width: 400px;
     position: absolute;
     right: 0;
-    top: 10px; }
+    top: -5px; }
     .bill-container .bill-header .bill-bar-code img {
       max-width: 100%; }
 
@@ -98,6 +98,12 @@
     .bill-rows table td[bill-edit-able] .editable_td_before {
       left: 5px;
       z-index: 110; }
+  .bill-rows .chosen-container {
+    width: 100% !important; }
+    .bill-rows .chosen-container .chosen-single {
+      height: 36px !important;
+      line-height: 35px !important;
+      margin: -1px; }
   .bill-rows .select3-container {
     box-shadow: 0 0 10px 3px #7eaffd; }
 
