@@ -758,7 +758,12 @@ class BaseRestController extends RestController {
             $mv = explode(',', I('get._mv'));
             for($i=0; $i<count($mf);$i++) {
                 if($mf[$i] && isset($mv[$i])) {
-                    $map[$mf[$i]] = $mv[$i];
+                    if($mv[$i] === 'undefined' && I('get._kw')) {
+                        $map[$mf[$i]] = ['LIKE', "%".I('get._kw')."%"];
+                    } else {
+                        $map[$mf[$i]] = $mv[$i];
+                    }
+
                 }
             }
         }
@@ -792,7 +797,7 @@ class BaseRestController extends RestController {
                         $where[$sf] = array('LIKE', "%{$kw}%");
                     }
                 // 否则将尝试使用几个常用字段
-                } else {
+                } else if($model->fuzzy_search !== false) {
                     $fields = array(
                         "name"
                     );

@@ -184,11 +184,11 @@ function to_decimal_display(value, scale, format) {
 /*
 * 返回数据的主显
 * */
-function to_item_display(item, data_api) {
-    var label_field='name';
+function to_item_display(item, data_api, force_label_field) {
+    var label_field= force_label_field || 'name';
     data_api = data_api || {config: {}};
 
-    if(data_api.config.label_field) {
+    if(data_api.config.label_field && undefined === force_label_field) {
         label_field = data_api.config.label_field;
     }
 
@@ -231,14 +231,13 @@ function generate_bill_no(prefix) {
     var year = String(date.getFullYear());
     var day = date.getDate();
     day = day < 10 ? '0' + String(day) : String(day);
-    return sprintf('%(prefix)s%(year)s%(month)s%(day)s%(second)s %(rand)s%(string)s', {
-        prefix: prefix ? prefix.toUpperCase()+' ': '',
+    return sprintf('%(prefix)s%(year)s%(month)s%(day)s%(second)s %(string)s', {
+        prefix: '',
         year: time_str[year[3]] + year[2],
         month: time_str[date.getMonth()],
         day: day,
         second: String(date.getTime()).slice(5, 10),
-        rand: get_random_int(10, 99),
-        string: randomString(2).toUpperCase()
+        string: randomString(3, true).toUpperCase()
     });
 }
 
@@ -588,9 +587,14 @@ function get_date_for_input(timestamp, mask) {
 /**
  * 生成随机字符串
  * */
-function randomString(len) {
+function randomString(len, only_number) {
     len = len || 6;
     var $chars = 'abcdefghijklmnopqrstuvwxyz01234567890';
+
+    if(only_number) {
+        $chars = '0123456789';
+    }
+
     var maxPos = $chars.length;
     var str = '';
     for (var i = 0; i < len; i++) {

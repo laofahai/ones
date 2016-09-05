@@ -130,6 +130,13 @@
                     auto_hide: 5000
                 };
 
+                if(opts.content.msg) {
+                    opts.content = opts.content.msg;
+                }
+                if(opts.content.error) {
+                    opts.type = 'danger';
+                }
+
                 opts = angular.deep_extend(default_opts, opts);
 
                 var alert = $injector.get('$alert')(opts);

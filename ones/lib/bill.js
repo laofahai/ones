@@ -32,8 +32,8 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         , bar_code_container: '#bar-code' // img container id <div id="bar-code"></div>
                         , field: 'bill_no' // bar code 存储ID
                         , display_value: true // 是否显示字符
-                        , height: 50
-                        , fontSize: 14
+                        , height: 40
+                        , fontSize: 10
                         , value: generate_bill_no()
                     }
                 };
@@ -66,6 +66,8 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                     this.parentScope.system_preference = ones.system_preference;
                     this.parentScope.company_profile = ones.company_profile;
+
+                    this.opts.model.config.bill_meta_required = this.opts.model.config.bill_meta_required || [];
 
                     this.run();
                 };
@@ -434,17 +436,18 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                 var generate_bar_code = function() {
                     var bar_code = self.opts.isEdit ? self.parentScope.bill_meta_data[self.opts.bill_no.field] : self.opts.bill_no.value;
 
-                    if(!bar_code) {
+                    if(!bar_code || false === self.opts.model.config.display_barcode) {
                         return;
                     }
 
                     $(self.opts.bill_no.bar_code_container).append('<img />');
                     $timeout(function() {
                         $(self.opts.bill_no.bar_code_container + ' img').JsBarcode(bar_code, {
-                            height: self.opts.bill_no.height,
-                            displayValue: self.opts.bill_no.display_value
-                            , format:	"CODE128"
-                        }).height(self.opts.bill_no.height);
+                            height: 40,
+                            fontSize: 8,
+                            displayValue: self.opts.bill_no.display_value,
+                            format:	"CODE128"
+                        });
                     });
 
                     self.parentScope.bar_code_field = self.opts.bill_no.field;
@@ -549,12 +552,15 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                     setTimeout(function() {
                                         ele.find('.bill_editable_widget').addClass('hide');
                                         ele.find('label.bill_row_td_editable_label').removeClass('hide');
-                                    }, 50);
+                                    }, 350);
 
                                     // 检测label model 是否已正确
                                     $timeout(function(){
 
                                         // 小数保留
+                                        if(column_def.widget == 'select3') {
+                                            return;
+                                        }
                                         if (column_def.widget === 'number') {
                                             var getter = $parse(column_def['ng-model']);
                                             getter.assign(scope, to_decimal_display(scope.$eval(column_def['ng-model'])));
@@ -572,9 +578,9 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                             getter.assign(scope, label_value || old_label_value);
                                         } else {
                                             var getter = $parse(column_def['label-model']);
-                                            getter.assign(scope, old_label_value || scope.$eval(column_def['ng-model']));
+                                            getter.assign(scope, scope.$eval(column_def['ng-model']));
                                         }
-                                    });
+                                    }, 500);
 
                                     bind_before_and_after(column_def);
                                 });

@@ -25,11 +25,11 @@ class CompanyProfileController extends BaseRestController {
         $service->init_profile();
 
         $company_service = D('Account/Company');
-        $company_service->where()->save([
+        $company_service->where([
+            "id" => $_GET['company_id']
+        ])->save([
             'name' => I('post.name')
         ]);
-
-        $_GET['company_id'] = get_current_company_id();
 
         $_GET['id'] = $service->where([
             'company_id' => $_GET['company_id']
