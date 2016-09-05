@@ -45,6 +45,11 @@ ones.APP_ENTRY = 'app.html';
 
 ones.global_module = angular.module("ones.global", []);
 
+ones.company_profile = {};
+ones.user_info = {};
+ones.system_preference = {};
+ones.user_preference = {};
+
 // 常用按键
 window.KEY_CODES = {
     DOWN: 40
@@ -258,9 +263,7 @@ angular.module("ones.configModule", [
                         return response;
                     },
                     'responseError': function (response) {
-
                         // @todo debug
-
                         var status = response.status;
                         switch (status) {
                             case 401:

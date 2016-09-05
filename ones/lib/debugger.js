@@ -34,7 +34,7 @@
                 $scope.show_debugger = false;
                 $scope.debugger_enable = false;
 
-                if(ones.DEBUG && window.top.__DEBUGGER_ENABLE_FOR.indexOf(parseInt(ones.company_profile.id)) >= 0) {
+                if(ones.DEBUG && ones.company_profile && window.top.__DEBUGGER_ENABLE_FOR.indexOf(parseInt(ones.company_profile.id)) >= 0) {
                     $scope.debugger_enable = true;
                 } else {
                     return false;

@@ -10,7 +10,7 @@
             'socketFactory',
             'pluginExecutor',
             function(socketFactory, plugin) {
-                if(!is_app_loaded('messageCenter') || undefined === io) {
+                if(!is_app_loaded('messageCenter') || undefined === io || !ones.user_info) {
                     ones.caches.setItem('socket.connected', false);
                     ones.DEBUG && console.debug('Connect to message center failed.');
                     return {

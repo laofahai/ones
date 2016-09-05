@@ -43,6 +43,11 @@
                 }
             };
 
+            //监听全局事件
+            $scope.$on("event:loginRequired", function() {
+                window.top.location.href = "./";
+            });
+
             /**
              * 向frame广播事件
              * */
