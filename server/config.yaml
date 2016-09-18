@@ -1,3 +1,4 @@
+debug: false
 # 当前版本
 version: "1.0"
 # 默认语言

@@ -415,8 +415,8 @@
                             var ele = $(this);
                             $timeout(function() {
                                 ele.parent().removeClass('active');
-                                ele.parent().find('ul.items').addClass('hide');
-                            }, 300);
+                                //ele.parent().find('ul.items').addClass('hide');
+                            }, 1000);
                         });
                         $('body').delegate('#'+config.id, 'focus', function() {
                             var ele = $(this);

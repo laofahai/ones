@@ -16,6 +16,24 @@ class DynamicConfigBehavior extends Behavior
 
     public function run(&$params) {
 
+        if(true === APP_DEBUG) {
+            define('APPLICATION_ENV', 'development');
+        }
+
+        switch(APP_DEBUG) {
+            case true:
+                $_env = 'development';
+                break;
+            case 1:
+                $_env = 'testing';
+                break;
+            default:
+                $_env = 'production';
+                break;
+        }
+
+        define('APPLICATION_ENV', $_env);
+
         // 根据migration 设定数据库链接
         $__phinx_config = \Symfony\Component\Yaml\Yaml::parse(file_get_contents(ENTRY_PATH.'/phinx.yml'));
         if(defined('APPLICATION_ENV')) {

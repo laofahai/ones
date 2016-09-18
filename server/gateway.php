@@ -22,7 +22,7 @@ define('CURRENT_DATE_TIME', date('Y-m-d H:i:s'));
 
 // 应用环境
 // 可选： development, production, testing 等，在 /server/phinx.yml中可配置相应的数据库连接
-define('APPLICATION_ENV', 'development');
+//define('APPLICATION_ENV', 'development');
 
 header("Access-Control-Allow-Origin: *");
 
@@ -60,8 +60,7 @@ try{
     $ones = \Symfony\Component\Yaml\Yaml::parse(file_get_contents('./config.yaml'));
 } catch(Exception $e) {}
 
-
-define('APP_DEBUG', false);
+define('APP_DEBUG', $ones['debug']);
 
 //修正POST不能正确获取数据问题
 if(in_array($_SERVER["REQUEST_METHOD"], array("POST", "PUT"))

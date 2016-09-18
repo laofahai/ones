@@ -1,10 +1,11 @@
 <?php
 
-define('ENTRY_PATH', dirname(dirname(__FILE__)));
-define('INSTALL_PATH', ENTRY_PATH.'/install');
+error_reporting(E_ALL^E_NOTICE);
+define('ENTRY_PATH', dirname(dirname(__FILE__))."/server");
+define('INSTALL_PATH', dirname(__FILE__));
 
 require ENTRY_PATH."/vendor/autoload.php";
-require ENTRY_PATH."/Data/Migrations/0_install.php";
+require INSTALL_PATH."/migration.php";
 require INSTALL_PATH.'/common.php';
 require ENTRY_PATH.'/Application/Common/Common/function.php';
 require ENTRY_PATH.'/Application/Account/Common/function.php';
@@ -75,7 +76,7 @@ $migrate = new Install(0);
 $migrate->up();
 ob_end_clean();
 
-echo "\nData schema migrated success, fill your company and super-user info\n\n";
+echo "\nData schema migrated success, fill out your company and super-user info\n\n";
 
 // 公司及管理员信息
 echo "Your company name: ";
@@ -227,7 +228,7 @@ if(!$prepared->execute()) {
 }
 
 // 商品分类ROOT节点
-$sql = "INSERT INTO product_category(name, lft, rgt, company_id)VALUES('ROOT', 1, 2, :company_id)";
+$sql = "INSERT INTO product_category(name, lft, rgt, company_id)VALUES('Product Category', 1, 2, :company_id)";
 $prepared = $pdo->prepare($sql);
 $prepared->bindParam(':company_id', $company_id);
 if(!$prepared->execute()) {
@@ -243,15 +244,54 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS `session` (
   UNIQUE KEY `session_id` (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-// 写应用表
+// 写应用表及应用Migration
 $sql = "INSERT INTO app(alias, requirements)VALUES(:alias, :requirements)";
 $prepared = $pdo->prepare($sql);
-foreach($apps as $alias=>$app_config) {
-    $requirements = $app_config['requirements'];
-    $prepared->bindParam(':alias', $alias);
-    $prepared->bindParam(':requirements', $requirements);
-    $prepared->execute();
+
+$path = ENTRY_PATH."/Application/";
+$dh = opendir($path);
+$migration_version = 10000;
+while(($app_name = readdir($dh)) !== false) {
+    $config_file = $path.$app_name.'/config.yml';
+    if("." !== substr($app_name, 0, 1)) {
+        if(is_file($config_file)) {
+            $app_config = \Symfony\Component\Yaml\Yaml::parse(file_get_contents($config_file));
+            
+            $alias = $app_config["alias"];
+
+            $requirements = implode(",", (array)$app_config["requirements"]);
+
+            $prepared->bindParam(':alias', $alias);
+            $prepared->bindParam(':requirements', $requirements);
+            $prepared->execute();
+        }
+
+        // 应用migration
+        $migration_dir = $path.$app_name."/Migration/";
+        if(is_dir($migration_dir)) {
+            $fh = opendir($migration_dir);
+            while(($migration_file = readdir($fh)) !== false) {
+
+                if(substr($migration_file, -4) === '.php') {
+                    require $migration_dir.$migration_file;
+                    $tmp = explode(".", $migration_file);
+                    $class_name = array_shift($tmp);
+                    $class_name = sprintf(
+                        '\%s\Migration\%s',
+                        $app_name,
+                        $class_name
+                    );
+                    $migrate = new $class_name($migration_version);
+                    $migrate->up();
+                    $migration_version++;
+                }
+            }
+            closedir($fh);
+        }
+        
+    }
 }
+closedir($dh);
 
 display_loading('initialize company and super-user', 5);
 

@@ -195,12 +195,15 @@ $bill_td_height: 34px;
 
 
 .bill-quick-search {
-    position: absolute;
-    width:300px;
-    margin-left:-150px;
-    left:50%;
-    top:10px;
-    z-index:100;
+    position: fixed;
+    width: 300px;
+    margin-left: -150px;
+    left: 50%;
+    top: 65px;
+    z-index: 100;
+    padding: 5px;
+    background: #fff;
+    box-shadow: 1px 1px 5px #666;
 
     input {
         height:40px;
