@@ -63,7 +63,9 @@
                 $scope.switch_info = function(index) {
                     var uri = $scope.debug_uris[index];
                     $scope.active_index = index;
-
+                    if(!$scope.debug_info || !$scope.debug_info[uri]) {
+                        return;
+                    }
                     $scope.debug_info[uri].REQUEST_URI = $scope.debug_info[uri].REQUEST_URI.replace(/&amp;/g, '&');
                     $scope.current_info = $scope.debug_info[uri];
                 };

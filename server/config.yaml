@@ -1,11 +1,9 @@
-# 是否开启调试模式
-DEBUG: true
 # 当前版本
 version: "1.0"
 # 默认语言
 default_language: zh-cn
 # 会话保存时间
-access_max_age: 600
+access_max_age: 6000
 # 无需认证动作
 auth_dont_need_login: 
     - home.config.bootstrap.event
@@ -13,7 +11,6 @@ auth_dont_need_login:
 auth_dont_need_check:
     - home.config.app.get
 
-    
 # 默认导航
 navs:
     Base Data Set:

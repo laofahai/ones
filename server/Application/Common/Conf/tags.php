@@ -1,7 +1,8 @@
 <?php
 
-return array(
-    "app_init" => array(
+return [
+    "app_init" => [
         "Common\\Behaviors\\AutoRouteBehavior",
-    )
-);
+        "Common\\Behaviors\\DynamicConfigBehavior"
+    ]
+];

@@ -66,7 +66,7 @@ class BaseRestController extends RestController {
     protected $deleteModel;
 
     public function __construct() {
-        
+
         //支持方法
         if(!$this->allowMethod) {
             $this->allowMethod = explode(",", strtolower(SUPPORTED_METHOD));
@@ -91,9 +91,9 @@ class BaseRestController extends RestController {
         }
 
         tag('before_controller_construct');
-        
+
         parent::__construct();
-        
+
         // 当前请求 =》 auth_node
         $this->current_action_all = sprintf("%s.%s.%s.%s",
             lcfirst(MODULE_NAME),
@@ -118,7 +118,7 @@ class BaseRestController extends RestController {
 
         //当前模块前端别名
         $this->module_alias = __(sprintf('%s.%s', lcfirst(MODULE_NAME), lcfirst(CONTROLLER_NAME)));
-        
+
         //导入非当前应用的插件及函数等信息
         foreach($this->activeApps as $app) {
             $app = ucfirst($app);
@@ -187,7 +187,7 @@ class BaseRestController extends RestController {
 
         // 获得用户已授权节点
         $authed_nodes = session('authed_nodes');
-        if(DEBUG || !$authed_nodes) {
+        if(APP_DEBUG || !$authed_nodes) {
             $authed_nodes = D('Account/Authorize')->get_authed_nodes();
             session('authed_nodes', $authed_nodes);
         }
@@ -1069,9 +1069,11 @@ class BaseRestController extends RestController {
      * 日志 附加在返回的数据中
      * */
     protected function append_log_to_data($data) {
-        if(true !== RESPONSE_WITH_DEBUG_INFO || !$data) {
+        if(true !== APP_DEBUG || !$data) {
             return $data;
         }
+
+        Log::record('hello', 'SQL');
 
         $debug_info = [];
         $logs = CommonLog::get_log();
@@ -1100,6 +1102,31 @@ class BaseRestController extends RestController {
         }
 
         return $data;
+    }
+
+    public function __call($method,$args) {
+        if( 0 === strcasecmp($method,ACTION_NAME.C('ACTION_SUFFIX'))) {
+            if(method_exists($this,$method.'_'.$this->_method.'_'.$this->_type)) { // RESTFul方法支持
+                $fun  =  $method.'_'.$this->_method.'_'.$this->_type;
+                $this->$fun();
+            }elseif($this->_method == $this->defaultMethod && method_exists($this,$method.'_'.$this->_type) ){
+                $fun  =  $method.'_'.$this->_type;
+                $this->$fun();
+            }elseif($this->_type == $this->defaultType && method_exists($this,$method.'_'.$this->_method) ){
+                $fun  =  $method.'_'.$this->_method;
+                $this->$fun();
+            }elseif(method_exists($this,'_empty')) {
+                // 如果定义了_empty操作 则调用
+                $this->_empty($method, $args);
+            } else if(method_exists($this, $method)) {
+                $this->$method();
+//            }elseif(file_exists_case($this->view->parseTemplate())){
+//                // 检查是否存在默认模版 如果有直接输出模版
+//                $this->display();
+            }else{
+                E(L('_ERROR_ACTION_').':'.ACTION_NAME);
+            }
+        }
     }
     
 }

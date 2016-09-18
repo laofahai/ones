@@ -28,6 +28,9 @@ class ConfigEvent extends BaseRestEvent {
                 $data[$k] = $v;
             }
         }
+
+        $data['DEBUG'] = APP_DEBUG ? true : false;
+
         // 已启用应用
         $data['loaded_apps'] = array_merge(AppService::$activeApps, AppService::$baseApps);
 

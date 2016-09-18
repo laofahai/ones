@@ -97,6 +97,12 @@ function config_init(apps, callback) {
                 ones[k] = data[k];
             }
 
+            // 未登录直接访问
+            if(window.location.href.indexOf(ones.APP_ENTRY) >= 0 && !ones.company_profile) {
+                window.location.href = './';
+                return false;
+            }
+
             window.set_debugger_info(uri, data.__DEBUG__);
 
             // app.html
