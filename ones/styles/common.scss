@@ -250,6 +250,18 @@ $focus_color: #438ED1;
     }
 }
 
+.form-field .select3-container {
+    position:relative;
+    z-index: auto;
+    ul.items {
+        position:absolute;
+        z-index:110;
+        width:100%;
+        border:1px solid #ddd;
+        border-top:0;
+    }
+}
+
 
 // chosen
 .chosen-container {

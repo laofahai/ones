@@ -3,48 +3,50 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   padding: 10px 20px 20px;
   margin-bottom: 20px; }
-  .bill-container .bill-header .bill-subject {
-    height: 70px;
-    margin: 0;
-    position: relative;
-    color: #000;
-    border-bottom: 1px solid #efefef;
-    margin-bottom: 20px; }
-    .bill-container .bill-header .bill-subject .bill-subject-left {
+  .bill-container .bill-header {
+    position: relative; }
+    .bill-container .bill-header .bill-subject {
+      height: 70px;
+      margin: 0;
+      position: relative;
+      color: #000;
+      border-bottom: 1px solid #efefef;
+      margin-bottom: 20px; }
+      .bill-container .bill-header .bill-subject .bill-subject-left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 12px; }
+        .bill-container .bill-header .bill-subject .bill-subject-left .subject {
+          border-right: 1px solid #666;
+          padding: 5px 10px 5px 0;
+          margin-right: 10px; }
+          .bill-container .bill-header .bill-subject .bill-subject-left .subject input {
+            border: 0;
+            text-align: center; }
+          .bill-container .bill-header .bill-subject .bill-subject-left .subject input:focus {
+            border: 0;
+            outline: none; }
+        .bill-container .bill-header .bill-subject .bill-subject-left .company-info {
+          padding-top: 8px; }
+          .bill-container .bill-header .bill-subject .bill-subject-left .company-info small {
+            display: block;
+            margin: 1px 0; }
+        .bill-container .bill-header .bill-subject .bill-subject-left h1 {
+          font-size: 24px;
+          margin: 0;
+          padding: 10px 0; }
+    .bill-container .bill-header .bill-bar-code {
+      font-size: 11px;
+      color: #222;
+      line-height: 180%;
+      text-align: right;
+      width: 400px;
       position: absolute;
-      left: 0;
-      top: 0;
-      font-size: 12px; }
-      .bill-container .bill-header .bill-subject .bill-subject-left .subject {
-        border-right: 1px solid #666;
-        padding: 5px 10px 5px 0;
-        margin-right: 10px; }
-        .bill-container .bill-header .bill-subject .bill-subject-left .subject input {
-          border: 0;
-          text-align: center; }
-        .bill-container .bill-header .bill-subject .bill-subject-left .subject input:focus {
-          border: 0;
-          outline: none; }
-      .bill-container .bill-header .bill-subject .bill-subject-left .company-info {
-        padding-top: 8px; }
-        .bill-container .bill-header .bill-subject .bill-subject-left .company-info small {
-          display: block;
-          margin: 1px 0; }
-      .bill-container .bill-header .bill-subject .bill-subject-left h1 {
-        font-size: 24px;
-        margin: 0;
-        padding: 10px 0; }
-  .bill-container .bill-header .bill-bar-code {
-    font-size: 11px;
-    color: #222;
-    line-height: 180%;
-    text-align: right;
-    width: 400px;
-    position: absolute;
-    right: 0;
-    top: -5px; }
-    .bill-container .bill-header .bill-bar-code img {
-      max-width: 100%; }
+      right: 0;
+      top: -5px; }
+      .bill-container .bill-header .bill-bar-code img {
+        max-width: 100%; }
 
 .bill-rows {
   /* select 3*/ }
@@ -130,5 +132,28 @@
   padding-top: 10px; }
   .bill-related h2 {
     font-size: 20px; }
+
+.bill-quick-search {
+  position: absolute;
+  width: 300px;
+  margin-left: -150px;
+  left: 50%;
+  top: 10px;
+  z-index: 100; }
+  .bill-quick-search input {
+    height: 40px; }
+  .bill-quick-search ul {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #438ED1;
+    list-style: none;
+    padding: 0;
+    margin-top: -1px; }
+    .bill-quick-search ul li {
+      padding: 5px 8px;
+      cursor: pointer; }
+    .bill-quick-search ul li.active, .bill-quick-search ul li:hover {
+      background: #438ED1;
+      color: #fff; }
 
 /*# sourceMappingURL=bill.css.map */

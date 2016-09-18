@@ -23,13 +23,13 @@ var FORM_FIELDS_TPL = {
                 '</div>',
     select3: '<div class="select3-container">' +
         '<input type="text" ng-model="%(model)s__label__" data-origin-model="%(model)s" autocomplete="off" %(attr)s />' +
-        '<a href="javascript:void(0)" class="select3-add-btn" ng-show="cant_be_dynamic_add" ng-click="$root.select_dynamic_add(\'%(model)s\')"><i class="fa fa-plus"></i></a>' +
-        '<a href="javascript:void(0)" class="select3-show-grid-btn" ng-click="$root.show_select3_modal(\'%(model)s\', \'%(model)s__label__\')">' +
+        '<a href="javascript:void(0)" class="select3-add-btn" ng-show="cant_be_dynamic_add" ng-click="select_dynamic_add(\'%(model)s\')"><i class="fa fa-plus"></i></a>' +
+        '<a href="javascript:void(0)" class="select3-show-grid-btn" ng-click="show_select3_modal(\'%(model)s\', \'%(model)s__label__\')">' +
         '<i class="fa fa-ellipsis-h"></i></a>' +
         '<input type="hidden" ng-model="%(model)s" /></div>',
     select3_items: '<ul ng-show="%(items_model)s.length>0" class="items">' +
-    '<li ng-repeat="item in $root.%(items_model)s" ng-bind="item.label" ' +
-    'ng-click="$root.do_select3_item_select(item, true, \'%(origin_model)s\', $event)" ng-class="{\'active\':$index===active_select3_index}"></li>' +
+    '<li ng-repeat="item in %(items_model)s" ng-bind="item.label" ' +
+    'ng-click="do_select3_item_select(item, true, \'%(origin_model)s\', $event)" ng-class="{\'active\':$index===active_select3_index}"></li>' +
     '</ul>' +
     '<ul ng-show="%(items_model)s.length<=0" class="items"><li ng-bind="\'common.Does not match any rows\'|lang"></li></ul>',
     select3_group_tpl: '<div class="form-group %(group_class)s" ng-class="%(ng_class)s" ng-show="check_is_in_active_group(%(field_config)s.field)">' +

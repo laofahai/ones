@@ -18,7 +18,7 @@ class UserInfoModel extends CommonViewModel {
     public $tableName = 'user_info';
 
     protected $viewFields = array(
-        'UserInfo' => array('id', 'login', 'email', 'realname', 'avatar', 'created', 'department_id', '_type'=>'left'),
+        'UserInfo' => array('id', 'login', 'email', 'realname', 'created', 'department_id', '_type'=>'left'),
         'Department' => array('name' => 'department_id__label__', '_on'=>'UserInfo.department_id=Department.id', '_type'=>'left')
     );
 

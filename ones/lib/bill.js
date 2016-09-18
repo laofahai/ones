@@ -148,7 +148,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                         var rows = response_data.rows;
                         if(response_data.meta.locked && $routeParams.action === 'edit') {
-                            RootFrameService.close();
                             return RootFrameService.alert({
                                 type: 'danger',
                                 content: _('common.This item is locked and can not be edit')
@@ -202,6 +201,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                 this.run = function() {
 
+
                     this.scope.$watch('column_defs', function(updated_column_defs) {
                         self.scope.column_defs = updated_column_defs;
                     });
@@ -232,6 +232,97 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                 generate_bar_code();
                             });
                         }
+                    }
+
+                    if(!$routeParams.id) {
+
+                        var do_quick_search_query = function() {
+                            var keyword = self.scope.$parent.bill_meta_data.quick_search_keyword;
+                            if(!self.scope.bill_rows || !keyword) {
+                                return;
+                            }
+
+                            var api = $injector.get('Product.ProductCompanyMapAPI');
+                            api.resource.api_query({_m: 'fetch_by_unique_number', keyword: keyword, app: ones.app_info.app}).$promise.then(function(response_data) {
+                                self.scope.$parent.current_quick_search_index = 0;
+                                if(response_data) {
+                                    self.scope.$parent.quick_search_result = response_data;
+                                }
+                            });
+                        };
+
+                        self.scope.$parent.$watch(function() {
+                            return self.scope.$parent.bill_meta_data.quick_search_keyword;
+                        }, function(keyword) {
+                            do_quick_search_query();
+                        });
+
+                        self.scope.$parent.do_quick_search_focus = function() {
+                            do_quick_search_query();
+                        };
+
+                        var do_select = function(index) {
+                            var latest_cleared_row = self.scope.bill_rows.length;
+                            for(var i=0;i<self.scope.bill_rows.length;i++) {
+                                if(!self.scope.bill_rows[i].product_id) {
+                                    latest_cleared_row = i;
+                                    break;
+                                }
+                            }
+                            self.scope.bill_rows[latest_cleared_row] = self.scope.$parent.quick_search_result[index];
+
+                            self.scope.$parent.fetch_stock_quantity(
+                                self.scope.bill_rows,
+                                self.scope.$parent,
+                                latest_cleared_row
+                            );
+                            self.scope.$parent.re_calculate_subtotal(
+                                self.scope.bill_rows,
+                                self.scope.$parent,
+                                latest_cleared_row
+                            );
+                            //console.log(self.scope.bill_rows);
+                        };
+
+                        this.scope.$parent.do_quick_search_blur = function() {
+                            $timeout(function() {
+                                self.scope.$parent.current_quick_search_index = 0;
+                                self.scope.$parent.quick_search_result = [];
+                            }, 350);
+
+                        };
+
+                        this.scope.$parent.do_quick_search = function($event, index) {
+                            if(undefined !== index) {
+                                do_select(index);
+                                return;
+                            }
+
+                            switch($event.keyCode) {
+                                case KEY_CODES.ENTER:
+                                    do_select(self.scope.$parent.current_quick_search_index);
+                                    break;
+                                case KEY_CODES.UP:
+                                    self.scope.$parent.current_quick_search_index--;
+                                    if(self.scope.$parent.current_quick_search_index<0) {
+                                        self.scope.$parent.current_quick_search_index = self.scope.$parent.quick_search_result.length-1;
+                                    }
+                                    break;
+                                case KEY_CODES.DOWN:
+                                    self.scope.$parent.current_quick_search_index++;
+                                    if(self.scope.$parent.current_quick_search_index>=self.scope.$parent.quick_search_result.length) {
+                                        self.scope.$parent.current_quick_search_index = 0;
+                                    }
+                                    break;
+                                default:
+                                    return;
+                            }
+
+                            $event.preventDefault();
+                        };
+
+
+                        this.scope.$parent.show_quick_search = true;
                     }
 
                     // 行字段
@@ -306,7 +397,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         column_def.id = randomString('6')+'_'+column_def.field;
 
                         self.scope.column_defs[column_def.field] = column_def;
-                        td.attr('data-inited', 'true');
 
                         var html = field_factory.make_field(td_scope, column_def.field, column_def, column_def.opts || {
                             container_tpl: '%(input)s',
@@ -315,9 +405,14 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                         td.append($compile(html)(td_scope || self.scope));
 
-                        $timeout(function(){
-                            td.find('>:last').addClass('bill_editable_widget').addClass('hide');
-                        });
+                        //if(td.data('inited')) {
+                            $timeout(function(){
+                                td.find('>:last').addClass('bill_editable_widget').addClass('hide');
+                            });
+                        //}
+
+                        td.attr('data-inited', 'true');
+
 
                     };
 
@@ -347,25 +442,27 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                         // 检测必须字段， 非法行将被丢弃
                         // @todo 检测时是否仅检测undefined
-                        if(self.row_model.config.bill_row_required) {
-                            var required = self.row_model.config.bill_row_required;
-                            angular.forEach(bill_rows, function(item, index) {
+
+                        var required = self.row_model.config.bill_row_required;
+                        angular.forEach(bill_rows, function(item, index) {
+
+                            if(self.row_model.config.bill_row_required) {
                                 for(var i=0;i<required.length;i++) {
                                     if(!item[required[i]]) {
                                         return;
                                     }
                                 }
+                            }
 
-                                // 检测行数据中的无用临时数据
-                                delete(item['tr_id']);
-                                angular.forEach(item, function(v, k) {
-                                    if(k.end_with('__')) {
-                                        delete(item[k]);
-                                    }
-                                });
-                                bill_rows_cleared.push(item);
-                            });
-                        }
+                            // 检测行数据中的无用临时数据
+                            delete(item['tr_id']);
+                            //angular.forEach(item, function(v, k) {
+                            //    if(k.end_with('__') && k != 'brand__label__' && k != 'standard__label__' && k != 'product_id__label__') {
+                            //        delete(item[k]);
+                            //    }
+                            //});
+                            bill_rows_cleared.push(item);
+                        });
 
                         // 无明细行
                         if(bill_rows_cleared.length <= 0) {
@@ -394,10 +491,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                         }
                         var callback = function(response_data) {
 
-                            if(!response_data || !response_data.error) {
-                                RootFrameService.close();
-                            }
-
                             if(is_app_loaded('messageCenter')) {
                                 var mc = $injector.get('ones.MessageCenter');
                                 mc.emit('some_data_changed', {
@@ -406,6 +499,10 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                                     app: ones.app_info.app,
                                     module: ones.app_info.module
                                 });
+                            }
+
+                            if(!response_data || !response_data.error) {
+                                RootFrameService.close();
                             }
 
                         };
@@ -556,7 +653,6 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                                     // 检测label model 是否已正确
                                     $timeout(function(){
-
                                         // 小数保留
                                         if(column_def.widget == 'select3') {
                                             return;
@@ -568,6 +664,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
 
                                         var label_value = scope.$eval(column_def['label-model']);
                                         var old_label_value = angular.copy(label_value);
+
                                         if(typeof column_def.get_display === 'function') {
                                             label_value = column_def.get_display(
                                                 scope.$eval(column_def['ng-model']), // value
@@ -715,7 +812,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
                             ele.bind('click', function() {
                                 bind_element_event(column_def, ele, true);
                             });
-                        });
+                        }, 5000);
 
                     }
                 };

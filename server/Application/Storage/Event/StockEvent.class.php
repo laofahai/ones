@@ -14,4 +14,8 @@ class StockEvent extends BaseRestEvent {
         $this->response(['quantity_balance'=>$quantity_balance]);
     }
 
+    public function _EM_get_quantity_balance() {
+        return $this->get_quantity_balance();
+    }
+
 }

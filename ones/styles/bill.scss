@@ -7,7 +7,7 @@ $bill_td_height: 34px;
     margin-bottom:20px;
 
     .bill-header {
-
+        position:relative;
         .bill-subject {
             height: 70px;
             margin:0;
@@ -190,5 +190,37 @@ $bill_td_height: 34px;
     padding-top:10px;
     h2 {
         font-size: 20px
+    }
+}
+
+
+.bill-quick-search {
+    position: absolute;
+    width:300px;
+    margin-left:-150px;
+    left:50%;
+    top:10px;
+    z-index:100;
+
+    input {
+        height:40px;
+    }
+
+    ul {
+        width: 100%;
+        background: #fff;
+        border: 1px solid #438ED1;
+        list-style: none;
+        padding: 0;
+        margin-top: -1px;
+
+        li {
+            padding:5px 8px;
+            cursor: pointer;
+        }
+        li.active, li:hover {
+            background: #438ED1;
+            color:#fff;
+        }
     }
 }

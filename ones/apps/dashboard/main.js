@@ -46,7 +46,7 @@
                 $scope.open_widgets_modal = function() {
                     $modal({
                         scope: $scope,
-                        templateUrl: appView('add_widget.html'),
+                        template: appView('add_widget.html', 'dashboard'),
                         show: true
                     });
 

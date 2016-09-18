@@ -181,6 +181,7 @@
                             }
                         });
 
+                        self.field_search_values = query_params;
                         self.getPagedDataAsync(1, query_params);
 
                     }, true);
@@ -365,7 +366,6 @@
                     if(self.model_config.addable !== false && self.link_actions.indexOf(add_btn) < 0) {
                         self.link_actions.push(add_btn);
                     }
-
                     angular.forEach(self.model_config.extra_link_actions, function(la) {
                         if(self.link_actions.indexOf(la) >= 0) {
                             return;
@@ -377,13 +377,13 @@
                         return;
                     }
 
-                    self.scope.$root.link_actions = array_unique(self.link_actions);
+                    self.scope.$root.link_actions = self.link_actions;
                 };
 
                 this.refresh = function(){
                     self.getPagedDataAsync(
                         self.scope.pagingOptions.currentPage,
-                        self.filtersData
+                        angular.extend(angular.copy(self.filtersData), self.field_search_values || {})
                     );
                     self.scope.$parent.gridSelected = self.gridSelected = [];
                 };
@@ -392,7 +392,7 @@
                 this.makeSelectedActions = function() {
                     self.selectedAction = [];
 
-                    if(self.options.query_params._ot) {
+                    if(self.options.query_params && self.options.query_params._ot) {
                         self.selectedActions = [
                             {
                                 name: "untrash",

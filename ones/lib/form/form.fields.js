@@ -18,8 +18,7 @@
             "$timeout",
             "$routeParams",
             "RootFrameService",
-            "$rootScope",
-            function(plugin, $injector, $compile, $parse, $timeout, $routeParams, RootFrameService, $rootScope) {
+            function(plugin, $injector, $compile, $parse, $timeout, $routeParams, RootFrameService) {
 
                 var self = this;
 
@@ -353,20 +352,16 @@
                         var items_getter = $parse(items_model);
                         var selected_getter = $parse(selected_item_model);
 
-                        var runtime_scope = config.scope || self.scope.$parent.$parent;
+                        var runtime_scope = config.scope || self.scope;
 
                         var enter_ing = false;
-
-                        var method_defined = false;
-
-                        var do_select3_query;
 
                         self.select3_fields = self.select3_fields || [];
 
                         delete(config['ng-model']);
 
                         // ui 事件
-                        config['ng-keydown'] = '$root.do_select3_keydown($event)';
+                        config['ng-keydown'] = 'do_select3_keydown($event)';
                         // debounce
                         config['ng-model-options'] = '{debounce: 300}';
                         this.html = sprintf(FORM_FIELDS_TPL.select3, {
@@ -376,315 +371,302 @@
                         });
 
                         var temp_label='';
-                        this.data_source = $injector.get(config.data_source);
+                        var data_source = $injector.get(config.data_source);
 
-                        // 动态新增
-                        self.scope.cant_be_dynamic_add = config.dynamic_add === false ? false : true;
-
-
-                        var define_method = function() {
-                            $rootScope.select_dynamic_add = function() {
-                                RootFrameService.open_frame({
-                                    src: sprintf('%s/%s/add', data_source.config.app, data_source.config.module),
-                                    label: _("common.Add New") + config.label,
-                                    singleton: true
-                                });
-                            };
-
-                            // 显示grid选择
-                            $rootScope.show_select3_modal = function(t_model, t_label_model) {
-                                var model = angular.copy(data_source);
-                                model.config.multi_select = false;
-                                model.config.list_display = model.config.modal_list_display || config.data_source_list_display || model.config.list_display;
-
-                                self.scope.grid_config = {
-                                    model: model,
-                                    resource: model.resource,
-                                    opts: {
-                                        is_modal_grid: true
-                                    }
-                                };
-
-                                $injector.get("$modal")({
-                                    scope: self.scope,
-                                    template: get_view_path('views/itemSelectModal.html'),
-                                    show: true
-                                });
-
-                                self.scope.$modal_title = config.label;
-                            };
-
-                            $rootScope.doItemSelectConfirm = function(evt, grid_selected) {
-                                var item = item_to_kv(grid_selected[0] || {}, data_source);
-                                do_select3_item_select(item);
-                            };
-
-                            /*
-                             * 失去焦点
-                             * */
-                            $('body').delegate('#'+config.id, 'blur', function() {
-                                var ele = $(this);
-                                $timeout(function() {
-                                    ele.parent().removeClass('active');
-                                    ele.parent().find('ul.items').addClass('hide');
-                                }, 300);
+                        self.scope.select_dynamic_add = function() {
+                            RootFrameService.open_frame({
+                                src: sprintf('%s/%s/add', data_source.config.app, data_source.config.module),
+                                label: _("common.Add New") + config.label,
+                                singleton: true
                             });
-                            $('body').delegate('#'+config.id, 'focus', function() {
-                                var ele = $(this);
-                                ele.select();
-                                $timeout(function() {
-                                    var keyword = $.trim(ele.val());
+                        };
+                        // 显示grid选择
+                        self.scope.show_select3_modal = function(t_model, t_label_model) {
+                            var model = angular.copy(data_source);
+                            model.config.multi_select = false;
+                            model.config.list_display = model.config.modal_list_display || config.data_source_list_display || model.config.list_display;
 
-                                    ele.parent().addClass('active');
-                                    ele.parent().find('ul.items').removeClass('hide');
+                            self.scope.grid_config = {
+                                model: model,
+                                resource: model.resource,
+                                opts: {
+                                    is_modal_grid: true
+                                }
+                            };
 
-                                    if(runtime_scope.$root.$$phase != '$apply' && runtime_scope.$root.$$phase != '$digest') {
-                                        runtime_scope.$apply(function() {
-                                            select3_init(ele, keyword);
-                                            do_select3_query(keyword);
-                                        });
-                                    } else {
+                            $injector.get("$modal")({
+                                scope: self.scope,
+                                template: get_view_path('views/itemSelectModal.html'),
+                                show: true
+                            });
+
+                            self.scope.$modal_title = config.label;
+                        };
+
+                        self.scope.doItemSelectConfirm = function(evt, grid_selected) {
+                            var item = item_to_kv(grid_selected[0] || {}, data_source);
+                            do_select3_item_select(item);
+                        };
+
+                        /*
+                        * 失去焦点
+                        * */
+                        $('body').delegate('#'+config.id, 'blur', function() {
+                            var ele = $(this);
+                            $timeout(function() {
+                                ele.parent().removeClass('active');
+                                ele.parent().find('ul.items').addClass('hide');
+                            }, 300);
+                        });
+                        $('body').delegate('#'+config.id, 'focus', function() {
+                            var ele = $(this);
+                            ele.select();
+                            $timeout(function() {
+                                var keyword = $.trim(ele.val());
+
+                                ele.parent().addClass('active');
+                                ele.parent().find('ul.items').removeClass('hide');
+
+                                if(runtime_scope.$root.$$phase != '$apply' && runtime_scope.$root.$$phase != '$digest') {
+                                    runtime_scope.$apply(function() {
                                         select3_init(ele, keyword);
                                         do_select3_query(keyword);
-                                    }
+                                    });
+                                } else {
+                                    select3_init(ele, keyword);
+                                    do_select3_query(keyword);
+                                }
+                            });
+                        });
+
+                        // 设置当前使用的model
+                        var set_runtime_model = function(origin_model) {
+                            model = origin_model;
+                            //config.id = origin_model.replace('.', '_');
+                            label_model = model + '__label__';
+                            items_model = model + '__select3_items__';
+                            selected_item_model = model+'__select3_selected__';
+
+                            label_getter = $parse(label_model);
+                            model_getter = $parse(origin_model);
+                            items_getter = $parse(items_model);
+                            selected_getter = $parse(selected_item_model);
+                        };
+
+                        // 控件初始化
+                        var select3_init = function(ele, keyword) {
+
+                            // 动态新增
+                            self.scope.cant_be_dynamic_add = config.dynamic_add === false ? false : true;
+
+                            runtime_scope.active_select3_index = 0;
+                            set_runtime_model($(ele).data('origin-model'));
+
+                            if(ele.parent('.select3-container').find('ul.items').length <= 0) {
+                                var tpl = sprintf(FORM_FIELDS_TPL.select3_items, {
+                                    items_model: items_model,
+                                    origin_model: model
+                                });
+                                ele.parent('.select3-container').append($compile(tpl)(runtime_scope));
+                            }
+
+                            $timeout(function() {
+                                ele.parent('.select3-container').css({
+                                    //paddingTop: ele.height() + 1,
+                                    //top: 0,
+                                    //left: 0
+                                }).find('ul.items').css({
+                                    marginTop: ele.height()
                                 });
                             });
-
-                            // 设置当前使用的model
-                            var set_runtime_model = function(origin_model) {
-                                model = origin_model;
-                                //config.id = origin_model.replace('.', '_');
-                                label_model = model + '__label__';
-                                items_model = model + '__select3_items__';
-                                selected_item_model = model+'__select3_selected__';
-
-                                label_getter = $parse(label_model);
-                                model_getter = $parse(origin_model);
-                                items_getter = $parse(items_model);
-                                selected_getter = $parse(selected_item_model);
-                            };
-
-                            // 控件初始化
-                            var select3_init = function(ele, keyword) {
-                                runtime_scope.active_select3_index = 0;
-                                set_runtime_model($(ele).data('origin-model'));
-                                runtime_scope = config.scope || self.scope.$parent.$parent;
-
-                                if(ele.parent('.select3-container').find('ul.items').length <= 0) {
-                                    var tpl = sprintf(FORM_FIELDS_TPL.select3_items, {
-                                        items_model: items_model,
-                                        origin_model: model
-                                    });
-                                    ele.parent('.select3-container').append($compile(tpl)(runtime_scope));
-                                }
-
-                                $timeout(function() {
-                                    ele.parent('.select3-container').css({
-                                        //paddingTop: ele.height() + 1,
-                                        //top: 0,
-                                        //left: 0
-                                    }).find('ul.items').css({
-                                        marginTop: ele.height()
-                                    });
-                                });
-
-                            };
-
-                            // 选中项目
-                            var do_select3_item_select = function(item, auto_hide, origin_model, $event) {
-
-                                if(!config.select3_auto_add && (!item || !item.value || !item.label)) {
-                                    return;
-                                }
-                                if(origin_model) {
-                                    set_runtime_model(origin_model);
-                                }
-
-                                var select_real_method = function(item) {
-                                    item = item || {};
-                                    $timeout(function () {
-                                        runtime_scope[selected_item_model] = item;
-                                        label_getter.assign(runtime_scope, item.label);
-                                        model_getter.assign(runtime_scope, item.value);
-                                        selected_getter.assign(runtime_scope, item);
-
-                                        enter_ing = false;
-                                    });
-                                };
-
-                                if(auto_hide) {
-                                    $('#'+config.id).trigger('blur');
-                                }
-                            };
-
-                            $rootScope.do_select3_item_select = do_select3_item_select;
-
-                            // 上下键索引
-                            $rootScope.do_select3_keydown = function($event) {
-                                set_runtime_model($($event.target).data('origin-model'));
-                                switch($event.keyCode) {
-                                    case KEY_CODES.DOWN:
-                                        runtime_scope.active_select3_index =
-                                            runtime_scope.active_select3_index+1 > (runtime_scope.$eval(items_model) || []).length - 1
-                                                ? 0
-                                                : runtime_scope.active_select3_index+1;
-                                        selected_getter.assign(runtime_scope, runtime_scope.$eval(items_model)[runtime_scope.active_select3_index]);
-                                        break;
-                                    case KEY_CODES.UP:
-                                        runtime_scope.active_select3_index =
-                                            runtime_scope.active_select3_index-1 < 0
-                                                ? (runtime_scope.$eval(items_model) || []).length - 1
-                                                : runtime_scope.active_select3_index-1;
-                                        selected_getter.assign(runtime_scope, runtime_scope.$eval(items_model)[runtime_scope.active_select3_index]);
-                                        break;
-                                    case KEY_CODES.ENTER:
-                                        if(!enter_ing) {
-                                            var the_item = runtime_scope.$eval(items_model) || [];
-                                            do_select3_item_select(
-                                                the_item[runtime_scope.active_select3_index],
-                                                true,
-                                                undefined,
-                                                $event
-                                            );
-                                        }
-                                        enter_ing = true;
-                                        break;
-                                    default:
-                                        return;
-                                }
-
-                                $event.preventDefault();
-                            };
-
-                            // 查询
-                            do_select3_query = function(keyword) {
-
-                                runtime_scope.active_select3_index = 0;
-                                // && !$('input.input_widget_select3:focus').length
-                                if(!keyword && !config.auto_query) {
-                                    items_getter.assign(runtime_scope, []);
-                                    return;
-                                }
-
-                                temp_label = keyword;
-                                var query_params = {_kw: temp_label};
-                                var valueField = config.data_source_value_field||data_source.config.value_field||'id';
-
-                                var _mf = [];
-                                var _mv = [];
-
-                                // 其他查询条件
-                                if(config.data_source_query_param) {
-                                    _mf = angular.isArray(config.data_source_query_param._mf) ? config.data_source_query_param._mf : config.data_source_query_param._mf.split(',');
-                                    _mv = angular.isArray(config.data_source_query_param._mv) ? config.data_source_query_param._mv : String(config.data_source_query_param._mv).split(',');
-                                }
-
-                                // 根据已有数据查询
-                                if(config.data_source_query_with) {
-
-                                    if(!angular.isArray(config.data_source_query_with)) {
-                                        config.data_source_query_with = [config.data_source_query_with];
-                                    }
-                                    for(var i=0;i<config.data_source_query_with.length;i++) {
-                                        var req = config.data_source_query_with[i];
-                                        var exists_model = model.split('.').slice(0, -1).join('.') + '.' + req;
-
-                                        var exists_index = _mf.indexOf(req);
-
-                                        if(exists_index >= 0) {
-                                            _mv[exists_index] = runtime_scope.$eval(exists_model);
-                                        } else {
-                                            _mf.push(req);
-                                            _mv.push(runtime_scope.$eval(exists_model));
-                                        }
-
-                                    }
-                                }
-
-                                query_params._mf = _mf.join();
-                                query_params._mv = _mv.join();
-
-                                data_source.resource.api_query(query_params).$promise.then(function(data) {
-                                    if(!data) {
-                                        //items_getter.assign(runtime_scope, []);
-                                        return false;
-                                    }
-
-                                    items_getter.assign($rootScope, []);
-                                    var items = [];
-                                    angular.forEach(data, function(item) {
-                                        items.push({
-                                            value: item[valueField],
-                                            label: to_item_display(item, data_source)
-                                        });
-                                    });
-
-                                    items = items || [];
-                                    items_getter.assign($rootScope, items);
-
-                                    if(enter_ing) {
-                                        do_select3_item_select(items[0], false);
-                                    }
-
-                                    enter_ing = false;
-
-                                });
-                            };
-
 
                         };
 
-                        if(!method_defined) {
-                            define_method();
-                        }
+                        // 选中项目
+                        var do_select3_item_select = function(item, auto_hide, origin_model, $event) {
+
+                            if(!config.select3_auto_add && (!item || !item.value || !item.label)) {
+                                return;
+                            }
+                            if(origin_model) {
+                                set_runtime_model(origin_model);
+                            }
+
+                            var select_real_method = function(item) {
+                                item = item || {};
+                                $timeout(function() {
+                                    runtime_scope[selected_item_model] = item;
+                                    label_getter.assign(runtime_scope, item.label);
+                                    model_getter.assign(runtime_scope, item.value);
+                                    selected_getter.assign(runtime_scope, item);
+
+                                    enter_ing = false;
+                                }, 350);
+                            };
+
+                            // 自动新增
+                            if(config.select3_auto_add && $event && runtime_scope.$eval(items_model).length <= 0) {
+                                var item_label = $($event.target).val();
+                                if($event.keyCode == 13 && item_label) {
+
+                                    if(!confirm('是否自动新增')) {
+                                        return false;
+                                    }
+
+                                    var data = {
+                                        product_attribute_alias: config.field,
+                                        attribute_content: item_label
+                                    };
+
+                                    var current_scope_data = runtime_scope.$eval(config['label-model'].replace('__label__', '').split('.').slice(0, -1).join('.'));
+                                    angular.forEach(current_scope_data, function(v, k) {
+                                        if(k !== 'tr_id' && !k.end_with('__')) {
+                                            data[k] = v;
+                                        }
+                                    });
+
+                                    data_source.resource.save(data).$promise.then(function(response_data) {
+                                        do_select3_item_select(response_data, true);
+                                    });
+                                }
+                            }
+
+                            select_real_method(item);
+
+                            if(auto_hide) {
+                                $('#'+config.id).trigger('blur');
+                            }
+                        };
+
+                        runtime_scope.do_select3_item_select = do_select3_item_select;
+
+                        // 上下键索引
+                        runtime_scope.do_select3_keydown = function($event) {
+                            set_runtime_model($($event.target).data('origin-model'));
+                            switch($event.keyCode) {
+                                case KEY_CODES.DOWN:
+                                    runtime_scope.active_select3_index =
+                                        runtime_scope.active_select3_index+1 > (runtime_scope.$eval(items_model) || []).length - 1
+                                            ? 0
+                                            : runtime_scope.active_select3_index+1;
+                                    selected_getter.assign(runtime_scope, runtime_scope.$eval(items_model)[runtime_scope.active_select3_index]);
+                                    break;
+                                case KEY_CODES.UP:
+                                    runtime_scope.active_select3_index =
+                                        runtime_scope.active_select3_index-1 < 0
+                                            ? (runtime_scope.$eval(items_model) || []).length - 1
+                                            : runtime_scope.active_select3_index-1;
+                                    selected_getter.assign(runtime_scope, runtime_scope.$eval(items_model)[runtime_scope.active_select3_index]);
+                                    break;
+                                case KEY_CODES.ENTER:
+                                    if(!enter_ing) {
+                                        var the_item = runtime_scope.$eval(items_model) || [];
+                                        do_select3_item_select(
+                                            the_item[runtime_scope.active_select3_index],
+                                            true,
+                                            undefined,
+                                            $event
+                                        );
+                                    }
+                                    enter_ing = true;
+                                    break;
+                                default:
+                                    return;
+                            }
+
+                            $event.preventDefault();
+                        };
+
+                        // 查询
+                        var do_select3_query = function(keyword) {
+
+                            runtime_scope.active_select3_index = 0;
+                            // && !$('input.input_widget_select3:focus').length
+                            if(!keyword && !config.auto_query) {
+                                items_getter.assign(runtime_scope, []);
+                                return;
+                            }
+
+                            temp_label = keyword;
+                            var query_params = {_kw: temp_label};
+                            var valueField = config.data_source_value_field || data_source.config.value_field||'id';
+
+                            var _mf = [];
+                            var _mv = [];
+
+                            // 其他查询条件
+                            if(config.data_source_query_param) {
+
+                                angular.forEach(config.data_source_query_param, function(v, k) {
+                                    if(k == '_mf' || k == '_mv') {
+                                        _mf = angular.isArray(config.data_source_query_param._mf) ? config.data_source_query_param._mf : config.data_source_query_param._mf.split(',');
+                                        _mv = angular.isArray(config.data_source_query_param._mv) ? config.data_source_query_param._mv : String(config.data_source_query_param._mv).split(',');
+                                    } else {
+                                        query_params[k] = v;
+                                    }
+                                });
+                            }
+
+                            // 根据已有数据查询
+                            if(config.data_source_query_with) {
+
+                                if(!angular.isArray(config.data_source_query_with)) {
+                                    config.data_source_query_with = config.data_source_query_with.split(',');
+                                }
+
+                                config.data_source_query_with_map = config.data_source_query_with_map || [];
+                                for(var i=0;i<config.data_source_query_with.length;i++) {
+                                    var req = config.data_source_query_with_map[i] || config.data_source_query_with[i];
+                                    var exists_model = model.split('.').slice(0, -1).join('.') + '.' + config.data_source_query_with[i];
+
+                                    var exists_index = _mf.indexOf(req);
+
+                                    if(exists_index >= 0) {
+                                        _mv[exists_index] = runtime_scope.$eval(exists_model);
+                                    } else {
+                                        _mf.push(req);
+                                        _mv.push(runtime_scope.$eval(exists_model));
+                                    }
+
+                                }
+                            }
+
+                            query_params._mf = _mf.join();
+                            query_params._mv = _mv.join();
+
+                            data_source.resource.api_query(query_params).$promise.then(function(data) {
+                                if(!data) {
+                                    //items_getter.assign(runtime_scope, []);
+                                    return false;
+                                }
+
+                                items_getter.assign(runtime_scope, []);
+                                var items = [];
+                                angular.forEach(data, function(item) {
+                                    items.push({
+                                        value: item[valueField],
+                                        label: to_item_display(item, data_source, config.data_source_label_field)
+                                    });
+                                });
+
+                                items = items || [];
+                                items_getter.assign(runtime_scope, items);
+
+                                if(enter_ing) {
+                                    do_select3_item_select(items[0], false);
+                                }
+
+                                enter_ing = false;
+
+                            });
+                        };
 
                         // 输入时后端查询
                         runtime_scope.$watch(label_model, function(keyword){
                             do_select3_query(keyword);
                         });
-
-
-
                     }
                 };
-
-                this.fields_maker.select3.prototype.init = function() {
-                    var self = this;
-
-                    $rootScope.select_dynamic_add = function() {
-                        RootFrameService.open_frame({
-                            src: sprintf('%s/%s/add', self.data_source.config.app, self.data_source.config.module),
-                            label: _("common.Add New") + config.label,
-                            singleton: true
-                        });
-                    };
-
-                    // 显示grid选择
-                    $rootScope.show_select3_modal = function(t_model, t_label_model) {
-                        var model = self.data_source;
-                        model.config.multi_select = false;
-                        model.config.list_display = model.config.modal_list_display || config.data_source_list_display || model.config.list_display;
-
-                        self.scope.grid_config = {
-                            model: model,
-                            resource: model.resource,
-                            opts: {
-                                is_modal_grid: true
-                            }
-                        };
-
-                        $injector.get("$modal")({
-                            scope: self.scope,
-                            template: get_view_path('views/itemSelectModal.html'),
-                            show: true
-                        });
-
-                        self.scope.$modal_title = config.label;
-                    };
-
-                };
-
-                this.fields_maker.select3.prototype.do_query = function() {};
 
 
                 /**
@@ -783,11 +765,6 @@
                     self.global_opts = opts;
 
                     var fm = new maker(config);
-
-                    if(typeof fm.init === 'function') {
-                        fm.init();
-                    }
-
                     var html = fm.html;
                     if(fm.group_tpl) {
                         CUSTOME_GROUP_TPL = fm.group_tpl;

@@ -215,6 +215,7 @@ angular.module("ones.configModule", [
         'ones.servicesModule',
         'ones.pluginsModule',
         'ones.configModule',
+        'ones.debuggerModule',
 
         'ones.app.account.main',
 

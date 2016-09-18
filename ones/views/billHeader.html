@@ -26,7 +26,28 @@
                 </small>
                 <small ng-bind="company_profile.address" ng-show="company_profile.address"></small>
             </div>
+
         </div>
+
+        <div class="bill-quick-search pull-left">
+            <input type="text" class="form-control"
+                   ng-keydown="do_quick_search($event)"
+                   ng-model="bill_meta_data.quick_search_keyword"
+                   ng-model-options="{debounce: 300}"
+                   placeholder="请输入商品编号"
+                   ng-blur="do_quick_search_blur()"
+                   ng-focus="do_quick_search_focus()"
+                   ng-show="show_quick_search" />
+            <ul ng-show="quick_search_result.length>0">
+                <li
+                        ng-repeat="qsr in quick_search_result"
+                        ng-class="{active: $index==current_quick_search_index}"
+                        ng-click="do_quick_search($event, $index)">
+                    {{qsr.product_category_id__label__}}/{{qsr.product_id__label__}}/{{qsr.brand_id__label__}}/{{qsr.standard_id__label__}}
+                </li>
+            </ul>
+        </div>
+
         <div class="bill-bar-code" clip-copy="bill_meta_data[bar_code_field]"  clip-click="on_clip_click()" id="bar-code"></div>
     </div>
 </div>

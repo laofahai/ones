@@ -18,8 +18,8 @@ class ConfigService extends CommonModel {
         $config = array();
 
         if($app && AppService::is_app_active($app)) {
-            $configs = S("configs/app/all");
-            $config = $configs[$app];
+//            $configs = S("configs/app/all");
+            $config = AppService::$allAppConfigs[$app];
         }
 
         $config = $config ? $config : array();

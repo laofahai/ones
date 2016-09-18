@@ -22,7 +22,7 @@ class CommonModel extends Model {
      * 默认增加company_id字段
      * */
     public function where($map, $parse=null) {
-        if(!$this->not_belongs_to_company && !$map['id']) {
+        if(!$this->not_belongs_to_company && !$map['id'] && !$map['company_id']) {
             $map["company_id"] = get_current_company_id();
         }
 
@@ -52,6 +52,20 @@ class CommonModel extends Model {
         ))->save(array(
             $field => $data
         ));
+    }
+
+    /*
+     * 更改项目审核状态
+     * */
+    public function change_audit_status($ids, $status) {
+        $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+        $result = $this->where(['id'=>['IN', $ids]])->save([
+            'is_platform_reviewed' => $status ? 1 : 0
+        ]);
+
+        return $result;
+
     }
 
     /*

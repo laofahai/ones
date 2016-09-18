@@ -66,27 +66,6 @@ class BaseRestController extends RestController {
     protected $deleteModel;
 
     public function __construct() {
-
-        //基本运行配置
-        $this->bootstrapConfigs = parse_yml(ENTRY_PATH.'/config.yaml');
-
-        $this->bootstrapConfigs = $this->bootstrapConfigs ? $this->bootstrapConfigs : [];
-        //当前接口版本
-        if(I('server.HTTP_API_VERSION')) {
-            define('API_VERSION', I('server.HTTP_API_VERSION'));
-        } else {
-            define('API_VERSION', false);
-        }
-
-        //当前语言
-        $this->currentLanguage = $this->bootstrapConfigs["default_language"] ? $this->bootstrapConfigs["default_language"] : 'zh-cn' ;
-        if(I("server.HTTP_CLIENT_LANGUAGE")) {
-            $this->currentLanguage = I("server.HTTP_CLIENT_LANGUAGE");
-        }
-        if(I('get.lang')) {
-            $this->currentLanguage = I('get.lang');
-        }
-        define('CURRENT_LANGUAGE', $this->currentLanguage);
         
         //支持方法
         if(!$this->allowMethod) {
@@ -98,7 +77,7 @@ class BaseRestController extends RestController {
             session(
                 array(
                     'id'=>I("server.HTTP_TOKEN"),
-                    'expire'=>1800,
+                    'expire'=>6000,
                 )
             );
             session('[start]');
@@ -157,6 +136,26 @@ class BaseRestController extends RestController {
                 require_once APPLICATION_PATH.$app.'/Common/function.php';
             }
         }
+
+        //基本运行配置
+        $this->bootstrapConfigs = parse_yml(ENTRY_PATH.'/config.yaml');
+
+        //当前接口版本
+        if(I('server.HTTP_API_VERSION')) {
+            define('API_VERSION', I('server.HTTP_API_VERSION'));
+        } else {
+            define('API_VERSION', false);
+        }
+
+        //当前语言
+        $this->currentLanguage = $this->bootstrapConfigs["default_language"] ? $this->bootstrapConfigs["default_language"] : 'zh-cn' ;
+        if(I("server.HTTP_CLIENT_LANGUAGE")) {
+            $this->currentLanguage = I("server.HTTP_CLIENT_LANGUAGE");
+        }
+        if(I('get.lang')) {
+            $this->currentLanguage = I('get.lang');
+        }
+        define('CURRENT_LANGUAGE', $this->currentLanguage);
         
         /*
          * 解析应用配置
@@ -530,6 +529,10 @@ class BaseRestController extends RestController {
 
         $item = $model->where($map)->find();
 
+        if($this->echoSQL) {
+            echo $model->getLastSql();exit;
+        }
+
         if(!$item) {
             return;
         }
@@ -636,6 +639,10 @@ class BaseRestController extends RestController {
      * 默认删除处理
      * */
     public function on_delete($return = false) {
+
+        if(I('request.forever_delete')) {
+            return $this->error("为防止数据丢失， 系统禁用了永久删除功能");
+        }
 
         if($api_method = $this->api_version_method_exists('on_delete')) {
             return $this->$api_method($return);
@@ -758,7 +765,7 @@ class BaseRestController extends RestController {
             $mv = explode(',', I('get._mv'));
             for($i=0; $i<count($mf);$i++) {
                 if($mf[$i] && isset($mv[$i])) {
-                    if($mv[$i] === 'undefined' && I('get._kw')) {
+                    if($mv[$i] === 'undefined') {
                         $map[$mf[$i]] = ['LIKE', "%".I('get._kw')."%"];
                     } else {
                         $map[$mf[$i]] = $mv[$i];

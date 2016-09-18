@@ -49,12 +49,7 @@ class UserPreferenceService extends CommonModel {
 
         $exists['data'] = $data_type === 'serialize' ? serialize($data) : $data;
 
-        $result = $this->save($exists);
-
-        $cache_key = 'user_preference_/'.get_current_user_id();
-        S($cache_key, null);
-
-        return false === $result;
+        return false === $this->save($exists);
     }
 
     /*

@@ -237,7 +237,7 @@ class WorkflowService extends CommonModel {
         $workflow = $this->where(['id'=>$workflow_id])->find();
 
         if(!$workflow) {
-            $this->error = _('common.Object not found');
+            $this->error = __('common.Object not found');
             return false;
         }
 
@@ -260,10 +260,11 @@ class WorkflowService extends CommonModel {
             ])->delete();
             foreach($nodes as $node) {
                 $node['workflow_id'] = $workflow_id;
+                $node['company_id'] = $workflow['company_id'] ? $workflow['company_id'] : get_current_company_id();
                 $node_service->create($node);
                 if(!$node_service->add()) {
                     // @todo error
-                    $this->error = _('bpm.Add node failed');
+                    $this->error = __('bpm.Add node failed');
                     return false;
                 }
 

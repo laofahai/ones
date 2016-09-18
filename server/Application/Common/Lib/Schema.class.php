@@ -13,11 +13,7 @@ class Schema {
      * @return Array
      * **/
     static public function parse($app, $schemas, $tables="all", $exclude_meta=false) {
-
-        $result = [];
-
-        $data_model_service = D("DataModel/DataModelField", "Service");
-
+        $result = array();
         foreach($schemas as $table=>$schema) {
 
             if(!$table) {
@@ -66,6 +62,7 @@ class Schema {
              * 数据模型字段
              * 会覆盖默认数据表中数据
              * */
+            $data_model_service = D("DataModel/DataModelField", "Service");
             $module = sprintf('%s.%s', lcfirst($app), lcfirst(camelCase($table)));
 
             $extra_fields = $data_model_service->get_fields_by_module($module);
@@ -223,8 +220,7 @@ class Schema {
         }
 
         // 类型widget
-        if(!array_key_exists('widget', $result)) {
-            $result['type'] = !array_key_exists('type', $result) ? '' : $result['type'];
+        if(!$result['widget']) {
             switch($result['type']) {
                 case "text":
                     $result['widget'] = 'textarea';

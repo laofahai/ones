@@ -29,7 +29,7 @@ header("Access-Control-Allow-Origin: *");
 // 返回信息包含调试信息
 define("RESPONSE_WITH_DEBUG_INFO", true);
 
-define('DEBUG', false);
+define('DEBUG', true);
 
 //define('BUILD_LITE_FILE',true);
 
@@ -44,7 +44,8 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
-ini_set('session.cookie_lifetime', '600');
+ini_set('session.cookie_lifetime', '6000');
+ini_set('session.gc_maxlifetime', '6000');
 
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.5.9','<')) {
@@ -82,8 +83,5 @@ define('RUNTIME_PATH','./Runtime/');
 
 define('CURRENT_TIMESTAMP', time());
 
-if(is_file(RUNTIME_PATH.'lite.php')) {
-    require RUNTIME_PATH.'lite.php';
-} else {
-    require './vendor/topthink/thinkphp/ThinkPHP/ThinkPHP.php';
-}
+// 引入ThinkPHP入口文件
+require './vendor/topthink/thinkphp/ThinkPHP/ThinkPHP.php';

@@ -129,6 +129,7 @@
                         exclude_meta: true,
                         schema: self.config.schema,
                         callback: function(result) {
+
                             result = result[self.model_config.table].structure || {};
 
                             if(!result) {
@@ -196,7 +197,7 @@
                                     return;
                                 }
 
-                                if(['id'].indexOf(field) >= 0) {
+                                if(['id', 'is_platform_reviewed'].indexOf(field) >= 0) {
                                     return;
                                 }
 

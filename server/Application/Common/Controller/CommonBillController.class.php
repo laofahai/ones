@@ -78,6 +78,12 @@ class CommonBillController extends BaseRestController {
      * 插入方法
      * */
     public function on_post() {
+
+        $extra_method = '_EM_'.I('get._m');
+        if(I('get._m') && method_exists($this, $extra_method)) {
+            return $this->$extra_method();
+        }
+
         $model = D($this->main_model);
         if(false === $model->add_bill(I('post.meta'), I('post.rows'))) {
             return $this->error($model->getError());

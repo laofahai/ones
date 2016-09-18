@@ -84,6 +84,9 @@ class StockInService extends CommonBillService {
                 continue;
             }
             $detail_service->where(['id'=>$row['id']])->setInc('already_in', $row['this_time_in_quantity']);
+            $detail_service->where(['id'=>$row['id']])->save([
+                'storage_id' => $row['storage_id']
+            ]);
             $rows[$k]['quantity'] = $row['this_time_in_quantity'];
             // 写库存操作记录
             if(false === $log_service->record([

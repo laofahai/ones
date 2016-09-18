@@ -13,8 +13,10 @@ STOCK_OUT_STATUS_COMPLETE: 已全部出库
 Storage Manage: 仓储管理
 Stock List: 库存清单
 Stock: 库存
+Stock Transfer: 库存调拨
 Stock In: 入库
 Stock Out: 出库
+Stock Transfer Bill: 库存调拨单
 Stock In Bill: 入库单
 Stock Out Bill: 出库单
 Storages List: 仓库列表
@@ -50,3 +52,8 @@ StockOut Complete Callback Function: 出库完成后回调方法
 
 Convert to stock out: 转化为出库单
 Convert to stock in: 转化为入库单
+
+Out Storage: 出库仓库
+In Storage: 入库仓库
+
+%s in storage not full, can't do stock out: %s 在仓库中库存不足, 不能出库

@@ -18,14 +18,14 @@
     ])
         .config([
             '$routeProvider',
-            'calendarConfig',
+            'calendarConfigProvider',
             function($route, calendarConfig) {
                 $route.when('/calendar/events', {
                     controller: "CalendarEventsCtrl",
                     templateUrl: appView('calendar.html')
                 });
 
-                calendarConfig.dateFormatter = 'moment';
+                calendarConfig.setDateFormatter('moment');
             }
         ])
 

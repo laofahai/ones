@@ -8,7 +8,7 @@
                     width="{{column_defs[field].width}}"
                         >
                     <label ng-bind="column_defs[field].label"></label>
-                    <div class="dropdown pull-right" ng-show="column_defs[field].batch_select && !$parent.bill_meta_data.locked && !$parent.$parent.is_view">
+                    <div class="dropdown pull-right" ng-show="column_defs[field].batch_select && (column_defs[field].force_editable || (!$parent.bill_meta_data.locked && !$parent.$parent.is_view)) ">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <i class="fa fa-toggle-down"></i>
                         </a>
@@ -33,8 +33,9 @@
                     data-field="{{field}}"
                     ng-class="{'td_editable': column_defs[field].editable !== false}"
                     bill-edit-able="column_defs['{{field}}']"
+                    title="{{bill_rows[$parent.$index][field+'__label__']}}"
                     data-row-index="{{row.tr_id}}">
-                    <label ng-bind="bill_rows[$parent.$index][field+'__label__']" class="bill_row_td_editable_label"></label>
+                    <label ng-bind-html="bill_rows[$parent.$index][field+'__label__']" class="bill_row_td_editable_label"></label>
                     <span class="editable_td_after bill_cell_append" ng-bind="bill_rows[$parent.$index][field+'__after__']"></span>
                     <span class="editable_td_before bill_cell_append" ng-bind="bill_rows[$parent.$index][field+'__before__']"></span>
                 </td>

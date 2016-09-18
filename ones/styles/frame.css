@@ -206,6 +206,16 @@
       background: #7eaffd;
       color: #fff; }
 
+.form-field .select3-container {
+  position: relative;
+  z-index: auto; }
+  .form-field .select3-container ul.items {
+    position: absolute;
+    z-index: 110;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-top: 0; }
+
 .chosen-container {
   font-size: 12px; }
   .chosen-container .chosen-single {
