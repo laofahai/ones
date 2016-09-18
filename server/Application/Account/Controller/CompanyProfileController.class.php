@@ -4,7 +4,7 @@
  * @app Account
  * @package Account.controller.CompanyProfile
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Account\Controller;
 use Account\Service\CompanyProfileService;

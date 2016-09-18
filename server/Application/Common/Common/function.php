@@ -61,12 +61,12 @@ function decimal_scale($value) {
 }
 
 function DBC($alias = null) {
-    $cache_key = "db_config_".get_current_company_id();
-    $cached = S($cache_key);
+    $cache_key = get_company_cache_key('db_config');
+    $cached = F($cache_key);
     if(DEBUG || !$cached) {
         $cached = D('Home/Config', 'Service')->get_kv_config();
         $cached = get_array_to_kv($cached, 'val', 'alias');
-        S($cache_key, $cached);
+        F($cache_key, $cached);
     }
 
     return $alias ? $cached[$alias] : $cached;
@@ -94,7 +94,7 @@ function parse_yml($file) {
  * **/
 function __($msgid) {
     $cacheId = sprintf('lang/%s/all', CURRENT_LANGUAGE);
-    $lang = S($cacheId);
+    $lang = F($cacheId);
 
     $msgIds = explode('.', $msgid);
     $last = end($msgIds);
@@ -375,5 +375,8 @@ function process_with_item_select_ids($field, $multi=false) {
     }
 
     return $multi ? implode(',', $data) : $data[0];
+}
 
+function get_company_cache_key($key) {
+    return 'company/'.get_current_company_id().'/'.$key;
 }

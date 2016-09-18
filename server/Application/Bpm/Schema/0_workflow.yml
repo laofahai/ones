@@ -32,6 +32,7 @@ workflow:
                     blank: true
                 restrict:
                     delete: SET_NULL
+        enable_trash: true
 
 workflow_node:
     alias:

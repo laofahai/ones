@@ -14,7 +14,20 @@ use Common\Lib\BaseMigration;
 class RegionMigration extends BaseMigration {
 
     public function up() {
-        echo "migration_up";exit;
+        $sql_path = ENTRY_PATH.'/Application/Region/Schema/data.sql';
+        if(!is_file($sql_path)) {
+            return;
+        }
+        $sql_content = file_get_contents($sql_path);
+        $sql_content = explode("\n", $sql_content);
+
+        foreach($sql_content as $sql) {
+            $sql = trim($sql);
+            if(!$sql) {
+                continue;
+            }
+            $this->execute($sql);
+        }
+
     }
-    
 }

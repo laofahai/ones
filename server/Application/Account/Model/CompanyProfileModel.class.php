@@ -4,7 +4,7 @@
  * @app Account
  * @package Account.model.CompanyProfile
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Account\Model;
 use Common\Model\CommonViewModel;

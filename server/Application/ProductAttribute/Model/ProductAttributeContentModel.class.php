@@ -4,7 +4,7 @@
  * @app Productattribute
  * @package Productattribute.model.ProductAttributeContent
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Productattribute\Model;
 use Common\Model\CommonViewModel;

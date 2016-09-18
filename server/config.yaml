@@ -11,6 +11,8 @@ auth_dont_need_login:
     - home.i18n.event
 auth_dont_need_check:
     - home.config.app.get
+    - home.static.js.get
+    - home.static.css.get
 
 # 默认导航
 navs:

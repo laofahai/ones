@@ -13,6 +13,7 @@ storage:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true
 
 stock:
     product_unique_id:
@@ -37,6 +38,7 @@ stock:
             storage:
                 restrict:
                     delete: CASCADE
+        enable_trash: true
 
 stock_log:
     source_model:
@@ -78,3 +80,4 @@ stock_log:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true

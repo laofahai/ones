@@ -2,7 +2,7 @@
     /*
      * @app customerAnalytics
      * @author laofahai@TEam Swift
-     * @link https://ng-erp.com
+     * @link http://ng-erp.com
      * */
     'use strict';
     angular.module('ones.app.customerAnalytics.main', [])

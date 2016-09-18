@@ -31,6 +31,7 @@ company:
             sign_id: 
                 unique: true
             is_active:
+        enable_trash: true
 
 company_active_apps:
     $meta:
@@ -62,3 +63,4 @@ company_profile:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true

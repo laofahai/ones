@@ -6,7 +6,7 @@
 /*
 * 是否开启调试模式
 * */
-ones.DEBUG = true;
+ones.DEBUG = false;
 
 
 /*

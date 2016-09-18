@@ -77,7 +77,7 @@ class BaseRestController extends RestController {
             session(
                 array(
                     'id'=>I("server.HTTP_TOKEN"),
-                    'expire'=>6000,
+                    'expire'=>99999,
                 )
             );
             session('[start]');
@@ -160,14 +160,14 @@ class BaseRestController extends RestController {
         /*
          * 解析应用配置
          * * */
-        $cachedAppConfig = S("configs/app/all");
+        $cachedAppConfig = F("configs/app_config_all");
         if(DEBUG or !$cachedAppConfig) {
             foreach (new RecursiveFileFilterIterator(APP_PATH, "config.yml") as $item) {
                 $app = lcfirst(basename(dirname($item)));
                 $this->appConfigs[$app] = parse_yml($item);
             }
             
-            S("configs/app/all", $this->appConfigs);
+            F("configs/app_config_all", $this->appConfigs);
         } else if(!DEBUG && $cachedAppConfig) {
             $this->appConfigs = $cachedAppConfig;
         }

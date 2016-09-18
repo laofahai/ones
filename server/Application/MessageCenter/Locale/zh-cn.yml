@@ -1,7 +1,7 @@
 APP_NAME: 消息中心
 APP_DESCRIPTION: 提供socket服务，可做数据实时更新、线上聊天等
 APP_AUTHOR: TEam Swift
-APP_AUTHOR_LINK: https://ng-erp.com
+APP_AUTHOR_LINK: http://ng-erp.com
 
 Message Center: 消息中心
 Socket Pass: Web Socket服务地址

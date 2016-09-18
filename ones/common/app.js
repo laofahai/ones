@@ -204,14 +204,16 @@
         function($scope, $timeout) {
             $scope.active_nav = 0;
             $scope.toggleLeftNavItems = function($index, alias, subNavs) {
+                if($index == $scope.active_nav) {
+                    return;
+                }
                 $scope.$parent.subNavs = [];
                 $timeout(function() {
                     $scope.$parent.subNavs = subNavs;
-                }, 300);
+                });
 
                 $scope.active_nav = $index;
             };
-
         }
     ])
     .controller('LeftSidebarCtrl', [

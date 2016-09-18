@@ -4,7 +4,7 @@
  * @app Finance
  * @package Finance.model.Receivables
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Finance\Model;
 use Common\Model\CommonViewModel;

@@ -27,7 +27,7 @@ class NavEvent extends BaseRestEvent {
 
         // 二维数组导航信息
         $flat_navs = array();
-        $flat_cache_key = 'navs/all/flat';
+        $flat_cache_key = 'navs_all_flat';
 
         /*
          * 支持三级菜单
@@ -76,7 +76,7 @@ class NavEvent extends BaseRestEvent {
 
         tag("before_nav_response", $result);
 
-        S($flat_cache_key, $flat_navs);
+        F($flat_cache_key, $flat_navs);
         
         $this->response($result);
 

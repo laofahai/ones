@@ -4,7 +4,7 @@
  * @app Purchase
  * @package Purchase.model.Purchase
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Purchase\Model;
 use Common\Model\CommonViewModel;

@@ -18,7 +18,7 @@ class ConfigService extends CommonModel {
         $config = array();
 
         if($app && AppService::is_app_active($app)) {
-//            $configs = S("configs/app/all");
+//            $configs = F("configs/app/all");
             $config = AppService::$allAppConfigs[$app];
         }
 
@@ -94,7 +94,7 @@ class ConfigService extends CommonModel {
             $this->add($row);
         }
 
-        S('kv_db_configs'.get_current_company_id(), null);
+        F(get_company_cache_key('kv_db_configs'), null);
     }
 
     /*
@@ -102,8 +102,8 @@ class ConfigService extends CommonModel {
      * */
     public function get_kv_config($alias=null) {
 
-        $cache_key = 'kv_db_configs/'.get_current_company_id();
-        $cached = S($cache_key);
+        $cache_key = get_company_cache_key('kv_db_configs');
+        $cached = F($cache_key);
         if(DEBUG || !$cached) {
             $source = $this->where([])->select();
 
@@ -111,7 +111,7 @@ class ConfigService extends CommonModel {
             foreach($source as $row) {
                 $cached[$row['alias']] = $row;
             }
-            S($cache_key, $cached);
+            F($cache_key, $cached);
         }
 
         return $alias ? $cached[$alias] : $cached;

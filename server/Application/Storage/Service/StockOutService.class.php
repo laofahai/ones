@@ -4,7 +4,7 @@
  * @app Storage
  * @package Storage.service.StockOut
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Storage\Service;
 

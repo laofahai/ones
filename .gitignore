@@ -5,6 +5,7 @@ dist
 .idea
 bower_components
 ones/bower_components
+ones/runtime_compiled
 server/Runtime
 server/*.log
 server/vendor

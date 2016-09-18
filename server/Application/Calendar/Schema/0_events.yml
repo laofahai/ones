@@ -31,3 +31,4 @@ events:
             user_info:
                 restrict:
                     delete: CASCADE
+        enable_trash: true

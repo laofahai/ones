@@ -19,6 +19,7 @@ auth_role:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true
 
 # 用户所属角色对应
 auth_user_role:

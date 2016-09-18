@@ -194,6 +194,16 @@ aside.sidebar {
   border-bottom: 1px solid #ccc;
   list-style: none;
   padding: 0; }
+  .left_navs .ng-leave {
+    transition: none; }
+  .left_navs .ng-leave.ng-leave-active,
+  .left_navs .ng-move,
+  .left_navs .ng-enter {
+    opacity: 0; }
+  .left_navs .ng-leave,
+  .left_navs .ng-move.ng-move-active,
+  .left_navs .ng-enter.ng-enter-active {
+    opacity: 1; }
 
 .left_navs a {
   display: block;

@@ -25,6 +25,7 @@ supplier:
                 restrict:
                     delete:
                         SET_NULL
+        enable_trash: true
 
 
 supplier_supply_product:

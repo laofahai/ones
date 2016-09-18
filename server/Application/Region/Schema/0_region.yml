@@ -11,3 +11,4 @@ region:
         indexes:
             parent_id:
             type:
+        enable_trash: true

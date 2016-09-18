@@ -57,8 +57,8 @@ class UserPreferenceService extends CommonModel {
      * */
     public function get_preference($name=null) {
 
-        $cache_key = 'user_preference_/'.get_current_user_id();
-        $cached = S($cache_key);
+        $cache_key = get_company_cache_key('user_preference/'.get_current_user_id());
+        $cached = F($cache_key);
         if(DEBUG || !$cached) {
             $source = $this->where(array(
                 'user_info_id' => get_current_user_id()
@@ -71,7 +71,7 @@ class UserPreferenceService extends CommonModel {
                 }
                 $cached[$row['name']] = $row;
             }
-            S($cache_key, $cached);
+            F($cache_key, $cached);
         }
 
         if($name) {
@@ -111,7 +111,8 @@ class UserPreferenceService extends CommonModel {
             $this->add($row);
         }
 
-        S('user_preference_'.$uid, null);
+        $cache_key = get_company_cache_key('user_preference/'.$uid);
+        F($cache_key, null);
     }
 
 

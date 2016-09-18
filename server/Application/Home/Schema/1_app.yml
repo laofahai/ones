@@ -23,4 +23,5 @@ app:
             alias:
                 unique: true
             type:
+        enable_trash: true
 

@@ -68,6 +68,7 @@ crm_clue:
                     delete: CASCADE
                 options:
                     blank: true
+        enable_trash: true
 
 customer:
     source_from:
@@ -116,6 +117,7 @@ customer:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true
 
 customer_head_log:
     type:
@@ -178,6 +180,7 @@ customer_communicate:
                     delete: CASCADE
                 options:
                     unique: true
+        enable_trash: true
 
 
 customer_care:
@@ -213,3 +216,4 @@ customer_care:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true

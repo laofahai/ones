@@ -46,6 +46,7 @@ sale_opportunities:
             customer:
                 restrict:
                     delete: CASCADE
+        enable_trash: true
 
 
 
@@ -102,3 +103,4 @@ contract:
                 foreign_key: head_id
                 restrict:
                     delete: SET_NULL
+        enable_trash: true

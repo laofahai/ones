@@ -4,7 +4,7 @@
  * @app Region
  * @package Region.event.Region
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Region\Event;
 use Common\Event\BaseRestEvent;

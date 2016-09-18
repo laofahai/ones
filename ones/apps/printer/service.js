@@ -2,7 +2,7 @@
     /*
      * @app printer
      * @author laofahai@TEam Swift
-     * @link https://ng-erp.com
+     * @link http://ng-erp.com
      * */
     'use strict';
     ones.global_module

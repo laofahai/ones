@@ -4,7 +4,7 @@
  * @app Supplier
  * @package Supplier.controller.Supplier
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Supplier\Controller;
 use Common\Controller\BaseRestController;

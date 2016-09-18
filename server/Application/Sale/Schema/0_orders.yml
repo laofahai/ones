@@ -52,6 +52,7 @@ orders:
                     blank: true
                 restrict:
                     delete: SET_NULL
+        enable_trash: true
 
 orders_detail:
     quantity:
@@ -84,3 +85,4 @@ orders_detail:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true

@@ -4,7 +4,7 @@
  * @app Printer
  * @package Printer.service.PrintTemplate
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Printer\Service;
 use Common\Model\CommonModel;

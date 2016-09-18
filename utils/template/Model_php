@@ -4,7 +4,7 @@
  * @app *alias*
  * @package *alias*.model.*module*
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace *alias*\Model;
 use Common\Model\CommonViewModel;

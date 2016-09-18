@@ -21,10 +21,12 @@
  * 非debug模式：存入localStorage
  * 
  * @todo 动态切换当前语言
+ * @todo 默认会有6个基础应用语言包被加载
  * */
 function i18n_init(apps, callback) {
 
-    if (ones.DEBUG || !ones.caches.getItem('ones.lang')) {
+    var cached = ones.caches.getItem('ones.lang') || {};
+    if (ones.DEBUG || Object.keys(cached).length < 8) {
 
         if(ones.load_all_i18n) {
             apps = ['all'];

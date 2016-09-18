@@ -49,6 +49,7 @@ purchase:
                     blank: true
                 restrict:
                     delete: SET_NULL
+        enable_trash: true
 
 purchase_detail:
     quantity:
@@ -81,3 +82,4 @@ purchase_detail:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true

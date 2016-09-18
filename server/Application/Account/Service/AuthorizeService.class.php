@@ -79,8 +79,8 @@ class AuthorizeService extends CommonModel {
     public function get_authed_nodes($user_id = null) {
         $user_id = $user_id ? $user_id : get_current_user_id();
 
-        $cache_key = 'authed/nodes/'.$user_id;
-        $cached = S($cache_key);
+        $cache_key = get_company_cache_key('authed/nodes_user_'.$user_id);
+        $cached = F($cache_key);
 
         if(!DEBUG && $cached) {
             return $cached;
@@ -102,7 +102,7 @@ class AuthorizeService extends CommonModel {
 
         $data = get_array_to_ka($nodes, 'id');
 
-        S($cache_key, $data);
+        F($cache_key, $data);
         return $data;
 
     }
@@ -111,8 +111,8 @@ class AuthorizeService extends CommonModel {
      * 获取角色已授权节点
      * */
     public function get_authed_nodes_by_role($role_id) {
-        $cache_key = 'authed/nodes/role/'.$role_id;
-        $cached = S($cache_key);
+        $cache_key = get_company_cache_key('authed/nodes_role_'.$role_id);
+        $cached = F($cache_key);
 
         if(!DEBUG && $cached) {
             return $cached;
@@ -124,7 +124,7 @@ class AuthorizeService extends CommonModel {
 
         $data = get_array_to_ka($nodes, 'id');
 
-        S($cache_key, $data);
+        F($cache_key, $data);
         return $data;
     }
 

@@ -4,7 +4,7 @@
  * @app Bpm
  * @package Bpm.service.WorkflowProgress
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Bpm\Service;
 use Common\Model\CommonModel;

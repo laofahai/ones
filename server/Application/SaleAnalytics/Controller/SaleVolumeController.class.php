@@ -4,7 +4,7 @@
  * @app SaleAnalytics
  * @package SaleAnalytics.controller.SaleVolume
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace SaleAnalytics\Controller;
 use Common\Controller\BaseRestController;

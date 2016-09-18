@@ -9,6 +9,7 @@
 namespace Home\Controller;
 
 
+use Account\Service\CompanyService;
 use Common\Controller\BaseRestController;
 use Common\Lib\Schema;
 
@@ -52,6 +53,11 @@ class ConfigController extends BaseRestController {
         }
 
         $this->response($configs);
+    }
+
+    public function _EM_clear_cache() {
+        CompanyService::clearCache();
+        $this->success(__("common.Operation Success"));
     }
 
 }

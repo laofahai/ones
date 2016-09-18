@@ -2,7 +2,7 @@
 
 ONES not ONS，项目前端基于AngularJS+Bootstrap, 后端使用PHP+MySQL，使用ThinkPHP框架。
 
-Author: [TEam Swift](https://ng-erp.com)
+Author: [TEam Swift](http://ng-erp.com)
 
 
 * 讨论反馈 [http://forum.ng-erp.com](http://forum.ng-erp.com)

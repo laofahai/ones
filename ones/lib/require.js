@@ -32,28 +32,70 @@
         };
 
         path = array_unique(path);
-        angular.forEach(path, function(p) {
+        if(ones.DEBUG) {
+            angular.forEach(path, function(p) {
+                if(include_paths.indexOf(p) >= 0) {
+                    return;
+                }
+                $.ajax({
+                    url: p+'.js',
+                    dataType: "script",
+                    success: function(data) {
+                        include_paths.push(p);
+                        if(!inited && include_paths.length === path.length && typeof callback === 'function') {
+                            inited = true;
+                            callback();
+                        }
+                    },
+                    error: function(event, type, error) {
+                        console && console.error(event, type, error);
+                    }
+                });
+            });
+        } else {
+            var cleared = [];
+            angular.forEach(path, function(p) {
+                if(include_paths.indexOf(p) >= 0) {
+                    return;
+                }
+                cleared.push(p);
+                include_paths.push(p);
+            });
 
-            if(include_paths.indexOf(p) >= 0) {
+            if(!cleared) {
+                callback();
                 return;
             }
 
+            var compiled_script_path = 'runtime_compiled/'+hex_md5(cleared.join())+'.js';
+
             $.ajax({
-                url: p+'.js',
+                url: compiled_script_path,
                 dataType: "script",
                 success: function(data) {
-                    include_paths.push(p);
                     if(!inited && include_paths.length === path.length && typeof callback === 'function') {
                         inited = true;
                         callback();
                     }
                 },
                 error: function(event, type, error) {
-                    console && console.log(type, error);
+                    $.ajax({
+                        url: ones.remote_entry+'home/static&t=js&f='+encodeURIComponent(cleared.join()),
+                        dataType: "script",
+                        success: function(data) {
+                            if(!inited && include_paths.length === path.length && typeof callback === 'function') {
+                                inited = true;
+                                callback();
+                            }
+                        },
+                        error: function(event, type, error) {
+                            console && console.log(type, error);
+                        }
+                    });
                 }
             });
+        }
 
-        });
 
         ones.DEBUG && console.debug('Load js: ', include_paths);
 

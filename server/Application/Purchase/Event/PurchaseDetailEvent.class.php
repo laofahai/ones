@@ -4,7 +4,7 @@
  * @app Purchase
  * @package Purchase.event.PurchaseDetail
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Purchase\Event;
 use Common\Event\BaseRestEvent;

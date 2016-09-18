@@ -4,7 +4,7 @@
  * @app SaleAnalytics
  * @package SaleAnalytics.service.SaleBoard
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace SaleAnalytics\Service;
 use Common\Model\CommonModel;

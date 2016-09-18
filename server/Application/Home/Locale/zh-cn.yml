@@ -40,3 +40,7 @@ Edit %s Preference: 修改 %s 首选项
 
 Free to use: 免费使用
 Balance not full: 余额不足，请前往充值
+
+Clear front-end cache: 清除前端缓存（需重新登录）
+Clear back-end cache: 清除后端缓存
+Cache has been cleared, please re-login: 缓存已经被清除， 请重新登录

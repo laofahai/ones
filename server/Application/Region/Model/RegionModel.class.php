@@ -4,7 +4,7 @@
  * @app Region
  * @package Region.model.Region
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Region\Model;
 use Common\Model\CommonViewModel;

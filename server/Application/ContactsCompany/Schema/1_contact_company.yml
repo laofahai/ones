@@ -21,6 +21,7 @@ contacts_company_role:
             company: # 所属公司
                 restrict:
                     delete: CASCADE
+        enable_trash: true
 
 # 往来单位与其角色对应表  many to many
 # A公司 是 B公司的客户，是C公司的供应商

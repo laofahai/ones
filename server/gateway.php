@@ -39,8 +39,7 @@ if($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
-ini_set('session.cookie_lifetime', '6000');
-ini_set('session.gc_maxlifetime', '6000');
+ini_set('session.cookie_lifetime', '99999');
 
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.5.9','<')) {

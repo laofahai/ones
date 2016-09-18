@@ -1,7 +1,7 @@
 alias: dataModel
 author: TEam Swift
 description: ONES 数据模型模块
-link: https://ng-erp.com
+link: http://ng-erp.com
 document: http://ones_manual.mydoc.io/?t=35693
 auth_nodes:
     - dataModel.dataModelField.*

@@ -4,7 +4,7 @@
  * @app *alias*
  * @package *alias*.event.*module*
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace *alias*\Event;
 use Common\Event\BaseRestEvent;

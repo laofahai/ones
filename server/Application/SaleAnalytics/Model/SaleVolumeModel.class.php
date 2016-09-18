@@ -4,7 +4,7 @@
  * @app SaleAnalytics
  * @package SaleAnalytics.model.SaleVolume
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace SaleAnalytics\Model;
 use Common\Model\CommonViewModel;

@@ -4,7 +4,7 @@
  * @app Sale
  * @package Sale.controller.OrdersDetail
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Sale\Controller;
 use Common\Controller\BaseRestController;

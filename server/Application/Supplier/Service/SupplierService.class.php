@@ -4,7 +4,7 @@
  * @app Supplier
  * @package Supplier.service.Supplier
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Supplier\Service;
 use Common\Model\CommonModel;

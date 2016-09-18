@@ -4,7 +4,7 @@
  * @app Finance
  * @package Finance.service.FinanceStreamline
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Finance\Service;
 use Common\Model\CommonModel;

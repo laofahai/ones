@@ -1,6 +1,6 @@
 alias: uploader
 author: TEam Swift
-link: https://ng-erp.com
+link: http://ng-erp.com
 requirement:
 
 # 上传文件最大尺寸， byte

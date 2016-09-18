@@ -4,7 +4,7 @@
  * @app Productattribute
  * @package Productattribute.service.ProductAttributeMap
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Productattribute\Service;
 use Common\Model\CommonModel;

@@ -12,6 +12,7 @@ finance_account:
     $meta:
         foreign:
             - company
+        enable_trash: true
 
 receivables:
     subject:
@@ -71,6 +72,7 @@ receivables:
                     blank: true
                 restrict:
                     delete: SET_NULL
+        enable_trash: true
 
 
 payables:
@@ -131,6 +133,7 @@ payables:
                     blank: true
                 restrict:
                     delete: SET_NULL
+        enable_trash: true
 
 finance_streamline:
     direction:
@@ -175,3 +178,4 @@ finance_streamline:
                     blank: true
                 restrict:
                     delete: SET_NULL
+        enable_trash: true

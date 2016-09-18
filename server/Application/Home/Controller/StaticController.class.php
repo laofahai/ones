@@ -9,6 +9,7 @@
 namespace Home\Controller;
 
 
+use Common\Lib\JSMin;
 use Think\Controller;
 
 class StaticController extends Controller
@@ -33,41 +34,50 @@ class StaticController extends Controller
 
     /*
      * 返回JS
-     * @todo minify
      * */
-    private function fetch_static_for_js($files) {
-//        header('Content-Type: application/x-javascript');
-//        header('Charset: utf-8');
-        $front_end_root = dirname(ENTRY_PATH).'/ones/';
-        ob_start();
-        foreach($files as $file) {
-            $path = $front_end_root.$file.".js";
-            if(is_file($path)) {
-                echo file_get_contents($path);
+    protected function fetch_static_for_js($files) {
+        header('Content-Type: application/x-javascript');
+        header('Charset: utf-8');
+
+        $cache_key = "compiled/js";
+        $content = F($cache_key);
+        if(DEBUG || !$content) {
+            $front_end_root = dirname(ENTRY_PATH).'/ones/';
+            ob_start();
+            foreach($files as $file) {
+                $path = $front_end_root.$file.".js";
+                if(is_file($path)) {
+                    echo file_get_contents($path);
+                }
+            }
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            $content = trim(JSMin::minify($content));
+
+            F($cache_key, $content);
+        }
+
+        // 保存至物理路径
+        $save_path = '/runtime_compiled/'.md5(implode(',', $files));
+        $this->save_to_file($save_path, $content);
+        $this->save_to_file($save_path, $content);
+        echo $content;
+    }
+
+    private function save_to_file($save_path, $content, $ext='js') {
+
+        $paths = ['ones', 'dist'];
+        foreach($paths as $path) {
+            $the_path = dirname(ENTRY_PATH).'/'.$path.$save_path.'.'.$ext;
+            $save_dir = dirname($the_path);
+
+            if(!is_dir($save_dir)) {
+                mkdir($save_dir, 0777, true);
+            }
+            if(!is_file($the_path)) {
+                file_put_contents($the_path, $content);
             }
         }
-        $content = ob_get_contents();
-        ob_end_clean();
-        echo $this->format_js($content);
     }
-
-    private function format_js($content) {
-        $content = preg_replace("/(\/\/)(.*)[\S]/i", "", $content);
-//        $content = preg_replace("/\/\*[\s\S]*\*\//U", "", $content);
-
-        $search = [
-            '    ',
-            '	',
-            "\n\n"
-        ];
-        $replace = [
-            '',
-            '',
-            "\n"
-        ];
-        $content = str_replace($search, $replace, $content);
-
-        return $content;
-    }
-
 }

@@ -19,7 +19,7 @@ class SchemaService {
 
         $cache_key = "schema/".$app;
 
-        $schemas = (array)S($cache_key);
+        $schemas = (array)F($cache_key);
         if(DEBUG || !$schemas) {
 
             $schemas = [];
@@ -38,7 +38,7 @@ class SchemaService {
 
             $schemas = Schema::parse($app, $schemas, $tables);
 
-            S($cache_key, $schemas);
+            F($cache_key, $schemas);
         }
         return $schemas;
     }

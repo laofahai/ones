@@ -4,7 +4,7 @@
  * @app Supplier
  * @package Supplier.model.Supplier
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Supplier\Model;
 use Common\Model\CommonViewModel;

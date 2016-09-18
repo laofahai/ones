@@ -4,7 +4,7 @@
  * @app Finance
  * @package Finance.controller.Receivables
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Finance\Controller;
 use Common\Controller\BaseRestController;

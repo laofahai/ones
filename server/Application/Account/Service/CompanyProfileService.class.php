@@ -4,7 +4,7 @@
  * @app Account
  * @package Account.service.CompanyProfile
  * @author laofahai@TEam Swift
- * @link https://ng-erp.com
+ * @link http://ng-erp.com
  * */
 namespace Account\Service;
 use Common\Model\CommonModel;

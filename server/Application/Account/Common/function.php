@@ -11,8 +11,8 @@ function generate_password($source, $rand_hash=false) {
  * */
 function get_auth_nodes() {
 
-    $cache_key = 'auth/nodes/all';
-    $cached = S($cache_key);
+    $cache_key = 'all_auth_node';
+    $cached = F($cache_key);
     if(!DEBUG && $cached) {
         return $cached;
     }
@@ -26,7 +26,7 @@ function get_auth_nodes() {
         $all_nodes[$node['id']] = $node;
     }
 
-    S($cache_key, $all_nodes);
+    F($cache_key, $all_nodes);
 
     return $all_nodes;
 }

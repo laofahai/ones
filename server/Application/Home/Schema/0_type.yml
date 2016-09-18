@@ -22,3 +22,4 @@ common_type:
             company:
                 restrict:
                     delete: CASCADE
+        enable_trash: true
