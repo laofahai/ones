@@ -135,7 +135,6 @@
         
         var tpl = '<link href="%s.css%s" type="text/css" rel="stylesheet" data-path="%s" />';
 
-        
         var __include = function(path) {
             element = sprintf(tpl,
                 path,
