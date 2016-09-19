@@ -673,9 +673,10 @@ class BaseRestController extends RestController {
         if(method_exists($model, "do_delete")) {
             $rs = $model->do_delete($ids);
         } else {
-            $schema = SchemaService::getSchemaByApp(lcfirst(MODULE_NAME), $model->get('tableName'));
+            $table_name = $model->get('tableName') ? $model->get('tableName') : model_name_to_table_name($model->get('name'));
+            $schema = SchemaService::getSchemaByApp(lcfirst(MODULE_NAME), $table_name);
 
-            if($schema[$model->get('tableName')]['enable_trash']) {
+            if($schema[$table_name]['enable_trash']) {
                 $rs = $model->where(["id" => array("IN", $ids)])->save([
                     "trashed" => "1"
                 ]);
@@ -827,9 +828,9 @@ class BaseRestController extends RestController {
         if(I("get._ot")) {
             $map[$this->model_name.'.trashed'] = '1';
         } else {
-            $schema = SchemaService::getSchemaByApp(lcfirst(MODULE_NAME), $model->get('tableName'));
-
-            if($schema[$model->get('tableName')]['enable_trash']) {
+            $table_name = $model->get('tableName') ? $model->get('tableName') : model_name_to_table_name($model->get('name'));
+            $schema = SchemaService::getSchemaByApp(lcfirst(MODULE_NAME), $table_name);
+            if($schema[$table_name]['enable_trash']) {
                 $map[$this->model_name.'.trashed'] = '0';
             }
         }

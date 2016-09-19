@@ -18,8 +18,8 @@ class Dev extends BaseMigration {
         // index, foreign key
 
         $this->apply_meta();
-        $this->add_auth_node();
-//        exit;
+//        $this->add_auth_node();
+        exit;
 
     }
 

@@ -11,5 +11,11 @@ use Common\Event\BaseRestEvent;
 
 class ProductCategoryEvent extends BaseRestEvent {
 
+    public function on_event_list() {
+        $model = D('Product/ProductCategory', "Service");
+        $tree = $model->get_tree();
+
+        $this->response($tree);
+    }
 
 }

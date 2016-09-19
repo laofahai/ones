@@ -333,6 +333,10 @@ function model_alias_to_label($alias) {
     return __($app.'.'.camelCaseSpace($module));
 }
 
+function model_name_to_table_name($model_name) {
+    return strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '_', $model_name));
+}
+
 /*
  * 自动生成单据标题
  * */
