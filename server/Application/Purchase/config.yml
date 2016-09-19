@@ -19,7 +19,6 @@ include:
     js:
         - apps/purchase/main
         - apps/purchase/model
-        - lib/bill
         - apps/product/model
         - apps/supplier/model
 global_include:

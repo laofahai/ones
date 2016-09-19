@@ -338,8 +338,6 @@ class BaseRestController extends RestController {
 
             $list = $model->select();
 
-//            echo $model->getLastSql();exit;
-
             $this->queryMeta = array(
                 "map" => $map,
                 "limit" => $limit,
@@ -1073,8 +1071,6 @@ class BaseRestController extends RestController {
         if(true !== APP_DEBUG || !$data) {
             return $data;
         }
-
-        Log::record('hello', 'SQL');
 
         $debug_info = [];
         $logs = CommonLog::get_log();

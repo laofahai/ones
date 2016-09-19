@@ -19,7 +19,6 @@ auth_nodes:
 
 include:
     js:
-        - lib/bill
         - apps/storage/main
         - apps/storage/model
         - apps/storage/stockIn

@@ -6,7 +6,7 @@ var BILL_META_INPUT_GROUP_TPL = '<div class="input-group"><span class="input-gro
             "ngClipProvider",
             function(ngClipProvider) {
                 // ng-click to copy
-                ngClipProvider.setPath("lib/ZeroClipboard.swf");
+                ngClipProvider.setPath("images/ZeroClipboard.swf");
             }
         ])
         .service('BillModule', [

@@ -27,7 +27,6 @@ include:
         - apps/storage/model
         - apps/contactsCompany/model
         - apps/crm/model
-        - lib/bill
 
 global_include:
     js:

@@ -221,8 +221,8 @@ module.exports = function (grunt) {
                             "ones/bower_components/angular-base64-upload/src/angular-base64-upload.js",
                             "ones/bower_components/jsbarcode/JsBarcode.all.min.js",
                             "ones/bower_components/socket.io-client/socket.io.js",
-                            "bower_components/zeroclipboard/dist/ZeroClipboard.min.js",
-                            "bower_components/ng-clip/dest/ng-clip.min.js"
+                            "ones/bower_components/zeroclipboard/dist/ZeroClipboard.min.js",
+                            "ones/bower_components/ng-clip/dest/ng-clip.min.js"
                         ]
                     }
                 ]
@@ -311,6 +311,7 @@ module.exports = function (grunt) {
                             "ones/lib/form/form.js",
                             "ones/lib/form/form.fields.js",
                             "ones/lib/form/form.fields.tpl.js",
+                            "ones/lib/bill.js",
                             "ones/lib/grid_view.js",
                             "ones/lib/detail_view/detail_view.js",
                             "ones/lib/detail_view/detail_view.widget.js",
