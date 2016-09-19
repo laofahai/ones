@@ -257,6 +257,7 @@ module.exports = function (grunt) {
                     {
                         dest: '.tmp/concat/assets/js/login.js',
                         src: [
+                            "ones/lib/debugger.js",
                             "ones/lib/vendor/sprintf.js",
                             "ones/lib/function.js",
                             "ones/common/config.js",
@@ -273,6 +274,7 @@ module.exports = function (grunt) {
                     {
                         dest: '.tmp/concat/assets/js/app.js',
                         src: [
+                            "ones/lib/debugger.js",
                             "ones/lib/vendor/sprintf.js",
                             "ones/lib/vendor/md5.js",
                             "ones/lib/require.js",
@@ -294,6 +296,7 @@ module.exports = function (grunt) {
                     {
                         dest: '.tmp/concat/assets/js/frame_lib.js',
                         src: [
+                            "ones/lib/debugger.js",
                             "ones/lib/vendor/sprintf.js",
                             "ones/lib/vendor/md5.js",
                             "ones/lib/vendor/accounting.min.js",
@@ -387,16 +390,16 @@ module.exports = function (grunt) {
         //  }
         //},
 
-        svgmin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.svg',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
-            }
-        },
+        //svgmin: {
+        //    dist: {
+        //        files: [{
+        //            expand: true,
+        //            cwd: '<%= yeoman.app %>/images',
+        //            src: '{,*/}*.svg',
+        //            dest: '<%= yeoman.dist %>/images'
+        //        }]
+        //    }
+        //},
 
         htmlmin: {
             dist: {
@@ -430,11 +433,11 @@ module.exports = function (grunt) {
         },
 
         // Replace Google CDN references
-        cdnify: {
-            dist: {
-                html: ['<%= yeoman.dist %>/*.html']
-            }
-        },
+        //cdnify: {
+        //    dist: {
+        //        html: ['<%= yeoman.dist %>/*.html']
+        //    }
+        //},
 
         // Copies remaining files to places other tasks can use
         copy: {
@@ -445,7 +448,7 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,png,txt}',
+                        '*.{ico,png,txt,md}',
                         '.htaccess',
                         '*.html',
                         'apps/{,**/}*.*',
@@ -491,9 +494,9 @@ module.exports = function (grunt) {
                 'copy:styles'
             ],
             dist: [
-                'copy:styles',
+                'copy:styles'
                 //'imagemin',
-                'svgmin'
+                //'svgmin'
             ]
         },
 

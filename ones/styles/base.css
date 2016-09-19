@@ -223,4 +223,9 @@ a, button, input {
   opacity: 1;
   transform: scale(1); }
 
+input[type="checkbox"]:checked::after,
+.checkbox input[type="checkbox"]:checked::after,
+.checkbox-inline input[type="checkbox"]:checked::after {
+  content: url(../images/checkmark.png) !important; }
+
 /*# sourceMappingURL=base.css.map */
